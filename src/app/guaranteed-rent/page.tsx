@@ -48,11 +48,11 @@ export default function GuaranteedRentPage() {
       <section className="bg-red-50 border-y border-red-200">
         <div className="container-max px-4 py-5">
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-red-700 font-medium text-center">
-            <span>😩 Chasing late rent?</span>
-            <span>🏚️ Property sitting empty?</span>
-            <span>📞 Midnight maintenance calls?</span>
-            <span>💸 Paying agent fees?</span>
-            <span>📋 Compliance headaches?</span>
+            <span>Chasing late rent?</span>
+            <span>Property sitting empty?</span>
+            <span>Midnight maintenance calls?</span>
+            <span>Paying agent fees?</span>
+            <span>Compliance headaches?</span>
           </div>
           <p className="text-center text-red-800 font-bold mt-2">All of this disappears with guaranteed rent.</p>
         </div>
@@ -67,15 +67,14 @@ export default function GuaranteedRentPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { icon: "💷", title: "Guaranteed Monthly Rent", desc: "Same amount. Same date. Every single month. Whether the property is occupied or not." },
-              { icon: "🚫", title: "Zero Void Periods", desc: "No gaps between tenants. No empty months. No lost income. Ever." },
-              { icon: "🔧", title: "We Handle Everything", desc: "Tenant sourcing, management, maintenance, compliance, inspections — all us." },
-              { icon: "📋", title: "No Agent Fees", desc: "No tenant-find fees. No management percentage. No renewal charges. No hidden costs." },
-              { icon: "🔒", title: "3-5 Year Lease", desc: "Long-term security. One agreement. Guaranteed income for years, not months." },
-              { icon: "🏠", title: "Property Protected", desc: "Regular inspections. Professional management. Returned in condition at end of lease." },
+              { title: "Guaranteed Monthly Rent", desc: "Same amount. Same date. Every single month. Whether the property is occupied or not." },
+              { title: "Zero Void Periods", desc: "No gaps between tenants. No empty months. No lost income. Ever." },
+              { title: "We Handle Everything", desc: "Tenant sourcing, management, maintenance, compliance, inspections — all us." },
+              { title: "No Agent Fees", desc: "No tenant-find fees. No management percentage. No renewal charges. No hidden costs." },
+              { title: "3-5 Year Lease", desc: "Long-term security. One agreement. Guaranteed income for years, not months." },
+              { title: "Property Protected", desc: "Regular inspections. Professional management. Returned in condition at end of lease." },
             ].map((b) => (
-              <div key={b.title} className="bg-white rounded-2xl border border-navy-100/80 p-6 card-hover">
-                <span className="text-3xl block mb-3">{b.icon}</span>
+              <div key={b.title} className="bg-white rounded-2xl border border-navy-100 p-6 card-hover">
                 <h3 className="font-bold text-navy-800 mb-1">{b.title}</h3>
                 <p className="text-sm text-navy-500">{b.desc}</p>
               </div>
@@ -306,5 +305,6 @@ export default function GuaranteedRentPage() {
     </>
   );
 }
+
 
 
