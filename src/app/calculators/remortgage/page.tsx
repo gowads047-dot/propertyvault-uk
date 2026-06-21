@@ -1,0 +1,120 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { Disclaimer } from "@/components/legal/Disclaimer";
+
+export default function RemortgagePage() {
+  const [outstandingBalance, setOutstandingBalance] = useState(180000);
+  const [currentRate, setCurrentRate] = useState(6.5);
+  const [newRate, setNewRate] = useState(4.5);
+  const [remainingTerm, setRemainingTerm] = useState(20);
+  const [arrangementFee, setArrangementFee] = useState(999);
+  const [valuationFee, setValuationFee] = useState(0);
+  const [legalFees, setLegalFees] = useState(0);
+  const [exitFee, setExitFee] = useState(0);
+
+  const results = useMemo(() => {
+    const months = remainingTerm * 12;
+    const calcPayment = (balance: number, rate: number, m: number) => {
+      const r = rate / 100 / 12;
+      if (r === 0) return balance / m;
+      return balance * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1);
+    };
+
+    const currentMonthly = calcPayment(outstandingBalance, currentRate, months);
+    const newMonthly = calcPayment(outstandingBalance, newRate, months);
+    const monthlySaving = currentMonthly - newMonthly;
+    const annualSaving = monthlySaving * 12;
+    const totalSavingOverTerm = monthlySaving * months;
+
+    const totalSwitchCost = arrangementFee + valuationFee + legalFees + exitFee;
+    const netSaving = totalSavingOverTerm - totalSwitchCost;
+    const breakEvenMonths = monthlySaving > 0 ? totalSwitchCost / monthlySaving : 0;
+
+    const currentTotalCost = currentMonthly * months;
+    const newTotalCost = (newMonthly * months) + totalSwitchCost;
+
+    return {
+      currentMonthly, newMonthly, monthlySaving, annualSaving,
+      totalSavingOverTerm, totalSwitchCost, netSaving, breakEvenMonths,
+      currentTotalCost, newTotalCost, worthSwitching: netSaving > 0,
+    };
+  }, [outstandingBalance, currentRate, newRate, remainingTerm, arrangementFee, valuationFee, legalFees, exitFee]);
+
+  const fmt = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
+  const fmtExact = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+
+  return (
+    <>
+      <section className="gradient-navy py-12 md:py-16">
+        <div className="container-max px-4">
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Remortgage Savings Calculator</h1>
+          <p className="text-navy-200 max-w-2xl">See how much you could save by switching to a new mortgage deal. Compare your current rate with a new rate and factor in all switching costs.</p>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max">
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div className="space-y-5">
+              <div>
+                <label className="block text-sm font-semibold text-navy-700 mb-1">Outstanding Mortgage Balance</label>
+                <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
+                <input type="number" value={outstandingBalance} onChange={(e) => setOutstandingBalance(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Current Rate ({currentRate}%)</label><input type="range" min={1} max={10} step={0.1} value={currentRate} onChange={(e) => setCurrentRate(Number(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-sm font-semibold text-navy-700 mb-1">New Rate ({newRate}%)</label><input type="range" min={1} max={10} step={0.1} value={newRate} onChange={(e) => setNewRate(Number(e.target.value))} className="w-full accent-gold-500" /></div>
+              </div>
+              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Remaining Term ({remainingTerm} years)</label><input type="range" min={5} max={35} step={1} value={remainingTerm} onChange={(e) => setRemainingTerm(Number(e.target.value))} className="w-full accent-gold-500" /></div>
+
+              <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Switching Costs</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Arrangement Fee</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={arrangementFee} onChange={(e) => setArrangementFee(Number(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Valuation Fee</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={valuationFee} onChange={(e) => setValuationFee(Number(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Legal Fees</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={legalFees} onChange={(e) => setLegalFees(Number(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Early Exit Fee</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={exitFee} onChange={(e) => setExitFee(Number(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+              </div>
+            </div>
+
+            <div>
+              <div className={`rounded-2xl p-8 text-white mb-6 ${results.worthSwitching ? "bg-gradient-to-br from-green-700 to-green-900" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
+                {results.worthSwitching ? (
+                  <>
+                    <p className="text-green-200 text-sm mb-1">Switching could save you</p>
+                    <p className="text-4xl font-bold text-white mb-1">{fmt(results.netSaving)}</p>
+                    <p className="text-green-200 text-sm">over the remaining {remainingTerm} years</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-navy-200 text-sm mb-1">Switching would cost you more</p>
+                    <p className="text-4xl font-bold text-red-400 mb-1">{fmt(Math.abs(results.netSaving))}</p>
+                    <p className="text-navy-200 text-sm">Fees outweigh the savings — not worth switching</p>
+                  </>
+                )}
+                <div className="grid grid-cols-2 gap-3 mt-6">
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Current Monthly</p><p className="font-bold text-lg">{fmtExact(results.currentMonthly)}</p></div>
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">New Monthly</p><p className="font-bold text-lg">{fmtExact(results.newMonthly)}</p></div>
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Monthly Saving</p><p className="font-bold text-lg text-green-400">{fmtExact(results.monthlySaving)}</p></div>
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Break-Even</p><p className="font-bold text-lg">{results.breakEvenMonths > 0 ? Math.ceil(results.breakEvenMonths) + " months" : "—"}</p></div>
+                </div>
+              </div>
+              <div className="bg-white rounded-xl border border-navy-100 p-5">
+                <h4 className="font-bold text-navy-800 mb-3">Full Comparison</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between"><span className="text-navy-600">Total cost staying (current rate)</span><span className="font-semibold">{fmt(results.currentTotalCost)}</span></div>
+                  <div className="flex justify-between"><span className="text-navy-600">Total cost switching (new rate + fees)</span><span className="font-semibold">{fmt(results.newTotalCost)}</span></div>
+                  <div className="flex justify-between"><span className="text-navy-600">Switching costs</span><span className="font-semibold">{fmt(results.totalSwitchCost)}</span></div>
+                  <div className="flex justify-between"><span className="text-navy-600">Annual saving</span><span className="font-semibold text-green-600">{fmt(results.annualSaving)}</span></div>
+                  <div className="flex justify-between border-t border-navy-200 pt-2 font-bold"><span>Net saving over term</span><span className={results.netSaving >= 0 ? "text-green-600" : "text-red-600"}>{fmt(results.netSaving)}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <Disclaimer type="calculator" />
+        </div>
+      </section>
+    </>
+  );
+}

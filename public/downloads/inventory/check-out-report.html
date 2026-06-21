@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en-GB">
+<head><meta charset="UTF-8"><title>Check-Out Report — PropertyVault UK</title><link rel="stylesheet" href="../template-styles.css"></head>
+<body>
+<div class="download-bar no-print"><span>Fill in the fields below, then save as PDF</span><button onclick="window.print()">Save as PDF / Print</button></div>
+<div style="margin-top:15mm">
+
+<div class="doc-header">
+<div class="logo-bar">
+<div class="logo"><div class="logo-icon">P</div><div class="logo-text">PropertyVault<span>.uk</span></div></div>
+<div class="doc-ref">Document Reference: PV-<br>Date: ____/____/________</div>
+</div>
+<div class="doc-title">CHECK-OUT INSPECTION REPORT</div>
+<div class="doc-subtitle">End of Tenancy Property Condition Report</div>
+</div>
+
+<table>
+<tr><td style="width:30%">Property address:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Tenant name(s):</td><td><input class="field" type="text"></td></tr>
+<tr><td>Tenancy end date:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Check-out date:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Inspected by:</td><td><input class="field" type="text"></td></tr>
+</table>
+
+<h2>Meter Readings at Check-Out</h2>
+<table>
+<tr><th>Utility</th><th>Check-In Reading</th><th>Check-Out Reading</th></tr>
+<tr><td>Electricity</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+<tr><td>Gas</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+<tr><td>Water</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+</table>
+
+<h2>Keys Returned</h2>
+<table>
+<tr><th>Key Type</th><th>Qty Issued</th><th>Qty Returned</th><th>Missing?</th></tr>
+<tr><td>Front door</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+<tr><td>Back door</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+<tr><td>Window keys</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+<tr><td>Other</td><td><input class="field" type="text"></td><td><input class="field" type="text"></td><td><input class="field" type="text"></td></tr>
+</table>
+
+<p><em>Condition: E = Excellent | G = Good | F = Fair | P = Poor | D = Damaged</em></p>
+
+<h2>Room-by-Room Comparison</h2>
+
+<table>
+<tr><th style="width:25%">Room / Item</th><th style="width:15%">Check-In</th><th style="width:15%">Check-Out</th><th>Notes / Damage</th><th style="width:15%">Deduction?</th></tr>
+<tr><td colspan="5"><strong>ENTRANCE / HALLWAY</strong></td></tr>
+<tr><td>Walls</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Floor</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Door</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td colspan="5"><strong>LIVING ROOM</strong></td></tr>
+<tr><td>Walls</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Floor</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Windows</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Furniture</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td colspan="5"><strong>KITCHEN</strong></td></tr>
+<tr><td>Units/Worktops</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Appliances</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Cleanliness</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td colspan="5"><strong>BEDROOM 1</strong></td></tr>
+<tr><td>Walls/Ceiling</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Floor</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Furniture</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td colspan="5"><strong>BATHROOM</strong></td></tr>
+<tr><td>Bath/Shower</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Toilet</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td>Cleanliness</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+<tr><td colspan="5"><strong>OUTSIDE</strong></td></tr>
+<tr><td>Garden</td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text" style="min-width:20mm"></td><td><input class="field" type="text"></td><td><input class="field" type="text" style="min-width:20mm"></td></tr>
+</table>
+
+<h2>Proposed Deposit Deductions</h2>
+<table>
+<tr><th style="width:50%">Item</th><th>Cost</th></tr>
+<tr><td><input class="field" type="text"></td><td>£<input class="field" type="text"></td></tr>
+<tr><td><input class="field" type="text"></td><td>£<input class="field" type="text"></td></tr>
+<tr><td><input class="field" type="text"></td><td>£<input class="field" type="text"></td></tr>
+<tr><td><input class="field" type="text"></td><td>£<input class="field" type="text"></td></tr>
+<tr><td><strong>Total deductions</strong></td><td>£<input class="field" type="text"></td></tr>
+<tr><td><strong>Deposit to return</strong></td><td>£<input class="field" type="text"></td></tr>
+</table>
+
+<h2>Signatures</h2>
+<h3>Tenant</h3>
+<table>
+<tr><td style="width:25%">Name:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Signature:</td><td><input class="field" type="text" placeholder="Sign here" style="min-width:100%;height:15mm"></td></tr>
+<tr><td>Date:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Agree with report?</td><td><input class="field" type="text"> (Yes / No — if No, note dispute below)</td></tr>
+</table>
+
+<h3>Landlord / Agent</h3>
+<table>
+<tr><td style="width:25%">Name:</td><td><input class="field" type="text"></td></tr>
+<tr><td>Signature:</td><td><input class="field" type="text" placeholder="Sign here" style="min-width:100%;height:15mm"></td></tr>
+<tr><td>Date:</td><td><input class="field" type="text"></td></tr>
+</table>
+
+<div class="doc-footer"><span>PropertyVault UK — propertyvaultuk.co.uk</span><span>Page ___ of ___</span></div><div class="disclaimer"><p>Take dated photographs alongside this report. Both parties should keep a signed copy. Disputes can be referred to the deposit scheme's free ADR service. PropertyVault UK accepts no liability.</p><p>Template provided by PropertyVault UK — propertyvaultuk.co.uk</p></div>
+</div>
+</body>
+</html>
+

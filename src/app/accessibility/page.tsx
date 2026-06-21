@@ -1,0 +1,73 @@
+﻿import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Accessibility Statement — PropertyVault UK",
+  description: "PropertyVault UK accessibility statement. Our commitment to making our website accessible to all users.",
+};
+
+export default function AccessibilityPage() {
+  return (
+    <>
+      <section className="gradient-navy py-12 md:py-16">
+        <div className="container-max px-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Accessibility Statement</h1>
+          <p className="text-navy-200 text-sm">Last updated: June 2026</p>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-4xl prose-sm text-navy-600 leading-relaxed space-y-8">
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Our Commitment</h2>
+            <p>PropertyVault UK is committed to ensuring digital accessibility for people with disabilities. We continually improve the user experience for everyone and apply the relevant accessibility standards.</p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Conformance Status</h2>
+            <p>We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.2 at Level AA. These guidelines explain how to make web content more accessible for people with disabilities and more user-friendly for everyone.</p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Measures We Take</h2>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Semantic HTML markup for proper document structure and screen reader compatibility</li>
+              <li>Sufficient colour contrast ratios between text and backgrounds (minimum 4.5:1 for normal text)</li>
+              <li>Alt text for all meaningful images</li>
+              <li>Keyboard navigation support for all interactive elements</li>
+              <li>ARIA labels and roles where native HTML semantics are insufficient</li>
+              <li>Responsive design that works across screen sizes and orientations</li>
+              <li>Focus indicators visible on all interactive elements</li>
+              <li>Form labels associated with their input fields</li>
+              <li>Error messages that clearly identify and describe errors</li>
+              <li>Content that does not rely solely on colour to convey information</li>
+              <li>Text resizable up to 200% without loss of content or functionality</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Known Limitations</h2>
+            <p>While we strive for full accessibility, some areas may have limitations:</p>
+            <ul className="list-disc pl-6 space-y-1 mt-2">
+              <li>Some interactive calculator charts may have limited screen reader support — text alternatives for results are provided</li>
+              <li>Some third-party embedded content may not meet all accessibility standards</li>
+              <li>PDF downloads may have limited accessibility — we are working to provide accessible alternatives</li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Feedback</h2>
+            <p>We welcome your feedback on the accessibility of PropertyVault UK. If you encounter accessibility barriers or have suggestions for improvement, please contact us:</p>
+            <p className="mt-2"><strong>Email:</strong> accessibility@propertyvault.uk<br />
+            We aim to respond to accessibility feedback within 5 working days.</p>
+          </div>
+
+          <div>
+            <h2 className="text-xl font-bold text-navy-800 mb-3">Enforcement</h2>
+            <p>If you are not satisfied with our response, you can contact the Equality Advisory and Support Service (EASS) at equalityadvisoryservice.com or the Equality and Human Rights Commission (EHRC) at equalityhumanrights.com.</p>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+

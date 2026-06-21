@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://propertyvaultuk.co.uk/sitemap.xml
+
+# Disallow admin/internal paths
+Disallow: /_next/
+Disallow: /_not-found/
