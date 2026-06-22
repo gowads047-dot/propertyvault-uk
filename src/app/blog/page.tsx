@@ -9,13 +9,21 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    title: "UK Property Market 2026 — What Investors Need to Know",
+    excerpt: "The market has shifted. Mortgage rates, house prices, rental demand, and what it means for your next deal — an honest look at where we are.",
+    href: "/blog/uk-property-market-2026",
+    category: "Market",
+    readTime: "8 min",
+    date: "June 2026",
+    featured: true,
+  },
+  {
     title: "The Biggest Financial Lie in Britain Is Unravelling",
     excerpt: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The market isn't crashing — it's freezing. And that could be worse.",
     href: "/blog/biggest-financial-lie-britain",
     category: "Opinion",
     readTime: "12 min",
     date: "June 2026",
-    featured: true,
   },
   {
     title: "What Is the BRRR Strategy? A Complete UK Guide",

@@ -139,10 +139,10 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-5 gap-5">
-            <Link href="/blog/biggest-financial-lie-britain" className="group md:col-span-3 block bg-navy-800 rounded-2xl p-8 md:p-10 relative overflow-hidden">
-              <span className="inline-block px-3 py-1 bg-white/10 text-white/80 text-xs font-semibold rounded-full mb-6">Featured</span>
-              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-3 group-hover:text-gold-400 transition-colors leading-tight" style={{ fontFamily: "var(--font-family-heading)" }}>The Biggest Financial Lie in Britain Is Unravelling</h3>
-              <p className="text-white/60 text-sm">For 40 years, Britain believed property prices would always rise. That assumption is now failing.</p>
+            <Link href="/blog/uk-property-market-2026" className="group md:col-span-3 block bg-navy-800 rounded-2xl p-8 md:p-10 relative overflow-hidden">
+              <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-6">New · June 2026</span>
+              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-3 group-hover:text-gold-400 transition-colors leading-tight" style={{ fontFamily: "var(--font-family-heading)" }}>UK Property Market 2026 — What Investors Need to Know</h3>
+              <p className="text-white/60 text-sm">Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
             </Link>
 
             <div className="md:col-span-2 flex flex-col gap-5">
