@@ -37,6 +37,15 @@ html.dark {
   --foreground: #e4e8f0;
 }
 
+/* Makan is ALWAYS light mode — reset everything */
+html.dark .hetta,
+html.dark .hetta * {
+  color: inherit;
+}
+.hetta {
+  color-scheme: light;
+}
+
 html.dark body {
   background: #0a1224;
   color: #e4e8f0;
@@ -46,7 +55,12 @@ html.dark h1, html.dark h2, html.dark h3,
 html.dark h4, html.dark h5, html.dark h6 {
   color: #f5f7fa;
 }
+html.dark .hetta h1, html.dark .hetta h2, html.dark .hetta h3,
+html.dark .hetta h4, html.dark .hetta h5, html.dark .hetta h6 {
+  color: var(--h-text);
+}
 
+/* Dark mode — main site only */
 html.dark .bg-white { background-color: #111827; }
 html.dark .bg-navy-50 { background-color: #0a1224; }
 html.dark .bg-navy-800 { background-color: #1e293b; }
@@ -61,8 +75,8 @@ html.dark .bg-gold-50 { background-color: #1e1a0e; }
 html.dark .bg-green-50 { background-color: #0a1e12; }
 html.dark .bg-blue-50 { background-color: #0a1224; }
 
-html.dark p, html.dark span, html.dark li, html.dark td, html.dark th,
-html.dark label, html.dark a {
+html.dark p, html.dark span, html.dark li, html.dark td,
+html.dark th, html.dark label, html.dark a {
   color: inherit;
 }
 
@@ -76,34 +90,39 @@ html.dark .card-hover:hover {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.4);
 }
 
-html.dark :not(.hetta) > input[type="text"],
-html.dark :not(.hetta) > input[type="email"],
-html.dark :not(.hetta) > input[type="number"],
-html.dark :not(.hetta) > input[type="tel"],
-html.dark :not(.hetta) > input[type="date"],
-html.dark :not(.hetta) > input[type="search"],
-html.dark :not(.hetta) > select,
-html.dark :not(.hetta) > textarea {
+html.dark input[type="text"], html.dark input[type="email"],
+html.dark input[type="number"], html.dark input[type="tel"],
+html.dark input[type="date"], html.dark input[type="search"],
+html.dark select, html.dark textarea {
   background-color: #1e293b;
   color: #f1f5f9;
   border-color: #334155;
 }
 
-html.dark :not(.hetta) input::placeholder,
-html.dark :not(.hetta) textarea::placeholder {
+html.dark input::placeholder, html.dark textarea::placeholder {
   color: #64748b;
 }
 
-html.dark .hetta input,
-html.dark .hetta select,
-html.dark .hetta textarea {
+/* ══ MAKAN: force light mode always — undo ALL dark overrides ══ */
+html.dark .hetta { background: var(--h-bg); color: var(--h-text); }
+html.dark .hetta .bg-white { background-color: #ffffff !important; }
+html.dark .hetta .bg-navy-50 { background-color: var(--h-bg) !important; }
+html.dark .hetta .border-navy-100 { border-color: var(--h-border) !important; }
+html.dark .hetta .text-navy-800 { color: var(--h-text) !important; }
+html.dark .hetta .text-navy-700 { color: var(--h-text) !important; }
+html.dark .hetta .text-navy-600 { color: var(--h-muted) !important; }
+html.dark .hetta .text-navy-500 { color: var(--h-muted) !important; }
+html.dark .hetta .text-navy-400 { color: var(--h-subtle) !important; }
+html.dark .hetta .text-white { color: #ffffff !important; }
+html.dark .hetta p, html.dark .hetta span, html.dark .hetta a,
+html.dark .hetta li, html.dark .hetta label, html.dark .hetta td,
+html.dark .hetta th { color: inherit; }
+html.dark .hetta input, html.dark .hetta select, html.dark .hetta textarea {
   background-color: #ffffff !important;
   color: #1a1a1a !important;
   border-color: #e8e5e1 !important;
 }
-
-html.dark .hetta input::placeholder,
-html.dark .hetta textarea::placeholder {
+html.dark .hetta input::placeholder, html.dark .hetta textarea::placeholder {
   color: #a3a3a3 !important;
 }
 
