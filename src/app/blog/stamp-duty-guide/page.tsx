@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,12 +12,14 @@ export const metadata: Metadata = {
 export default function StampDutyArticle() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16"><div className="container-max px-4"><div className="max-w-3xl">
-        <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Stamp Duty UK — Complete Guide to Current Rates</h1>
-        <p className="text-navy-200">Everything you need to know about Stamp Duty Land Tax in England and Northern Ireland.</p>
-      </div></div></section>
-
+      <BlogArticleHero
+        title="Stamp Duty UK — Complete Guide to Current Rates"
+        excerpt="Current SDLT rates from April 2025, first-time buyer relief, additional property surcharge (+5%)."
+        category="Finance"
+        date="June 2026"
+        readTime="5 min"
+        image="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1400&q=80"
+      />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
         <p className="text-lg">Stamp Duty Land Tax (SDLT) is a tax you pay when you buy residential property in England or Northern Ireland above certain price thresholds. Scotland has Land and Buildings Transaction Tax (LBTT), and Wales has Land Transaction Tax (LTT) — different rates apply in those countries.</p>
 
@@ -65,4 +68,5 @@ export default function StampDutyArticle() {
     </>
   );
 }
+
 

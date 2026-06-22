@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,12 +12,14 @@ export const metadata: Metadata = {
 export default function FTBArticle() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16"><div className="container-max px-4"><div className="max-w-3xl">
-        <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>First-Time Buyer Guide — Step by Step to Your First Home</h1>
-        <p className="text-navy-200">Everything you need to know about buying your first property in England or Wales.</p>
-      </div></div></section>
-
+      <BlogArticleHero
+        title="First-Time Buyer Guide — Step by Step"
+        excerpt="From saving a deposit and getting an AIP to completing your purchase. LISA, stamp duty relief, and what to expect."
+        category="Buying"
+        date="June 2026"
+        readTime="6 min"
+        image="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=80"
+      />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
         <p className="text-lg">Buying your first home is one of the biggest financial decisions you will make. This guide walks you through the entire process — from saving a deposit to collecting your keys.</p>
 
@@ -70,4 +73,5 @@ export default function FTBArticle() {
     </>
   );
 }
+
 

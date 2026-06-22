@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,17 +12,14 @@ export const metadata: Metadata = {
 export default function BiggestLieArticle() {
   return (
     <>
-      <section className="gradient-navy py-16 md:py-24">
-        <div className="container-max px-4">
-          <div className="max-w-3xl">
-            <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-            <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-4">Opinion</span>
-            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-[1.1]" style={{ fontFamily: "var(--font-family-heading)" }}>The Biggest Financial Lie in Britain Is Unravelling</h1>
-            <p className="text-navy-200 text-lg">By <strong className="text-white">Nass</strong> · PropertyVault UK</p>
-          </div>
-        </div>
-      </section>
-
+      <BlogArticleHero
+        title="The Biggest Financial Lie in Britain Is Unravelling"
+        excerpt="For 40 years, Britain believed property prices would always rise. That assumption is now failing."
+        category="Opinion"
+        date="June 2026"
+        readTime="12 min"
+        image="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1400&q=80"
+      />
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl">
           <div className="prose prose-lg max-w-none text-navy-700 leading-relaxed space-y-6">
@@ -255,4 +253,5 @@ export default function BiggestLieArticle() {
     </>
   );
 }
+
 

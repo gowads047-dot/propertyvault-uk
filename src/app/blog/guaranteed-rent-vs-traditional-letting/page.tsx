@@ -1,3 +1,4 @@
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -18,22 +19,14 @@ const faqs = [
 export default function GuaranteedRentComparison() {
   return (
     <>
-      <section className="bg-white py-12 md:py-16">
-        <div className="container-max px-4">
-          <div className="max-w-2xl">
-            <Link href="/blog" className="text-sm font-semibold text-navy-400 hover:text-navy-600 mb-4 inline-block">&larr; All articles</Link>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 bg-navy-50 text-navy-600 text-xs font-bold rounded-full">Comparison</span>
-              <span className="text-xs text-navy-400">By Nass · June 2026 · 6 min read</span>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4 leading-tight" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent vs Traditional Letting</h1>
-            <p className="text-lg text-navy-500">Side-by-side comparison for UK landlords. Which puts more money in your pocket — and which lets you sleep at night?</p>
-          </div>
-        </div>
-      </section>
-
-      <div className="border-t border-navy-100" />
-
+      <BlogArticleHero
+        title="Guaranteed Rent vs Traditional Letting — Full Comparison"
+        excerpt="Side-by-side comparison of guaranteed rent vs traditional letting. Real income numbers and risk analysis."
+        category="Comparison"
+        date="June 2026"
+        readTime="6 min"
+        image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&q=80"
+      />
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl">
           {/* Comparison Table */}
@@ -134,3 +127,4 @@ export default function GuaranteedRentComparison() {
     </>
   );
 }
+

@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,14 +12,14 @@ export const metadata: Metadata = {
 export default function Section24Article() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16">
-        <div className="container-max px-4"><div className="max-w-3xl">
-          <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Section 24 Explained — How It Affects Your Tax Bill</h1>
-          <p className="text-navy-200">Understanding the mortgage interest restriction and what it means for UK landlords.</p>
-        </div></div>
-      </section>
-
+      <BlogArticleHero
+        title="Section 24 Explained — How It Affects Your Tax Bill"
+        excerpt="Understanding the mortgage interest restriction and how it impacts different tax bands."
+        category="Tax"
+        date="June 2026"
+        readTime="6 min"
+        image="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1400&q=80"
+      />
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
           <p className="text-lg"><strong>Section 24 of the Finance (No. 2) Act 2015</strong> changed how individual landlords are taxed on their rental income. Since April 2020, landlords can no longer deduct mortgage interest as an expense from their rental income. Instead, they receive a basic rate (20%) tax credit on their mortgage interest costs.</p>
@@ -92,4 +93,5 @@ export default function Section24Article() {
     </>
   );
 }
+
 

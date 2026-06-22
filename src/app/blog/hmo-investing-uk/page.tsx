@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,12 +12,14 @@ export const metadata: Metadata = {
 export default function HMOArticle() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16"><div className="container-max px-4"><div className="max-w-3xl">
-        <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>HMO Investing UK — Is It Still Profitable?</h1>
-        <p className="text-navy-200">A complete guide to Houses in Multiple Occupation — licensing, yields, regulations, and whether it still makes financial sense.</p>
-      </div></div></section>
-
+      <BlogArticleHero
+        title="HMO Investing UK — Is It Still Profitable?"
+        excerpt="HMO licensing, minimum room sizes, fire safety requirements, yield comparison with single-lets."
+        category="Investing"
+        date="June 2026"
+        readTime="7 min"
+        image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&q=80"
+      />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
         <p className="text-lg">A House in Multiple Occupation (HMO) is a property rented to <strong>3 or more people from 2 or more separate households</strong> who share facilities such as a kitchen or bathroom. HMOs typically generate significantly higher rental yields than single-let properties because you charge rent per room rather than per property.</p>
 
@@ -82,4 +85,5 @@ export default function HMOArticle() {
     </>
   );
 }
+
 

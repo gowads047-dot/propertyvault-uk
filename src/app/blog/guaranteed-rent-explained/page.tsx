@@ -1,4 +1,5 @@
-﻿import Link from "next/link";
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
@@ -11,16 +12,14 @@ export const metadata: Metadata = {
 export default function GuaranteedRentArticle() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16">
-        <div className="container-max px-4">
-          <div className="max-w-3xl">
-            <Link href="/blog" className="text-gold-400 text-sm font-medium hover:text-gold-300 mb-3 inline-block">← Back to Blog</Link>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent Explained — Is It Worth It for Landlords?</h1>
-            <p className="text-navy-200">Everything you need to know about guaranteed rent schemes, how they work, and whether they make financial sense.</p>
-          </div>
-        </div>
-      </section>
-
+      <BlogArticleHero
+        title="Guaranteed Rent Explained — Is It Worth It for Landlords?"
+        excerpt="How guaranteed rent works, the real income comparison, pros and cons, and who it's best for."
+        category="Landlords"
+        date="June 2026"
+        readTime="7 min"
+        image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80"
+      />
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
           <p className="text-lg">Guaranteed rent is a scheme where a property company leases your property from you for an agreed period — typically 3 to 5 years — and pays you a fixed monthly rent regardless of whether the property is occupied or not. The company handles all tenant management, maintenance, and compliance.</p>
@@ -128,4 +127,5 @@ export default function GuaranteedRentArticle() {
     </>
   );
 }
+
 

@@ -1,3 +1,4 @@
+﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -11,22 +12,14 @@ export const metadata: Metadata = {
 export default function PropertyMarket2026() {
   return (
     <>
-      <section className="bg-white py-12 md:py-16">
-        <div className="container-max px-4">
-          <div className="max-w-2xl">
-            <Link href="/blog" className="text-sm font-semibold text-navy-400 hover:text-navy-600 mb-4 inline-block">&larr; All articles</Link>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="px-3 py-1 bg-navy-50 text-navy-600 text-xs font-bold rounded-full">Market</span>
-              <span className="text-xs text-navy-400">By Nass · June 2026 · 8 min read</span>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4 leading-tight" style={{ fontFamily: "var(--font-family-heading)" }}>UK Property Market 2026 — What Investors Need to Know</h1>
-            <p className="text-lg text-navy-500">The market has shifted. Here&apos;s what the numbers actually say — and what it means for your next deal.</p>
-          </div>
-        </div>
-      </section>
-
-      <div className="border-t border-navy-100" />
-
+      <BlogArticleHero
+        title="UK Property Market 2026 — What Investors Need to Know"
+        excerpt="The market has shifted. Here's what the numbers actually say — and what it means for your next deal."
+        category="Market"
+        date="June 2026"
+        readTime="8 min"
+        image="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80"
+      />
       <article className="section-padding bg-white">
         <div className="container-max max-w-2xl prose prose-navy">
           <h2>The headline numbers</h2>
@@ -108,3 +101,4 @@ export default function PropertyMarket2026() {
     </>
   );
 }
+

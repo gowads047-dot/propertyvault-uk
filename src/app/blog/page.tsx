@@ -5,7 +5,6 @@ import { BlogList } from "@/components/blog/BlogList";
 export const metadata: Metadata = {
   title: "Property Blog — Expert UK Property Investment Insights | PropertyVault UK",
   description: "Expert property investment articles. BRRR strategy, guaranteed rent, Section 24, HMO investing, stamp duty, first-time buyer guides, and EPC deadline explained.",
-  keywords: "property blog UK, property investment articles, BRRR guide, guaranteed rent explained, Section 24 explained, HMO investing",
 };
 
 const articles = [
@@ -17,6 +16,7 @@ const articles = [
     readTime: "8 min",
     date: "June 2026",
     featured: true,
+    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80",
   },
   {
     title: "The Biggest Financial Lie in Britain Is Unravelling",
@@ -25,6 +25,7 @@ const articles = [
     category: "Opinion",
     readTime: "12 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
   },
   {
     title: "What Is the BRRR Strategy? A Complete UK Guide",
@@ -33,14 +34,16 @@ const articles = [
     category: "Investing",
     readTime: "8 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
   },
   {
     title: "Guaranteed Rent Explained — Is It Worth It for Landlords?",
-    excerpt: "How guaranteed rent works, the real income comparison (you may actually earn more), pros and cons, and who it's best for.",
+    excerpt: "How guaranteed rent works, the real income comparison, pros and cons, and who it's best for.",
     href: "/blog/guaranteed-rent-explained",
     category: "Landlords",
     readTime: "7 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
   },
   {
     title: "Section 24 Explained — How It Affects Your Tax Bill",
@@ -49,6 +52,7 @@ const articles = [
     category: "Tax",
     readTime: "6 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
   },
   {
     title: "HMO Investing UK — Is It Still Profitable?",
@@ -57,6 +61,7 @@ const articles = [
     category: "Investing",
     readTime: "7 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
   },
   {
     title: "Stamp Duty UK — Complete Guide to Current Rates",
@@ -65,6 +70,7 @@ const articles = [
     category: "Finance",
     readTime: "5 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
   },
   {
     title: "First-Time Buyer Guide — Step by Step",
@@ -73,6 +79,7 @@ const articles = [
     category: "Buying",
     readTime: "6 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
   },
   {
     title: "Personal vs Limited Company — Which Is Better for BTL?",
@@ -81,6 +88,7 @@ const articles = [
     category: "Tax",
     readTime: "7 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
   },
   {
     title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
@@ -89,6 +97,7 @@ const articles = [
     category: "Comparison",
     readTime: "6 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
   },
   {
     title: "EPC C Deadline — What Landlords Need to Know",
@@ -97,26 +106,33 @@ const articles = [
     category: "Landlords",
     readTime: "6 min",
     date: "June 2026",
+    image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=800&q=80",
   },
 ];
 
 export default function BlogPage() {
   return (
     <>
-      <section className="bg-white py-16 md:py-24">
-        <div className="container-max px-4">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Blog</p>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Insights</h1>
-            <p className="text-navy-500">Expert articles on UK property investing, tax, mortgages, and landlord compliance. Every article is fact-checked and links to our free calculators and tools.</p>
-          </div>
+      {/* Dark editorial hero */}
+      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "72px 0 64px" }}>
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+        <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
+          <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
+            {articles.length} articles · Updated June 2026
+          </p>
+          <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
+            Property<br />
+            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Insights.</em>
+          </h1>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", maxWidth: 480, lineHeight: 1.65 }}>
+            Expert articles on UK property investing, tax, mortgages, and landlord compliance. Every article links to our free calculators and tools.
+          </p>
         </div>
       </section>
 
-      <div className="border-t border-navy-100" />
-
-      <section className="section-padding bg-white">
-        <div className="container-max max-w-4xl">
+      {/* Blog grid */}
+      <section style={{ background: "#f8f9fc", padding: "48px 0 80px" }}>
+        <div className="container-max px-4" style={{ maxWidth: 1100 }}>
           <BlogList articles={articles} />
         </div>
       </section>
