@@ -195,7 +195,7 @@ export function GRQuoteWidget() {
 
             {/* CTAs */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer"
+              <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer"
                 style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "13px", background: "#0f1b36", color: "white", borderRadius: 12, fontWeight: 800, fontSize: 14, textDecoration: "none" }}>
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="white"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
                 Book a Free 15-Min Call →

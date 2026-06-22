@@ -48,7 +48,7 @@ export default function GuaranteedRentPage() {
               Even if the property sits empty — you still get paid.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-400 text-navy-900 font-bold rounded-xl hover:bg-gold-300 transition-all shadow-lg text-lg">
+              <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-400 text-navy-900 font-bold rounded-xl hover:bg-gold-300 transition-all shadow-lg text-lg">
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
                 Book a Free 15-Min Call
               </a>
@@ -252,7 +252,7 @@ export default function GuaranteedRentPage() {
 
           {/* Dual contact CTA */}
           <div className="grid sm:grid-cols-2 gap-3 mb-6">
-            <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer"
+            <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer"
               className="flex flex-col items-center gap-2 px-6 py-5 bg-navy-800 text-white font-bold rounded-2xl hover:bg-navy-700 transition-all shadow-xl hover:-translate-y-1 text-center group">
               <svg className="w-7 h-7 text-gold-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
               <span className="text-base">Book a Free 15-Min Call</span>
@@ -307,7 +307,7 @@ export default function GuaranteedRentPage() {
               Book My Free Valuation →
             </button>
             <div className="grid grid-cols-2 gap-3 mt-3">
-              <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer"
+              <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 py-4 bg-navy-800 text-white font-bold rounded-xl hover:bg-navy-700 transition-all text-sm">
                 <svg className="w-5 h-5 text-gold-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
                 Book a Call
@@ -329,7 +329,7 @@ export default function GuaranteedRentPage() {
           <p className="text-gold-400 font-bold text-sm mb-2">Don&apos;t let another month of rent slip away</p>
           <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Every month without guaranteed rent is money you&apos;re losing.</h2>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-400 text-navy-900 font-bold rounded-xl hover:bg-gold-300 transition-all shadow-lg">
+            <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gold-400 text-navy-900 font-bold rounded-xl hover:bg-gold-300 transition-all shadow-lg">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
               Book a Free Call
             </a>
