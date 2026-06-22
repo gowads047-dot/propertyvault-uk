@@ -86,21 +86,21 @@ export default function MakanPage() {
   return (
     <>
       {/* Hero */}
-      <section style={{ background: "var(--h-surface)" }} className="py-12 md:py-20">
+      <section style={{ background: "var(--h-surface)" }} className="pt-10 pb-6 md:pt-14 md:pb-8">
         <div className="h-container text-center">
-          <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+          <div className="flex items-center justify-center gap-2 mb-3 flex-wrap">
             {countries.slice(0, 5).map(c => <span key={c.code} className="text-lg">{c.flag}</span>)}
             <span className="text-sm font-medium" style={{ color: "var(--h-subtle)" }}>+{countries.length - 5} more</span>
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 tracking-tight" style={{ color: "var(--h-text)", lineHeight: 1.05 }}>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-3 tracking-tight" style={{ color: "var(--h-text)", lineHeight: 1.05 }}>
             {t("hero.title")}
           </h1>
-          <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "var(--h-muted)" }}>
+          <p className="text-lg mb-6 max-w-xl mx-auto" style={{ color: "var(--h-muted)" }}>
             {t("hero.subtitle")}
           </p>
 
           {/* Diaspora Mode */}
-          <div className="max-w-xl mx-auto mb-8">
+          <div className="max-w-xl mx-auto mb-4">
             <div className="flex items-center justify-center gap-2 flex-wrap py-3 px-5 rounded-xl" style={{ background: "var(--h-warm)" }}>
               <span className="text-sm" style={{ color: "var(--h-muted)" }}>I&apos;m in</span>
               <select
