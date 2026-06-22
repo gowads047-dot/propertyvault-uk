@@ -114,6 +114,30 @@ export function StampDutyCalculator() {
           <p className="text-navy-300 text-sm">Effective rate: {results.effectiveRate.toFixed(2)}%</p>
         </div>
 
+        {/* Visual band bar */}
+        {results.totalTax > 0 && (
+          <div className="bg-white rounded-xl border border-navy-100 p-6 mb-4">
+            <h4 className="font-bold text-navy-800 mb-3 text-sm">Tax by band</h4>
+            <div className="space-y-2">
+              {results.bands.filter(b => b.tax > 0).map((band, i) => {
+                const colors = ["#0f1b36", "#c9a84c", "#6b7280", "#3b82f6", "#ef4444"];
+                const maxTax = Math.max(...results.bands.map(b => b.tax));
+                return (
+                  <div key={i}>
+                    <div className="flex justify-between text-xs text-navy-500 mb-1">
+                      <span>{(band.rate * 100).toFixed(0)}% on {fmt(band.from)}–{fmt(band.to)}</span>
+                      <span className="font-semibold text-navy-800">{fmt(band.tax)}</span>
+                    </div>
+                    <div className="h-5 bg-navy-50 rounded-full overflow-hidden">
+                      <div className="h-full rounded-full transition-all duration-500" style={{ width: `${maxTax > 0 ? (band.tax / maxTax * 100) : 0}%`, backgroundColor: colors[i % colors.length] }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <div className="bg-white rounded-xl border border-navy-100 p-6">
           <h4 className="font-bold text-navy-800 mb-4">Tax Band Breakdown</h4>
           <div className="space-y-3">

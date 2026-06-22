@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { BlogList } from "@/components/blog/BlogList";
 
 export const metadata: Metadata = {
   title: "Property Blog — Expert UK Property Investment Insights | PropertyVault UK",
@@ -116,24 +117,7 @@ export default function BlogPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-4xl">
-          <div className="space-y-5">
-            {articles.map((post) => (
-              <Link key={post.href} href={post.href}
-                className={`group block rounded-2xl p-6 card-hover ${(post as any).featured ? "bg-gradient-to-br from-navy-800 to-navy-900 text-white border-2 border-gold-400/30" : "bg-white border border-navy-100/80"}`}>
-                <div className="flex items-center gap-3 mb-3">
-                  {(post as any).featured && <span className="px-3 py-1 bg-gold-400 text-navy-900 text-xs font-bold rounded-full">Featured</span>}
-                  <span className={`px-3 py-1 text-xs font-bold rounded-full ${(post as any).featured ? "bg-white/20 text-white" : "bg-navy-50 text-navy-600"}`}>{post.category}</span>
-                  <span className={`text-xs ${(post as any).featured ? "text-navy-300" : "text-navy-400"}`}>{post.readTime} read</span>
-                  <span className={`text-xs ${(post as any).featured ? "text-navy-300" : "text-navy-400"}`}>By Nass · {post.date}</span>
-                </div>
-                <h2 className={`text-lg font-bold mb-2 transition-colors ${(post as any).featured ? "text-white group-hover:text-gold-400 text-xl md:text-2xl" : "text-navy-800 group-hover:text-gold-600"}`} style={(post as any).featured ? { fontFamily: "var(--font-family-heading)" } : undefined}>{post.title}</h2>
-                <p className={`text-sm leading-relaxed ${(post as any).featured ? "text-navy-200" : "text-navy-500"}`}>{post.excerpt}</p>
-                <span className={`inline-flex items-center gap-1 mt-3 text-sm font-semibold ${(post as any).featured ? "text-gold-400" : "text-gold-600"}`}>
-                  Read article <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
-                </span>
-              </Link>
-            ))}
-          </div>
+          <BlogList articles={articles} />
         </div>
       </section>
     </>

@@ -149,6 +149,36 @@ export function MortgageCalculator() {
           </div>
         </div>
 
+        {/* Donut Chart */}
+        <div className="bg-white rounded-xl border border-navy-100 p-6 mb-4">
+          <h4 className="font-bold text-navy-800 mb-4 text-sm">Total cost split</h4>
+          <div className="flex items-center gap-6">
+            <svg viewBox="0 0 36 36" className="w-24 h-24 flex-shrink-0">
+              {(() => {
+                const total = results.depositAmount + results.loanAmount + results.totalInterest;
+                const depPct = total > 0 ? (results.depositAmount / total) * 100 : 0;
+                const loanPct = total > 0 ? (results.loanAmount / total) * 100 : 0;
+                const intPct = total > 0 ? (results.totalInterest / total) * 100 : 0;
+                const depDash = depPct * 0.754;
+                const loanDash = loanPct * 0.754;
+                const intDash = intPct * 0.754;
+                return (
+                  <>
+                    <circle cx="18" cy="18" r="12" fill="none" stroke="#E8D5B7" strokeWidth="5" strokeDasharray={`${depDash} ${75.4 - depDash}`} strokeDashoffset="18.85" />
+                    <circle cx="18" cy="18" r="12" fill="none" stroke="#0f1b36" strokeWidth="5" strokeDasharray={`${loanDash} ${75.4 - loanDash}`} strokeDashoffset={`${18.85 - depDash}`} />
+                    <circle cx="18" cy="18" r="12" fill="none" stroke="#ef4444" strokeWidth="5" strokeDasharray={`${intDash} ${75.4 - intDash}`} strokeDashoffset={`${18.85 - depDash - loanDash}`} />
+                  </>
+                );
+              })()}
+            </svg>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#E8D5B7]" /><span className="text-navy-500">Deposit</span><span className="font-semibold text-navy-800 ml-auto">{fmt(results.depositAmount)}</span></div>
+              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-[#0f1b36]" /><span className="text-navy-500">Capital</span><span className="font-semibold text-navy-800 ml-auto">{fmt(results.loanAmount)}</span></div>
+              <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-red-400" /><span className="text-navy-500">Interest</span><span className="font-semibold text-navy-800 ml-auto">{fmt(results.totalInterest)}</span></div>
+            </div>
+          </div>
+        </div>
+
         {/* Visual Breakdown */}
         <div className="bg-white rounded-xl border border-navy-100 p-6">
           <h4 className="font-bold text-navy-800 mb-4">Payment Breakdown</h4>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
   title: "PropertyVault UK — 17 Free Property Calculators, 40+ Templates, Zero Sign-Up",
@@ -39,6 +40,7 @@ export default function Home() {
       {/* Guaranteed Rent — Featured */}
       <section className="bg-navy-50 py-16 md:py-20">
         <div className="container-max px-4">
+          <FadeIn>
           <div className="bg-white rounded-3xl p-8 md:p-12 border border-navy-100 shadow-sm">
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div>
@@ -67,14 +69,17 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* Tools — Clean grid, no emojis */}
       <section className="bg-white section-padding">
         <div className="container-max px-4">
+          <FadeIn>
           <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-2 text-center">Free tools</p>
           <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800 text-center mb-12" style={{ fontFamily: "var(--font-family-heading)" }}>Everything in one place</h2>
+          </FadeIn>
 
           {/* Large feature cards */}
           <div className="grid md:grid-cols-2 gap-5 mb-5">
