@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 
 export const metadata: Metadata = {
   title: "Property Investing in Birmingham — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
@@ -144,6 +145,18 @@ export default function BirminghamPage() {
               <p className="text-xs text-navy-400 mt-1">Room-by-room analysis</p>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Sold Prices & Crime Widget */}
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl px-4">
+          <div className="text-center mb-8">
+            <p className="text-gold-600 font-bold text-xs uppercase tracking-widest mb-2">Live data</p>
+            <h2 className="text-2xl font-extrabold text-navy-900 mb-2">Look Up Sold Prices & Crime</h2>
+            <p className="text-navy-500 text-sm">Enter any Birmingham postcode to see recent sold prices from the Land Registry and crime data from West Midlands Police.</p>
+          </div>
+          <AreaSoldPricesWidget defaultPostcode="B12 8QX" />
         </div>
       </section>
 

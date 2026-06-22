@@ -29,11 +29,11 @@ interface AreaData {
 }
 interface Sale { date: string; price: number; type: string; tenure: string; address: string; newBuild: boolean; }
 
-// SDLT calculator (England, April 2025 rates)
+// SDLT calculator (England, April 2025 rates + 5% additional property surcharge from Oct 2024)
 function calcSDLT(price: number, additionalProperty: boolean): number {
   const bands = additionalProperty
-    ? [{ up: 250000, rate: 0.03 }, { up: 925000, rate: 0.08 }, { up: 1500000, rate: 0.13 }, { up: Infinity, rate: 0.15 }]
-    : [{ up: 250000, rate: 0 }, { up: 925000, rate: 0.05 }, { up: 1500000, rate: 0.10 }, { up: Infinity, rate: 0.12 }];
+    ? [{ up: 125000, rate: 0.05 }, { up: 250000, rate: 0.07 }, { up: 925000, rate: 0.10 }, { up: 1500000, rate: 0.15 }, { up: Infinity, rate: 0.17 }]
+    : [{ up: 125000, rate: 0 }, { up: 250000, rate: 0.02 }, { up: 925000, rate: 0.05 }, { up: 1500000, rate: 0.10 }, { up: Infinity, rate: 0.12 }];
   let tax = 0, prev = 0;
   for (const band of bands) {
     if (price <= prev) break;

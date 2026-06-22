@@ -112,7 +112,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
 };
 
 // Templates with full interactive forms
-const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance"]);
+const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet"]);
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
