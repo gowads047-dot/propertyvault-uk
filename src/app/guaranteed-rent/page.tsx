@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { GRQuoteWidget } from "@/components/guaranteed-rent/GRQuoteWidget";
 
 const guaranteedRentFaqs = [
   { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
@@ -220,6 +221,20 @@ export default function GuaranteedRentPage() {
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
           <FAQSchema faqs={guaranteedRentFaqs} />
+        </div>
+      </section>
+
+      {/* Instant Quote Widget */}
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <div className="text-center mb-8">
+            <p className="text-gold-600 font-bold text-xs uppercase tracking-widest mb-2">Try it now</p>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>
+              See What We&apos;d Pay You
+            </h2>
+            <p className="text-navy-500 text-sm mt-2">2 questions. Instant estimate. No sign-up needed.</p>
+          </div>
+          <GRQuoteWidget />
         </div>
       </section>
 

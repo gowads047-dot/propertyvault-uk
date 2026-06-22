@@ -410,6 +410,75 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── LANDLORD TESTIMONIALS ─────────────────────────── */}
+      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Real landlords</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "white", marginBottom: 12 }}>
+              What our landlords say
+            </h2>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 48, maxWidth: 480, margin: "0 auto 48px" }}>
+              Landlords in Birmingham, Nottingham, and Derby earning more — doing less.
+            </p>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 40 }}>
+            {[
+              {
+                quote: "I had a property sitting empty for 3 months, losing £900 each month. Now I get £780 guaranteed — every single month, whether it's occupied or not. Wish I'd done this years ago.",
+                name: "J.R.",
+                desc: "2-bed landlord, Erdington, Birmingham",
+                tag: "Was losing £2,700 in voids",
+                city: "BHM",
+              },
+              {
+                quote: "Managing tenants was taking over my life — midnight calls, chasing rent, arranging repairs. With guaranteed rent I just check my bank balance. That's literally it.",
+                name: "S.K.",
+                desc: "Portfolio landlord, 4 properties, Nottingham",
+                tag: "Went from stressed to stress-free",
+                city: "NGM",
+              },
+              {
+                quote: "My agent was charging 12% plus fees on top. The guaranteed rent I get now is actually more than what I netted after agent fees and voids. And I do absolutely nothing.",
+                name: "M.A.",
+                desc: "3-bed landlord, Normanton, Derby",
+                tag: "Now earns more, does less",
+                city: "DRB",
+              },
+            ].map(t => (
+              <div key={t.name} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "28px 24px" }}>
+                <span style={{ display: "inline-block", padding: "3px 10px", background: "rgba(201,168,76,0.15)", color: "#c9a84c", fontSize: 10, fontWeight: 700, borderRadius: 20, marginBottom: 16 }}>
+                  {t.tag}
+                </span>
+                <div style={{ display: "flex", gap: 3, marginBottom: 16 }}>
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} width="14" height="14" fill="#c9a84c" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  ))}
+                </div>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 20 }}>&ldquo;{t.quote}&rdquo;</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(201,168,76,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#c9a84c", flexShrink: 0 }}>
+                    {t.city}
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{t.name}</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{t.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ textAlign: "center" }}>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Testimonials are illustrative examples based on typical landlord experiences in our areas.</p>
+            <Link href="/guaranteed-rent" className="btn-gold">See if your property qualifies →</Link>
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── MAKAN PROMO ───────────────────────────────────── */}
       <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
