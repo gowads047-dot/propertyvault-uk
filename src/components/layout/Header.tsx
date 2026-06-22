@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 
 const mainLinks = [
   { href: "/calculators", label: "Calculators" },
@@ -80,6 +81,7 @@ export function Header() {
 
           {/* Right */}
           <div className="flex items-center gap-2.5">
+            <DarkModeToggle />
             <Link href="/guaranteed-rent" className="hidden md:inline-flex items-center gap-2 bg-navy-800 text-white font-semibold text-[13px] py-2.5 px-5 rounded-full hover:bg-navy-900 transition-colors">
               Guaranteed Rent
             </Link>

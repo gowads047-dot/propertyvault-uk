@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
     description:
-      "15 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.",
+      "17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.",
     type: "website",
     locale: "en_GB",
     siteName: "PropertyVault UK",

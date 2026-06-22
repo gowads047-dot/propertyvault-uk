@@ -32,6 +32,39 @@
   --foreground: #222222;
 }
 
+html.dark {
+  --background: #0a1224;
+  --foreground: #e4e8f0;
+}
+
+html.dark body {
+  background: #0a1224;
+  color: #e4e8f0;
+}
+
+html.dark h1, html.dark h2, html.dark h3,
+html.dark h4, html.dark h5, html.dark h6 {
+  color: #f5f7fa;
+}
+
+html.dark .bg-white { background-color: #0f1b36; }
+html.dark .bg-navy-50 { background-color: #0a1224; }
+html.dark .border-navy-100 { border-color: #1a2e5a; }
+html.dark .text-navy-800 { color: #e4e8f0; }
+html.dark .text-navy-700 { color: #c5cde0; }
+html.dark .text-navy-600 { color: #97a5c5; }
+html.dark .text-navy-500 { color: #6b7db0; }
+html.dark .text-navy-400 { color: #4a5f96; }
+
+html.dark input[type="text"], html.dark input[type="email"],
+html.dark input[type="number"], html.dark input[type="tel"],
+html.dark input[type="date"], html.dark input[type="search"],
+html.dark select, html.dark textarea {
+  background-color: #152548;
+  color: #e4e8f0;
+  border-color: #1a2e5a;
+}
+
 * { box-sizing: border-box; }
 
 html {

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
@@ -14,20 +15,55 @@ const faqs = [
   { q: "Should I use gross or net yield?", a: "Always use net yield for decision-making. Gross yield ignores all costs (mortgage, management, maintenance, voids, insurance) and dramatically overstates your actual return. A property with 8% gross yield might only deliver 3-4% net yield after all expenses." },
 ];
 
-export default function DealAnalyserPage() {
-  const [purchasePrice, setPurchasePrice] = useState(180000);
-  const [refurbCost, setRefurbCost] = useState(15000);
-  const [afterRefurbValue, setAfterRefurbValue] = useState(220000);
-  const [monthlyRent, setMonthlyRent] = useState(950);
-  const [depositPct, setDepositPct] = useState(25);
-  const [mortgageRate, setMortgageRate] = useState(5.5);
-  const [mortgageTerm, setMortgageTerm] = useState(25);
-  const [mortgageType, setMortgageType] = useState<"interest" | "repayment">("interest");
-  const [purchaseCosts, setPurchaseCosts] = useState(5000);
-  const [managementPct, setManagementPct] = useState(10);
-  const [maintenancePct, setMaintenancePct] = useState(10);
-  const [insuranceMonthly, setInsuranceMonthly] = useState(30);
-  const [voidWeeks, setVoidWeeks] = useState(2);
+function ShareButton({ params }: { params: Record<string, string | number> }) {
+  const [copied, setCopied] = useState(false);
+  const handleShare = () => {
+    const url = new URL(window.location.pathname, window.location.origin);
+    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, String(v)));
+    navigator.clipboard.writeText(url.toString()).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+  return (
+    <button onClick={handleShare} className="flex items-center gap-2 text-sm font-semibold text-navy-500 hover:text-navy-800 transition-colors">
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0-12.814a2.25 2.25 0 1 0 0-2.186m0 2.186a2.25 2.25 0 1 0 0 2.186" /></svg>
+      {copied ? "Link copied!" : "Share deal"}
+    </button>
+  );
+}
+
+export default function DealAnalyserPageWrapper() {
+  return (
+    <Suspense fallback={<div className="container-max px-4 py-20 text-center text-navy-400">Loading calculator...</div>}>
+      <DealAnalyserPage />
+    </Suspense>
+  );
+}
+
+function DealAnalyserPage() {
+  const searchParams = useSearchParams();
+
+  const getParam = (key: string, fallback: number) => {
+    const v = searchParams.get(key);
+    return v ? Number(v) : fallback;
+  };
+
+  const [purchasePrice, setPurchasePrice] = useState(() => getParam("pp", 180000));
+  const [refurbCost, setRefurbCost] = useState(() => getParam("rc", 15000));
+  const [afterRefurbValue, setAfterRefurbValue] = useState(() => getParam("arv", 220000));
+  const [monthlyRent, setMonthlyRent] = useState(() => getParam("mr", 950));
+  const [depositPct, setDepositPct] = useState(() => getParam("dp", 25));
+  const [mortgageRate, setMortgageRate] = useState(() => getParam("rate", 5.5));
+  const [mortgageTerm, setMortgageTerm] = useState(() => getParam("term", 25));
+  const [mortgageType, setMortgageType] = useState<"interest" | "repayment">(() => (searchParams.get("mt") === "repayment" ? "repayment" : "interest"));
+  const [purchaseCosts, setPurchaseCosts] = useState(() => getParam("pc", 5000));
+  const [managementPct, setManagementPct] = useState(() => getParam("mgmt", 10));
+  const [maintenancePct, setMaintenancePct] = useState(() => getParam("maint", 10));
+  const [insuranceMonthly, setInsuranceMonthly] = useState(() => getParam("ins", 30));
+  const [voidWeeks, setVoidWeeks] = useState(() => getParam("vw", 2));
+
+  const shareParams = { pp: purchasePrice, rc: refurbCost, arv: afterRefurbValue, mr: monthlyRent, dp: depositPct, rate: mortgageRate, term: mortgageTerm, mt: mortgageType, pc: purchaseCosts, mgmt: managementPct, maint: maintenancePct, ins: insuranceMonthly, vw: voidWeeks };
 
   const r = useMemo(() => {
     const annualRent = monthlyRent * 12;
@@ -109,7 +145,7 @@ export default function DealAnalyserPage() {
               </div>
             </div>
             <p className="text-navy-500">Analyse any UK property deal from 4 perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. One tool, complete picture.</p>
-            <div className="mt-3"><PrintButton /></div>
+            <div className="mt-3 flex gap-4"><PrintButton /><ShareButton params={shareParams} /></div>
           </div>
         </div>
       </section>
