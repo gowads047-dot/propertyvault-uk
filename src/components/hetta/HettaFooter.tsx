@@ -17,17 +17,17 @@ export function MakanFooter() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--h-subtle)" }}>Browse</p>
             <div className="space-y-2">
-              <Link href="/hetta" className="block text-sm" style={{ color: "var(--h-muted)" }}>All listings</Link>
-              <Link href="/hetta/rooms" className="block text-sm" style={{ color: "var(--h-muted)" }}>Rooms</Link>
-              <Link href="/hetta?type=flat" className="block text-sm" style={{ color: "var(--h-muted)" }}>Flats</Link>
-              <Link href="/hetta?type=house" className="block text-sm" style={{ color: "var(--h-muted)" }}>Houses</Link>
+              <Link href="/makan" className="block text-sm" style={{ color: "var(--h-muted)" }}>All listings</Link>
+              <Link href="/makan/rooms" className="block text-sm" style={{ color: "var(--h-muted)" }}>Rooms</Link>
+              <Link href="/makan?type=flat" className="block text-sm" style={{ color: "var(--h-muted)" }}>Flats</Link>
+              <Link href="/makan?type=house" className="block text-sm" style={{ color: "var(--h-muted)" }}>Houses</Link>
             </div>
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--h-subtle)" }}>Landlords</p>
             <div className="space-y-2">
-              <Link href="/hetta/list" className="block text-sm" style={{ color: "var(--h-muted)" }}>List for free</Link>
-              <Link href="/hetta/how-it-works" className="block text-sm" style={{ color: "var(--h-muted)" }}>How it works</Link>
+              <Link href="/makan/list" className="block text-sm" style={{ color: "var(--h-muted)" }}>List for free</Link>
+              <Link href="/makan/how-it-works" className="block text-sm" style={{ color: "var(--h-muted)" }}>How it works</Link>
               <Link href="/guaranteed-rent" className="block text-sm" style={{ color: "var(--h-muted)" }}>Guaranteed rent</Link>
             </div>
           </div>

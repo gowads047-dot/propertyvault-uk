@@ -150,7 +150,7 @@ export default function MakanPage() {
           {/* Listing Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map(l => (
-              <Link href={`/hetta/listing/${l.id}`} key={l.id} className="h-card group">
+              <Link href={`/makan/listing/${l.id}`} key={l.id} className="h-card group">
                 <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.images?.[0] ? undefined : l.property_type === "Room" ? "#e8e0d6" : l.property_type === "Flat" ? "#d6dfe8" : "#d6e8db" }}>
                   {l.images?.[0] ? (
                     <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover" />
@@ -221,7 +221,7 @@ export default function MakanPage() {
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">Got a property? List it free.</h2>
           <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Reach tenants directly. No agent fees. No commission. No catch.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/hetta/list" className="h-btn h-btn-primary text-center">List your property</Link>
+            <Link href="/makan/list" className="h-btn h-btn-primary text-center">List your property</Link>
             <Link href="/guaranteed-rent" className="h-btn h-btn-secondary !border-white/20 !text-white hover:!bg-white/10 text-center">Or get guaranteed rent</Link>
           </div>
         </div>

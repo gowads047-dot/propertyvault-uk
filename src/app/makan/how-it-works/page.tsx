@@ -105,8 +105,8 @@ export default function HowItWorksPage() {
           <h2 className="text-2xl font-bold text-white mb-3">Ready to get started?</h2>
           <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Whether you&apos;re looking for a place or listing one — Makan is free for everyone.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/hetta" className="h-btn h-btn-primary text-center">Browse listings</Link>
-            <Link href="/hetta/list" className="h-btn h-btn-secondary !border-white/20 !text-white text-center">List for free</Link>
+            <Link href="/makan" className="h-btn h-btn-primary text-center">Browse listings</Link>
+            <Link href="/makan/list" className="h-btn h-btn-secondary !border-white/20 !text-white text-center">List for free</Link>
           </div>
         </div>
       </section>

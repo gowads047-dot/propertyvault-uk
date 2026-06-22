@@ -12,17 +12,17 @@ export function MakanHeader() {
   const { t } = useLang();
 
   const nav = [
-    { href: "/hetta", label: t("nav.browse") },
-    { href: "/hetta/rooms", label: t("nav.rooms") },
-    { href: "/hetta/list", label: t("nav.list") },
-    { href: "/hetta/how-it-works", label: t("nav.how") },
+    { href: "/makan", label: t("nav.browse") },
+    { href: "/makan/rooms", label: t("nav.rooms") },
+    { href: "/makan/list", label: t("nav.list") },
+    { href: "/makan/how-it-works", label: t("nav.how") },
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[var(--h-border)]">
       <div className="h-container">
         <div className="flex items-center justify-between h-16">
-          <Link href="/hetta" className="flex items-center gap-2.5 group">
+          <Link href="/makan" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-[var(--h-accent)] flex items-center justify-center group-hover:scale-105 transition-transform">
               <svg className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="none">
                 <path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z" fill="currentColor"/>
@@ -47,7 +47,7 @@ export function MakanHeader() {
           <div className="flex items-center gap-2">
             <LangSwitcher />
             {user ? (
-              <Link href="/hetta/dashboard" className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
+              <Link href="/makan/dashboard" className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
                 <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--h-accent)", color: "white" }}>
                   {(profile?.name || "U").charAt(0).toUpperCase()}
                 </div>
@@ -55,8 +55,8 @@ export function MakanHeader() {
               </Link>
             ) : (
               <>
-                <Link href="/hetta/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg hidden sm:inline" style={{ color: "var(--h-muted)" }}>{t("nav.login")}</Link>
-                <Link href="/hetta/auth" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-4">{t("nav.signup")}</Link>
+                <Link href="/makan/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg hidden sm:inline" style={{ color: "var(--h-muted)" }}>{t("nav.login")}</Link>
+                <Link href="/makan/auth" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-4">{t("nav.signup")}</Link>
               </>
             )}
             <button onClick={() => setOpen(!open)} className="md:hidden p-2 rounded-lg" style={{ color: "var(--h-muted)" }}>
@@ -77,9 +77,9 @@ export function MakanHeader() {
               <Link key={link.href} href={link.href} className="block py-2.5 px-3 rounded-lg text-sm font-medium" style={{ color: "var(--h-text)" }} onClick={() => setOpen(false)}>{link.label}</Link>
             ))}
             {user ? (
-              <Link href="/hetta/dashboard" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.dashboard")}</Link>
+              <Link href="/makan/dashboard" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.dashboard")}</Link>
             ) : (
-              <Link href="/hetta/auth" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.signup")}</Link>
+              <Link href="/makan/auth" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.signup")}</Link>
             )}
           </div>
         </div>

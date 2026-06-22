@@ -46,7 +46,7 @@ export default function RoomsPage() {
         <div className="h-container">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {rooms.map(r => (
-              <Link href={`/hetta/listing/${r.id}`} key={r.id} className="h-card group">
+              <Link href={`/makan/listing/${r.id}`} key={r.id} className="h-card group">
                 <div className="relative aspect-[4/3] flex items-center justify-center" style={{ background: r.images?.[0] ? undefined : "#e8e0d6" }}>
                   {r.images?.[0] ? (
                     <img src={r.images[0]} alt={r.title} className="w-full h-full object-cover" />
@@ -72,14 +72,14 @@ export default function RoomsPage() {
             <div className="text-center py-16">
               <p className="text-lg font-semibold" style={{ color: "var(--h-text)" }}>No rooms listed yet</p>
               <p className="text-sm mt-1 mb-6" style={{ color: "var(--h-muted)" }}>Be the first to list a room on Makan</p>
-              <Link href="/hetta/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
+              <Link href="/makan/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
             </div>
           )}
 
           <div className="text-center mt-10 py-10 rounded-2xl" style={{ background: "var(--h-warm)" }}>
             <h2 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Got a room to let?</h2>
             <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>List it free on Makan and find your next housemate.</p>
-            <Link href="/hetta/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
+            <Link href="/makan/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
           </div>
         </div>
       </section>

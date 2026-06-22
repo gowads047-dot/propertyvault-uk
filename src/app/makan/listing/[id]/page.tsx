@@ -88,7 +88,7 @@ export default function ListingPage() {
       <div className="py-20 text-center h-container">
         <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Listing not found</h1>
         <p style={{ color: "var(--h-muted)" }}>This listing may have been removed or the URL is incorrect.</p>
-        <Link href="/hetta" className="h-btn h-btn-primary mt-6 inline-flex">Browse all listings</Link>
+        <Link href="/makan" className="h-btn h-btn-primary mt-6 inline-flex">Browse all listings</Link>
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function ListingPage() {
   return (
     <div className="py-8" style={{ background: "var(--h-bg)" }}>
       <div className="h-container max-w-4xl">
-        <Link href="/hetta" className="inline-flex items-center gap-1 text-sm font-medium mb-6" style={{ color: "var(--h-muted)" }}>
+        <Link href="/makan" className="inline-flex items-center gap-1 text-sm font-medium mb-6" style={{ color: "var(--h-muted)" }}>
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
           Back to listings
         </Link>
@@ -239,7 +239,7 @@ export default function ListingPage() {
               ) : (
                 <div className="text-center">
                   <p className="text-xs mb-3" style={{ color: "var(--h-subtle)" }}>Log in to send an enquiry or save this listing</p>
-                  <Link href="/hetta/auth" className="h-btn h-btn-secondary w-full justify-center text-sm">Log in / Sign up</Link>
+                  <Link href="/makan/auth" className="h-btn h-btn-secondary w-full justify-center text-sm">Log in / Sign up</Link>
                 </div>
               )}
 

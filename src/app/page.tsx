@@ -77,7 +77,7 @@ export default function Home() {
       <section className="bg-white section-padding">
         <div className="container-max px-4">
           <FadeIn>
-          <Link href="/hetta" className="group block rounded-3xl p-8 md:p-12 border-2 border-navy-100 hover:border-[#e8553d]/30 transition-all" style={{ background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)" }}>
+          <Link href="/makan" className="group block rounded-3xl p-8 md:p-12 border-2 border-navy-100 hover:border-[#e8553d]/30 transition-all" style={{ background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)" }}>
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div>
                 <div className="flex items-center gap-3 mb-4">

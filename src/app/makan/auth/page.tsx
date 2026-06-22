@@ -26,7 +26,7 @@ export default function AuthPage() {
     if (mode === "login") {
       const { error } = await signIn(email, password);
       if (error) setError(error);
-      else router.push("/hetta/dashboard");
+      else router.push("/makan/dashboard");
     } else {
       if (password.length < 6) { setError("Password must be at least 6 characters"); setLoading(false); return; }
       const { error } = await signUp(email, password, name, role);

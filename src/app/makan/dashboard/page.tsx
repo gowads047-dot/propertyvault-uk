@@ -37,7 +37,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/hetta/auth"); return; }
+    if (!user) { router.push("/makan/auth"); return; }
     fetchData();
   }, [user, authLoading]);
 
@@ -83,7 +83,7 @@ export default function DashboardPage() {
             <p className="text-sm" style={{ color: "var(--h-muted)" }}>Welcome back, {profile?.name}</p>
           </div>
           <div className="flex gap-3">
-            <Link href="/hetta/list" className="h-btn h-btn-primary text-sm !py-2">New listing</Link>
+            <Link href="/makan/list" className="h-btn h-btn-primary text-sm !py-2">New listing</Link>
             <button onClick={signOut} className="h-btn h-btn-secondary text-sm !py-2">Sign out</button>
           </div>
         </div>
@@ -110,7 +110,7 @@ export default function DashboardPage() {
           {listings.length === 0 ? (
             <div className="h-card !rounded-xl p-8 text-center">
               <p className="mb-3" style={{ color: "var(--h-muted)" }}>You haven&apos;t listed any properties yet.</p>
-              <Link href="/hetta/list" className="h-btn h-btn-primary inline-flex text-sm">Create your first listing</Link>
+              <Link href="/makan/list" className="h-btn h-btn-primary inline-flex text-sm">Create your first listing</Link>
             </div>
           ) : (
             <div className="space-y-3">
@@ -165,7 +165,7 @@ export default function DashboardPage() {
             <h2 className="font-bold mb-4" style={{ color: "var(--h-text)" }}>Saved listings</h2>
             <div className="grid sm:grid-cols-2 gap-3">
               {favourites.map((f: any) => (
-                <Link key={f.id} href={`/hetta/listing/${f.listing?.id}`} className="h-card !rounded-xl p-4">
+                <Link key={f.id} href={`/makan/listing/${f.listing?.id}`} className="h-card !rounded-xl p-4">
                   <p className="font-semibold text-sm" style={{ color: "var(--h-text)" }}>{f.listing?.title}</p>
                   <p className="text-xs" style={{ color: "var(--h-muted)" }}>{f.listing?.area}, {f.listing?.city} · £{f.listing?.price}/mo</p>
                 </Link>

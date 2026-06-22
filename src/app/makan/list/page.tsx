@@ -45,7 +45,7 @@ export default function ListPropertyPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) { router.push("/hetta/auth"); return; }
+    if (!user) { router.push("/makan/auth"); return; }
 
     if (images.length < 3) { setError("Please upload at least 3 photos. Quality photos are required for your listing to be approved."); return; }
     if (!form.property_type) { setError("Please select a property type."); return; }
@@ -100,7 +100,7 @@ export default function ListPropertyPage() {
       setError(insertErr.message);
       setSubmitting(false);
     } else {
-      router.push("/hetta/dashboard");
+      router.push("/makan/dashboard");
     }
   };
 
@@ -115,7 +115,7 @@ export default function ListPropertyPage() {
           </div>
           <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--h-text)" }}>{t("list.signinRequired")}</h1>
           <p className="mb-6" style={{ color: "var(--h-muted)" }}>Create a free account to list your property. Takes 30 seconds.</p>
-          <Link href="/hetta/auth" className="h-btn h-btn-primary inline-flex">{t("nav.signup")}</Link>
+          <Link href="/makan/auth" className="h-btn h-btn-primary inline-flex">{t("nav.signup")}</Link>
         </div>
       </div>
     );
