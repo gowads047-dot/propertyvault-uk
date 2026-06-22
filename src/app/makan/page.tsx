@@ -30,7 +30,26 @@ interface Listing {
   featured?: boolean;
   listing_type?: string;
   country?: string;
+  size_sqm?: number;
+  video_url?: string;
+  highlights?: string[];
 }
+
+const CARD_FEATURE_ICONS: Record<string, string> = {
+  "Parking": "🅿️", "Garage": "🏗️",
+  "Pool": "🏊", "Swimming pool": "🏊",
+  "Gym": "🏋️",
+  "Garden": "🌿", "Private garden": "🌿",
+  "Balcony": "🌤️", "Terrace": "☀️",
+  "Sea view": "🌊", "Marina view": "⛵", "City view": "🌆",
+  "Furnished": "🛋️", "Part furnished": "🪑",
+  "Air conditioning": "❄️", "Chiller free": "❄️",
+  "En-suite": "🚿", "Bills included": "💡",
+  "Pets OK": "🐾", "Pet friendly": "🐾",
+  "Concierge": "🎩", "Security": "🔐",
+  "Near transport": "🚇", "Near metro": "🚇",
+  "Private beach": "🏖️", "Beach access": "🏖️",
+};
 
 const typeFilters = ["All", ...propertyTypes];
 
@@ -213,49 +232,73 @@ export default function MakanPage() {
           {/* Listing Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map(l => (
-              <Link href={`/makan/listing/${l.id}`} key={l.id} className="h-card group">
+              <Link href={`/makan/listing/${l.id}`} key={l.id} className="h-card group overflow-hidden">
+                {/* Photo */}
                 <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.images?.[0] ? undefined : l.property_type === "Room" ? "#f0e6da" : l.property_type === "Flat" ? "#dae3f0" : l.property_type === "House" ? "#daf0de" : l.property_type === "Villa" ? "#f0dae8" : "#e8e5e1" }}>
                   {l.images?.[0] ? (
-                    <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover" />
+                    <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
                       <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.7)" }}>
                         <svg className="w-8 h-8" style={{ color: "var(--h-accent)" }} viewBox="0 0 24 24" fill="currentColor">
-                          {l.property_type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
-                          {l.property_type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
                           {(l.property_type === "House" || l.property_type === "Villa") && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
-                          {(l.property_type === "Studio" || l.property_type === "Apartment") && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
-                          {(l.property_type === "Penthouse" || l.property_type === "Land" || l.property_type === "Commercial") && <path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>}
+                          {(l.property_type !== "House" && l.property_type !== "Villa") && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
                         </svg>
                       </div>
                       <span className="text-xs font-semibold" style={{ color: "var(--h-muted)" }}>{l.property_type}</span>
                     </div>
                   )}
-                  {l.featured && <div className="absolute top-3 left-3"><span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>Featured</span></div>}
-                  <div className="absolute top-3 right-3"><span className="h-badge" style={{ background: "var(--h-surface)", color: "var(--h-text)" }}>{l.property_type}</span></div>
-                  {isAvailableNow(l.available_from) && <div className="absolute bottom-3 left-3"><span className="h-badge" style={{ background: "var(--h-green)", color: "white" }}>Available now</span></div>}
+
+                  {/* Top left badges */}
+                  <div className="absolute top-3 left-3 flex gap-1.5 flex-wrap">
+                    {l.featured && <span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>Featured</span>}
+                    {l.listing_type === "sale" && <span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>For Sale</span>}
+                    {l.video_url && <span className="h-badge text-white" style={{ background: "rgba(0,0,0,0.65)" }}>🎬</span>}
+                  </div>
+
+                  {/* Top right: type */}
+                  <div className="absolute top-3 right-3">
+                    <span className="h-badge" style={{ background: "var(--h-surface)", color: "var(--h-text)" }}>{l.property_type}</span>
+                  </div>
+
+                  {/* Bottom left: available */}
+                  {isAvailableNow(l.available_from) && l.listing_type !== "sale" && (
+                    <div className="absolute bottom-3 left-3">
+                      <span className="h-badge" style={{ background: "var(--h-green)", color: "white" }}>Available now</span>
+                    </div>
+                  )}
+
+                  {/* Bottom right: size if known */}
+                  {l.size_sqm && (
+                    <div className="absolute bottom-3 right-3">
+                      <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full" style={{ background: "rgba(0,0,0,0.55)", color: "white" }}>{l.size_sqm} m²</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Card body */}
                 <div className="p-4">
-                  <h3 className="font-semibold text-sm leading-snug mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>{l.title}</h3>
-                  <p className="text-xs mb-2" style={{ color: "var(--h-muted)" }}>{l.area}, {l.city}</p>
+                  <h3 className="font-semibold text-sm leading-snug mb-1 group-hover:text-[var(--h-accent)] transition-colors line-clamp-2" style={{ color: "var(--h-text)" }}>{l.title}</h3>
+                  <p className="text-xs mb-2.5 flex items-center gap-1" style={{ color: "var(--h-muted)" }}>
+                    <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                    {l.area}, {l.city}
+                  </p>
+
+                  {/* Feature icons */}
                   <div className="flex flex-wrap gap-1.5 mb-3">
-                    {(l.features || []).map(tag => (
-                      <span key={tag} className="text-xs px-2 py-0.5 rounded-md" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{tag}</span>
+                    {(l.features || []).slice(0, 4).map(tag => (
+                      <span key={tag} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-md" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
+                        {CARD_FEATURE_ICONS[tag] && <span className="text-xs leading-none">{CARD_FEATURE_ICONS[tag]}</span>}
+                        {tag}
+                      </span>
                     ))}
                   </div>
-                  <div className="flex items-end justify-between">
+
+                  {/* Price + beds */}
+                  <div className="flex items-end justify-between pt-2.5" style={{ borderTop: "1px solid var(--h-border)" }}>
                     <div>
-                      {l.listing_type === "sale" ? (
-                        <>
-                          <span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{formatPrice(l.price, l.country || "gb")}</span>
-                          <span className="ml-1.5 text-xs font-bold px-1.5 py-0.5 rounded" style={{ background: "var(--h-accent)", color: "white" }}>For Sale</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{formatPrice(l.price, l.country || "gb")}</span>
-                          <span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span>
-                        </>
-                      )}
+                      <span className="text-lg font-bold" style={{ color: "var(--h-text)" }}>{formatPrice(l.price, l.country || "gb")}</span>
+                      {l.listing_type !== "sale" && <span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span>}
                     </div>
                     <span className="text-xs font-medium" style={{ color: "var(--h-muted)" }}>{l.bedrooms === 0 ? "Studio" : `${l.bedrooms} bed${l.bedrooms > 1 ? "s" : ""}`}</span>
                   </div>
