@@ -14,6 +14,7 @@ const articles = [
     href: "/blog/biggest-financial-lie-britain",
     category: "Opinion",
     readTime: "12 min",
+    date: "June 2026",
     featured: true,
   },
   {
@@ -22,6 +23,7 @@ const articles = [
     href: "/blog/brrr-strategy-explained",
     category: "Investing",
     readTime: "8 min",
+    date: "June 2026",
   },
   {
     title: "Guaranteed Rent Explained — Is It Worth It for Landlords?",
@@ -29,6 +31,7 @@ const articles = [
     href: "/blog/guaranteed-rent-explained",
     category: "Landlords",
     readTime: "7 min",
+    date: "June 2026",
   },
   {
     title: "Section 24 Explained — How It Affects Your Tax Bill",
@@ -36,6 +39,7 @@ const articles = [
     href: "/blog/section-24-explained",
     category: "Tax",
     readTime: "6 min",
+    date: "June 2026",
   },
   {
     title: "HMO Investing UK — Is It Still Profitable?",
@@ -43,6 +47,7 @@ const articles = [
     href: "/blog/hmo-investing-uk",
     category: "Investing",
     readTime: "7 min",
+    date: "June 2026",
   },
   {
     title: "Stamp Duty UK — Complete Guide to Current Rates",
@@ -50,6 +55,7 @@ const articles = [
     href: "/blog/stamp-duty-guide",
     category: "Finance",
     readTime: "5 min",
+    date: "June 2026",
   },
   {
     title: "First-Time Buyer Guide — Step by Step",
@@ -57,6 +63,7 @@ const articles = [
     href: "/blog/first-time-buyer-guide",
     category: "Buying",
     readTime: "6 min",
+    date: "June 2026",
   },
   {
     title: "Personal vs Limited Company — Which Is Better for BTL?",
@@ -64,6 +71,7 @@ const articles = [
     href: "/blog/personal-vs-limited-company",
     category: "Tax",
     readTime: "7 min",
+    date: "June 2026",
   },
   {
     title: "EPC C Deadline — What Landlords Need to Know",
@@ -71,21 +79,24 @@ const articles = [
     href: "/blog/epc-c-deadline-landlords",
     category: "Landlords",
     readTime: "6 min",
+    date: "June 2026",
   },
 ];
 
 export default function BlogPage() {
   return (
     <>
-      <section className="gradient-navy py-16 md:py-20">
+      <section className="bg-white py-16 md:py-24">
         <div className="container-max px-4">
           <div className="max-w-3xl">
-            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-2">Blog</p>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Property Insights</h1>
-            <p className="text-navy-200">Expert articles on UK property investing, tax, mortgages, and landlord compliance. Every article is fact-checked and links to our free calculators and tools.</p>
+            <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Blog</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Insights</h1>
+            <p className="text-navy-500">Expert articles on UK property investing, tax, mortgages, and landlord compliance. Every article is fact-checked and links to our free calculators and tools.</p>
           </div>
         </div>
       </section>
+
+      <div className="border-t border-navy-100" />
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-4xl">
@@ -97,6 +108,7 @@ export default function BlogPage() {
                   {(post as any).featured && <span className="px-3 py-1 bg-gold-400 text-navy-900 text-xs font-bold rounded-full">Featured</span>}
                   <span className={`px-3 py-1 text-xs font-bold rounded-full ${(post as any).featured ? "bg-white/20 text-white" : "bg-navy-50 text-navy-600"}`}>{post.category}</span>
                   <span className={`text-xs ${(post as any).featured ? "text-navy-300" : "text-navy-400"}`}>{post.readTime} read</span>
+                  <span className={`text-xs ${(post as any).featured ? "text-navy-300" : "text-navy-400"}`}>By Nass · {post.date}</span>
                 </div>
                 <h2 className={`text-lg font-bold mb-2 transition-colors ${(post as any).featured ? "text-white group-hover:text-gold-400 text-xl md:text-2xl" : "text-navy-800 group-hover:text-gold-600"}`} style={(post as any).featured ? { fontFamily: "var(--font-family-heading)" } : undefined}>{post.title}</h2>
                 <p className={`text-sm leading-relaxed ${(post as any).featured ? "text-navy-200" : "text-navy-500"}`}>{post.excerpt}</p>
