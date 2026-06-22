@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
 import { ShareButtons } from "@/components/hetta/ShareButtons";
+import { countries, formatPrice } from "@/lib/hetta-config";
 
 interface Listing {
   id: string;
@@ -34,6 +35,7 @@ export default function ListingPage() {
   const { user } = useAuth();
   const [listing, setListing] = useState<Listing | null>(null);
   const [owner, setOwner] = useState<Profile | null>(null);
+  const [similar, setSimilar] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [saved, setSaved] = useState(false);
   const [enquirySent, setEnquirySent] = useState(false);
@@ -54,6 +56,8 @@ export default function ListingPage() {
         const { data: fav } = await supabase.from("favourites").select("id").eq("user_id", user.id).eq("listing_id", data.id).single();
         setSaved(!!fav);
       }
+      const { data: sim } = await supabase.from("listings").select("*").eq("status", "active").eq("city", data.city).neq("id", data.id).limit(4);
+      setSimilar(sim || []);
     }
     setLoading(false);
   }
@@ -247,6 +251,52 @@ export default function ListingPage() {
             </div>
           </div>
         </div>
+
+        {/* Neighbourhood */}
+        <div className="mt-10">
+          <h2 className="text-xl font-bold mb-5" style={{ color: "var(--h-text)" }}>About {listing.area}, {listing.city}</h2>
+          <div className="grid sm:grid-cols-4 gap-3">
+            {[
+              { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>, label: "Location", value: `${listing.area}` },
+              { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" /></svg>, label: "Transport", value: "Nearby" },
+              { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342" /></svg>, label: "Schools", value: "Nearby" },
+              { icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>, label: "Shops", value: "Nearby" },
+            ].map(n => (
+              <div key={n.label} className="h-card !rounded-xl p-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{n.icon}</div>
+                <div>
+                  <p className="text-xs" style={{ color: "var(--h-subtle)" }}>{n.label}</p>
+                  <p className="text-sm font-semibold" style={{ color: "var(--h-text)" }}>{n.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Similar Listings */}
+        {similar.length > 0 && (
+          <div className="mt-10">
+            <h2 className="text-xl font-bold mb-5" style={{ color: "var(--h-text)" }}>Similar in {listing.city}</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {similar.map(s => (
+                <Link href={`/makan/listing/${s.id}`} key={s.id} className="h-card group">
+                  <div className="aspect-[4/3] flex items-center justify-center" style={{ background: s.images?.[0] ? undefined : s.property_type === "Room" ? "#e8e0d6" : s.property_type === "Flat" ? "#d6dfe8" : "#d6e8db" }}>
+                    {s.images?.[0] ? (
+                      <img src={s.images[0]} alt={s.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <svg className="w-10 h-10 opacity-20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    )}
+                  </div>
+                  <div className="p-3">
+                    <p className="text-sm font-semibold truncate group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>{s.title}</p>
+                    <p className="text-xs" style={{ color: "var(--h-muted)" }}>{s.area}</p>
+                    <p className="font-bold mt-1" style={{ color: "var(--h-text)" }}>£{s.price}<span className="text-xs font-normal" style={{ color: "var(--h-subtle)" }}>/mo</span></p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

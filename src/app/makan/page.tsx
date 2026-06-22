@@ -76,6 +76,31 @@ export default function MakanPage() {
             {t("hero.subtitle")}
           </p>
 
+          {/* Diaspora Mode */}
+          <div className="max-w-xl mx-auto mb-8">
+            <div className="flex items-center justify-center gap-2 flex-wrap py-3 px-5 rounded-xl" style={{ background: "var(--h-warm)" }}>
+              <span className="text-sm" style={{ color: "var(--h-muted)" }}>I&apos;m in</span>
+              <select
+                value={countryFilter === "All" ? "gb" : ""}
+                onChange={e => { setCountryFilter("All"); }}
+                className="text-sm font-semibold py-1 px-2 rounded-lg border-0"
+                style={{ background: "var(--h-surface)", color: "var(--h-text)" }}
+              >
+                {countries.map(c => <option key={c.code} value={c.code}>{c.flag} {c.name}</option>)}
+              </select>
+              <span className="text-sm" style={{ color: "var(--h-muted)" }}>show me properties in</span>
+              <select
+                value={countryFilter}
+                onChange={e => { setCountryFilter(e.target.value); setCityFilter("All cities"); }}
+                className="text-sm font-semibold py-1 px-2 rounded-lg border-0"
+                style={{ background: "var(--h-surface)", color: "var(--h-text)" }}
+              >
+                <option value="All">All countries</option>
+                {countries.map(c => <option key={c.code} value={c.code}>{c.flag} {c.name}</option>)}
+              </select>
+            </div>
+          </div>
+
           {/* Search bar */}
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center gap-2 p-2 rounded-2xl" style={{ background: "var(--h-surface)", border: "2px solid var(--h-border)" }}>
@@ -83,12 +108,12 @@ export default function MakanPage() {
                 <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: "var(--h-subtle)" }} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                 <input
                   type="text" value={search} onChange={e => setSearch(e.target.value)}
-                  placeholder="Search by area, city, or keyword..."
+                  placeholder={t("hero.search")}
                   className="h-input !border-0 !pl-12 !shadow-none !ring-0"
                   style={{ background: "transparent" }}
                 />
               </div>
-              <button className="h-btn h-btn-primary !rounded-xl hidden sm:flex">Search</button>
+              <button className="h-btn h-btn-primary !rounded-xl hidden sm:flex">{t("hero.cta")}</button>
             </div>
           </div>
         </div>
@@ -215,6 +240,28 @@ export default function MakanPage() {
         </div>
       </section>
 
+      {/* Can't find what you need? */}
+      <section className="py-12" style={{ background: "var(--h-bg)", borderTop: "1px solid var(--h-border)" }}>
+        <div className="h-container">
+          <div className="grid md:grid-cols-2 gap-5">
+            <Link href="/makan/wanted" className="h-card !rounded-2xl p-8 group">
+              <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              </div>
+              <h3 className="text-lg font-bold mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>Can&apos;t find what you need?</h3>
+              <p className="text-sm" style={{ color: "var(--h-muted)" }}>Post what you&apos;re looking for and let landlords come to you.</p>
+            </Link>
+            <Link href="/makan/about" className="h-card !rounded-2xl p-8 group">
+              <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+              </div>
+              <h3 className="text-lg font-bold mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>Our story</h3>
+              <p className="text-sm" style={{ color: "var(--h-muted)" }}>Why we built Makan and what makes us different.</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-16" style={{ background: "var(--h-slate)" }}>
         <div className="h-container text-center">
@@ -222,7 +269,7 @@ export default function MakanPage() {
           <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Reach tenants directly. No agent fees. No commission. No catch.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/makan/list" className="h-btn h-btn-primary text-center">List your property</Link>
-            <Link href="/guaranteed-rent" className="h-btn h-btn-secondary !border-white/20 !text-white hover:!bg-white/10 text-center">Or get guaranteed rent</Link>
+            <Link href="/makan/wanted" className="h-btn h-btn-secondary !border-white/20 !text-white hover:!bg-white/10 text-center">Post what you need</Link>
           </div>
         </div>
       </section>
