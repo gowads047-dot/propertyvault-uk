@@ -3,17 +3,20 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
-
-const nav = [
-  { href: "/hetta", label: "Browse" },
-  { href: "/hetta/rooms", label: "Rooms" },
-  { href: "/hetta/list", label: "List free" },
-  { href: "/hetta/how-it-works", label: "How it works" },
-];
+import { useLang } from "@/lib/lang-context";
+import { LangSwitcher } from "./LangSwitcher";
 
 export function HettaHeader() {
   const [open, setOpen] = useState(false);
   const { user, profile } = useAuth();
+  const { t } = useLang();
+
+  const nav = [
+    { href: "/hetta", label: t("nav.browse") },
+    { href: "/hetta/rooms", label: t("nav.rooms") },
+    { href: "/hetta/list", label: t("nav.list") },
+    { href: "/hetta/how-it-works", label: t("nav.how") },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[var(--h-border)]">
@@ -41,23 +44,21 @@ export function HettaHeader() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <LangSwitcher />
             {user ? (
               <Link href="/hetta/dashboard" className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
                 <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--h-accent)", color: "white" }}>
                   {(profile?.name || "U").charAt(0).toUpperCase()}
                 </div>
-                <span className="text-sm font-medium hidden sm:inline" style={{ color: "var(--h-text)" }}>{profile?.name?.split(" ")[0] || "Account"}</span>
+                <span className="text-sm font-medium hidden sm:inline" style={{ color: "var(--h-text)" }}>{profile?.name?.split(" ")[0] || t("nav.dashboard")}</span>
               </Link>
             ) : (
               <>
-                <Link href="/hetta/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg" style={{ color: "var(--h-muted)" }}>Log in</Link>
-                <Link href="/hetta/auth" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-5">Sign up free</Link>
+                <Link href="/hetta/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg hidden sm:inline" style={{ color: "var(--h-muted)" }}>{t("nav.login")}</Link>
+                <Link href="/hetta/auth" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-4">{t("nav.signup")}</Link>
               </>
             )}
-            <Link href="/" className="text-xs font-medium px-3 py-1.5 rounded-lg hidden md:inline" style={{ color: "var(--h-subtle)", background: "var(--h-warm)" }}>
-              PropertyVault
-            </Link>
             <button onClick={() => setOpen(!open)} className="md:hidden p-2 rounded-lg" style={{ color: "var(--h-muted)" }}>
               {open ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -76,9 +77,9 @@ export function HettaHeader() {
               <Link key={link.href} href={link.href} className="block py-2.5 px-3 rounded-lg text-sm font-medium" style={{ color: "var(--h-text)" }} onClick={() => setOpen(false)}>{link.label}</Link>
             ))}
             {user ? (
-              <Link href="/hetta/dashboard" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>Dashboard</Link>
+              <Link href="/hetta/dashboard" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.dashboard")}</Link>
             ) : (
-              <Link href="/hetta/auth" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>Sign up / Log in</Link>
+              <Link href="/hetta/auth" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>{t("nav.signup")}</Link>
             )}
           </div>
         </div>

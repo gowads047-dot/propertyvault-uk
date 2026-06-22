@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
+import { useLang } from "@/lib/lang-context";
+import { countries, propertyTypes, formatPrice } from "@/lib/hetta-config";
 
 const sampleListings = [
   { id: "sample-1", title: "Modern 2-bed apartment, Jewellery Quarter", property_type: "Flat", bedrooms: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available_from: "2026-06-01", features: ["Furnished", "Parking"], featured: true, images: [] },
@@ -27,14 +29,18 @@ interface Listing {
   featured?: boolean;
 }
 
-const types = ["All", "Room", "Flat", "House"];
-const cities = ["All cities", "Birmingham", "Nottingham", "Derby"];
+const typeFilters = ["All", ...propertyTypes];
 
 export default function HettaPage() {
+  const { t } = useLang();
   const [typeFilter, setTypeFilter] = useState("All");
+  const [countryFilter, setCountryFilter] = useState("All");
   const [cityFilter, setCityFilter] = useState("All cities");
   const [search, setSearch] = useState("");
   const [listings, setListings] = useState<Listing[]>(sampleListings);
+
+  const selectedCountry = countries.find(c => c.code === countryFilter);
+  const cityOptions = countryFilter === "All" ? [] : (selectedCountry?.cities || []);
 
   useEffect(() => {
     supabase.from("listings").select("*").eq("status", "active").order("created_at", { ascending: false })
@@ -57,12 +63,15 @@ export default function HettaPage() {
       {/* Hero */}
       <section style={{ background: "var(--h-surface)" }} className="py-12 md:py-20">
         <div className="h-container text-center">
-          <p className="text-sm font-semibold mb-3" style={{ color: "var(--h-accent)" }}>100% free · No sign-up required</p>
+          <div className="flex items-center justify-center gap-2 mb-4 flex-wrap">
+            {countries.slice(0, 5).map(c => <span key={c.code} className="text-lg">{c.flag}</span>)}
+            <span className="text-sm font-medium" style={{ color: "var(--h-subtle)" }}>+{countries.length - 5} more</span>
+          </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 tracking-tight" style={{ color: "var(--h-text)", lineHeight: 1.05 }}>
-            Find your place
+            {t("hero.title")}
           </h1>
-          <p className="text-lg mb-10 max-w-lg mx-auto" style={{ color: "var(--h-muted)" }}>
-            Rooms, flats, and houses across Birmingham, Nottingham, and Derby. List free. Browse free. No agents needed.
+          <p className="text-lg mb-10 max-w-xl mx-auto" style={{ color: "var(--h-muted)" }}>
+            {t("hero.subtitle")}
           </p>
 
           {/* Search bar */}
@@ -89,16 +98,16 @@ export default function HettaPage() {
           <div className="flex flex-wrap items-center justify-center gap-8 text-sm" style={{ color: "var(--h-muted)" }}>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ background: "var(--h-green)" }} />
-              <span><strong style={{ color: "var(--h-text)" }}>{listings.length}</strong> listings live</span>
+              <span><strong style={{ color: "var(--h-text)" }}>{listings.length}</strong> {t("stats.listings")}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span><strong style={{ color: "var(--h-text)" }}>3</strong> cities</span>
+              <span><strong style={{ color: "var(--h-text)" }}>{countries.length}</strong> {t("stats.countries")}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span><strong style={{ color: "var(--h-text)" }}>Free</strong> forever</span>
+              <span><strong style={{ color: "var(--h-text)" }}>{t("stats.free")}</strong></span>
             </div>
             <div className="flex items-center gap-2">
-              <span><strong style={{ color: "var(--h-text)" }}>Zero</strong> agent fees</span>
+              <span><strong style={{ color: "var(--h-text)" }}>{t("stats.noFees")}</strong></span>
             </div>
           </div>
         </div>
@@ -108,25 +117,28 @@ export default function HettaPage() {
       <section className="py-10" style={{ background: "var(--h-bg)" }}>
         <div className="h-container">
           {/* Filters */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <div className="flex gap-1.5 flex-wrap">
+              {["All", "Room", "Studio", "Flat", "House", "Villa", "Penthouse"].map(tp => (
+                <button key={tp} onClick={() => setTypeFilter(tp)}
+                  className={`h-tag ${typeFilter === tp ? "h-tag-active" : ""}`}>
+                  {tp}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="flex flex-wrap items-center gap-3 mb-8">
-            <div className="flex gap-1.5">
-              {types.map(t => (
-                <button key={t} onClick={() => setTypeFilter(t)}
-                  className={`h-tag ${typeFilter === t ? "h-tag-active" : ""}`}>
-                  {t}
-                </button>
-              ))}
-            </div>
-            <div className="w-px h-6" style={{ background: "var(--h-border)" }} />
-            <div className="flex gap-1.5">
-              {cities.map(c => (
-                <button key={c} onClick={() => setCityFilter(c)}
-                  className={`h-tag ${cityFilter === c ? "h-tag-active" : ""}`}>
-                  {c}
-                </button>
-              ))}
-            </div>
-            <div className="ml-auto text-sm" style={{ color: "var(--h-subtle)" }}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</div>
+            <select value={countryFilter} onChange={e => { setCountryFilter(e.target.value); setCityFilter("All cities"); }} className="h-input !w-auto !py-2 !text-sm">
+              <option value="All">{t("filter.allCountries")}</option>
+              {countries.map(c => <option key={c.code} value={c.code}>{c.flag} {c.name}</option>)}
+            </select>
+            {countryFilter !== "All" && (
+              <select value={cityFilter} onChange={e => setCityFilter(e.target.value)} className="h-input !w-auto !py-2 !text-sm">
+                <option value="All cities">{t("filter.allCities")}</option>
+                {cityOptions.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            )}
+            <div className="ml-auto text-sm" style={{ color: "var(--h-subtle)" }}>{filtered.length} {t("filter.results")}</div>
           </div>
 
           {/* Listing Grid */}

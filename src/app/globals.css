@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme inline {
@@ -47,22 +47,46 @@ html.dark h4, html.dark h5, html.dark h6 {
   color: #f5f7fa;
 }
 
-html.dark .bg-white { background-color: #0f1b36; }
+html.dark .bg-white { background-color: #111827; }
 html.dark .bg-navy-50 { background-color: #0a1224; }
-html.dark .border-navy-100 { border-color: #1a2e5a; }
-html.dark .text-navy-800 { color: #e4e8f0; }
-html.dark .text-navy-700 { color: #c5cde0; }
-html.dark .text-navy-600 { color: #97a5c5; }
-html.dark .text-navy-500 { color: #6b7db0; }
-html.dark .text-navy-400 { color: #4a5f96; }
+html.dark .bg-navy-800 { background-color: #1e293b; }
+html.dark .border-navy-100 { border-color: #1e293b; }
+html.dark .text-navy-800 { color: #f1f5f9; }
+html.dark .text-navy-700 { color: #e2e8f0; }
+html.dark .text-navy-600 { color: #cbd5e1; }
+html.dark .text-navy-500 { color: #94a3b8; }
+html.dark .text-navy-400 { color: #94a3b8; }
+html.dark .text-gold-600 { color: #f4d35e; }
+html.dark .bg-gold-50 { background-color: #1e1a0e; }
+html.dark .bg-green-50 { background-color: #0a1e12; }
+html.dark .bg-blue-50 { background-color: #0a1224; }
+
+html.dark p, html.dark span, html.dark li, html.dark td, html.dark th,
+html.dark label, html.dark a {
+  color: inherit;
+}
+
+html.dark .btn-secondary {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+html.dark .card-hover:hover {
+  box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.4);
+}
 
 html.dark input[type="text"], html.dark input[type="email"],
 html.dark input[type="number"], html.dark input[type="tel"],
 html.dark input[type="date"], html.dark input[type="search"],
 html.dark select, html.dark textarea {
-  background-color: #152548;
-  color: #e4e8f0;
-  border-color: #1a2e5a;
+  background-color: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+html.dark input::placeholder, html.dark textarea::placeholder {
+  color: #64748b;
 }
 
 * { box-sizing: border-box; }
