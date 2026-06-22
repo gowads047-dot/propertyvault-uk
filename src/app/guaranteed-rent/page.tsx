@@ -1,5 +1,20 @@
-﻿import type { Metadata } from "next";
+﻿import Link from "next/link";
+import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+
+const guaranteedRentFaqs = [
+  { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
+  { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
+  { q: "What types of property qualify for guaranteed rent?", a: "Most residential properties qualify — houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability and safety standards." },
+  { q: "Who are the tenants in a guaranteed rent scheme?", a: "We work with local councils and registered social housing providers in Birmingham, Nottingham, and Derby to house families and individuals. All tenants are managed by our team." },
+  { q: "What about repairs and maintenance with guaranteed rent?", a: "We handle all day-to-day maintenance at our cost during the lease. Major structural issues (roof, subsidence) remain the property owner's responsibility, but we coordinate everything." },
+  { q: "How long is a guaranteed rent lease?", a: "Typically 3-5 years. Longer leases provide greater income security and may attract a higher guaranteed rent amount." },
+  { q: "How quickly can guaranteed rent start?", a: "Once you accept our offer, we can typically complete the lease within 7-14 days. Your first guaranteed rent payment follows shortly after." },
+  { q: "What areas do you cover for guaranteed rent?", a: "We currently operate across Birmingham, Nottingham, Derby, and surrounding areas within approximately 30 minutes of each city centre." },
+  { q: "Is guaranteed rent better than using a letting agent?", a: "For many landlords, yes. When you add up void periods, agent fees (8-12%), maintenance costs, and compliance spend, guaranteed rent at 80-90% of market rate often delivers more net income with zero effort." },
+  { q: "What happens at the end of a guaranteed rent lease?", a: "Your property is returned in the condition it was at the start of the lease (fair wear and tear excepted). You can then renew the lease with us, let privately, or sell." },
+];
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent for Landlords — Birmingham, Nottingham & Derby | PropertyVault UK",
@@ -92,9 +107,9 @@ export default function GuaranteedRentPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { quote: "I had a property empty for 3 months, losing £900 each month. Now I get £780 guaranteed every month without lifting a finger. I wish I'd done this years ago.", who: "Landlord with 2-bed in Erdington, Birmingham", tag: "Was losing £2,700 in voids" },
-              { quote: "Managing tenants was taking over my life — phone calls at midnight, chasing rent, arranging repairs. With guaranteed rent, I just check my bank balance. That's it.", who: "Portfolio landlord, 4 properties in Nottingham", tag: "Went from stressed to stress-free" },
-              { quote: "My agent was charging 12% plus fees on top. The guaranteed rent is actually more than what I was netting after agent fees and void periods. And I do absolutely nothing.", who: "Landlord with 3-bed in Normanton, Derby", tag: "Now earns more, does less" },
+              { quote: "I had a property empty for 3 months, losing £900 each month. Now I get £780 guaranteed every month without lifting a finger. I wish I'd done this years ago.", who: "Landlord with 2-bed in Erdington, Birmingham", tag: "Was losing £2,700 in voids", initials: "JR", city: "Birmingham" },
+              { quote: "Managing tenants was taking over my life — phone calls at midnight, chasing rent, arranging repairs. With guaranteed rent, I just check my bank balance. That's it.", who: "Portfolio landlord, 4 properties in Nottingham", tag: "Went from stressed to stress-free", initials: "SK", city: "Nottingham" },
+              { quote: "My agent was charging 12% plus fees on top. The guaranteed rent is actually more than what I was netting after agent fees and void periods. And I do absolutely nothing.", who: "Landlord with 3-bed in Normanton, Derby", tag: "Now earns more, does less", initials: "MA", city: "Derby" },
             ].map((t) => (
               <div key={t.who} className="glass rounded-2xl p-6">
                 <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-4">{t.tag}</span>
@@ -104,7 +119,13 @@ export default function GuaranteedRentPage() {
                   ))}
                 </div>
                 <p className="text-white/90 text-sm leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
-                <p className="text-navy-300 text-xs">{t.who}</p>
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="w-9 h-9 rounded-full bg-gold-400/20 flex items-center justify-center text-gold-400 font-bold text-xs">{t.initials}</div>
+                  <div>
+                    <p className="text-white/80 text-xs font-semibold">{t.who}</p>
+                    <p className="text-navy-400 text-xs">{t.city}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -141,6 +162,9 @@ export default function GuaranteedRentPage() {
             </table>
           </div>
           <p className="text-xs text-navy-400 text-center mt-3">Illustrative example. Actual figures depend on property, location, and circumstances.</p>
+          <div className="text-center mt-6">
+            <Link href="/blog/guaranteed-rent-vs-traditional-letting" className="text-sm font-semibold text-gold-600 hover:text-gold-700 transition-colors">Read the full comparison: Guaranteed Rent vs Traditional Letting →</Link>
+          </div>
         </div>
       </section>
 
@@ -192,25 +216,10 @@ export default function GuaranteedRentPage() {
         </div>
       </section>
 
-      {/* FAQs */}
+      {/* FAQs with Schema */}
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <h2 className="text-2xl font-extrabold text-navy-800 mb-6 text-center" style={{ fontFamily: "var(--font-family-heading)" }}>Common Questions</h2>
-          <div className="space-y-3">
-            {[
-              { q: "How much rent will I receive?", a: "Typically 80-90% of market rent. But when you subtract voids, agent fees, maintenance, and compliance costs from self-managing, most landlords actually net more with guaranteed rent." },
-              { q: "Do I still own my property?", a: "Yes — 100% ownership stays with you. We lease it from you. You can sell at any time (subject to lease terms)." },
-              { q: "What types of property do you take?", a: "Houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability standards." },
-              { q: "Who are the tenants?", a: "We work with local councils and registered social housing providers to house families and individuals. All tenants are managed by our team." },
-              { q: "What about repairs?", a: "We handle all day-to-day maintenance at our cost. Major structural issues remain the owner's responsibility, but we coordinate everything." },
-              { q: "How quickly can we start?", a: "Once you accept our offer, we can complete within 7-14 days. Your first guaranteed rent payment follows shortly after." },
-            ].map((faq) => (
-              <div key={faq.q} className="bg-white rounded-2xl border border-navy-100/80 p-5">
-                <h3 className="font-bold text-navy-800 mb-1">{faq.q}</h3>
-                <p className="text-sm text-navy-600">{faq.a}</p>
-              </div>
-            ))}
-          </div>
+          <FAQSchema faqs={guaranteedRentFaqs} />
         </div>
       </section>
 
