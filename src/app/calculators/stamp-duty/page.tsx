@@ -2,6 +2,9 @@ import { StampDutyCalculator } from "@/components/calculators/StampDutyCalculato
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { EmailResults } from "@/components/calculators/EmailResults";
+import { PrintButton } from "@/components/calculators/PrintButton";
 
 const stampDutyFaqs = [
   { q: "How much is stamp duty on a £300,000 house?", a: "For a standard purchase at £300,000 from April 2025: £0 on the first £125,000, 2% on £125,001-£250,000 (£2,500), and 5% on £250,001-£300,000 (£2,500) = £5,000 total. First-time buyers pay £0 (nil rate up to £300,000)." },
@@ -19,16 +22,20 @@ export const metadata: Metadata = {
 export default function StampDutyPage() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16">
+      <section className="bg-white py-16 md:py-20">
         <div className="container-max px-4">
-          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Stamp Duty Calculator (SDLT)</h1>
-          <p className="text-navy-200 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, additional property surcharge, and first-time buyer relief.</p>
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Stamp Duty" }]} />
+          <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free Calculator</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Stamp Duty Calculator (SDLT)</h1>
+          <p className="text-navy-500 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, additional property surcharge, and first-time buyer relief.</p>
+          <div className="mt-3"><PrintButton /></div>
         </div>
       </section>
-      <section className="section-padding bg-white">
+      <div className="border-t border-navy-100" />
+      <section className="section-padding bg-navy-50">
         <div className="container-max">
           <StampDutyCalculator />
+          <div className="mt-8"><EmailResults /></div>
           <FAQSchema faqs={stampDutyFaqs} />
           <Disclaimer type="calculator" />
         </div>

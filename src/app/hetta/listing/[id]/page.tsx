@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
+import { ShareButtons } from "@/components/hetta/ShareButtons";
 
 interface Listing {
   id: string;
@@ -189,6 +190,12 @@ export default function ListingPage() {
                 </div>
               </div>
             )}
+
+            {/* Share */}
+            <div className="mt-6">
+              <h2 className="font-bold mb-3" style={{ color: "var(--h-text)" }}>Share this listing</h2>
+              <ShareButtons title={`${listing.title} — £${listing.price}/mo in ${listing.area}, ${listing.city}`} />
+            </div>
           </div>
 
           {/* Sidebar */}

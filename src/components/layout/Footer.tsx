@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const sections = [
-  { title: "Hetta", links: [
+  { title: "Makan", links: [
     { href: "/hetta", label: "Browse Listings" },
     { href: "/hetta/rooms", label: "Rooms" },
     { href: "/hetta/list", label: "List Free" },

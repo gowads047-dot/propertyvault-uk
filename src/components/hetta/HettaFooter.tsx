@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function HettaFooter() {
+export function MakanFooter() {
   return (
     <footer className="border-t" style={{ borderColor: "var(--h-border)", background: "var(--h-surface)" }}>
       <div className="h-container py-12">
@@ -10,7 +10,7 @@ export function HettaFooter() {
               <div className="w-7 h-7 rounded-lg bg-[var(--h-accent)] flex items-center justify-center">
                 <svg className="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
               </div>
-              <span className="font-bold text-lg" style={{ color: "var(--h-text)" }}>hetta</span>
+              <span className="font-bold text-lg" style={{ color: "var(--h-text)" }}>makan</span>
             </div>
             <p className="text-sm" style={{ color: "var(--h-muted)" }}>Find your place. Free property listings for everyone.</p>
           </div>
@@ -42,7 +42,7 @@ export function HettaFooter() {
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center" style={{ borderColor: "var(--h-border)" }}>
-          <p className="text-xs" style={{ color: "var(--h-subtle)" }}>© 2026 Hetta by PropertyVault UK. Free for everyone.</p>
+          <p className="text-xs" style={{ color: "var(--h-subtle)" }}>© 2026 Makan by PropertyVault UK. Free for everyone.</p>
         </div>
       </div>
     </footer>

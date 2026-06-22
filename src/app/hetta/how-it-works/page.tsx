@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "How Hetta Works — Free Property Listings",
-  description: "How Hetta works for tenants and landlords. Free listings, direct messaging, no agent fees. Find or list a property in Birmingham, Nottingham, or Derby.",
+  title: "How Makan Works — Free Property Listings",
+  description: "How Makan works for tenants and landlords. Free listings, direct messaging, no agent fees. Find or list a property in Birmingham, Nottingham, or Derby.",
 };
 
 export default function HowItWorksPage() {
@@ -11,7 +11,7 @@ export default function HowItWorksPage() {
     <>
       <section className="py-16" style={{ background: "var(--h-surface)" }}>
         <div className="h-container max-w-3xl text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: "var(--h-text)" }}>How Hetta works</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: "var(--h-text)" }}>How Makan works</h1>
           <p className="text-lg" style={{ color: "var(--h-muted)" }}>A simple, free way to find or list a property. No agents. No fees. No catch.</p>
         </div>
       </section>
@@ -65,7 +65,7 @@ export default function HowItWorksPage() {
       {/* Comparison */}
       <section className="py-16" style={{ background: "var(--h-bg)" }}>
         <div className="h-container max-w-3xl">
-          <h2 className="text-2xl font-bold text-center mb-8" style={{ color: "var(--h-text)" }}>Hetta vs the rest</h2>
+          <h2 className="text-2xl font-bold text-center mb-8" style={{ color: "var(--h-text)" }}>Makan vs the rest</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -103,7 +103,7 @@ export default function HowItWorksPage() {
       <section className="py-16" style={{ background: "var(--h-slate)" }}>
         <div className="h-container text-center">
           <h2 className="text-2xl font-bold text-white mb-3">Ready to get started?</h2>
-          <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Whether you&apos;re looking for a place or listing one — Hetta is free for everyone.</p>
+          <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Whether you&apos;re looking for a place or listing one — Makan is free for everyone.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/hetta" className="h-btn h-btn-primary text-center">Browse listings</Link>
             <Link href="/hetta/list" className="h-btn h-btn-secondary !border-white/20 !text-white text-center">List for free</Link>

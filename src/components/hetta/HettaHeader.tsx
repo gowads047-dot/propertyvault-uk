@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useLang } from "@/lib/lang-context";
 import { LangSwitcher } from "./LangSwitcher";
 
-export function HettaHeader() {
+export function MakanHeader() {
   const [open, setOpen] = useState(false);
   const { user, profile } = useAuth();
   const { t } = useLang();
@@ -28,7 +28,7 @@ export function HettaHeader() {
                 <path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z" fill="currentColor"/>
               </svg>
             </div>
-            <span className="text-xl font-bold tracking-tight" style={{ color: "var(--h-text)" }}>hetta</span>
+            <span className="text-xl font-bold tracking-tight" style={{ color: "var(--h-text)" }}>makan</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">

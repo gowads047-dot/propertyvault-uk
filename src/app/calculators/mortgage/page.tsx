@@ -2,6 +2,9 @@ import { MortgageCalculator } from "@/components/calculators/MortgageCalculator"
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { EmailResults } from "@/components/calculators/EmailResults";
+import { PrintButton } from "@/components/calculators/PrintButton";
 
 const mortgageFaqs = [
   { q: "How much can I borrow for a mortgage?", a: "Most UK lenders will lend 4-4.5 times your annual gross income. Some specialist lenders may go up to 5.5x. Use our Affordability Calculator for a more accurate estimate based on your income and outgoings." },
@@ -19,16 +22,20 @@ export const metadata: Metadata = {
 export default function MortgageCalculatorPage() {
   return (
     <>
-      <section className="gradient-navy py-12 md:py-16">
+      <section className="bg-white py-16 md:py-20">
         <div className="container-max px-4">
-          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Mortgage Calculator</h1>
-          <p className="text-navy-200 max-w-2xl">Calculate your monthly mortgage payments, total interest costs, and compare repayment versus interest-only options. Adjust property price, deposit, rate, and term.</p>
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Mortgage" }]} />
+          <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free Calculator</p>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Mortgage Calculator</h1>
+          <p className="text-navy-500 max-w-2xl">Calculate your monthly mortgage payments, total interest costs, and compare repayment versus interest-only options.</p>
+          <div className="mt-3"><PrintButton /></div>
         </div>
       </section>
-      <section className="section-padding bg-white">
+      <div className="border-t border-navy-100" />
+      <section className="section-padding bg-navy-50">
         <div className="container-max">
           <MortgageCalculator />
+          <div className="mt-8"><EmailResults /></div>
           <FAQSchema faqs={mortgageFaqs} />
           <Disclaimer type="calculator" />
         </div>

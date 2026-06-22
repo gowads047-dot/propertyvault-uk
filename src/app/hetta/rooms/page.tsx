@@ -71,14 +71,14 @@ export default function RoomsPage() {
           {rooms.length === 0 && (
             <div className="text-center py-16">
               <p className="text-lg font-semibold" style={{ color: "var(--h-text)" }}>No rooms listed yet</p>
-              <p className="text-sm mt-1 mb-6" style={{ color: "var(--h-muted)" }}>Be the first to list a room on Hetta</p>
+              <p className="text-sm mt-1 mb-6" style={{ color: "var(--h-muted)" }}>Be the first to list a room on Makan</p>
               <Link href="/hetta/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
             </div>
           )}
 
           <div className="text-center mt-10 py-10 rounded-2xl" style={{ background: "var(--h-warm)" }}>
             <h2 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Got a room to let?</h2>
-            <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>List it free on Hetta and find your next housemate.</p>
+            <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>List it free on Makan and find your next housemate.</p>
             <Link href="/hetta/list" className="h-btn h-btn-primary inline-flex">List a room free</Link>
           </div>
         </div>

@@ -73,7 +73,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hetta Promo */}
+      {/* Makan Promo */}
       <section className="bg-white section-padding">
         <div className="container-max px-4">
           <FadeIn>
@@ -84,7 +84,7 @@ export default function Home() {
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#e8553d" }}>
                     <svg className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
                   </div>
-                  <span className="text-2xl font-bold tracking-tight text-navy-800">hetta</span>
+                  <span className="text-2xl font-bold tracking-tight text-navy-800">makan</span>
                   <span className="px-2 py-0.5 bg-[#e8553d] text-white text-xs font-bold rounded-full">New</span>
                 </div>
                 <h2 className="text-xl md:text-2xl font-extrabold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Find your place — free listings for everyone</h2>

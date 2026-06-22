@@ -110,7 +110,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "stats.countries": "countries",
     "stats.free": "Free forever",
     "stats.noFees": "Zero agent fees",
-    "how.title": "How Hetta works",
+    "how.title": "How Makan works",
     "how.browse.title": "Browse or search",
     "how.browse.desc": "Filter by type, city, or budget. Every listing is free to view.",
     "how.message.title": "Message directly",
@@ -118,7 +118,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.movein.title": "Move in",
     "how.movein.desc": "Agree terms, sign up, and move in. It's your place.",
     "footer.tagline": "Find your place. Free property listings worldwide.",
-    "footer.copyright": "Hetta by PropertyVault UK. Free for everyone.",
+    "footer.copyright": "Makan by PropertyVault UK. Free for everyone.",
   },
   ar: {
     "hero.title": "لاقي مكانك",
@@ -166,7 +166,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "stats.countries": "دول",
     "stats.free": "مجاني للأبد",
     "stats.noFees": "بدون عمولة",
-    "how.title": "كيف يعمل حِطّة",
+    "how.title": "كيف يعمل مكان",
     "how.browse.title": "تصفّح أو ابحث",
     "how.browse.desc": "فلتر حسب النوع أو المدينة أو الميزانية. كل الإعلانات مجانية.",
     "how.message.title": "تواصل مباشرة",
@@ -174,7 +174,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.movein.title": "انتقل",
     "how.movein.desc": "اتفق على الشروط واسكن. مكانك أنت.",
     "footer.tagline": "لاقي مكانك. إعلانات عقارية مجانية حول العالم.",
-    "footer.copyright": "حِطّة من PropertyVault UK. مجاني للجميع.",
+    "footer.copyright": "مكان من PropertyVault UK. مجاني للجميع.",
   },
   fr: {
     "hero.title": "Trouvez votre place",
@@ -222,7 +222,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "stats.countries": "pays",
     "stats.free": "Gratuit pour toujours",
     "stats.noFees": "Zéro frais d'agence",
-    "how.title": "Comment fonctionne Hetta",
+    "how.title": "Comment fonctionne Makan",
     "how.browse.title": "Parcourez ou recherchez",
     "how.browse.desc": "Filtrez par type, ville ou budget. Toutes les annonces sont gratuites.",
     "how.message.title": "Contactez directement",
@@ -230,7 +230,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.movein.title": "Emménagez",
     "how.movein.desc": "Convenez des termes et emménagez. C'est votre place.",
     "footer.tagline": "Trouvez votre place. Annonces immobilières gratuites dans le monde entier.",
-    "footer.copyright": "Hetta par PropertyVault UK. Gratuit pour tous.",
+    "footer.copyright": "Makan par PropertyVault UK. Gratuit pour tous.",
   },
 };
 

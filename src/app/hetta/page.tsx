@@ -31,12 +31,13 @@ interface Listing {
 
 const typeFilters = ["All", ...propertyTypes];
 
-export default function HettaPage() {
+export default function MakanPage() {
   const { t } = useLang();
   const [typeFilter, setTypeFilter] = useState("All");
   const [countryFilter, setCountryFilter] = useState("All");
   const [cityFilter, setCityFilter] = useState("All cities");
   const [search, setSearch] = useState("");
+  const [maxPrice, setMaxPrice] = useState(5000);
   const [listings, setListings] = useState<Listing[]>(sampleListings);
 
   const selectedCountry = countries.find(c => c.code === countryFilter);
@@ -52,6 +53,7 @@ export default function HettaPage() {
   const filtered = listings.filter(l => {
     if (typeFilter !== "All" && l.property_type !== typeFilter) return false;
     if (cityFilter !== "All cities" && l.city !== cityFilter) return false;
+    if (l.price > maxPrice) return false;
     if (search && !l.title.toLowerCase().includes(search.toLowerCase()) && !l.area.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -138,7 +140,11 @@ export default function HettaPage() {
                 {cityOptions.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             )}
-            <div className="ml-auto text-sm" style={{ color: "var(--h-subtle)" }}>{filtered.length} {t("filter.results")}</div>
+            <div className="flex items-center gap-3 ml-auto">
+              <label className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--h-muted)" }}>Max: <strong style={{ color: "var(--h-text)" }}>{maxPrice >= 5000 ? "Any" : `${maxPrice}`}</strong></label>
+              <input type="range" min={100} max={5000} step={50} value={maxPrice} onChange={e => setMaxPrice(+e.target.value)} className="w-28 accent-[var(--h-accent)]" />
+              <span className="text-sm" style={{ color: "var(--h-subtle)" }}>{filtered.length} {t("filter.results")}</span>
+            </div>
           </div>
 
           {/* Listing Grid */}
@@ -190,7 +196,7 @@ export default function HettaPage() {
       {/* How it works */}
       <section className="py-16" style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)" }}>
         <div className="h-container">
-          <h2 className="text-2xl font-bold text-center mb-10" style={{ color: "var(--h-text)" }}>How Hetta works</h2>
+          <h2 className="text-2xl font-bold text-center mb-10" style={{ color: "var(--h-text)" }}>How Makan works</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             {[
               { step: "1", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>, title: "Browse or search", desc: "Filter by rooms, flats, or houses. Search by city, area, or budget." },

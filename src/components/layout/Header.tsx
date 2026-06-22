@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 
 const mainLinks = [
-  { href: "/hetta", label: "Hetta" },
+  { href: "/hetta", label: "Makan" },
   { href: "/calculators", label: "Calculators" },
   { href: "/templates", label: "Templates" },
   { href: "/areas", label: "Areas" },
@@ -13,7 +13,7 @@ const mainLinks = [
 ];
 
 const mobileLinks = [
-  { heading: "Hetta — Find Your Place", links: [
+  { heading: "Makan — Find Your Place", links: [
     { href: "/hetta", label: "Browse Listings" },
     { href: "/hetta/rooms", label: "Rooms to Rent" },
     { href: "/hetta/list", label: "List Free" },
