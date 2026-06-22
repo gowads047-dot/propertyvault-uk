@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing, rather than relying on a single metric like gross yield which can be misleading." },
@@ -284,6 +285,8 @@ export default function DealAnalyserPage() {
                 <p className={`text-4xl font-extrabold ${r.roi >= 15 ? "text-green-600" : r.roi >= 0 ? "text-navy-800" : "text-red-600"}`}>{r.roi.toFixed(1)}%</p>
                 <p className="text-xs text-navy-400 mt-1">({fmt(r.totalReturn)} return on {fmt(r.totalCashInvested)} invested)</p>
               </div>
+
+              <EmailResults />
             </div>
           </div>
         </div>

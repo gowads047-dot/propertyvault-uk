@@ -58,6 +58,21 @@ export default function Section24Article() {
 
           
           <div className="mt-10 pt-8 border-t border-navy-200 not-prose">
+            <h3 className="font-bold text-navy-800 mb-4">Related Calculators</h3>
+            <div className="grid sm:grid-cols-3 gap-3 mb-6">
+              <Link href="/calculators/section-24" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Section 24</p>
+                <p className="text-xs text-navy-400 mt-0.5">See your tax impact</p>
+              </Link>
+              <Link href="/calculators/personal-vs-ltd" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Personal vs Ltd</p>
+                <p className="text-xs text-navy-400 mt-0.5">Compare structures</p>
+              </Link>
+              <Link href="/calculators/capital-gains-tax" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">CGT Calculator</p>
+                <p className="text-xs text-navy-400 mt-0.5">Tax on sale</p>
+              </Link>
+            </div>
             <h3 className="font-bold text-navy-800 mb-4">Related Articles</h3>
             <div className="grid sm:grid-cols-2 gap-3">
               <Link href="/blog/personal-vs-limited-company" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">

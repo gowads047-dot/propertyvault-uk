@@ -99,6 +99,21 @@ export default function BRRRArticle() {
 
           
           <div className="mt-10 pt-8 border-t border-navy-200 not-prose">
+            <h3 className="font-bold text-navy-800 mb-4">Related Calculators</h3>
+            <div className="grid sm:grid-cols-3 gap-3 mb-6">
+              <Link href="/calculators/deal-analyser" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Deal Analyser</p>
+                <p className="text-xs text-navy-400 mt-0.5">Full deal breakdown</p>
+              </Link>
+              <Link href="/calculators/brrr" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">BRRR Calculator</p>
+                <p className="text-xs text-navy-400 mt-0.5">Model your deal</p>
+              </Link>
+              <Link href="/calculators/bridging" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Bridging Loan</p>
+                <p className="text-xs text-navy-400 mt-0.5">Finance costs</p>
+              </Link>
+            </div>
             <h3 className="font-bold text-navy-800 mb-4">Related Articles</h3>
             <div className="grid sm:grid-cols-2 gap-3">
               <Link href="/blog/hmo-investing-uk" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">

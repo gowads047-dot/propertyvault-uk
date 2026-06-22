@@ -14,14 +14,21 @@ export default function Home() {
         <div className="container-max px-4 py-16 md:py-24 lg:py-32 text-center">
           <p className="text-sm font-semibold text-navy-500 mb-4 tracking-wide">100% Free · No Sign-Up Required</p>
           <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-navy-800 mb-5 leading-[1.1] max-w-2xl mx-auto" style={{ fontFamily: "var(--font-family-heading)" }}>
-            Property calculators, templates, and guides — all free
+            Analyse deals, cut tax, and grow your portfolio
           </h1>
           <p className="text-lg text-navy-500 mb-10 max-w-lg mx-auto">
-            17 calculators. 40+ templates. Expert UK property guides. Built for investors, landlords, and buyers.
+            17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/calculators" className="btn-primary text-center">Explore calculators</Link>
-            <Link href="/guaranteed-rent" className="btn-secondary text-center">Book free valuation</Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
+            <Link href="/calculators/deal-analyser" className="btn-gold text-center">Analyse a deal</Link>
+            <Link href="/calculators" className="btn-primary text-center">All calculators</Link>
+            <Link href="/guaranteed-rent" className="btn-secondary text-center">Guaranteed rent</Link>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">17</p><p className="text-xs text-navy-400 mt-0.5">Free calculators</p></div>
+            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">40+</p><p className="text-xs text-navy-400 mt-0.5">Templates</p></div>
+            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">49</p><p className="text-xs text-navy-400 mt-0.5">Glossary terms</p></div>
+            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">3</p><p className="text-xs text-navy-400 mt-0.5">Area guides</p></div>
           </div>
         </div>
       </section>
