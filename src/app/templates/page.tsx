@@ -75,12 +75,12 @@ export default function TemplatesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
         <div className="container-max px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Free Downloads</p>
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Property Templates &amp; Checklists</h1>
-            <p className="text-navy-200 text-lg">Professional checklists, trackers, and guides for home buyers, sellers, landlords, and commercial property professionals. Based on UK Government guidance and property industry best practice.</p>
+            <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free Downloads</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Templates &amp; Checklists</h1>
+            <p className="text-navy-500 text-lg">Professional checklists, trackers, and guides for home buyers, sellers, landlords, and commercial property professionals.</p>
           </div>
         </div>
       </section>
@@ -127,10 +127,30 @@ export default function TemplatesPage() {
 
           {/* Template Cards */}
           <div className="grid md:grid-cols-2 gap-5">
-            {filtered.map((t) => (
+            {filtered.map((t) => {
+              const catColors: Record<string, { bg: string; icon: string }> = {
+                buyer: { bg: "bg-blue-50", icon: "text-blue-500" },
+                seller: { bg: "bg-green-50", icon: "text-green-500" },
+                landlord: { bg: "bg-gold-50", icon: "text-gold-600" },
+                commercial: { bg: "bg-purple-50", icon: "text-purple-500" },
+              };
+              const c = catColors[t.category] || catColors.buyer;
+              return (
               <div key={t.id} className="bg-white rounded-xl border border-navy-100 p-6 hover:shadow-lg hover:border-gold-400/30 transition-all">
-                <span className="inline-block px-2 py-0.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full mb-3 capitalize">{t.category === "buyer" ? "Home Buyer" : t.category === "seller" ? "Home Seller" : t.category === "landlord" ? "Landlord" : "Commercial"}</span>
-                <h3 className="font-bold text-navy-800 text-lg mb-2">{t.title}</h3>
+                <div className="flex items-start gap-4 mb-3">
+                  <div className={`w-12 h-14 rounded-lg ${c.bg} flex items-center justify-center flex-shrink-0`}>
+                    <svg className={`w-6 h-6 ${c.icon}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                      {t.category === "buyer" && <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955a1.126 1.126 0 0 1 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />}
+                      {t.category === "seller" && <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />}
+                      {t.category === "landlord" && <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />}
+                      {t.category === "commercial" && <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />}
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="inline-block px-2 py-0.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded-full mb-1 capitalize">{t.category === "buyer" ? "Home Buyer" : t.category === "seller" ? "Home Seller" : t.category === "landlord" ? "Landlord" : "Commercial"}</span>
+                    <h3 className="font-bold text-navy-800 text-lg">{t.title}</h3>
+                  </div>
+                </div>
                 <p className="text-sm text-navy-500 mb-3 leading-relaxed">{t.desc}</p>
                 <p className="text-xs text-navy-400 mb-4"><strong>For:</strong> {t.forWho}</p>
                 <div className="flex gap-3">
@@ -144,7 +164,8 @@ export default function TemplatesPage() {
                   </button>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>
