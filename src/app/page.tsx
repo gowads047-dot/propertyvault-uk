@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "PropertyVault UK — 15 Free Property Calculators, 40+ Templates, Zero Sign-Up",
-  description: "The UK's most comprehensive free property platform. 15 calculators, 40+ templates, expert guides, and tools for investors, landlords, and buyers.",
+  title: "PropertyVault UK — 17 Free Property Calculators, 40+ Templates, Zero Sign-Up",
+  description: "The UK's most comprehensive free property platform. 17 calculators, 40+ templates, expert guides, and tools for investors, landlords, and buyers.",
 };
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
             Property calculators, templates, and guides — all free
           </h1>
           <p className="text-lg text-navy-500 mb-10 max-w-lg mx-auto">
-            15 calculators. 40+ templates. Expert UK property guides. Built for investors, landlords, and buyers.
+            17 calculators. 40+ templates. Expert UK property guides. Built for investors, landlords, and buyers.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/calculators" className="btn-primary text-center">Explore calculators</Link>
@@ -69,31 +69,56 @@ export default function Home() {
           <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-2 text-center">Free tools</p>
           <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800 text-center mb-12" style={{ fontFamily: "var(--font-family-heading)" }}>Everything in one place</h2>
 
+          {/* Large feature cards */}
           <div className="grid md:grid-cols-2 gap-5 mb-5">
-            {[
-              { title: "15 Free Calculators", desc: "Mortgage, stamp duty, BRRR, rental yield, Section 24, HMO, bridging, flip ROI, affordability, and more.", href: "/calculators" },
-              { title: "40+ Templates & Checklists", desc: "Buyer, seller, landlord, and commercial property. Fillable forms, compliance trackers, and inventories.", href: "/templates" },
-            ].map((c) => (
-              <Link key={c.title} href={c.href} className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
-                <h3 className="text-lg font-bold text-navy-800 mb-2 group-hover:text-gold-600 transition-colors">{c.title}</h3>
-                <p className="text-sm text-navy-500 leading-relaxed mb-4">{c.desc}</p>
-                <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Explore →</span>
-              </Link>
-            ))}
+            <Link href="/calculators" className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-navy-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
+              </div>
+              <h3 className="text-lg font-bold text-navy-800 mb-2 group-hover:text-gold-600 transition-colors">17 Free Calculators</h3>
+              <p className="text-sm text-navy-500 leading-relaxed mb-4">Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, bridging, flip ROI, and more.</p>
+              <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Explore →</span>
+            </Link>
+            <Link href="/templates" className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
+              <div className="w-12 h-12 rounded-2xl bg-navy-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </div>
+              <h3 className="text-lg font-bold text-navy-800 mb-2 group-hover:text-gold-600 transition-colors">40+ Templates &amp; Checklists</h3>
+              <p className="text-sm text-navy-500 leading-relaxed mb-4">Buyer, seller, landlord, and commercial property. Fillable forms, compliance trackers, and inventories.</p>
+              <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Explore →</span>
+            </Link>
           </div>
 
+          {/* Smaller tool cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { title: "Property Search", desc: "Rightmove, Zoopla & more", href: "/search" },
-              { title: "Area Research", desc: "Crime, schools, flood risk", href: "/area-guide" },
-              { title: "Expert Guides", desc: "BTL, BRRR, HMO, tax, law", href: "/property-investing" },
-              { title: "Property Glossary", desc: "46 terms explained", href: "/glossary" },
-            ].map((s) => (
-              <Link key={s.title} href={s.href} className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
-                <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">{s.title}</h3>
-                <p className="text-xs text-navy-400 mt-1">{s.desc}</p>
-              </Link>
-            ))}
+            <Link href="/search" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
+              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#0f1b36" strokeWidth="2"/><path d="M13.5 13.5L17 17" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round"/></svg>
+              </div>
+              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Property Search</h3>
+              <p className="text-xs text-navy-400 mt-1">Rightmove, Zoopla &amp; more</p>
+            </Link>
+            <Link href="/areas" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
+              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><path d="M10 2C6.5 2 4 5 4 8.5C4 13 10 18 10 18s6-5 6-9.5C16 5 13.5 2 10 2z" fill="#c9a84c"/><circle cx="10" cy="8" r="2.5" fill="white"/></svg>
+              </div>
+              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Area Guides</h3>
+              <p className="text-xs text-navy-400 mt-1">Birmingham, Nottingham, Derby</p>
+            </Link>
+            <Link href="/property-investing" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
+              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" fill="#0f1b36"/><path d="M5 12l3-3 2 2 4-5" stroke="#c9a84c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </div>
+              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Expert Guides</h3>
+              <p className="text-xs text-navy-400 mt-1">BTL, BRRR, HMO, tax, law</p>
+            </Link>
+            <Link href="/glossary" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
+              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
+                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" fill="#E8D5B7"/><text x="10" y="13" textAnchor="middle" fill="#0f1b36" fontSize="8" fontWeight="bold">A-Z</text></svg>
+              </div>
+              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Property Glossary</h3>
+              <p className="text-xs text-navy-400 mt-1">49 terms explained</p>
+            </Link>
           </div>
         </div>
       </section>
@@ -143,7 +168,7 @@ export default function Home() {
               ]},
               { title: "For Investors", links: [
                 { href: "/property-investing", label: "Investment Guides" },
-                { href: "/calculators", label: "All 15 Calculators" },
+                { href: "/calculators", label: "All 17 Calculators" },
                 { href: "/glossary", label: "Property Glossary" },
                 { href: "/blog", label: "Blog" },
               ]},
@@ -154,8 +179,8 @@ export default function Home() {
                 { href: "/search", label: "Property Search" },
               ]},
               { title: "Resources", links: [
+                { href: "/areas", label: "Area Guides" },
                 { href: "/tools", label: "Property Tools" },
-                { href: "/area-guide", label: "Area Research" },
                 { href: "/sold-prices", label: "Sold Prices" },
                 { href: "/contact", label: "Contact" },
               ]},
