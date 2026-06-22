@@ -3,67 +3,404 @@ import type { Metadata } from "next";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
-  title: "PropertyVault UK — 17 Free Property Calculators, 40+ Templates, Zero Sign-Up",
-  description: "The UK's most comprehensive free property platform. 17 calculators, 40+ templates, expert guides, and tools for investors, landlords, and buyers.",
+  title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
+  description: "17 free property calculators, 40+ templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
 };
 
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="bg-white">
-        <div className="container-max px-4 py-16 md:py-24 lg:py-32 text-center">
-          <p className="text-sm font-semibold text-navy-500 mb-4 tracking-wide">100% Free · No Sign-Up Required</p>
-          <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold text-navy-800 mb-5 leading-[1.1] max-w-2xl mx-auto" style={{ fontFamily: "var(--font-family-heading)" }}>
-            Analyse deals, cut tax, and grow your portfolio
-          </h1>
-          <p className="text-lg text-navy-500 mb-10 max-w-lg mx-auto">
-            17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
-            <Link href="/calculators/deal-analyser" className="btn-gold text-center">Analyse a deal</Link>
-            <Link href="/calculators" className="btn-primary text-center">All calculators</Link>
-            <Link href="/guaranteed-rent" className="btn-secondary text-center">Guaranteed rent</Link>
+      <style>{`
+        @keyframes countUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .stat-num { animation: countUp 0.6s ease both; }
+        .stat-num:nth-child(2) { animation-delay: 0.1s; }
+        .stat-num:nth-child(3) { animation-delay: 0.2s; }
+        .stat-num:nth-child(4) { animation-delay: 0.3s; }
+        .hero-line { animation: countUp 0.7s ease both; }
+        .hero-line:nth-child(1) { animation-delay: 0s; }
+        .hero-line:nth-child(2) { animation-delay: 0.2s; }
+        .hero-line:nth-child(3) { animation-delay: 0.35s; }
+        .hero-line:nth-child(4) { animation-delay: 0.5s; }
+        .step-card:hover { transform: translateY(-3px); }
+        .step-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .pillar-card:hover { border-color: #c9a84c; }
+        .pillar-card { transition: border-color 0.2s, box-shadow 0.2s; }
+        .pillar-card:hover { box-shadow: 0 8px 32px rgba(15,27,54,0.08); }
+        .blog-hero-card { background: #0f1b36; }
+        .blog-hero-card:hover { background: #1a2845; }
+        .blog-hero-card { transition: background 0.2s; }
+      `}</style>
+
+      {/* ── HERO ──────────────────────────────────────────── */}
+      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden" }}>
+        {/* Subtle grid texture */}
+        <div style={{
+          position: "absolute", inset: 0, pointerEvents: "none",
+          backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)",
+          backgroundSize: "60px 60px"
+        }} />
+        {/* Gold glow */}
+        <div style={{ position: "absolute", top: -100, right: -100, width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+
+        <div className="container-max px-4" style={{ paddingTop: 72, paddingBottom: 80, position: "relative", zIndex: 1 }}>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left: copy */}
+            <div>
+              <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c" }} />
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>100% Free · No sign-up required</span>
+              </div>
+
+              <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
+                Analyse deals,<br />
+                cut tax, and<br />
+                <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>grow your portfolio.</em>
+              </h1>
+
+              <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 36, maxWidth: 420 }}>
+                17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers.
+              </p>
+
+              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                <Link href="/calculators/deal-analyser" className="btn-gold">Analyse a deal</Link>
+                <Link href="/calculators" className="btn-primary" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.12)" }}>All calculators</Link>
+                <Link href="/guaranteed-rent" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.45)", padding: "10px 0" }}>
+                  Guaranteed rent <span style={{ fontSize: 12 }}>→</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: dashboard mockup */}
+            <div className="hero-line" style={{ position: "relative" }}>
+              {/* Main card */}
+              <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: 24, backdropFilter: "blur(8px)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                  <div>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Your portfolio</p>
+                    <p style={{ fontSize: 28, fontWeight: 800, color: "white" }}>£4,250</p>
+                    <p style={{ fontSize: 12, color: "rgba(201,168,76,0.8)", marginTop: 2 }}>▲ rent received this month</p>
+                  </div>
+                  <div style={{ background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 10, padding: "6px 12px" }}>
+                    <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c" }}>3 properties</p>
+                  </div>
+                </div>
+
+                {/* Mini bar chart */}
+                <div style={{ display: "flex", gap: 6, alignItems: "flex-end", height: 60, marginBottom: 16 }}>
+                  {[40, 65, 55, 80, 70, 90, 100].map((h, i) => (
+                    <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: 4, background: i === 6 ? "#c9a84c" : "rgba(255,255,255,0.1)" }} />
+                  ))}
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  {["Jan","Feb","Mar","Apr","May","Jun","Jul"].map(m => (
+                    <span key={m} style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>{m}</span>
+                  ))}
+                </div>
+
+                {/* Status rows */}
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 20, paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+                  {[
+                    { label: "Void periods", value: "0 days", dot: "#22c55e" },
+                    { label: "Next inspection", value: "14 Aug", dot: "#c9a84c" },
+                    { label: "Compliance", value: "Up to date ✓", dot: "#22c55e" },
+                  ].map(r => (
+                    <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ width: 6, height: 6, borderRadius: "50%", background: r.dot, flexShrink: 0 }} />
+                        <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{r.label}</span>
+                      </div>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>{r.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Floating yield card */}
+              <div style={{ position: "absolute", bottom: -20, left: -20, background: "white", borderRadius: 14, padding: "12px 16px", boxShadow: "0 12px 40px rgba(0,0,0,0.25)", minWidth: 140 }}>
+                <p style={{ fontSize: 10, color: "#a3a3a3", marginBottom: 2 }}>Gross yield</p>
+                <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36" }}>7.2%</p>
+                <p style={{ fontSize: 10, color: "#22c55e", fontWeight: 600 }}>▲ above market avg</p>
+              </div>
+            </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
-            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">17</p><p className="text-xs text-navy-400 mt-0.5">Free calculators</p></div>
-            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">40+</p><p className="text-xs text-navy-400 mt-0.5">Templates</p></div>
-            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">49</p><p className="text-xs text-navy-400 mt-0.5">Glossary terms</p></div>
-            <div><p className="text-2xl md:text-3xl font-extrabold text-navy-800">3</p><p className="text-xs text-navy-400 mt-0.5">Area guides</p></div>
+
+          {/* Bottom stats bar */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 64, paddingTop: 36, display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0 }}>
+            {[
+              { n: "17", l: "Free calculators" },
+              { n: "40+", l: "Templates" },
+              { n: "£0", l: "Sign-up cost" },
+              { n: "3–5yr", l: "Guaranteed leases" },
+            ].map((s, i) => (
+              <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none", padding: "0 16px" }}>
+                <p style={{ fontSize: 28, fontWeight: 800, color: "white", lineHeight: 1 }}>{s.n}</p>
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{s.l}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="border-t border-navy-100" />
+      {/* ── SHOCK STAT BANNER ─────────────────────────────── */}
+      <section style={{ background: "#c9a84c" }}>
+        <div className="container-max px-4" style={{ padding: "20px 16px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 16, textAlign: "center" }}>
+            <p style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36" }}>
+              UK landlords spend an average of <strong>£3,200/year</strong> on letting agent management fees.
+            </p>
+            <Link href="/guaranteed-rent" style={{ fontSize: 13, fontWeight: 700, background: "#0f1b36", color: "white", padding: "8px 18px", borderRadius: 20, textDecoration: "none", whiteSpace: "nowrap" }}>
+              See the alternative →
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      {/* Guaranteed Rent — Featured */}
-      <section className="bg-navy-50 py-16 md:py-20">
+      {/* ── THREE PILLARS ─────────────────────────────────── */}
+      <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-          <div className="bg-white rounded-3xl p-8 md:p-12 border border-navy-100 shadow-sm">
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-              <div>
-                <p className="text-xs font-semibold text-gold-600 uppercase tracking-widest mb-3">For landlords</p>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed rent in Birmingham, Nottingham &amp; Derby</h2>
-                <p className="text-navy-500 mb-6">We lease your property and pay you every month for 3-5 years. No voids, no management, no fees.</p>
-                <div className="flex flex-wrap gap-3">
-                  <Link href="/guaranteed-rent" className="btn-gold">Book free valuation</Link>
-                  <a href="https://wa.me/4407415721628?text=Hi%2C%20I%27m%20a%20landlord%20interested%20in%20guaranteed%20rent." target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center gap-2">
-                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    WhatsApp
-                  </a>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Why PropertyVault</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 52, letterSpacing: "-0.01em" }}>
+              Built for landlords who want<br />less hassle, more return
+            </h2>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+            {[
+              {
+                icon: (
+                  <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+                    <rect x="2" y="8" width="28" height="20" rx="4" fill="#0f1b36"/>
+                    <path d="M8 22V16" stroke="#c9a84c" strokeWidth="3" strokeLinecap="round"/>
+                    <path d="M14 22V12" stroke="#c9a84c" strokeWidth="3" strokeLinecap="round"/>
+                    <path d="M20 22V9" stroke="#c9a84c" strokeWidth="3" strokeLinecap="round"/>
+                    <path d="M26 22V6" stroke="#c9a84c" strokeWidth="3" strokeLinecap="round"/>
+                  </svg>
+                ),
+                title: "Earn more",
+                desc: "Guaranteed rent paid every month for 3–5 years. No void periods, no chasing tenants, no arrears.",
+                stat: "£0 voids",
+                href: "/guaranteed-rent",
+                cta: "Get guaranteed rent",
+              },
+              {
+                icon: (
+                  <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+                    <path d="M16 3L4 9v9c0 6.075 5.373 10.5 12 12 6.627-1.5 12-5.925 12-12V9L16 3z" fill="#0f1b36"/>
+                    <path d="M11 16l3.5 3.5L21 13" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                ),
+                title: "Stay protected",
+                desc: "Full management included. Legal compliance, property inspections, and maintenance coordination.",
+                stat: "100% covered",
+                href: "/landlord-hub",
+                cta: "Compliance guide",
+              },
+              {
+                icon: (
+                  <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+                    <rect x="4" y="4" width="24" height="24" rx="6" fill="#0f1b36"/>
+                    <circle cx="16" cy="14" r="4" stroke="#c9a84c" strokeWidth="2"/>
+                    <path d="M9 26c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
+                ),
+                title: "Stay in control",
+                desc: "No lock-ins. Direct contact with us, not a call centre. Transparent terms from day one.",
+                stat: "No lock-in",
+                href: "/guaranteed-rent",
+                cta: "How it works",
+              },
+            ].map(p => (
+              <div key={p.title} className="pillar-card" style={{ border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 32, display: "flex", flexDirection: "column" }}>
+                <div style={{ width: 56, height: 56, borderRadius: 16, background: "#f8f9fc", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                  {p.icon}
+                </div>
+                <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
+                <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
+                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
+                <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  {p.cta} <span style={{ color: "#c9a84c" }}>→</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── ALTERNATING SECTION 1: Guaranteed Rent ────────── */}
+      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
+            {/* Left: copy */}
+            <div>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>For landlords</p>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+                We pay your rent.<br />Every month.<br /><em style={{ fontStyle: "italic", fontWeight: 600, color: "#64748b" }}>Whether tenanted or not.</em>
+              </h2>
+              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
+                We take on your property on a 3–5 year lease and pay you a guaranteed monthly amount. No management fees, no void periods, no tenant hassle. We handle everything.
+              </p>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link href="/guaranteed-rent" className="btn-gold">Book free valuation</Link>
+                <a href="https://wa.me/4407415721628?text=Hi%2C%20I%27m%20a%20landlord%20interested%20in%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
+                  <svg width="18" height="18" fill="#22c55e" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                  WhatsApp us
+                </a>
+              </div>
+            </div>
+
+            {/* Right: stat cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              {[
+                { n: "3–5", l: "Year leases", sub: "long-term security" },
+                { n: "£0", l: "Management fees", sub: "ever" },
+                { n: "Zero", l: "Void periods", sub: "guaranteed" },
+                { n: "100%", l: "Hands-off", sub: "we handle everything" },
+              ].map(s => (
+                <div key={s.l} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
+                  <p style={{ fontSize: 26, fontWeight: 800, color: "#0f1b36", lineHeight: 1 }}>{s.n}</p>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginTop: 4 }}>{s.l}</p>
+                  <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>{s.sub}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS — Step cards ─────────────────────── */}
+      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Simple process</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "white", marginBottom: 52 }}>
+              Guaranteed rent in 3 steps
+            </h2>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+            {[
+              { step: "01", title: "Book a free valuation", desc: "Tell us about your property. We'll assess it and give you a guaranteed monthly figure — no obligation.", icon: "📋" },
+              { step: "02", title: "We take it on", desc: "We sign a 3–5 year lease and take over full management. You receive your first payment within days.", icon: "✍️" },
+              { step: "03", title: "You get paid — every month", desc: "We handle tenants, repairs, compliance, and inspections. Your rent lands in your account no matter what.", icon: "💷" },
+            ].map(s => (
+              <div key={s.step} className="step-card" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                  <span style={{ fontSize: 36 }}>{s.icon}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(201,168,76,0.5)", letterSpacing: "0.08em" }}>{s.step}</span>
+                </div>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: "white", marginBottom: 10 }}>{s.title}</h3>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.65 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ textAlign: "center", marginTop: 40 }}>
+            <Link href="/guaranteed-rent" className="btn-gold">Book your free valuation</Link>
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── ALTERNATING SECTION 2: Tools ──────────────────── */}
+      <section style={{ background: "white", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
+
+            {/* Left: tool cards visual */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              {[
+                { label: "Deal Analyser", tag: "Most used", href: "/calculators/deal-analyser" },
+                { label: "Stamp Duty", tag: "Calculator", href: "/calculators/stamp-duty" },
+                { label: "BRRR Strategy", tag: "Calculator", href: "/calculators/brrr" },
+                { label: "Rental Yield", tag: "Calculator", href: "/calculators/rental-yield" },
+                { label: "Mortgage", tag: "Calculator", href: "/calculators/mortgage" },
+                { label: "Section 24 Tax", tag: "Calculator", href: "/calculators/section-24" },
+              ].map(t => (
+                <Link key={t.label} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "16px 14px", textDecoration: "none", display: "block" }}
+                  className="hover:border-gold-300 transition-colors">
+                  <p style={{ fontSize: 10, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 4 }}>{t.tag}</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>{t.label}</p>
+                </Link>
+              ))}
+            </div>
+
+            {/* Right: copy */}
+            <div>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+                17 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
+              </h2>
+              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
+                From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
+              </p>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link href="/calculators" className="btn-gold">All 17 calculators</Link>
+                <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
+                  40+ templates
+                </Link>
+              </div>
+            </div>
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── VIDEO / TESTIMONIAL SECTION ───────────────────── */}
+      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
+            {/* Left: copy */}
+            <div>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Landlord success</p>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+                "Not a single void month in two years"
+              </h2>
+              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 8 }}>
+                Our landlords in Birmingham, Nottingham, and Derby tell us the same thing: guaranteed rent changed how they think about property.
+              </p>
+              <p style={{ fontSize: 14, color: "#94a3b8", marginBottom: 32 }}>No chasing rent. No tenant calls. No surprise costs.</p>
+              <Link href="/guaranteed-rent" className="btn-gold">See if your property qualifies</Link>
+            </div>
+
+            {/* Right: video placeholder (swap src for real video when ready) */}
+            <div style={{ position: "relative" }}>
+              <div style={{ background: "#0f1b36", borderRadius: 20, overflow: "hidden", aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                {/* Background pattern */}
+                <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+                {/* Play button */}
+                <a href="https://wa.me/4407415721628?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
+                  style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textDecoration: "none" }}>
+                  <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(201,168,76,0.4)" }}>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <p style={{ fontSize: 15, fontWeight: 700, color: "white", marginBottom: 4 }}>Speak with Nass</p>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>Free 15-min call · WhatsApp</p>
+                  </div>
+                </a>
+                {/* Corner badge */}
+                <div style={{ position: "absolute", top: 16, right: 16, background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, padding: "6px 12px" }}>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c" }}>Free consultation</p>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                {[
-                  { n: "3-5", l: "Year leases" },
-                  { n: "Zero", l: "Void periods" },
-                  { n: "100%", l: "Management included" },
-                ].map((s) => (
-                  <div key={s.l} className="bg-navy-50 rounded-2xl p-5 text-center">
-                    <p className="text-xl font-extrabold text-navy-800">{s.n}</p>
-                    <p className="text-xs text-navy-500 mt-1">{s.l}</p>
+
+              {/* Below-video trust badges */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginTop: 12 }}>
+                {["No fees", "No lock-in", "No agents"].map(b => (
+                  <div key={b} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 10, padding: "10px 8px", textAlign: "center" }}>
+                    <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>✓ {b}</p>
                   </div>
                 ))}
               </div>
@@ -73,28 +410,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Makan Promo */}
-      <section className="bg-white section-padding">
+      {/* ── MAKAN PROMO ───────────────────────────────────── */}
+      <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-          <Link href="/makan" className="group block rounded-3xl p-8 md:p-12 border-2 border-navy-100 hover:border-[#e8553d]/30 transition-all" style={{ background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)" }}>
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+          <Link href="/makan" style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #f0ece8", background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)", textDecoration: "none" }}
+            className="group hover:border-[#e8553d]/30 transition-all">
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40, alignItems: "center" }}>
               <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#e8553d" }}>
-                    <svg className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: "#e8553d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="22" height="22" viewBox="0 0 20 20" fill="white"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
                   </div>
-                  <span className="text-2xl font-bold tracking-tight text-navy-800">makan</span>
-                  <span className="px-2 py-0.5 bg-[#e8553d] text-white text-xs font-bold rounded-full">New</span>
+                  <span style={{ fontSize: 24, fontWeight: 800, color: "#0f1b36", letterSpacing: "-0.01em" }}>makan</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, background: "#e8553d", color: "white", padding: "3px 8px", borderRadius: 20 }}>New</span>
                 </div>
-                <h2 className="text-xl md:text-2xl font-extrabold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Find your place — free listings for everyone</h2>
-                <p className="text-navy-500 text-sm mb-4">Browse rooms, flats, and houses across Birmingham, Nottingham, and Derby. List your property for free. No agents, no fees, no catch.</p>
-                <span className="text-sm font-semibold group-hover:text-[#e8553d] transition-colors text-navy-800">Browse listings →</span>
+                <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#0f1b36", marginBottom: 10 }}>
+                  Free property listings — UK, Middle East & North Africa
+                </h2>
+                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>
+                  Browse rooms, flats, houses, and villas. List your property free. No agents, no fees, no catch — ever.
+                </p>
+                <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  Browse listings <span style={{ color: "#e8553d" }}>→</span>
+                </span>
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Free</p><p className="text-xs text-navy-400">To list</p></div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Free</p><p className="text-xs text-navy-400">To browse</p></div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Zero</p><p className="text-xs text-navy-400">Agent fees</p></div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>
+                {[
+                  { n: "Free", l: "To list" },
+                  { n: "Free", l: "To browse" },
+                  { n: "£0", l: "Agent fees" },
+                ].map(s => (
+                  <div key={s.l} style={{ background: "white", borderRadius: 16, padding: "20px 12px", textAlign: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                    <p style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36" }}>{s.n}</p>
+                    <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>{s.l}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </Link>
@@ -102,104 +453,84 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools — Clean grid, no emojis */}
-      <section className="bg-white section-padding">
+      {/* ── TOOLS GRID ────────────────────────────────────── */}
+      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-          <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-2 text-center">Free tools</p>
-          <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800 text-center mb-12" style={{ fontFamily: "var(--font-family-heading)" }}>Everything in one place</h2>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 48 }}>Everything in one place</h2>
           </FadeIn>
-
-          {/* Large feature cards */}
-          <div className="grid md:grid-cols-2 gap-5 mb-5">
-            <Link href="/calculators" className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
-              <div className="w-12 h-12 rounded-2xl bg-navy-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 16 }}>
+            <Link href="/calculators" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>
+              <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
               </div>
-              <h3 className="text-lg font-bold text-navy-800 mb-2 group-hover:text-gold-600 transition-colors">17 Free Calculators</h3>
-              <p className="text-sm text-navy-500 leading-relaxed mb-4">Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, bridging, flip ROI, and more.</p>
-              <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Explore →</span>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>17 Free Calculators</h3>
+              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, and more.</p>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
             </Link>
-            <Link href="/templates" className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
-              <div className="w-12 h-12 rounded-2xl bg-navy-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <Link href="/templates" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>
+              <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
-              <h3 className="text-lg font-bold text-navy-800 mb-2 group-hover:text-gold-600 transition-colors">40+ Templates &amp; Checklists</h3>
-              <p className="text-sm text-navy-500 leading-relaxed mb-4">Buyer, seller, landlord, and commercial property. Fillable forms, compliance trackers, and inventories.</p>
-              <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Explore →</span>
-            </Link>
-          </div>
-
-          {/* Smaller tool cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link href="/search" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
-              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#0f1b36" strokeWidth="2"/><path d="M13.5 13.5L17 17" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round"/></svg>
-              </div>
-              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Property Search</h3>
-              <p className="text-xs text-navy-400 mt-1">Rightmove, Zoopla &amp; more</p>
-            </Link>
-            <Link href="/areas" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
-              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><path d="M10 2C6.5 2 4 5 4 8.5C4 13 10 18 10 18s6-5 6-9.5C16 5 13.5 2 10 2z" fill="#c9a84c"/><circle cx="10" cy="8" r="2.5" fill="white"/></svg>
-              </div>
-              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Area Guides</h3>
-              <p className="text-xs text-navy-400 mt-1">Birmingham, Nottingham, Derby</p>
-            </Link>
-            <Link href="/property-investing" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
-              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" fill="#0f1b36"/><path d="M5 12l3-3 2 2 4-5" stroke="#c9a84c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </div>
-              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Expert Guides</h3>
-              <p className="text-xs text-navy-400 mt-1">BTL, BRRR, HMO, tax, law</p>
-            </Link>
-            <Link href="/glossary" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover">
-              <div className="w-10 h-10 rounded-xl bg-navy-50 flex items-center justify-center mb-3 group-hover:bg-gold-50 transition-colors">
-                <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" fill="#E8D5B7"/><text x="10" y="13" textAnchor="middle" fill="#0f1b36" fontSize="8" fontWeight="bold">A-Z</text></svg>
-              </div>
-              <h3 className="font-semibold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">Property Glossary</h3>
-              <p className="text-xs text-navy-400 mt-1">49 terms explained</p>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>40+ Templates</h3>
+              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
             </Link>
           </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12 }}>
+            {[
+              { href: "/search", label: "Property Search", sub: "Rightmove, Zoopla & more" },
+              { href: "/areas", label: "Area Guides", sub: "Birmingham, Nottingham, Derby" },
+              { href: "/property-investing", label: "Expert Guides", sub: "BTL, BRRR, HMO, tax, law" },
+              { href: "/glossary", label: "Property Glossary", sub: "49 terms explained" },
+            ].map(t => (
+              <Link key={t.href} href={t.href} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "20px 16px", textDecoration: "none", display: "block" }}
+                className="hover:border-gold-300 transition-colors">
+                <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>{t.label}</h3>
+                <p style={{ fontSize: 12, color: "#94a3b8" }}>{t.sub}</p>
+              </Link>
+            ))}
+          </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Blog — Asymmetric layout */}
-      <section className="bg-navy-50 section-padding">
+      {/* ── BLOG ──────────────────────────────────────────── */}
+      <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>From the blog</h2>
-            <Link href="/blog" className="text-sm font-semibold text-navy-500 hover:text-navy-800 transition-colors hidden sm:block">All articles →</Link>
+          <FadeIn>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "#0f1b36" }}>From the blog</h2>
+            <Link href="/blog" style={{ fontSize: 13, fontWeight: 600, color: "#64748b", textDecoration: "none" }}>All articles →</Link>
           </div>
-
-          <div className="grid md:grid-cols-5 gap-5">
-            <Link href="/blog/uk-property-market-2026" className="group md:col-span-3 block bg-navy-800 rounded-2xl p-8 md:p-10 relative overflow-hidden">
-              <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-6">New · June 2026</span>
-              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-3 group-hover:text-gold-400 transition-colors leading-tight" style={{ fontFamily: "var(--font-family-heading)" }}>UK Property Market 2026 — What Investors Need to Know</h3>
-              <p className="text-white/60 text-sm">Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+            <Link href="/blog/uk-property-market-2026" style={{ background: "#0f1b36", borderRadius: 20, padding: "36px 32px", textDecoration: "none", display: "block", gridColumn: "span 2" }}
+              className="blog-hero-card">
+              <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, color: "#c9a84c", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", padding: "4px 12px", borderRadius: 20, marginBottom: 20 }}>New · June 2026</span>
+              <h3 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 800, color: "white", marginBottom: 10, lineHeight: 1.25 }}>UK Property Market 2026 — What Investors Need to Know</h3>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
             </Link>
-
-            <div className="md:col-span-2 flex flex-col gap-5">
-              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover flex-1">
-                <p className="text-xs font-semibold text-navy-400 mb-2">Investing</p>
-                <h3 className="font-bold text-navy-800 group-hover:text-gold-600 transition-colors leading-snug">What Is the BRRR Strategy?</h3>
-              </Link>
-              <Link href="/blog/guaranteed-rent-explained" className="group block bg-white rounded-2xl border border-navy-100 p-6 card-hover flex-1">
-                <p className="text-xs font-semibold text-navy-400 mb-2">Landlords</p>
-                <h3 className="font-bold text-navy-800 group-hover:text-gold-600 transition-colors leading-snug">Guaranteed Rent — Is It Worth It?</h3>
-              </Link>
-            </div>
+            <Link href="/blog/brrr-strategy-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
+              className="hover:border-gold-300 transition-colors">
+              <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Investing</p>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>What Is the BRRR Strategy?</h3>
+            </Link>
+            <Link href="/blog/guaranteed-rent-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
+              className="hover:border-gold-300 transition-colors">
+              <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Landlords</p>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>Guaranteed Rent — Is It Worth It?</h3>
+            </Link>
           </div>
-          <div className="text-center mt-5 sm:hidden">
-            <Link href="/blog" className="text-sm font-semibold text-navy-500">All articles →</Link>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
-      {/* Quick Links */}
-      <section className="bg-white section-padding">
+      {/* ── QUICK LINKS ───────────────────────────────────── */}
+      <section style={{ background: "#f8f9fc", borderTop: "1px solid #e8eaf0", padding: "60px 0" }}>
         <div className="container-max px-4">
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 40, fontSize: 14 }}>
             {[
               { title: "For Landlords", links: [
                 { href: "/guaranteed-rent", label: "Guaranteed Rent" },
@@ -225,12 +556,12 @@ export default function Home() {
                 { href: "/sold-prices", label: "Sold Prices" },
                 { href: "/contact", label: "Contact" },
               ]},
-            ].map((group) => (
+            ].map(group => (
               <div key={group.title}>
-                <h3 className="font-semibold text-navy-800 mb-3">{group.title}</h3>
-                <ul className="space-y-2.5">
-                  {group.links.map((link) => (
-                    <li key={link.href}><Link href={link.href} className="text-navy-400 hover:text-navy-800 transition-colors">{link.label}</Link></li>
+                <h3 style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 14, fontSize: 13 }}>{group.title}</h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+                  {group.links.map(link => (
+                    <li key={link.href}><Link href={link.href} style={{ fontSize: 13, color: "#94a3b8", textDecoration: "none" }} className="hover:text-navy-800 transition-colors">{link.label}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -239,15 +570,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-navy-800">
-        <div className="container-max px-4 py-16 md:py-20 text-center">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Start making smarter property decisions</h2>
-          <p className="text-white/50 mb-8 max-w-md mx-auto text-sm">Free forever. No sign-up. No paywalls.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/calculators" className="btn-gold text-center">Explore calculators</Link>
-            <Link href="/guaranteed-rent" className="btn-outline !border-white/20 !text-white hover:!bg-white/5 text-center">Guaranteed rent</Link>
-          </div>
+      {/* ── FINAL CTA ─────────────────────────────────────── */}
+      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+        <div className="container-max px-4" style={{ textAlign: "center" }}>
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "white", marginBottom: 16, letterSpacing: "-0.01em" }}>
+              Start making smarter<br />
+              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>property decisions.</em>
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.35)", marginBottom: 36, fontSize: 15, maxWidth: 400, margin: "0 auto 36px" }}>Free forever. No sign-up. No paywalls. No catch.</p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/calculators" className="btn-gold">Explore calculators</Link>
+              <Link href="/guaranteed-rent" style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.6)", padding: "12px 24px", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, textDecoration: "none" }}>
+                Guaranteed rent →
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </section>
     </>
