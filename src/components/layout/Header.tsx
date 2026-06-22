@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 const mainLinks = [
   { href: "/calculators", label: "Calculators" },
   { href: "/templates", label: "Templates" },
+  { href: "/areas", label: "Areas" },
   { href: "/blog", label: "Blog" },
   { href: "/property-investing", label: "Learn" },
 ];
@@ -15,10 +16,12 @@ const mobileLinks = [
     { href: "/search", label: "Search Properties" },
     { href: "/sold-prices", label: "Sold Prices" },
     { href: "/valuation", label: "Free Valuation" },
+    { href: "/areas", label: "Area Guides" },
     { href: "/area-guide", label: "Area Research" },
   ]},
   { heading: "Tools & Calculators", links: [
-    { href: "/calculators", label: "All Calculators (15)" },
+    { href: "/calculators/deal-analyser", label: "Deal Analyser" },
+    { href: "/calculators", label: "All Calculators (17)" },
     { href: "/tools", label: "Property Tools" },
     { href: "/templates", label: "Templates & Checklists" },
     { href: "/glossary", label: "Property Glossary" },
