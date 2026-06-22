@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useMemo, Suspense } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
@@ -14,6 +13,21 @@ const faqs = [
   { q: "What is cash-on-cash return?", a: "Cash-on-cash return measures the annual pre-tax cash flow as a percentage of the total cash you invested. A cash-on-cash return of 10%+ is considered strong for UK property." },
   { q: "How does Section 24 affect my returns?", a: "Section 24 restricts mortgage interest deductions for individual landlords. Higher-rate taxpayers only get a 20% tax credit on mortgage interest, not full deduction. This can significantly reduce post-tax income and is why many investors use limited companies." },
 ];
+
+interface AreaData {
+  postcode: string;
+  region: string;
+  district: string;
+  county: string;
+  ward: string;
+  constituency: string;
+  lat: number;
+  lng: number;
+  crime: { total: number; level: string; color: string; month: string; topCategories: { label: string; count: number }[] };
+  sales: { recent: Sale[]; avgPrice: number };
+  suggestedCity: string;
+}
+interface Sale { date: string; price: number; type: string; tenure: string; address: string; newBuild: boolean; }
 
 // SDLT calculator (England, April 2025 rates)
 function calcSDLT(price: number, additionalProperty: boolean): number {
@@ -91,17 +105,16 @@ function DealScoreGauge({ score }: { score: number }) {
   );
 }
 
-export default function DealAnalyserPageWrapper() {
-  return (
-    <Suspense fallback={<div className="container-max px-4 py-20 text-center text-navy-400">Loading calculator...</div>}>
-      <DealAnalyserPage />
-    </Suspense>
-  );
-}
-
-function DealAnalyserPage() {
-  const searchParams = useSearchParams();
-  const gp = (key: string, fallback: number) => { const v = searchParams.get(key); return v ? Number(v) : fallback; };
+export default function DealAnalyserPage() {
+  const gp = (key: string, fallback: number) => {
+    if (typeof window === "undefined") return fallback;
+    const v = new URLSearchParams(window.location.search).get(key);
+    return v ? Number(v) : fallback;
+  };
+  const gps = (key: string, fallback: string) => {
+    if (typeof window === "undefined") return fallback;
+    return new URLSearchParams(window.location.search).get(key) ?? fallback;
+  };
 
   // ── Inputs ──────────────────────────────────────────────
   const [purchasePrice, setPurchasePrice] = useState(() => gp("pp", 180000));
@@ -111,7 +124,7 @@ function DealAnalyserPage() {
   const [depositPct, setDepositPct]       = useState(() => gp("dp", 25));
   const [mortgageRate, setMortgageRate]   = useState(() => gp("rate", 5.5));
   const [mortgageTerm, setMortgageTerm]   = useState(() => gp("term", 25));
-  const [mortgageType, setMortgageType]   = useState<"interest"|"repayment">(() => searchParams.get("mt") === "repayment" ? "repayment" : "interest");
+  const [mortgageType, setMortgageType]   = useState<"interest"|"repayment">(() => gps("mt", "interest") === "repayment" ? "repayment" : "interest");
   const [managementPct, setManagementPct] = useState(() => gp("mgmt", 10));
   const [maintenancePct, setMaintPct]     = useState(() => gp("maint", 10));
   const [insuranceMonthly, setInsurance]  = useState(() => gp("ins", 30));
@@ -123,6 +136,36 @@ function DealAnalyserPage() {
   const [cityBenchmark, setCityBenchmark] = useState("nottingham");
   const [capitalGrowthPct, setCapGrowth] = useState(3);
   const [activeSection, setActiveSection] = useState<"overview"|"stress"|"projection"|"tax"|"brrr">("overview");
+
+  // ── Postcode lookup ──────────────────────────────────────
+  const [postcodeInput, setPostcodeInput]   = useState("");
+  const [postcodeLoading, setPostcodeLoading] = useState(false);
+  const [postcodeError, setPostcodeError]   = useState("");
+  const [areaData, setAreaData]             = useState<AreaData | null>(null);
+
+  const lookupPostcode = async () => {
+    const pc = postcodeInput.trim().toUpperCase();
+    if (!pc) return;
+    setPostcodeLoading(true);
+    setPostcodeError("");
+    setAreaData(null);
+    try {
+      const res = await fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(pc)}`);
+      const json = await res.json();
+      if (!res.ok) { setPostcodeError(json.error ?? "Lookup failed"); return; }
+      setAreaData(json);
+      // Auto-set benchmark city from region
+      if (json.suggestedCity) setCityBenchmark(json.suggestedCity);
+      // Suggest avg price as purchase price if we have data and user hasn't changed default
+      if (json.sales?.avgPrice > 0 && purchasePrice === 180000) {
+        setPurchasePrice(Math.round(json.sales.avgPrice / 5000) * 5000);
+      }
+    } catch {
+      setPostcodeError("Network error — please try again.");
+    } finally {
+      setPostcodeLoading(false);
+    }
+  };
 
   // Auto SDLT
   const sdlt = useMemo(() => calcSDLT(purchasePrice, additionalProperty), [purchasePrice, additionalProperty]);
@@ -244,7 +287,6 @@ function DealAnalyserPage() {
 
   const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
   const fmt2 = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 2 }).format(n);
-  const pct  = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
 
   // ── Smart Insights ───────────────────────────────────────
   const insights = useMemo(() => {
@@ -322,6 +364,108 @@ function DealAnalyserPage() {
 
             {/* ── INPUTS ─────────────────────────────────────── */}
             <div className="lg:col-span-2 space-y-4">
+
+              {/* Postcode lookup */}
+              <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                <h3 className="font-bold text-navy-800 text-sm mb-1">📍 Property Postcode</h3>
+                <p className="text-xs text-navy-400 mb-3">Get area intelligence — crime data, recent sold prices, and market context.</p>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input
+                    type="text"
+                    value={postcodeInput}
+                    onChange={e => setPostcodeInput(e.target.value.toUpperCase())}
+                    onKeyDown={e => e.key === "Enter" && lookupPostcode()}
+                    placeholder="e.g. NG1 1AA"
+                    maxLength={8}
+                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 14, fontWeight: 600, outline: "none", textTransform: "uppercase", letterSpacing: "0.04em" }}
+                  />
+                  <button
+                    onClick={lookupPostcode}
+                    disabled={postcodeLoading || !postcodeInput.trim()}
+                    style={{ padding: "10px 18px", background: postcodeLoading || !postcodeInput.trim() ? "#94a3b8" : "#0f1b36", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: postcodeLoading || !postcodeInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
+                  >
+                    {postcodeLoading ? "Looking up…" : "Look up"}
+                  </button>
+                </div>
+                {postcodeError && (
+                  <p style={{ fontSize: 12, color: "#dc2626", marginTop: 8, fontWeight: 500 }}>⚠️ {postcodeError}</p>
+                )}
+
+                {/* Area Intelligence results */}
+                {areaData && (
+                  <div style={{ marginTop: 16, borderTop: "1px solid #e2e8f0", paddingTop: 14 }}>
+                    {/* Area header */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+                      <div>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36" }}>{areaData.postcode}</p>
+                        <p style={{ fontSize: 12, color: "#64748b" }}>{[areaData.district, areaData.county, areaData.region].filter(Boolean).join(" · ")}</p>
+                        <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>{areaData.ward} ward · {areaData.constituency}</p>
+                      </div>
+                      <a
+                        href={`https://www.google.com/maps?q=${areaData.lat},${areaData.lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontSize: 11, color: "#c9a84c", fontWeight: 600, textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
+                        Map
+                      </a>
+                    </div>
+
+                    {/* Crime */}
+                    <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0", marginBottom: 10 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🚨 Crime ({areaData.crime.month})</span>
+                        <span style={{ fontSize: 13, fontWeight: 800, color: areaData.crime.color }}>{areaData.crime.level} — {areaData.crime.total} incidents</span>
+                      </div>
+                      {areaData.crime.topCategories.length > 0 && (
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 8px" }}>
+                          {areaData.crime.topCategories.map(c => (
+                            <span key={c.label} style={{ fontSize: 10, color: "#64748b", background: "white", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>
+                              {c.label} ({c.count})
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 4 }}>Source: data.police.uk — crimes within ~1 mile</p>
+                    </div>
+
+                    {/* Recent sold prices */}
+                    {areaData.sales.recent.length > 0 ? (
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏠 Recent Sold Prices</span>
+                          {areaData.sales.avgPrice > 0 && (
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>Avg: <strong style={{ color: "#c9a84c" }}>£{areaData.sales.avgPrice.toLocaleString()}</strong></span>
+                          )}
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                          {areaData.sales.recent.slice(0, 5).map((s, i) => (
+                            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: i < 4 ? "1px solid #e2e8f0" : "none" }}>
+                              <div>
+                                <p style={{ fontSize: 11, fontWeight: 600, color: "#374151" }}>{s.address || s.type}</p>
+                                <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.type} · {s.tenure} {s.newBuild ? "· New Build" : ""} · {s.date.slice(0, 7)}</p>
+                              </div>
+                              <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", flexShrink: 0, marginLeft: 8 }}>
+                                £{s.price.toLocaleString()}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 6 }}>Source: HM Land Registry Price Paid Data</p>
+                      </div>
+                    ) : (
+                      <p style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
+                    )}
+
+                    {areaData.suggestedCity && (
+                      <p style={{ fontSize: 11, color: "#64748b", marginTop: 8 }}>
+                        📊 Benchmark auto-set to <strong>{BENCHMARKS[areaData.suggestedCity]?.name}</strong> based on region.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
 
               {/* Property */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
