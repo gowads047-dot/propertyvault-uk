@@ -1,98 +1,122 @@
-"use client";
+import type { Metadata } from "next";
 
-import { useState } from "react";
+export const metadata: Metadata = {
+  title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
+  description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
+  keywords: "property glossary, property terms explained, buy to let glossary, property investment terminology, UK property definitions",
+};
 
-const glossaryTerms = [
-  { term: "AST (Assured Shorthold Tenancy)", def: "The most common type of tenancy in England. A tenancy agreement between a private landlord and tenant, giving the tenant the right to live in the property for a set period." },
-  { term: "ARV (After Repair Value)", def: "The estimated market value of a property after refurbishment works are completed. Used in BRRR and flip deal analysis." },
-  { term: "BMV (Below Market Value)", def: "A property offered for sale at a price below its current market valuation, often from motivated sellers." },
-  { term: "Bridging Finance", def: "Short-term loans (typically 1-18 months) used for property purchases, refurbishments, or chain-break situations. Higher interest rates than mortgages, charged monthly." },
-  { term: "BRRR", def: "Buy, Refurbish, Rent, Refinance — a property investment strategy where you buy below market value, add value through refurbishment, rent the property, then refinance to recycle your capital." },
-  { term: "BTL (Buy-to-Let)", def: "Purchasing a property specifically to rent it out to tenants, generating rental income and potential capital growth." },
-  { term: "Capital Gains Tax (CGT)", def: "Tax paid on the profit when you sell a property that is not your main home. Residential property rates are 18% (basic rate) and 24% (higher rate) from October 2024." },
-  { term: "Chain", def: "A sequence of linked property transactions where each buyer is also selling a property. Chain-free means the buyer has no property to sell." },
-  { term: "Commonhold", def: "A form of property ownership for flats where each owner holds a freehold share. No ground rent or lease expiry. Managed by a commonhold association." },
-  { term: "Completion", def: "The final stage of a property purchase when ownership legally transfers, the balance of funds is paid, and keys are handed over." },
-  { term: "Conveyancing", def: "The legal process of transferring property ownership from seller to buyer. Carried out by a solicitor or licensed conveyancer." },
-  { term: "Covenant", def: "A legal obligation or restriction attached to a property's title. Can restrict what you can do with the property." },
-  { term: "Deposit Protection", def: "Legal requirement for landlords to protect tenants' deposits in a government-approved scheme (DPS, MyDeposits, or TDS) within 30 days of receipt." },
-  { term: "Dilapidations", def: "The cost of repairs and reinstatement required at the end of a lease to return a property to its original condition. Common in commercial leases." },
-  { term: "EPC (Energy Performance Certificate)", def: "A rating from A (most efficient) to G (least efficient) showing a property's energy performance. Legal requirement for selling or renting. Minimum E for rental properties." },
-  { term: "EICR (Electrical Installation Condition Report)", def: "A report on the safety of a property's electrical installation. Required every 5 years for rental properties in England." },
-  { term: "Equity", def: "The difference between a property's market value and the outstanding mortgage balance. Equity = Value - Mortgage." },
-  { term: "Exchange of Contracts", def: "The point at which both buyer and seller are legally committed to the transaction. The buyer pays a deposit (usually 10%) and a completion date is set." },
-  { term: "FHL (Furnished Holiday Let)", def: "A property let as furnished holiday accommodation that meets HMRC criteria (available 210+ days, let 105+ days per year). Offers specific tax advantages." },
-  { term: "Freehold", def: "Outright ownership of both the property and the land it sits on, indefinitely. The owner has full control and no ground rent." },
-  { term: "GDV (Gross Development Value)", def: "The total market value of a completed development. Used to assess the viability of property development projects." },
-  { term: "Ground Rent", def: "An annual charge paid by a leaseholder to the freeholder. The Leasehold Reform Act 2022 set new ground rents on new leases to zero (a peppercorn)." },
-  { term: "Gross Yield", def: "Annual rental income divided by the purchase price, expressed as a percentage. Does not account for expenses. Formula: (Annual Rent ÷ Price) × 100." },
-  { term: "HMO (House in Multiple Occupation)", def: "A property rented to 3+ people from 2+ separate households who share facilities. Subject to additional licensing and safety requirements." },
-  { term: "ICR (Interest Coverage Ratio)", def: "A lender's test that rental income must cover mortgage payments by a set ratio (usually 125-145% at a stress rate). Used for BTL mortgage affordability." },
-  { term: "Leasehold", def: "Ownership of a property for a set term (typically 99-999 years) but not the land. Common with flats. Subject to ground rent, service charges, and lease conditions." },
-  { term: "LTV (Loan-to-Value)", def: "The mortgage amount as a percentage of the property value. A £150,000 mortgage on a £200,000 property = 75% LTV." },
-  { term: "Negative Equity", def: "When a property is worth less than the outstanding mortgage balance. Can occur during market downturns." },
-  { term: "Net Yield", def: "Annual rental income minus operating expenses, divided by purchase price. Gives a more realistic picture of returns than gross yield." },
-  { term: "Permitted Development (PD)", def: "Certain types of development that can be carried out without formal planning permission, subject to conditions. Includes some extensions and changes of use." },
-  { term: "PPD (Price Paid Data)", def: "HM Land Registry data showing the sale price of every residential property transaction in England and Wales. Publicly available and free." },
-  { term: "Rent-to-Rent", def: "Leasing a property from a landlord and subletting it at a higher rent (with the landlord's consent). The operator keeps the margin." },
-  { term: "RICS", def: "Royal Institution of Chartered Surveyors — the professional body for surveyors and valuers. RICS-registered surveyors follow strict professional standards." },
-  { term: "Right to Rent", def: "Legal requirement for landlords in England to verify that tenants have the legal right to rent in the UK before the tenancy starts. Penalties of up to £20,000." },
-  { term: "SA (Serviced Accommodation)", def: "Fully furnished short-term rental property, typically booked nightly or weekly through platforms like Airbnb and Booking.com." },
-  { term: "SDLT (Stamp Duty Land Tax)", def: "Tax paid on property purchases in England and Northern Ireland above certain thresholds. Additional 5% surcharge on second homes and investment properties." },
-  { term: "Section 8", def: "A notice seeking possession of a rental property on specific grounds (e.g., rent arrears, breach of tenancy). Ground 8 is mandatory for 2+ months arrears." },
-  { term: "Section 21", def: "A no-fault possession notice giving tenants 2 months to leave. The government plans to abolish Section 21 through the Renters' Reform Bill." },
-  { term: "Section 24", def: "Tax rule (since April 2020) that prevents individual landlords from deducting mortgage interest from rental income. Instead, a 20% tax credit is given." },
-  { term: "Service Charge", def: "Fees paid by leaseholders towards the maintenance and management of a building's communal areas, structure, and services." },
-  { term: "SPV (Special Purpose Vehicle)", def: "A limited company set up specifically to hold property. Used for tax efficiency — mortgage interest is fully deductible and corporation tax applies instead of income tax." },
-  { term: "SRA", def: "Solicitors Regulation Authority — the regulatory body for solicitors in England and Wales. SRA-regulated solicitors must follow professional conduct rules." },
-  { term: "Stamp Duty Surcharge", def: "An additional 5% (increased from 3% in October 2024) charged on top of standard SDLT rates for additional property purchases (second homes, BTL)." },
-  { term: "Tenure", def: "The way a property is held — freehold (own outright), leasehold (own for a set term), or commonhold (shared freehold)." },
-  { term: "Void Period", def: "A period when a rental property is empty between tenants, generating no income. Typically 2-4 weeks per year." },
-  { term: "Yield", def: "The annual return on a property investment, usually expressed as a percentage. Can be calculated as gross yield (before expenses) or net yield (after expenses)." },
+const terms = [
+  { term: "ARV (After Refurbishment Value)", def: "The estimated market value of a property after renovation works are completed. Used in BRRR and flip strategies to calculate potential profit and refinance amounts." },
+  { term: "AST (Assured Shorthold Tenancy)", def: "The most common type of tenancy in England and Wales. Gives the tenant the right to stay for a fixed term (usually 6 or 12 months) with a minimum notice period." },
+  { term: "Below Market Value (BMV)", def: "A property priced below its true market value. Often found through motivated sellers, auctions, or direct-to-vendor marketing. Key to BRRR and flip strategies." },
+  { term: "Bridging Loan", def: "Short-term finance (typically 1-18 months) used to bridge a gap — for example, buying at auction before a mortgage completes, or funding a refurb before refinancing." },
+  { term: "BRRR", def: "Buy, Refurbish, Refinance, Rent. A strategy where you buy below market value, renovate, refinance to pull your capital out, then rent the property. Goal is to recycle your deposit." },
+  { term: "Buy-to-Let (BTL)", def: "Purchasing a property specifically to rent out to tenants. Requires a buy-to-let mortgage (not a residential one) and typically a 25% deposit." },
+  { term: "Capital Gains Tax (CGT)", def: "Tax paid on profit when selling a property that isn't your main home. Rates are 18% (basic rate) and 24% (higher rate) for residential property from October 2024." },
+  { term: "Capital Growth", def: "The increase in a property's value over time. Some areas prioritise capital growth (e.g., London, premium suburbs) while others prioritise rental yield." },
+  { term: "Cash Flow", def: "The net money left each month after all costs (mortgage, management, maintenance, insurance, voids) are deducted from rental income. Positive cash flow means profit." },
+  { term: "Cash-on-Cash Return", def: "Annual pre-tax cash flow divided by total cash invested. Measures how hard your actual cash is working. A 10%+ cash-on-cash return is considered strong." },
+  { term: "Chain", def: "A sequence of linked property transactions where each sale depends on the next. Being 'chain-free' (e.g., first-time buyer or cash buyer) is an advantage." },
+  { term: "Completion", def: "The final stage of a property purchase when ownership legally transfers, keys are handed over, and the purchase price is paid. Stamp duty is due on this date." },
+  { term: "Conveyancing", def: "The legal process of transferring property ownership from seller to buyer. Handled by a solicitor or licensed conveyancer. Typically costs £1,000-£2,000." },
+  { term: "Covenant", def: "A legal obligation attached to a property, such as restrictions on use, alterations, or development. Check covenants before purchasing — they can limit investment potential." },
+  { term: "Deal Sourcer", def: "Someone who finds below-market-value properties for investors in exchange for a fee (typically £3,000-£7,000). Must be transparent about fees and not mislead on values." },
+  { term: "Deposit", def: "The upfront cash paid when buying a property. Buy-to-let mortgages typically require 25% deposit. Residential mortgages can be as low as 5-10%." },
+  { term: "Disbursements", def: "Additional costs paid by your solicitor on your behalf during conveyancing — searches, Land Registry fees, bank transfer fees. Typically £300-£500 on top of legal fees." },
+  { term: "EPC (Energy Performance Certificate)", def: "A rating from A (most efficient) to G (least efficient) showing a property's energy efficiency. Rental properties must have a minimum E rating. A C rating may be required from 2028." },
+  { term: "Equity", def: "The difference between a property's market value and the outstanding mortgage. Equity increases as you pay down the mortgage and/or the property value rises." },
+  { term: "Exchange of Contracts", def: "The point at which the sale becomes legally binding. Both parties sign contracts and the buyer pays a deposit (usually 10%). Pulling out after exchange incurs penalties." },
+  { term: "Freehold", def: "Outright ownership of both the building and the land it sits on. Most houses are freehold. Preferred over leasehold for investment as there are no ground rent or service charges to a freeholder." },
+  { term: "Gross Yield", def: "Annual rental income divided by the property purchase price, expressed as a percentage. A simple but incomplete measure — doesn't account for any costs." },
+  { term: "Ground Rent", def: "An annual charge paid by a leaseholder to the freeholder. Can be a nominal amount (£50-£250/year) or escalating. The Leasehold Reform Act 2022 set new ground rents to zero for new leases." },
+  { term: "Guaranteed Rent", def: "A scheme where a company leases your property and pays you a fixed rent regardless of occupancy. Removes void risk and management hassle. Typically 3-5 year contracts." },
+  { term: "HMO (House in Multiple Occupation)", def: "A property rented by 3+ tenants from 2+ households who share facilities. Requires an HMO licence if 5+ tenants. Higher yields but more regulation and management." },
+  { term: "ICR (Interest Cover Ratio)", def: "A lender's test that rental income must exceed mortgage interest by a set ratio (typically 125-145% at a stress rate of 5.5%). Determines how much you can borrow." },
+  { term: "Joint Venture (JV)", def: "A partnership between two or more parties to invest in property. One may provide capital, the other expertise or time. Requires a clear JV agreement." },
+  { term: "Land Registry", def: "The government body that records property ownership in England and Wales. All property sales must be registered. Title information can be purchased for £3 per property." },
+  { term: "Leasehold", def: "Ownership of a property for a fixed term (e.g., 99 or 125 years) but not the land. Common with flats. Short leases (under 80 years) significantly reduce value and mortgageability." },
+  { term: "LTV (Loan-to-Value)", def: "The mortgage amount as a percentage of the property value. A 75% LTV means you're borrowing 75% and putting down 25% deposit. Lower LTV usually means better rates." },
+  { term: "Market Value", def: "The price a property would reasonably sell for on the open market. Determined by comparable sales, location, condition, and demand. Different from the asking price." },
+  { term: "Mortgage Offer", def: "A formal offer from a lender to provide a mortgage on specific terms. Typically valid for 3-6 months. Subject to conditions like satisfactory survey and legal checks." },
+  { term: "Net Yield", def: "Annual rental income minus all costs (mortgage, management, maintenance, insurance, voids), divided by the purchase price. The real measure of investment return." },
+  { term: "No-Fault Eviction (Section 21)", def: "A landlord's ability to evict a tenant without giving a reason after the fixed term ends. Being reformed under the Renters Reform Bill — landlords will need specific grounds." },
+  { term: "RICS Valuation", def: "A formal property valuation by a Royal Institution of Chartered Surveyors member. Required by most mortgage lenders. Different from an estate agent's opinion of value." },
+  { term: "Rental Yield", def: "The annual return on a property investment from rent, expressed as a percentage. Can be gross (before costs) or net (after costs). The most common measure of BTL performance." },
+  { term: "Remortgage", def: "Switching your existing mortgage to a new deal, either with the same or a different lender. Usually done when a fixed rate ends to avoid the lender's SVR (standard variable rate)." },
+  { term: "Right to Rent", def: "A legal requirement for landlords in England to check that tenants have the right to live in the UK before granting a tenancy. Failure to check can result in fines up to £20,000." },
+  { term: "SDLT (Stamp Duty Land Tax)", def: "Tax paid on property purchases in England and Northern Ireland. Rates start at 0% up to £125,000, rising to 12% above £1.5m. An additional 5% surcharge applies to second homes." },
+  { term: "Section 24", def: "Tax rule (fully phased in from April 2020) that prevents landlords from deducting mortgage interest from rental income. Instead, a 20% tax credit is given. Hits higher-rate taxpayers hardest." },
+  { term: "Service Charge", def: "An annual charge for the maintenance of communal areas in a leasehold property — cleaning, repairs, insurance, management. Can be £1,000-£5,000+/year and erode yield significantly." },
+  { term: "SPV (Special Purpose Vehicle)", def: "A limited company set up specifically to hold property. Avoids Section 24, allows mortgage interest as a business expense, and corporation tax (25%) may be lower than personal income tax." },
+  { term: "Stress Test", def: "A lender's assessment of whether you can afford mortgage payments if interest rates rise. BTL lenders typically stress test at 5.5% even if your actual rate is lower." },
+  { term: "Survey", def: "A professional inspection of a property's condition. Types range from basic (Level 1/Condition Report) to full structural (Level 3/Building Survey). Essential before purchase." },
+  { term: "Tenancy Deposit Scheme", def: "A legal requirement in England to protect tenant deposits in a government-approved scheme (DPS, MyDeposits, or TDS) within 30 days. Failure allows tenants to claim 1-3x the deposit." },
+  { term: "Title Deeds", def: "Legal documents proving ownership of a property. Now mostly held electronically by the Land Registry. Include details of boundaries, rights of way, and any restrictions." },
+  { term: "Vacant Possession", def: "A property sold empty with no tenants or occupants. Required for most residential mortgages. BTL properties can be sold with tenants in situ." },
+  { term: "Void Period", def: "Time when a rental property is empty between tenants. No rent is received but costs continue. Typically 2-4 weeks per year. Reducing voids is key to maximising returns." },
+  { term: "Yield", def: "The annual return on an investment expressed as a percentage. In property, usually refers to rental yield — gross yield (rent/price) or net yield (rent minus costs/price)." },
 ];
 
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+
 export default function GlossaryPage() {
-  const [search, setSearch] = useState("");
-  const [activeLetter, setActiveLetter] = useState("");
+  const grouped = alphabet.reduce((acc, letter) => {
+    const matching = terms.filter(t => t.term.charAt(0).toUpperCase() === letter);
+    if (matching.length > 0) acc[letter] = matching;
+    return acc;
+  }, {} as Record<string, typeof terms>);
 
-  const letters = [...new Set(glossaryTerms.map(t => t.term[0].toUpperCase()))].sort();
-
-  const filtered = glossaryTerms.filter(t => {
-    const matchSearch = !search || t.term.toLowerCase().includes(search.toLowerCase()) || t.def.toLowerCase().includes(search.toLowerCase());
-    const matchLetter = !activeLetter || t.term[0].toUpperCase() === activeLetter;
-    return matchSearch && matchLetter;
-  });
+  const activeLetters = Object.keys(grouped);
 
   return (
     <>
-      <section className="gradient-navy py-16 md:py-20">
-        <div className="container-max px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Property Glossary</h1>
-          <p className="text-navy-200 max-w-2xl mx-auto">Every UK property term explained in plain English. {glossaryTerms.length} definitions covering investing, mortgages, law, tax, and more.</p>
+      <section className="bg-white py-16 md:py-24">
+        <div className="container-max px-4">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Reference</p>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Glossary</h1>
+            <p className="text-navy-500">{terms.length} essential UK property terms explained in plain English. From ARV to yield — everything investors, landlords, and buyers need to know.</p>
+          </div>
         </div>
       </section>
 
-      <section className="section-padding bg-white">
-        <div className="container-max max-w-3xl">
-          <input type="text" value={search} onChange={(e) => { setSearch(e.target.value); setActiveLetter(""); }}
-            placeholder="Search terms..."
-            className="w-full px-4 py-3 border border-navy-200 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+      <div className="border-t border-navy-100" />
 
-          <div className="flex flex-wrap gap-1 mb-6">
-            <button onClick={() => setActiveLetter("")} className={`px-2.5 py-1 rounded text-sm font-medium ${!activeLetter ? "bg-navy-600 text-white" : "bg-navy-50 text-navy-600 hover:bg-navy-100"}`}>All</button>
-            {letters.map(l => (
-              <button key={l} onClick={() => { setActiveLetter(l === activeLetter ? "" : l); setSearch(""); }}
-                className={`px-2.5 py-1 rounded text-sm font-medium ${activeLetter === l ? "bg-navy-600 text-white" : "bg-navy-50 text-navy-600 hover:bg-navy-100"}`}>{l}</button>
+      {/* Alphabet Navigation */}
+      <section className="bg-white sticky top-0 z-10 border-b border-navy-100">
+        <div className="container-max px-4 py-3">
+          <div className="flex flex-wrap gap-1">
+            {alphabet.map(letter => (
+              <a
+                key={letter}
+                href={activeLetters.includes(letter) ? `#letter-${letter}` : undefined}
+                className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${activeLetters.includes(letter) ? "bg-navy-800 text-white hover:bg-gold-500" : "bg-navy-50 text-navy-300 cursor-default"}`}
+              >
+                {letter}
+              </a>
             ))}
           </div>
+        </div>
+      </section>
 
-          <p className="text-sm text-navy-500 mb-4">{filtered.length} term{filtered.length !== 1 ? "s" : ""}</p>
-
-          <div className="space-y-3">
-            {filtered.map(t => (
-              <div key={t.term} className="bg-white rounded-xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800">{t.term}</h3>
-                <p className="text-sm text-navy-600 mt-1">{t.def}</p>
+      <section className="bg-navy-50 section-padding">
+        <div className="container-max px-4 max-w-3xl">
+          <div className="space-y-8">
+            {activeLetters.map(letter => (
+              <div key={letter} id={`letter-${letter}`} className="scroll-mt-20">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-navy-800 text-white flex items-center justify-center font-extrabold text-lg">{letter}</div>
+                  <div className="flex-1 h-px bg-navy-200" />
+                </div>
+                <div className="space-y-3">
+                  {grouped[letter].map(t => (
+                    <div key={t.term} className="bg-white rounded-2xl border border-navy-100 p-5">
+                      <h3 className="font-bold text-navy-800 mb-1">{t.term}</h3>
+                      <p className="text-sm text-navy-500 leading-relaxed">{t.def}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>

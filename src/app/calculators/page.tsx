@@ -2,11 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Calculators UK — 16 Tools for Investors & Landlords | PropertyVault UK",
-  description: "16 free UK property calculators. Mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, affordability, remortgage, bridging, flip ROI, and more.",
+  title: "Free Property Calculators UK — 17 Tools for Investors & Landlords | PropertyVault UK",
+  description: "17 free UK property calculators. Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, affordability, remortgage, bridging, flip ROI, and more.",
 };
 
 const calculators = [
+  {
+    title: "Deal Analyser", desc: "Analyse any deal from 4 perspectives — yield, cash flow, and cash-on-cash return.", href: "/calculators/deal-analyser", cat: "Investing", tag: "Flagship",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>,
+  },
   {
     title: "Mortgage Calculator", desc: "Monthly repayments, total interest, repayment vs interest-only.", href: "/calculators/mortgage", cat: "Finance",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="13" width="22" height="13" rx="2" fill="#E8D5B7"/><path d="M2 14L14 4l12 10" stroke="#0f1b36" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><rect x="11" y="18" width="6" height="8" rx="1" fill="#0f1b36"/><circle cx="21" cy="9" r="4" fill="#c9a84c" stroke="#0f1b36" strokeWidth="1.5"/><text x="21" y="11" textAnchor="middle" fill="#0f1b36" fontSize="6" fontWeight="bold">£</text></svg>,
@@ -98,7 +102,7 @@ export default function CalculatorsPage() {
                   </div>
                   <div className="flex gap-1.5">
                     <span className="px-2 py-0.5 bg-navy-50 text-navy-400 text-xs font-semibold rounded-full">{calc.cat}</span>
-                    {calc.tag && <span className="px-2 py-0.5 bg-navy-800 text-white text-xs font-semibold rounded-full">{calc.tag}</span>}
+                    {calc.tag && <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${calc.tag === "Flagship" ? "bg-gold-400 text-navy-900" : "bg-navy-800 text-white"}`}>{calc.tag}</span>}
                   </div>
                 </div>
                 <h2 className="font-bold text-navy-800 mb-1 group-hover:text-gold-600 transition-colors">{calc.title}</h2>
