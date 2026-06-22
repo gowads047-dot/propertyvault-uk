@@ -261,12 +261,15 @@ export default function MakanPage() {
       {/* How it works */}
       <section className="py-16" style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)" }}>
         <div className="h-container">
-          <h2 className="text-2xl font-bold text-center mb-10" style={{ color: "var(--h-text)" }}>How Makan works</h2>
+          <h2 className="text-2xl font-bold text-center mb-2" style={{ color: "var(--h-text)" }}>How Makan works</h2>
+          <p className="text-center text-sm mb-10" style={{ color: "var(--h-muted)" }}>Verified users · reviewed listings · legal in all 10 countries</p>
           <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             {[
-              { step: "1", emoji: "🔍", title: "Browse or search", desc: "Filter by type, country, city, or budget. Smart search suggests locations as you type." },
-              { step: "2", emoji: "💬", title: "Message directly", desc: "Contact the landlord via WhatsApp or in-app enquiry. No agents, no middlemen." },
-              { step: "3", emoji: "🏠", title: "Move in", desc: "Agree terms, sign up, and move in. It's your place." },
+              { step: "1", emoji: "🔍", title: "Browse or search", desc: "Filter by type, country, city, or budget. Smart search suggests locations as you type. No account needed to browse." },
+              { step: "2", emoji: "✅", title: "Sign up & get verified", desc: "Create a free account with your phone number to contact landlords. Every user is verified — no anonymous contact." },
+              { step: "3", emoji: "💬", title: "Message directly", desc: "WhatsApp or in-app enquiry, direct to the landlord. Listings are reviewed before going live. No agents, no middlemen." },
+              { step: "4", emoji: "📋", title: "Do your checks", desc: "Before signing: verify the landlord, check legal certificates (EPC, Gas Safety for UK), sign a written contract." },
+              { step: "5", emoji: "🏠", title: "Move in", desc: "Agree terms directly, sign your contract, and move in. Makan never charges you anything — ever." },
             ].map(s => (
               <div key={s.step} className="text-center">
                 <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl" style={{ background: "var(--h-accent-light)" }}>
@@ -277,6 +280,9 @@ export default function MakanPage() {
               </div>
             ))}
           </div>
+          <p className="text-center mt-8">
+            <Link href="/makan/how-it-works" className="text-sm font-semibold" style={{ color: "var(--h-accent)" }}>Full guide — including safety, legal checks &amp; compliance →</Link>
+          </p>
         </div>
       </section>
 

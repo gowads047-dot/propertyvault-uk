@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
 import { ShareButtons } from "@/components/hetta/ShareButtons";
-import { countries, formatPrice } from "@/lib/hetta-config";
+import { countries, formatPrice, getCountry } from "@/lib/hetta-config";
 
 interface Listing {
   id: string;
@@ -203,7 +203,7 @@ export default function ListingPage() {
           </div>
 
           {/* Sidebar */}
-          <div>
+          <div className="space-y-4">
             <div className="h-card !rounded-2xl p-6 sticky top-20">
               {user ? (
                 <>
@@ -259,6 +259,27 @@ export default function ListingPage() {
                   </div>
                 </>
               )}
+            </div>
+
+            {/* Safety notice */}
+            <div className="rounded-2xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+              <p className="text-xs font-bold mb-2" style={{ color: "var(--h-text)" }}>🛡️ Stay safe</p>
+              <ul className="space-y-1.5 text-xs" style={{ color: "var(--h-muted)" }}>
+                <li>→ Never pay a deposit before viewing in person</li>
+                <li>→ Always sign a written tenancy agreement</li>
+                <li>→ Verify the landlord owns or manages the property</li>
+                {listing.city && (() => {
+                  const c = countries.find(x => x.cities.includes(listing.city));
+                  if (c?.code === "gb") return <li key="uk-legal">→ <strong>UK:</strong> Ask for EPC, Gas Safety &amp; deposit protection scheme</li>;
+                  if (c?.code === "ae") return <li key="ae-legal">→ <strong>UAE:</strong> Ensure Ejari/Tawtheeq registration before moving in</li>;
+                  if (c?.code === "kw") return <li key="kw-legal">→ <strong>Kuwait:</strong> Foreign nationals cannot own — rental contracts only</li>;
+                  if (c?.code === "sa") return <li key="sa-legal">→ <strong>Saudi:</strong> Ejar registration is legally required for all tenancies</li>;
+                  return null;
+                })()}
+              </ul>
+              <Link href="/makan/compliance" className="text-xs font-semibold mt-3 block" style={{ color: "var(--h-accent)" }}>
+                Legal guide for {listing.city} →
+              </Link>
             </div>
           </div>
         </div>
