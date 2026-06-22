@@ -437,7 +437,7 @@ export default function ListingPage() {
 
             {/* Title + location */}
             <div className="mb-6">
-              <h1 className="text-2xl md:text-3xl font-extrabold leading-tight mb-1" style={{ color: "var(--h-text)" }}>{listing.title}</h1>
+              <h1 className="leading-tight mb-1" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--h-text)" }}>{listing.title}</h1>
               <p className="flex items-center gap-1.5 text-sm" style={{ color: "var(--h-muted)" }}>
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
                 {listing.area}, {listing.city}{countryObj ? `, ${countryObj.name}` : ""}
