@@ -27,7 +27,8 @@ export function MakanFooter() {
             <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--h-subtle)" }}>Landlords</p>
             <div className="space-y-2">
               <Link href="/makan/list" className="block text-sm" style={{ color: "var(--h-muted)" }}>List for free</Link>
-              <Link href="/makan/how-it-works" className="block text-sm" style={{ color: "var(--h-muted)" }}>How it works</Link>
+              <Link href="/makan/wanted" className="block text-sm" style={{ color: "var(--h-muted)" }}>Property wanted</Link>
+              <Link href="/makan/about" className="block text-sm" style={{ color: "var(--h-muted)" }}>About Makan</Link>
               <Link href="/guaranteed-rent" className="block text-sm" style={{ color: "var(--h-muted)" }}>Guaranteed rent</Link>
             </div>
           </div>

@@ -15,7 +15,8 @@ export function MakanHeader() {
     { href: "/makan", label: t("nav.browse") },
     { href: "/makan/rooms", label: t("nav.rooms") },
     { href: "/makan/list", label: t("nav.list") },
-    { href: "/makan/how-it-works", label: t("nav.how") },
+    { href: "/makan/wanted", label: t("nav.wanted") || "Wanted" },
+    { href: "/makan/about", label: t("nav.about") || "About" },
   ];
 
   return (
