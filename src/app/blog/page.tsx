@@ -82,6 +82,14 @@ const articles = [
     date: "June 2026",
   },
   {
+    title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
+    excerpt: "Side-by-side comparison of guaranteed rent vs traditional letting. Real income numbers, risk analysis, and which option suits your situation.",
+    href: "/blog/guaranteed-rent-vs-traditional-letting",
+    category: "Comparison",
+    readTime: "6 min",
+    date: "June 2026",
+  },
+  {
     title: "EPC C Deadline — What Landlords Need to Know",
     excerpt: "The proposed EPC C requirement for rental properties. Improvement costs, available grants, and how to prepare your portfolio.",
     href: "/blog/epc-c-deadline-landlords",

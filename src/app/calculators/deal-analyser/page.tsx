@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { PrintButton } from "@/components/calculators/PrintButton";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing, rather than relying on a single metric like gross yield which can be misleading." },
@@ -108,6 +109,7 @@ export default function DealAnalyserPage() {
               </div>
             </div>
             <p className="text-navy-500">Analyse any UK property deal from 4 perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. One tool, complete picture.</p>
+            <div className="mt-3"><PrintButton /></div>
           </div>
         </div>
       </section>
