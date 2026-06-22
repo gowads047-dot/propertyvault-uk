@@ -61,7 +61,7 @@ export function SmartSearch({ value, onChange, onSelectCity, placeholder }: Prop
         onFocus={() => setFocused(true)}
         placeholder={placeholder || "Search by city, area, or country..."}
         className="h-input !border-0 !pl-12 !shadow-none !ring-0"
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", color: "#1a1a1a" }}
       />
 
       {/* Dropdown */}

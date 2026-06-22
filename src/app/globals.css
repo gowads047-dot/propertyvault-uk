@@ -328,8 +328,8 @@ input::placeholder, textarea::placeholder {
   border: 1.5px solid var(--h-border);
   border-radius: 10px;
   font-size: 15px;
-  background: var(--h-surface);
-  color: var(--h-text);
+  background: var(--h-surface) !important;
+  color: #1a1a1a !important;
   transition: border-color 0.15s;
 }
 .hetta .h-input:focus {
@@ -338,7 +338,11 @@ input::placeholder, textarea::placeholder {
   box-shadow: 0 0 0 3px rgba(232, 85, 61, 0.1);
 }
 .hetta .h-input::placeholder {
-  color: var(--h-subtle);
+  color: #a3a3a3 !important;
+}
+
+.hetta select.h-input {
+  color: #1a1a1a !important;
 }
 
 .hetta .h-badge {
