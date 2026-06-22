@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useLang } from "@/lib/lang-context";
 import { countries, propertyTypes, formatPrice } from "@/lib/hetta-config";
+import { SmartSearch } from "@/components/hetta/SmartSearch";
 
 const sampleListings = [
   { id: "sample-1", title: "Modern 2-bed apartment, Jewellery Quarter", property_type: "Flat", bedrooms: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available_from: "2026-06-01", features: ["Furnished", "Parking"], featured: true, images: [] },
@@ -104,15 +105,12 @@ export default function MakanPage() {
           {/* Search bar */}
           <div className="max-w-2xl mx-auto">
             <div className="flex items-center gap-2 p-2 rounded-2xl" style={{ background: "var(--h-surface)", border: "2px solid var(--h-border)" }}>
-              <div className="flex-1 relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: "var(--h-subtle)" }} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
-                <input
-                  type="text" value={search} onChange={e => setSearch(e.target.value)}
-                  placeholder={t("hero.search")}
-                  className="h-input !border-0 !pl-12 !shadow-none !ring-0"
-                  style={{ background: "transparent" }}
-                />
-              </div>
+              <SmartSearch
+                value={search}
+                onChange={setSearch}
+                onSelectCity={(city, code) => { setSearch(city); setCountryFilter(code); setCityFilter(city); }}
+                placeholder={t("hero.search")}
+              />
               <button className="h-btn h-btn-primary !rounded-xl hidden sm:flex">{t("hero.cta")}</button>
             </div>
           </div>
@@ -176,16 +174,21 @@ export default function MakanPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map(l => (
               <Link href={`/makan/listing/${l.id}`} key={l.id} className="h-card group">
-                <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.images?.[0] ? undefined : l.property_type === "Room" ? "#e8e0d6" : l.property_type === "Flat" ? "#d6dfe8" : "#d6e8db" }}>
+                <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.images?.[0] ? undefined : l.property_type === "Room" ? "#f0e6da" : l.property_type === "Flat" ? "#dae3f0" : l.property_type === "House" ? "#daf0de" : l.property_type === "Villa" ? "#f0dae8" : "#e8e5e1" }}>
                   {l.images?.[0] ? (
                     <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <svg className="w-12 h-12 opacity-20" viewBox="0 0 24 24" fill="currentColor">
-                        {l.property_type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
-                        {l.property_type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
-                        {l.property_type === "House" && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
-                      </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                      <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.7)" }}>
+                        <svg className="w-8 h-8" style={{ color: "var(--h-accent)" }} viewBox="0 0 24 24" fill="currentColor">
+                          {l.property_type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
+                          {l.property_type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
+                          {(l.property_type === "House" || l.property_type === "Villa") && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
+                          {(l.property_type === "Studio" || l.property_type === "Apartment") && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
+                          {(l.property_type === "Penthouse" || l.property_type === "Land" || l.property_type === "Commercial") && <path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/>}
+                        </svg>
+                      </div>
+                      <span className="text-xs font-semibold" style={{ color: "var(--h-muted)" }}>{l.property_type}</span>
                     </div>
                   )}
                   {l.featured && <div className="absolute top-3 left-3"><span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>Featured</span></div>}
@@ -224,13 +227,13 @@ export default function MakanPage() {
           <h2 className="text-2xl font-bold text-center mb-10" style={{ color: "var(--h-text)" }}>How Makan works</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-3xl mx-auto">
             {[
-              { step: "1", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>, title: "Browse or search", desc: "Filter by rooms, flats, or houses. Search by city, area, or budget." },
-              { step: "2", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg>, title: "Message directly", desc: "Contact the landlord via WhatsApp or enquiry form. No middlemen." },
-              { step: "3", icon: <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" /></svg>, title: "Move in", desc: "Agree terms, sign up, and move in. It's your place." },
+              { step: "1", emoji: "🔍", title: "Browse or search", desc: "Filter by type, country, city, or budget. Smart search suggests locations as you type." },
+              { step: "2", emoji: "💬", title: "Message directly", desc: "Contact the landlord via WhatsApp or in-app enquiry. No agents, no middlemen." },
+              { step: "3", emoji: "🏠", title: "Move in", desc: "Agree terms, sign up, and move in. It's your place." },
             ].map(s => (
               <div key={s.step} className="text-center">
-                <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-                  {s.icon}
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center text-3xl" style={{ background: "var(--h-accent-light)" }}>
+                  {s.emoji}
                 </div>
                 <h3 className="font-bold mb-1" style={{ color: "var(--h-text)" }}>{s.title}</h3>
                 <p className="text-sm" style={{ color: "var(--h-muted)" }}>{s.desc}</p>
@@ -245,15 +248,15 @@ export default function MakanPage() {
         <div className="h-container">
           <div className="grid md:grid-cols-2 gap-5">
             <Link href="/makan/wanted" className="h-card !rounded-2xl p-8 group">
-              <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              <div className="w-14 h-14 rounded-xl mb-4 flex items-center justify-center text-2xl" style={{ background: "var(--h-accent-light)" }}>
+                📢
               </div>
               <h3 className="text-lg font-bold mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>Can&apos;t find what you need?</h3>
               <p className="text-sm" style={{ color: "var(--h-muted)" }}>Post what you&apos;re looking for and let landlords come to you.</p>
             </Link>
             <Link href="/makan/about" className="h-card !rounded-2xl p-8 group">
-              <div className="w-12 h-12 rounded-xl mb-4 flex items-center justify-center" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg>
+              <div className="w-14 h-14 rounded-xl mb-4 flex items-center justify-center text-2xl" style={{ background: "var(--h-warm)" }}>
+                📖
               </div>
               <h3 className="text-lg font-bold mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>Our story</h3>
               <p className="text-sm" style={{ color: "var(--h-muted)" }}>Why we built Makan and what makes us different.</p>
