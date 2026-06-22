@@ -22,16 +22,15 @@ export const metadata: Metadata = {
 export default function StampDutyPage() {
   return (
     <>
-      <section className="bg-white py-16 md:py-20">
+      <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
           <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Stamp Duty" }]} />
-          <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free Calculator</p>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Stamp Duty Calculator (SDLT)</h1>
-          <p className="text-navy-500 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, additional property surcharge, and first-time buyer relief.</p>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Stamp Duty Calculator (SDLT)</h1>
+          <p className="text-navy-200 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, additional property surcharge, and first-time buyer relief.</p>
           <div className="mt-3"><PrintButton /></div>
         </div>
       </section>
-      <div className="border-t border-navy-100" />
       <section className="section-padding bg-navy-50">
         <div className="container-max">
           <StampDutyCalculator />

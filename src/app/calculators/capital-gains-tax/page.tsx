@@ -58,17 +58,13 @@ export default function CGTCalculatorPage() {
 
   return (
     <>
-      <section className="bg-white py-16 md:py-20">
+      <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
-          <div className="max-w-3xl">
-            <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free calculator</p>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Capital Gains Tax Calculator</h1>
-            <p className="text-navy-500">Calculate your CGT liability when selling a UK property. Covers residential property rates (18%/24%), annual exempt amount, and allowable deductions.</p>
-          </div>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Capital Gains Tax Calculator</h1>
+          <p className="text-navy-200 max-w-2xl">Calculate your CGT liability when selling a UK property. Covers residential property rates (18%/24%), annual exempt amount, and allowable deductions.</p>
         </div>
       </section>
-
-      <div className="border-t border-navy-100" />
 
       <section className="bg-navy-50 section-padding">
         <div className="container-max px-4">

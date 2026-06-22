@@ -80,11 +80,11 @@ const calculators = [
 export default function CalculatorsPage() {
   return (
     <>
-      <section className="bg-white py-16 md:py-24">
+      <section className="gradient-navy py-16 md:py-24">
         <div className="container-max px-4 text-center">
-          <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-3">Free tools</p>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Calculators</h1>
-          <p className="text-navy-500 max-w-lg mx-auto">{calculators.length} free calculators for UK property investors, landlords, and buyers. No sign-up required.</p>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Free tools</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Property Calculators</h1>
+          <p className="text-navy-200 max-w-lg mx-auto">{calculators.length} free calculators for UK property investors, landlords, and buyers. No sign-up required.</p>
         </div>
       </section>
 
