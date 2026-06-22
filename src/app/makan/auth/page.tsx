@@ -4,12 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
+import { supabase } from "@/lib/supabase";
 
 export default function AuthPage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [role, setRole] = useState("tenant");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,9 +31,18 @@ export default function AuthPage() {
       else router.push("/makan/dashboard");
     } else {
       if (password.length < 6) { setError("Password must be at least 6 characters"); setLoading(false); return; }
+      if (!phone.trim()) { setError("Phone / WhatsApp number is required"); setLoading(false); return; }
+      if (!name.trim()) { setError("Full name is required"); setLoading(false); return; }
       const { error } = await signUp(email, password, name, role);
-      if (error) setError(error);
-      else setSuccess("Check your email to confirm your account, then log in.");
+      if (error) { setError(error); setLoading(false); return; }
+
+      // Update profile with phone/whatsapp
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase.from("profiles").update({ phone: phone.trim(), whatsapp: phone.trim() }).eq("id", user.id);
+      }
+
+      setSuccess("Check your email to confirm your account, then log in.");
     }
     setLoading(false);
   };
@@ -44,7 +55,7 @@ export default function AuthPage() {
             <svg className="w-6 h-6 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
           </div>
           <h1 className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>{mode === "login" ? "Welcome back" : "Create your account"}</h1>
-          <p className="text-sm mt-1" style={{ color: "var(--h-muted)" }}>{mode === "login" ? "Log in to manage your listings" : "Free forever. List properties, save favourites, message landlords."}</p>
+          <p className="text-sm mt-1" style={{ color: "var(--h-muted)" }}>{mode === "login" ? "Log in to manage listings and contact landlords" : "Sign up to list properties, save favourites, and message landlords."}</p>
         </div>
 
         {/* Toggle */}
@@ -57,8 +68,13 @@ export default function AuthPage() {
           {mode === "signup" && (
             <>
               <div>
-                <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Full name</label>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} required className="h-input" placeholder="Your name" />
+                <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Full name *</label>
+                <input type="text" value={name} onChange={e => setName(e.target.value)} required className="h-input" placeholder="Your full name" />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Phone / WhatsApp number *</label>
+                <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required className="h-input" placeholder="e.g. +44 7415 721628" />
+                <p className="text-xs mt-1" style={{ color: "var(--h-subtle)" }}>Required for landlords and tenants to communicate directly. Include country code.</p>
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>I am a...</label>
@@ -79,11 +95,11 @@ export default function AuthPage() {
             </>
           )}
           <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Email</label>
+            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Email *</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="h-input" placeholder="you@email.com" />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Password</label>
+            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Password *</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="h-input" placeholder={mode === "signup" ? "At least 6 characters" : "Your password"} />
           </div>
 
@@ -96,7 +112,7 @@ export default function AuthPage() {
         </form>
 
         <p className="text-xs text-center mt-6" style={{ color: "var(--h-subtle)" }}>
-          By signing up you agree to our <Link href="/terms" className="underline">terms</Link> and <Link href="/privacy" className="underline">privacy policy</Link>.
+          By signing up you agree to our <Link href="/terms" className="underline">terms</Link> and <Link href="/privacy" className="underline">privacy policy</Link>. Your phone number will be shared with landlords/tenants you interact with.
         </p>
       </div>
     </div>
