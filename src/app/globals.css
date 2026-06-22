@@ -76,17 +76,35 @@ html.dark .card-hover:hover {
   box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.4);
 }
 
-html.dark input[type="text"], html.dark input[type="email"],
-html.dark input[type="number"], html.dark input[type="tel"],
-html.dark input[type="date"], html.dark input[type="search"],
-html.dark select, html.dark textarea {
+html.dark :not(.hetta) > input[type="text"],
+html.dark :not(.hetta) > input[type="email"],
+html.dark :not(.hetta) > input[type="number"],
+html.dark :not(.hetta) > input[type="tel"],
+html.dark :not(.hetta) > input[type="date"],
+html.dark :not(.hetta) > input[type="search"],
+html.dark :not(.hetta) > select,
+html.dark :not(.hetta) > textarea {
   background-color: #1e293b;
   color: #f1f5f9;
   border-color: #334155;
 }
 
-html.dark input::placeholder, html.dark textarea::placeholder {
+html.dark :not(.hetta) input::placeholder,
+html.dark :not(.hetta) textarea::placeholder {
   color: #64748b;
+}
+
+html.dark .hetta input,
+html.dark .hetta select,
+html.dark .hetta textarea {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  border-color: #e8e5e1 !important;
+}
+
+html.dark .hetta input::placeholder,
+html.dark .hetta textarea::placeholder {
+  color: #a3a3a3 !important;
 }
 
 * { box-sizing: border-box; }
