@@ -28,6 +28,8 @@ interface Listing {
   features: string[];
   images: string[];
   featured?: boolean;
+  listing_type?: string;
+  country?: string;
 }
 
 const typeFilters = ["All", ...propertyTypes];
@@ -53,8 +55,9 @@ export default function MakanPage() {
 
   const filtered = listings.filter(l => {
     if (typeFilter !== "All" && l.property_type !== typeFilter) return false;
+    if (countryFilter !== "All" && l.country && l.country !== countryFilter) return false;
     if (cityFilter !== "All cities" && l.city !== cityFilter) return false;
-    if (l.price > maxPrice) return false;
+    if (l.listing_type !== "sale" && l.price > maxPrice) return false;
     if (search && !l.title.toLowerCase().includes(search.toLowerCase()) && !l.area.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
@@ -241,7 +244,19 @@ export default function MakanPage() {
                     ))}
                   </div>
                   <div className="flex items-end justify-between">
-                    <div><span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>£{l.price}</span><span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span></div>
+                    <div>
+                      {l.listing_type === "sale" ? (
+                        <>
+                          <span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{formatPrice(l.price, l.country || "gb")}</span>
+                          <span className="ml-1.5 text-xs font-bold px-1.5 py-0.5 rounded" style={{ background: "var(--h-accent)", color: "white" }}>For Sale</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{formatPrice(l.price, l.country || "gb")}</span>
+                          <span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span>
+                        </>
+                      )}
+                    </div>
                     <span className="text-xs font-medium" style={{ color: "var(--h-muted)" }}>{l.bedrooms === 0 ? "Studio" : `${l.bedrooms} bed${l.bedrooms > 1 ? "s" : ""}`}</span>
                   </div>
                 </div>
