@@ -5,20 +5,25 @@ import { useState, useEffect } from "react";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 
 const mainLinks = [
+  { href: "/hetta", label: "Hetta" },
   { href: "/calculators", label: "Calculators" },
   { href: "/templates", label: "Templates" },
   { href: "/areas", label: "Areas" },
   { href: "/blog", label: "Blog" },
-  { href: "/property-investing", label: "Learn" },
 ];
 
 const mobileLinks = [
+  { heading: "Hetta — Find Your Place", links: [
+    { href: "/hetta", label: "Browse Listings" },
+    { href: "/hetta/rooms", label: "Rooms to Rent" },
+    { href: "/hetta/list", label: "List Free" },
+    { href: "/hetta/how-it-works", label: "How It Works" },
+  ]},
   { heading: "Property Search", links: [
     { href: "/search", label: "Search Properties" },
     { href: "/sold-prices", label: "Sold Prices" },
     { href: "/valuation", label: "Free Valuation" },
     { href: "/areas", label: "Area Guides" },
-    { href: "/area-guide", label: "Area Research" },
   ]},
   { heading: "Tools & Calculators", links: [
     { href: "/calculators/deal-analyser", label: "Deal Analyser" },
