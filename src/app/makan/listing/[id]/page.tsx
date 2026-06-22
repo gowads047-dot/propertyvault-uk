@@ -284,6 +284,32 @@ export default function ListingPage() {
           </div>
         </div>
 
+        {/* Map */}
+        <div className="mt-10">
+          <h2 className="text-xl font-bold mb-4" style={{ color: "var(--h-text)" }}>Location — {listing.area}, {listing.city}</h2>
+          <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--h-border)", height: 340 }}>
+            <iframe
+              title="Property location"
+              width="100%"
+              height="340"
+              style={{ border: 0 }}
+              src={`https://www.openstreetmap.org/export/embed.html?layer=mapnik&query=${encodeURIComponent(`${listing.area}, ${listing.city}`)}`}
+              loading="lazy"
+            />
+          </div>
+          <p className="text-xs mt-2" style={{ color: "var(--h-subtle)" }}>
+            Map shows approximate area — exact address shared after enquiry.{" "}
+            <a
+              href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${listing.area}, ${listing.city}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "var(--h-accent)" }}
+            >
+              View larger map ↗
+            </a>
+          </p>
+        </div>
+
         {/* Similar Listings */}
         {similar.length > 0 && (
           <div className="mt-10">

@@ -138,6 +138,43 @@ export default function MakanPage() {
         </div>
       </section>
 
+      {/* Country context panel — shows when a country is selected */}
+      {countryFilter !== "All" && (() => {
+        const c = countries.find(x => x.code === countryFilter);
+        if (!c) return null;
+        const cityStory = cityFilter !== "All cities" ? c.cityStories?.[cityFilter] : null;
+        return (
+          <section className="py-6" style={{ background: "var(--h-accent-light)", borderTop: "1px solid var(--h-border)" }}>
+            <div className="h-container">
+              <div className="flex flex-col sm:flex-row sm:items-start gap-5">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-3xl">{c.flag}</span>
+                    <div>
+                      <p className="font-bold text-lg" style={{ color: "var(--h-text)" }}>{cityFilter !== "All cities" ? cityFilter : c.name}</p>
+                      <p className="text-xs" style={{ color: "var(--h-accent)" }}>{c.avgRent} · {c.language} · {c.foreignBuy}</p>
+                    </div>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--h-text)", opacity: 0.8 }}>
+                    {cityStory || c.hero}
+                  </p>
+                  {cityFilter === "All cities" && (
+                    <p className="text-xs mt-2 font-semibold" style={{ color: "var(--h-accent)" }}>{c.highlight}</p>
+                  )}
+                </div>
+                <Link
+                  href={`/makan/country/${c.code}`}
+                  className="shrink-0 text-sm font-semibold px-4 py-2 rounded-xl transition-colors self-start"
+                  style={{ background: "var(--h-accent)", color: "white" }}
+                >
+                  {c.name} property guide →
+                </Link>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+
       {/* Filters + Listings */}
       <section className="py-10" style={{ background: "var(--h-bg)" }}>
         <div className="h-container">
@@ -238,6 +275,27 @@ export default function MakanPage() {
                 <h3 className="font-bold mb-1" style={{ color: "var(--h-text)" }}>{s.title}</h3>
                 <p className="text-sm" style={{ color: "var(--h-muted)" }}>{s.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Explore by country */}
+      <section className="py-12" style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)" }}>
+        <div className="h-container">
+          <h2 className="text-xl font-bold mb-6" style={{ color: "var(--h-text)" }}>Explore by country</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            {countries.map(c => (
+              <Link
+                key={c.code}
+                href={`/makan/country/${c.code}`}
+                className="text-center py-5 px-3 rounded-2xl transition-all group"
+                style={{ background: "var(--h-bg)", border: "1px solid var(--h-border)" }}
+              >
+                <span className="text-3xl block mb-2">{c.flag}</span>
+                <p className="text-xs font-bold group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>{c.name}</p>
+                <p className="text-xs mt-0.5" style={{ color: "var(--h-subtle)" }}>{c.cities.length} cities</p>
+              </Link>
             ))}
           </div>
         </div>

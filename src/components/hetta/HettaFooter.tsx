@@ -1,10 +1,18 @@
 import Link from "next/link";
 
+const countryLinks = [
+  { code: "gb", flag: "🇬🇧", name: "UK" },
+  { code: "ma", flag: "🇲🇦", name: "Morocco" },
+  { code: "eg", flag: "🇪🇬", name: "Egypt" },
+  { code: "ae", flag: "🇦🇪", name: "UAE" },
+  { code: "sa", flag: "🇸🇦", name: "Saudi" },
+];
+
 export function MakanFooter() {
   return (
     <footer className="border-t" style={{ borderColor: "var(--h-border)", background: "var(--h-surface)" }}>
       <div className="h-container py-12">
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-[var(--h-accent)] flex items-center justify-center">
@@ -30,6 +38,17 @@ export function MakanFooter() {
               <Link href="/makan/wanted" className="block text-sm" style={{ color: "var(--h-muted)" }}>Property wanted</Link>
               <Link href="/makan/about" className="block text-sm" style={{ color: "var(--h-muted)" }}>About Makan</Link>
               <Link href="/guaranteed-rent" className="block text-sm" style={{ color: "var(--h-muted)" }}>Guaranteed rent</Link>
+            </div>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{ color: "var(--h-subtle)" }}>Markets</p>
+            <div className="space-y-2">
+              {countryLinks.map(c => (
+                <Link key={c.code} href={`/makan/country/${c.code}`} className="block text-sm" style={{ color: "var(--h-muted)" }}>
+                  {c.flag} {c.name}
+                </Link>
+              ))}
+              <Link href="/makan" className="block text-sm" style={{ color: "var(--h-muted)" }}>All countries →</Link>
             </div>
           </div>
           <div>
