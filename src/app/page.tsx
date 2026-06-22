@@ -51,26 +51,49 @@ export default function Home() {
             {/* Left: copy */}
             <div>
               <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>100% Free · No sign-up required</span>
+                <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", boxShadow: "0 0 0 3px rgba(201,168,76,0.25)", animation: "pulse 2s infinite" }} />
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Guaranteed Rent</span>
               </div>
 
-              <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
-                Analyse deals,<br />
-                cut tax, and<br />
-                <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>grow your portfolio.</em>
+              <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
+                Your rent,{" "}
+                <span style={{ color: "#c9a84c" }}>guaranteed</span>
+                <br />every month —<br />
+                <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.35)" }}>no voids, ever.</em>
               </h1>
 
-              <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 36, maxWidth: 420 }}>
-                17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers.
+              <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 16, maxWidth: 420 }}>
+                Join Midlands landlords earning a predictable monthly income with our 3–5 year guaranteed rent scheme. We pay you whether the tenant pays or not.
               </p>
 
-              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-                <Link href="/calculators/deal-analyser" className="btn-gold">Analyse a deal</Link>
-                <Link href="/calculators" className="btn-primary" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.12)" }}>All calculators</Link>
-                <Link href="/guaranteed-rent" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.45)", padding: "10px 0" }}>
-                  Guaranteed rent <span style={{ fontSize: 12 }}>→</span>
+              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 32 }}>
+                {["No void periods", "No management stress", "No hidden fees"].map(t => (
+                  <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12, color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "4px 10px" }}>
+                    <span style={{ color: "#22c55e", fontWeight: 700 }}>✓</span> {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
+                <Link href="/guaranteed-rent" className="btn-gold" style={{ fontSize: 15, padding: "13px 24px" }}>
+                  Get My Free Rent Estimate →
                 </Link>
+                <Link href="/calculators" className="btn-primary" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.12)" }}>
+                  Explore Free Tools
+                </Link>
+              </div>
+
+              <div className="hero-line" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+                {[
+                  { icon: "★", text: "5-star rated service" },
+                  { icon: "🔒", text: "No obligation estimate" },
+                  { icon: "⚡", text: "Response within 2 hrs" },
+                ].map(t => (
+                  <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span style={{ fontSize: 13 }}>{t.icon}</span>
+                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", fontWeight: 600 }}>{t.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -247,11 +270,11 @@ export default function Home() {
                 We take on your property on a 3–5 year lease and pay you a guaranteed monthly amount. No management fees, no void periods, no tenant hassle. We handle everything.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/guaranteed-rent" className="btn-gold">Book free valuation</Link>
-                <a href="https://wa.me/4407415721628?text=Hi%2C%20I%27m%20a%20landlord%20interested%20in%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
+                <Link href="/guaranteed-rent" className="btn-gold">Get a free rent estimate</Link>
+                <a href="https://calendly.com/propertyvault/free-valuation" target="_blank" rel="noopener noreferrer"
                   style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
-                  <svg width="18" height="18" fill="#22c55e" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                  WhatsApp us
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#0f1b36"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+                  Book a free call
                 </a>
               </div>
             </div>
