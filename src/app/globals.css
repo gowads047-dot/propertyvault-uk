@@ -206,3 +206,138 @@ input::placeholder, textarea::placeholder {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+/* ═══════════════════════════════════════════
+   HETTA — Separate design system
+   Warm slate + coral + cream palette
+   ═══════════════════════════════════════════ */
+
+.hetta {
+  --h-bg: #faf9f7;
+  --h-surface: #ffffff;
+  --h-text: #1a1a1a;
+  --h-muted: #6b6b6b;
+  --h-subtle: #a3a3a3;
+  --h-border: #e8e5e1;
+  --h-accent: #e8553d;
+  --h-accent-hover: #d14530;
+  --h-accent-light: #fef0ed;
+  --h-warm: #f5f0eb;
+  --h-slate: #2d2d2d;
+  --h-green: #16a34a;
+  --h-green-light: #f0fdf4;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--h-bg);
+  color: var(--h-text);
+}
+
+.hetta h1, .hetta h2, .hetta h3 {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--h-text);
+  letter-spacing: -0.02em;
+}
+
+.hetta .h-container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.hetta .h-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.hetta .h-btn-primary {
+  background: var(--h-accent);
+  color: #ffffff;
+}
+.hetta .h-btn-primary:hover {
+  background: var(--h-accent-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(232, 85, 61, 0.35);
+}
+
+.hetta .h-btn-secondary {
+  background: var(--h-surface);
+  color: var(--h-text);
+  border: 1.5px solid var(--h-border);
+}
+.hetta .h-btn-secondary:hover {
+  border-color: var(--h-text);
+}
+
+.hetta .h-btn-dark {
+  background: var(--h-slate);
+  color: #ffffff;
+}
+.hetta .h-btn-dark:hover {
+  background: #1a1a1a;
+}
+
+.hetta .h-card {
+  background: var(--h-surface);
+  border: 1px solid var(--h-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.hetta .h-card:hover {
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.hetta .h-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--h-border);
+  border-radius: 10px;
+  font-size: 15px;
+  background: var(--h-surface);
+  color: var(--h-text);
+  transition: border-color 0.15s;
+}
+.hetta .h-input:focus {
+  outline: none;
+  border-color: var(--h-accent);
+  box-shadow: 0 0 0 3px rgba(232, 85, 61, 0.1);
+}
+.hetta .h-input::placeholder {
+  color: var(--h-subtle);
+}
+
+.hetta .h-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hetta .h-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--h-warm);
+  color: var(--h-muted);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.hetta .h-tag:hover, .hetta .h-tag-active {
+  background: var(--h-accent);
+  color: #ffffff;
+}
