@@ -1,18 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
-const listings = [
-  { id: 1, title: "Modern 2-bed apartment, Jewellery Quarter", type: "Flat", beds: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available: "Now", tags: ["Furnished", "Parking"], featured: true },
-  { id: 2, title: "Spacious double room in shared house", type: "Room", beds: 1, price: 450, city: "Nottingham", area: "Lenton", available: "1 Jul", tags: ["Bills included", "Students"] },
-  { id: 3, title: "Renovated 3-bed terraced house", type: "House", beds: 3, price: 850, city: "Derby", area: "Normanton", available: "Now", tags: ["Garden", "Pets OK"] },
-  { id: 4, title: "Studio flat near city centre", type: "Flat", beds: 0, price: 595, city: "Birmingham", area: "Digbeth", available: "15 Jul", tags: ["Furnished", "Bills included"] },
-  { id: 5, title: "Large double room, professional house share", type: "Room", beds: 1, price: 500, city: "Nottingham", area: "West Bridgford", available: "Now", tags: ["Professionals", "En-suite"] },
-  { id: 6, title: "4-bed semi-detached, family home", type: "House", beds: 4, price: 1200, city: "Birmingham", area: "Edgbaston", available: "1 Aug", tags: ["Garden", "Garage", "Unfurnished"] },
-  { id: 7, title: "Cosy single room near university", type: "Room", beds: 1, price: 380, city: "Derby", area: "Allestree", available: "Now", tags: ["Students", "Bills included"] },
-  { id: 8, title: "Refurbished 1-bed flat, tram link", type: "Flat", beds: 1, price: 650, city: "Nottingham", area: "Hyson Green", available: "Now", tags: ["Furnished", "Transport"] },
+const sampleListings = [
+  { id: "sample-1", title: "Modern 2-bed apartment, Jewellery Quarter", property_type: "Flat", bedrooms: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available_from: "2026-06-01", features: ["Furnished", "Parking"], featured: true, images: [] },
+  { id: "sample-2", title: "Spacious double room in shared house", property_type: "Room", bedrooms: 1, price: 450, city: "Nottingham", area: "Lenton", available_from: "2026-07-01", features: ["Bills included", "Students"], images: [] },
+  { id: "sample-3", title: "Renovated 3-bed terraced house", property_type: "House", bedrooms: 3, price: 850, city: "Derby", area: "Normanton", available_from: "2026-06-01", features: ["Garden", "Pets OK"], images: [] },
+  { id: "sample-4", title: "Studio flat near city centre", property_type: "Flat", bedrooms: 0, price: 595, city: "Birmingham", area: "Digbeth", available_from: "2026-07-15", features: ["Furnished", "Bills included"], images: [] },
+  { id: "sample-5", title: "Large double room, professional house share", property_type: "Room", bedrooms: 1, price: 500, city: "Nottingham", area: "West Bridgford", available_from: "2026-06-01", features: ["Professionals", "En-suite"], images: [] },
+  { id: "sample-6", title: "4-bed semi-detached, family home", property_type: "House", bedrooms: 4, price: 1200, city: "Birmingham", area: "Edgbaston", available_from: "2026-08-01", features: ["Garden", "Garage", "Unfurnished"], images: [] },
 ];
+
+interface Listing {
+  id: string;
+  title: string;
+  property_type: string;
+  bedrooms: number;
+  price: number;
+  city: string;
+  area: string;
+  available_from: string;
+  features: string[];
+  images: string[];
+  featured?: boolean;
+}
 
 const types = ["All", "Room", "Flat", "House"];
 const cities = ["All cities", "Birmingham", "Nottingham", "Derby"];
@@ -21,13 +34,23 @@ export default function HettaPage() {
   const [typeFilter, setTypeFilter] = useState("All");
   const [cityFilter, setCityFilter] = useState("All cities");
   const [search, setSearch] = useState("");
+  const [listings, setListings] = useState<Listing[]>(sampleListings);
+
+  useEffect(() => {
+    supabase.from("listings").select("*").eq("status", "active").order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (data && data.length > 0) setListings(data);
+      });
+  }, []);
 
   const filtered = listings.filter(l => {
-    if (typeFilter !== "All" && l.type !== typeFilter) return false;
+    if (typeFilter !== "All" && l.property_type !== typeFilter) return false;
     if (cityFilter !== "All cities" && l.city !== cityFilter) return false;
     if (search && !l.title.toLowerCase().includes(search.toLowerCase()) && !l.area.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
   });
+
+  const isAvailableNow = (d: string) => !d || new Date(d) <= new Date();
 
   return (
     <>
@@ -110,51 +133,33 @@ export default function HettaPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {filtered.map(l => (
               <Link href={`/hetta/listing/${l.id}`} key={l.id} className="h-card group">
-                {/* Image placeholder */}
-                <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.type === "Room" ? "#e8e0d6" : l.type === "Flat" ? "#d6dfe8" : "#d6e8db" }}>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <svg className="w-12 h-12 opacity-20" viewBox="0 0 24 24" fill="currentColor">
-                      {l.type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12-3h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4zm2 8h-8V9h6c1.1 0 2 .9 2 2v4z"/>}
-                      {l.type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
-                      {l.type === "House" && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
-                    </svg>
-                  </div>
-                  {l.featured && (
-                    <div className="absolute top-3 left-3">
-                      <span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>Featured</span>
+                <div className="relative aspect-[4/3] overflow-hidden" style={{ background: l.images?.[0] ? undefined : l.property_type === "Room" ? "#e8e0d6" : l.property_type === "Flat" ? "#d6dfe8" : "#d6e8db" }}>
+                  {l.images?.[0] ? (
+                    <img src={l.images[0]} alt={l.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <svg className="w-12 h-12 opacity-20" viewBox="0 0 24 24" fill="currentColor">
+                        {l.property_type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
+                        {l.property_type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
+                        {l.property_type === "House" && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
+                      </svg>
                     </div>
                   )}
-                  <div className="absolute top-3 right-3">
-                    <span className="h-badge" style={{ background: "var(--h-surface)", color: "var(--h-text)" }}>{l.type}</span>
-                  </div>
-                  {l.available === "Now" && (
-                    <div className="absolute bottom-3 left-3">
-                      <span className="h-badge" style={{ background: "var(--h-green)", color: "white" }}>Available now</span>
-                    </div>
-                  )}
+                  {l.featured && <div className="absolute top-3 left-3"><span className="h-badge text-white" style={{ background: "var(--h-accent)" }}>Featured</span></div>}
+                  <div className="absolute top-3 right-3"><span className="h-badge" style={{ background: "var(--h-surface)", color: "var(--h-text)" }}>{l.property_type}</span></div>
+                  {isAvailableNow(l.available_from) && <div className="absolute bottom-3 left-3"><span className="h-badge" style={{ background: "var(--h-green)", color: "white" }}>Available now</span></div>}
                 </div>
-                {/* Info */}
                 <div className="p-4">
-                  <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="font-semibold text-sm leading-snug group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>{l.title}</h3>
-                  </div>
+                  <h3 className="font-semibold text-sm leading-snug mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>{l.title}</h3>
                   <p className="text-xs mb-2" style={{ color: "var(--h-muted)" }}>{l.area}, {l.city}</p>
                   <div className="flex flex-wrap gap-1.5 mb-3">
-                    {l.tags.map(tag => (
+                    {(l.features || []).map(tag => (
                       <span key={tag} className="text-xs px-2 py-0.5 rounded-md" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{tag}</span>
                     ))}
                   </div>
                   <div className="flex items-end justify-between">
-                    <div>
-                      <span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>£{l.price}</span>
-                      <span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span>
-                    </div>
-                    {l.beds > 0 && (
-                      <span className="text-xs font-medium" style={{ color: "var(--h-muted)" }}>{l.beds} bed{l.beds > 1 ? "s" : ""}</span>
-                    )}
-                    {l.beds === 0 && (
-                      <span className="text-xs font-medium" style={{ color: "var(--h-muted)" }}>Studio</span>
-                    )}
+                    <div><span className="text-xl font-bold" style={{ color: "var(--h-text)" }}>£{l.price}</span><span className="text-sm" style={{ color: "var(--h-subtle)" }}>/mo</span></div>
+                    <span className="text-xs font-medium" style={{ color: "var(--h-muted)" }}>{l.bedrooms === 0 ? "Studio" : `${l.bedrooms} bed${l.bedrooms > 1 ? "s" : ""}`}</span>
                   </div>
                 </div>
               </Link>

@@ -1,169 +1,222 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+import { supabase } from "@/lib/supabase";
 
 export default function ListPropertyPage() {
-  const [submitted, setSubmitted] = useState(false);
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  if (submitted) {
+  const [form, setForm] = useState({
+    property_type: "",
+    title: "",
+    address: "",
+    area: "",
+    city: "Birmingham",
+    bedrooms: 1,
+    price: 0,
+    available_from: "",
+    furnished: "Furnished",
+    description: "",
+    features: [] as string[],
+  });
+
+  const [images, setImages] = useState<File[]>([]);
+
+  const update = (key: string, value: any) => setForm(prev => ({ ...prev, [key]: value }));
+
+  const toggleFeature = (f: string) => {
+    setForm(prev => ({
+      ...prev,
+      features: prev.features.includes(f) ? prev.features.filter(x => x !== f) : [...prev.features, f],
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) { router.push("/hetta/auth"); return; }
+    setSubmitting(true);
+    setError("");
+
+    let imageUrls: string[] = [];
+    for (const file of images) {
+      const ext = file.name.split(".").pop();
+      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadErr } = await supabase.storage.from("listing-images").upload(path, file);
+      if (!uploadErr) {
+        const { data } = supabase.storage.from("listing-images").getPublicUrl(path);
+        imageUrls.push(data.publicUrl);
+      }
+    }
+
+    const { error: insertErr } = await supabase.from("listings").insert({
+      user_id: user.id,
+      title: form.title,
+      description: form.description,
+      property_type: form.property_type,
+      bedrooms: form.bedrooms,
+      price: form.price,
+      city: form.city,
+      area: form.area,
+      address: form.address,
+      available_from: form.available_from || new Date().toISOString().split("T")[0],
+      furnished: form.furnished,
+      features: form.features,
+      images: imageUrls,
+      status: "active",
+    });
+
+    if (insertErr) {
+      setError(insertErr.message);
+      setSubmitting(false);
+    } else {
+      router.push("/hetta/dashboard");
+    }
+  };
+
+  if (authLoading) return <div className="py-20 text-center" style={{ color: "var(--h-muted)" }}>Loading...</div>;
+
+  if (!user) {
     return (
-      <div className="py-20">
-        <div className="h-container max-w-lg text-center">
-          <div className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center" style={{ background: "var(--h-green-light)" }}>
-            <svg className="w-8 h-8" style={{ color: "var(--h-green)" }} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>
+      <div className="py-20 text-center">
+        <div className="h-container max-w-md">
+          <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
+            <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
           </div>
-          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Listing submitted!</h1>
-          <p className="mb-6" style={{ color: "var(--h-muted)" }}>We&apos;ll review your listing and publish it within 24 hours. You&apos;ll receive a confirmation via WhatsApp or email.</p>
-          <a href="/hetta" className="h-btn h-btn-primary">Browse listings</a>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Sign in to list</h1>
+          <p className="mb-6" style={{ color: "var(--h-muted)" }}>Create a free account to list your property. Takes 30 seconds.</p>
+          <Link href="/hetta/auth" className="h-btn h-btn-primary inline-flex">Sign up / Log in</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <>
-      <section className="py-12" style={{ background: "var(--h-surface)" }}>
-        <div className="h-container max-w-2xl">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4 text-sm font-semibold" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>
-              <span className="w-2 h-2 rounded-full" style={{ background: "var(--h-green)" }} />
-              100% free
+    <section className="py-12" style={{ background: "var(--h-surface)" }}>
+      <div className="h-container max-w-2xl">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4 text-sm font-semibold" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>
+            <span className="w-2 h-2 rounded-full" style={{ background: "var(--h-green)" }} />
+            100% free
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: "var(--h-text)" }}>List your property</h1>
+          <p style={{ color: "var(--h-muted)" }}>Your listing goes live instantly. Edit or remove it anytime from your dashboard.</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Property type */}
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>What are you listing?</label>
+            <div className="grid grid-cols-3 gap-3">
+              {["Room", "Flat", "House"].map(type => (
+                <button key={type} type="button" onClick={() => update("property_type", type)}
+                  className="h-card !rounded-xl p-4 text-center transition-all"
+                  style={{ borderColor: form.property_type === type ? "var(--h-accent)" : undefined, background: form.property_type === type ? "var(--h-accent-light)" : undefined }}>
+                  <p className="text-sm font-semibold" style={{ color: "var(--h-text)" }}>{type}</p>
+                </button>
+              ))}
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: "var(--h-text)" }}>List your property</h1>
-            <p style={{ color: "var(--h-muted)" }}>Reach tenants directly. No fees, no commission, no agents. Fill in the form and we&apos;ll publish your listing within 24 hours.</p>
           </div>
 
-          <form
-            action="https://formsubmit.co/gowads047@gmail.com"
-            method="POST"
-            onSubmit={() => setSubmitted(true)}
-            className="space-y-6"
-          >
-            <input type="hidden" name="_subject" value="New Hetta listing submission" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="text" name="_honey" style={{ display: "none" }} />
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Listing title</label>
+            <input type="text" value={form.title} onChange={e => update("title", e.target.value)} required className="h-input" placeholder="e.g. Spacious 2-bed flat near city centre" />
+          </div>
 
-            {/* Property type */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>What are you listing?</label>
-              <div className="grid grid-cols-3 gap-3">
-                {["Room", "Flat", "House"].map(type => (
-                  <label key={type} className="h-card !rounded-xl p-4 text-center cursor-pointer has-[:checked]:border-[var(--h-accent)] has-[:checked]:bg-[var(--h-accent-light)]">
-                    <input type="radio" name="property_type" value={type} required className="sr-only" />
-                    <div className="mx-auto w-10 h-10 rounded-lg mb-2 flex items-center justify-center" style={{ background: "var(--h-warm)" }}>
-                      {type === "Room" && <svg className="w-5 h-5" style={{ color: "var(--h-muted)" }} fill="currentColor" viewBox="0 0 24 24"><path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12-3h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/></svg>}
-                      {type === "Flat" && <svg className="w-5 h-5" style={{ color: "var(--h-muted)" }} fill="currentColor" viewBox="0 0 24 24"><path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/></svg>}
-                      {type === "House" && <svg className="w-5 h-5" style={{ color: "var(--h-muted)" }} fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>}
-                    </div>
-                    <p className="text-sm font-semibold" style={{ color: "var(--h-text)" }}>{type}</p>
-                  </label>
-                ))}
-              </div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Area</label>
+              <input type="text" value={form.area} onChange={e => update("area", e.target.value)} required className="h-input" placeholder="e.g. Erdington" />
             </div>
-
-            {/* Address */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Address or area</label>
-              <input type="text" name="address" required placeholder="e.g. Erdington, Birmingham or full address" className="h-input" />
-              <p className="text-xs mt-1" style={{ color: "var(--h-subtle)" }}>We won&apos;t publish the exact address — just the area and city.</p>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>City</label>
+              <select value={form.city} onChange={e => update("city", e.target.value)} className="h-input">
+                <option>Birmingham</option>
+                <option>Nottingham</option>
+                <option>Derby</option>
+              </select>
             </div>
+          </div>
 
-            {/* Details grid */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Bedrooms</label>
-                <select name="bedrooms" required className="h-input">
-                  <option value="">Select</option>
-                  <option value="Studio">Studio</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5+">5+</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Monthly rent (£)</label>
-                <input type="number" name="rent" required placeholder="e.g. 850" className="h-input" />
-              </div>
-            </div>
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Full address (private — not shown publicly)</label>
+            <input type="text" value={form.address} onChange={e => update("address", e.target.value)} className="h-input" placeholder="Full address for your records" />
+          </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Available from</label>
-                <input type="date" name="available_from" required className="h-input" />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Furnished?</label>
-                <select name="furnished" required className="h-input">
-                  <option value="">Select</option>
-                  <option value="Furnished">Furnished</option>
-                  <option value="Part furnished">Part furnished</option>
-                  <option value="Unfurnished">Unfurnished</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Description */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Description</label>
-              <textarea name="description" required rows={4} placeholder="Describe the property — what makes it great, nearby transport, local amenities..." className="h-input" />
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Bedrooms</label>
+              <select value={form.bedrooms} onChange={e => update("bedrooms", +e.target.value)} className="h-input">
+                <option value={0}>Studio</option>
+                {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
             </div>
-
-            {/* Features */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Features (tick all that apply)</label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {["Parking", "Garden", "Pets OK", "Bills included", "En-suite", "Washing machine", "Dishwasher", "EPC C+", "Near transport"].map(f => (
-                  <label key={f} className="flex items-center gap-2 text-sm cursor-pointer py-1.5 px-3 rounded-lg" style={{ color: "var(--h-muted)" }}>
-                    <input type="checkbox" name="features" value={f} className="accent-[var(--h-accent)]" />
-                    {f}
-                  </label>
-                ))}
-              </div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Monthly rent (£)</label>
+              <input type="number" value={form.price || ""} onChange={e => update("price", +e.target.value)} required className="h-input" placeholder="e.g. 850" />
             </div>
+          </div>
 
-            {/* Contact */}
-            <div className="border-t pt-6" style={{ borderColor: "var(--h-border)" }}>
-              <h3 className="font-bold mb-4" style={{ color: "var(--h-text)" }}>Your contact details</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Name</label>
-                  <input type="text" name="name" required className="h-input" placeholder="Your name" />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Email</label>
-                  <input type="email" name="email" required className="h-input" placeholder="you@email.com" />
-                </div>
-              </div>
-              <div className="mt-4">
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>WhatsApp number (optional)</label>
-                <input type="tel" name="whatsapp" className="h-input" placeholder="e.g. 07415..." />
-                <p className="text-xs mt-1" style={{ color: "var(--h-subtle)" }}>If provided, tenants can message you directly on WhatsApp.</p>
-              </div>
-            </div>
-
-            {/* Who are you */}
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>I am a...</label>
-              <div className="flex flex-wrap gap-2">
-                {["Landlord", "Agent", "Tenant (looking for housemate)", "Property company"].map(role => (
-                  <label key={role} className="flex items-center gap-2 text-sm cursor-pointer py-2 px-4 rounded-lg border" style={{ borderColor: "var(--h-border)", color: "var(--h-muted)" }}>
-                    <input type="radio" name="role" value={role} required className="accent-[var(--h-accent)]" />
-                    {role}
-                  </label>
-                ))}
-              </div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Available from</label>
+              <input type="date" value={form.available_from} onChange={e => update("available_from", e.target.value)} className="h-input" />
             </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Furnished?</label>
+              <select value={form.furnished} onChange={e => update("furnished", e.target.value)} className="h-input">
+                <option>Furnished</option>
+                <option>Part furnished</option>
+                <option>Unfurnished</option>
+              </select>
+            </div>
+          </div>
 
-            <button type="submit" className="h-btn h-btn-primary w-full !py-4 text-lg">
-              Submit listing — it&apos;s free
-            </button>
-            <p className="text-xs text-center" style={{ color: "var(--h-subtle)" }}>Your listing will be reviewed and published within 24 hours. We may contact you for additional details or photos.</p>
-          </form>
-        </div>
-      </section>
-    </>
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Description</label>
+            <textarea value={form.description} onChange={e => update("description", e.target.value)} required rows={4} className="h-input" placeholder="Describe the property — what makes it great?" />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Features</label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {["Parking", "Garden", "Pets OK", "Bills included", "En-suite", "Washing machine", "Dishwasher", "EPC C+", "Near transport"].map(f => (
+                <button key={f} type="button" onClick={() => toggleFeature(f)}
+                  className="flex items-center gap-2 text-sm py-2 px-3 rounded-lg border transition-all"
+                  style={{
+                    borderColor: form.features.includes(f) ? "var(--h-accent)" : "var(--h-border)",
+                    background: form.features.includes(f) ? "var(--h-accent-light)" : "transparent",
+                    color: form.features.includes(f) ? "var(--h-accent)" : "var(--h-muted)",
+                  }}>
+                  {form.features.includes(f) ? "✓" : "+"} {f}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Image upload */}
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Photos (optional)</label>
+            <input
+              type="file" accept="image/*" multiple
+              onChange={e => setImages(Array.from(e.target.files || []))}
+              className="h-input"
+            />
+            {images.length > 0 && <p className="text-xs mt-1" style={{ color: "var(--h-green)" }}>{images.length} photo{images.length > 1 ? "s" : ""} selected</p>}
+          </div>
+
+          {error && <div className="p-3 rounded-lg text-sm" style={{ background: "#fef2f2", color: "#dc2626" }}>{error}</div>}
+
+          <button type="submit" disabled={submitting || !form.property_type} className="h-btn h-btn-primary w-full !py-4 text-lg">
+            {submitting ? "Publishing..." : "Publish listing — it's free"}
+          </button>
+        </form>
+      </div>
+    </section>
   );
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "@/lib/auth-context";
 
 const nav = [
   { href: "/hetta", label: "Browse" },
@@ -12,6 +13,7 @@ const nav = [
 
 export function HettaHeader() {
   const [open, setOpen] = useState(false);
+  const { user, profile } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-[var(--h-border)]">
@@ -40,10 +42,20 @@ export function HettaHeader() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Link href="/hetta/list" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-5">
-              List for free
-            </Link>
-            <Link href="/" className="text-xs font-medium px-3 py-1.5 rounded-lg" style={{ color: "var(--h-subtle)", background: "var(--h-warm)" }}>
+            {user ? (
+              <Link href="/hetta/dashboard" className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--h-accent)", color: "white" }}>
+                  {(profile?.name || "U").charAt(0).toUpperCase()}
+                </div>
+                <span className="text-sm font-medium hidden sm:inline" style={{ color: "var(--h-text)" }}>{profile?.name?.split(" ")[0] || "Account"}</span>
+              </Link>
+            ) : (
+              <>
+                <Link href="/hetta/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg" style={{ color: "var(--h-muted)" }}>Log in</Link>
+                <Link href="/hetta/auth" className="hidden sm:inline-flex h-btn h-btn-primary text-sm !py-2 !px-5">Sign up free</Link>
+              </>
+            )}
+            <Link href="/" className="text-xs font-medium px-3 py-1.5 rounded-lg hidden md:inline" style={{ color: "var(--h-subtle)", background: "var(--h-warm)" }}>
               PropertyVault
             </Link>
             <button onClick={() => setOpen(!open)} className="md:hidden p-2 rounded-lg" style={{ color: "var(--h-muted)" }}>
@@ -61,16 +73,13 @@ export function HettaHeader() {
         <div className="md:hidden border-t" style={{ borderColor: "var(--h-border)" }}>
           <div className="p-4 space-y-1">
             {nav.map(link => (
-              <Link key={link.href} href={link.href}
-                className="block py-2.5 px-3 rounded-lg text-sm font-medium"
-                style={{ color: "var(--h-text)" }}
-                onClick={() => setOpen(false)}>
-                {link.label}
-              </Link>
+              <Link key={link.href} href={link.href} className="block py-2.5 px-3 rounded-lg text-sm font-medium" style={{ color: "var(--h-text)" }} onClick={() => setOpen(false)}>{link.label}</Link>
             ))}
-            <Link href="/hetta/list" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>
-              List your property free
-            </Link>
+            {user ? (
+              <Link href="/hetta/dashboard" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>Dashboard</Link>
+            ) : (
+              <Link href="/hetta/auth" className="block h-btn h-btn-primary text-center mt-3 text-sm" onClick={() => setOpen(false)}>Sign up / Log in</Link>
+            )}
           </div>
         </div>
       )}
