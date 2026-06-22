@@ -2,21 +2,85 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/lib/auth-context";
 
-const allListings: Record<string, { title: string; type: string; beds: number; price: number; city: string; area: string; available: string; tags: string[]; desc: string }> = {
-  "1": { title: "Modern 2-bed apartment, Jewellery Quarter", type: "Flat", beds: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available: "Now", tags: ["Furnished", "Parking"], desc: "A beautifully presented 2-bedroom apartment in the heart of the Jewellery Quarter. Open-plan living with modern kitchen, two double bedrooms, bathroom with shower. Allocated parking space included. 5-minute walk to tram stop and city centre. EPC rating C." },
-  "2": { title: "Spacious double room in shared house", type: "Room", beds: 1, price: 450, city: "Nottingham", area: "Lenton", available: "1 Jul", tags: ["Bills included", "Students"], desc: "Large double room in a well-maintained 4-bed shared house. All bills included (gas, electric, water, wifi). Shared kitchen, bathroom, and living room. 10-minute walk to University of Nottingham. Ideal for students or young professionals." },
-  "3": { title: "Renovated 3-bed terraced house", type: "House", beds: 3, price: 850, city: "Derby", area: "Normanton", available: "Now", tags: ["Garden", "Pets OK"], desc: "Recently renovated 3-bedroom terraced house. New kitchen, new bathroom, new boiler. Rear garden. Pets considered. Close to city centre and Derby Royal Hospital. EPC rating D. Available immediately." },
-  "4": { title: "Studio flat near city centre", type: "Flat", beds: 0, price: 595, city: "Birmingham", area: "Digbeth", available: "15 Jul", tags: ["Furnished", "Bills included"], desc: "Compact but well-designed studio flat in Digbeth's creative quarter. Fully furnished with kitchenette, modern shower room, and built-in storage. All bills included. 10-minute walk to Bullring and New Street station." },
-  "5": { title: "Large double room, professional house share", type: "Room", beds: 1, price: 500, city: "Nottingham", area: "West Bridgford", available: "Now", tags: ["Professionals", "En-suite"], desc: "Generous en-suite double room in a professional house share. Shared kitchen and living areas kept to a high standard. Quiet residential street in West Bridgford. Off-street parking. Working professionals only." },
-  "6": { title: "4-bed semi-detached, family home", type: "House", beds: 4, price: 1200, city: "Birmingham", area: "Edgbaston", available: "1 Aug", tags: ["Garden", "Garage", "Unfurnished"], desc: "Spacious 4-bedroom semi-detached family home in Edgbaston. Two reception rooms, large kitchen-diner, family bathroom and separate WC. Garage and rear garden. Near good schools and Edgbaston Reservoir. Unfurnished." },
-  "7": { title: "Cosy single room near university", type: "Room", beds: 1, price: 380, city: "Derby", area: "Allestree", available: "Now", tags: ["Students", "Bills included"], desc: "Comfortable single room in a friendly shared house near University of Derby. All bills included. Shared kitchen and bathroom. Quiet residential area with good bus links to campus and city centre." },
-  "8": { title: "Refurbished 1-bed flat, tram link", type: "Flat", beds: 1, price: 650, city: "Nottingham", area: "Hyson Green", available: "Now", tags: ["Furnished", "Transport"], desc: "Newly refurbished 1-bedroom flat. Modern kitchen, bright living room, double bedroom, and bathroom with shower. 2-minute walk to tram stop (direct to city centre in 8 minutes). Fully furnished. EPC rating C." },
-};
+interface Listing {
+  id: string;
+  title: string;
+  description: string;
+  property_type: string;
+  bedrooms: number;
+  price: number;
+  city: string;
+  area: string;
+  available_from: string;
+  furnished: string;
+  features: string[];
+  images: string[];
+  user_id: string;
+  created_at: string;
+}
+
+interface Profile {
+  name: string;
+  whatsapp: string | null;
+}
 
 export default function ListingPage() {
   const { id } = useParams();
-  const listing = allListings[id as string];
+  const { user } = useAuth();
+  const [listing, setListing] = useState<Listing | null>(null);
+  const [owner, setOwner] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saved, setSaved] = useState(false);
+  const [enquirySent, setEnquirySent] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (!id) return;
+    loadListing();
+  }, [id]);
+
+  async function loadListing() {
+    const { data } = await supabase.from("listings").select("*").eq("id", id).single();
+    if (data) {
+      setListing(data);
+      const { data: profile } = await supabase.from("profiles").select("name, whatsapp").eq("id", data.user_id).single();
+      setOwner(profile);
+      if (user) {
+        const { data: fav } = await supabase.from("favourites").select("id").eq("user_id", user.id).eq("listing_id", data.id).single();
+        setSaved(!!fav);
+      }
+    }
+    setLoading(false);
+  }
+
+  async function toggleSave() {
+    if (!user || !listing) return;
+    if (saved) {
+      await supabase.from("favourites").delete().eq("user_id", user.id).eq("listing_id", listing.id);
+      setSaved(false);
+    } else {
+      await supabase.from("favourites").insert({ user_id: user.id, listing_id: listing.id });
+      setSaved(true);
+    }
+  }
+
+  async function sendEnquiry(e: React.FormEvent) {
+    e.preventDefault();
+    if (!user || !listing || !message.trim()) return;
+    await supabase.from("enquiries").insert({
+      listing_id: listing.id,
+      sender_id: user.id,
+      recipient_id: listing.user_id,
+      message: message.trim(),
+    });
+    setEnquirySent(true);
+  }
+
+  if (loading) return <div className="py-20 text-center" style={{ color: "var(--h-muted)" }}>Loading...</div>;
 
   if (!listing) {
     return (
@@ -28,74 +92,119 @@ export default function ListingPage() {
     );
   }
 
-  const bgColor = listing.type === "Room" ? "#e8e0d6" : listing.type === "Flat" ? "#d6dfe8" : "#d6e8db";
+  const bgColor = listing.property_type === "Room" ? "#e8e0d6" : listing.property_type === "Flat" ? "#d6dfe8" : "#d6e8db";
+  const isAvailable = !listing.available_from || new Date(listing.available_from) <= new Date();
+  const whatsappNum = owner?.whatsapp || "4407415721628";
 
   return (
-    <div className="py-8">
+    <div className="py-8" style={{ background: "var(--h-bg)" }}>
       <div className="h-container max-w-4xl">
         <Link href="/hetta" className="inline-flex items-center gap-1 text-sm font-medium mb-6" style={{ color: "var(--h-muted)" }}>
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
           Back to listings
         </Link>
 
-        {/* Image area */}
-        <div className="rounded-2xl overflow-hidden mb-8 aspect-[16/7] flex items-center justify-center" style={{ background: bgColor }}>
-          <div className="text-center">
-            <svg className="w-16 h-16 mx-auto opacity-20 mb-2" viewBox="0 0 24 24" fill="currentColor">
-              {listing.type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
-              {listing.type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
-              {listing.type === "House" && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
-            </svg>
-            <p className="text-sm opacity-30">Photos coming soon</p>
+        {/* Images */}
+        {listing.images && listing.images.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 rounded-2xl overflow-hidden mb-8">
+            <div className="aspect-[4/3] md:aspect-auto md:row-span-2">
+              <img src={listing.images[0]} alt={listing.title} className="w-full h-full object-cover" />
+            </div>
+            {listing.images.slice(1, 3).map((img, i) => (
+              <div key={i} className="aspect-[4/3] hidden md:block">
+                <img src={img} alt={`${listing.title} ${i + 2}`} className="w-full h-full object-cover" />
+              </div>
+            ))}
+            {listing.images.length === 1 && (
+              <div className="aspect-[4/3] hidden md:flex items-center justify-center" style={{ background: bgColor }}>
+                <p className="text-sm opacity-30">More photos coming</p>
+              </div>
+            )}
           </div>
-        </div>
+        ) : (
+          <div className="rounded-2xl overflow-hidden mb-8 aspect-[16/7] flex items-center justify-center" style={{ background: bgColor }}>
+            <div className="text-center">
+              <svg className="w-16 h-16 mx-auto opacity-20 mb-2" viewBox="0 0 24 24" fill="currentColor">
+                {listing.property_type === "Room" && <path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/>}
+                {listing.property_type === "Flat" && <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z"/>}
+                {listing.property_type === "House" && <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>}
+              </svg>
+              <p className="text-sm opacity-30">Photos coming soon</p>
+            </div>
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main content */}
           <div className="lg:col-span-2">
             <div className="flex flex-wrap gap-2 mb-3">
-              <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{listing.type}</span>
-              {listing.available === "Now" && <span className="h-badge" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>Available now</span>}
-              {listing.available !== "Now" && <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>Available {listing.available}</span>}
+              <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{listing.property_type}</span>
+              <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{listing.furnished}</span>
+              {isAvailable && <span className="h-badge" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>Available now</span>}
+              {!isAvailable && <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>Available {new Date(listing.available_from).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>}
             </div>
             <h1 className="text-2xl md:text-3xl font-bold mb-2" style={{ color: "var(--h-text)" }}>{listing.title}</h1>
             <p className="text-sm mb-6" style={{ color: "var(--h-muted)" }}>{listing.area}, {listing.city}</p>
 
-            {/* Key details */}
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div className="h-card !rounded-xl p-4 text-center">
                 <p className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>£{listing.price}</p>
                 <p className="text-xs" style={{ color: "var(--h-muted)" }}>per month</p>
               </div>
               <div className="h-card !rounded-xl p-4 text-center">
-                <p className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>{listing.beds === 0 ? "Studio" : listing.beds}</p>
-                <p className="text-xs" style={{ color: "var(--h-muted)" }}>{listing.beds === 0 ? "" : listing.beds === 1 ? "bedroom" : "bedrooms"}</p>
+                <p className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>{listing.bedrooms === 0 ? "Studio" : listing.bedrooms}</p>
+                <p className="text-xs" style={{ color: "var(--h-muted)" }}>{listing.bedrooms === 0 ? "" : listing.bedrooms === 1 ? "bedroom" : "bedrooms"}</p>
               </div>
               <div className="h-card !rounded-xl p-4 text-center">
-                <p className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>{listing.type}</p>
+                <p className="text-2xl font-bold" style={{ color: "var(--h-text)" }}>{listing.property_type}</p>
                 <p className="text-xs" style={{ color: "var(--h-muted)" }}>property type</p>
               </div>
             </div>
 
-            <h2 className="font-bold mb-3" style={{ color: "var(--h-text)" }}>About this property</h2>
-            <p className="leading-relaxed mb-6" style={{ color: "var(--h-muted)" }}>{listing.desc}</p>
+            {listing.description && (
+              <>
+                <h2 className="font-bold mb-3" style={{ color: "var(--h-text)" }}>About this property</h2>
+                <p className="leading-relaxed mb-6 whitespace-pre-line" style={{ color: "var(--h-muted)" }}>{listing.description}</p>
+              </>
+            )}
 
-            <h2 className="font-bold mb-3" style={{ color: "var(--h-text)" }}>Features</h2>
-            <div className="flex flex-wrap gap-2 mb-8">
-              {listing.tags.map(tag => (
-                <span key={tag} className="h-tag">{tag}</span>
-              ))}
-            </div>
+            {listing.features && listing.features.length > 0 && (
+              <>
+                <h2 className="font-bold mb-3" style={{ color: "var(--h-text)" }}>Features</h2>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {listing.features.map(tag => (
+                    <span key={tag} className="h-tag">{tag}</span>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {owner && (
+              <div className="h-card !rounded-xl p-4 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
+                  {owner.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="font-semibold text-sm" style={{ color: "var(--h-text)" }}>Listed by {owner.name}</p>
+                  <p className="text-xs" style={{ color: "var(--h-muted)" }}>Responds within 24 hours</p>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Sidebar — Contact */}
+          {/* Sidebar */}
           <div>
             <div className="h-card !rounded-2xl p-6 sticky top-20">
               <p className="font-bold mb-1" style={{ color: "var(--h-text)" }}>Interested?</p>
               <p className="text-sm mb-5" style={{ color: "var(--h-muted)" }}>Contact the landlord directly — no agents, no fees.</p>
 
+              {user && (
+                <button onClick={toggleSave} className="h-btn h-btn-secondary w-full mb-3 justify-center">
+                  {saved ? "♥ Saved" : "♡ Save listing"}
+                </button>
+              )}
+
               <a
-                href={`https://wa.me/4407415721628?text=${encodeURIComponent(`Hi, I'm interested in the listing: ${listing.title} (£${listing.price}/mo in ${listing.area}, ${listing.city})`)}`}
+                href={`https://wa.me/${whatsappNum}?text=${encodeURIComponent(`Hi, I'm interested in: ${listing.title} (£${listing.price}/mo in ${listing.area}, ${listing.city})`)}`}
                 target="_blank" rel="noopener noreferrer"
                 className="h-btn w-full justify-center mb-3"
                 style={{ background: "#25D366", color: "white" }}
@@ -104,19 +213,30 @@ export default function ListingPage() {
                 WhatsApp
               </a>
 
-              <form action="https://formsubmit.co/gowads047@gmail.com" method="POST" className="space-y-3">
-                <input type="hidden" name="_subject" value={`Hetta enquiry: ${listing.title}`} />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="listing" value={listing.title} />
-                <input type="text" name="_honey" style={{ display: "none" }} />
-                <input type="text" name="name" required placeholder="Your name" className="h-input" />
-                <input type="email" name="email" required placeholder="Email address" className="h-input" />
-                <input type="tel" name="phone" placeholder="Phone (optional)" className="h-input" />
-                <textarea name="message" rows={3} placeholder="Your message..." className="h-input" defaultValue={`Hi, I'm interested in this ${listing.type.toLowerCase()}. Is it still available?`} />
-                <button type="submit" className="h-btn h-btn-primary w-full">Send enquiry</button>
-              </form>
+              {user ? (
+                enquirySent ? (
+                  <div className="p-3 rounded-lg text-sm text-center" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>Enquiry sent! The landlord will respond soon.</div>
+                ) : (
+                  <form onSubmit={sendEnquiry} className="space-y-3">
+                    <textarea
+                      value={message}
+                      onChange={e => setMessage(e.target.value)}
+                      rows={3}
+                      className="h-input"
+                      placeholder="Your message..."
+                      defaultValue={`Hi, I'm interested in this ${listing.property_type.toLowerCase()}. Is it still available?`}
+                    />
+                    <button type="submit" className="h-btn h-btn-primary w-full">Send enquiry</button>
+                  </form>
+                )
+              ) : (
+                <div className="text-center">
+                  <p className="text-xs mb-3" style={{ color: "var(--h-subtle)" }}>Log in to send an enquiry or save this listing</p>
+                  <Link href="/hetta/auth" className="h-btn h-btn-secondary w-full justify-center text-sm">Log in / Sign up</Link>
+                </div>
+              )}
 
-              <p className="text-xs text-center mt-4" style={{ color: "var(--h-subtle)" }}>Free to enquire. No sign-up needed.</p>
+              <p className="text-xs text-center mt-4" style={{ color: "var(--h-subtle)" }}>Free to enquire. No sign-up needed for WhatsApp.</p>
             </div>
           </div>
         </div>

@@ -73,6 +73,35 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Hetta Promo */}
+      <section className="bg-white section-padding">
+        <div className="container-max px-4">
+          <FadeIn>
+          <Link href="/hetta" className="group block rounded-3xl p-8 md:p-12 border-2 border-navy-100 hover:border-[#e8553d]/30 transition-all" style={{ background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)" }}>
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#e8553d" }}>
+                    <svg className="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
+                  </div>
+                  <span className="text-2xl font-bold tracking-tight text-navy-800">hetta</span>
+                  <span className="px-2 py-0.5 bg-[#e8553d] text-white text-xs font-bold rounded-full">New</span>
+                </div>
+                <h2 className="text-xl md:text-2xl font-extrabold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Find your place — free listings for everyone</h2>
+                <p className="text-navy-500 text-sm mb-4">Browse rooms, flats, and houses across Birmingham, Nottingham, and Derby. List your property for free. No agents, no fees, no catch.</p>
+                <span className="text-sm font-semibold group-hover:text-[#e8553d] transition-colors text-navy-800">Browse listings →</span>
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Free</p><p className="text-xs text-navy-400">To list</p></div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Free</p><p className="text-xs text-navy-400">To browse</p></div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm"><p className="text-lg font-bold text-navy-800">Zero</p><p className="text-xs text-navy-400">Agent fees</p></div>
+              </div>
+            </div>
+          </Link>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Tools — Clean grid, no emojis */}
       <section className="bg-white section-padding">
         <div className="container-max px-4">

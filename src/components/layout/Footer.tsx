@@ -1,13 +1,18 @@
 import Link from "next/link";
 
 const sections = [
+  { title: "Hetta", links: [
+    { href: "/hetta", label: "Browse Listings" },
+    { href: "/hetta/rooms", label: "Rooms" },
+    { href: "/hetta/list", label: "List Free" },
+    { href: "/hetta/how-it-works", label: "How It Works" },
+  ]},
   { title: "Platform", links: [
     { href: "/calculators", label: "Calculators" },
     { href: "/templates", label: "Templates" },
-    { href: "/tools", label: "Tools" },
     { href: "/glossary", label: "Glossary" },
-    { href: "/search", label: "Search" },
     { href: "/guaranteed-rent", label: "Guaranteed Rent" },
+    { href: "/areas", label: "Area Guides" },
   ]},
   { title: "Learn", links: [
     { href: "/property-investing", label: "Investing" },
