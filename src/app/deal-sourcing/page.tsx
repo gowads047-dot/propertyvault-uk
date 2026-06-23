@@ -109,7 +109,6 @@ export default function DealSourcingPage() {
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Cancel anytime. Secure checkout via Stripe.</p>
           </div>
         </div>
-        </div>
       </section>
     </>
   );
