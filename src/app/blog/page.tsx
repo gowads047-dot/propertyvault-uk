@@ -9,6 +9,16 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    title: "Renters' Rights Act 2025 — What Every Landlord Needs to Know",
+    excerpt: "Section 21 abolished, fixed-term tenancies gone, rent increases capped, pets allowed. The complete guide for UK landlords on what changed and what to do now.",
+    href: "/blog/renters-rights-act",
+    category: "Landlords",
+    readTime: "10 min",
+    date: "June 2026",
+    featured: true,
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
+  },
+  {
     title: "UK Property Market 2026 — What Investors Need to Know",
     excerpt: "The market has shifted. Mortgage rates, house prices, rental demand, and what it means for your next deal — an honest look at where we are.",
     href: "/blog/uk-property-market-2026",

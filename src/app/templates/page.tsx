@@ -85,6 +85,16 @@ const TEMPLATES = [
     icon: "🔎",
   },
   {
+    id: "renters-rights-notice",
+    title: "Tenant Rights Notice",
+    desc: "Formal notice to issue to tenants explaining their rights under the Renters' Rights Act 2025 — security of tenure, rent increases, repairs, pets, and the PRS Ombudsman.",
+    category: "landlord",
+    time: "3 min",
+    pages: "2 pages",
+    badge: "New law",
+    icon: "⚖️",
+  },
+  {
     id: "due-diligence",
     title: "Commercial Due Diligence",
     desc: "Comprehensive checklist for investigating a commercial property before purchase — title, planning, environmental, and compliance.",
@@ -112,7 +122,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
 };
 
 // Templates with full interactive forms
-const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet"]);
+const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice"]);
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
