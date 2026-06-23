@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 
 const SECTIONS = [
   {
@@ -225,44 +226,42 @@ export default function DueDiligenceTemplate() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
-                <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>PropertyVault UK</p>
-                  <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", margin: 0 }}>Commercial Due Diligence Checklist</h1>
-                  {propertyAddress && <p style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>{propertyAddress}</p>}
-                  {purchasePrice && <p style={{ fontSize: 12, color: "#0f1b36", fontWeight: 600, marginTop: 2 }}>Purchase price: £{purchasePrice}</p>}
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Completion</p>
-                  <p style={{ fontSize: 22, fontWeight: 800, color: statusColor }}>{pct}%</p>
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>{done}/{total} items</p>
-                </div>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category="Investment Due Diligence"
+                title="Commercial Due Diligence Checklist"
+                date={new Date().toLocaleDateString("en-GB")}
+              />
+              {propertyAddress && <p style={{ fontSize: 11, color: "#374151", marginBottom: 4 }}><strong>Property:</strong> {propertyAddress}</p>}
+              {purchasePrice && <p style={{ fontSize: 11, color: "#374151", marginBottom: 16 }}><strong>Purchase price:</strong> £{purchasePrice}</p>}
+              <div style={{ border: "1px solid #e5e7eb", padding: "10px 14px", marginBottom: 20 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: statusColor }}>{pct}% complete</span>
+                <span style={{ fontSize: 10, color: "#6b7280", marginLeft: 12 }}>{done}/{total} items</span>
               </div>
 
               {SECTIONS.map(section => (
-                <div key={section.title} style={{ marginBottom: 18, pageBreakInside: "avoid" }}>
-                  <div style={{ background: "#0f1b36", color: "white", padding: "5px 10px", borderRadius: 4, marginBottom: 8 }}>
-                    <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>{section.icon} {section.title}</p>
+                <div key={section.title} style={{ marginBottom: 18, breakInside: "avoid" }}>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 8 }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{section.title}</p>
                   </div>
-                  {section.items.map(item => (
-                    <div key={item.id} style={{ display: "flex", gap: 8, marginBottom: 5 }}>
-                      <div style={{ width: 13, height: 13, border: `1.5px solid ${item.critical && !checked[item.id] ? "#ef4444" : "#0f1b36"}`, borderRadius: 2, flexShrink: 0, marginTop: 2, background: checked[item.id] ? "#22c55e" : "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        {checked[item.id] && <span style={{ fontSize: 8, color: "white", fontWeight: 800 }}>✓</span>}
+                  <div style={{ border: "1px solid #e5e7eb", borderTop: "none" }}>
+                    {section.items.map((item, ii) => (
+                      <div key={item.id} style={{ display: "flex", gap: 10, padding: "7px 12px", borderBottom: "1px solid #f1f5f9", background: checked[item.id] ? "#f0fdf4" : "white" }}>
+                        <div style={{ width: 13, height: 13, border: `1.5px solid ${item.critical && !checked[item.id] ? "#ef4444" : "#0f1b36"}`, flexShrink: 0, marginTop: 2, background: checked[item.id] ? "#22c55e" : "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          {checked[item.id] && <span style={{ fontSize: 8, color: "white", fontWeight: 800 }}>✓</span>}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <p style={{ fontSize: 11, color: checked[item.id] ? "#6b7280" : "#0f1b36" }}>
+                            {item.title}{item.critical ? " ★" : ""}
+                          </p>
+                          {notes[item.id] && <p style={{ fontSize: 10, color: "#374151", marginTop: 2 }}>Note: {notes[item.id]}</p>}
+                        </div>
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <p style={{ fontSize: 11, fontWeight: 600, color: checked[item.id] ? "#6b7280" : "#0f1b36", textDecoration: checked[item.id] ? "line-through" : "none" }}>
-                          {item.title}{item.critical ? " ★" : ""}
-                        </p>
-                        {notes[item.id] && <p style={{ fontSize: 10, color: "#374151", background: "#fffbf4", padding: "2px 6px", borderRadius: 3, marginTop: 2 }}>Note: {notes[item.id]}</p>}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               ))}
-              <div style={{ marginTop: 20, paddingTop: 12, borderTop: "1px solid #e5e7eb", fontSize: 10, color: "#9ca3af" }}>
-                ★ = Critical item — do not exchange until resolved &nbsp;·&nbsp; PropertyVault UK &nbsp;·&nbsp; Not legal or financial advice
-              </div>
+              <PrintFooter docTitle="Commercial Due Diligence Checklist" note="★ Critical — do not exchange until resolved · Not legal or financial advice" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("checklist")} className="btn-outline text-sm">← Back</button>
@@ -274,6 +273,9 @@ export default function DueDiligenceTemplate() {
     </>
   );
 }
+
+
+
 
 
 

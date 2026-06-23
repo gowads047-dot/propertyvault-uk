@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 
 export default function ReferenceRequest() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -117,13 +118,17 @@ export default function ReferenceRequest() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              {/* Header */}
-              <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 12, color: "#374151" }}>{landlordName || "_______________"}</p>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category={type === "employer" ? "Tenancy Administration · Employment Reference" : "Tenancy Administration · Landlord Reference"}
+                title={type === "employer" ? "Request for Employment Reference" : "Request for Landlord Reference"}
+                date={fmt(issueDate)}
+              />
+              {/* From address */}
+              <div style={{ marginBottom: 20 }}>
+                <p style={{ fontSize: 12, color: "#374151", fontWeight: 600 }}>{landlordName || "_______________"}</p>
                 {landlordAddress && <p style={{ fontSize: 11, color: "#6b7280", whiteSpace: "pre-line" }}>{landlordAddress}</p>}
                 {landlordEmail && <p style={{ fontSize: 11, color: "#6b7280" }}>{landlordEmail}</p>}
-                <p style={{ fontSize: 11, color: "#6b7280", marginTop: 8 }}>{fmt(issueDate)}</p>
               </div>
 
               <div style={{ marginBottom: 24 }}>
@@ -192,9 +197,9 @@ export default function ReferenceRequest() {
 
               <p style={{ fontSize: 12, color: "#374151", marginBottom: 24 }}>Thank you for your time and assistance.</p>
 
-              <p style={{ fontSize: 12, color: "#374151", marginBottom: 4 }}>Yours faithfully,</p>
-              <div style={{ borderBottom: "1.5px solid #0f1b36", height: 40, maxWidth: 220, marginBottom: 6 }} />
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
+              <p style={{ fontSize: 12, color: "#374151", marginBottom: 16 }}>Yours faithfully,</p>
+              <SignatureBlock signerLabel="Signed (Landlord / Agent)" signerName={landlordName} showWitness={false} date={issueDate} />
+              <PrintFooter docTitle={type === "employer" ? "Request for Employment Reference" : "Request for Landlord Reference"} note="Confidential · UK GDPR compliant" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
@@ -206,6 +211,8 @@ export default function ReferenceRequest() {
     </>
   );
 }
+
+
 
 
 

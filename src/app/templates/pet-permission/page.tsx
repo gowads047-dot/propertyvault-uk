@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 
 export default function PetPermission() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -131,35 +132,44 @@ export default function PetPermission() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
-                <p style={{ fontSize: 11, color: "#6b7280", marginTop: 4 }}>{fmt(issueDate)}</p>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category="Correspondence · Pet Permission"
+                title="Response to Pet Request"
+                date={issueDate}
+              />
+
+              {/* Letter addresses */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
+                <div>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 700, marginBottom: 4 }}>From</p>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
+                  <p style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>{fmt(issueDate)}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 700, marginBottom: 4 }}>To</p>
+                  <p style={{ fontSize: 12, color: "#374151" }}>{tenantName || "_______________"}</p>
+                  <p style={{ fontSize: 11, color: "#6b7280" }}>{propertyAddress || "_______________"}</p>
+                </div>
               </div>
 
-              <div style={{ marginBottom: 24 }}>
-                <p style={{ fontSize: 12, color: "#374151" }}>{tenantName || "_______________"}</p>
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{propertyAddress || "_______________"}</p>
-              </div>
-
-              <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 16 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginBottom: 14 }}>
                 Re: Request to keep a pet at {propertyAddress || "the above property"}
               </p>
 
-              <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8, marginBottom: 16 }}>Dear {tenantName || "Tenant"},</p>
-
-              <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8, marginBottom: 16 }}>
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginBottom: 14 }}>Dear {tenantName || "Tenant"},</p>
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginBottom: 16 }}>
                 Thank you for your request to keep {petName ? `${petName}, ` : ""}a{petBreed ? ` ${petBreed}` : ""} {petType || "pet"} at the above property. I have given this request careful consideration.
               </p>
 
               {decision === "approve" && (
                 <>
-                  <div style={{ background: "#f0fdf4", border: "1.5px solid #86efac", borderRadius: 10, padding: 16, marginBottom: 20 }}>
-                    <p style={{ fontSize: 13, fontWeight: 800, color: "#16a34a", marginBottom: 4 }}>✅ Permission Granted</p>
-                    <p style={{ fontSize: 12, color: "#374151" }}>I am pleased to confirm that you have my permission to keep the above-described pet at the property.</p>
+                  <div style={{ border: "1.5px solid #16a34a", padding: "10px 14px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 12, fontWeight: 800, color: "#16a34a", marginBottom: 4 }}>PERMISSION GRANTED</p>
+                    <p style={{ fontSize: 11.5, color: "#374151" }}>I am pleased to confirm that you have my permission to keep the above-described pet at the property.</p>
                   </div>
-                  <div style={{ fontSize: 12, color: "#374151", lineHeight: 1.8 }}>
-                    <p style={{ marginBottom: 12 }}>Please note that you remain responsible for any damage caused to the property by the pet, and the property should be returned in the same condition as at the commencement of the tenancy, with allowance only for fair wear and tear.</p>
+                  <div style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8 }}>
+                    <p style={{ marginBottom: 10 }}>Please note that you remain responsible for any damage caused to the property by the pet, and the property should be returned in the same condition as at the commencement of the tenancy, with allowance only for fair wear and tear.</p>
                     <p>Permission applies to the named pet only. Any additional animals must be approved separately in writing.</p>
                   </div>
                 </>
@@ -167,29 +177,29 @@ export default function PetPermission() {
 
               {decision === "approve-conditions" && (
                 <>
-                  <div style={{ background: "#fffbeb", border: "1.5px solid #fcd34d", borderRadius: 10, padding: 16, marginBottom: 20 }}>
-                    <p style={{ fontSize: 13, fontWeight: 800, color: "#d97706", marginBottom: 4 }}>⚠️ Permission Granted — Subject to Conditions</p>
-                    <p style={{ fontSize: 12, color: "#374151" }}>I am prepared to grant permission for the pet, subject to the following conditions which must be observed throughout the tenancy.</p>
+                  <div style={{ border: "1.5px solid #d97706", padding: "10px 14px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 12, fontWeight: 800, color: "#d97706", marginBottom: 4 }}>PERMISSION GRANTED — SUBJECT TO CONDITIONS</p>
+                    <p style={{ fontSize: 11.5, color: "#374151" }}>I am prepared to grant permission, subject to the following conditions which must be observed throughout the tenancy.</p>
                   </div>
-                  <div style={{ fontSize: 12, color: "#374151", lineHeight: 1.8, marginBottom: 20 }}>
+                  <div style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginBottom: 16 }}>
                     {conditions.split("\n").filter(Boolean).map((c, i) => (
                       <p key={i} style={{ marginBottom: 6 }}>{c}</p>
                     ))}
                   </div>
-                  <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8 }}>Please sign and return a copy of this letter to confirm your agreement to these conditions. Breach of any condition may be treated as a breach of the tenancy agreement.</p>
+                  <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8 }}>Please sign and return a copy of this letter to confirm your agreement. Breach of any condition may be treated as a breach of the tenancy agreement.</p>
                 </>
               )}
 
               {decision === "refuse" && (
                 <>
-                  <div style={{ background: "#fef2f2", border: "1.5px solid #fca5a5", borderRadius: 10, padding: 16, marginBottom: 20 }}>
-                    <p style={{ fontSize: 13, fontWeight: 800, color: "#dc2626", marginBottom: 4 }}>❌ Permission Refused</p>
-                    <p style={{ fontSize: 12, color: "#374151" }}>After careful consideration, I am unable to grant permission for the pet at this property. The reason is set out below.</p>
+                  <div style={{ border: "1.5px solid #dc2626", padding: "10px 14px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 12, fontWeight: 800, color: "#dc2626", marginBottom: 4 }}>PERMISSION REFUSED</p>
+                    <p style={{ fontSize: 11.5, color: "#374151" }}>After careful consideration, I am unable to grant permission for the pet at this property. The reason is set out below.</p>
                   </div>
-                  <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 12, marginBottom: 20, fontSize: 12, color: "#374151", lineHeight: 1.7 }}>
+                  <div style={{ background: "#fafafa", border: "1px solid #e5e7eb", padding: 12, marginBottom: 16, fontSize: 11.5, color: "#374151", lineHeight: 1.7 }}>
                     {refusalReason || "_______________"}
                   </div>
-                  <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8 }}>If you disagree with this decision, you may refer the matter to the Private Rented Sector Ombudsman or seek independent legal advice. I am willing to reconsider if circumstances change.</p>
+                  <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8 }}>If you disagree with this decision, you may refer the matter to the Private Rented Sector Ombudsman or seek independent legal advice.</p>
                 </>
               )}
 
@@ -200,6 +210,7 @@ export default function PetPermission() {
                 showWitness={true}
                 date={issueDate}
               />
+              <PrintFooter docTitle="Pet Permission Letter" note="Renters' Rights Act 2025 · England" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>

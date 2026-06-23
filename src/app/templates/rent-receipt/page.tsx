@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintFooter } from "@/components/PrintDoc";
 
 export default function RentReceipt() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -128,59 +129,60 @@ export default function RentReceipt() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="flex items-center justify-center">
-              <div className="receipt-inner bg-white rounded-2xl border-2 border-navy-800 p-8 max-w-lg w-full" style={{ fontFamily: "Georgia, serif" }}>
-                {/* Header */}
-                <div style={{ textAlign: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 4 }}>Official Rent Receipt</p>
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>No. {receiptNumber}</p>
-                </div>
-
-                {/* Amount */}
-                <div style={{ textAlign: "center", background: "#0f1b36", borderRadius: 12, padding: "16px 0", marginBottom: 20 }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Amount Received</p>
-                  <p style={{ fontSize: 36, fontWeight: 800, color: "#c9a84c", fontFamily: "ui-monospace, monospace", margin: 0 }}>£{total || "0.00"}</p>
-                  {includesDeposit && depositAmount && (
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
-                      Rent £{amount} + Deposit £{depositAmount}
-                    </p>
-                  )}
-                </div>
-
-                {/* Details */}
-                <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: "8px 12px", fontSize: 12, marginBottom: 20 }}>
-                  <span style={{ color: "#6b7280", fontWeight: 600 }}>Received from</span>
-                  <span style={{ fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</span>
-                  <span style={{ color: "#6b7280", fontWeight: 600 }}>Property</span>
-                  <span style={{ color: "#374151" }}>{propertyAddress || "_______________"}</span>
-                  <span style={{ color: "#6b7280", fontWeight: 600 }}>For period</span>
-                  <span style={{ color: "#374151" }}>{periodFrom && periodTo ? `${fmt(periodFrom)} – ${fmt(periodTo)}` : "_______________"}</span>
-                  <span style={{ color: "#6b7280", fontWeight: 600 }}>Date paid</span>
-                  <span style={{ color: "#374151" }}>{fmt(paymentDate)}</span>
-                  <span style={{ color: "#6b7280", fontWeight: 600 }}>Method</span>
-                  <span style={{ color: "#374151" }}>{methodLabel[paymentMethod]}</span>
-                  {reference && <>
-                    <span style={{ color: "#6b7280", fontWeight: 600 }}>Reference</span>
-                    <span style={{ color: "#374151" }}>{reference}</span>
-                  </>}
-                </div>
-
-                {/* Signature */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, paddingTop: 16, borderTop: "1px solid #f1f5f9" }}>
-                  <div>
-                    <p style={{ fontSize: 10, color: "#6b7280", marginBottom: 4 }}>Signed (Landlord)</p>
-                    <div style={{ borderBottom: "1.5px solid #0f1b36", height: 32, marginBottom: 4 }} />
-                    <p style={{ fontSize: 11, fontWeight: 700, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif", maxWidth: 520, margin: "0 auto" }}>
+              {/* Header */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: 12, borderBottom: "2.5px solid #0f1b36", marginBottom: 4 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 28, height: 28, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z" fill="white"/></svg>
                   </div>
-                  <div>
-                    <p style={{ fontSize: 10, color: "#6b7280", marginBottom: 4 }}>Date signed</p>
-                    <div style={{ borderBottom: "1.5px solid #0f1b36", height: 32, marginBottom: 4 }} />
-                    <p style={{ fontSize: 11, color: "#6b7280" }}>{fmt(paymentDate)}</p>
-                  </div>
+                  <p style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", margin: 0 }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
                 </div>
-
-                <p style={{ fontSize: 9, color: "#9ca3af", textAlign: "center", marginTop: 16 }}>Keep this receipt as proof of payment · PropertyVault.co.uk</p>
+                <div style={{ textAlign: "right" }}>
+                  <p style={{ fontSize: 9, color: "#6b7280", margin: 0 }}>Receipt No. {receiptNumber}</p>
+                  <p style={{ fontSize: 9, color: "#6b7280", margin: 0 }}>{fmt(paymentDate)}</p>
+                </div>
               </div>
+              <div style={{ height: 3, background: "#c9a84c", marginBottom: 20 }} />
+
+              <p style={{ fontSize: 9, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>Official Rent Receipt</p>
+
+              {/* Amount box */}
+              <div style={{ border: "2px solid #0f1b36", padding: "16px 20px", textAlign: "center", marginBottom: 20 }}>
+                <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>Total Amount Received</p>
+                <p style={{ fontSize: 34, fontWeight: 800, color: "#0f1b36", fontFamily: "ui-monospace, monospace", margin: 0 }}>£{total || "0.00"}</p>
+                {includesDeposit && depositAmount && (
+                  <p style={{ fontSize: 10, color: "#6b7280", marginTop: 4 }}>Rent £{amount} + Deposit £{depositAmount}</p>
+                )}
+              </div>
+
+              {/* Details table */}
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11.5, marginBottom: 20 }}>
+                <tbody>
+                  {[
+                    ["Received from", tenantName || "—"],
+                    ["Property", propertyAddress || "—"],
+                    ["For period", periodFrom && periodTo ? `${fmt(periodFrom)} – ${fmt(periodTo)}` : "—"],
+                    ["Date paid", fmt(paymentDate)],
+                    ["Payment method", methodLabel[paymentMethod]],
+                    ...(reference ? [["Reference", reference]] : []),
+                  ].map(([label, value], i) => (
+                    <tr key={i} style={{ background: i % 2 === 0 ? "#fafafa" : "white" }}>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "7px 10px", fontWeight: 600, color: "#6b7280", width: 130 }}>{label}</td>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "7px 10px", color: "#1a1a1a" }}>{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={landlordName}
+                showWitness={false}
+                date={paymentDate}
+              />
+
+              <PrintFooter docTitle="Rent Receipt" note="Retain as proof of payment" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>

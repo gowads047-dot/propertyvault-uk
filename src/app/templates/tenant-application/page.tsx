@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 // ── Field helpers ─────────────────────────────────────────────────────────────
@@ -274,29 +275,14 @@ export default function TenantApplicationTemplate() {
           </div>
 
           {/* The actual document */}
-          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", boxShadow: "0 4px 40px rgba(0,0,0,0.15)", fontFamily: "Georgia, serif", color: "#1a1a1a", lineHeight: 1.6 }}>
-
-            {/* Letterhead */}
-            <div style={{ background: "#0f1b36", padding: "28px 40px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <div>
-                <p style={{ fontFamily: "Arial, sans-serif", fontSize: 22, fontWeight: 800, color: "white", letterSpacing: "-0.02em" }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
-                <p style={{ fontFamily: "Arial, sans-serif", fontSize: 11, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>Free Property Tools for UK Investors & Landlords</p>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Ref: {refNum}</p>
-                <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Date: {today}</p>
-              </div>
-            </div>
-
-            {/* Gold rule */}
-            <div style={{ height: 4, background: "#c9a84c" }} />
-
-            {/* Document title */}
-            <div style={{ padding: "32px 40px 20px", borderBottom: "1px solid #e2e8f0" }}>
-              <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>Residential Tenancy</p>
-              <h1 style={{ fontFamily: "Arial, sans-serif", fontSize: 26, fontWeight: 800, color: "#0f1b36", margin: "0 0 8px" }}>Tenant Application Form</h1>
-              <p style={{ fontFamily: "Arial, sans-serif", fontSize: 12, color: "#64748b" }}>This form must be completed in full. All information will be treated in confidence and used solely for the purpose of assessing this application.</p>
-            </div>
+          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", fontFamily: "Arial, Helvetica, sans-serif", color: "#1a1a1a", lineHeight: 1.6, padding: "40px" }}>
+            <PrintHeader
+              category="Tenancy Administration · Residential Tenancy"
+              title="Tenant Application Form"
+              reference={refNum}
+              date={today}
+            />
+            <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 24, lineHeight: 1.6 }}>This form must be completed in full. All information will be treated in confidence and used solely for the purpose of assessing this application.</p>
 
             <div style={{ padding: "0 40px 40px" }}>
 
@@ -367,26 +353,14 @@ export default function TenantApplicationTemplate() {
                 <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "#374151", lineHeight: 1.65, marginBottom: 20 }}>
                   I declare that all information provided in this application is true, complete, and accurate to the best of my knowledge and belief. I understand that any false or misleading information may result in the rejection of this application or termination of any tenancy. I consent to the landlord/agent conducting credit and reference checks and contacting the persons named as references. I understand this application does not constitute an offer or agreement to let the property.
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginTop: 24 }}>
-                  <div>
-                    <div style={{ borderBottom: "1px solid #1a1a1a", height: 40, marginBottom: 6 }} />
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "#64748b" }}>Applicant Signature</p>
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "#64748b" }}>Name: {f.fullName || "___________________________"}</p>
-                  </div>
-                  <div>
-                    <div style={{ borderBottom: "1px solid #1a1a1a", height: 40, marginBottom: 6 }} />
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "#64748b" }}>Date Signed: ___________________________</p>
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, color: "#64748b" }}>Ref: {refNum}</p>
-                  </div>
-                </div>
+                <SignatureBlock
+                  signerLabel="Applicant Signature"
+                  signerName={f.fullName}
+                  witnessLabel="Witness"
+                  showWitness={true}
+                />
               </div>
-
-              {/* Footer */}
-              <div style={{ marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
-                <p style={{ fontFamily: "Arial, sans-serif", fontSize: 9, color: "#94a3b8", lineHeight: 1.5 }}>
-                  This form was generated by PropertyVault UK (propertyvaultuk.co.uk) for general informational purposes only. It is not a legally binding document and does not constitute legal advice. Always consult a qualified solicitor or licensed property professional for legal matters. © {new Date().getFullYear()} PropertyVault UK.
-                </p>
-              </div>
+              <PrintFooter docTitle="Tenant Application Form" note="Confidential · Data processed under UK GDPR" />
             </div>
           </div>
         </section>
@@ -398,11 +372,11 @@ export default function TenantApplicationTemplate() {
 // ── Document sub-components ───────────────────────────────────────────────────
 function DocSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginTop: 28 }}>
-      <div style={{ background: "#0f1b36", padding: "6px 14px", borderRadius: 3, marginBottom: 0, display: "inline-block" }}>
-        <p style={{ fontFamily: "Arial, sans-serif", fontSize: 11, fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.06em" }}>{title}</p>
+    <div style={{ marginTop: 24, breakInside: "avoid" }}>
+      <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 0 }}>
+        <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
       </div>
-      <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: "4px 0" }}>
+      <div style={{ border: "1px solid #e2e8f0", borderTop: "2px solid #0f1b36", padding: "4px 0" }}>
         {children}
       </div>
     </div>
@@ -421,6 +395,8 @@ function DocRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+
 
 
 

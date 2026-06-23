@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection } from "@/components/PrintDoc";
 
 const GROUNDS = [
   { id: "g8", n: "Ground 8", type: "Mandatory", notice: "4 weeks", title: "Serious Rent Arrears", detail: "At least 2 months' rent is unpaid both at the date of service of this notice AND at the date of the court hearing. The court must grant possession if this ground is made out." },
@@ -167,73 +168,76 @@ export default function Section8Notice() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ textAlign: "center", marginBottom: 28, paddingBottom: 20, borderBottom: "2px solid #0f1b36" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>Housing Act 1988 (as amended)</p>
-                <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", margin: "0 0 4px" }}>Notice Seeking Possession of a Property</h1>
-                <p style={{ fontSize: 13, color: "#6b7280" }}>Section 8 Notice · Assured Periodic Tenancy</p>
-              </div>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20, fontSize: 12 }}>
-                <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 12 }}>
-                  <p style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>To (Tenant)</p>
-                  <p style={{ fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
-                  <p style={{ color: "#374151", marginTop: 4 }}>{propertyAddress || "_______________"}</p>
+              <PrintHeader
+                category="Legal Notice · Housing Act 1988 (as amended)"
+                title="Notice Seeking Possession of a Property — Section 8"
+                date={issueDate}
+              />
+
+              {/* Parties */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
+                <div style={{ border: "1px solid #e5e7eb", padding: 12 }}>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6, fontWeight: 700 }}>To (Tenant)</p>
+                  <p style={{ fontWeight: 700, color: "#0f1b36", fontSize: 12 }}>{tenantName || "_______________"}</p>
+                  <p style={{ color: "#374151", marginTop: 4, fontSize: 11 }}>{propertyAddress || "_______________"}</p>
                 </div>
-                <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 12 }}>
-                  <p style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>From (Landlord{agentName ? "/Agent" : ""})</p>
-                  <p style={{ fontWeight: 700, color: "#0f1b36" }}>{agentName || landlordName || "_______________"}</p>
+                <div style={{ border: "1px solid #e5e7eb", padding: 12 }}>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6, fontWeight: 700 }}>From (Landlord{agentName ? " / Agent" : ""})</p>
+                  <p style={{ fontWeight: 700, color: "#0f1b36", fontSize: 12 }}>{agentName || landlordName || "_______________"}</p>
                   {agentName && <p style={{ color: "#374151", fontSize: 11 }}>on behalf of {landlordName}</p>}
                   <p style={{ color: "#374151", marginTop: 4, fontSize: 11 }}>{landlordAddress}</p>
                 </div>
               </div>
 
-              <div style={{ background: "#fef9ec", border: "1px solid #c9a84c", borderRadius: 8, padding: 12, marginBottom: 20, fontSize: 12 }}>
-                <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>Date of this notice: {fmt(issueDate)}</p>
-                <p style={{ color: "#374151" }}>The landlord gives you notice that they intend to apply to the court for an order requiring you to give up possession of the above-named property.</p>
-                {longestNotice > 0 && <p style={{ color: "#374151", marginTop: 6 }}>You are required to vacate the property on or before: <strong>{possessionDate()}</strong></p>}
+              {/* Notice statement */}
+              <div style={{ border: "1.5px solid #c9a84c", padding: 12, marginBottom: 20 }}>
+                <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 4, fontSize: 12 }}>Date of this notice: {fmt(issueDate)}</p>
+                <p style={{ color: "#374151", fontSize: 11, lineHeight: 1.6 }}>The landlord gives you notice that they intend to apply to the court for an order requiring you to give up possession of the above-named property.</p>
+                {longestNotice > 0 && <p style={{ color: "#0f1b36", marginTop: 6, fontSize: 11, fontWeight: 600 }}>You are required to vacate the property on or before: <strong>{possessionDate()}</strong></p>}
               </div>
 
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ background: "#0f1b36", color: "white", padding: "6px 12px", borderRadius: 4, marginBottom: 12 }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Grounds for Possession</p>
-                </div>
+              {/* Grounds */}
+              <PrintSection title="Grounds for Possession">
                 {chosen.length === 0 ? (
-                  <p style={{ fontSize: 12, color: "#9ca3af", fontStyle: "italic" }}>No grounds selected.</p>
+                  <p style={{ fontSize: 11, color: "#9ca3af", fontStyle: "italic" }}>No grounds selected.</p>
                 ) : chosen.map((g, i) => (
-                  <div key={g.id} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < chosen.length - 1 ? "1px solid #f3f4f6" : "none" }}>
-                    <div style={{ display: "flex", gap: 8, alignItems: "flex-start", marginBottom: 4 }}>
-                      <span style={{ background: "#0f1b36", color: "white", fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 10 }}>{g.n}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{g.title}</span>
-                      <span style={{ fontSize: 10, color: g.type === "Mandatory" ? "#dc2626" : "#6b7280", fontWeight: 600, marginLeft: "auto" }}>{g.type}</span>
+                  <div key={g.id} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: i < chosen.length - 1 ? "1px solid #f1f5f9" : "none" }}>
+                    <div style={{ display: "flex", gap: 10, alignItems: "baseline", marginBottom: 4 }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", minWidth: 70 }}>{g.n}</span>
+                      <span style={{ fontSize: 11.5, fontWeight: 700, color: "#0f1b36" }}>{g.title}</span>
+                      <span style={{ fontSize: 9.5, color: g.type === "Mandatory" ? "#dc2626" : "#6b7280", fontWeight: 600, marginLeft: "auto", whiteSpace: "nowrap" }}>{g.type} · {g.notice} notice</span>
                     </div>
-                    <p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, marginBottom: groundDetails[g.id] ? 6 : 0 }}>{g.detail}</p>
+                    <p style={{ fontSize: 10.5, color: "#374151", lineHeight: 1.6, marginBottom: groundDetails[g.id] ? 6 : 0, paddingLeft: 80 }}>{g.detail}</p>
                     {groundDetails[g.id] && (
-                      <div style={{ background: "#f5f2ec", borderRadius: 6, padding: "8px 10px", fontSize: 11, color: "#0f1b36" }}>
-                        <strong>Particulars:</strong> {groundDetails[g.id]}
+                      <div style={{ background: "#fafafa", border: "1px solid #e5e7eb", padding: "7px 10px", fontSize: 10.5, color: "#0f1b36", marginTop: 4, paddingLeft: 80 }}>
+                        <strong>Particulars: </strong>{groundDetails[g.id]}
                       </div>
                     )}
                   </div>
                 ))}
+              </PrintSection>
+
+              {/* Statutory warnings */}
+              <div style={{ fontSize: 10.5, color: "#374151", lineHeight: 1.75, marginBottom: 16, padding: "10px 12px", background: "#fafafa", border: "1px solid #e5e7eb" }}>
+                <p>If you do not leave the property by the date stated, the landlord will apply to the court for a possession order. If the court grants an order and you still do not leave, bailiffs can be instructed to remove you.</p>
+                <p style={{ marginTop: 6 }}>If you need advice about this notice, contact Citizens Advice (0800 144 8848), Shelter (0808 800 4444), or a housing solicitor as soon as possible.</p>
               </div>
 
-              <div style={{ fontSize: 11, color: "#374151", lineHeight: 1.7, marginBottom: 20 }}>
-                <p>If you do not leave the property by the date stated above, the landlord will apply to the court for a possession order. If the court grants an order and you still do not leave, bailiffs can be instructed to remove you.</p>
-                <p style={{ marginTop: 8 }}>If you need advice about this notice, contact Citizens Advice (0800 144 8848), Shelter (0808 800 4444), or a housing solicitor as soon as possible.</p>
-              </div>
-
-              <div style={{ marginTop: 8, fontSize: 11, color: "#374151" }}>
-                <p style={{ fontSize: 10, color: "#9ca3af", marginBottom: 6 }}>Service method</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 20 }}>
+              {/* Service method */}
+              <PrintSection title="Method of Service (tick as applicable)">
+                <div style={{ display: "flex", gap: 32 }}>
                   {["Hand delivered", "First class post", "Email (if agreed in tenancy)"].map(m => (
-                    <div key={m} style={{ display: "flex", gap: 6, fontSize: 11 }}>
-                      <div style={{ width: 12, height: 12, border: "1px solid #9ca3af", borderRadius: 2, flexShrink: 0, marginTop: 1 }} />
+                    <div key={m} style={{ display: "flex", gap: 6, fontSize: 11, alignItems: "center" }}>
+                      <div style={{ width: 13, height: 13, border: "1.5px solid #374151", flexShrink: 0 }} />
                       <span>{m}</span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </PrintSection>
 
+              {/* Signatures */}
               <SignatureBlock
                 signerLabel="Signed (Landlord / Agent)"
                 signerName={agentName || landlordName}
@@ -242,9 +246,11 @@ export default function Section8Notice() {
                 date={issueDate}
               />
 
-              <div style={{ marginTop: 24, padding: "10px 12px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, fontSize: 10, color: "#991b1b" }}>
-                Important: Keep proof of service (certificate of posting, delivery confirmation, or signed receipt). You will need this if the matter proceeds to court.
+              <div style={{ marginTop: 20, padding: "8px 12px", border: "1px solid #fca5a5", fontSize: 9.5, color: "#991b1b" }}>
+                Important: Retain proof of service (certificate of posting, delivery confirmation, or signed receipt). This will be required if the matter proceeds to court.
               </div>
+
+              <PrintFooter docTitle="Section 8 Possession Notice" note="England & Wales · Housing Act 1988 (as amended by the Housing Act 1996)" />
             </div>
             <div className="mt-4 flex gap-3 flex-wrap items-center">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>

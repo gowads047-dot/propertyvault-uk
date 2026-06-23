@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 interface ComplianceItem {
@@ -246,23 +247,14 @@ export default function LandlordComplianceTemplate() {
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
-          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", boxShadow: "0 4px 40px rgba(0,0,0,0.15)", fontFamily: "Arial, sans-serif", color: "#1a1a1a" }}>
-            {/* Letterhead */}
-            <div style={{ background: "#0f1b36", padding: "24px 36px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 800, color: "white" }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Free Property Tools for UK Landlords & Investors</p>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Ref: {refNum}</p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Completed: {today}</p>
-              </div>
-            </div>
-            <div style={{ height: 4, background: "#c9a84c" }} />
-
-            <div style={{ padding: "28px 36px 36px" }}>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Landlord Compliance Checklist</h1>
-              <p style={{ fontSize: 11, color: "#64748b", marginBottom: 16 }}>England & Wales · Updated to reflect April 2025 legislation</p>
+          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", fontFamily: "Arial, sans-serif", color: "#1a1a1a", padding: "40px" }}>
+            <PrintHeader
+              category="Property Management · Regulatory"
+              title="Landlord Compliance Checklist"
+              reference={refNum}
+              date={today}
+            />
+            <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 16 }}>England &amp; Wales · Updated to reflect April 2025 legislation</p>
 
               {/* Summary box */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 10, marginBottom: 24, padding: "14px", background: "#f8f9fc", border: "1px solid #e2e8f0", borderRadius: 4 }}>
@@ -299,8 +291,7 @@ export default function LandlordComplianceTemplate() {
               {/* Sections */}
               {SECTIONS.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 18 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px", display: "flex", justifyContent: "space-between" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.05em" }}>{sec.icon} {sec.title}</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.05em" }}>{sec.icon} {sec.title}</p>
                     <p style={{ fontSize: 10, color: "#c9a84c" }}>{sec.items.filter(i => checked[i.id]).length}/{sec.items.length}</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
@@ -329,8 +320,7 @@ export default function LandlordComplianceTemplate() {
               {/* Notes */}
               {notes && (
                 <div style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.05em" }}>Notes & Action Points</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.05em" }}>Notes & Action Points</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: 12 }}>
                     <p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{notes}</p>
@@ -338,34 +328,24 @@ export default function LandlordComplianceTemplate() {
                 </div>
               )}
 
-              {/* Signature */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 24 }}>
-                <div style={{ border: "1px solid #e2e8f0", padding: 14 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 24 }}>LANDLORD SIGNATURE</p>
-                  <div style={{ borderBottom: "1px solid #1a1a1a", marginBottom: 4 }} />
-                  <p style={{ fontSize: 9, color: "#64748b" }}>Name: {landlordName || "___________________________"}</p>
-                  <p style={{ fontSize: 9, color: "#64748b", marginTop: 4 }}>Date: ___________________________</p>
-                </div>
-                <div style={{ border: "1px solid #e2e8f0", padding: 14, background: criticalChecked === criticalItems ? "#f0fdf4" : "#fff7ed" }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 8 }}>COMPLIANCE STATUS</p>
-                  <p style={{ fontSize: 16, fontWeight: 800, color: criticalChecked === criticalItems ? "#16a34a" : "#d97706" }}>
-                    {criticalChecked === criticalItems ? "✓ Compliant" : `⚠ ${criticalItems - criticalChecked} Outstanding`}
-                  </p>
-                  <p style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>{checkedCount}/{totalItems} items complete · {criticalChecked}/{criticalItems} critical</p>
-                  <p style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>Ref: {refNum}</p>
-                </div>
+              <div style={{ border: "1px solid #e5e7eb", padding: 12, marginBottom: 16, background: criticalChecked === criticalItems ? "#f0fdf4" : "#fff7ed" }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>COMPLIANCE STATUS</p>
+                <p style={{ fontSize: 14, fontWeight: 800, color: criticalChecked === criticalItems ? "#16a34a" : "#d97706" }}>
+                  {criticalChecked === criticalItems ? "COMPLIANT" : `${criticalItems - criticalChecked} CRITICAL ITEMS OUTSTANDING`}
+                </p>
+                <p style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>{checkedCount}/{totalItems} items complete · {criticalChecked}/{criticalItems} critical items complete</p>
               </div>
-
-              <p style={{ fontSize: 8, color: "#94a3b8", marginTop: 24, lineHeight: 1.5 }}>
-                This checklist is for guidance only and does not constitute legal advice. Legislation changes frequently — always verify current requirements with a qualified solicitor or letting agent. PropertyVault UK accepts no liability for errors or omissions. © {new Date().getFullYear()} PropertyVault UK (propertyvaultuk.co.uk). Ref: {refNum}
-              </p>
-            </div>
+              <SignatureBlock signerLabel="Signed (Landlord)" signerName={landlordName} showWitness={false} />
+              <PrintFooter docTitle="Landlord Compliance Checklist" note="Guidance only — verify current requirements with a qualified solicitor" />
           </div>
         </section>
       )}
     </>
   );
 }
+
+
+
 
 
 

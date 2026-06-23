@@ -1,6 +1,7 @@
 ﻿"use client";
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const fmt = (n: number) => "£" + n.toFixed(2);
@@ -184,18 +185,16 @@ export default function CheckOutReportTemplate() {
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
-          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", boxShadow: "0 4px 40px rgba(0,0,0,0.15)", fontFamily: "Arial, sans-serif", color: "#1a1a1a" }}>
-            <div style={{ background: "#0f1b36", padding: "24px 36px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <p style={{ fontSize: 20, fontWeight: 800, color: "white" }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
-              <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Ref: {refNum} · {today}</p>
-            </div>
-            <div style={{ height: 4, background: "#c9a84c" }} />
+          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", fontFamily: "Arial, sans-serif", color: "#1a1a1a", padding: "40px" }}>
+            <PrintHeader
+              category="Property Management · End of Tenancy"
+              title="Check-Out Inspection Report"
+              reference={refNum}
+              date={today}
+            />
+            <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 20 }}>End-of-tenancy inspection and deposit deduction schedule</p>
 
-            <div style={{ padding: "28px 36px 36px" }}>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Check-Out Inspection Report</h1>
-              <p style={{ fontSize: 11, color: "#64748b", marginBottom: 20 }}>End-of-tenancy inspection and deposit deduction schedule</p>
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 24, padding: "14px", background: "#f8f9fc", border: "1px solid #e2e8f0", borderRadius: 4 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 24, padding: "14px", background: "#f8f9fc", border: "1px solid #e2e8f0", borderRadius: 4 }}>
                 {[
                   { l: "Property", v: address || "—" },
                   { l: "Check-out date", v: checkOutDate ? new Date(checkOutDate).toLocaleDateString("en-GB") : today },
@@ -216,7 +215,7 @@ export default function CheckOutReportTemplate() {
 
               {/* Room conditions */}
               <div style={{ marginBottom: 24 }}>
-                <div style={{ background: "#0f1b36", padding: "5px 12px" }}><p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase" }}>Room-by-Room Condition</p></div>
+                <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>Room-by-Room Condition</p></div>
                 <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                   {ROOMS.map(room => {
                     const cond = conditions[room.id];
@@ -239,7 +238,7 @@ export default function CheckOutReportTemplate() {
               {/* Deductions */}
               {depositHeld > 0 && (
                 <div style={{ marginBottom: 24 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}><p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase" }}>Deposit Deduction Schedule</p></div>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>Deposit Deduction Schedule</p></div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                     {deductions.filter(d => d.desc || d.amount > 0).map((d, i) => (
                       <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 12px", borderBottom: "1px solid #f8f9fc" }}>
@@ -261,32 +260,27 @@ export default function CheckOutReportTemplate() {
 
               {generalNotes && (
                 <div style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}><p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase" }}>General Notes</p></div>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>General Notes</p></div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: 12 }}><p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{generalNotes}</p></div>
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 24 }}>
-                {[{ l: "Landlord / Agent", n: landlordName }, { l: "Tenant", n: tenantName }].map(s => (
-                  <div key={s.l} style={{ border: "1px solid #e2e8f0", padding: 14 }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 20 }}>SIGNED: {s.l.toUpperCase()}</p>
-                    <div style={{ borderBottom: "1px solid #1a1a1a", marginBottom: 4 }} />
-                    <p style={{ fontSize: 9, color: "#64748b" }}>{s.n || "Name: ___________________________"}</p>
-                    <p style={{ fontSize: 9, color: "#64748b", marginTop: 4 }}>Date: ___________________________</p>
-                  </div>
-                ))}
-              </div>
-
-              <p style={{ fontSize: 8, color: "#94a3b8", marginTop: 24, lineHeight: 1.5 }}>
-                This check-out report was produced at the end of tenancy. Any deductions from the deposit must be supported by evidence and will be subject to deposit scheme adjudication if disputed. Generated by PropertyVault UK. Ref: {refNum}. © {new Date().getFullYear()} PropertyVault UK.
-              </p>
-            </div>
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={landlordName}
+                witnessLabel="Signed (Tenant)"
+                showWitness={true}
+              />
+              <PrintFooter docTitle="Check-Out Inspection Report" note="Tenancy Deposit Scheme compliant · Retain both copies" />
           </div>
         </section>
       )}
     </>
   );
 }
+
+
+
 
 
 

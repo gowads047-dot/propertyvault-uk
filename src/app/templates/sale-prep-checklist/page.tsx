@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const SECTIONS = [
@@ -191,23 +192,21 @@ export default function SalePrepChecklist() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
-                <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>PropertyVault UK</p>
-                  <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", margin: 0 }}>Home Sale Preparation Checklist</h1>
-                  {address && <p style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>{address}</p>}
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Progress</p>
-                  <p style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36" }}>{pct}%</p>
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>{done}/{total} complete</p>
-                </div>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category="Property Sales · Preparation"
+                title="Home Sale Preparation Checklist"
+                date={new Date().toLocaleDateString("en-GB")}
+              />
+              {address && <p style={{ fontSize: 11, color: "#374151", marginBottom: 4 }}><strong>Property:</strong> {address}</p>}
+              <div style={{ border: "1px solid #e5e7eb", padding: "8px 12px", marginBottom: 20 }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: "#0f1b36" }}>{pct}% complete</span>
+                <span style={{ fontSize: 10, color: "#6b7280", marginLeft: 12 }}>{done}/{total} items</span>
               </div>
               {SECTIONS.map(section => (
                 <div key={section.title} style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", color: "white", padding: "5px 10px", borderRadius: 4, marginBottom: 8 }}>
-                    <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>{section.icon} {section.title}</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 8 }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{section.icon} {section.title}</p>
                   </div>
                   {section.items.map(item => (
                     <div key={item.id} style={{ display: "flex", gap: 8, marginBottom: 6, pageBreakInside: "avoid" }}>
@@ -224,9 +223,7 @@ export default function SalePrepChecklist() {
                   ))}
                 </div>
               ))}
-              <div style={{ marginTop: 20, paddingTop: 12, borderTop: "1px solid #e5e7eb", fontSize: 10, color: "#9ca3af" }}>
-                ★ = Critical item &nbsp;·&nbsp; Generated via PropertyVault UK &nbsp;·&nbsp; Not legal or financial advice
-              </div>
+              <PrintFooter docTitle="Home Sale Preparation Checklist" note="★ Critical item · Not legal or financial advice" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("checklist")} className="btn-outline text-sm">← Back to checklist</button>
@@ -238,6 +235,9 @@ export default function SalePrepChecklist() {
     </>
   );
 }
+
+
+
 
 
 

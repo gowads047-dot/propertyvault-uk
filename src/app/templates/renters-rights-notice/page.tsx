@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 export default function RentersRightsNotice() {
@@ -20,8 +21,8 @@ export default function RentersRightsNotice() {
 
   const DocSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div style={{ marginBottom: 24 }}>
-      <div style={{ background: "#0f1b36", color: "white", padding: "6px 12px", borderRadius: 4, marginBottom: 10 }}>
-        <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
+      <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 10 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
       </div>
       {children}
     </div>
@@ -310,6 +311,9 @@ export default function RentersRightsNotice() {
     </>
   );
 }
+
+
+
 
 
 

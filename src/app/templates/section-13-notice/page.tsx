@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection } from "@/components/PrintDoc";
 
 export default function Section13Notice() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -131,56 +132,61 @@ export default function Section13Notice() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ textAlign: "center", marginBottom: 28, paddingBottom: 20, borderBottom: "2px solid #0f1b36" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>Housing Act 1988, Section 13 (as amended)</p>
-                <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", margin: "0 0 4px" }}>Notice of Rent Increase</h1>
-                <p style={{ fontSize: 12, color: "#6b7280" }}>Assured Periodic Tenancy — Private Rented Sector</p>
-              </div>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category="Legal Notice · Housing Act 1988 Section 13 (as amended)"
+                title="Notice of Rent Increase — Assured Periodic Tenancy"
+                date={issueDate}
+              />
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20, fontSize: 12 }}>
-                <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 12 }}>
-                  <p style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>To (Tenant)</p>
-                  <p style={{ fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+                <div style={{ border: "1px solid #e5e7eb", padding: 12 }}>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6, fontWeight: 700 }}>To (Tenant)</p>
+                  <p style={{ fontWeight: 700, color: "#0f1b36", fontSize: 12 }}>{tenantName || "_______________"}</p>
                   <p style={{ color: "#374151", marginTop: 4, fontSize: 11 }}>{propertyAddress || "_______________"}</p>
                 </div>
-                <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 12 }}>
-                  <p style={{ fontSize: 10, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>From (Landlord / Agent)</p>
-                  <p style={{ fontWeight: 700, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
+                <div style={{ border: "1px solid #e5e7eb", padding: 12 }}>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 6, fontWeight: 700 }}>From (Landlord / Agent)</p>
+                  <p style={{ fontWeight: 700, color: "#0f1b36", fontSize: 12 }}>{landlordName || "_______________"}</p>
                   {landlordAddress && <p style={{ color: "#374151", marginTop: 4, fontSize: 11 }}>{landlordAddress}</p>}
                 </div>
               </div>
 
-              <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.7, marginBottom: 20 }}>
-                I/We, the landlord of the above property, give you notice that the rent for the above property will be increased as follows, pursuant to Section 13 of the Housing Act 1988.
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.7, marginBottom: 20 }}>
+                I/We, the landlord of the above property, give you notice that the rent for the above property will be increased as follows, pursuant to Section 13 of the Housing Act 1988 (as amended).
               </p>
 
-              <div style={{ background: "#0f1b36", color: "white", borderRadius: 12, padding: 20, marginBottom: 20, textAlign: "center" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: 16, alignItems: "center" }}>
-                  <div>
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>Current Rent</p>
-                    <p style={{ fontSize: 28, fontWeight: 800, fontFamily: "ui-monospace, monospace" }}>£{currentRent || "—"}</p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>per {rentPeriod}</p>
-                  </div>
-                  <div style={{ fontSize: 24, color: "#c9a84c" }}>→</div>
-                  <div>
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 4 }}>New Rent</p>
-                    <p style={{ fontSize: 28, fontWeight: 800, color: "#c9a84c", fontFamily: "ui-monospace, monospace" }}>£{proposedRent || "—"}</p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>per {rentPeriod}</p>
-                  </div>
-                </div>
-                {increase && <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", marginTop: 12 }}>Increase of £{increase}/{rentPeriod} ({increasePct}%)</p>}
+              {/* Rent comparison — print-friendly bordered table */}
+              <PrintSection title="Proposed Rent Change">
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12, marginBottom: 8 }}>
+                  <thead>
+                    <tr style={{ background: "#f8f8f8" }}>
+                      <th style={{ border: "1px solid #e5e7eb", padding: "8px 12px", textAlign: "left", fontWeight: 700, color: "#0f1b36" }}>Current Rent</th>
+                      <th style={{ border: "1px solid #e5e7eb", padding: "8px 12px", textAlign: "left", fontWeight: 700, color: "#0f1b36" }}>Proposed New Rent</th>
+                      <th style={{ border: "1px solid #e5e7eb", padding: "8px 12px", textAlign: "left", fontWeight: 700, color: "#0f1b36" }}>Increase</th>
+                      <th style={{ border: "1px solid #e5e7eb", padding: "8px 12px", textAlign: "left", fontWeight: 700, color: "#0f1b36" }}>Period</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "8px 12px", fontSize: 14, fontWeight: 800, color: "#374151", fontFamily: "ui-monospace, monospace" }}>£{currentRent || "—"}</td>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "8px 12px", fontSize: 14, fontWeight: 800, color: "#0f1b36", fontFamily: "ui-monospace, monospace" }}>£{proposedRent || "—"}</td>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "8px 12px", fontSize: 12, color: "#374151" }}>{increase ? `£${increase} (${increasePct}%)` : "—"}</td>
+                      <td style={{ border: "1px solid #e5e7eb", padding: "8px 12px", fontSize: 12, color: "#374151" }}>Per {rentPeriod}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </PrintSection>
+
+              <div style={{ border: "1.5px solid #c9a84c", padding: 12, marginBottom: 20 }}>
+                <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 4, fontSize: 11.5 }}>Notice date: {fmt(issueDate)}</p>
+                <p style={{ color: "#374151", fontSize: 11 }}>The new rent will take effect from: <strong>{effectiveDate()}</strong></p>
+                <p style={{ color: "#6b7280", fontSize: 10.5, marginTop: 4 }}>This is the first rent payment date falling at least two months after the date of this notice.</p>
               </div>
 
-              <div style={{ background: "#fef9ec", border: "1px solid #c9a84c", borderRadius: 8, padding: 12, marginBottom: 20, fontSize: 12 }}>
-                <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>Notice date: {fmt(issueDate)}</p>
-                <p style={{ color: "#374151" }}>The new rent will take effect from: <strong>{effectiveDate()}</strong></p>
-                <p style={{ color: "#6b7280", fontSize: 11, marginTop: 4 }}>This is the first rent payment date falling at least two months after the date of this notice.</p>
-              </div>
-
-              <div style={{ fontSize: 11, color: "#374151", lineHeight: 1.7, marginBottom: 20 }}>
-                <p><strong>Your right to challenge this increase:</strong> If you believe the proposed rent is above the open market rate for similar properties in the area, you may refer this notice to the First-tier Tribunal (Property Chamber) for a determination. You must do so before the effective date of the increase. The Tribunal may set a rent equal to or lower than the proposed amount — it cannot award a higher rent than proposed.</p>
-                <p style={{ marginTop: 8 }}>To refer to the Tribunal, visit: <strong>www.gov.uk/find-a-tribunal</strong> or call 0300 123 1024.</p>
+              <div style={{ fontSize: 11, color: "#374151", lineHeight: 1.75, marginBottom: 20 }}>
+                <p><strong>Your right to challenge this increase:</strong> If you believe the proposed rent is above the open market rate for similar properties in the area, you may refer this notice to the First-tier Tribunal (Property Chamber) for a determination before the effective date. The Tribunal may set a rent equal to or lower than the proposed amount.</p>
+                <p style={{ marginTop: 6 }}>To refer to the Tribunal: <strong>www.gov.uk/find-a-tribunal</strong> or call 0300 123 1024.</p>
               </div>
 
               <SignatureBlock
@@ -190,6 +196,7 @@ export default function Section13Notice() {
                 showWitness={true}
                 date={issueDate}
               />
+              <PrintFooter docTitle="Section 13 Rent Increase Notice" note="England & Wales · Housing Act 1988 s.13" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>

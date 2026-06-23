@@ -1,6 +1,7 @@
 ﻿"use client";
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const AREAS = [
@@ -159,19 +160,14 @@ export default function InspectionRecordTemplate() {
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
-          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", boxShadow: "0 4px 40px rgba(0,0,0,0.15)", fontFamily: "Arial, sans-serif", color: "#1a1a1a" }}>
-            <div style={{ background: "#0f1b36", padding: "24px 36px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <p style={{ fontSize: 20, fontWeight: 800, color: "white" }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
-              <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Ref: {refNum} · {today}</p>
-            </div>
-            <div style={{ height: 4, background: "#c9a84c" }} />
-
-            <div style={{ padding: "28px 36px 36px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 4 }}>
-                <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36" }}>Mid-Tenancy Inspection Record</h1>
-                <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", background: overallColor + "20", color: overallColor, borderRadius: 6 }}>{overallStatus}</span>
-              </div>
-              <p style={{ fontSize: 11, color: "#64748b", marginBottom: 20 }}>Periodic inspection {inspectionNo ? `#${inspectionNo}` : ""}</p>
+          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", fontFamily: "Arial, sans-serif", color: "#1a1a1a", padding: "40px" }}>
+            <PrintHeader
+              category="Property Management · Mid-Tenancy"
+              title="Mid-Tenancy Inspection Record"
+              reference={refNum}
+              date={today}
+            />
+            <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 20 }}>Periodic inspection {inspectionNo ? `#${inspectionNo}` : ""}</p>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 24, padding: "14px", background: "#f8f9fc", border: "1px solid #e2e8f0", borderRadius: 4 }}>
                 {[
@@ -191,8 +187,8 @@ export default function InspectionRecordTemplate() {
 
               {AREAS.map(area => (
                 <div key={area.id} style={{ marginBottom: 16 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase" }}>{area.name}</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>{area.name}</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                     {area.checks.map((check, ii) => {
@@ -217,7 +213,7 @@ export default function InspectionRecordTemplate() {
 
               {actionsRequired && (
                 <div style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}><p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase" }}>Actions Required</p></div>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>Actions Required</p></div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: 12 }}>
                     <p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{actionsRequired}</p>
                     {followUpDate && <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 8 }}>Follow-up by: {new Date(followUpDate).toLocaleDateString("en-GB")}</p>}
@@ -225,27 +221,23 @@ export default function InspectionRecordTemplate() {
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 24 }}>
-                {[{ l: "Inspector", n: inspectorName }, { l: "Tenant (if present)", n: tenantName }].map(s => (
-                  <div key={s.l} style={{ border: "1px solid #e2e8f0", padding: 14 }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 20 }}>SIGNED: {s.l.toUpperCase()}</p>
-                    <div style={{ borderBottom: "1px solid #1a1a1a", marginBottom: 4 }} />
-                    <p style={{ fontSize: 9, color: "#64748b" }}>{s.n || "Name: ___________________________"}</p>
-                    <p style={{ fontSize: 9, color: "#64748b", marginTop: 4 }}>Date: ___________________________</p>
-                  </div>
-                ))}
-              </div>
-
-              <p style={{ fontSize: 8, color: "#94a3b8", marginTop: 24, lineHeight: 1.5 }}>
-                Periodic inspection record. Landlords should give at least 24 hours notice before entry (Section 11, Landlord & Tenant Act 1985). Generated by PropertyVault UK. Ref: {refNum}. © {new Date().getFullYear()} PropertyVault UK.
-              </p>
-            </div>
+              <SignatureBlock
+                signerLabel="Signed (Inspector / Landlord)"
+                signerName={inspectorName}
+                witnessLabel="Signed (Tenant)"
+                showWitness={true}
+              />
+              <PrintFooter docTitle="Mid-Tenancy Inspection Record" note="24 hrs notice required for entry · Landlord & Tenant Act 1985 s.11" />
           </div>
         </section>
       )}
     </>
   );
 }
+
+
+
+
 
 
 

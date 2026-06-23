@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 
 export default function RepairReport() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -129,73 +130,71 @@ export default function RepairReport() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
-              <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{propertyAddress || "_______________"}</p>
-                <p style={{ fontSize: 11, color: "#6b7280", marginTop: 8 }}>{fmt(issueDate)}</p>
+            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+              <PrintHeader
+                category={`Formal Notice · ${urgency.toUpperCase()} Repair Request`}
+                title="Notice of Repair Required"
+                date={issueDate}
+              />
+
+              {/* Letter addresses */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
+                <div>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 700, marginBottom: 4 }}>From (Tenant)</p>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
+                  <p style={{ fontSize: 11, color: "#6b7280" }}>{propertyAddress || "_______________"}</p>
+                  <p style={{ fontSize: 11, color: "#6b7280", marginTop: 4 }}>{fmt(issueDate)}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: 9, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 700, marginBottom: 4 }}>To (Landlord)</p>
+                  <p style={{ fontSize: 12, color: "#374151" }}>{landlordName || "_______________"}</p>
+                  {landlordAddress && <p style={{ fontSize: 11, color: "#6b7280", whiteSpace: "pre-line" }}>{landlordAddress}</p>}
+                </div>
               </div>
 
-              <div style={{ marginBottom: 24 }}>
-                <p style={{ fontSize: 12, color: "#374151" }}>{landlordName || "_______________"}</p>
-                {landlordAddress && <p style={{ fontSize: 11, color: "#6b7280", whiteSpace: "pre-line" }}>{landlordAddress}</p>}
-              </div>
-
+              {/* Urgency band */}
               {(() => {
                 const cfg = urgencyConfig[urgency];
                 return (
-                  <div style={{ background: cfg.bg, border: `1.5px solid ${cfg.color}`, borderRadius: 8, padding: 10, marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 18 }}>{urgency === "emergency" ? "🚨" : urgency === "urgent" ? "⚠️" : "ℹ️"}</span>
-                    <div>
-                      <p style={{ fontSize: 12, fontWeight: 800, color: cfg.color }}>{urgency.toUpperCase()} REPAIR NOTICE</p>
-                      <p style={{ fontSize: 11, color: cfg.color, opacity: 0.8 }}>{cfg.desc}</p>
-                    </div>
+                  <div style={{ border: `1.5px solid ${cfg.color}`, padding: "8px 12px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 11.5, fontWeight: 800, color: cfg.color }}>{urgency.toUpperCase()} REPAIR NOTICE — {cfg.desc}</p>
                   </div>
                 );
               })()}
 
-              <p style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", marginBottom: 16 }}>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginBottom: 14 }}>
                 Re: Notice of Repair Required — {issueTitle || "_______________"}
               </p>
 
-              <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8, marginBottom: 14 }}>Dear {landlordName || "Sir/Madam"},</p>
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginBottom: 12 }}>Dear {landlordName || "Sir/Madam"},</p>
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginBottom: 14 }}>I am writing to formally notify you of a repair that is required at the above property, which I occupy as your tenant.</p>
 
-              <div style={{ fontSize: 12, color: "#374151", lineHeight: 1.8 }}>
-                <p style={{ marginBottom: 12 }}>I am writing to formally notify you of a repair that is required at the above property, which I occupy as your tenant.</p>
-
-                <div style={{ background: "#f5f2ec", borderRadius: 8, padding: 14, marginBottom: 16 }}>
-                  <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 8, fontSize: 12 }}>Details of the issue:</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: "6px 12px", fontSize: 11 }}>
-                    <span style={{ color: "#6b7280" }}>Issue:</span><span style={{ fontWeight: 600 }}>{issueTitle || "—"}</span>
-                    {location && <><span style={{ color: "#6b7280" }}>Location:</span><span>{location}</span></>}
-                    {firstReported && <><span style={{ color: "#6b7280" }}>First noticed:</span><span>{fmt(firstReported)}</span></>}
-                  </div>
-                  {issueDesc && <p style={{ marginTop: 10, color: "#374151", lineHeight: 1.65 }}>{issueDesc}</p>}
+              <div style={{ border: "1px solid #e5e7eb", padding: 12, marginBottom: 14 }}>
+                <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 8, fontSize: 11.5 }}>Details of the issue:</p>
+                <div style={{ display: "grid", gridTemplateColumns: "130px 1fr", gap: "5px 12px", fontSize: 11 }}>
+                  <span style={{ color: "#6b7280" }}>Issue:</span><span style={{ fontWeight: 600 }}>{issueTitle || "—"}</span>
+                  {location && <><span style={{ color: "#6b7280" }}>Location:</span><span>{location}</span></>}
+                  {firstReported && <><span style={{ color: "#6b7280" }}>First noticed:</span><span>{fmt(firstReported)}</span></>}
                 </div>
+                {issueDesc && <p style={{ marginTop: 10, color: "#374151", lineHeight: 1.65, fontSize: 11.5 }}>{issueDesc}</p>}
+              </div>
 
-                {previousContact && (
-                  <p style={{ marginBottom: 12 }}>
-                    <strong>Previous contact:</strong> {previousContact}
-                  </p>
-                )}
-
-                <p style={{ marginBottom: 12 }}>{requestedAction}</p>
-
-                {deadline && (
-                  <p style={{ marginBottom: 12 }}>
-                    I request a response by <strong>{fmt(deadline)}</strong>. If I do not hear from you by this date, I may contact the local council's housing enforcement team or the Private Rented Sector Ombudsman.
-                  </p>
-                )}
-
-                <p style={{ marginBottom: 12 }}>Please note that as a landlord you have a legal duty to maintain the property in a good state of repair under Section 11 of the Landlord and Tenant Act 1985, and under Awaab's Law (as introduced by the Renters' Rights Act 2025), you are required to investigate and begin remediation of hazards within prescribed timescales.</p>
-
+              <div style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8 }}>
+                {previousContact && <p style={{ marginBottom: 10 }}><strong>Previous contact:</strong> {previousContact}</p>}
+                <p style={{ marginBottom: 10 }}>{requestedAction}</p>
+                {deadline && <p style={{ marginBottom: 10 }}>I request a response by <strong>{fmt(deadline)}</strong>. If I do not hear from you by this date, I may contact the local council's housing enforcement team or the Private Rented Sector Ombudsman.</p>}
+                <p style={{ marginBottom: 10 }}>As a landlord you have a legal duty to maintain the property in a good state of repair under Section 11 of the Landlord and Tenant Act 1985. Under Awaab's Law (Renters' Rights Act 2025), you are required to investigate and begin remediation of hazards within prescribed timescales.</p>
                 <p>I am keeping a copy of this letter for my records.</p>
               </div>
 
-              <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.8, marginTop: 20, marginBottom: 4 }}>Yours faithfully,</p>
-              <div style={{ borderBottom: "1.5px solid #0f1b36", height: 40, maxWidth: 220, marginBottom: 6 }} />
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
-              <p style={{ fontSize: 11, color: "#6b7280" }}>Tenant at {propertyAddress || "_______________"}</p>
+              <p style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8, marginTop: 20, marginBottom: 8 }}>Yours faithfully,</p>
+              <SignatureBlock
+                signerLabel={tenantName || "Tenant"}
+                signerName={tenantName}
+                showWitness={false}
+                date={issueDate}
+              />
+              <PrintFooter docTitle="Repair Report Notice" note="Landlord and Tenant Act 1985 s.11 · Renters' Rights Act 2025" />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>

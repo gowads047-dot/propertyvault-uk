@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const SECTIONS = [
@@ -256,22 +257,13 @@ export default function ViewingChecklistTemplate() {
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
-          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", boxShadow: "0 4px 40px rgba(0,0,0,0.15)", fontFamily: "Arial, sans-serif", color: "#1a1a1a" }}>
-            {/* Letterhead */}
-            <div style={{ background: "#0f1b36", padding: "24px 36px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-              <div>
-                <p style={{ fontSize: 20, fontWeight: 800, color: "white" }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Free Property Tools for UK Investors & Buyers</p>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Ref: {refNum}</p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Date: {today}</p>
-              </div>
-            </div>
-            <div style={{ height: 4, background: "#c9a84c" }} />
-
-            <div style={{ padding: "28px 36px 36px" }}>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Property Viewing Checklist</h1>
+          <div id="print-doc" style={{ maxWidth: 800, margin: "0 auto", background: "white", fontFamily: "Arial, sans-serif", color: "#1a1a1a", padding: "40px" }}>
+            <PrintHeader
+              category="Investment Due Diligence · Viewing Notes"
+              title="Property Viewing Checklist"
+              reference={refNum}
+              date={today}
+            />
 
               {/* Summary box */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 12, marginBottom: 24, padding: "14px", background: "#f8f9fc", border: "1px solid #e2e8f0", borderRadius: 4 }}>
@@ -293,8 +285,7 @@ export default function ViewingChecklistTemplate() {
               {/* Checklist sections */}
               {SECTIONS.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px", display: "flex", justifyContent: "space-between" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.05em" }}>{sec.title}</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.05em" }}>{sec.title}</p>
                     <p style={{ fontSize: 10, color: "#c9a84c" }}>{sec.items.filter(i => f.checks[i]).length}/{sec.items.length}</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
@@ -313,8 +304,7 @@ export default function ViewingChecklistTemplate() {
               {/* Notes */}
               {f.notes && (
                 <div style={{ marginBottom: 20 }}>
-                  <div style={{ background: "#0f1b36", padding: "5px 12px" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "white", textTransform: "uppercase", letterSpacing: "0.05em" }}>Notes & Observations</p>
+                  <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.05em" }}>Notes & Observations</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: "12px" }}>
                     <p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{f.notes}</p>
@@ -322,34 +312,28 @@ export default function ViewingChecklistTemplate() {
                 </div>
               )}
 
-              {/* Overall verdict box */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20 }}>
-                <div style={{ border: "1px solid #e2e8f0", padding: "14px" }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 8 }}>OVERALL ASSESSMENT</p>
-                  <div style={{ display: "flex", gap: 8 }}>
-                    {["Strong Buy", "Consider", "Pass"].map(v => (
-                      <div key={v} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                        <div style={{ width: 12, height: 12, border: "1px solid #94a3b8", borderRadius: 2 }} />
-                        <p style={{ fontSize: 10, color: "#374151" }}>{v}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div style={{ border: "1px solid #e2e8f0", padding: "14px" }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 16 }}>SIGNATURE</p>
-                  <div style={{ borderBottom: "1px solid #1a1a1a", marginBottom: 4 }} />
-                  <p style={{ fontSize: 9, color: "#64748b" }}>Signed: ___________________________ Date: ___________</p>
+              <div style={{ border: "1px solid #e5e7eb", padding: "12px", marginBottom: 16 }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 8 }}>OVERALL ASSESSMENT — tick one:</p>
+                <div style={{ display: "flex", gap: 20 }}>
+                  {["Strong Buy", "Consider", "Pass"].map(v => (
+                    <div key={v} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 14, height: 14, border: "1.5px solid #94a3b8" }} />
+                      <p style={{ fontSize: 11, color: "#374151" }}>{v}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <p style={{ fontSize: 8, color: "#94a3b8", marginTop: 24, lineHeight: 1.5 }}>Generated by PropertyVault UK (propertyvaultuk.co.uk). For informational purposes only. Not financial or legal advice. © {new Date().getFullYear()} PropertyVault UK. Ref: {refNum}</p>
-            </div>
+              <SignatureBlock signerLabel="Signed (Viewer)" signerName="" showWitness={false} />
+              <PrintFooter docTitle="Property Viewing Checklist" note="For informational purposes only — not financial or legal advice" />
           </div>
         </section>
       )}
     </>
   );
 }
+
+
+
 
 
 

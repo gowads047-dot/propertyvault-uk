@@ -132,6 +132,42 @@ html.dark .hetta input::placeholder, html.dark .hetta textarea::placeholder {
 
 @media print {
   .no-print { display: none !important; }
+
+  /* Fix multi-page print: absolute (not fixed) so content flows past page 1 */
+  #print-doc {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: white !important;
+  }
+
+  /* Remove decorative chrome from print */
+  #print-doc .rounded-2xl,
+  #print-doc .rounded-xl,
+  #print-doc .rounded-lg {
+    border-radius: 0 !important;
+  }
+
+  /* Force backgrounds & colors to print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Typography for print */
+  #print-doc {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.55 !important;
+    color: #1a1a1a !important;
+  }
 }
 
 * { box-sizing: border-box; }

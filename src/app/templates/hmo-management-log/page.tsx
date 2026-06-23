@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 
 const COMPLIANCE_ITEMS = [
   { id: "gas", label: "Gas Safety Check (annual)", category: "safety" },
@@ -282,6 +283,8 @@ export default function HmoManagementLog() {
     </>
   );
 }
+
+
 
 
 
