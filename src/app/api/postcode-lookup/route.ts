@@ -30,6 +30,17 @@ const CRIME_LABELS: Record<string, string> = {
   "other-theft":              "Other theft",
 };
 
+// Fetch with a hard timeout so we don't hit Vercel's 10s serverless limit
+async function fetchWithTimeout(url: string, options: RequestInit & { next?: { revalidate?: number } } = {}, timeoutMs = 5000): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const raw = searchParams.get("postcode") ?? "";
@@ -40,10 +51,12 @@ export async function GET(request: Request) {
   }
 
   try {
-    // ── 1. Postcodes.io ───────────────────────────────────
-    const pcRes = await fetch(`https://api.postcodes.io/postcodes/${postcode}`, {
-      next: { revalidate: 86400 },
-    });
+    // ── 1. Postcodes.io (required) ────────────────────────
+    const pcRes = await fetchWithTimeout(
+      `https://api.postcodes.io/postcodes/${postcode}`,
+      {},
+      6000
+    );
     const pcJson = await pcRes.json();
 
     if (pcJson.status !== 200 || !pcJson.result) {
@@ -56,14 +69,15 @@ export async function GET(request: Request) {
       admin_county: county,
     } = pcJson.result;
 
-    // ── 2. Crime data (last full month) ──────────────────
+    // ── 2. Crime data (optional, 4s timeout) ─────────────
     const crimeDate = getPreviousMonth();
     let crimeCategories: Record<string, number> = {};
     let crimeTotal = 0;
     try {
-      const crimeRes = await fetch(
+      const crimeRes = await fetchWithTimeout(
         `https://data.police.uk/api/crimes-street/all-crime?lat=${latitude}&lng=${longitude}&date=${crimeDate}`,
-        { next: { revalidate: 3600 } }
+        {},
+        4000
       );
       if (crimeRes.ok) {
         const crimes: { category: string }[] = await crimeRes.json();
@@ -73,7 +87,7 @@ export async function GET(request: Request) {
         }
       }
     } catch {
-      // Crime data is optional — don't fail the whole request
+      // Crime data is optional — silently skip on timeout/error
     }
 
     const crimeLevel =
@@ -86,38 +100,43 @@ export async function GET(request: Request) {
       crimeLevel === "Medium"   ? "#d97706" :
       crimeLevel === "High"     ? "#ea580c" : "#dc2626";
 
-    // Top crime categories
     const topCrimes = Object.entries(crimeCategories)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([cat, count]) => ({ label: CRIME_LABELS[cat] ?? cat, count }));
 
-    // ── 3. Land Registry recent sales ────────────────────
+    // ── 3. Land Registry recent sales (optional, 4s timeout) ──
     let recentSales: Sale[] = [];
     let avgPrice = 0;
     try {
-      const lrRes = await fetch(
-        `https://landregistry.data.gov.uk/data/ppi/transaction-record.json?propertyAddress.postcode=${encodeURIComponent(postcode.slice(0, -3) + " " + postcode.slice(-3))}&_pageSize=20&_sort=-transactionDate`,
-        { headers: { Accept: "application/json" }, next: { revalidate: 86400 } }
+      const formattedPC = postcode.slice(0, -3) + " " + postcode.slice(-3);
+      const lrRes = await fetchWithTimeout(
+        `https://landregistry.data.gov.uk/data/ppi/transaction-record.json?propertyAddress.postcode=${encodeURIComponent(formattedPC)}&_pageSize=20&_sort=-transactionDate`,
+        { headers: { Accept: "application/json" } },
+        4000
       );
       if (lrRes.ok) {
         const lrJson = await lrRes.json();
         const items = lrJson?.result?.items ?? [];
-        recentSales = items.slice(0, 8).map((item: LRItem) => ({
-          date:     item.transactionDate?.slice(0, 10) ?? "",
-          price:    item.pricePaid ?? 0,
-          type:     PROP_TYPES[item.propertyType ?? ""] ?? item.propertyType ?? "Property",
-          tenure:   item.estateType === "L" ? "Leasehold" : "Freehold",
-          address:  [item.paon, item.saon, item.street].filter(Boolean).join(" ").toUpperCase(),
-          newBuild: item.newBuild === "Y",
-        }));
+        recentSales = items.slice(0, 8).map((item: LRItem) => {
+          const propType = str(item.propertyType);
+          const estate   = str(item.estateType);
+          return {
+            date:     isoDate(item.transactionDate),
+            price:    num(item.pricePaid),
+            type:     (PROP_TYPES[propType] ?? propType) || "Property",
+            tenure:   estate === "L" ? "Leasehold" : "Freehold",
+            address:  [str(item.paon), str(item.saon), str(item.street)].filter(Boolean).join(" ").toUpperCase(),
+            newBuild: str(item.newBuild) === "Y",
+          };
+        });
         if (items.length > 0) {
-          const prices = items.map((i: LRItem) => i.pricePaid ?? 0).filter(Boolean);
-          avgPrice = prices.length ? Math.round(prices.reduce((a: number, b: number) => a + b, 0) / prices.length) : 0;
+          const prices = items.map((i: LRItem) => num(i.pricePaid)).filter(Boolean);
+          avgPrice = prices.length ? Math.round((prices as number[]).reduce((a, b) => a + b, 0) / prices.length) : 0;
         }
       }
     } catch {
-      // Sales data is optional
+      // Sales data is optional — silently skip on timeout/error
     }
 
     const suggestedCity = REGION_TO_CITY[region] ?? "nottingham";
@@ -151,16 +170,51 @@ const PROP_TYPES: Record<string, string> = {
   D: "Detached", S: "Semi-detached", T: "Terraced", F: "Flat/Maisonette",
 };
 
-interface LRItem {
-  transactionDate?: string;
-  pricePaid?: number;
-  propertyType?: string;
-  estateType?: string;
-  newBuild?: string;
-  paon?: string;
-  saon?: string;
-  street?: string;
+// Land Registry returns JSON-LD — values can be strings, numbers, or nested objects
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LRVal = any;
+
+// Recursively extract a plain string from any JSON-LD value
+function str(v: LRVal): string {
+  if (v === null || v === undefined) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "number") return String(v);
+  if (typeof v !== "object") return String(v);
+  // Try common JSON-LD patterns in order of preference
+  if (typeof v._value === "string") return v._value;
+  if (typeof v._value === "number") return String(v._value);
+  if (typeof v.label === "string") return v.label;
+  if (typeof v.label === "object") return str(v.label);
+  if (typeof v.prefLabel === "string") return v.prefLabel;
+  if (typeof v.prefLabel === "object") return str(v.prefLabel);
+  if (typeof v._about === "string") {
+    // Extract last path segment from URI as fallback
+    return v._about.split("/").pop() ?? "";
+  }
+  return "";
 }
+
+function num(v: LRVal): number {
+  if (v === null || v === undefined) return 0;
+  if (typeof v === "number") return v;
+  const s = str(v);
+  return s ? parseFloat(s) || 0 : 0;
+}
+
+// Parse any date value to ISO YYYY-MM-DD
+function isoDate(v: LRVal): string {
+  const s = str(v);
+  if (!s) return "";
+  // Already ISO
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  // Try native Date parse (handles "Mon, 28 Jul 2023 ...")
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  return s.slice(0, 10);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LRItem = Record<string, any>;
 
 interface Sale {
   date: string;
