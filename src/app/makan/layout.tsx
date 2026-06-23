@@ -6,7 +6,7 @@ import { LangProvider } from "@/lib/lang-context";
 
 export const metadata: Metadata = {
   title: { template: "%s | Makan", default: "Makan — Find Your Place" },
-  description: "Free property listing platform. List rooms, flats, houses, and villas across UK, Middle East, and North Africa. No fees, no agents.",
+  description: "Free property listing platform. List rooms, flats, houses, and villas across the UK, Egypt, and Morocco. No fees, no agents.",
 };
 
 export default function MakanLayout({ children }: { children: React.ReactNode }) {

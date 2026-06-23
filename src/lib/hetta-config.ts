@@ -79,6 +79,8 @@ export const countries: Country[] = [
       "Giza": "Home to the Pyramids and a city in its own right. The Sheikh Zayed and 6th October corridors have seen massive residential development, offering large apartments at highly competitive prices.",
     },
   },
+  // ── countries below are not active in this phase ──
+  /*
   {
     code: "ae", name: "UAE", nameAr: "الإمارات", nameFr: "EAU",
     currency: "AED", symbol: "AED", flag: "🇦🇪",
@@ -206,6 +208,7 @@ export const countries: Country[] = [
       "Irbid": "A major university city in northern Jordan, second in size only to Amman. Strong student rental demand and very affordable entry prices.",
     },
   },
+  */
 ];
 
 export const propertyTypes = ["Room", "Studio", "Flat", "Apartment", "House", "Villa", "Penthouse", "Land", "Commercial"];
@@ -223,7 +226,7 @@ export type Lang = "en" | "ar" | "fr";
 export const translations: Record<Lang, Record<string, string>> = {
   en: {
     "hero.title": "Find your place",
-    "hero.subtitle": "Rooms, flats, houses, and villas across the UK, Middle East, and North Africa. List free. Browse free. No agents needed.",
+    "hero.subtitle": "Rooms, flats, houses, and villas across the UK, Egypt, and Morocco. List free. Browse free. No agents needed.",
     "hero.search": "Search by city, area, or keyword...",
     "hero.cta": "Search",
     "nav.browse": "Browse",
@@ -276,12 +279,12 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.message.desc": "Contact the landlord via WhatsApp or enquiry. No middlemen.",
     "how.movein.title": "Move in",
     "how.movein.desc": "Agree terms, sign up, and move in. It's your place.",
-    "footer.tagline": "Find your place. Free property listings worldwide.",
+    "footer.tagline": "Find your place. UK · Egypt · Morocco.",
     "footer.copyright": "Makan by PropertyVault UK. Free for everyone.",
   },
   ar: {
     "hero.title": "لاقي مكانك",
-    "hero.subtitle": "غرف، شقق، بيوت، وفلل في بريطانيا، الشرق الأوسط، وشمال أفريقيا. سجّل مجاناً. تصفّح مجاناً. بدون وسطاء.",
+    "hero.subtitle": "غرف، شقق، بيوت، وفلل في بريطانيا، مصر، والمغرب. سجّل مجاناً. تصفّح مجاناً. بدون وسطاء.",
     "hero.search": "ابحث بالمدينة أو المنطقة...",
     "hero.cta": "بحث",
     "nav.browse": "تصفّح",
@@ -334,12 +337,12 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.message.desc": "راسل المالك عبر واتساب أو النموذج. بدون وسطاء.",
     "how.movein.title": "انتقل",
     "how.movein.desc": "اتفق على الشروط واسكن. مكانك أنت.",
-    "footer.tagline": "لاقي مكانك. إعلانات عقارية مجانية حول العالم.",
+    "footer.tagline": "لاقي مكانك. بريطانيا · مصر · المغرب.",
     "footer.copyright": "مكان من PropertyVault UK. مجاني للجميع.",
   },
   fr: {
     "hero.title": "Trouvez votre place",
-    "hero.subtitle": "Chambres, appartements, maisons et villas au Royaume-Uni, au Moyen-Orient et en Afrique du Nord. Annoncez gratuitement. Parcourez gratuitement. Sans agents.",
+    "hero.subtitle": "Chambres, appartements, maisons et villas au Royaume-Uni, en Égypte et au Maroc. Annoncez gratuitement. Parcourez gratuitement. Sans agents.",
     "hero.search": "Rechercher par ville, quartier ou mot-clé...",
     "hero.cta": "Rechercher",
     "nav.browse": "Parcourir",
@@ -392,7 +395,7 @@ export const translations: Record<Lang, Record<string, string>> = {
     "how.message.desc": "Contactez le propriétaire par WhatsApp ou formulaire. Sans intermédiaires.",
     "how.movein.title": "Emménagez",
     "how.movein.desc": "Convenez des termes et emménagez. C'est votre place.",
-    "footer.tagline": "Trouvez votre place. Annonces immobilières gratuites dans le monde entier.",
+    "footer.tagline": "Trouvez votre place. Royaume-Uni · Égypte · Maroc.",
     "footer.copyright": "Makan par PropertyVault UK. Gratuit pour tous.",
   },
 };
