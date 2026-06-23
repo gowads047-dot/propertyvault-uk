@@ -1,415 +1,433 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 
-const AI_QUESTIONS = [
-  "Which mortgage expires next?",
-  "What should I focus on today?",
-  "Which property is most profitable?",
-  "Which tenant reported a leak?",
-  "How much tax am I likely to owe?",
-  "Which compliance items expire this year?",
-  "Which properties are underperforming?",
-  "What maintenance costs increased this year?",
-];
+// ─── Conversation engine ────────────────────────────────────────────────────
 
-const AI_ANSWERS: Record<string, string> = {
-  "Which mortgage expires next?": "Your Barclays BTL on 14 Maple Street expires in 47 days (3 Aug 2026). Fixed rate 2.89% → reverts to SVR 7.24%. Estimated savings from switching now: £284/month. 3 brokers have been notified.",
-  "What should I focus on today?": "3 things need your attention: (1) Gas safety certificate on Flat 4, Grove Lane — expires in 9 days. (2) Tenant in 22 Park Road has an open maintenance issue, 6 days without update. (3) Rent review overdue on 8 Victoria Terrace — current rent £850, market rate £975.",
-  "Which property is most profitable?": "14 Maple Street. Net yield 8.4%, monthly cash flow £612 after all costs. BRRR equity position: £74,000. ROI since purchase: 31.2%. It outperforms your portfolio average by 2.1%.",
-  "Which tenant reported a leak?": "Sarah Mitchell at 22 Park Road (flat 2) reported a bathroom ceiling leak on 17 Jun. Status: Awaiting contractor. No update in 6 days. Mark Davis (plumber) was contacted but hasn't responded. Recommend: Chase or reassign.",
-  "How much tax am I likely to owe?": "Based on your current income and expenses, estimated self-assessment liability this year: £6,240. Allowable expenses tracked: £14,330. Potential missing receipts flagged: 3 items (contractor invoices). Tip: Upload the Manchester invoice to reduce liability by ~£340.",
-  "Which compliance items expire this year?": "4 items expire before Dec 2026: Gas Safety (Flat 4, Grove Lane) — 9 days. EICR (14 Maple Street) — 4 months. EPC (22 Park Road) — 7 months, currently rated D. Deposit protection renewal (Flat 4) — 2 months.",
-  "Which properties are underperforming?": "22 Park Road is your weakest performer. Net yield 4.1% vs portfolio average 6.8%. 3 maintenance issues in 6 months (total: £2,340). Rent at £795 — market comparable is £900. Recommendation: Review rent, assess works needed, model against sale.",
-  "What maintenance costs increased this year?": "Total maintenance spend YTD: £8,940 (+34% vs last year). Largest increases: plumbing (£3,200, up 61%) and boiler servicing (£1,440, up 28%). 22 Park Road accounts for 47% of all spend. Recommend flagging for review.",
-};
+type Action = { type: string; label: string; value: string; color: string };
+type Message = { role: "user" | "ai"; text: string; actions?: Action[]; ts?: string };
 
-const MODULES = [
-  {
-    icon: "🧠",
-    title: "Property Intelligence",
-    tag: "Core",
-    tagColor: "#6366f1",
-    desc: "One button. Complete visibility. Every property becomes a living data room — mortgage, tenants, compliance, cash flow, documents, maintenance history.",
-    bullets: ["Purchase price vs current valuation & equity", "Mortgage product, rate, ERC dates & refinance alerts", "Tenant health score & payment history", "Compliance status across 6 categories", "Full maintenance & contractor history"],
-  },
-  {
-    icon: "🔧",
-    title: "Maintenance Command Centre",
-    tag: "Workflow",
-    tagColor: "#0891b2",
-    desc: "AI triages every issue automatically. One tap shares everything — photos, videos, scope — directly to WhatsApp, email, or SMS. Every job tracked from report to completion.",
-    bullets: ["Tenant submits photos, video & voice notes", "AI categorises urgency & suggests likely cause", "One-tap contractor dispatch with full context", "Quote comparison, approval, invoice storage", "Nothing gets lost in WhatsApp"],
-  },
-  {
-    icon: "⚖️",
-    title: "Compliance Engine",
-    tag: "Safety Net",
-    tagColor: "#d4af37",
-    desc: "Track every certificate, licence, and deadline across every property. Never miss a renewal. Never face a fine.",
-    bullets: ["EPC, Gas Safety, EICR, Insurance, Deposits", "HMO & selective licensing deadlines", "Proprietary Compliance Score per property", "Automated renewal reminders (30/14/7 days)", "One-click certificate upload & storage"],
-  },
-  {
-    icon: "💷",
-    title: "Tax Intelligence",
-    tag: "Financial",
-    tagColor: "#22c55e",
-    desc: "Not bookkeeping. Tax intelligence. AI reads your receipts, allocates to properties, and shows your estimated liability at all times.",
-    bullets: ["AI receipt capture via photo, email or PDF", "Automatic income & expense allocation", "Live estimated self-assessment figure", "Missing receipt alerts", "Allowable expense optimisation suggestions"],
-  },
-  {
-    icon: "🏦",
-    title: "Mortgage Intelligence",
-    tag: "Financial",
-    tagColor: "#22c55e",
-    desc: "Most landlords forget mortgage deadlines. We don't. Track every product, every ERC date, every refinancing opportunity across your portfolio.",
-    bullets: ["Full mortgage record per property", "Fixed rate expiry & ERC countdown", "Rate comparison & savings estimate", "Broker referral with full mortgage brief", "Portfolio-level LTV & equity dashboard"],
-  },
-  {
-    icon: "👤",
-    title: "Tenant Portal",
-    tag: "Experience",
-    tagColor: "#a855f7",
-    desc: "A premium experience for tenants that reduces friction and incoming calls. They self-serve. You stay in control.",
-    bullets: ["Rent payments & payment history", "Maintenance reporting with media upload", "Document access & digital signatures", "Real-time issue status tracking", "Direct messaging, always logged"],
-  },
-  {
-    icon: "📊",
-    title: "Portfolio Health Engine",
-    tag: "Intelligence",
-    tagColor: "#f59e0b",
-    desc: "A proprietary score (0–100) that tells you exactly how well-run your portfolio is — and what to fix first.",
-    bullets: ["Live occupancy, yield & cash flow position", "Risk flags: compliance gaps, expiring mortgages", "Opportunity flags: rent reviews, refinancing", "Trend analysis vs previous months", "Becomes addictive — landlords check daily"],
-  },
-  {
-    icon: "💬",
-    title: "Ask My Portfolio™",
-    tag: "AI Signature",
-    tagColor: "#ef4444",
-    desc: "The feature that makes landlords say 'I can't cancel this.' Ask anything about your portfolio in plain English. Get an instant, intelligent answer.",
-    bullets: ["Natural language queries across all properties", "Answers with context — not just data", "Proactive recommendations built into responses", "No reports. No menus. No searching.", "The operating system's brain"],
-  },
-];
+function parseMessage(input: string): { reply: string; actions: Action[] } {
+  const i = input.toLowerCase();
 
-const HEALTH_ITEMS = [
-  { label: "Occupancy", score: 100, color: "#22c55e", note: "All 4 units tenanted" },
-  { label: "Rent Collection", score: 97, color: "#22c55e", note: "1 payment 3 days late" },
-  { label: "Compliance", score: 78, color: "#f59e0b", note: "2 certificates expiring soon" },
-  { label: "Maintenance", score: 85, color: "#22c55e", note: "1 open issue, day 6" },
-  { label: "Mortgage Health", score: 62, color: "#f59e0b", note: "1 fix expiring in 47 days" },
-  { label: "Tax Position", score: 90, color: "#22c55e", note: "3 receipts unallocated" },
-];
-
-const OVERALL_SCORE = 84;
-
-const COMPETITOR_GAPS = [
-  "No AI-powered property briefing — landlords still manually check everything",
-  "Maintenance is email chaos — no tracked workflow, no contractor coordination",
-  "Zero mortgage intelligence — landlords discover SVR reversion by accident",
-  "Tax tools are bolt-ons, not integrated — data entry, not intelligence",
-  "Tenant portals feel like an afterthought — not a premium experience",
-  "Compliance is a checklist, not a safety net — no proactive alerting",
-  "No portfolio-level intelligence — no score, no recommendations, no growth insights",
-  "Ask My Portfolio doesn't exist anywhere in the market",
-];
-
-export default function RenturaPage() {
-  const [aiInput, setAiInput] = useState("");
-  const [aiAnswer, setAiAnswer] = useState("");
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiTyped, setAiTyped] = useState("");
-  const [activePill, setActivePill] = useState(0);
-  const [openModule, setOpenModule] = useState<number | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    let i = 0;
-    const q = AI_QUESTIONS[activePill];
-    setAiTyped("");
-    const t = setInterval(() => {
-      if (i <= q.length) {
-        setAiTyped(q.slice(0, i));
-        i++;
-      } else {
-        clearInterval(t);
-      }
-    }, 30);
-    return () => clearInterval(t);
-  }, [activePill]);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setActivePill(p => (p + 1) % AI_QUESTIONS.length);
-    }, 4000);
-    return () => clearInterval(t);
-  }, []);
-
-  function handleAsk(q?: string) {
-    const question = q || aiInput;
-    if (!question.trim()) return;
-    setAiLoading(true);
-    setAiAnswer("");
-    setTimeout(() => {
-      const match = Object.keys(AI_ANSWERS).find(k => question.toLowerCase().includes(k.toLowerCase().slice(0, 12)));
-      setAiAnswer(match ? AI_ANSWERS[match] : "Based on your portfolio data, I need a moment to analyse that. For best results, try one of the suggested questions — or your data may need to be connected first.");
-      setAiLoading(false);
-      setAiInput("");
-    }, 1200);
+  if (i.includes("paid") && (i.includes("£") || i.match(/\d{3,4}/))) {
+    const amount = input.match(/£[\d,]+/)?.[0] || input.match(/[\d,]{3,4}/)?.[0] || "amount";
+    return {
+      reply: `Got it. Payment of ${amount} recorded against your rent ledger. Arrears cleared if any were outstanding. Tenant record updated. Receipt available under Financials.`,
+      actions: [
+        { type: "record", label: "Payment logged", value: amount, color: "#22c55e" },
+        { type: "update", label: "Ledger updated", value: "Rent account", color: "#6366f1" },
+        { type: "clear", label: "Arrears cleared", value: "£0 outstanding", color: "#22c55e" },
+      ],
+    };
   }
 
+  if (i.includes("bought") || i.includes("purchased") || (i.includes("new property") && i.match(/£[\d,k]+/i))) {
+    const address = input.match(/at\s+([^,for]+)/i)?.[1]?.trim() || "new address";
+    const price = input.match(/£[\d,]+k?/i)?.[0] || "purchase price";
+    return {
+      reply: `New property added. I've created the property record, mortgage placeholder, and timeline for ${address}. Add your mortgage details and I'll track the expiry, LTV, and refinancing windows automatically.`,
+      actions: [
+        { type: "create", label: "Property created", value: address, color: "#6366f1" },
+        { type: "create", label: "Timeline started", value: "Purchase recorded", color: "#a855f7" },
+        { type: "pending", label: "Mortgage needed", value: price + " purchase", color: "#f59e0b" },
+      ],
+    };
+  }
+
+  if (i.includes("boiler") || i.includes("replaced") || (i.includes("cost") && i.match(/£\d+/))) {
+    const cost = input.match(/£[\d,]+/)?.[0] || "cost";
+    const property = input.match(/(?:at|flat|house|property)\s+([^\.\,]+)/i)?.[1]?.trim();
+    return {
+      reply: `Maintenance job logged and filed. ${cost} expense categorised as repairs — tax allowable. ${property ? `Attached to ${property}.` : ""} I've updated the maintenance history and flagged it for your self-assessment summary.`,
+      actions: [
+        { type: "record", label: "Expense logged", value: cost + " — repairs", color: "#22c55e" },
+        { type: "tax", label: "Tax allowable", value: "Added to SA summary", color: "#d4af37" },
+        { type: "history", label: "Property history updated", value: property || "property", color: "#6366f1" },
+      ],
+    };
+  }
+
+  if (i.includes("leak") || i.includes("damp") || i.includes("broken") || i.includes("reported") || i.includes("tap") || i.includes("radiator") || i.includes("crack")) {
+    const issue = i.includes("leak") ? "leak" : i.includes("damp") ? "damp" : i.includes("radiator") ? "radiator fault" : "maintenance issue";
+    return {
+      reply: `Maintenance issue created and flagged as urgent. I've categorised this as a ${issue}, assessed urgency as Medium-High, and prepared a contractor brief. Tenant will receive an auto-acknowledgement. Ready to share with your contractor via WhatsApp or email?`,
+      actions: [
+        { type: "create", label: "Issue created", value: issue.charAt(0).toUpperCase() + issue.slice(1), color: "#ef4444" },
+        { type: "alert", label: "Urgency assessed", value: "Medium-High", color: "#f59e0b" },
+        { type: "notify", label: "Tenant acknowledged", value: "Auto-sent", color: "#6366f1" },
+        { type: "action", label: "Contractor brief ready", value: "Tap to share", color: "#22c55e" },
+      ],
+    };
+  }
+
+  if (i.includes("mortgage") && (i.includes("expir") || i.includes("this year") || i.includes("upcoming") || i.includes("renew"))) {
+    return {
+      reply: `You have 2 mortgages expiring in the next 12 months:\n\n• 14 Maple Street — Barclays 2.89% fixed, expires 3 Aug 2026 (41 days). SVR reversion would cost £284/month extra.\n• 22 Park Road — NatWest 3.2% fixed, expires 14 Nov 2026 (5 months). £196/month difference.\n\nWant me to prepare a broker brief for both?`,
+      actions: [
+        { type: "alert", label: "Maple Street", value: "41 days · urgent", color: "#ef4444" },
+        { type: "alert", label: "Park Road", value: "5 months", color: "#f59e0b" },
+        { type: "action", label: "Broker brief", value: "Ready to generate", color: "#6366f1" },
+      ],
+    };
+  }
+
+  if (i.includes("focus") || i.includes("today") || i.includes("priority") || i.includes("important")) {
+    return {
+      reply: `3 things need your attention today:\n\n1. Gas Safety on Flat 4, Grove Lane — expires in 9 days. Book it now.\n2. Tenant at 22 Park Road has had an open maintenance issue for 6 days. Chase the contractor.\n3. Mortgage at 14 Maple Street expires in 41 days — rate reversion will cost £3,408/year extra.\n\nEverything else can wait.`,
+      actions: [
+        { type: "urgent", label: "Gas Safety due", value: "9 days", color: "#ef4444" },
+        { type: "chase", label: "Maintenance stalled", value: "6 days open", color: "#f59e0b" },
+        { type: "alert", label: "Mortgage expiry", value: "41 days", color: "#f59e0b" },
+      ],
+    };
+  }
+
+  if (i.includes("profitable") || i.includes("best property") || i.includes("performing")) {
+    return {
+      reply: `Your best performer is 14 Maple Street. Net yield 8.4%, monthly cash flow £612, ROI since purchase 31.2%. It generates 43% of your total portfolio income on 28% of your total capital. Your weakest is 22 Park Road — yield 4.1%, high maintenance spend, rent below market rate.`,
+      actions: [
+        { type: "top", label: "14 Maple Street", value: "8.4% yield · £612/mo CF", color: "#22c55e" },
+        { type: "low", label: "22 Park Road", value: "4.1% yield · review needed", color: "#ef4444" },
+      ],
+    };
+  }
+
+  if (i.includes("tax") || i.includes("owe") || i.includes("self assessment") || i.includes("hmrc")) {
+    return {
+      reply: `Based on rent received and expenses logged so far, your estimated self-assessment liability this year is £6,240. Allowable expenses tracked: £14,330. I've flagged 3 potential missing receipts that could reduce your bill by ~£680. Tip: the boiler replacement at Flat 3 may qualify for capital allowances — worth checking with your accountant.`,
+      actions: [
+        { type: "tax", label: "Estimated liability", value: "£6,240", color: "#d4af37" },
+        { type: "saving", label: "Missing receipts", value: "~£680 saving possible", color: "#22c55e" },
+        { type: "tip", label: "Capital allowance flag", value: "Boiler — Flat 3", color: "#6366f1" },
+      ],
+    };
+  }
+
+  if (i.includes("tenant") && (i.includes("moved") || i.includes("vacated") || i.includes("left") || i.includes("ended"))) {
+    return {
+      reply: `Tenancy marked as ended. I've triggered the deposit return checklist, flagged the property as vacant, and created a void period record for your tax summary. When you're ready to re-let, I'll pull the current market rent for that area.`,
+      actions: [
+        { type: "update", label: "Tenancy ended", value: "Archived", color: "#6366f1" },
+        { type: "checklist", label: "Deposit checklist", value: "Triggered", color: "#f59e0b" },
+        { type: "record", label: "Void period", value: "Tax noted", color: "#22c55e" },
+      ],
+    };
+  }
+
+  return {
+    reply: `I understood that. Let me pull the relevant data from your portfolio and prepare the right response. In the live platform, this would update your records, create alerts, and surface relevant intelligence automatically — with no forms.`,
+    actions: [
+      { type: "ai", label: "Intent recognised", value: "Processing", color: "#6366f1" },
+      { type: "action", label: "Records would update", value: "Automatically", color: "#22c55e" },
+    ],
+  };
+}
+
+const DEMO_PROMPTS = [
+  { label: "Log a payment", text: "Tenant paid £1,250 today for 14 Maple Street." },
+  { label: "Add a property", text: "Bought 22 Oak Avenue Manchester for £195,000 in March 2024." },
+  { label: "Log maintenance", text: "Boiler replaced at Flat 3. Dave charged £650." },
+  { label: "Report an issue", text: "Tenant at Park Road reported a leaking tap in the kitchen." },
+  { label: "Check mortgages", text: "Show mortgages expiring this year." },
+  { label: "Today's priorities", text: "What should I focus on today?" },
+  { label: "Tax position", text: "How much tax am I likely to owe this year?" },
+  { label: "Best property", text: "Which property is my most profitable?" },
+];
+
+const COMPARISONS = [
+  { task: "Add a new property", old: "Navigate to Properties → Add New → Fill 12-field form → Add mortgage separately → Add tenant separately → Link records manually", rentura: '"Bought 14 High Street Manchester for £220k. Barclays mortgage, 4.8% fixed. Tenant John pays £1,250/mo." → Done.' },
+  { task: "Log a maintenance cost", old: "Go to Maintenance → New Issue → Choose property from dropdown → Select category → Fill description → Set priority → Save → Go to Financials → Add expense → Link to property", rentura: '"Boiler replaced at Flat 3. Cost £650." → Job logged. Expense categorised. Tax summary updated. Property history filed.' },
+  { task: "Record a rent payment", old: "Open rent ledger → Find tenant → Click Record Payment → Enter amount → Enter date → Select payment method → Save → Check arrears separately", rentura: '"Tenant paid £1,100 today." → Logged. Ledger updated. Arrears cleared. Receipt created.' },
+  { task: "Log compliance certificate", old: "Settings → Compliance → Select property → Select certificate type → Enter expiry date → Upload PDF → Set reminder manually", rentura: 'Forward the certificate email to rentura@yourplatform.com → Everything extracted, stored, dated and reminder set automatically.' },
+];
+
+const PROACTIVE_ALERTS = [
+  { icon: "⚠️", type: "Mortgage", msg: "14 Maple Street — Barclays fixed rate expires in 41 days. SVR reversion costs £284/month extra. Want me to prepare a broker brief?", color: "#ef4444" },
+  { icon: "📋", type: "Compliance", msg: "Gas Safety at Flat 4, Grove Lane expires in 9 days. Last engineer was Dave Morris — shall I contact him to rebook?", color: "#f59e0b" },
+  { icon: "💷", type: "Rent Review", msg: "You haven't reviewed rent on 22 Park Road for 18 months. Market rate has increased to £950. Current rent: £795. Potential extra income: £1,860/year.", color: "#22c55e" },
+  { icon: "🔧", type: "Maintenance Trend", msg: "22 Park Road has had 4 plumbing issues in 12 months. Total spend: £2,340. This may indicate a systemic issue — worth a full plumbing survey.", color: "#6366f1" },
+  { icon: "🧾", type: "Tax", msg: "3 contractor invoices have been received but not allocated to a property. This may affect your self-assessment. Upload or forward them to link automatically.", color: "#d4af37" },
+];
+
+function TypewriterText({ text, speed = 18 }: { text: string; speed?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  useEffect(() => {
+    setDisplayed("");
+    let i = 0;
+    const t = setInterval(() => {
+      if (i <= text.length) { setDisplayed(text.slice(0, i)); i++; }
+      else clearInterval(t);
+    }, speed);
+    return () => clearInterval(t);
+  }, [text, speed]);
+  return <>{displayed}</>;
+}
+
+export default function RenturaPage() {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "ai",
+      text: "Hi. Tell me what happened — or ask me anything about your portfolio. I'll handle the rest.",
+      ts: "now",
+    },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [openCompare, setOpenCompare] = useState<number | null>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const send = useCallback((text: string) => {
+    if (!text.trim() || loading) return;
+    const userMsg: Message = { role: "user", text: text.trim(), ts: "just now" };
+    setMessages(m => [...m, userMsg]);
+    setInput("");
+    setLoading(true);
+    setTimeout(() => {
+      const { reply, actions } = parseMessage(text);
+      setMessages(m => [...m, { role: "ai", text: reply, actions, ts: "just now" }]);
+      setLoading(false);
+    }, 900 + Math.random() * 400);
+  }, [loading]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: "#05080f", color: "white", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-family-body)", background: "#06080f", color: "white", minHeight: "100vh" }}>
 
       {/* TOPBAR */}
-      <div style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <Link href="/" style={{ textDecoration: "none" }}>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.4)" }}>PropertyVault UK</span>
-          </Link>
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>›</span>
-          <span style={{ fontSize: 13, fontWeight: 800, color: "white", letterSpacing: "-0.02em" }}>Rentura</span>
+      <div style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "11px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Link href="/" style={{ textDecoration: "none", fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 600 }}>PropertyVault UK</Link>
+          <span style={{ color: "rgba(255,255,255,0.12)" }}>›</span>
+          <span style={{ fontSize: 14, fontWeight: 900, letterSpacing: "-0.03em" }}>Rentura</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", animation: "pulse 2s infinite" }} />
-          <span style={{ fontSize: 11, fontWeight: 700, color: "#22c55e", textTransform: "uppercase", letterSpacing: "0.08em" }}>Early Access Open</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: "#22c55e", textTransform: "uppercase", letterSpacing: "0.08em" }}>Early Access</span>
         </div>
       </div>
 
       {/* HERO */}
-      <section style={{ padding: "100px 24px 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)", backgroundSize: "80px 80px", pointerEvents: "none" }} />
+      <section style={{ padding: "96px 24px 72px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 60% at 50% -10%, rgba(99,102,241,0.1) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }} />
 
-        <div style={{ maxWidth: 860, margin: "0 auto", position: "relative" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 100, padding: "6px 16px", fontSize: 11, color: "#a5b4fc", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 32 }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", display: "inline-block" }} />
-            The Operating System for Property Investors
+        <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(99,102,241,0.07)", border: "1px solid rgba(99,102,241,0.18)", borderRadius: 100, padding: "6px 18px", fontSize: 11, color: "#a5b4fc", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 30 }}>
+            Conversational Property OS · £9.99/month
           </div>
 
-          <h1 style={{ fontSize: "clamp(44px,7vw,80px)", fontWeight: 900, lineHeight: 0.95, letterSpacing: "-0.04em", marginBottom: 28, fontFamily: "var(--font-family-heading)" }}>
-            Your portfolio.<br />
-            <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Completely</span><br />
-            <span style={{ background: "linear-gradient(135deg,#6366f1,#a855f7,#ec4899)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>intelligent.</span>
+          <h1 style={{ fontSize: "clamp(40px,6.5vw,76px)", fontWeight: 900, lineHeight: 0.93, letterSpacing: "-0.04em", marginBottom: 28, fontFamily: "var(--font-family-heading)" }}>
+            Tell Rentura<br />
+            <span style={{ background: "linear-gradient(135deg,#6366f1 0%,#a855f7 50%,#ec4899 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>what happened.</span><br />
+            <span style={{ fontSize: "0.8em", color: "rgba(255,255,255,0.55)", WebkitTextFillColor: "rgba(255,255,255,0.55)" }}>It handles the rest.</span>
           </h1>
 
-          <p style={{ fontSize: "clamp(15px,2.2vw,19px)", color: "rgba(255,255,255,0.5)", maxWidth: 620, margin: "0 auto 14px", lineHeight: 1.7 }}>
-            Rentura is not property management software. It&apos;s not a dashboard. It&apos;s not a CRM.
-          </p>
-          <p style={{ fontSize: "clamp(15px,2.2vw,19px)", color: "rgba(255,255,255,0.85)", maxWidth: 620, margin: "0 auto 48px", lineHeight: 1.7, fontWeight: 600 }}>
-            It&apos;s the operating system that becomes indispensable to every landlord who uses it.
+          <p style={{ fontSize: "clamp(15px,2vw,18px)", color: "rgba(255,255,255,0.45)", maxWidth: 580, margin: "0 auto 44px", lineHeight: 1.75 }}>
+            No forms. No menus. No dashboards. No data entry.<br />
+            Just tell Rentura what happened — and watch it organise your entire property business.
           </p>
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-            <a href="#early-access" style={{ display: "inline-block", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white", fontWeight: 800, fontSize: 16, padding: "16px 44px", borderRadius: 14, textDecoration: "none", letterSpacing: "-0.02em" }}>
-              Join Early Access — £9.99/month
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <a href="#ask" style={{ display: "inline-block", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white", fontWeight: 800, fontSize: 15, padding: "14px 36px", borderRadius: 14, textDecoration: "none" }}>
+              Try it now →
             </a>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)" }}>Cancel anytime · No setup fees · Mobile first</p>
+            <a href="#compare" style={{ display: "inline-block", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", fontWeight: 600, fontSize: 15, padding: "14px 36px", borderRadius: 14, textDecoration: "none" }}>
+              See the difference
+            </a>
           </div>
         </div>
       </section>
 
-      {/* PORTFOLIO HEALTH DEMO */}
-      <section style={{ padding: "0 24px 80px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 24, overflow: "hidden" }}>
-            {/* Window chrome */}
-            <div style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "12px 20px", display: "flex", alignItems: "center", gap: 8 }}>
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "rgba(239,68,68,0.5)" }} />
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "rgba(245,158,11,0.5)" }} />
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "rgba(34,197,94,0.5)" }} />
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginLeft: 12, fontFamily: "monospace" }}>Rentura · Daily Command Centre</span>
-            </div>
-
-            <div style={{ padding: "24px" }}>
-              {/* Health score */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16, marginBottom: 24 }}>
-                <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Portfolio Health Score</p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
-                    <span style={{ fontSize: 52, fontWeight: 900, color: "#22c55e", lineHeight: 1 }}>{OVERALL_SCORE}</span>
-                    <span style={{ fontSize: 22, color: "rgba(255,255,255,0.2)", fontWeight: 300 }}>/100</span>
-                  </div>
-                </div>
-                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  <div style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 10, padding: "8px 14px" }}>
-                    <p style={{ fontSize: 10, color: "#4ade80", fontWeight: 700, marginBottom: 2 }}>STRENGTH</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)" }}>100% occupied · Rent ✓</p>
-                  </div>
-                  <div style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)", borderRadius: 10, padding: "8px 14px" }}>
-                    <p style={{ fontSize: 10, color: "#fbbf24", fontWeight: 700, marginBottom: 2 }}>RISK</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)" }}>Mortgage expiry · EPC due</p>
-                  </div>
-                  <div style={{ background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 10, padding: "8px 14px" }}>
-                    <p style={{ fontSize: 10, color: "#a5b4fc", fontWeight: 700, marginBottom: 2 }}>OPPORTUNITY</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)" }}>Rent review on 3 properties</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Metric bars */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 10 }}>
-                {HEALTH_ITEMS.map(item => (
-                  <div key={item.label} style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12, padding: "12px 14px" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                      <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>{item.label}</span>
-                      <span style={{ fontSize: 12, fontWeight: 800, color: item.color }}>{item.score}%</span>
-                    </div>
-                    <div style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
-                      <div style={{ width: `${item.score}%`, height: "100%", background: item.color, borderRadius: 2 }} />
-                    </div>
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 5 }}>{item.note}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ASK MY PORTFOLIO */}
-      <section style={{ padding: "0 24px 80px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: 100, padding: "5px 14px", fontSize: 11, color: "#f87171", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>
-              AI Signature Feature
-            </div>
-            <h2 style={{ fontSize: "clamp(28px,4vw,42px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
-              Ask My Portfolio™
+      {/* ASK RENTURA — LIVE DEMO */}
+      <section id="ask" style={{ padding: "0 24px 80px" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 28 }}>
+            <h2 style={{ fontSize: "clamp(22px,3vw,32px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+              Ask Rentura™
             </h2>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 480, margin: "0 auto" }}>
-              Ask anything about your portfolio in plain English. Get an instant, intelligent answer. No reports. No menus.
-            </p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)" }}>The only interface you need. Type what happened — or ask anything.</p>
           </div>
 
-          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, overflow: "hidden" }}>
-            {/* Animated pill showing example questions */}
-            <div style={{ padding: "20px 20px 0", display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {AI_QUESTIONS.slice(0, 4).map((q, i) => (
-                <button key={q} onClick={() => { setAiInput(q); handleAsk(q); }} style={{ background: i === activePill % 4 ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.04)", border: `1px solid ${i === activePill % 4 ? "rgba(99,102,241,0.35)" : "rgba(255,255,255,0.08)"}`, borderRadius: 20, padding: "6px 14px", fontSize: 12, color: i === activePill % 4 ? "#a5b4fc" : "rgba(255,255,255,0.45)", cursor: "pointer", transition: "all 0.3s", fontWeight: i === activePill % 4 ? 700 : 500 }}>
-                  {q}
-                </button>
-              ))}
-            </div>
-
-            {/* Input */}
-            <div style={{ padding: 20 }}>
-              <div style={{ display: "flex", gap: 10 }}>
-                <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: "12px 16px" }}>
-                  <span style={{ fontSize: 16, flexShrink: 0 }}>💬</span>
-                  <input ref={inputRef} type="text" value={aiInput || aiTyped} onChange={e => setAiInput(e.target.value)} onKeyDown={e => e.key === "Enter" && handleAsk()} placeholder="Ask anything about your portfolio…" style={{ flex: 1, background: "none", border: "none", outline: "none", color: "white", fontSize: 14, fontFamily: "inherit" }} />
-                </div>
-                <button onClick={() => handleAsk()} style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", border: "none", borderRadius: 12, padding: "12px 20px", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer", flexShrink: 0 }}>
-                  {aiLoading ? "…" : "Ask →"}
-                </button>
-              </div>
-
-              {(aiLoading || aiAnswer) && (
-                <div style={{ marginTop: 16, background: "rgba(99,102,241,0.06)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: 12, padding: "14px 16px" }}>
-                  {aiLoading ? (
-                    <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", animation: "pulse 0.8s infinite" }} />
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", animation: "pulse 0.8s 0.2s infinite" }} />
-                      <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", animation: "pulse 0.8s 0.4s infinite" }} />
-                      <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginLeft: 6 }}>Analysing your portfolio…</span>
-                    </div>
-                  ) : (
-                    <>
-                      <p style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", marginBottom: 6 }}>RENTURA AI</p>
-                      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.7 }}>{aiAnswer}</p>
-                    </>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
-            {AI_QUESTIONS.slice(4).map(q => (
-              <button key={q} onClick={() => { setAiInput(q); handleAsk(q); }} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: "6px 14px", fontSize: 11, color: "rgba(255,255,255,0.4)", cursor: "pointer", transition: "all 0.2s" }}>
-                {q}
+          {/* Quick prompts */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 7, justifyContent: "center", marginBottom: 20 }}>
+            {DEMO_PROMPTS.map(p => (
+              <button key={p.label} onClick={() => send(p.text)} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "rgba(255,255,255,0.5)", cursor: "pointer", fontWeight: 600, transition: "all 0.2s" }}>
+                {p.label}
               </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* PROPERTY INTELLIGENCE */}
-      <section style={{ padding: "0 24px 80px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
-            <div style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)", borderRadius: 100, padding: "4px 14px", fontSize: 11, color: "#a5b4fc", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>Core Feature</div>
-          </div>
-          <h2 style={{ fontSize: "clamp(26px,3.5vw,38px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
-            Property Intelligence
-          </h2>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 540, marginBottom: 32 }}>One button. Every property becomes a complete data room. No searching. No spreadsheets.</p>
-
-          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, overflow: "hidden" }}>
-            <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.06))", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "18px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-              <div>
-                <p style={{ fontSize: 17, fontWeight: 800 }}>14 Maple Street, Birmingham B21 9AA</p>
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>3-bed terrace · BTL · Purchased Apr 2021</p>
+          {/* Chat window */}
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 22, overflow: "hidden" }}>
+            {/* Chrome */}
+            <div style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "11px 18px", display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(239,68,68,0.4)" }} />
+                <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(245,158,11,0.4)" }} />
+                <div style={{ width: 9, height: 9, borderRadius: "50%", background: "rgba(34,197,94,0.4)" }} />
               </div>
-              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                <span style={{ background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 20, padding: "4px 12px", fontSize: 11, fontWeight: 700, color: "#4ade80" }}>Tenanted</span>
-                <span style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 20, padding: "4px 12px", fontSize: 11, fontWeight: 700, color: "#a5b4fc" }}>Health 94/100</span>
-              </div>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontFamily: "monospace", marginLeft: 8 }}>Rentura · Conversational OS · Live Demo</span>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 0 }}>
-              {[
-                { section: "PROPERTY", items: [["Purchase Price", "£145,000"], ["Current Value", "£192,000"], ["Equity", "£74,000"], ["LTV", "61%"]] },
-                { section: "MORTGAGE", items: [["Lender", "Barclays"], ["Rate", "2.89% fixed"], ["Monthly Payment", "£486"], ["Expires", "3 Aug 2026 ⚠️"]] },
-                { section: "FINANCIALS", items: [["Monthly Rent", "£1,100"], ["Net Yield", "8.4%"], ["Monthly Cash Flow", "£612"], ["ROI", "31.2%"]] },
-                { section: "COMPLIANCE", items: [["Gas Safety", "✓ Valid"], ["EICR", "✓ 4 months"], ["EPC", "C — valid"], ["Deposit", "✓ Protected"]] },
-              ].map(group => (
-                <div key={group.section} style={{ borderRight: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "16px 18px" }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{group.section}</p>
-                  {group.items.map(([k, v]) => (
-                    <div key={k} style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
-                      <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{k}</span>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: v.includes("⚠️") ? "#f59e0b" : "rgba(255,255,255,0.85)" }}>{v}</span>
+            {/* Messages */}
+            <div style={{ height: 440, overflowY: "auto", padding: "20px 20px 8px", display: "flex", flexDirection: "column", gap: 16 }}>
+              {messages.map((msg, i) => (
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: msg.role === "user" ? "flex-end" : "flex-start", gap: 8 }}>
+                  {/* Bubble */}
+                  <div style={{ maxWidth: "82%", background: msg.role === "user" ? "rgba(99,102,241,0.18)" : "rgba(255,255,255,0.04)", border: `1px solid ${msg.role === "user" ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.07)"}`, borderRadius: msg.role === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px", padding: "13px 16px" }}>
+                    {msg.role === "ai" && <p style={{ fontSize: 10, fontWeight: 700, color: "#a5b4fc", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Rentura</p>}
+                    <p style={{ fontSize: 13, color: msg.role === "user" ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.75)", lineHeight: 1.7, whiteSpace: "pre-line" }}>
+                      {i === messages.length - 1 && msg.role === "ai" ? <TypewriterText text={msg.text} /> : msg.text}
+                    </p>
+                  </div>
+                  {/* Action chips */}
+                  {msg.actions && msg.actions.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, maxWidth: "82%" }}>
+                      {msg.actions.map((a, ai) => (
+                        <div key={ai} style={{ background: a.color + "12", border: `1px solid ${a.color}28`, borderRadius: 10, padding: "5px 12px", display: "flex", alignItems: "center", gap: 6 }}>
+                          <span style={{ width: 5, height: 5, borderRadius: "50%", background: a.color, flexShrink: 0 }} />
+                          <span style={{ fontSize: 11, fontWeight: 700, color: a.color }}>{a.label}</span>
+                          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>·</span>
+                          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{a.value}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               ))}
+              {loading && (
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                  <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "18px 18px 18px 4px", padding: "13px 16px" }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "#a5b4fc", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em" }}>Rentura</p>
+                    <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+                      {[0, 1, 2].map(d => (
+                        <div key={d} style={{ width: 6, height: 6, borderRadius: "50%", background: "#6366f1", animation: `bounce 0.8s ${d * 0.15}s infinite` }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div ref={bottomRef} />
+            </div>
+
+            {/* Input */}
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "14px 16px" }}>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && send(input)}
+                  placeholder="Tell me what happened, or ask anything…"
+                  style={{ flex: 1, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 12, padding: "11px 16px", color: "white", fontSize: 14, outline: "none", fontFamily: "inherit" }}
+                />
+                <button onClick={() => send(input)} disabled={loading || !input.trim()} style={{ background: input.trim() ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "rgba(255,255,255,0.06)", border: "none", borderRadius: 12, padding: "11px 18px", color: input.trim() ? "white" : "rgba(255,255,255,0.2)", fontWeight: 800, fontSize: 13, cursor: input.trim() ? "pointer" : "default", transition: "all 0.2s", flexShrink: 0 }}>
+                  Send
+                </button>
+              </div>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 8, textAlign: "center" }}>This is a live demo — try typing anything. In the real platform, your portfolio data would power every response.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 8 MODULES */}
-      <section style={{ padding: "0 24px 80px" }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <h2 style={{ fontSize: "clamp(26px,3.5vw,38px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
-              Eight systems. One platform.
+      {/* PHILOSOPHY — no forms */}
+      <section style={{ padding: "0 24px 80px", background: "rgba(255,255,255,0.01)", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto", padding: "64px 0" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <h2 style={{ fontSize: "clamp(26px,3.5vw,40px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 12, fontFamily: "var(--font-family-heading)" }}>
+              The end of property admin.
             </h2>
-            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)" }}>Each one solves a problem competitors ignore. Together they become your property OS.</p>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", maxWidth: 500, margin: "0 auto" }}>
+              Every competitor asks you to fill forms. Rentura asks you what happened. One approach creates friction. One eliminates it.
+            </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12 }}>
-            {MODULES.map((m, i) => (
-              <div key={m.title} style={{ background: openModule === i ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)", border: `1px solid ${openModule === i ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.06)"}`, borderRadius: 16, overflow: "hidden", transition: "all 0.2s" }}>
-                <button onClick={() => setOpenModule(openModule === i ? null : i)} style={{ width: "100%", background: "none", border: "none", padding: "18px 20px", display: "flex", alignItems: "flex-start", gap: 14, cursor: "pointer", color: "white", textAlign: "left" }}>
-                  <span style={{ fontSize: 26, flexShrink: 0 }}>{m.icon}</span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
-                      <span style={{ fontSize: 14, fontWeight: 800 }}>{m.title}</span>
-                      <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: m.tagColor + "18", color: m.tagColor }}>{m.tag}</span>
-                    </div>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.55 }}>{m.desc}</p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+            {/* Old way */}
+            <div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 16 }}>
+                <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#ef4444" }}>✗</div>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Traditional software</span>
+              </div>
+              {["Navigate to a menu", "Find the right form", "Fill multiple fields", "Link to the right property", "Save and confirm", "Do it again for each record", "Hope nothing gets lost"].map((step, i) => (
+                <div key={i} style={{ display: "flex", gap: 10, marginBottom: 8, alignItems: "center", opacity: 0.55 }}>
+                  <span style={{ fontSize: 11, color: "#ef4444", background: "rgba(239,68,68,0.08)", borderRadius: "50%", width: 20, height: 20, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontWeight: 700 }}>{i + 1}</span>
+                  <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)" }}>{step}</span>
+                </div>
+              ))}
+              <div style={{ marginTop: 14, background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: 12, padding: "12px 16px" }}>
+                <p style={{ fontSize: 12, color: "#f87171" }}>Result: 7 steps. 4 minutes. Landlord gives up.</p>
+              </div>
+            </div>
+
+            {/* Rentura way */}
+            <div>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 16 }}>
+                <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#a5b4fc" }}>✓</div>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "0.08em" }}>Rentura</span>
+              </div>
+              <div style={{ background: "rgba(99,102,241,0.06)", border: "1.5px solid rgba(99,102,241,0.18)", borderRadius: 14, padding: "16px" }}>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.65, fontFamily: "monospace" }}>
+                  &ldquo;Tenant paid £1,100 today.&rdquo;
+                </p>
+              </div>
+              <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 7 }}>
+                {[
+                  { label: "Payment logged", color: "#22c55e" },
+                  { label: "Rent ledger updated", color: "#22c55e" },
+                  { label: "Arrears cleared", color: "#22c55e" },
+                  { label: "Receipt created", color: "#22c55e" },
+                  { label: "Tax record updated", color: "#d4af37" },
+                ].map(item => (
+                  <div key={item.label} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>{item.label}</span>
+                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginLeft: "auto" }}>Auto</span>
                   </div>
-                  <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 16, flexShrink: 0, marginTop: 2 }}>{openModule === i ? "−" : "+"}</span>
+                ))}
+              </div>
+              <div style={{ marginTop: 14, background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.15)", borderRadius: 12, padding: "12px 16px" }}>
+                <p style={{ fontSize: 12, color: "#4ade80" }}>Result: 1 sentence. 8 seconds. Everything done.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SIDE-BY-SIDE COMPARISONS */}
+      <section id="compare" style={{ padding: "64px 24px 80px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 36 }}>
+            <h2 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+              Every workflow. Simplified.
+            </h2>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)" }}>Tap any task to see the difference.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {COMPARISONS.map((c, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${openCompare === i ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.06)"}`, borderRadius: 16, overflow: "hidden" }}>
+                <button onClick={() => setOpenCompare(openCompare === i ? null : i)} style={{ width: "100%", background: "none", border: "none", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", color: "white", textAlign: "left", gap: 16 }}>
+                  <span style={{ fontSize: 14, fontWeight: 700 }}>{c.task}</span>
+                  <span style={{ fontSize: 16, color: "rgba(255,255,255,0.25)" }}>{openCompare === i ? "−" : "+"}</span>
                 </button>
-                {openModule === i && (
-                  <div style={{ padding: "0 20px 18px" }}>
-                    {m.bullets.map((b, bi) => (
-                      <div key={bi} style={{ display: "flex", gap: 8, marginBottom: 6, alignItems: "flex-start" }}>
-                        <span style={{ color: m.tagColor, flexShrink: 0, fontSize: 12, marginTop: 1 }}>✓</span>
-                        <span style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>{b}</span>
-                      </div>
-                    ))}
+                {openCompare === i && (
+                  <div style={{ padding: "0 20px 20px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <div style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.1)", borderRadius: 12, padding: "14px 16px" }}>
+                      <p style={{ fontSize: 10, fontWeight: 700, color: "#f87171", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Traditional Software</p>
+                      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>{c.old}</p>
+                    </div>
+                    <div style={{ background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.18)", borderRadius: 12, padding: "14px 16px" }}>
+                      <p style={{ fontSize: 10, fontWeight: 700, color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Rentura</p>
+                      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.72)", lineHeight: 1.7, fontFamily: "monospace" }}>{c.rentura}</p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -418,154 +436,186 @@ export default function RenturaPage() {
         </div>
       </section>
 
-      {/* MAINTENANCE DEMO */}
-      <section style={{ padding: "0 24px 80px", background: "rgba(255,255,255,0.01)", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", padding: "60px 0" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "start" }}>
-            <div>
-              <div style={{ background: "rgba(8,145,178,0.08)", border: "1px solid rgba(8,145,178,0.2)", borderRadius: 100, display: "inline-block", padding: "4px 14px", fontSize: 11, color: "#22d3ee", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>Maintenance Command Centre</div>
-              <h2 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 16, lineHeight: 1.1, fontFamily: "var(--font-family-heading)" }}>
-                No more lost WhatsApp chats.
-              </h2>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.75, marginBottom: 24 }}>
-                Every maintenance issue becomes a tracked workflow. Tenant submits — AI triages — you dispatch — contractor updates — issue closed. Everything attached to the property record. Nothing lost.
-              </p>
-              {[
-                { step: "1", label: "Tenant reports issue", detail: "Photos, video, voice note — all captured in the portal" },
-                { step: "2", label: "AI triages & categorises", detail: "Urgency, likely cause, and recommended next action" },
-                { step: "3", label: "One-tap contractor dispatch", detail: "Full context sent via WhatsApp, email or SMS" },
-                { step: "4", label: "Contractor quotes & updates", detail: "Status, photos, invoices — all in the thread" },
-                { step: "5", label: "Issue closed & filed", detail: "Attached to property record permanently" },
-              ].map(s => (
-                <div key={s.step} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "flex-start" }}>
-                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(8,145,178,0.15)", border: "1px solid rgba(8,145,178,0.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: "#22d3ee", flexShrink: 0 }}>{s.step}</div>
-                  <div>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{s.label}</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{s.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 18, overflow: "hidden" }}>
-              <div style={{ background: "rgba(8,145,178,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "14px 18px" }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#22d3ee" }}>🔧 Issue #MX-047</p>
-                <p style={{ fontSize: 14, fontWeight: 800, color: "white" }}>Bathroom ceiling leak — 22 Park Road</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Reported by Sarah Mitchell · 17 Jun · 6 days open</p>
-              </div>
-              <div style={{ padding: 18 }}>
-                <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#f87171" }}>AI TRIAGE</p>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", marginTop: 3 }}>Urgency: High · Likely cause: Upstairs plumbing or roof penetration · Recommended: Plumber + roofer inspection within 48hrs</p>
-                </div>
-                {[
-                  { who: "Sarah M.", msg: "There's water dripping from the ceiling above the bath. Attached 3 photos.", time: "6d ago", you: false },
-                  { who: "You", msg: "Thanks Sarah — I've raised this as urgent and dispatched a plumber. I'll update you within 24 hours.", time: "5d ago", you: true },
-                  { who: "Mark Davis (Plumber)", msg: "Viewing booked for tomorrow 10am. Will update with full quote after.", time: "5d ago", you: false },
-                ].map((msg, i) => (
-                  <div key={i} style={{ display: "flex", gap: 8, marginBottom: 10, justifyContent: msg.you ? "flex-end" : "flex-start" }}>
-                    {!msg.you && <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, flexShrink: 0 }}>{msg.who[0]}</div>}
-                    <div style={{ maxWidth: "75%", background: msg.you ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.04)", border: `1px solid ${msg.you ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.06)"}`, borderRadius: 12, padding: "8px 12px" }}>
-                      <p style={{ fontSize: 10, fontWeight: 700, color: msg.you ? "#a5b4fc" : "rgba(255,255,255,0.4)", marginBottom: 3 }}>{msg.who} · {msg.time}</p>
-                      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.5 }}>{msg.msg}</p>
-                    </div>
-                  </div>
-                ))}
-                <div style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: 10, padding: "10px 14px", marginTop: 4 }}>
-                  <p style={{ fontSize: 11, color: "#fbbf24" }}>⚠️ Mark Davis has not responded in 4 days. Tap to reassign or chase.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* COMPETITOR GAPS */}
-      <section style={{ padding: "60px 24px 80px" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 36 }}>
-            <h2 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
-              What the market is missing
+      {/* INPUT CHANNELS */}
+      <section style={{ padding: "0 24px 80px", background: "rgba(255,255,255,0.01)", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div style={{ maxWidth: 920, margin: "0 auto", padding: "64px 0" }}>
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <h2 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+              Tell Rentura any way you want.
             </h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)" }}>AppFolio, Arthur, Landlord Vision, Hammock. These are the gaps they all have.</p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)" }}>Type. Talk. Forward an email. Upload a document. WhatsApp. Rentura reads it all.</p>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {COMPETITOR_GAPS.map((gap, i) => (
-              <div key={i} style={{ display: "flex", gap: 14, background: "rgba(239,68,68,0.03)", border: "1px solid rgba(239,68,68,0.08)", borderRadius: 12, padding: "13px 16px", alignItems: "flex-start" }}>
-                <span style={{ color: "#ef4444", fontSize: 14, flexShrink: 0, marginTop: 1 }}>✗</span>
-                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{gap}</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 16 }}>
+            {[
+              {
+                icon: "💬", title: "Type it", color: "#6366f1",
+                eg: '"Boiler replaced at Flat 3. Cost £650."',
+                result: "Job logged · Expense filed · Tax noted",
+              },
+              {
+                icon: "🎤", title: "Say it", color: "#a855f7",
+                eg: '"Tenant at B11TU reported a leaking radiator. Dave visiting Friday, estimated £200."',
+                result: "Issue created · Contractor task added · Cost estimated",
+              },
+              {
+                icon: "📧", title: "Forward an email", color: "#0891b2",
+                eg: "Forward your gas certificate renewal email to Rentura",
+                result: "Document read · Record updated · Reminder set",
+              },
+              {
+                icon: "📄", title: "Upload a document", color: "#d4af37",
+                eg: "Upload a mortgage statement, invoice, or tenancy agreement",
+                result: "AI extracts all data · No manual entry required",
+              },
+              {
+                icon: "📱", title: "WhatsApp", color: "#25D366",
+                eg: "Forward a contractor quote, tenant message, or invoice",
+                result: "Filed to property · Workflow triggered",
+              },
+              {
+                icon: "📸", title: "Photo or video", color: "#ec4899",
+                eg: "Tenant photos of damage, receipts, certificates",
+                result: "AI reads image · Data extracted · Record updated",
+              },
+            ].map(ch => (
+              <div key={ch.title} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 16, padding: "20px 18px" }}>
+                <div style={{ fontSize: 26, marginBottom: 10 }}>{ch.icon}</div>
+                <h3 style={{ fontSize: 15, fontWeight: 800, marginBottom: 10, color: ch.color }}>{ch.title}</h3>
+                <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "10px 12px", marginBottom: 10 }}>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.55, fontFamily: "monospace", fontStyle: "italic" }}>&ldquo;{ch.eg}&rdquo;</p>
+                </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {ch.result.split(" · ").map(r => (
+                    <span key={r} style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 6, background: ch.color + "15", color: ch.color }}>{r}</span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 20, background: "rgba(99,102,241,0.05)", border: "1px solid rgba(99,102,241,0.15)", borderRadius: 14, padding: "16px 20px", textAlign: "center" }}>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "#a5b4fc" }}>Rentura solves every single one. That&apos;s the product.</p>
-          </div>
         </div>
       </section>
 
-      {/* NORTH STAR STATEMENTS */}
+      {/* PROACTIVE AI CO-PILOT */}
       <section style={{ padding: "0 24px 80px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-            <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.06))", border: "1px solid rgba(99,102,241,0.15)", borderRadius: 20, padding: "32px 28px" }}>
-              <p style={{ fontSize: 28, marginBottom: 16 }}>🧠</p>
-              <blockquote style={{ fontSize: "clamp(14px,2vw,17px)", fontStyle: "italic", color: "rgba(255,255,255,0.8)", lineHeight: 1.6, fontWeight: 600 }}>
-                &ldquo;This platform knows more about my portfolio than I do.&rdquo;
-              </blockquote>
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 12 }}>What landlords will say within 30 days.</p>
-            </div>
-            <div style={{ background: "linear-gradient(135deg,rgba(239,68,68,0.06),rgba(245,158,11,0.04))", border: "1px solid rgba(239,68,68,0.12)", borderRadius: 20, padding: "32px 28px" }}>
-              <p style={{ fontSize: 28, marginBottom: 16 }}>🔒</p>
-              <blockquote style={{ fontSize: "clamp(14px,2vw,17px)", fontStyle: "italic", color: "rgba(255,255,255,0.8)", lineHeight: 1.6, fontWeight: 600 }}>
-                &ldquo;If I cancelled this subscription, I would lose control of my property business.&rdquo;
-              </blockquote>
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 12 }}>The retention metric that matters most.</p>
-            </div>
+          <div style={{ textAlign: "center", marginBottom: 36 }}>
+            <h2 style={{ fontSize: "clamp(24px,3vw,34px)", fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+              The AI Co-Pilot that tells you first.
+            </h2>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", maxWidth: 460, margin: "0 auto" }}>
+              You don&apos;t ask — Rentura already knows. It watches your portfolio and surfaces issues before they become problems.
+            </p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {PROACTIVE_ALERTS.map((alert, i) => (
+              <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${alert.color}18`, borderRadius: 14, padding: "16px 18px", display: "flex", gap: 14, alignItems: "flex-start" }}>
+                <span style={{ fontSize: 20, flexShrink: 0, marginTop: 2 }}>{alert.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 5 }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, padding: "2px 8px", borderRadius: 20, background: alert.color + "15", color: alert.color }}>{alert.type}</span>
+                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", fontWeight: 600 }}>Proactive Alert</span>
+                  </div>
+                  <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.65 }}>{alert.msg}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* PRICING / EARLY ACCESS */}
-      <section id="early-access" style={{ padding: "0 24px 80px" }}>
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
-          <div style={{ background: "rgba(255,255,255,0.02)", border: "1.5px solid rgba(99,102,241,0.25)", borderRadius: 24, overflow: "hidden" }}>
-            <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.12),rgba(168,85,247,0.08))", borderBottom: "1px solid rgba(99,102,241,0.15)", padding: "18px 28px", textAlign: "center" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(34,197,94,0.1)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 100, padding: "4px 12px", fontSize: 11, color: "#4ade80", fontWeight: 700, marginBottom: 12 }}>
-                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-                Early Access — Limited Spots
-              </div>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "0.12em" }}>Rentura — Property Operating System</p>
+      {/* PROPERTY MEMORY */}
+      <section style={{ padding: "0 24px 80px", background: "rgba(255,255,255,0.01)", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto", padding: "64px 0" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
+            <div>
+              <div style={{ display: "inline-block", background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.2)", borderRadius: 100, padding: "4px 14px", fontSize: 11, color: "#c084fc", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>Property Memory</div>
+              <h2 style={{ fontSize: "clamp(22px,3vw,32px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16, fontFamily: "var(--font-family-heading)" }}>
+                Every property<br />remembers everything.
+              </h2>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.8, marginBottom: 20 }}>
+                Every conversation, every contractor visit, every payment, every inspection, every document — permanently attached to the property record. When you view a property, you see its complete story.
+              </p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", lineHeight: 1.7 }}>
+                Sell the property? The history exports with it. Switch letting agents? Your data stays with you. Cancel the subscription? Full data export, no lock-in.
+              </p>
             </div>
-            <div style={{ padding: "32px 28px" }}>
-              <div style={{ textAlign: "center", marginBottom: 28 }}>
-                <div style={{ fontSize: 56, fontWeight: 900, lineHeight: 1 }}>£9.99</div>
-                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 15, marginTop: 4 }}>per month · cancel anytime</div>
+            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 18, overflow: "hidden" }}>
+              <div style={{ padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div>
+                  <p style={{ fontSize: 13, fontWeight: 800 }}>22 Oak Avenue, Manchester</p>
+                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Property Timeline</p>
+                </div>
+                <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: "rgba(34,197,94,0.1)", color: "#4ade80" }}>Live</span>
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
+              <div style={{ padding: "14px 18px", display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
-                  "Daily Portfolio Health Score",
-                  "Ask My Portfolio™ AI",
-                  "Property Intelligence per property",
-                  "Maintenance Command Centre",
-                  "Compliance Engine (6 categories)",
-                  "Mortgage Intelligence & alerts",
-                  "Tax Intelligence & receipt capture",
-                  "Tenant Portal",
-                  "Contractor coordination workflow",
-                  "Portfolio Growth Intelligence",
-                  "Unlimited properties",
-                  "Mobile-first, always",
-                ].map(f => (
-                  <div key={f} style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 13 }}>
-                    <span style={{ color: "#6366f1", fontWeight: 800, flexShrink: 0 }}>✓</span>
-                    <span style={{ color: "rgba(255,255,255,0.7)" }}>{f}</span>
+                  { date: "Jun 2026", event: "Rent reviewed — increased £900 → £975", type: "financial", color: "#22c55e" },
+                  { date: "May 2026", event: "EICR certificate uploaded and filed", type: "compliance", color: "#d4af37" },
+                  { date: "Mar 2026", event: "Tenant reported damp — resolved in 6 days", type: "maintenance", color: "#6366f1" },
+                  { date: "Jan 2026", event: "Mortgage reviewed — retained Barclays 4.2%", type: "mortgage", color: "#a855f7" },
+                  { date: "Nov 2025", event: "New tenant moved in — AST signed digitally", type: "tenancy", color: "#0891b2" },
+                  { date: "Jul 2025", event: "Property purchased — £195,000", type: "purchase", color: "#d4af37" },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 4 }}>
+                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+                      {i < 5 && <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.07)", marginTop: 3 }} />}
+                    </div>
+                    <div style={{ flex: 1, paddingBottom: i < 5 ? 4 : 0 }}>
+                      <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginBottom: 2, fontWeight: 600 }}>{item.date}</p>
+                      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }}>{item.event}</p>
+                    </div>
                   </div>
                 ))}
               </div>
-              <a href="mailto:gowads047@gmail.com?subject=Rentura Early Access&body=I'd like to join the Rentura early access list." style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white", fontWeight: 800, fontSize: 16, padding: "16px", borderRadius: 14, textDecoration: "none", marginBottom: 12 }}>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section id="early-access" style={{ padding: "0 24px 80px" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto" }}>
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1.5px solid rgba(99,102,241,0.22)", borderRadius: 24, overflow: "hidden" }}>
+            <div style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.1),rgba(168,85,247,0.07))", borderBottom: "1px solid rgba(99,102,241,0.12)", padding: "22px 28px", textAlign: "center" }}>
+              <p style={{ fontSize: 22, fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 4 }}>Rentura</p>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", fontWeight: 600 }}>The Conversational Property OS</p>
+            </div>
+            <div style={{ padding: "28px 28px" }}>
+              <div style={{ textAlign: "center", marginBottom: 24 }}>
+                <span style={{ fontSize: 54, fontWeight: 900, lineHeight: 1 }}>£9.99</span>
+                <span style={{ fontSize: 16, color: "rgba(255,255,255,0.35)", marginLeft: 6 }}>/month</span>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>Cancel anytime · 14-day money-back</p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+                {[
+                  ["Ask Rentura™", "Natural language command bar — the only interface you need"],
+                  ["Voice notes", "Talk to Rentura on the move"],
+                  ["Email forwarding", "Forward certificates, invoices, statements"],
+                  ["Document AI", "Upload anything — AI extracts everything"],
+                  ["Property Memory", "Complete history for every property, forever"],
+                  ["AI Co-Pilot", "Proactive alerts — issues flagged before you notice"],
+                  ["Maintenance workflow", "AI triage, contractor dispatch, full tracking"],
+                  ["Tax Intelligence", "Live liability estimate, receipt capture, expense tagging"],
+                  ["Mortgage Intelligence", "Expiry alerts, rate comparisons, broker brief generation"],
+                  ["Compliance Engine", "Never miss a certificate, licence, or deadline"],
+                  ["Tenant Portal", "Premium self-service portal for your tenants"],
+                  ["WhatsApp integration", "Forward anything, get updates anywhere"],
+                ].map(([feature, desc]) => (
+                  <div key={feature} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ color: "#6366f1", fontWeight: 800, flexShrink: 0, fontSize: 13 }}>✓</span>
+                    <div>
+                      <span style={{ fontSize: 13, color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>{feature}</span>
+                      <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginLeft: 6 }}>— {desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <a href="mailto:gowads047@gmail.com?subject=Rentura Early Access Request&body=Hi Nass, I'd like early access to Rentura. My portfolio: " style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "white", fontWeight: 800, fontSize: 16, padding: "16px", borderRadius: 14, textDecoration: "none", marginBottom: 12 }}>
                 Request Early Access →
               </a>
               <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", textAlign: "center", lineHeight: 1.7 }}>
-                Early access members lock in £9.99/month permanently. Full launch price TBC. Cancel anytime. 14-day money-back guarantee under Consumer Contracts Regulations 2013.
+                Early access members lock in £9.99/month permanently. 14-day money-back guarantee under Consumer Contracts Regulations 2013. Cancel anytime.
               </p>
             </div>
           </div>
@@ -574,22 +624,22 @@ export default function RenturaPage() {
 
       {/* FOOTER */}
       <footer style={{ borderTop: "1px solid rgba(255,255,255,0.05)", padding: "28px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 18, fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 6 }}>Rentura</p>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 16 }}>by PropertyVault UK · The Operating System for Property Investors</p>
-        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", lineHeight: 1.7, maxWidth: 600, margin: "0 auto" }}>
-          Rentura is a property management and intelligence platform. It does not constitute financial, legal, tax, or mortgage advice. Tax estimates are indicative only — consult a qualified accountant. Mortgage data must be verified with your lender. &copy; {new Date().getFullYear()} PropertyVault UK.
+        <p style={{ fontSize: 17, fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 4 }}>Rentura</p>
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", marginBottom: 16 }}>by PropertyVault UK · The Conversational Operating System for Landlords</p>
+        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 16px" }}>
+          Rentura is a property intelligence and management platform. Nothing on this page constitutes financial, legal, tax, or mortgage advice. AI-generated insights are indicative only and should not replace qualified professional advice. &copy; {new Date().getFullYear()} PropertyVault UK. All rights reserved.
         </p>
-        <div style={{ display: "flex", gap: 20, justifyContent: "center", marginTop: 16 }}>
-          <Link href="/" style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textDecoration: "none" }}>Home</Link>
-          <Link href="/privacy" style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textDecoration: "none" }}>Privacy</Link>
-          <Link href="/terms" style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textDecoration: "none" }}>Terms</Link>
+        <div style={{ display: "flex", gap: 20, justifyContent: "center" }}>
+          <Link href="/" style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", textDecoration: "none" }}>Home</Link>
+          <Link href="/privacy" style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", textDecoration: "none" }}>Privacy</Link>
+          <Link href="/terms" style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", textDecoration: "none" }}>Terms</Link>
         </div>
       </footer>
 
       <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(0.8); }
+        @keyframes bounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40% { transform: translateY(-6px); opacity: 1; }
         }
       `}</style>
     </div>
