@@ -1,15 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 const CHALLENGE_DAYS = [
-  { day: 1, title: "Understand Deal Sourcing", desc: "The business model, income potential, legal framework, and mindset of a professional deal sourcer.", task: "Write down 3 target areas and why you chose them.", download: "Day 1 Checklist" },
-  { day: 2, title: "Find Potential Deals", desc: "Use Rightmove, Zoopla, OnTheMarket, estate agents, and direct-to-vendor methods to build your first pipeline.", task: "Find 5 potential deals and record them in your Lead Tracker.", download: "Lead Tracker Template" },
-  { day: 3, title: "Analyse Opportunities", desc: "Run the full numbers on each deal — yield, cash flow, ROI, stress test, and compare to your area benchmarks.", task: "Analyse all 5 deals. Identify the best 2.", download: "Deal Analysis Template" },
-  { day: 4, title: "Build Your Buyer Database", desc: "Find active property investors on LinkedIn, Facebook Groups, property networking events, and investor forums.", task: "Add 10 investor profiles to your Investor CRM.", download: "Investor CRM Template" },
-  { day: 5, title: "Create Your Investor Pack", desc: "Use our template to package your top deal into a professional investor presentation.", task: "Complete one full investor pack for your best deal.", download: "Investor Pack Template" },
-  { day: 6, title: "Present to Investors", desc: "Use the exact email and WhatsApp scripts to present your deal to 3 investors from your buyer list.", task: "Send your pack to 3 investors. Log their responses.", download: "Investor Outreach Scripts" },
-  { day: 7, title: "Close Your First Deal", desc: "Handle objections, negotiate terms, and get a reservation agreement signed by your investor.", task: "Follow up with all 3 investors. Aim for one agreement.", download: "Reservation Agreement Template" },
+  { day: 1, title: "Understand Deal Sourcing", desc: "The business model, income potential, legal framework, and mindset of a professional deal sourcer.", task: "Write down 3 target areas and why you chose them.", download: "Day 1 Checklist", nass: "Most people skip this day because they think they already know what deal sourcing is. They don't. Do this properly and you'll save yourself months of confusion." },
+  { day: 2, title: "Find Potential Deals", desc: "Use Rightmove, Zoopla, OnTheMarket, estate agents, and direct-to-vendor methods to build your first pipeline.", task: "Find 5 potential deals and record them in your Lead Tracker.", download: "Lead Tracker Template", nass: "You're not trying to find a perfect deal on Day 2. You're training your eye. Most of these 5 will be terrible — that's the point." },
+  { day: 3, title: "Analyse Opportunities", desc: "Run the full numbers on each deal — yield, cash flow, ROI, stress test, and compare to your area benchmarks.", task: "Analyse all 5 deals. Identify the best 2.", download: "Deal Analysis Template", nass: "Open the calculator. Plug in the numbers. Your gut feeling means nothing — what matters is what the spreadsheet says. This is the skill that separates sourcers from dreamers." },
+  { day: 4, title: "Build Your Buyer Database", desc: "Find active property investors on LinkedIn, Facebook Groups, property networking events, and investor forums.", task: "Add 10 investor profiles to your Investor CRM.", download: "Investor CRM Template", nass: "Don't skip this to find more deals. No buyers list = no income. This is the asset that will make you money for years. Treat it like gold." },
+  { day: 5, title: "Create Your Investor Pack", desc: "Use our template to package your top deal into a professional investor presentation.", task: "Complete one full investor pack for your best deal.", download: "Investor Pack Template", nass: "This day will take you 2-3 hours. That's normal. Your first pack takes longest. By your fifth, you'll be doing it in 45 minutes." },
+  { day: 6, title: "Present to Investors", desc: "Use the exact email and WhatsApp scripts to present your deal to 3 investors from your buyer list.", task: "Send your pack to 3 investors. Log their responses.", download: "Investor Outreach Scripts", nass: "This is the day most people bottle it. Send the email anyway. Rejection is information — a non-reply tells you who to follow up with. A no tells you what to improve." },
+  { day: 7, title: "Review, Reflect, Build the Habit", desc: "What went well? What felt hard? What needs improving? Set your weekly activity targets going forward.", task: "Write a short honest review of the week. Set targets for next 7 days.", download: "Reservation Agreement Template", nass: "You won't have a deal after 7 days. That's not the point. The point is you've now done every step of the process. You know what it feels like. Now do it consistently." },
 ];
 
 const MODULES = [
@@ -89,11 +90,14 @@ const MODULES = [
 ];
 
 export default function CoursesPage() {
+  const [openDay, setOpenDay] = useState<number | null>(null);
+  const [openModule, setOpenModule] = useState<string | null>(null);
+
   return (
     <div style={{ background: "#0a0f1e", minHeight: "100vh", color: "white", fontFamily: "var(--font-family-body)" }}>
 
       {/* NAV */}
-      <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 20 }}>
+      <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 24px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
         <Link href="/academy/dashboard" style={{ color: "#d4af37", fontWeight: 800, fontSize: 18, textDecoration: "none" }}>DSA</Link>
         {[["Dashboard", "/academy/dashboard"], ["Playbooks", "/academy/playbooks"], ["Scripts", "/academy/scripts"], ["Downloads", "/academy/downloads"]].map(([l, h]) => (
           <Link key={h} href={h} style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l}</Link>
@@ -102,27 +106,35 @@ export default function CoursesPage() {
 
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 24px" }}>
 
+        <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only</p>
         <h1 style={{ fontSize: 36, fontWeight: 800, marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Course Library</h1>
-        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 48 }}>Everything structured, sequential, and action-focused.</p>
+        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 48 }}>Start with the 7-Day Challenge. Then work through the 12-module masterclass at your own pace. Every module ends with a task — not just reading.</p>
 
         {/* 7-DAY CHALLENGE */}
         <div id="challenge" style={{ marginBottom: 60 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-            <div style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 10, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#d4af37" }}>QUICK START</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+            <div style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 10, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#d4af37" }}>START HERE</div>
             <h2 style={{ fontSize: 24, fontWeight: 800, fontFamily: "var(--font-family-heading)" }}>7-Day First Deal Challenge</h2>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>Seven days. Seven tasks. Real progress — not just motivation. Tap each day to see Nass&apos;s honest take.</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {CHALLENGE_DAYS.map(d => (
-              <div key={d.day} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: 24 }}>
-                <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div style={{ minWidth: 56, height: 56, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 12, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: "#d4af37", opacity: 0.7 }}>DAY</span>
-                    <span style={{ fontSize: 22, fontWeight: 900, color: "#d4af37" }}>{d.day}</span>
+              <div key={d.day} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${openDay === d.day ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 14, overflow: "hidden" }}>
+                <button onClick={() => setOpenDay(openDay === d.day ? null : d.day)} style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "16px 20px", display: "flex", alignItems: "center", gap: 16, color: "white", textAlign: "left" }}>
+                  <div style={{ minWidth: 52, height: 52, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 12, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "#d4af37", opacity: 0.7, textTransform: "uppercase" }}>Day</span>
+                    <span style={{ fontSize: 20, fontWeight: 900, color: "#d4af37", lineHeight: 1 }}>{d.day}</span>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ fontWeight: 800, fontSize: 16, marginBottom: 6 }}>{d.title}</h3>
-                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginBottom: 14, lineHeight: 1.5 }}>{d.desc}</p>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                    <h3 style={{ fontWeight: 800, fontSize: 15 }}>{d.title}</h3>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{d.task}</p>
+                  </div>
+                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18 }}>{openDay === d.day ? "−" : "+"}</span>
+                </button>
+                {openDay === d.day && (
+                  <div style={{ padding: "0 20px 20px 88px" }}>
+                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.65, marginBottom: 14 }}>{d.desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
                       <div style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", borderRadius: 8, padding: "6px 12px", fontSize: 12 }}>
                         <span style={{ color: "#60a5fa", fontWeight: 700 }}>Task: </span>
                         <span style={{ color: "rgba(255,255,255,0.7)" }}>{d.task}</span>
@@ -132,8 +144,12 @@ export default function CoursesPage() {
                         <Link href="/academy/downloads" style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none" }}>{d.download}</Link>
                       </div>
                     </div>
+                    <div style={{ background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.15)", borderRadius: 10, padding: "12px 16px" }}>
+                      <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", marginBottom: 4 }}>NASS SAYS:</p>
+                      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.65, fontStyle: "italic" }}>&ldquo;{d.nass}&rdquo;</p>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
@@ -141,34 +157,41 @@ export default function CoursesPage() {
 
         {/* MASTERCLASS */}
         <div id="orientation">
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
             <div style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)", borderRadius: 10, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#60a5fa" }}>FLAGSHIP COURSE</div>
             <h2 style={{ fontSize: 24, fontWeight: 800, fontFamily: "var(--font-family-heading)" }}>Deal Sourcing Masterclass</h2>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>12 modules, each with lessons and a real action task. Tap any module to expand it.</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {MODULES.map(m => (
-              <div key={m.n} id={`module-${m.n}`} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 24 }}>
-                <div style={{ display: "flex", gap: 16 }}>
-                  <div style={{ minWidth: 48, height: 48, background: "rgba(255,255,255,0.05)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>M{m.n}</div>
+              <div key={m.n} id={`module-${m.n}`} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${openModule === m.n ? "rgba(99,102,241,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: 14, overflow: "hidden" }}>
+                <button onClick={() => setOpenModule(openModule === m.n ? null : m.n)} style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "16px 20px", display: "flex", alignItems: "center", gap: 14, color: "white", textAlign: "left" }}>
+                  <div style={{ minWidth: 44, height: 44, background: "rgba(99,102,241,0.12)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#a5b4fc", flexShrink: 0 }}>M{m.n}</div>
                   <div style={{ flex: 1 }}>
-                    <h3 style={{ fontWeight: 800, fontSize: 16, marginBottom: 12 }}>{m.title}</h3>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 14 }}>
+                    <h3 style={{ fontWeight: 800, fontSize: 15 }}>{m.title}</h3>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{m.lessons.length} lessons · {m.objectives.length} objectives</p>
+                  </div>
+                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18 }}>{openModule === m.n ? "−" : "+"}</span>
+                </button>
+                {openModule === m.n && (
+                  <div style={{ padding: "0 20px 20px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, margin: "16px 0" }}>
                       <div>
-                        <div style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>Learning Objectives</div>
-                        {m.objectives.map(o => <div key={o} style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 3, display: "flex", gap: 6 }}><span style={{ color: "#d4af37" }}>✓</span>{o}</div>)}
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em" }}>Learning Objectives</div>
+                        {m.objectives.map(o => <div key={o} style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 5, display: "flex", gap: 6 }}><span style={{ color: "#d4af37", flexShrink: 0 }}>✓</span>{o}</div>)}
                       </div>
                       <div>
-                        <div style={{ fontSize: 11, fontWeight: 700, color: "#60a5fa", marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>Lessons</div>
-                        {m.lessons.map(l => <div key={l} style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 3, display: "flex", gap: 6 }}><span style={{ color: "rgba(255,255,255,0.2)" }}>›</span>{l}</div>)}
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#60a5fa", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em" }}>Lessons</div>
+                        {m.lessons.map(l => <div key={l} style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", marginBottom: 5, display: "flex", gap: 6 }}><span style={{ color: "rgba(255,255,255,0.2)", flexShrink: 0 }}>›</span>{l}</div>)}
                       </div>
                     </div>
-                    <div style={{ background: "rgba(59,130,246,0.08)", borderRadius: 8, padding: "8px 12px", fontSize: 12, display: "flex", gap: 6 }}>
-                      <span style={{ color: "#60a5fa", fontWeight: 700 }}>Action Task:</span>
+                    <div style={{ background: "rgba(59,130,246,0.08)", borderRadius: 8, padding: "10px 14px", fontSize: 13, display: "flex", gap: 6 }}>
+                      <span style={{ color: "#60a5fa", fontWeight: 700, flexShrink: 0 }}>Action Task:</span>
                       <span style={{ color: "rgba(255,255,255,0.6)" }}>{m.task}</span>
                     </div>
-                    {m.note && <div style={{ marginTop: 8, background: "rgba(239,68,68,0.08)", borderRadius: 8, padding: "6px 12px", fontSize: 11, color: "rgba(239,68,68,0.8)" }}>⚠️ {m.note}</div>}
+                    {m.note && <div style={{ marginTop: 8, background: "rgba(239,68,68,0.08)", borderRadius: 8, padding: "8px 14px", fontSize: 12, color: "rgba(239,68,68,0.8)" }}>⚖️ {m.note}</div>}
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>

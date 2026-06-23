@@ -6,6 +6,7 @@ import { useState } from "react";
 const PLAYBOOKS = [
   {
     id: "btl", n: "01", title: "How to Source a Buy to Let Deal",
+    nass: "BTL is the most straightforward strategy to explain to investors — and the most competitive to source. Your edge is speed and relationships. The sourcers who win in BTL have agents calling them. Build that.",
     overview: "A step-by-step system for finding, analysing, and packaging a compliant BTL deal that your investor can buy immediately.",
     steps: [
       "Define your target area — rental demand, yield benchmarks, vacancy rates",
@@ -25,6 +26,7 @@ const PLAYBOOKS = [
   },
   {
     id: "brrr", n: "02", title: "How to Source a BRRR Deal",
+    nass: "BRRR is where the money is. Investors love it because they get their capital back. The numbers are more complex — which means fewer sourcers do it well, which means you can charge more. Learn this one properly.",
     overview: "BRRR (Buy, Refurbish, Rent, Refinance) is the strategy investors use to recycle capital. Your job is to find the right distressed property with the right numbers.",
     steps: [
       "Target properties needing refurbishment — search 'in need of modernisation', auctions, probate",
@@ -42,6 +44,7 @@ const PLAYBOOKS = [
   },
   {
     id: "hmo", n: "03", title: "How to Source an HMO Deal",
+    nass: "HMO fees are bigger — £4,000 to £8,000 is normal for a good deal. But don't skip the compliance checks. An HMO without the right licence or in an Article 4 area can cost your investor tens of thousands. Do it right.",
     overview: "HMOs generate higher yields but require planning, licensing, and the right investor. This playbook walks you through every step.",
     steps: [
       "Research HMO licensing requirements in your target local authority",
@@ -60,6 +63,7 @@ const PLAYBOOKS = [
   },
   {
     id: "off-market", n: "04", title: "How to Source Off-Market Deals",
+    nass: "I'll be honest — off-market takes time to build. Don't expect a deal in week one. But once your system is running, you'll be getting calls instead of making them. That's the goal.",
     overview: "The best deals never hit Rightmove. This playbook teaches you how to find motivated sellers before anyone else.",
     steps: [
       "Set up Google Alerts for your area + 'probate', 'repossession', 'quick sale'",
@@ -77,6 +81,7 @@ const PLAYBOOKS = [
   },
   {
     id: "buyers-list", n: "05", title: "How to Build a Buyers List",
+    nass: "This is the playbook I wish I had at the start. I spent months finding deals I couldn't sell because I had no buyers. Build the list first — before you have a deal to sell.",
     overview: "No buyers list, no business. This playbook shows you exactly how to find, qualify, and organise active property investors.",
     steps: [
       "Join 10 UK property investment Facebook groups — engage daily",
@@ -95,6 +100,7 @@ const PLAYBOOKS = [
   },
   {
     id: "packaging", n: "06", title: "How to Package a Deal",
+    nass: "The pack is your credibility on paper. A scrappy email with a few numbers won't work. A clean, well-evidenced pack with a clear financial model will. This playbook shows you every section.",
     overview: "A well-packaged deal sells itself. This playbook covers every element of a professional investor pack.",
     steps: [
       "Download the Investor Pack Template from the Downloads section",
@@ -114,6 +120,7 @@ const PLAYBOOKS = [
   },
   {
     id: "selling", n: "07", title: "How to Sell a Deal",
+    nass: "Most sourcers send the pack and wait. That's not selling — that's hoping. This playbook is the follow-up system, the objection handling, the call structure. The bit most people skip.",
     overview: "Packaging is half the job. Selling is the other half. This playbook walks you through presenting, following up, and closing.",
     steps: [
       "Match the deal to the right 3 investors on your list based on their criteria",
@@ -133,6 +140,7 @@ const PLAYBOOKS = [
   },
   {
     id: "scaling", n: "08", title: "How to Scale to £5,000+ Per Month",
+    nass: "Don't look at this playbook until you've done at least 2 deals. Scaling a broken process just breaks it faster. Once you have a system that works — even slowly — this playbook is how you pour fuel on it.",
     overview: "Once you've done your first 2-3 deals, it's time to build a repeatable, scalable sourcing business.",
     steps: [
       "Document every step of your deal process into a Standard Operating Procedure",
@@ -165,8 +173,10 @@ export default function PlaybooksPage() {
       </div>
 
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "40px 24px" }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only</p>
         <h1 style={{ fontSize: 36, fontWeight: 800, marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Implementation Playbooks</h1>
-        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 40 }}>Step-by-step execution guides. Every strategy. Zero guessing.</p>
+        <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 8 }}>Not theory. Not inspiration. Step-by-step execution guides for every major strategy — with the common mistakes written out so you don&apos;t make them.</p>
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 40 }}>Tap any playbook to expand the full process, scripts, and checklist.</p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {PLAYBOOKS.map(p => (
@@ -187,7 +197,11 @@ export default function PlaybooksPage() {
 
               {open === p.id && (
                 <div style={{ padding: "0 24px 24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, margin: "16px 0" }}>{p.overview}</p>
+                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, margin: "16px 0 12px" }}>{p.overview}</p>
+                  {"nass" in p && <div style={{ background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.15)", borderRadius: 10, padding: "12px 16px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", marginBottom: 4 }}>NASS SAYS:</p>
+                    <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.65, fontStyle: "italic" }}>&ldquo;{(p as typeof p & { nass: string }).nass}&rdquo;</p>
+                  </div>}
 
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                     <div>
