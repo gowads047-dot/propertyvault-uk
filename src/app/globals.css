@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy-50: #f5f7fa;
+  --color-navy-50: #f5f2ec;
   --color-navy-100: #e4e8f0;
   --color-navy-200: #c5cde0;
   --color-navy-300: #97a5c5;
@@ -28,7 +28,7 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #fffbf4;
   --foreground: #222222;
 }
 
@@ -36,6 +36,8 @@ html.dark {
   --background: #0a1224;
   --foreground: #e4e8f0;
 }
+
+html.dark .bg-cream { background-color: #111827 !important; }
 
 /* Makan is ALWAYS light mode — reset everything */
 html.dark .hetta,
@@ -104,7 +106,8 @@ html.dark input::placeholder, html.dark textarea::placeholder {
 }
 
 /* ══ MAKAN: force light mode always — undo ALL dark overrides ══ */
-html.dark .hetta { background: var(--h-bg); color: var(--h-text); }
+/* Makan: completely immune to dark mode */
+html.dark .hetta { background: var(--h-bg) !important; }
 html.dark .hetta .bg-white { background-color: #ffffff !important; }
 html.dark .hetta .bg-navy-50 { background-color: var(--h-bg) !important; }
 html.dark .hetta .border-navy-100 { border-color: var(--h-border) !important; }
@@ -114,9 +117,10 @@ html.dark .hetta .text-navy-600 { color: var(--h-muted) !important; }
 html.dark .hetta .text-navy-500 { color: var(--h-muted) !important; }
 html.dark .hetta .text-navy-400 { color: var(--h-subtle) !important; }
 html.dark .hetta .text-white { color: #ffffff !important; }
-html.dark .hetta p, html.dark .hetta span, html.dark .hetta a,
-html.dark .hetta li, html.dark .hetta label, html.dark .hetta td,
-html.dark .hetta th { color: inherit; }
+html.dark .hetta .text-gold-600 { color: #b8922f !important; }
+html.dark .hetta .bg-gold-50 { background-color: #fefcf3 !important; }
+html.dark .hetta .bg-green-50 { background-color: #f0fdf4 !important; }
+html.dark .hetta .btn-secondary { background-color: #ffffff !important; color: #1a1a1a !important; border-color: #e8e5e1 !important; }
 html.dark .hetta input, html.dark .hetta select, html.dark .hetta textarea {
   background-color: #ffffff !important;
   color: #1a1a1a !important;
@@ -173,10 +177,14 @@ input::placeholder, textarea::placeholder {
 /* Airbnb-inspired utilities */
 
 @utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   background: #0f1b36;
   color: #ffffff;
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 28px;
   border-radius: 12px;
   transition: all 0.2s;
   font-size: 15px;
@@ -187,10 +195,14 @@ input::placeholder, textarea::placeholder {
 }
 
 @utility btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   background-color: #ffffff;
   color: #0f1b36;
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 28px;
   border-radius: 12px;
   border: 1.5px solid #e4e8f0;
   transition: all 0.2s;
@@ -201,23 +213,31 @@ input::placeholder, textarea::placeholder {
 }
 
 @utility btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   border: 1.5px solid #c5cde0;
   color: #0f1b36;
   font-weight: 600;
-  padding: 14px 28px;
+  padding: 12px 28px;
   border-radius: 12px;
   transition: all 0.2s;
   font-size: 15px;
   &:hover {
-    background-color: #f5f7fa;
+    background-color: #f5f2ec;
   }
 }
 
 @utility btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
   background: linear-gradient(135deg, #f4d35e 0%, #d4a843 100%);
   color: #0f1b36;
   font-weight: 700;
-  padding: 14px 28px;
+  padding: 12px 28px;
   border-radius: 12px;
   transition: all 0.2s;
   font-size: 15px;
@@ -227,8 +247,15 @@ input::placeholder, textarea::placeholder {
   }
 }
 
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
 @utility gradient-navy {
-  background: linear-gradient(160deg, #050912 0%, #0f1b36 40%, #1a2e5a 100%);
+  background: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
+  background-size: 300% 300%;
+  animation: gradient-shift 14s ease infinite;
 }
 
 @utility text-gradient-gold {
@@ -266,6 +293,23 @@ input::placeholder, textarea::placeholder {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@utility glass-stat {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+@utility bg-cream {
+  background-color: #fffbf4;
+}
+
+@utility font-data {
+  font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ═══════════════════════════════════════════

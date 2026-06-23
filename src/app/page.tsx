@@ -15,6 +15,15 @@ export default function Home() {
           from { opacity: 0; transform: translateY(10px); }
           to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes hero-bg {
+          0%, 100% { background-position: 0% 60%; }
+          50%       { background-position: 100% 40%; }
+        }
+        .hero-section {
+          background: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
+          background-size: 300% 300%;
+          animation: hero-bg 14s ease infinite;
+        }
         .stat-num { animation: countUp 0.6s ease both; }
         .stat-num:nth-child(2) { animation-delay: 0.1s; }
         .stat-num:nth-child(3) { animation-delay: 0.2s; }
@@ -35,7 +44,7 @@ export default function Home() {
       `}</style>
 
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden" }}>
+      <section className="hero-section" style={{ position: "relative", overflow: "hidden" }}>
         {/* Subtle grid texture */}
         <div style={{
           position: "absolute", inset: 0, pointerEvents: "none",
@@ -104,7 +113,7 @@ export default function Home() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                   <div>
                     <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Your portfolio</p>
-                    <p style={{ fontSize: 28, fontWeight: 800, color: "white" }}>£4,250</p>
+                    <p style={{ fontSize: 28, fontWeight: 800, color: "white", fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums" }}>£4,250</p>
                     <p style={{ fontSize: 12, color: "rgba(201,168,76,0.8)", marginTop: 2 }}>▲ rent received this month</p>
                   </div>
                   <div style={{ background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 10, padding: "6px 12px" }}>
@@ -145,23 +154,23 @@ export default function Home() {
               {/* Floating yield card */}
               <div style={{ position: "absolute", bottom: -20, left: -20, background: "white", borderRadius: 14, padding: "12px 16px", boxShadow: "0 12px 40px rgba(0,0,0,0.25)", minWidth: 140 }}>
                 <p style={{ fontSize: 10, color: "#a3a3a3", marginBottom: 2 }}>Gross yield</p>
-                <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36" }}>7.2%</p>
+                <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums" }}>7.2%</p>
                 <p style={{ fontSize: 10, color: "#22c55e", fontWeight: 600 }}>▲ above market avg</p>
               </div>
             </div>
           </div>
 
-          {/* Bottom stats bar */}
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 64, paddingTop: 36, display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0 }}>
+          {/* Bottom stats bar — glassmorphic */}
+          <div style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
             {[
               { n: "17", l: "Free calculators" },
               { n: "40+", l: "Templates" },
               { n: "£0", l: "Sign-up cost" },
               { n: "3–5yr", l: "Guaranteed leases" },
             ].map((s, i) => (
-              <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.07)" : "none", padding: "0 16px" }}>
-                <p style={{ fontSize: 28, fontWeight: 800, color: "white", lineHeight: 1 }}>{s.n}</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{s.l}</p>
+              <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none", padding: "0 24px" }}>
+                <p style={{ fontSize: 32, fontWeight: 800, color: "white", lineHeight: 1, fontFamily: "ui-monospace, 'Cascadia Code', monospace", fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{s.l}</p>
               </div>
             ))}
           </div>
