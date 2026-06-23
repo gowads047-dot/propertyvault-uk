@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 
 interface F {
   // Landlord
@@ -423,56 +425,110 @@ export default function ASTPage() {
 
   if (phase === "doc") {
     return (
-      <div style={{ background: "#f5f2ec", minHeight: "100vh" }}>
-        {/* Sticky nav */}
-        <div className="sticky top-0 z-40 bg-navy-800 text-white px-4 py-3 flex items-center justify-between no-print">
-          <div className="flex items-center gap-3">
-            <button onClick={() => setPhase("form")} className="text-white/70 hover:text-white text-sm">← Edit</button>
-            <span className="text-sm font-semibold">AST Agreement — {f.propertyAddress || "Draft"}</span>
+      <>
+        <style>{`
+          @media print {
+            body * { visibility: hidden !important; }
+            #print-doc, #print-doc * { visibility: visible !important; }
+            #print-doc { position: fixed; inset: 0; padding: 28px 36px; background: white; }
+            @page { size: A4; margin: 18mm 20mm; }
+            .no-print { display: none !important; }
+          }
+        `}</style>
+
+        <section className="gradient-navy py-10 px-4 no-print">
+          <div className="container-max">
+            <p className="text-gold-400 font-semibold text-xs uppercase tracking-wider mb-2">FREE TEMPLATE · LANDLORD</p>
+            <h1 className="text-2xl font-bold text-white mb-1">Assured Shorthold Tenancy Agreement</h1>
+            <p className="text-navy-200 text-sm">{f.propertyAddress || "Draft document"}</p>
           </div>
-          <button
-            onClick={() => acknowledged && window.print()}
-            disabled={!acknowledged}
-            style={{ background: acknowledged ? "#c9a84c" : "#64748b", cursor: acknowledged ? "pointer" : "not-allowed" }}
-            className="text-white text-sm font-bold px-4 py-2 rounded-xl transition-colors"
-          >
-            🖨️ Print
-          </button>
+        </section>
+
+        <div className="bg-amber-50 border-b border-amber-200 no-print">
+          <div className="container-max px-4 py-3">
+            <p className="text-xs text-amber-800 font-semibold">⚠️ Draft document only — this is not legal advice. Have this agreement reviewed by a qualified solicitor before any party signs. Tenancy law changes frequently and local circumstances vary.</p>
+          </div>
         </div>
 
-        <div className="max-w-3xl mx-auto px-4 py-8">
-          {/* Doc preview */}
-          <div id="print-doc" style={{ background: "white", color: "#1a1a1a", borderRadius: 16, border: "1.5px solid #e4e8f0", padding: 32, fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7 }}>
-            <pre style={{ whiteSpace: "pre-wrap", fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7, margin: 0 }}>{doc}</pre>
-            <div style={{ marginTop: 32, paddingTop: 16, borderTop: "1px solid #e4e8f0", fontSize: 10, color: "#94a3b8", textAlign: "center" }}>
-              Both parties should instruct their own independent legal representation. · PropertyVault UK · propertyvaultuk.co.uk · Generated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+        <div className="border-b border-navy-100 bg-white sticky top-0 z-10 no-print">
+          <div className="container-max px-4 py-3 flex items-center justify-between flex-wrap gap-3">
+            <button onClick={() => setPhase("form")} className="btn-outline text-sm">← Edit</button>
+            <ShareToolbar
+              docTitle="Assured Shorthold Tenancy Agreement"
+              onPrint={() => window.print()}
+            />
+          </div>
+        </div>
+
+        <section className="section-padding bg-slate-50">
+          <div className="container-max max-w-3xl">
+            <div id="print-doc" style={{ background: "white", color: "#1a1a1a", borderRadius: 16, border: "1.5px solid #e4e8f0", padding: 40, fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7 }}>
+              <PrintHeader
+                category="Residential Tenancy Agreement · England"
+                title="Assured Shorthold Tenancy Agreement"
+                date={f.startDate || new Date().toISOString().slice(0, 10)}
+              />
+
+              <pre style={{ whiteSpace: "pre-wrap", fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7, margin: "16px 0" }}>{doc}</pre>
+
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={f.agentManaged === "yes" ? f.agentName : f.landlordName}
+                witnessLabel="Witness to Landlord Signature"
+                showWitness={true}
+                date={f.startDate}
+              />
+
+              {tenants.map((name, i) => (
+                <SignatureBlock
+                  key={i}
+                  signerLabel={`Signed (Tenant ${tenants.length > 1 ? i + 1 : ""})`}
+                  signerName={name}
+                  witnessLabel="Witness to Tenant Signature"
+                  showWitness={true}
+                  date={f.startDate}
+                />
+              ))}
+
+              {f.guarantorName && (
+                <SignatureBlock
+                  signerLabel="Signed (Guarantor)"
+                  signerName={f.guarantorName}
+                  witnessLabel="Witness to Guarantor Signature"
+                  showWitness={true}
+                  date={f.startDate}
+                />
+              )}
+
+              <PrintFooter
+                docTitle="Assured Shorthold Tenancy Agreement"
+                note="England · Housing Act 1988 (as amended) · Renters' Rights Act 2025"
+              />
+            </div>
+
+            {/* Acknowledgement gate */}
+            <div style={{ marginTop: 24, background: "white", border: acknowledged ? "2px solid #16a34a" : "2px solid #e4e8f0", borderRadius: 16, padding: 24 }} className="no-print">
+              <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>⚠️ Legal Acknowledgement — Required Before Printing</h3>
+              <p style={{ fontSize: 13, color: "#374151", marginBottom: 16, lineHeight: 1.6 }}>
+                This document has been automatically generated for discussion purposes only. It does not constitute legal advice or a valid tenancy agreement without review by a qualified solicitor. Tenancy law changes frequently — clauses marked <strong>[LEGAL REVIEW REQUIRED]</strong> must be verified before execution. PropertyVault UK accepts no liability arising from use of this document.
+              </p>
+              <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer" }}>
+                <input type="checkbox" checked={acknowledged} onChange={e => setAcknowledged(e.target.checked)}
+                  style={{ width: 18, height: 18, marginTop: 2, accentColor: "#16a34a", flexShrink: 0 }} />
+                <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1b36", lineHeight: 1.5 }}>
+                  I understand this is a draft document. I will have it reviewed by a qualified solicitor before any party signs.
+                </span>
+              </label>
+              {acknowledged && (
+                <button onClick={() => window.print()}
+                  style={{ marginTop: 16, background: "#0f1b36", color: "white", border: "none", borderRadius: 12, padding: "12px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
+                  🖨️ Print / Save as PDF
+                </button>
+              )}
             </div>
           </div>
-
-          {/* Acknowledgement gate */}
-          <div style={{ marginTop: 24, background: "white", border: acknowledged ? "2px solid #16a34a" : "2px solid #e4e8f0", borderRadius: 16, padding: 24 }} className="no-print">
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>⚠️ Legal Acknowledgement — Required Before Printing</h3>
-            <p style={{ fontSize: 13, color: "#374151", marginBottom: 16, lineHeight: 1.6 }}>
-              This document has been automatically generated for discussion purposes only. It does not constitute legal advice or a valid tenancy agreement without review by a qualified solicitor. Tenancy law changes frequently — clauses marked <strong>[LEGAL REVIEW REQUIRED]</strong> must be verified before execution. PropertyVault UK accepts no liability arising from use of this document.
-            </p>
-            <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer" }}>
-              <input type="checkbox" checked={acknowledged} onChange={e => setAcknowledged(e.target.checked)}
-                style={{ width: 18, height: 18, marginTop: 2, accentColor: "#16a34a", flexShrink: 0 }} />
-              <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1b36", lineHeight: 1.5 }}>
-                I understand this is a draft document. I will have it reviewed by a qualified solicitor before any party signs.
-              </span>
-            </label>
-            {acknowledged && (
-              <button onClick={() => window.print()}
-                style={{ marginTop: 16, background: "#0f1b36", color: "white", border: "none", borderRadius: 12, padding: "12px 28px", fontSize: 14, fontWeight: 700, cursor: "pointer" }}>
-                🖨️ Print / Save as PDF
-              </button>
-            )}
-          </div>
-        </div>
-
-        <style>{`@media print { .no-print { display: none !important; } #print-doc { border: none !important; border-radius: 0 !important; padding: 20px !important; } }`}</style>
-      </div>
+        </section>
+      </>
     );
   }
 
@@ -493,6 +549,12 @@ export default function ASTPage() {
           </div>
         </div>
       </section>
+
+      <div className="bg-amber-50 border-b border-amber-200">
+        <div className="container-max px-4 py-3">
+          <p className="text-xs text-amber-800 font-semibold">⚠️ Legal document — this generator produces a draft AST for discussion purposes only. Always have a tenancy agreement reviewed by a qualified solicitor before signing. Not legal advice.</p>
+        </div>
+      </div>
 
       {/* Step progress */}
       <div className="container-max px-4 py-6">
