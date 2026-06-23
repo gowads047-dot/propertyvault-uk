@@ -630,28 +630,146 @@ ESG / Energy: [LEGAL REVIEW REQUIRED — consider green lease clauses, EPC impro
 
 EXECUTION
 
-This Lease has been executed as a deed and is delivered on the date shown at the beginning.
+[LEGAL REVIEW REQUIRED — execution formalities depend on the nature of the parties. Deeds executed by companies must comply with the Companies Act 2006 s.44 (two authorised signatories or one director + company seal). Individual signatories require witness attestation. Confirm correct form with your solicitor before execution.]
 
-EXECUTED AS A DEED by )
-${f.landlordName || "[LANDLORD]"} )
-acting by: )
-Director: _________________________ )
-Director/Secretary: ________________ )
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-EXECUTED AS A DEED by )
-${f.tenantName || "[TENANT]"} )
-acting by: )
-Director: _________________________ )
-Director/Secretary: ________________ )
-${f.guarantorRequired === "yes" ? `
-EXECUTED AS A DEED by )
-${f.guarantorName || "[GUARANTOR]"} )
-acting by: )
-Director: _________________________ )
-Director/Secretary: ________________ )` : ""}
+EXECUTION — LANDLORD (Company)
 
-[LEGAL REVIEW REQUIRED — execution formalities depend on whether parties are companies, individuals, LLPs, or partnerships. Deeds executed by companies must comply with the Companies Act 2006 s.44. Individual execution requires witness attestation.]
+EXECUTED as a DEED by                    )
+${f.landlordName || "[LANDLORD FULL NAME]"}  )
+(Company No: ${f.landlordCompany || "[     ]"})               )
+acting by two directors / a director     )
+and the company secretary:               )
 
+Director signature: _______________________________
+
+Print name: _______________________________________
+
+Director/Secretary signature: _____________________
+
+Print name: _______________________________________
+
+Date: ____________________________________________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTION — LANDLORD (Individual — if applicable)
+
+SIGNED as a DEED by                      )
+${f.landlordName || "[LANDLORD FULL NAME]"}  )
+in the presence of:                      )
+
+Signature: _______________________________________
+
+Print name: ______________________________________
+
+Date: ___________________________________________
+
+WITNESS
+
+Witness signature: _______________________________
+
+Witness print name: ______________________________
+
+Witness address: _________________________________
+
+________________________________________________
+
+Witness occupation: ______________________________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTION — TENANT (Company)
+
+EXECUTED as a DEED by                    )
+${f.tenantName || "[TENANT FULL NAME]"}      )
+(Company No: ${f.tenantCompany || "[     ]"})               )
+acting by two directors / a director     )
+and the company secretary:               )
+
+Director signature: _______________________________
+
+Print name: _______________________________________
+
+Director/Secretary signature: _____________________
+
+Print name: _______________________________________
+
+Date: ____________________________________________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTION — TENANT (Individual — if applicable)
+
+SIGNED as a DEED by                      )
+${f.tenantName || "[TENANT FULL NAME]"}      )
+in the presence of:                      )
+
+Signature: _______________________________________
+
+Print name: ______________________________________
+
+Date: ___________________________________________
+
+WITNESS
+
+Witness signature: _______________________________
+
+Witness print name: ______________________________
+
+Witness address: _________________________________
+
+________________________________________________
+
+Witness occupation: ______________________________
+
+${f.guarantorRequired === "yes" ? `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTION — GUARANTOR (Company)
+
+EXECUTED as a DEED by                    )
+${f.guarantorName || "[GUARANTOR FULL NAME]"}  )
+(Company No: ${f.guarantorCompany || "[     ]"})             )
+acting by two directors / a director     )
+and the company secretary:               )
+
+Director signature: _______________________________
+
+Print name: _______________________________________
+
+Director/Secretary signature: _____________________
+
+Print name: _______________________________________
+
+Date: ____________________________________________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTION — GUARANTOR (Individual — if applicable)
+
+SIGNED as a DEED by                      )
+${f.guarantorName || "[GUARANTOR FULL NAME]"}  )
+in the presence of:                      )
+
+Signature: _______________________________________
+
+Print name: ______________________________________
+
+Date: ___________________________________________
+
+WITNESS
+
+Witness signature: _______________________________
+
+Witness print name: ______________________________
+
+Witness address: _________________________________
+
+________________________________________________
+
+Witness occupation: ______________________________
+` : ""}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 SCHEDULES
@@ -659,14 +777,6 @@ SCHEDULES
 Schedule 1: Tenant's Rights [LEGAL REVIEW REQUIRED]
 Schedule 2: Landlord's Reservations [LEGAL REVIEW REQUIRED]
 ${f.serviceChargeApplicable === "yes" ? "Schedule 3: Service Charge Provisions [LEGAL REVIEW REQUIRED]\n" : ""}${f.reviewType ? "Schedule 4: Rent Review [LEGAL REVIEW REQUIRED]\n" : ""}${f.scheduleOfCondition === "yes" ? "Schedule 5: Schedule of Condition [TO BE PREPARED BY SURVEYOR]\n" : ""}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-IMPORTANT NOTICE
-
-This document has been automatically generated by the PropertyVault Commercial Lease Assembly System for discussion and solicitor review purposes only. It does not constitute a binding legal document, legal advice, or a completed lease. It must be reviewed and approved by a qualified commercial property solicitor before execution. The parties must instruct their own independent solicitors.
-
-Generated: ${today}
 `;
 }
 
@@ -998,6 +1108,7 @@ export default function CommercialLeasePage() {
   const [phase, setPhase] = useState<Phase>("type");
   const [step, setStep] = useState(0);
   const [f, setF] = useState<FormData>(EMPTY);
+  const [acknowledged, setAcknowledged] = useState(false);
   const [activeDoc, setActiveDoc] = useState(0);
 
   const set = (key: keyof FormData) => (val: string) => setF(prev => ({ ...prev, [key]: val }));
@@ -1390,8 +1501,11 @@ export default function CommercialLeasePage() {
                   </button>
                 ))}
               </div>
-              <button onClick={() => { const el = document.getElementById("print-area"); if (el) window.print(); }}
-                style={{ fontSize: 12, fontWeight: 700, padding: "8px 16px", borderRadius: 10, background: "#0f1b36", color: "white", border: "none", cursor: "pointer", flexShrink: 0 }}>
+              <button
+                onClick={() => acknowledged && window.print()}
+                disabled={!acknowledged}
+                title={!acknowledged ? "You must acknowledge the legal notice below before printing" : "Print document"}
+                style={{ fontSize: 12, fontWeight: 700, padding: "8px 16px", borderRadius: 10, background: acknowledged ? "#0f1b36" : "#cbd5e1", color: "white", border: "none", cursor: acknowledged ? "pointer" : "not-allowed", flexShrink: 0, transition: "background 0.2s" }}>
                 🖨️ Print
               </button>
             </div>
@@ -1425,14 +1539,40 @@ export default function CommercialLeasePage() {
                 <pre style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: 12, lineHeight: 1.7, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#1e293b" }}>
                   {DOCS[activeDoc].fn(f)}
                 </pre>
-                {/* Single legal notice at end of document — print-visible */}
-                <div style={{ marginTop: 32, paddingTop: 20, borderTop: "2px solid #0f1b36" }}>
-                  <p style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Important — Legal Review Required</p>
-                  <p style={{ fontSize: 11, color: "#64748b", lineHeight: 1.6 }}>
-                    This document has been automatically generated by the PropertyVault Commercial Lease Assembly System for discussion purposes only. It does not constitute legal advice, a binding agreement, or a completed legal document. It must be reviewed and approved by a qualified commercial property solicitor (England &amp; Wales) before execution. Where <strong>[LEGAL REVIEW REQUIRED]</strong> appears in the text, that matter must be specifically addressed by your solicitor before signing. Both parties should instruct their own independent legal representation.
+                {/* Minimal print-only footer */}
+                <div style={{ marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
+                  <p style={{ fontSize: 10, color: "#94a3b8" }}>
+                    Both parties should instruct their own independent legal representation. · PropertyVault UK · propertyvaultuk.co.uk · Generated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
                   </p>
-                  <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 8 }}>PropertyVault UK · propertyvaultuk.co.uk · Generated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
                 </div>
+              </div>
+
+              {/* Acknowledgement checkbox — must tick before printing */}
+              <div style={{ marginTop: 20, background: "white", border: `2px solid ${acknowledged ? "#16a34a" : "#e2e8f0"}`, borderRadius: 14, padding: 20, transition: "border-color 0.2s" }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 10 }}>Legal Acknowledgement — Required Before Printing</p>
+                <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.65, marginBottom: 16 }}>
+                  This document has been automatically generated by the PropertyVault Commercial Lease Assembly System for discussion and solicitor review purposes only. It does not constitute a binding legal document, legal advice, or a completed lease. It must be reviewed and approved by a qualified commercial property solicitor (England &amp; Wales) before execution. Where <strong>[LEGAL REVIEW REQUIRED]</strong> appears in the text, that matter must be specifically addressed by a solicitor before signing. Both parties should instruct their own independent legal representation. PropertyVault UK accepts no liability arising from the use of this document.
+                </p>
+                <label style={{ display: "flex", alignItems: "flex-start", gap: 10, cursor: "pointer" }}>
+                  <input
+                    type="checkbox"
+                    checked={acknowledged}
+                    onChange={e => setAcknowledged(e.target.checked)}
+                    style={{ marginTop: 2, width: 16, height: 16, flexShrink: 0, cursor: "pointer", accentColor: "#0f1b36" }}
+                  />
+                  <span style={{ fontSize: 12, fontWeight: 600, color: "#0f1b36", lineHeight: 1.5 }}>
+                    I understand this is a draft document for discussion only. I will instruct a qualified solicitor to review and approve it before any party signs.
+                  </span>
+                </label>
+                {acknowledged && (
+                  <div style={{ marginTop: 14, display: "flex", justifyContent: "flex-end" }}>
+                    <button
+                      onClick={() => window.print()}
+                      style={{ fontSize: 13, fontWeight: 700, padding: "10px 24px", borderRadius: 10, background: "#0f1b36", color: "white", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}>
+                      🖨️ Print / Save as PDF
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Solicitor review summary */}
