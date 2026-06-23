@@ -41,6 +41,7 @@ const mobileLinks = [
   ]},
   { heading: "Learn", links: [
     { href: "/academy", label: "🎓 Deal Sourcing Academy" },
+    { href: "/rentura", label: "🏠 Rentura — Landlord OS" },
     { href: "/property-investing", label: "Property Investing" },
     { href: "/mortgages", label: "Mortgages" },
     { href: "/property-tax", label: "Property Tax" },
