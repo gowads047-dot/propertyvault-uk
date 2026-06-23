@@ -488,7 +488,6 @@ export default function ListingPage() {
               <div className="grid divide-x" style={{
                 gridTemplateColumns: `repeat(${[listing.size_sqm, listing.bedrooms !== null, listing.furnished].filter(Boolean).length + 1}, 1fr)`,
                 borderTop: "1px solid var(--h-border)",
-                divideColor: "var(--h-border)",
               }}>
                 {listing.size_sqm ? (
                   <div className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--h-border)" }}>
