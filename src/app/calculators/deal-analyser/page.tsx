@@ -918,6 +918,28 @@ export default function DealAnalyserPage() {
         </div>
       </section>
 
+      {/* Academy upsell */}
+      <section style={{ background: "#0f1b36" }} className="section-padding">
+        <div className="container-max px-4 max-w-3xl text-center">
+          <p className="text-gold-400 font-semibold text-xs uppercase tracking-wider mb-3">Deal Sourcing Academy</p>
+          <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
+            Know the numbers. Now learn the strategy.
+          </h2>
+          <p className="text-navy-200 text-sm mb-6 max-w-xl mx-auto">
+            The Deal Analyser tells you if a deal works. The Academy teaches you how to find them, pitch investors, and build a compliant deal-sourcing business — from scratch.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {["12-Module Masterclass", "Investor Scripts", "Deal Playbooks", "Legal & Compliance", "7-Day Challenge", "AI Prompt Toolkit"].map(f => (
+              <span key={f} className="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/80">{f}</span>
+            ))}
+          </div>
+          <a href="/academy" className="inline-block bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold px-8 py-3 rounded-2xl text-sm transition-colors">
+            Join the Academy — £14.99/month →
+          </a>
+          <p className="text-navy-400 text-xs mt-3">Educational platform · Not financial advice · Cancel anytime</p>
+        </div>
+      </section>
+
       {/* Related */}
       <section className="bg-white section-padding">
         <div className="container-max px-4 max-w-4xl">
