@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2025-05-28.basil" });
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-05-27.dahlia" });
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,24 +20,27 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  const sub = event.data.object as Stripe.Subscription;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sub = event.data.object as any;
+  const userId = sub.metadata?.userId as string | undefined;
 
   if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") {
-    const userId = sub.metadata?.userId;
     if (userId) {
+      const periodEnd = sub.current_period_end
+        ? new Date(sub.current_period_end * 1000).toISOString()
+        : null;
       await supabase.from("academy_members").upsert({
         user_id: userId,
-        stripe_customer_id: sub.customer as string,
+        stripe_customer_id: sub.customer,
         stripe_subscription_id: sub.id,
         status: sub.status,
-        current_period_end: new Date((sub as Stripe.Subscription & { current_period_end: number }).current_period_end * 1000).toISOString(),
+        current_period_end: periodEnd,
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
     }
   }
 
   if (event.type === "customer.subscription.deleted") {
-    const userId = sub.metadata?.userId;
     if (userId) {
       await supabase.from("academy_members")
         .update({ status: "cancelled", updated_at: new Date().toISOString() })

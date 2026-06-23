@@ -25,6 +25,7 @@ interface AreaData {
   lng: number;
   crime: { total: number; level: string; color: string; month: string; topCategories: { label: string; count: number }[] };
   sales: { recent: Sale[]; avgPrice: number };
+  rental: { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number; demand: string; trend: string; yieldRangeLow: string | null; yieldRangeHigh: string | null };
   suggestedCity: string;
 }
 interface Sale { date: string; price: number; type: string; tenure: string; address: string; newBuild: boolean; }
@@ -456,6 +457,40 @@ export default function DealAnalyserPage() {
                       </div>
                     ) : (
                       <p style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
+                    )}
+
+                    {/* Rental Market */}
+                    {areaData.rental && (
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0", marginTop: 10 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏘️ Rental Market ({areaData.region})</span>
+                          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                            <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 6, background: areaData.rental.demand === "Very High" ? "#fef2f2" : areaData.rental.demand === "High" ? "#fefce8" : "#f0fdf4", color: areaData.rental.demand === "Very High" ? "#dc2626" : areaData.rental.demand === "High" ? "#ca8a04" : "#16a34a" }}>{areaData.rental.demand} Demand</span>
+                            <span style={{ fontSize: 10, color: "#16a34a", fontWeight: 600 }}>{areaData.rental.trend}</span>
+                          </div>
+                        </div>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4, marginBottom: 8 }}>
+                          {[
+                            { label: "Studio", val: areaData.rental.studio },
+                            { label: "1 Bed", val: areaData.rental.oneBed },
+                            { label: "2 Bed", val: areaData.rental.twoBed },
+                            { label: "3 Bed", val: areaData.rental.threeBed },
+                            { label: "4 Bed+", val: areaData.rental.fourBed },
+                          ].map(r => (
+                            <div key={r.label} style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 7, padding: "5px 4px", textAlign: "center" }}>
+                              <div style={{ fontSize: 9, color: "#94a3b8", fontWeight: 600 }}>{r.label}</div>
+                              <div style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36" }}>£{r.val.toLocaleString()}</div>
+                              <div style={{ fontSize: 9, color: "#64748b" }}>/mo</div>
+                            </div>
+                          ))}
+                        </div>
+                        {areaData.rental.yieldRangeLow && areaData.rental.yieldRangeHigh && (
+                          <p style={{ fontSize: 10, color: "#64748b" }}>
+                            Estimated gross yield: <strong style={{ color: "#c9a84c" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> based on area sold prices
+                          </p>
+                        )}
+                        <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
+                      </div>
                     )}
 
                     {areaData.suggestedCity && (
