@@ -5,6 +5,16 @@ import Link from "next/link";
 
 const TEMPLATES = [
   {
+    id: "ast",
+    title: "Assured Shorthold Tenancy Agreement",
+    desc: "Generate a compliant AST for England & Wales — fixed term or periodic, furnished or unfurnished. Includes deposit terms, bill responsibilities, house rules, and signature blocks.",
+    category: "landlord",
+    time: "10 min",
+    pages: "4–6 pages",
+    badge: "Essential",
+    icon: "📄",
+  },
+  {
     id: "tenant-application",
     title: "Tenant Application Form",
     desc: "Professional application form collecting personal details, employment, rental history, references, and Right to Rent confirmation.",
@@ -204,7 +214,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
 };
 
 // Templates with full interactive forms
-const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence", "section-8-notice", "section-13-notice", "reference-request", "pet-permission", "repair-report", "hmo-management-log", "rent-receipt", "commercial-lease"]);
+const INTERACTIVE = new Set(["ast", "tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence", "section-8-notice", "section-13-notice", "reference-request", "pet-permission", "repair-report", "hmo-management-log", "rent-receipt", "commercial-lease"]);
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
