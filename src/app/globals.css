@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme inline {
@@ -318,29 +318,33 @@ input::placeholder, textarea::placeholder {
    ═══════════════════════════════════════════ */
 
 .hetta {
-  --h-bg: #faf9f7;
+  --h-bg: #f8f7f5;
   --h-surface: #ffffff;
-  --h-text: #1a1a1a;
-  --h-muted: #6b6b6b;
-  --h-subtle: #a3a3a3;
-  --h-border: #e8e5e1;
+  --h-text: #111111;
+  --h-muted: #555555;
+  --h-subtle: #999999;
+  --h-border: #e5e2de;
   --h-accent: #e8553d;
   --h-accent-hover: #d14530;
   --h-accent-light: #fef0ed;
-  --h-warm: #f5f0eb;
-  --h-slate: #2d2d2d;
+  --h-warm: #f4efe9;
+  --h-slate: #1e1e1e;
   --h-green: #16a34a;
   --h-green-light: #f0fdf4;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
   background: var(--h-bg);
   color: var(--h-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
 }
 
 .hetta h1, .hetta h2, .hetta h3 {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  font-weight: 800;
   color: var(--h-text);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
 }
 
 .hetta .h-container {

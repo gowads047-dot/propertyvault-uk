@@ -285,6 +285,10 @@ export default function ListingPage() {
   const views = viewCount(listing.id, listing.view_count ?? 0);
   const pricePerSqm = listing.size_sqm && forSale ? Math.round(listing.price / listing.size_sqm) : null;
 
+  // Detect Arabic/RTL content
+  const isRTL = /[؀-ۿ]/.test(listing.description || listing.title);
+  const arabicFont = "'Noto Sans Arabic', 'Plus Jakarta Sans', system-ui, sans-serif";
+
   // WhatsApp message — tailored per listing type
   const waMessage = forSale
     ? `Hi, I found your property on Makan and I'm interested in viewing it.\n\n📍 ${listing.title}\n💰 ${priceStr} · ${listing.area}, ${listing.city}\n\nIs it still available and can we arrange a viewing?`
@@ -317,11 +321,16 @@ export default function ListingPage() {
                 className="w-full h-full object-cover"
               />
             ) : listing.video_url ? (
-              <video src={listing.video_url} controls className="w-full h-full object-cover" />
+              <video src={listing.video_url} controls className="w-full h-full object-cover" style={{ background: "#0a0a0a" }} />
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-3" style={{ background: "#1a1a1a" }}>
-                <svg className="w-16 h-16 opacity-20" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>No photos yet</p>
+              <div className="w-full h-full flex flex-col items-center justify-center gap-4" style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)" }}>
+                <div className="w-20 h-20 rounded-2xl flex items-center justify-center" style={{ background: "rgba(232,85,61,0.15)", border: "1px solid rgba(232,85,61,0.3)" }}>
+                  <svg className="w-10 h-10" style={{ color: "rgba(232,85,61,0.6)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" /></svg>
+                </div>
+                <div className="text-center">
+                  <p className="text-sm font-semibold mb-1" style={{ color: "rgba(255,255,255,0.7)" }}>Photos coming soon</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>Contact the agent for a viewing</p>
+                </div>
               </div>
             )}
 
@@ -414,60 +423,125 @@ export default function ListingPage() {
           <div className="lg:col-span-2">
 
             {/* Title + location */}
-            <div className="mb-6">
-              <h1 className="leading-tight mb-1" style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(22px, 3.5vw, 34px)", fontWeight: 700, letterSpacing: "-0.01em", color: "var(--h-text)" }}>{listing.title}</h1>
-              <p className="flex items-center gap-1.5 text-sm" style={{ color: "var(--h-muted)" }}>
-                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                {listing.area}, {listing.city}{countryObj ? `, ${countryObj.name}` : ""}
-              </p>
-            </div>
+            <div className="mb-8">
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-2 mb-3 text-xs font-medium" style={{ color: "var(--h-subtle)" }}>
+                <span>{listing.property_type}</span>
+                <span>·</span>
+                <span style={{ color: forSale ? "var(--h-accent)" : "var(--h-green)", fontWeight: 700 }}>{forSale ? "For Sale" : "To Rent"}</span>
+                <span>·</span>
+                <span>{listing.area}, {listing.city}{countryObj ? `, ${countryObj.name}` : ""}</span>
+              </div>
 
-            {/* Key stats bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-2">
-              <div className="rounded-xl p-4" style={{ background: "var(--h-accent)", color: "white" }}>
-                <p className="text-xl font-extrabold leading-tight">{priceStr}</p>
-                <p className="text-xs opacity-80 mt-0.5">{forSale ? "asking price" : "per month"}</p>
-              </div>
-              {listing.size_sqm ? (
-                <div className="rounded-xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-                  <p className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{listing.size_sqm} m²</p>
-                  <p className="text-xs" style={{ color: "var(--h-muted)" }}>floor area</p>
-                </div>
-              ) : (
-                <div className="rounded-xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-                  <p className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{listing.bedrooms === 0 ? "Studio" : listing.bedrooms}</p>
-                  <p className="text-xs" style={{ color: "var(--h-muted)" }}>{listing.bedrooms === 0 ? "open plan" : listing.bedrooms === 1 ? "bedroom" : "bedrooms"}</p>
-                </div>
-              )}
-              <div className="rounded-xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-                <p className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{listing.bedrooms === 0 ? "Studio" : listing.bedrooms}</p>
-                <p className="text-xs" style={{ color: "var(--h-muted)" }}>{listing.bedrooms === 0 ? "open plan" : listing.bedrooms === 1 ? "bedroom" : "bedrooms"}</p>
-              </div>
-              <div className="rounded-xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-                <p className="text-xl font-bold" style={{ color: "var(--h-text)" }}>{listing.furnished?.split(" ")[0] ?? "—"}</p>
-                <p className="text-xs" style={{ color: "var(--h-muted)" }}>furnished</p>
+              <h1 style={{
+                fontSize: "clamp(24px, 4vw, 42px)",
+                fontWeight: 900,
+                letterSpacing: "-0.03em",
+                lineHeight: 1.08,
+                color: "var(--h-text)",
+                fontFamily: isRTL ? arabicFont : undefined,
+                direction: isRTL ? "rtl" : undefined,
+              }}>
+                {listing.title}
+              </h1>
+
+              <div className="flex items-center gap-2 mt-3">
+                <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ color: "var(--h-accent)" }}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                <p className="text-sm font-medium" style={{ color: "var(--h-muted)" }}>{listing.area}, {listing.city}{countryObj ? `, ${countryObj.name}` : ""}</p>
+                <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
+                  👁 {views} views
+                </span>
               </div>
             </div>
 
-            {/* Price per sqm (sale only) */}
-            {pricePerSqm && (
-              <p className="text-xs mb-6 pl-1" style={{ color: "var(--h-muted)" }}>
-                ≈ {formatPrice(pricePerSqm, listing.country || "gb")} per m² · {listing.size_sqm} m² total
-              </p>
-            )}
+            {/* Premium price + stats strip */}
+            <div className="mb-8 rounded-2xl overflow-hidden" style={{ border: "1px solid var(--h-border)" }}>
+              {/* Price bar */}
+              <div className="px-5 py-4 flex items-center justify-between gap-4" style={{ background: "var(--h-slate)" }}>
+                <div>
+                  <p style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 900, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{priceStr}</p>
+                  <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {forSale ? "asking price" : "per calendar month"}
+                    {pricePerSqm ? ` · ${formatPrice(pricePerSqm, listing.country || "gb")}/m²` : ""}
+                  </p>
+                </div>
+                <div className="text-right">
+                  {isAvailable
+                    ? <span className="text-xs font-bold px-3 py-1.5 rounded-full" style={{ background: "var(--h-green)", color: "white" }}>Available now</span>
+                    : <span className="text-xs font-bold px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)" }}>
+                        {forSale ? "Handover " : "From "}
+                        {new Date(listing.available_from).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}
+                      </span>
+                  }
+                </div>
+              </div>
+
+              {/* Stat row */}
+              <div className="grid divide-x" style={{
+                gridTemplateColumns: `repeat(${[listing.size_sqm, listing.bedrooms !== null, listing.furnished].filter(Boolean).length + 1}, 1fr)`,
+                borderTop: "1px solid var(--h-border)",
+                divideColor: "var(--h-border)",
+              }}>
+                {listing.size_sqm ? (
+                  <div className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--h-border)" }}>
+                    <p className="text-lg font-extrabold" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>{listing.size_sqm} m²</p>
+                    <p className="text-xs font-medium mt-0.5" style={{ color: "var(--h-subtle)" }}>Floor area</p>
+                  </div>
+                ) : listing.bedrooms !== null && listing.bedrooms !== undefined && listing.property_type !== "Commercial" ? (
+                  <div className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--h-border)" }}>
+                    <p className="text-lg font-extrabold" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>
+                      {listing.bedrooms === 0 ? "Studio" : listing.bedrooms}
+                    </p>
+                    <p className="text-xs font-medium mt-0.5" style={{ color: "var(--h-subtle)" }}>{listing.bedrooms === 0 ? "Open plan" : listing.bedrooms === 1 ? "Bedroom" : "Bedrooms"}</p>
+                  </div>
+                ) : null}
+
+                <div className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--h-border)" }}>
+                  <p className="text-lg font-extrabold" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>{listing.property_type}</p>
+                  <p className="text-xs font-medium mt-0.5" style={{ color: "var(--h-subtle)" }}>Property type</p>
+                </div>
+
+                {listing.furnished && (
+                  <div className="px-4 py-3 text-center" style={{ borderRight: "1px solid var(--h-border)" }}>
+                    <p className="text-lg font-extrabold" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>{listing.furnished.split(" ")[0]}</p>
+                    <p className="text-xs font-medium mt-0.5" style={{ color: "var(--h-subtle)" }}>Furnishing</p>
+                  </div>
+                )}
+
+                <div className="px-4 py-3 text-center">
+                  <p className="text-lg font-extrabold" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>
+                    {new Date(listing.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
+                  </p>
+                  <p className="text-xs font-medium mt-0.5" style={{ color: "var(--h-subtle)" }}>Listed</p>
+                </div>
+              </div>
+            </div>
 
             {/* Description */}
             {listing.description && (
               <div className="mb-8">
-                <h2 className="text-lg font-bold mb-3" style={{ color: "var(--h-text)" }}>About this property</h2>
-                <div className="text-sm leading-relaxed whitespace-pre-line" style={{ color: "var(--h-muted)" }}>{listing.description}</div>
+                <h2 className="text-xl font-extrabold mb-4" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>About this property</h2>
+                <div
+                  className="leading-relaxed whitespace-pre-line"
+                  style={{
+                    color: "var(--h-muted)",
+                    fontSize: isRTL ? "1.05rem" : "0.95rem",
+                    lineHeight: isRTL ? 2 : 1.8,
+                    fontFamily: isRTL ? arabicFont : undefined,
+                    direction: isRTL ? "rtl" : "ltr",
+                    textAlign: isRTL ? "right" : "left",
+                    fontWeight: isRTL ? 500 : 400,
+                  }}
+                >
+                  {listing.description}
+                </div>
               </div>
             )}
 
             {/* Features — grouped with icons */}
             {listing.features && listing.features.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-lg font-bold mb-4" style={{ color: "var(--h-text)" }}>Features & amenities</h2>
+                <h2 className="text-xl font-extrabold mb-4" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>Features & amenities</h2>
                 <div className="space-y-5">
                   {Object.entries(featureGroups).map(([group, items]) => (
                     <div key={group}>
@@ -607,94 +681,98 @@ export default function ListingPage() {
             </div>
           </div>
 
-          {/* RIGHT — sidebar */}
+          {/* RIGHT — premium sidebar */}
           <div className="space-y-4">
-            <div className="rounded-2xl p-6 sticky top-20" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+            <div className="rounded-2xl overflow-hidden sticky top-20" style={{ border: "1px solid var(--h-border)", boxShadow: "0 4px 24px -8px rgba(0,0,0,0.08)" }}>
 
-              {/* Price callout */}
-              <div className="mb-4 pb-4" style={{ borderBottom: "1px solid var(--h-border)" }}>
-                <p className="text-3xl font-extrabold" style={{ color: "var(--h-text)" }}>{priceStr}</p>
-                {priceSuffix && <p className="text-xs mt-0.5" style={{ color: "var(--h-muted)" }}>Per month · all enquiries welcome</p>}
-                {forSale && listing.size_sqm && (
-                  <p className="text-xs mt-0.5" style={{ color: "var(--h-muted)" }}>
-                    {formatPrice(Math.round(listing.price / listing.size_sqm), listing.country || "gb")}/m² · {listing.size_sqm} m²
-                  </p>
+              {/* Price header */}
+              <div className="px-6 py-5" style={{ background: "var(--h-slate)" }}>
+                <p style={{ fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 900, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{priceStr}</p>
+                <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  {forSale ? "Asking price" : "Per calendar month"}
+                </p>
+                <div className="mt-3">
+                  <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: isAvailable ? "rgba(22,163,74,0.25)" : "rgba(255,255,255,0.1)", color: isAvailable ? "#4ade80" : "rgba(255,255,255,0.6)" }}>
+                    {isAvailable ? "✓ Available now" : forSale ? `Handover ${new Date(listing.available_from).toLocaleDateString("en-GB", { month: "short", year: "numeric" })}` : `From ${new Date(listing.available_from).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}`}
+                  </span>
+                </div>
+              </div>
+
+              <div className="p-5">
+                {user ? (
+                  <>
+                    {/* WhatsApp CTA — primary */}
+                    <a
+                      href={`https://wa.me/${whatsappNum.replace(/\D/g, "")}?text=${encodeURIComponent(waMessage)}`}
+                      target="_blank" rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl font-bold text-sm mb-3 transition-all hover:opacity-90 active:scale-[0.98]"
+                      style={{ background: "#25D366", color: "white", fontSize: "0.95rem", letterSpacing: "-0.01em" }}>
+                      <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                      Message on WhatsApp
+                    </a>
+
+                    <button onClick={toggleSave}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold mb-4 transition-all"
+                      style={{ background: saved ? "var(--h-accent-light)" : "var(--h-warm)", color: saved ? "var(--h-accent)" : "var(--h-muted)", border: "1px solid var(--h-border)" }}>
+                      {saved ? "♥ Saved to favourites" : "♡ Save listing"}
+                    </button>
+
+                    <div style={{ borderTop: "1px solid var(--h-border)", paddingTop: "1rem" }}>
+                      <p className="text-xs font-bold mb-2" style={{ color: "var(--h-text)" }}>Or send a message</p>
+                      {enquirySent ? (
+                        <div className="p-3 rounded-xl text-sm text-center" style={{ background: "rgba(34,197,94,0.08)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.2)" }}>
+                          ✓ Sent — they'll respond via WhatsApp
+                        </div>
+                      ) : (
+                        <form onSubmit={sendEnquiry} className="space-y-2">
+                          <textarea
+                            value={message}
+                            onChange={e => setMessage(e.target.value)}
+                            rows={3}
+                            className="h-input text-sm"
+                            placeholder={forSale ? "I'm interested in viewing. Is it still available?" : "I'd like to arrange a viewing. What's your earliest slot?"}
+                          />
+                          <button type="submit" className="h-btn h-btn-primary w-full justify-center !text-sm">Send enquiry</button>
+                        </form>
+                      )}
+                    </div>
+
+                    <p className="text-xs text-center mt-3" style={{ color: "var(--h-subtle)" }}>Your details are shared only with the agent.</p>
+                  </>
+                ) : (
+                  <div className="text-center py-2">
+                    <div className="w-14 h-14 rounded-2xl mx-auto mb-3 flex items-center justify-center text-2xl" style={{ background: "var(--h-accent-light)" }}>🏠</div>
+                    <p className="font-extrabold text-lg mb-1" style={{ color: "var(--h-text)", letterSpacing: "-0.02em" }}>Interested in this?</p>
+                    <p className="text-sm mb-5" style={{ color: "var(--h-muted)", lineHeight: 1.6 }}>Free account — message agents, save listings, no fees ever.</p>
+                    <Link href="/makan/auth" className="h-btn h-btn-primary w-full justify-center mb-3">Sign up free →</Link>
+                    <p className="text-xs" style={{ color: "var(--h-subtle)" }}>Have an account? <Link href="/makan/auth" className="font-bold underline" style={{ color: "var(--h-accent)" }}>Log in</Link></p>
+                  </div>
                 )}
               </div>
-
-              {/* Available from — prominent */}
-              <div className="flex items-center gap-3 mb-4 p-3 rounded-xl" style={{ background: isAvailable ? "rgba(34,197,94,0.08)" : "var(--h-warm)", border: `1px solid ${isAvailable ? "rgba(34,197,94,0.2)" : "var(--h-border)"}` }}>
-                <span className="text-lg">📅</span>
-                <div>
-                  <p className="text-xs font-bold" style={{ color: isAvailable ? "#16a34a" : "var(--h-text)" }}>
-                    {isAvailable ? "Available now" : `Available ${new Date(listing.available_from).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`}
-                  </p>
-                  <p className="text-xs" style={{ color: "var(--h-muted)" }}>{forSale ? "Ready to view" : isAvailable ? "Move in ready" : "Book a viewing now"}</p>
-                </div>
-              </div>
-
-              {user ? (
-                <>
-                  <button onClick={toggleSave}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold mb-3 transition-colors"
-                    style={{ background: saved ? "var(--h-accent-light)" : "var(--h-warm)", color: saved ? "var(--h-accent)" : "var(--h-text)", border: "1px solid var(--h-border)" }}>
-                    {saved ? "♥ Saved" : "♡ Save listing"}
-                  </button>
-
-                  <a
-                    href={`https://wa.me/${whatsappNum.replace(/\D/g, "")}?text=${encodeURIComponent(waMessage)}`}
-                    target="_blank" rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm mb-3"
-                    style={{ background: "#25D366", color: "white" }}>
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    WhatsApp landlord
-                  </a>
-
-                  {enquirySent ? (
-                    <div className="p-3 rounded-xl text-sm text-center" style={{ background: "rgba(34,197,94,0.1)", color: "#16a34a" }}>
-                      ✓ Enquiry sent — landlord will respond via WhatsApp
-                    </div>
-                  ) : (
-                    <form onSubmit={sendEnquiry} className="space-y-3">
-                      <textarea
-                        value={message}
-                        onChange={e => setMessage(e.target.value)}
-                        rows={3}
-                        className="h-input text-sm"
-                        placeholder={forSale
-                          ? `Hi, I'm interested in viewing ${listing.property_type.toLowerCase()}. Is it still available?`
-                          : `Hi, I'd like to arrange a viewing. What's your earliest slot?`}
-                      />
-                      <button type="submit" className="h-btn h-btn-primary w-full justify-center">Send enquiry</button>
-                    </form>
-                  )}
-
-                  <p className="text-xs text-center mt-4" style={{ color: "var(--h-subtle)" }}>Your contact details are shared with the landlord only.</p>
-                </>
-              ) : (
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-2xl mx-auto mb-3 flex items-center justify-center text-xl" style={{ background: "var(--h-accent-light)" }}>🔒</div>
-                  <p className="font-bold mb-1" style={{ color: "var(--h-text)" }}>Sign up to contact</p>
-                  <p className="text-sm mb-5" style={{ color: "var(--h-muted)" }}>Free account — message landlords, save listings, get WhatsApp details.</p>
-                  <Link href="/makan/auth" className="h-btn h-btn-primary w-full justify-center">Sign up free</Link>
-                  <p className="text-xs mt-3" style={{ color: "var(--h-subtle)" }}>Have an account? <Link href="/makan/auth" className="underline font-semibold" style={{ color: "var(--h-accent)" }}>Log in</Link></p>
-                </div>
-              )}
             </div>
 
-            {/* Safety */}
-            <div className="rounded-2xl p-4" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-              <p className="text-xs font-bold mb-3" style={{ color: "var(--h-text)" }}>🛡️ Stay safe</p>
-              <ul className="space-y-2 text-xs" style={{ color: "var(--h-muted)" }}>
-                <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> Never pay before viewing in person</li>
-                <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> Always sign a written tenancy agreement</li>
-                <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> Verify the landlord owns the property</li>
-                {countryObj?.code === "gb" && <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> <strong>UK:</strong> Ask for EPC, Gas Safety &amp; deposit protection</li>}
-                {countryObj?.code === "ae" && <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> <strong>UAE:</strong> Ejari registration is mandatory</li>}
-                {countryObj?.code === "kw" && <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> <strong>Kuwait:</strong> Rental only — foreign ownership restricted</li>}
-                {countryObj?.code === "sa" && <li className="flex gap-2"><span style={{ color: "var(--h-accent)" }}>→</span> <strong>Saudi:</strong> Ejar registration legally required</li>}
+            {/* Safety card */}
+            <div className="rounded-2xl p-5" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+              <p className="text-sm font-bold mb-3 flex items-center gap-2" style={{ color: "var(--h-text)" }}>
+                <span className="w-6 h-6 rounded-full flex items-center justify-center text-xs" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>🛡</span>
+                Stay safe
+              </p>
+              <ul className="space-y-2.5">
+                {[
+                  "Never pay a deposit before viewing in person",
+                  "Always get a signed written agreement",
+                  "Verify the agent or landlord identity",
+                  countryObj?.code === "gb" ? "UK: Ask for EPC, Gas Safety & deposit protection" : null,
+                  countryObj?.code === "eg" ? "Egypt: Use a licensed real estate agent" : null,
+                  countryObj?.code === "ma" ? "Morocco: Confirm title deed (titre foncier)" : null,
+                ].filter(Boolean).map((tip, i) => (
+                  <li key={i} className="flex items-start gap-2 text-xs leading-relaxed" style={{ color: "var(--h-muted)" }}>
+                    <span className="mt-0.5 flex-shrink-0 font-bold" style={{ color: "var(--h-accent)" }}>→</span>
+                    {tip}
+                  </li>
+                ))}
               </ul>
-              <Link href="/makan/compliance" className="text-xs font-semibold mt-3 block" style={{ color: "var(--h-accent)" }}>
+              <Link href="/makan/compliance" className="text-xs font-bold mt-4 block" style={{ color: "var(--h-accent)" }}>
                 Full legal guide →
               </Link>
             </div>
