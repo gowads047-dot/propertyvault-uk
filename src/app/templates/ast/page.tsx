@@ -450,13 +450,20 @@ export default function ASTPage() {
           </div>
         </div>
 
-        <div className="border-b border-navy-100 bg-white sticky top-0 z-10 no-print">
+        <div className="no-print" style={{ borderBottom: "1px solid #e4e8f0", background: "white", position: "sticky", top: 0, zIndex: 10 }}>
           <div className="container-max px-4 py-3 flex items-center justify-between flex-wrap gap-3">
-            <button onClick={() => setPhase("form")} className="btn-outline text-sm">← Edit</button>
-            <ShareToolbar
-              docTitle="Assured Shorthold Tenancy Agreement"
-              onPrint={() => window.print()}
-            />
+            <button
+              onClick={() => setPhase("form")}
+              style={{ background: "#0f1b36", color: "white", border: "none", borderRadius: 10, padding: "8px 16px", fontSize: 13, fontWeight: 600, cursor: "pointer" }}
+            >
+              ← Edit
+            </button>
+            <button
+              onClick={() => window.print()}
+              style={{ background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, padding: "8px 20px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+            >
+              🖨️ Print / PDF
+            </button>
           </div>
         </div>
 
