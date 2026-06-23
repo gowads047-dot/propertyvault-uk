@@ -900,19 +900,26 @@ export default function ASTPage() {
           )}
 
           {/* Navigation */}
-          <div className="flex justify-between mt-6 pt-4 border-t border-navy-100">
-            <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0}
-              className="px-5 py-2.5 rounded-xl text-sm font-semibold border border-navy-200 text-navy-600 hover:bg-navy-50 disabled:opacity-30 transition-colors">
+          <div className="flex justify-between mt-6 pt-4" style={{ borderTop: "1px solid #e4e8f0" }}>
+            <button
+              onClick={() => setStep(s => Math.max(0, s - 1))}
+              disabled={step === 0}
+              style={{ background: "white", color: "#0f1b36", border: "1.5px solid #cbd5e1", borderRadius: 10, padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: step === 0 ? "not-allowed" : "pointer", opacity: step === 0 ? 0.35 : 1 }}
+            >
               ← Back
             </button>
             {step < STEPS.length - 1 ? (
-              <button onClick={() => setStep(s => s + 1)}
-                className="px-6 py-2.5 rounded-xl text-sm font-bold bg-navy-800 text-white hover:bg-navy-900 transition-colors">
+              <button
+                onClick={() => setStep(s => s + 1)}
+                style={{ background: "#0f1b36", color: "white", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              >
                 Next →
               </button>
             ) : (
-              <button onClick={() => setPhase("doc")}
-                className="px-6 py-2.5 rounded-xl text-sm font-bold bg-gold-500 text-navy-900 hover:bg-gold-400 transition-colors">
+              <button
+                onClick={() => setPhase("doc")}
+                style={{ background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+              >
                 Generate Agreement →
               </button>
             )}
