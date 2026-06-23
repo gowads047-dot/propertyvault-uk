@@ -104,6 +104,76 @@ const TEMPLATES = [
     badge: "",
     icon: "🏢",
   },
+  {
+    id: "section-8-notice",
+    title: "Section 8 Possession Notice",
+    desc: "Legal notice to seek possession under the Housing Act 1988. Select grounds, auto-calculate notice periods, and generate a court-ready notice — now the only route to possession under the Renters' Rights Act.",
+    category: "landlord",
+    time: "5 min",
+    pages: "2 pages",
+    badge: "Legal",
+    icon: "⚖️",
+  },
+  {
+    id: "section-13-notice",
+    title: "Section 13 Rent Increase Notice",
+    desc: "The only lawful way to raise rent on a periodic tenancy. Calculates the effective date automatically, shows the increase amount, and includes the tenant's right to challenge at tribunal.",
+    category: "landlord",
+    time: "3 min",
+    pages: "1 page",
+    badge: "New law",
+    icon: "📈",
+  },
+  {
+    id: "reference-request",
+    title: "Tenancy Reference Request",
+    desc: "Professional reference request letters for employers and previous landlords — two types in one template. Confirm income, employment, and rental history before granting a tenancy.",
+    category: "landlord",
+    time: "3 min",
+    pages: "1 page",
+    badge: "",
+    icon: "📬",
+  },
+  {
+    id: "pet-permission",
+    title: "Pet Permission Letter",
+    desc: "Respond formally to tenant pet requests under the Renters' Rights Act 2025. Approve, approve with conditions, or refuse — all with proper legal wording. Blanket refusals are no longer valid.",
+    category: "landlord",
+    time: "3 min",
+    pages: "1 page",
+    badge: "New law",
+    icon: "🐾",
+  },
+  {
+    id: "repair-report",
+    title: "Repair Report Letter",
+    desc: "Tenants: formally document a repair issue in writing. Creates a paper trail under Awaab's Law — critical if the landlord fails to act and the matter goes to the council or Ombudsman.",
+    category: "landlord",
+    time: "5 min",
+    pages: "1 page",
+    badge: "",
+    icon: "🔧",
+  },
+  {
+    id: "hmo-management-log",
+    title: "HMO Management Log",
+    desc: "Monthly inspection and compliance record for Houses in Multiple Occupation. Tracks room occupancy, rent arrears, HMO licence status, fire safety, and maintenance in one printable document.",
+    category: "landlord",
+    time: "10 min",
+    pages: "2 pages",
+    badge: "HMO",
+    icon: "🏘️",
+  },
+  {
+    id: "rent-receipt",
+    title: "Rent Receipt",
+    desc: "Generate a professional, numbered rent receipt for any payment method — bank transfer, cash, cheque, or standing order. Recommended for cash payments as proof of payment for both parties.",
+    category: "landlord",
+    time: "2 min",
+    pages: "1 page",
+    badge: "",
+    icon: "🧾",
+  },
 ];
 
 const CATEGORY_FILTERS = [
@@ -122,7 +192,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
 };
 
 // Templates with full interactive forms
-const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence"]);
+const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence", "section-8-notice", "section-13-notice", "reference-request", "pet-permission", "repair-report", "hmo-management-log", "rent-receipt"]);
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -141,7 +211,7 @@ export default function TemplatesPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
           <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
-            {TEMPLATES.length} Free Templates · England & Wales
+            {TEMPLATES.length} Free Templates · England &amp; Wales
           </p>
           <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 5vw, 56px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
             Property<br />
@@ -154,7 +224,7 @@ export default function TemplatesPage() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "24px 40px" }}>
             {[
               { label: "Templates", value: TEMPLATES.length.toString() },
-              { label: "Interactive forms", value: "3" },
+              { label: "Interactive forms", value: INTERACTIVE.size.toString() },
               { label: "Print-ready PDF", value: "All" },
               { label: "Always free", value: "✓" },
             ].map(s => (
