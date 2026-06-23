@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 
 const mainLinks = [
-  { href: "/makan", label: "Makan" },
-  { href: "/calculators", label: "Calculators" },
-  { href: "/templates", label: "Templates" },
-  { href: "/areas", label: "Areas" },
-  { href: "/blog", label: "Blog" },
+  { href: "/makan", label: "Makan", sub: "Property listings" },
+  { href: "/calculators", label: "Calculators", sub: "" },
+  { href: "/templates", label: "Templates", sub: "" },
+  { href: "/areas", label: "Areas", sub: "" },
+  { href: "/blog", label: "Blog", sub: "" },
 ];
 
 const mobileLinks = [
@@ -46,6 +46,10 @@ const mobileLinks = [
     { href: "/renting-strategies", label: "Renting Strategies" },
     { href: "/blog", label: "Blog" },
   ]},
+  { heading: "Company", links: [
+    { href: "/about", label: "About PropertyVault" },
+    { href: "/contact", label: "Contact Us" },
+  ]},
 ];
 
 export function Header() {
@@ -78,8 +82,9 @@ export function Header() {
           <nav className="hidden lg:flex items-center gap-0.5">
             {mainLinks.map((link) => (
               <Link key={link.href} href={link.href}
-                className="px-3.5 py-2 text-[13px] font-semibold text-navy-600 hover:text-navy-900 hover:bg-navy-50 rounded-lg transition-all">
-                {link.label}
+                className="px-3.5 py-2 text-[13px] font-semibold text-navy-600 hover:text-navy-900 hover:bg-navy-50 rounded-lg transition-all flex flex-col items-center leading-none">
+                <span>{link.label}</span>
+                {link.sub && <span className="text-[9px] font-normal text-navy-400 mt-0.5">{link.sub}</span>}
               </Link>
             ))}
           </nav>

@@ -14,7 +14,7 @@ const articles = [
     href: "/blog/renters-rights-act",
     category: "Landlords",
     readTime: "10 min",
-    date: "June 2026",
+    date: "18 June 2026",
     featured: true,
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
   },
@@ -24,7 +24,7 @@ const articles = [
     href: "/blog/uk-property-market-2026",
     category: "Market",
     readTime: "8 min",
-    date: "June 2026",
+    date: "11 June 2026",
     featured: true,
     image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80",
   },
@@ -34,7 +34,7 @@ const articles = [
     href: "/blog/biggest-financial-lie-britain",
     category: "Opinion",
     readTime: "12 min",
-    date: "June 2026",
+    date: "3 June 2026",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
   },
   {
@@ -43,7 +43,7 @@ const articles = [
     href: "/blog/brrr-strategy-explained",
     category: "Investing",
     readTime: "8 min",
-    date: "June 2026",
+    date: "21 May 2026",
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
   },
   {
@@ -52,7 +52,7 @@ const articles = [
     href: "/blog/guaranteed-rent-explained",
     category: "Landlords",
     readTime: "7 min",
-    date: "June 2026",
+    date: "8 May 2026",
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
   },
   {
@@ -61,7 +61,7 @@ const articles = [
     href: "/blog/section-24-explained",
     category: "Tax",
     readTime: "6 min",
-    date: "June 2026",
+    date: "24 April 2026",
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
   },
   {
@@ -70,7 +70,7 @@ const articles = [
     href: "/blog/hmo-investing-uk",
     category: "Investing",
     readTime: "7 min",
-    date: "June 2026",
+    date: "10 April 2026",
     image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
   },
   {
@@ -79,7 +79,7 @@ const articles = [
     href: "/blog/stamp-duty-guide",
     category: "Finance",
     readTime: "5 min",
-    date: "June 2026",
+    date: "26 March 2026",
     image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
   },
   {
@@ -88,7 +88,7 @@ const articles = [
     href: "/blog/first-time-buyer-guide",
     category: "Buying",
     readTime: "6 min",
-    date: "June 2026",
+    date: "12 March 2026",
     image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
   },
   {
@@ -97,7 +97,7 @@ const articles = [
     href: "/blog/personal-vs-limited-company",
     category: "Tax",
     readTime: "7 min",
-    date: "June 2026",
+    date: "19 February 2026",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
   },
   {
@@ -106,7 +106,7 @@ const articles = [
     href: "/blog/guaranteed-rent-vs-traditional-letting",
     category: "Comparison",
     readTime: "6 min",
-    date: "June 2026",
+    date: "5 February 2026",
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
   },
   {
@@ -115,7 +115,7 @@ const articles = [
     href: "/blog/epc-c-deadline-landlords",
     category: "Landlords",
     readTime: "6 min",
-    date: "June 2026",
+    date: "22 January 2026",
     image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=800&q=80",
   },
 ];
@@ -128,7 +128,7 @@ export default function BlogPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
-            {articles.length} articles · Updated June 2026
+            {articles.length} articles · Latest: 18 June 2026
           </p>
           <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
             Property<br />

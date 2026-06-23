@@ -24,14 +24,47 @@ export default function AreasPage() {
         <div className="container-max px-4">
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { city: "Birmingham", href: "/areas/birmingham", region: "West Midlands" },
-              { city: "Nottingham", href: "/areas/nottingham", region: "East Midlands" },
-              { city: "Derby", href: "/areas/derby", region: "East Midlands" },
+              {
+                city: "Birmingham",
+                href: "/areas/birmingham",
+                region: "West Midlands",
+                yield: "6–8%",
+                price: "avg £230k",
+                desc: "The UK's second city — HS2 regeneration, 80,000+ students, and some of the strongest BTL yields outside London.",
+                tags: ["HMO hotspot", "Student lettings", "HS2 uplift"],
+              },
+              {
+                city: "Nottingham",
+                href: "/areas/nottingham",
+                region: "East Midlands",
+                yield: "7–10%",
+                price: "avg £195k",
+                desc: "Consistently among the UK's highest-yielding rental cities — two universities, low entry prices, and strong tenant demand.",
+                tags: ["Highest yields", "Affordable entry", "Dual university"],
+              },
+              {
+                city: "Derby",
+                href: "/areas/derby",
+                region: "East Midlands",
+                yield: "5–7%",
+                price: "avg £205k",
+                desc: "Growing industrial base anchored by Rolls-Royce and Toyota. Stable, professional tenant market with solid long-term demand.",
+                tags: ["Low vacancy", "Professional tenants", "Rolls-Royce hub"],
+              },
             ].map((c) => (
               <Link key={c.city} href={c.href} className="group block bg-white rounded-2xl border border-navy-100 p-8 card-hover">
-                <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-2">{c.region}</p>
-                <h2 className="text-2xl font-extrabold text-navy-800 mb-3 group-hover:text-gold-600 transition-colors" style={{ fontFamily: "var(--font-family-heading)" }}>{c.city}</h2>
-                <p className="text-sm text-navy-500 mb-4">Property investment guide, rental yields, area analysis, and guaranteed rent options.</p>
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest">{c.region}</p>
+                  <span className="text-xs font-bold text-gold-600 bg-gold-50 px-2 py-0.5 rounded-full">{c.yield} yield</span>
+                </div>
+                <h2 className="text-2xl font-extrabold text-navy-800 mb-1 group-hover:text-gold-600 transition-colors" style={{ fontFamily: "var(--font-family-heading)" }}>{c.city}</h2>
+                <p className="text-xs text-navy-400 mb-3">{c.price}</p>
+                <p className="text-sm text-navy-500 mb-4">{c.desc}</p>
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {c.tags.map(tag => (
+                    <span key={tag} className="text-xs font-medium text-navy-600 bg-navy-50 px-2 py-0.5 rounded-full">{tag}</span>
+                  ))}
+                </div>
                 <span className="text-sm font-semibold text-navy-800 group-hover:text-gold-600 transition-colors">Read guide →</span>
               </Link>
             ))}

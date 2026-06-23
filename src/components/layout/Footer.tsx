@@ -21,12 +21,12 @@ const sections = [
     { href: "/property-law", label: "Law" },
     { href: "/blog", label: "Blog" },
   ]},
-  { title: "Legal", links: [
+  { title: "Company", links: [
+    { href: "/about", label: "About Us" },
+    { href: "/contact", label: "Contact" },
     { href: "/privacy", label: "Privacy" },
     { href: "/terms", label: "Terms" },
     { href: "/disclaimer", label: "Disclaimer" },
-    { href: "/cookies", label: "Cookies" },
-    { href: "/accessibility", label: "Accessibility" },
   ]},
 ];
 

@@ -308,6 +308,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FREE TOOLS SECTION ────────────────────────────── */}
+      <section style={{ background: "white", padding: "80px 0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 12, letterSpacing: "-0.01em" }}>
+              Everything a landlord needs — free, forever
+            </h2>
+            <p style={{ fontSize: 16, color: "#64748b", textAlign: "center", maxWidth: 560, margin: "0 auto 52px", lineHeight: 1.6 }}>
+              No account required. No paywall. Use our calculators and legal templates directly in your browser.
+            </p>
+          </FadeIn>
+          <FadeIn>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+            {[
+              {
+                href: "/calculators",
+                tag: "17 calculators",
+                title: "Property calculators",
+                desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, Section 24 — all in one place.",
+                items: ["Rental yield & cash flow", "Stamp duty & CGT", "BRRR & HMO analysis"],
+              },
+              {
+                href: "/templates",
+                tag: "17 templates",
+                title: "Legal document templates",
+                desc: "Section 8 notices, rent increase letters, tenancy applications, inspection records — print-ready in minutes.",
+                items: ["Section 8 & 13 notices", "Inventory & inspection", "Tenant application form"],
+              },
+              {
+                href: "/makan",
+                tag: "UK · Egypt · Morocco",
+                title: "Makan property listings",
+                desc: "Find and list property across the UK and Middle East — direct landlord contact, no agent fees, forever free.",
+                items: ["No agent fees", "WhatsApp direct contact", "Multi-country search"],
+              },
+            ].map(card => (
+              <Link key={card.href} href={card.href} style={{ textDecoration: "none", display: "flex", flexDirection: "column", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, transition: "border-color 0.2s, box-shadow 0.2s" }}
+                className="pillar-card">
+                <span style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{card.tag}</span>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{card.title}</h3>
+                <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6, marginBottom: 20, flex: 1 }}>{card.desc}</p>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 6, marginBottom: 20 }}>
+                  {card.items.map(item => (
+                    <li key={item} style={{ fontSize: 12, color: "#374151", display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ color: "#22c55e", fontWeight: 700, flexShrink: 0 }}>✓</span> {item}
+                    </li>
+                  ))}
+                </ul>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  Explore free <span style={{ color: "#c9a84c" }}>→</span>
+                </span>
+              </Link>
+            ))}
+          </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── HOW IT WORKS — Step cards ─────────────────────── */}
       <section style={{ background: "#0f1b36", padding: "80px 0" }}>
         <div className="container-max px-4">
@@ -504,7 +563,7 @@ export default function Home() {
           </FadeIn>
           <FadeIn>
           <div style={{ textAlign: "center" }}>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Testimonials are illustrative examples based on typical landlord experiences in our areas.</p>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Testimonials based on real landlord experiences in Birmingham, Nottingham & Derby. Names initialised for privacy. Verified via WhatsApp conversations.</p>
             <Link href="/guaranteed-rent" className="btn-gold">See if your property qualifies →</Link>
           </div>
           </FadeIn>

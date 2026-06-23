@@ -80,9 +80,9 @@ export function BlogList({ articles }: { articles: Article[] }) {
             {/* Content */}
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px 36px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: CATEGORY_COLORS[featured.category] ?? "#0f1b36", color: "white" }}>
+                <button onClick={(e) => { e.preventDefault(); setActive(featured.category); }} style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: CATEGORY_COLORS[featured.category] ?? "#0f1b36", color: "white", border: "none", cursor: "pointer" }}>
                   {featured.category}
-                </span>
+                </button>
                 {featured.featured && (
                   <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: "#c9a84c", color: "#0f1b36" }}>
                     Featured
@@ -123,9 +123,9 @@ export function BlogList({ articles }: { articles: Article[] }) {
                 )}
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(10,15,30,0.5) 0%, transparent 60%)" }} />
                 <div style={{ position: "absolute", top: 12, left: 12 }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: CATEGORY_COLORS[post.category] ?? "#0f1b36", color: "white" }}>
+                  <button onClick={(e) => { e.preventDefault(); setActive(post.category); }} style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: CATEGORY_COLORS[post.category] ?? "#0f1b36", color: "white", border: "none", cursor: "pointer" }}>
                     {post.category}
-                  </span>
+                  </button>
                 </div>
               </div>
 

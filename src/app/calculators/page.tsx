@@ -12,7 +12,7 @@ const calculators = [
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>,
   },
   {
-    title: "Mortgage Calculator", desc: "Monthly repayments, total interest, repayment vs interest-only.", href: "/calculators/mortgage", cat: "Finance",
+    title: "Mortgage Calculator", desc: "Monthly repayments, total interest, repayment vs interest-only.", href: "/calculators/mortgage", cat: "Finance", tag: "Most popular",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="13" width="22" height="13" rx="2" fill="#E8D5B7"/><path d="M2 14L14 4l12 10" stroke="#0f1b36" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><rect x="11" y="18" width="6" height="8" rx="1" fill="#0f1b36"/><circle cx="21" cy="9" r="4" fill="#c9a84c" stroke="#0f1b36" strokeWidth="1.5"/><text x="21" y="11" textAnchor="middle" fill="#0f1b36" fontSize="6" fontWeight="bold">£</text></svg>,
   },
   {
@@ -20,7 +20,7 @@ const calculators = [
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="5" width="22" height="18" rx="3" fill="#0f1b36"/><rect x="6" y="8" width="16" height="4" rx="1" fill="#c9a84c"/><circle cx="14" cy="18" r="3" fill="#E8D5B7"/><text x="14" y="20" textAnchor="middle" fill="#0f1b36" fontSize="5" fontWeight="bold">£</text></svg>,
   },
   {
-    title: "Stamp Duty (SDLT)", desc: "Standard, additional property (+5%), and first-time buyer relief.", href: "/calculators/stamp-duty", cat: "Finance",
+    title: "Stamp Duty (SDLT)", desc: "Standard, additional property (+5%), and first-time buyer relief.", href: "/calculators/stamp-duty", cat: "Finance", tag: "Most popular",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="5" y="3" width="18" height="22" rx="2" fill="#E8D5B7"/><rect x="8" y="7" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="11" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><circle cx="20" cy="20" r="6" fill="#c9a84c"/><text x="20" y="22.5" textAnchor="middle" fill="#0f1b36" fontSize="8" fontWeight="bold">%</text></svg>,
   },
   {
@@ -40,7 +40,7 @@ const calculators = [
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="12" width="18" height="11" rx="2" fill="#c9a84c"/><rect x="15" y="15" width="8" height="8" rx="1" fill="#0f1b36"/><circle cx="7" cy="24" r="2" fill="#0f1b36"/><circle cx="19" cy="24" r="2" fill="#0f1b36"/><rect x="5" y="7" width="8" height="6" rx="1" fill="#E8D5B7" stroke="#0f1b36" strokeWidth="1"/></svg>,
   },
   {
-    title: "Rental Yield", desc: "Gross yield, net yield, and monthly cash flow on any BTL.", href: "/calculators/rental-yield", cat: "Investing",
+    title: "Rental Yield", desc: "Gross yield, net yield, and monthly cash flow on any BTL.", href: "/calculators/rental-yield", cat: "Investing", tag: "Most popular",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="#0f1b36"/><path d="M7 18l4-5 3 3 7-9" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><circle cx="21" cy="7" r="3" fill="#c9a84c"/></svg>,
   },
   {
@@ -102,7 +102,7 @@ export default function CalculatorsPage() {
                   </div>
                   <div className="flex gap-1.5">
                     <span className="px-2 py-0.5 bg-navy-50 text-navy-400 text-xs font-semibold rounded-full">{calc.cat}</span>
-                    {calc.tag && <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${calc.tag === "Flagship" ? "bg-gold-400 text-navy-900" : "bg-navy-800 text-white"}`}>{calc.tag}</span>}
+                    {calc.tag && <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${calc.tag === "Flagship" ? "bg-gold-400 text-navy-900" : calc.tag === "Most popular" ? "bg-green-100 text-green-800" : "bg-navy-800 text-white"}`}>{calc.tag}</span>}
                   </div>
                 </div>
                 <h2 className="font-bold text-navy-800 mb-1 group-hover:text-gold-600 transition-colors">{calc.title}</h2>

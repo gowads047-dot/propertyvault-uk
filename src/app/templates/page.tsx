@@ -148,7 +148,7 @@ const TEMPLATES = [
     id: "repair-report",
     title: "Repair Report Letter",
     desc: "Tenants: formally document a repair issue in writing. Creates a paper trail under Awaab's Law — critical if the landlord fails to act and the matter goes to the council or Ombudsman.",
-    category: "landlord",
+    category: "tenant",
     time: "5 min",
     pages: "1 page",
     badge: "",
@@ -179,6 +179,7 @@ const TEMPLATES = [
 const CATEGORY_FILTERS = [
   { id: "all",        label: "All Templates" },
   { id: "landlord",  label: "Landlords" },
+  { id: "tenant",    label: "Tenants" },
   { id: "buyer",     label: "Home Buyers" },
   { id: "seller",    label: "Home Sellers" },
   { id: "commercial",label: "Commercial" },
@@ -186,6 +187,7 @@ const CATEGORY_FILTERS = [
 
 const CAT_COLORS: Record<string, { dot: string; label: string }> = {
   landlord:   { dot: "#c9a84c", label: "Landlord" },
+  tenant:     { dot: "#0891b2", label: "Tenant" },
   buyer:      { dot: "#1d4ed8", label: "Home Buyer" },
   seller:     { dot: "#16a34a", label: "Seller" },
   commercial: { dot: "#7c3aed", label: "Commercial" },

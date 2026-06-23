@@ -302,7 +302,7 @@ export default function MakanPage() {
           {/* Stats row */}
           <div className="hero-reveal-3" style={{ display: "flex", gap: 32 }}>
             {[
-              { num: `${listings.length}+`, label: "listings live" },
+              ...(listings.length > 0 ? [{ num: `${listings.length}+`, label: "listings live" }] : [{ num: "New", label: "be first to list" }]),
               { num: `${countries.length}`, label: "countries" },
               { num: "£0", label: "agent fees" },
               { num: "Free", label: "forever" },
