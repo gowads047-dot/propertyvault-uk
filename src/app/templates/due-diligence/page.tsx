@@ -226,7 +226,7 @@ export default function DueDiligenceTemplate() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white p-10" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+            <div id="print-doc" className="p-10" style={{ background: "white", color: "#1a1a1a", fontFamily: "Arial, Helvetica, sans-serif" }}>
               <PrintHeader
                 category="Investment Due Diligence"
                 title="Commercial Due Diligence Checklist"

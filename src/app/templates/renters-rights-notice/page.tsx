@@ -179,7 +179,7 @@ export default function RentersRightsNotice() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-2xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-10" style={{ fontFamily: "Georgia, serif" }}>
+            <div id="print-doc" className="rounded-2xl border border-navy-100 p-10" style={{ background: "white", color: "#1a1a1a", fontFamily: "Georgia, serif" }}>
 
               {/* Header */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, paddingBottom: 20, borderBottom: "2px solid #0f1b36" }}>

@@ -105,6 +105,56 @@ html.dark input::placeholder, html.dark textarea::placeholder {
   color: #64748b;
 }
 
+/* ── Document preview areas: ALWAYS light regardless of dark mode ── */
+html.dark #print-doc,
+html.dark #print-area {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+html.dark #print-doc *,
+html.dark #print-area * {
+  color: #1a1a1a;
+  border-color: #e2e8f0;
+}
+html.dark #print-doc .bg-white,
+html.dark #print-area .bg-white { background-color: #ffffff !important; }
+html.dark #print-doc .bg-navy-50 { background-color: #f5f2ec !important; }
+html.dark #print-doc .bg-navy-800 { background-color: #0f1b36 !important; }
+html.dark #print-doc .border-navy-100 { border-color: #e4e8f0 !important; }
+html.dark #print-doc h1, html.dark #print-doc h2,
+html.dark #print-doc h3, html.dark #print-doc h4,
+html.dark #print-area h1, html.dark #print-area h2,
+html.dark #print-area h3, html.dark #print-area h4 { color: #0f1b36 !important; }
+html.dark #print-doc .text-navy-800, html.dark #print-doc .text-navy-700,
+html.dark #print-doc .text-navy-600, html.dark #print-doc .text-navy-400 { color: #0f1b36 !important; }
+html.dark #print-doc .text-gold-500, html.dark #print-doc .text-gold-600 { color: #b8922f !important; }
+html.dark #print-doc .bg-green-50 { background-color: #f0fdf4 !important; }
+html.dark #print-doc .text-green-700 { color: #15803d !important; }
+html.dark #print-doc .bg-red-50 { background-color: #fef2f2 !important; }
+html.dark #print-doc .text-red-700 { color: #b91c1c !important; }
+html.dark #print-doc .bg-amber-50 { background-color: #fffbeb !important; }
+html.dark #print-doc .text-amber-700 { color: #b45309 !important; }
+
+/* ── Colour badges: readable in dark mode site-wide ── */
+html.dark .bg-green-100 { background-color: #052e16 !important; }
+html.dark .text-green-800 { color: #86efac !important; }
+html.dark .text-green-700 { color: #4ade80 !important; }
+html.dark .bg-red-100 { background-color: #3b0a0a !important; }
+html.dark .text-red-800 { color: #fca5a5 !important; }
+html.dark .text-red-700 { color: #f87171 !important; }
+html.dark .bg-red-50 { background-color: #2a0a0a !important; }
+html.dark .bg-amber-100 { background-color: #2a1800 !important; }
+html.dark .text-amber-800 { color: #fcd34d !important; }
+html.dark .text-amber-700 { color: #fbbf24 !important; }
+html.dark .bg-amber-50 { background-color: #1c1400 !important; }
+html.dark .bg-yellow-100 { background-color: #1c1400 !important; }
+html.dark .text-yellow-800 { color: #fde68a !important; }
+html.dark .bg-blue-100 { background-color: #0a1a2e !important; }
+html.dark .text-blue-800 { color: #93c5fd !important; }
+html.dark .text-blue-700 { color: #60a5fa !important; }
+html.dark .bg-purple-100 { background-color: #1a0a2e !important; }
+html.dark .text-purple-800 { color: #c4b5fd !important; }
+
 /* ══ MAKAN: force light mode always — undo ALL dark overrides ══ */
 /* Makan: completely immune to dark mode */
 html.dark .hetta { background: var(--h-bg) !important; }

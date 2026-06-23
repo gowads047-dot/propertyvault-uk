@@ -190,7 +190,7 @@ export default function HmoManagementLog() {
       ) : (
         <section className="section-padding bg-cream">
           <div className="container-max max-w-3xl">
-            <div id="print-doc" className="bg-white rounded-2xl border border-navy-100 p-8" style={{ fontFamily: "system-ui, sans-serif" }}>
+            <div id="print-doc" className="rounded-2xl border border-navy-100 p-8" style={{ background: "white", color: "#1a1a1a", fontFamily: "system-ui, sans-serif" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
                 <div>
                   <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>HMO Management Log</p>
