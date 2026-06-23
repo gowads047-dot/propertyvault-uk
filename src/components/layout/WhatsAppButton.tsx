@@ -20,7 +20,7 @@ export function WhatsAppButton() {
   if (pathname?.startsWith("/makan")) return null;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+    <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2">
       {/* Book a Call button */}
       <a
         href={CALENDLY_URL}
@@ -32,7 +32,7 @@ export function WhatsAppButton() {
         <span className="hidden sm:block bg-white text-navy-800 text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-navy-100 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-2 group-hover:translate-x-0 whitespace-nowrap pointer-events-none">
           Book a free 15-min call
         </span>
-        <span className="w-12 h-12 bg-navy-800 hover:bg-navy-700 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200 text-white">
+        <span className="w-9 h-9 sm:w-12 sm:h-12 bg-navy-800 hover:bg-navy-700 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200 text-white">
           <CalIcon />
         </span>
       </a>
@@ -48,7 +48,7 @@ export function WhatsAppButton() {
         <span className="hidden sm:block bg-white text-green-700 text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-green-100 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-2 group-hover:translate-x-0 whitespace-nowrap pointer-events-none">
           WhatsApp us now
         </span>
-        <span className="w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200 text-white">
+        <span className="w-10 h-10 sm:w-14 sm:h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200 text-white">
           <WaIcon />
         </span>
       </a>
