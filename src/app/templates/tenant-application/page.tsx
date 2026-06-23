@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import Link from "next/link";
 
 // ── Field helpers ─────────────────────────────────────────────────────────────
@@ -420,3 +421,6 @@ function DocRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
+
+
+

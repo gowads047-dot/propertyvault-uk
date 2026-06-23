@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import Link from "next/link";
 
 const AREAS = [
@@ -36,7 +37,9 @@ export default function InspectionRecordTemplate() {
 
   return (
     <>
-      <style>{`@media print { body * { visibility: hidden !important; } #print-doc, #print-doc * { visibility: visible !important; } #print-doc { position: fixed; inset: 0; overflow: auto; background: white; } .no-print { display: none !important; } }`}</style>
+      <style>{`        @media print {
+          body * { visibility: hidden !important; }
+          #print-doc, #print-doc * { visibility: visible !important; } #print-doc { position: fixed; inset: 0; overflow: auto; background: white; } .no-print { display: none !important; } }`}</style>
 
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
@@ -243,3 +246,6 @@ export default function InspectionRecordTemplate() {
     </>
   );
 }
+
+
+

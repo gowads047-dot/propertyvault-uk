@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import Link from "next/link";
 
 export default function RentersRightsNotice() {
@@ -278,20 +279,13 @@ export default function RentersRightsNotice() {
                 <p style={{ fontSize: 12, color: "#374151", marginBottom: 20, lineHeight: 1.7 }}>
                   By signing below, both parties confirm that this notice has been provided to the tenant(s) at the commencement of the tenancy and that its contents have been explained or made available for review.
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
-                  <div>
-                    <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Landlord / Agent signature</p>
-                    <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                    <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
-                    <p style={{ fontSize: 11, color: "#6b7280" }}>Date: {fmt(issueDate)}</p>
-                  </div>
-                  <div>
-                    <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Tenant signature</p>
-                    <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                    <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36" }}>{tenantName || "_______________"}</p>
-                    <p style={{ fontSize: 11, color: "#6b7280" }}>Date: _______________</p>
-                  </div>
-                </div>
+                <SignatureBlock
+                  signerLabel="Landlord / Agent signature"
+                  signerName={landlordName}
+                  witnessLabel="Tenant signature"
+                  showWitness={true}
+                  date={issueDate}
+                />
               </DocSection>
 
               {/* Footer */}
@@ -303,7 +297,7 @@ export default function RentersRightsNotice() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit details</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / Save as PDF</button>
+              <ShareToolbar docTitle="Renters Rights Notice" onPrint={() => window.print()} />
               <Link href="/blog/renters-rights-act" className="btn-secondary text-sm">Read the full guide →</Link>
             </div>
 
@@ -316,3 +310,8 @@ export default function RentersRightsNotice() {
     </>
   );
 }
+
+
+
+
+

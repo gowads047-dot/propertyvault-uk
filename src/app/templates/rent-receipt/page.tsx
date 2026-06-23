@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 export default function RentReceipt() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -183,7 +184,7 @@ export default function RentReceipt() {
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="Rent Receipt" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -191,3 +192,8 @@ export default function RentReceipt() {
     </>
   );
 }
+
+
+
+
+

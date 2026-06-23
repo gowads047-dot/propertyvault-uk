@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 const GROUNDS = [
   { id: "g8", n: "Ground 8", type: "Mandatory", notice: "4 weeks", title: "Serious Rent Arrears", detail: "At least 2 months' rent is unpaid both at the date of service of this notice AND at the date of the court hearing. The court must grant possession if this ground is made out." },
@@ -54,6 +55,7 @@ export default function Section8Notice() {
           #print-doc, #print-doc * { visibility: visible !important; }
           #print-doc { position: fixed; inset: 0; padding: 28px 36px; background: white; }
           @page { size: A4; margin: 18mm 20mm; }
+          .no-print { display: none !important; }
         }
       `}</style>
 
@@ -220,33 +222,36 @@ export default function Section8Notice() {
                 <p style={{ marginTop: 8 }}>If you need advice about this notice, contact Citizens Advice (0800 144 8848), Shelter (0808 800 4444), or a housing solicitor as soon as possible.</p>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginTop: 24 }}>
-                <div>
-                  <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Signed (Landlord / Agent)</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36" }}>{agentName || landlordName || "_______________"}</p>
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Date: {fmt(issueDate)}</p>
-                </div>
-                <div>
-                  <p style={{ fontSize: 10, color: "#9ca3af" }}>Service method</p>
-                  <div style={{ marginTop: 4, display: "flex", flexDirection: "column", gap: 4 }}>
-                    {["Hand delivered", "First class post", "Email (if agreed in tenancy)"].map(m => (
-                      <div key={m} style={{ display: "flex", gap: 6, fontSize: 11 }}>
-                        <div style={{ width: 12, height: 12, border: "1px solid #9ca3af", borderRadius: 2, flexShrink: 0, marginTop: 1 }} />
-                        <span>{m}</span>
-                      </div>
-                    ))}
-                  </div>
+              <div style={{ marginTop: 8, fontSize: 11, color: "#374151" }}>
+                <p style={{ fontSize: 10, color: "#9ca3af", marginBottom: 6 }}>Service method</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 20 }}>
+                  {["Hand delivered", "First class post", "Email (if agreed in tenancy)"].map(m => (
+                    <div key={m} style={{ display: "flex", gap: 6, fontSize: 11 }}>
+                      <div style={{ width: 12, height: 12, border: "1px solid #9ca3af", borderRadius: 2, flexShrink: 0, marginTop: 1 }} />
+                      <span>{m}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
+
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={agentName || landlordName}
+                witnessLabel="Witness"
+                showWitness={true}
+                date={issueDate}
+              />
 
               <div style={{ marginTop: 24, padding: "10px 12px", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, fontSize: 10, color: "#991b1b" }}>
                 Important: Keep proof of service (certificate of posting, delivery confirmation, or signed receipt). You will need this if the matter proceeds to court.
               </div>
             </div>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 flex gap-3 flex-wrap items-center">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar
+                docTitle="Section 8 Possession Notice"
+                onPrint={() => window.print()}
+              />
             </div>
           </div>
         </section>

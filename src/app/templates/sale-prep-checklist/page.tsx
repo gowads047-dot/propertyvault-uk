@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import Link from "next/link";
 
 const SECTIONS = [
@@ -229,7 +230,7 @@ export default function SalePrepChecklist() {
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("checklist")} className="btn-outline text-sm">← Back to checklist</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="Sale Preparation Checklist" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -237,3 +238,8 @@ export default function SalePrepChecklist() {
     </>
   );
 }
+
+
+
+
+

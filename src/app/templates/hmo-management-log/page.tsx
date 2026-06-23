@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 const COMPLIANCE_ITEMS = [
   { id: "gas", label: "Gas Safety Check (annual)", category: "safety" },
@@ -263,22 +264,17 @@ export default function HmoManagementLog() {
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginTop: 20, paddingTop: 16, borderTop: "1px solid #f1f5f9" }}>
-                <div>
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>Inspector signature</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 32, marginBottom: 4 }} />
-                  <p style={{ fontSize: 10, color: "#374151" }}>{inspector || "_______________"}</p>
-                </div>
-                <div>
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>Next inspection date</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 32, marginBottom: 4 }} />
-                  <p style={{ fontSize: 10, color: "#6b7280" }}>Schedule within 4–8 weeks</p>
-                </div>
-              </div>
+              <SignatureBlock
+                signerLabel="Inspector signature"
+                signerName={inspector}
+                witnessLabel="Witness"
+                showWitness={true}
+                date={inspectionDate}
+              />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="HMO Management Log" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -286,3 +282,8 @@ export default function HmoManagementLog() {
     </>
   );
 }
+
+
+
+
+

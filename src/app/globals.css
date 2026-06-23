@@ -130,6 +130,10 @@ html.dark .hetta input::placeholder, html.dark .hetta textarea::placeholder {
   color: #a3a3a3 !important;
 }
 
+@media print {
+  .no-print { display: none !important; }
+}
+
 * { box-sizing: border-box; }
 
 html {

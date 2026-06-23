@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 export default function PetPermission() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -192,25 +193,17 @@ export default function PetPermission() {
                 </>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginTop: 32 }}>
-                <div>
-                  <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Signed (Landlord / Agent)</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36" }}>{landlordName || "_______________"}</p>
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Date: {fmt(issueDate)}</p>
-                </div>
-                {decision === "approve-conditions" && (
-                  <div>
-                    <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Tenant acknowledgement</p>
-                    <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                    <p style={{ fontSize: 11, color: "#6b7280" }}>Date: _______________</p>
-                  </div>
-                )}
-              </div>
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={landlordName}
+                witnessLabel={decision === "approve-conditions" ? "Tenant acknowledgement" : "Witness"}
+                showWitness={true}
+                date={issueDate}
+              />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="Pet Permission Letter" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -218,3 +211,8 @@ export default function PetPermission() {
     </>
   );
 }
+
+
+
+
+

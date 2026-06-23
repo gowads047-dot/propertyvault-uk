@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 const SECTIONS = [
   {
@@ -265,7 +266,7 @@ export default function DueDiligenceTemplate() {
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("checklist")} className="btn-outline text-sm">← Back</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="Property Due Diligence Report" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -273,3 +274,8 @@ export default function DueDiligenceTemplate() {
     </>
   );
 }
+
+
+
+
+

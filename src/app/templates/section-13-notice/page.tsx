@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
+import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 
 export default function Section13Notice() {
   const [mode, setMode] = useState<"form" | "preview">("form");
@@ -182,23 +183,17 @@ export default function Section13Notice() {
                 <p style={{ marginTop: 8 }}>To refer to the Tribunal, visit: <strong>www.gov.uk/find-a-tribunal</strong> or call 0300 123 1024.</p>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32, marginTop: 24 }}>
-                <div>
-                  <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Signed (Landlord / Agent)</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                  <p style={{ fontSize: 11, fontWeight: 600 }}>{landlordName || "_______________"}</p>
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Date: {fmt(issueDate)}</p>
-                </div>
-                <div>
-                  <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>Tenant acknowledgement (optional)</p>
-                  <div style={{ borderBottom: "1.5px solid #0f1b36", height: 36, marginBottom: 6 }} />
-                  <p style={{ fontSize: 11, color: "#6b7280" }}>Date: _______________</p>
-                </div>
-              </div>
+              <SignatureBlock
+                signerLabel="Signed (Landlord / Agent)"
+                signerName={landlordName}
+                witnessLabel="Tenant acknowledgement (optional)"
+                showWitness={true}
+                date={issueDate}
+              />
             </div>
             <div className="mt-4 flex gap-3">
               <button onClick={() => setMode("form")} className="btn-outline text-sm">← Edit</button>
-              <button onClick={() => window.print()} className="btn-primary text-sm">🖨️ Print / PDF</button>
+              <ShareToolbar docTitle="Section 13 Rent Increase Notice" onPrint={() => window.print()} />
             </div>
           </div>
         </section>
@@ -206,3 +201,8 @@ export default function Section13Notice() {
     </>
   );
 }
+
+
+
+
+
