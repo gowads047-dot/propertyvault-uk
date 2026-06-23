@@ -19,32 +19,6 @@ interface Listing {
   listing_type?: string;
 }
 
-const SAMPLE_ROOMS: Listing[] = [
-  {
-    id: "sample-r1",
-    title: "Spacious double room in shared house",
-    price: 450, city: "Nottingham", area: "Lenton",
-    features: ["Bills included", "Students welcome", "Wifi"],
-    available_from: "2026-07-01",
-    images: ["https://images.unsplash.com/photo-1449844908441-8d4832deb3c8?auto=format&fit=crop&w=900&q=80"],
-  },
-  {
-    id: "sample-r2",
-    title: "Large double room, professional house share",
-    price: 525, city: "Nottingham", area: "West Bridgford",
-    features: ["Professionals only", "En-suite", "Garden"],
-    available_from: "2026-06-01",
-    images: ["https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=80"],
-  },
-  {
-    id: "sample-r3",
-    title: "Bright double room near city centre",
-    price: 480, city: "Birmingham", area: "Digbeth",
-    features: ["Bills included", "Furnished", "Near transport"],
-    available_from: "2026-06-15",
-    images: ["https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80"],
-  },
-];
 
 // Feature icons
 const FEATURE_ICONS: Record<string, string> = {
@@ -63,7 +37,7 @@ const FEATURE_ICONS: Record<string, string> = {
 const CITIES = ["All cities", "Birmingham", "Nottingham", "Derby", "Manchester", "London", "Leeds"];
 
 export default function RoomsPage() {
-  const [rooms, setRooms] = useState<Listing[]>(SAMPLE_ROOMS);
+  const [rooms, setRooms] = useState<Listing[]>([]);
   const [cityFilter, setCityFilter] = useState("All cities");
   const [maxPrice, setMaxPrice] = useState(1000);
   const [billsOnly, setBillsOnly] = useState(false);
@@ -77,7 +51,7 @@ export default function RoomsPage() {
       .eq("property_type", "Room")
       .order("created_at", { ascending: false })
       .then(({ data }) => {
-        if (data && data.length > 0) setRooms(data);
+        setRooms(data || []);
         setLoading(false);
       });
   }, []);

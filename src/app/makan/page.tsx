@@ -7,14 +7,6 @@ import { useLang } from "@/lib/lang-context";
 import { countries, propertyTypes, formatPrice } from "@/lib/hetta-config";
 import { SmartSearch } from "@/components/hetta/SmartSearch";
 
-const sampleListings = [
-  { id: "sample-1", title: "Modern 2-bed apartment, Jewellery Quarter", property_type: "Flat", bedrooms: 2, price: 950, city: "Birmingham", area: "Jewellery Quarter", available_from: "2026-06-01", features: ["Furnished", "Parking"], featured: true, images: [], listing_type: "rent" },
-  { id: "sample-2", title: "Spacious double room in shared house", property_type: "Room", bedrooms: 1, price: 450, city: "Nottingham", area: "Lenton", available_from: "2026-07-01", features: ["Bills included", "Students"], images: [], listing_type: "rent" },
-  { id: "sample-3", title: "Renovated 3-bed terraced house", property_type: "House", bedrooms: 3, price: 850, city: "Derby", area: "Normanton", available_from: "2026-06-01", features: ["Garden", "Pets OK"], images: [], listing_type: "rent" },
-  { id: "sample-4", title: "Studio flat near city centre", property_type: "Flat", bedrooms: 0, price: 595, city: "Birmingham", area: "Digbeth", available_from: "2026-07-15", features: ["Furnished", "Bills included"], images: [], listing_type: "rent" },
-  { id: "sample-5", title: "Large double room, professional house share", property_type: "Room", bedrooms: 1, price: 500, city: "Nottingham", area: "West Bridgford", available_from: "2026-06-01", features: ["Professionals only", "En-suite"], images: [], listing_type: "rent" },
-  { id: "sample-6", title: "4-bed semi-detached, family home", property_type: "House", bedrooms: 4, price: 1200, city: "Birmingham", area: "Edgbaston", available_from: "2026-08-01", features: ["Garden", "Garage", "Unfurnished"], images: [], listing_type: "rent" },
-];
 
 interface Listing {
   id: string;
@@ -98,7 +90,7 @@ export default function MakanPage() {
   const [cityFilter, setCityFilter] = useState("All cities");
   const [search, setSearch] = useState("");
   const [maxPrice, setMaxPrice] = useState(5000);
-  const [listings, setListings] = useState<Listing[]>(sampleListings);
+  const [listings, setListings] = useState<Listing[]>([]);
   const [featuredListing, setFeaturedListing] = useState<Listing | null>(null);
   const heroRef = useScrollReveal();
 
@@ -108,12 +100,9 @@ export default function MakanPage() {
   useEffect(() => {
     supabase.from("listings").select("*").eq("status", "active").order("created_at", { ascending: false })
       .then(({ data }) => {
-        if (data && data.length > 0) {
-          setListings(data);
-          // pick a listing with an image for the hero preview card
-          const withImg = data.find((l: Listing) => l.images?.[0]);
-          if (withImg) setFeaturedListing(withImg);
-        }
+        setListings(data || []);
+        const withImg = (data || []).find((l: Listing) => l.images?.[0]);
+        if (withImg) setFeaturedListing(withImg);
       });
   }, []);
 
