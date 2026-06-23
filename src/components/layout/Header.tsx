@@ -10,6 +10,7 @@ const mainLinks = [
   { href: "/templates", label: "Templates", sub: "" },
   { href: "/areas", label: "Areas", sub: "" },
   { href: "/blog", label: "Blog", sub: "" },
+  { href: "/academy", label: "Academy", sub: "£14.99/mo", highlight: true },
 ];
 
 const mobileLinks = [
@@ -39,6 +40,7 @@ const mobileLinks = [
     { href: "/find-agent", label: "Find a Professional" },
   ]},
   { heading: "Learn", links: [
+    { href: "/academy", label: "🎓 Deal Sourcing Academy" },
     { href: "/property-investing", label: "Property Investing" },
     { href: "/mortgages", label: "Mortgages" },
     { href: "/property-tax", label: "Property Tax" },
@@ -81,11 +83,20 @@ export function Header() {
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-0.5">
             {mainLinks.map((link) => (
-              <Link key={link.href} href={link.href}
-                className="px-3.5 py-2 text-[13px] font-semibold text-navy-600 hover:text-navy-900 hover:bg-navy-50 rounded-lg transition-all flex flex-col items-center leading-none">
-                <span>{link.label}</span>
-                {link.sub && <span className="text-[9px] font-normal text-navy-400 mt-0.5">{link.sub}</span>}
-              </Link>
+              link.highlight ? (
+                <Link key={link.href} href={link.href}
+                  className="ml-1 px-3.5 py-2 text-[13px] font-bold rounded-lg transition-all flex flex-col items-center leading-none"
+                  style={{ background: "#c9a84c", color: "#0f1b36" }}>
+                  <span>Academy</span>
+                  <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>£14.99/mo</span>
+                </Link>
+              ) : (
+                <Link key={link.href} href={link.href}
+                  className="px-3.5 py-2 text-[13px] font-semibold text-navy-600 hover:text-navy-900 hover:bg-navy-50 rounded-lg transition-all flex flex-col items-center leading-none">
+                  <span>{link.label}</span>
+                  {link.sub && <span className="text-[9px] font-normal text-navy-400 mt-0.5">{link.sub}</span>}
+                </Link>
+              )
             ))}
           </nav>
 
@@ -112,6 +123,11 @@ export function Header() {
           <div className="px-5 py-5 space-y-5">
             <Link href="/guaranteed-rent" className="block btn-primary text-center text-sm" onClick={() => setMobileOpen(false)}>
               Guaranteed Rent →
+            </Link>
+            <Link href="/academy" onClick={() => setMobileOpen(false)}
+              className="block text-center text-sm font-bold py-2.5 px-4 rounded-full transition-colors"
+              style={{ background: "#c9a84c", color: "#0f1b36" }}>
+              🎓 Academy — £14.99/month →
             </Link>
             {mobileLinks.map((group) => (
               <div key={group.heading}>
