@@ -17,6 +17,7 @@ export default function ListPropertyPage() {
 
   const [form, setForm] = useState({
     property_type: "",
+    listing_type: "rent",
     title: "",
     address: "",
     area: "",
@@ -24,10 +25,14 @@ export default function ListPropertyPage() {
     city: "",
     bedrooms: 1,
     price: 0,
+    size_sqm: 0,
     available_from: "",
     furnished: "Furnished",
     description: "",
     features: [] as string[],
+    company_name: "",
+    facebook_url: "",
+    instagram_url: "",
   });
 
   const [images, setImages] = useState<File[]>([]);
@@ -47,7 +52,7 @@ export default function ListPropertyPage() {
     e.preventDefault();
     if (!user) { router.push("/makan/auth"); return; }
 
-    if (images.length < 3) { setError("Please upload at least 3 photos. Quality photos are required for your listing to be approved."); return; }
+    if (images.length === 0 && !video) { setError("Please upload at least one photo or a video."); return; }
     if (!form.property_type) { setError("Please select a property type."); return; }
     if (!form.title.trim()) { setError("Please add a title."); return; }
     if (!form.city) { setError("Please select a city."); return; }
@@ -59,6 +64,8 @@ export default function ListPropertyPage() {
     setError("");
 
     let imageUrls: string[] = [];
+    let videoUrl: string | null = null;
+
     for (const file of images) {
       const ext = file.name.split(".").pop();
       const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
@@ -75,7 +82,7 @@ export default function ListPropertyPage() {
       const { error: uploadErr } = await supabase.storage.from("listing-images").upload(path, video);
       if (!uploadErr) {
         const { data } = supabase.storage.from("listing-images").getPublicUrl(path);
-        imageUrls.push(data.publicUrl);
+        videoUrl = data.publicUrl;
       }
     }
 
@@ -84,8 +91,10 @@ export default function ListPropertyPage() {
       title: form.title,
       description: form.description,
       property_type: form.property_type,
+      listing_type: form.listing_type,
       bedrooms: form.bedrooms,
       price: form.price,
+      size_sqm: form.size_sqm || null,
       city: form.city,
       area: form.area,
       address: form.address,
@@ -93,6 +102,10 @@ export default function ListPropertyPage() {
       furnished: form.furnished,
       features: form.features,
       images: imageUrls,
+      video_url: videoUrl,
+      company_name: form.company_name || null,
+      facebook_url: form.facebook_url || null,
+      instagram_url: form.instagram_url || null,
       status: "pending",
     });
 
@@ -144,6 +157,20 @@ export default function ListPropertyPage() {
             </div>
           </div>
 
+          {/* Rent or Sale */}
+          <div>
+            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>For rent or sale? *</label>
+            <div className="flex gap-2">
+              {[{ v: "rent", label: "For Rent" }, { v: "sale", label: "For Sale" }].map(({ v, label }) => (
+                <button key={v} type="button" onClick={() => update("listing_type", v)}
+                  className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all border"
+                  style={{ borderColor: form.listing_type === v ? "var(--h-accent)" : "var(--h-border)", background: form.listing_type === v ? "var(--h-accent-light)" : "transparent", color: "var(--h-text)" }}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div>
             <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Listing title *</label>
             <input type="text" value={form.title} onChange={e => update("title", e.target.value)} required className="h-input" placeholder="e.g. Spacious 2-bed flat near city centre" />
@@ -177,7 +204,7 @@ export default function ListPropertyPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Bedrooms *</label>
               <select value={form.bedrooms} onChange={e => update("bedrooms", +e.target.value)} className="h-input">
@@ -186,11 +213,15 @@ export default function ListPropertyPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Rent ({selectedCountry?.symbol}) *</label>
-              <input type="number" value={form.price || ""} onChange={e => update("price", +e.target.value)} required className="h-input" placeholder="Monthly" />
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Price ({selectedCountry?.symbol}) *</label>
+              <input type="number" value={form.price || ""} onChange={e => update("price", +e.target.value)} required className="h-input" placeholder={form.listing_type === "sale" ? "Asking price" : "Monthly"} />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Available from *</label>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Size (m²)</label>
+              <input type="number" value={form.size_sqm || ""} onChange={e => update("size_sqm", +e.target.value)} className="h-input" placeholder="Optional" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>{form.listing_type === "sale" ? "Handover date" : "Available from"} *</label>
               <input type="date" value={form.available_from} onChange={e => update("available_from", e.target.value)} required className="h-input" />
             </div>
           </div>
@@ -231,7 +262,24 @@ export default function ListPropertyPage() {
             </div>
           </div>
 
-          {/* Photos — REQUIRED */}
+          {/* Company & Social links — optional */}
+          <div className="border-t pt-6" style={{ borderColor: "var(--h-border)" }}>
+            <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Company / agency name <span className="font-normal" style={{ color: "var(--h-subtle)" }}>(optional)</span></label>
+            <input type="text" value={form.company_name} onChange={e => update("company_name", e.target.value)} className="h-input mb-4" placeholder="e.g. United Real Estate" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Facebook page URL</label>
+                <input type="url" value={form.facebook_url} onChange={e => update("facebook_url", e.target.value)} className="h-input" placeholder="https://facebook.com/..." />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Instagram profile URL</label>
+                <input type="url" value={form.instagram_url} onChange={e => update("instagram_url", e.target.value)} className="h-input" placeholder="https://instagram.com/..." />
+              </div>
+            </div>
+            <p className="text-xs mt-2" style={{ color: "var(--h-subtle)" }}>These appear on your listing so buyers/tenants can follow your brand.</p>
+          </div>
+
+          {/* Photos — optional if video provided */}
           <div className="border-t pt-6" style={{ borderColor: "var(--h-border)" }}>
             <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>{t("list.photos")} *</label>
             <p className="text-xs mb-3" style={{ color: "var(--h-subtle)" }}>{t("list.photosHint")}</p>
@@ -242,8 +290,8 @@ export default function ListPropertyPage() {
             />
             {images.length > 0 && (
               <div className="mt-3">
-                <p className="text-xs mb-2" style={{ color: images.length >= 3 ? "var(--h-green)" : "var(--h-accent)" }}>
-                  {images.length} photo{images.length > 1 ? "s" : ""} selected {images.length < 3 && `— need ${3 - images.length} more`}
+                <p className="text-xs mb-2" style={{ color: "var(--h-green)" }}>
+                  {images.length} photo{images.length > 1 ? "s" : ""} selected
                 </p>
                 <div className="flex gap-2 flex-wrap">
                   {images.map((img, i) => (
@@ -269,7 +317,7 @@ export default function ListPropertyPage() {
 
           {error && <div className="p-4 rounded-xl text-sm font-medium" style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}>{error}</div>}
 
-          <button type="submit" disabled={submitting || !form.property_type || images.length < 3} className="h-btn h-btn-primary w-full !py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed">
+          <button type="submit" disabled={submitting || !form.property_type || (images.length === 0 && !video)} className="h-btn h-btn-primary w-full !py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed">
             {submitting ? "Uploading & submitting..." : t("list.publish")}
           </button>
           <p className="text-xs text-center" style={{ color: "var(--h-subtle)" }}>Your listing will be reviewed within 24 hours. Listings without quality photos or complete details won&apos;t be approved.</p>
