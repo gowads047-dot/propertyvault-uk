@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 
 const MODULES = [
@@ -79,12 +78,11 @@ function StarRating({ n }: { n: number }) {
 }
 
 export default function AcademyPage() {
-  const { user } = useAuth();
-  const [loading, setLoading] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [openDay, setOpenDay] = useState<number | null>(null);
   const [quizStep, setQuizStep] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<number[]>([]);
+  const loading = false;
 
   const QUIZ = [
     { q: "Have you ever tried to get into property before?", opts: ["Complete beginner", "I've done some research", "I own property already", "I've tried sourcing before"] },
@@ -94,28 +92,11 @@ export default function AcademyPage() {
 
   const quizDone = quizAnswers.length === QUIZ.length;
 
-  async function handleCheckout() {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: user?.email, userId: user?.id }),
-      });
-      const data = await res.json();
-      if (data.url) window.location.href = data.url;
-    } catch {
-      alert("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   function CTAButton({ large = false }: { large?: boolean }) {
     return (
-      <button onClick={handleCheckout} disabled={loading} style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: large ? 18 : 15, padding: large ? "16px 48px" : "13px 32px", borderRadius: 14, border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1, letterSpacing: "-0.3px", display: "inline-block" }}>
-        {loading ? "One moment…" : "Join the Academy — £14.99/month"}
-      </button>
+      <Link href="/academy/join" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: large ? 18 : 15, padding: large ? "16px 48px" : "13px 32px", borderRadius: 14, letterSpacing: "-0.3px", display: "inline-block", textDecoration: "none" }}>
+        Join the Academy — Free Sign Up
+      </Link>
     );
   }
 
@@ -373,11 +354,11 @@ export default function AcademyPage() {
                 </div>
               ))}
             </div>
-            <button onClick={handleCheckout} disabled={loading} style={{ width: "100%", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "16px 0", borderRadius: 14, border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.7 : 1, marginBottom: 12 }}>
-              {loading ? "One moment…" : "Join the Academy →"}
-            </button>
+            <Link href="/academy/join" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "16px 0", borderRadius: 14, textDecoration: "none", marginBottom: 12 }}>
+              Join the Academy — Free Sign Up →
+            </Link>
             <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.6 }}>
-              14-day money-back guarantee under Consumer Contracts Regulations 2013 · Secure checkout via Stripe · Educational platform — not financial or legal advice
+              No payment required to sign up · Educational platform — not financial or legal advice
             </p>
           </div>
         </div>
