@@ -204,6 +204,7 @@ export default function ListingPage() {
   const [saved, setSaved] = useState(false);
   const [enquirySent, setEnquirySent] = useState(false);
   const [message, setMessage] = useState("");
+  const [enquiryError, setEnquiryError] = useState("");
   const [activeImg, setActiveImg] = useState(0);
   const [floorPlanOpen, setFloorPlanOpen] = useState(false);
 
@@ -243,14 +244,21 @@ export default function ListingPage() {
 
   async function sendEnquiry(e: React.FormEvent) {
     e.preventDefault();
-    if (!user || !listing || !message.trim()) return;
-    await supabase.from("enquiries").insert({
+    setEnquiryError("");
+    if (!user) { setEnquiryError("Please sign in to send an enquiry."); return; }
+    if (!listing) return;
+    if (!message.trim()) { setEnquiryError("Please write a message first."); return; }
+    const { error } = await supabase.from("enquiries").insert({
       listing_id: listing.id,
       sender_id: user.id,
       recipient_id: listing.user_id,
       message: message.trim(),
     });
-    setEnquirySent(true);
+    if (error) {
+      setEnquiryError("Failed to send: " + error.message);
+    } else {
+      setEnquirySent(true);
+    }
   }
 
   if (loading) {
@@ -731,7 +739,11 @@ export default function ListingPage() {
                             rows={3}
                             className="h-input text-sm"
                             placeholder={forSale ? "I'm interested in viewing. Is it still available?" : "I'd like to arrange a viewing. What's your earliest slot?"}
+                            onFocus={e => { if (!message) setMessage(e.target.placeholder); }}
                           />
+                          {enquiryError && (
+                            <p className="text-xs font-medium" style={{ color: "#dc2626" }}>{enquiryError}</p>
+                          )}
                           <button type="submit" className="h-btn h-btn-primary w-full justify-center !text-sm">Send enquiry</button>
                         </form>
                       )}
