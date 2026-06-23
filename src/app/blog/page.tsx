@@ -121,27 +121,51 @@ const articles = [
 ];
 
 export default function BlogPage() {
+  const categories = Array.from(new Set(articles.map(a => a.category)));
+
   return (
     <>
-      {/* Dark editorial hero */}
-      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "72px 0 64px" }}>
+      {/* Hero */}
+      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "64px 0 56px" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+        {/* Radial glow */}
+        <div style={{ position: "absolute", top: "-30%", left: "60%", width: 600, height: 600, background: "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
-          <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
-            {articles.length} articles · Latest: 18 June 2026
-          </p>
-          <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(36px, 5vw, 60px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
-            Property<br />
-            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Insights.</em>
-          </h1>
-          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", maxWidth: 480, lineHeight: 1.65 }}>
-            Expert articles on UK property investing, tax, mortgages, and landlord compliance. Every article links to our free calculators and tools.
-          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 24 }}>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", display: "inline-block" }} />
+                  PropertyVault Blog
+                </span>
+              </div>
+              <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(32px, 5vw, 56px)", fontWeight: 800, color: "white", lineHeight: 1.06, letterSpacing: "-0.025em", marginBottom: 16 }}>
+                Property knowledge<br />
+                <span style={{ color: "#c9a84c" }}>that pays off.</span>
+              </h1>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", maxWidth: 440, lineHeight: 1.7 }}>
+                Expert guides on UK property investing, tax, landlord law, and deal sourcing. Every article links to our free tools and calculators.
+              </p>
+            </div>
+            {/* Stats strip */}
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+              {[
+                { value: `${articles.length}`, label: "Articles" },
+                { value: `${categories.length}`, label: "Topics" },
+                { value: "Free", label: "Always" },
+              ].map(s => (
+                <div key={s.label} style={{ textAlign: "center" }}>
+                  <p style={{ fontSize: 28, fontWeight: 800, color: "white", lineHeight: 1 }}>{s.value}</p>
+                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontWeight: 600, marginTop: 4, textTransform: "uppercase", letterSpacing: "0.05em" }}>{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Blog grid */}
-      <section style={{ background: "#f8f9fc", padding: "48px 0 80px" }}>
+      <section style={{ background: "#f8fafc", padding: "48px 0 80px" }}>
         <div className="container-max px-4" style={{ maxWidth: 1100 }}>
           <BlogList articles={articles} />
         </div>
