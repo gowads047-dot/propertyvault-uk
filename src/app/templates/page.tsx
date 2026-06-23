@@ -174,6 +174,16 @@ const TEMPLATES = [
     badge: "",
     icon: "🧾",
   },
+  {
+    id: "commercial-lease",
+    title: "Commercial Lease Assembly",
+    desc: "Full commercial lease document assembly system — generates solicitor-review-ready Heads of Terms, lease, SDLT analysis, Land Registry analysis, risk reports, and negotiation matrix from a guided questionnaire. England & Wales only.",
+    category: "commercial",
+    time: "30–60 min",
+    pages: "Full package",
+    badge: "Pro",
+    icon: "🏢",
+  },
 ];
 
 const CATEGORY_FILTERS = [
@@ -194,7 +204,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
 };
 
 // Templates with full interactive forms
-const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence", "section-8-notice", "section-13-notice", "reference-request", "pet-permission", "repair-report", "hmo-management-log", "rent-receipt"]);
+const INTERACTIVE = new Set(["tenant-application", "viewing-checklist", "landlord-compliance", "inventory-checklist", "checkout-report", "inspection-record", "offer-worksheet", "renters-rights-notice", "sale-prep-checklist", "due-diligence", "section-8-notice", "section-13-notice", "reference-request", "pet-permission", "repair-report", "hmo-management-log", "rent-receipt", "commercial-lease"]);
 
 export default function TemplatesPage() {
   const [activeCategory, setActiveCategory] = useState("all");
