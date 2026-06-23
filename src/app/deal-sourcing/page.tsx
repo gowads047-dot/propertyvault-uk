@@ -68,6 +68,49 @@ export default function DealSourcingPage() {
           <Disclaimer type="financial" />
         </div>
       </section>
+
+      {/* DEAL SOURCING ACADEMY UPSELL */}
+      <section style={{ background: "linear-gradient(135deg, #0a0f1e 0%, #0d1a3a 100%)", padding: "64px 24px" }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 100, padding: "5px 14px", fontSize: 12, color: "#d4af37", fontWeight: 700, marginBottom: 20 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
+              NOW OPEN — £14.99/MONTH
+            </div>
+            <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", lineHeight: 1.15 }}>
+              Want to Become a Deal Sourcer?
+            </h2>
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", maxWidth: 540, margin: "0 auto 8px" }}>
+              The Deal Sourcing Academy teaches you exactly how to find deals, package them professionally, build an investor list, and earn sourcing fees.
+            </p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Educational platform. Not financial advice. Results vary.</p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 14, marginBottom: 36 }}>
+            {[
+              { icon: "🎓", label: "12-Module Masterclass" },
+              { icon: "⚡", label: "7-Day First Deal Challenge" },
+              { icon: "📋", label: "8 Strategy Playbooks" },
+              { icon: "🗣️", label: "100+ Sales Scripts" },
+              { icon: "🤖", label: "50+ AI Prompts" },
+              { icon: "📁", label: "Templates & Calculators" },
+            ].map(f => (
+              <div key={f.label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ fontSize: 20 }}>{f.icon}</span>
+                <span style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>{f.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ textAlign: "center" }}>
+            <Link href="/academy" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "15px 40px", borderRadius: 14, textDecoration: "none", marginBottom: 10 }}>
+              Join the Academy — £14.99/month →
+            </Link>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Cancel anytime. Secure checkout via Stripe.</p>
+          </div>
+        </div>
+        </div>
+      </section>
     </>
   );
 }
