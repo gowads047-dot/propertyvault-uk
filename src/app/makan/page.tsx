@@ -244,30 +244,36 @@ export default function MakanPage() {
         <div className="h-container" style={{ paddingTop: 56, paddingBottom: 52, position: "relative", zIndex: 2 }}>
 
           {/* Eyebrow */}
-          <div className="hero-reveal" style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#e8553d" }} />
-            <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.45)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              {countries.slice(0, 5).map(c => c.flag).join("  ")} &nbsp;+{countries.length - 5} more
+          <div className="hero-reveal" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 20, padding: "6px 14px", borderRadius: 20, background: "rgba(232,85,61,0.15)", border: "1px solid rgba(232,85,61,0.3)" }}>
+            <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e8553d" }} />
+            <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.8)", letterSpacing: "0.04em" }}>
+              🇬🇧 UK · 🇪🇬 Egypt · 🇲🇦 Morocco · Zero agent fees
             </span>
           </div>
 
           {/* Headline */}
           <h1 className="hero-reveal-2" style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: "clamp(44px, 6vw, 72px)",
-            fontWeight: 700,
+            fontFamily: "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif",
+            fontSize: "clamp(38px, 5.5vw, 66px)",
+            fontWeight: 900,
             color: "white",
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            marginBottom: 28,
-            maxWidth: 600
+            lineHeight: 1.06,
+            letterSpacing: "-0.035em",
+            marginBottom: 16,
+            maxWidth: 620
           }}>
-            Find your<br />
-            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.38)" }}>place.</em>
+            List and find property<br />
+            <span style={{ color: "#e8553d" }}>free.</span>{" "}
+            <span style={{ color: "rgba(255,255,255,0.35)", fontWeight: 700 }}>No agents.</span>
           </h1>
 
+          {/* Sub-headline */}
+          <p className="hero-reveal-2" style={{ fontSize: "clamp(15px, 2vw, 18px)", color: "rgba(255,255,255,0.55)", marginBottom: 32, maxWidth: 480, lineHeight: 1.6, fontWeight: 400 }}>
+            Built for the diaspora. Direct landlord &amp; agent contact via WhatsApp. Browse for free, list for free — forever.
+          </p>
+
           {/* Search */}
-          <div className="hero-reveal-3" style={{ maxWidth: 520, marginBottom: 48 }}>
+          <div className="hero-reveal-3" style={{ maxWidth: 520, marginBottom: 36 }}>
             <div style={{
               display: "flex", alignItems: "center",
               background: "white", borderRadius: 12,
