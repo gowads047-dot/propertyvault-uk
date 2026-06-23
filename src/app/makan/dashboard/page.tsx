@@ -84,6 +84,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex gap-3">
             <Link href="/makan/list" className="h-btn h-btn-primary text-sm !py-2">New listing</Link>
+            <Link href="/makan/settings" className="h-btn h-btn-secondary text-sm !py-2">Settings</Link>
             <button onClick={signOut} className="h-btn h-btn-secondary text-sm !py-2">Sign out</button>
           </div>
         </div>
