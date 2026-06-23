@@ -98,8 +98,16 @@ export default function AcademyDashboard() {
             { label: "Scripts", href: "/academy/scripts" },
             { label: "Downloads", href: "/academy/downloads" },
             { label: "Legal Hub", href: "/academy/legal" },
+            { label: "Calculator", href: "/academy/calculator" },
+            { label: "CRM", href: "/academy/crm" },
+            { label: "Emails", href: "/academy/emails" },
+            { label: "Checklist", href: "/academy/checklist" },
+            { label: "Deal Reviews", href: "/academy/deal-reviews" },
+            { label: "Area Research", href: "/academy/area-research" },
+            { label: "Q&A", href: "/academy/qa" },
+            { label: "Media", href: "/academy/media" },
           ].map(l => (
-            <Link key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>{l.label}</Link>
+            <Link key={l.href} href={l.href} style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, fontWeight: 600, textDecoration: "none", whiteSpace: "nowrap" }}>{l.label}</Link>
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -203,6 +211,30 @@ export default function AcademyDashboard() {
                 <span style={{ fontSize: 11, fontWeight: 800, color: i === 0 ? "#d4af37" : "rgba(255,255,255,0.3)" }}>S{i + 1}</span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: i === 0 ? "#d4af37" : "rgba(255,255,255,0.5)" }}>{stage}</span>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* NEW TOOLS GRID */}
+        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
+          <h2 style={{ fontWeight: 800, fontSize: 16, marginBottom: 16 }}>🛠️ Members-Only Tools</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(160px,1fr))", gap: 10 }}>
+            {[
+              { icon: "📊", label: "Deal Calculator", sub: "BRRR · JV · Packaging", href: "/academy/calculator" },
+              { icon: "👥", label: "Investor CRM", sub: "Track contacts", href: "/academy/crm" },
+              { icon: "✉️", label: "Email Swipe File", sub: "11 templates", href: "/academy/emails" },
+              { icon: "✅", label: "Sourcing Checklist", sub: "37 steps", href: "/academy/checklist" },
+              { icon: "🏘️", label: "Area Research", sub: "7 cities covered", href: "/academy/area-research" },
+              { icon: "📋", label: "Deal Reviews", sub: "Weekly analysis", href: "/academy/deal-reviews" },
+              { icon: "❓", label: "Q&A Board", sub: "Ask Nass anything", href: "/academy/qa" },
+              { icon: "🎬", label: "Media Hub", sub: "Videos coming soon", href: "/academy/media" },
+            ].map(t => (
+              <Link key={t.href} href={t.href} style={{ textDecoration: "none", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "14px 14px", display: "flex", flexDirection: "column", gap: 4 }}
+                className="hover:border-yellow-500/30 transition-colors">
+                <span style={{ fontSize: 20 }}>{t.icon}</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{t.label}</span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{t.sub}</span>
+              </Link>
             ))}
           </div>
         </div>
