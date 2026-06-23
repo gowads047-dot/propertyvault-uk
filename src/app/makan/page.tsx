@@ -202,17 +202,17 @@ export default function MakanPage() {
           pointerEvents: "none"
         }} />
 
-        {/* Floating preview card — top right */}
+        {/* Floating preview card — top right, desktop only */}
         {featuredListing && (
           <Link href={`/makan/listing/${featuredListing.id}`}
-            className="preview-card-reveal"
+            className="preview-card-reveal hidden md:block"
             style={{
               position: "absolute", top: 32, right: 32,
               width: 200, background: "rgba(255,255,255,0.06)",
               border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: 14, overflow: "hidden",
               backdropFilter: "blur(8px)",
-              textDecoration: "none", display: "block",
+              textDecoration: "none",
               zIndex: 10
             }}>
             {featuredListing.images?.[0] && (
@@ -300,7 +300,7 @@ export default function MakanPage() {
           </div>
 
           {/* Stats row */}
-          <div className="hero-reveal-3" style={{ display: "flex", gap: 32 }}>
+          <div className="hero-reveal-3" style={{ display: "flex", gap: "clamp(16px, 5vw, 32px)" }}>
             {[
               ...(listings.length > 0 ? [{ num: `${listings.length}+`, label: "listings live" }] : [{ num: "New", label: "be first to list" }]),
               { num: `${countries.length}`, label: "countries" },

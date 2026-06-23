@@ -48,19 +48,19 @@ export function MakanHeader() {
           <div className="flex items-center gap-2">
             <LangSwitcher />
             <Link href="/makan/list"
-              className="hidden sm:inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-all hover:opacity-90"
+              className="hidden md:inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-xl transition-all hover:opacity-90"
               style={{ background: "var(--h-accent)", color: "white" }}>
               + List free
             </Link>
             {user ? (
-              <Link href="/makan/dashboard" className="flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
+              <Link href="/makan/dashboard" className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors" style={{ background: "var(--h-warm)" }}>
                 <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: "var(--h-accent)", color: "white" }}>
                   {(profile?.name || "U").charAt(0).toUpperCase()}
                 </div>
-                <span className="text-sm font-medium hidden sm:inline" style={{ color: "var(--h-text)" }}>{profile?.name?.split(" ")[0] || t("nav.dashboard")}</span>
+                <span className="text-sm font-medium" style={{ color: "var(--h-text)" }}>{profile?.name?.split(" ")[0] || t("nav.dashboard")}</span>
               </Link>
             ) : (
-              <Link href="/makan/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg hidden sm:inline" style={{ color: "var(--h-muted)" }}>{t("nav.login")}</Link>
+              <Link href="/makan/auth" className="text-sm font-medium px-3 py-1.5 rounded-lg hidden md:inline" style={{ color: "var(--h-muted)" }}>{t("nav.login")}</Link>
             )}
             <button onClick={() => setOpen(!open)} className="md:hidden p-2 rounded-lg" style={{ color: "var(--h-muted)" }}>
               {open ? (
