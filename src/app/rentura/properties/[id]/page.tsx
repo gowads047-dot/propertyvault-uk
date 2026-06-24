@@ -99,7 +99,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
-type Tab = "overview" | "timeline" | "tenants" | "mortgage" | "compliance";
+type Tab = "overview" | "timeline" | "tenants" | "mortgage" | "compliance" | "documents";
 
 export default function PropertyPassport() {
   const { id } = useParams<{ id: string }>();
@@ -119,6 +119,12 @@ export default function PropertyPassport() {
   const [showAddMortgage, setShowAddMortgage] = useState(false);
   const [showAddCert, setShowAddCert] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  // Document upload
+  const [uploading, setUploading] = useState(false);
+  const [uploadResult, setUploadResult] = useState<{ summary: string; document_type: string; extracted: Record<string, unknown>; warnings: string[]; confidence?: number } | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [pendingExtract, setPendingExtract] = useState<Record<string, unknown> | null>(null);
 
   // Forms
   const [tenantForm, setTenantForm] = useState({ name: "", email: "", phone: "", monthly_rent: "", move_in_date: "", deposit_amount: "", deposit_scheme: "" });
@@ -225,6 +231,98 @@ export default function PropertyPassport() {
     setSaving(false);
   }
 
+  // ── Document upload + extraction ─────────────────────────────────────────────
+
+  async function uploadDocument(file: File) {
+    if (!user || !property) return;
+    setUploading(true);
+    setUploadError(null);
+    setUploadResult(null);
+    setPendingExtract(null);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("property_id", id as string);
+
+    try {
+      const res = await fetch("/api/rentura/extract", { method: "POST", body: formData });
+      const data = await res.json();
+      if (!res.ok || data.error) { setUploadError(data.error ?? "Extraction failed"); return; }
+      setUploadResult(data);
+      setPendingExtract(data.extracted);
+    } catch {
+      setUploadError("Upload failed — please try again.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function saveExtracted() {
+    if (!user || !property || !uploadResult || !pendingExtract) return;
+    setSaving(true);
+    const type = uploadResult.document_type;
+    const ex = pendingExtract;
+
+    try {
+      if (["gas_safety", "eicr", "epc", "fire_alarm", "pat_test", "legionella"].includes(type)) {
+        const existing = compliance.find(c => c.certificate_type === type);
+        const certData = {
+          property_id: id, user_id: user.id,
+          certificate_type: type,
+          issue_date: (ex.issue_date as string) ?? null,
+          expiry_date: (ex.expiry_date as string) ?? null,
+          notes: [ex.engineer_name, ex.cert_number, ex.inspector_name].filter(Boolean).join(" · ") || null,
+          trust_level: "verified",
+          updated_at: new Date().toISOString(),
+        };
+        if (existing) {
+          const { data } = await supabase.from("rentura_compliance").update(certData).eq("id", existing.id).select().single();
+          if (data) setCompliance(prev => prev.map(c => c.id === existing.id ? data : c));
+        } else {
+          const { data } = await supabase.from("rentura_compliance").insert(certData).select().single();
+          if (data) setCompliance(prev => [...prev, data].sort((a, b) => (a.expiry_date ?? "").localeCompare(b.expiry_date ?? "")));
+        }
+        await supabase.from("rentura_events").insert({ property_id: id, user_id: user.id, event_type: "compliance", title: `${CERT_LABELS[type] ?? type} uploaded & verified`, description: `Expiry: ${ex.expiry_date ?? "not found"}`, trust_level: "verified", metadata: ex, event_date: (ex.issue_date as string) ?? new Date().toISOString().split("T")[0] });
+      } else if (type === "mortgage_statement") {
+        await supabase.from("rentura_mortgages").update({ is_current: false }).eq("property_id", id).eq("is_current", true);
+        const { data } = await supabase.from("rentura_mortgages").insert({ property_id: id, user_id: user.id, lender: ex.lender ?? null, interest_rate: ex.interest_rate ?? null, monthly_payment: ex.monthly_payment ?? null, remaining_balance: ex.remaining_balance ?? null, fixed_term_expiry: ex.fixed_term_expiry ?? null, product_name: ex.product_name ?? null, trust_level: "verified", is_current: true }).select().single();
+        if (data) setMortgages(prev => [data, ...prev.map(m => ({ ...m, is_current: false }))]);
+        await supabase.from("rentura_events").insert({ property_id: id, user_id: user.id, event_type: "mortgage", title: `Mortgage statement uploaded — ${ex.lender ?? "lender"}`, description: `${ex.interest_rate ?? "?"}% · Balance ${ex.remaining_balance ? "£" + ex.remaining_balance : "?"}`, trust_level: "verified", metadata: ex, event_date: (ex.statement_date as string) ?? new Date().toISOString().split("T")[0] });
+      }
+
+      const evtRes = await supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false });
+      setEvents(evtRes.data ?? []);
+      setUploadResult(null);
+      setPendingExtract(null);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  // ── Section 21 readiness ──────────────────────────────────────────────────────
+
+  function getSection21Checks() {
+    const currentTenantLocal = tenants.find(t => t.is_current);
+    const gasCert = compliance.find(c => c.certificate_type === "gas_safety");
+    const epc = compliance.find(c => c.certificate_type === "epc");
+    const eicr = compliance.find(c => c.certificate_type === "eicr");
+
+    const gasValid = gasCert && (daysUntil(gasCert.expiry_date) ?? 1) > 0;
+    const epcValid = epc && (daysUntil(epc.expiry_date) ?? 1) > 0;
+    const eicrValid = eicr && (daysUntil(eicr.expiry_date) ?? 1) > 0;
+    const depositProtected = !!currentTenantLocal?.deposit_scheme;
+
+    return [
+      { label: "Gas Safety Certificate", pass: !!gasValid, detail: gasValid ? `Valid · expires ${epc?.expiry_date ?? "?"}` : (gasCert ? "Certificate expired" : "Not recorded"), required: true, fixTab: "compliance" as Tab },
+      { label: "EPC (min E rating)", pass: !!epcValid, detail: epcValid ? "Recorded and valid" : (epc ? "Certificate expired" : "Not recorded"), required: true, fixTab: "compliance" as Tab },
+      { label: "EICR", pass: !!eicrValid, detail: eicrValid ? "Recorded and valid" : (eicr ? "Certificate expired" : "Not recorded"), required: true, fixTab: "compliance" as Tab },
+      { label: "Deposit protected", pass: depositProtected, detail: depositProtected ? `Scheme: ${currentTenantLocal?.deposit_scheme}` : "No deposit scheme recorded", required: true, fixTab: "tenants" as Tab },
+      { label: "Prescribed Information served", pass: null, detail: "Confirm manually — must be served same day deposit received", required: true, fixTab: null },
+      { label: "How to Rent guide served", pass: null, detail: "Confirm manually — must be current version at start of tenancy", required: true, fixTab: null },
+      { label: "No improvement notice", pass: null, detail: "Confirm no outstanding improvement notices from council", required: true, fixTab: null },
+    ];
+  }
+
   const BG = "#eceae2";
   const INK = "#111111";
   const INK2 = "rgba(17,17,17,0.52)";
@@ -247,6 +345,7 @@ export default function PropertyPassport() {
     { key: "tenants", label: `Tenants (${tenants.length})` },
     { key: "mortgage", label: "Mortgage" },
     { key: "compliance", label: `Compliance (${compliance.length})` },
+    { key: "documents", label: "Documents" },
   ];
 
   if (loading) {
@@ -290,7 +389,11 @@ export default function PropertyPassport() {
                 {property.address.split(",").slice(1).join(",").trim()} · {property.property_type} · {property.bedrooms ? `${property.bedrooms} bed` : "?"}
               </p>
             </div>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <button onClick={() => setTab("documents")}
+                style={{ background: "white", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
+                ↑ Upload doc
+              </button>
               <button onClick={() => { setShowAddCert(true); setTab("compliance"); }}
                 style={{ background: "white", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
                 + Cert
@@ -300,9 +403,13 @@ export default function PropertyPassport() {
                 + Tenant
               </button>
               <button onClick={() => { setShowAddMortgage(true); setTab("mortgage"); }}
-                style={{ background: CTA, color: "white", fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
+                style={{ background: "white", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
                 + Mortgage
               </button>
+              <Link href={`/rentura/properties/${id}/passport`}
+                style={{ background: CTA, color: "white", fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, textDecoration: "none", display: "inline-block" }}>
+                Export PDF →
+              </Link>
             </div>
           </div>
 
@@ -561,6 +668,50 @@ export default function PropertyPassport() {
         {/* ── COMPLIANCE ── */}
         {tab === "compliance" && (
           <div>
+            {/* Section 21 readiness check */}
+            <div style={{ background: "white", borderRadius: 14, padding: "20px 22px", border: `1px solid ${BORDER}`, marginBottom: 20 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                <div style={{ width: 32, height: 32, background: "#0f1728", borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>⚖️</div>
+                <div>
+                  <p style={{ fontSize: 14, fontWeight: 900, letterSpacing: "-0.01em" }}>Section 21 Readiness Check</p>
+                  <p style={{ fontSize: 12, color: INK2 }}>Can you legally serve a Section 21 notice right now?</p>
+                </div>
+              </div>
+              {(() => {
+                const checks = getSection21Checks();
+                const failCount = checks.filter(c => c.pass === false).length;
+                const unknownCount = checks.filter(c => c.pass === null).length;
+                const allPass = failCount === 0 && unknownCount === 0;
+                return (
+                  <>
+                    <div style={{ marginBottom: 14, padding: "10px 14px", borderRadius: 8, background: failCount > 0 ? "rgba(220,38,38,0.06)" : allPass ? "rgba(22,163,74,0.06)" : "rgba(217,119,6,0.06)", border: `1px solid ${failCount > 0 ? "rgba(220,38,38,0.2)" : allPass ? "rgba(22,163,74,0.2)" : "rgba(217,119,6,0.2)"}` }}>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: failCount > 0 ? "#dc2626" : allPass ? "#16a34a" : "#d97706" }}>
+                        {failCount > 0 ? `${failCount} issue${failCount > 1 ? "s" : ""} must be resolved before serving` : allPass ? "Ready to serve Section 21" : `${unknownCount} item${unknownCount > 1 ? "s" : ""} need manual confirmation`}
+                      </p>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      {checks.map(check => (
+                        <div key={check.label} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "10px 0", borderBottom: `1px solid ${BORDER}` }}>
+                          <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>
+                            {check.pass === true ? "✅" : check.pass === false ? "❌" : "○"}
+                          </span>
+                          <div style={{ flex: 1 }}>
+                            <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 2 }}>{check.label}</p>
+                            <p style={{ fontSize: 12, color: check.pass === false ? "#dc2626" : INK2 }}>{check.detail}</p>
+                          </div>
+                          {check.pass === false && check.fixTab && (
+                            <button onClick={() => setTab(check.fixTab!)} style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "none", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontFamily: "inherit", flexShrink: 0 }}>
+                              Fix →
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+
             <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16 }}>
               <button onClick={() => setShowAddCert(true)} style={{ background: CTA, color: "white", fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit" }}>
                 + Add / update certificate
@@ -592,6 +743,106 @@ export default function PropertyPassport() {
                 </div>
               );
             })}
+          </div>
+        )}
+        {/* ── DOCUMENTS ── */}
+        {tab === "documents" && (
+          <div>
+            {/* Upload area */}
+            <div style={{ background: "white", borderRadius: 14, padding: "28px 24px", border: `2px dashed ${BORDER}`, marginBottom: 20, textAlign: "center" }}
+              onDragOver={e => e.preventDefault()}
+              onDrop={e => { e.preventDefault(); const file = e.dataTransfer.files[0]; if (file) uploadDocument(file); }}>
+              <p style={{ fontSize: 28, marginBottom: 12 }}>📄</p>
+              <p style={{ fontSize: 15, fontWeight: 800, marginBottom: 6, letterSpacing: "-0.01em" }}>Upload a document</p>
+              <p style={{ fontSize: 13, color: INK2, marginBottom: 20, lineHeight: 1.6 }}>
+                Gas Safety, EICR, EPC, mortgage statement, insurance, tenancy agreement.<br />
+                Rentura reads it and updates the Passport automatically — data marked{" "}
+                <span style={{ color: "#16a34a", fontWeight: 700 }}>✓ VERIFIED</span>.
+              </p>
+              <label style={{ display: "inline-block", background: CTA, color: "white", fontWeight: 700, fontSize: 14, padding: "11px 24px", borderRadius: 9, cursor: "pointer" }}>
+                {uploading ? "Extracting…" : "Choose file (PDF or image)"}
+                <input type="file" accept=".pdf,image/*" style={{ display: "none" }} disabled={uploading}
+                  onChange={e => { const file = e.target.files?.[0]; if (file) uploadDocument(file); e.target.value = ""; }} />
+              </label>
+              <p style={{ fontSize: 11, color: INK2, marginTop: 12 }}>Or drag and drop · Max 10MB</p>
+            </div>
+
+            {/* Upload error */}
+            {uploadError && (
+              <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 10, padding: "12px 16px", color: "#dc2626", fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
+                {uploadError}
+              </div>
+            )}
+
+            {/* Extraction result */}
+            {uploadResult && pendingExtract && (
+              <div style={{ background: "white", borderRadius: 14, padding: "22px 24px", border: "1px solid rgba(22,163,74,0.3)", marginBottom: 20 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+                  <span style={{ fontSize: 18 }}>✅</span>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 800 }}>Document read successfully</p>
+                    <p style={{ fontSize: 12, color: INK2 }}>{uploadResult.summary}</p>
+                  </div>
+                  <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 700, color: "#16a34a", background: "rgba(22,163,74,0.08)", padding: "3px 8px", borderRadius: 20 }}>
+                    {Math.round((uploadResult.confidence ?? 0) * 100)}% confidence
+                  </span>
+                </div>
+
+                {/* Extracted fields */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 12, marginBottom: 16, background: "#fafaf9", borderRadius: 10, padding: 16 }}>
+                  {Object.entries(pendingExtract).filter(([, v]) => v != null).map(([k, v]) => (
+                    <div key={k}>
+                      <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 3 }}>
+                        {k.replace(/_/g, " ")}
+                      </p>
+                      <p style={{ fontSize: 13, fontWeight: 600 }}>{String(v)}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {uploadResult.warnings?.length > 0 && (
+                  <div style={{ background: "rgba(217,119,6,0.06)", border: "1px solid rgba(217,119,6,0.2)", borderRadius: 8, padding: "10px 14px", marginBottom: 14 }}>
+                    {uploadResult.warnings.map((w, i) => (
+                      <p key={i} style={{ fontSize: 12, color: "#d97706", fontWeight: 600 }}>⚠ {w}</p>
+                    ))}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={saveExtracted} disabled={saving}
+                    style={{ background: "#16a34a", color: "white", fontWeight: 800, fontSize: 14, padding: "11px 22px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit", opacity: saving ? 0.6 : 1 }}>
+                    {saving ? "Saving…" : "Save to Passport — mark Verified ✓"}
+                  </button>
+                  <button onClick={() => { setUploadResult(null); setPendingExtract(null); }}
+                    style={{ background: "none", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 600, fontSize: 14, padding: "11px 18px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
+                    Discard
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* What gets extracted */}
+            <div style={{ background: "white", borderRadius: 14, padding: "20px 22px", border: `1px solid ${BORDER}` }}>
+              <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>What Rentura can read</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 10 }}>
+                {[
+                  ["📋", "Gas Safety Certificate", "Expiry, engineer, cert number → Compliance"],
+                  ["⚡", "EICR", "Expiry, inspector, outcome → Compliance"],
+                  ["🏠", "EPC", "Expiry, rating, score → Compliance"],
+                  ["🏦", "Mortgage statement", "Rate, balance, lender, expiry → Mortgage"],
+                  ["📝", "Tenancy agreement", "Tenant name, rent, dates → Tenants"],
+                  ["🧾", "Invoice / receipt", "Amount, date, description → Timeline"],
+                ].map(([icon, label, dest]) => (
+                  <div key={label} style={{ display: "flex", gap: 10, padding: "10px 12px", background: "#fafaf9", borderRadius: 9 }}>
+                    <span style={{ fontSize: 20, flexShrink: 0 }}>{icon}</span>
+                    <div>
+                      <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 2 }}>{label}</p>
+                      <p style={{ fontSize: 11, color: INK2 }}>{dest}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
