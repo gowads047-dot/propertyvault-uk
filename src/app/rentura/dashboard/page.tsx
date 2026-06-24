@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -248,13 +248,22 @@ function AlertCard({ alert }: { alert: Alert }) {
   );
 }
 
+function SubscribedBanner() {
+  const searchParams = useSearchParams();
+  if (searchParams.get("subscribed") !== "1") return null;
+  return (
+    <div style={{ background: "rgba(34,197,94,0.1)", borderBottom: "1px solid rgba(34,197,94,0.2)", padding: "12px 28px", display: "flex", alignItems: "center", gap: 12 }}>
+      <span style={{ fontSize: 18 }}>🎉</span>
+      <p style={{ fontSize: 14, fontWeight: 700, color: "#22c55e" }}>Welcome to Rentura! Your subscription is active — you have full access.</p>
+    </div>
+  );
+}
+
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function RenturaDashboard() {
   const { user, profile, loading: authLoading, signOut } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const justSubscribed = searchParams.get("subscribed") === "1";
 
   const [properties, setProperties] = useState<RenturaProperty[]>([]);
   const [tenants, setTenants] = useState<Record<string, RenturaTenant[]>>({});
@@ -426,12 +435,9 @@ export default function RenturaDashboard() {
   return (
     <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh" }}>
 
-      {justSubscribed && (
-        <div style={{ background: "rgba(34,197,94,0.1)", borderBottom: "1px solid rgba(34,197,94,0.2)", padding: "12px 28px", display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 18 }}>🎉</span>
-          <p style={{ fontSize: 14, fontWeight: 700, color: "#22c55e" }}>Welcome to Rentura! Your subscription is active — you have full access.</p>
-        </div>
-      )}
+      <Suspense fallback={null}>
+        <SubscribedBanner />
+      </Suspense>
 
       {/* ── NAV ── */}
       <nav style={{ borderBottom: `1px solid ${BORDER}`, padding: "12px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", background: BG, position: "sticky", top: 0, zIndex: 20 }}>
