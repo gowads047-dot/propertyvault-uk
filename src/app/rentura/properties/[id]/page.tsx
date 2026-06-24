@@ -124,6 +124,10 @@ export default function PropertyPassport() {
   const [showAddCert, setShowAddCert] = useState(false);
   const [saving, setSaving] = useState(false);
 
+  // Tenant portal invite
+  const [lastInvite, setLastInvite] = useState<{ portalUrl: string; whatsappUrl: string } | null>(null);
+  const [tenantIssues, setTenantIssues] = useState<{ id: string; title: string; status: string; priority: string; tenant_name: string; created_at: string }[]>([]);
+
   // Document upload
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<{ summary: string; document_type: string; extracted: Record<string, unknown>; warnings: string[]; confidence?: number } | null>(null);
@@ -154,6 +158,10 @@ export default function PropertyPassport() {
       setMortgages(mortRes.data ?? []);
       setCompliance(compRes.data ?? []);
       setMaintenance((maintRes.data ?? []) as RenturaMaintenance[]);
+      // Load tenant-reported issues
+      fetch(`/api/tenant/issues?landlordId=${user!.id}&propertyId=${id}`)
+        .then(r => r.json())
+        .then(d => setTenantIssues(d.issues ?? []));
       setLoading(false);
     }
     load();
@@ -180,6 +188,25 @@ export default function PropertyPassport() {
       await supabase.from("rentura_events").insert({ property_id: id, user_id: user.id, event_type: "tenant_in", title: `Tenant moved in — ${tenantForm.name.trim()}`, description: `Monthly rent: ${fmt(tenantForm.monthly_rent ? parseFloat(tenantForm.monthly_rent) : null)}`, amount: tenantForm.monthly_rent ? parseFloat(tenantForm.monthly_rent) : null, trust_level: "confirmed", metadata: {}, event_date: tenantForm.move_in_date || new Date().toISOString().split("T")[0] });
       const evtRes = await supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false });
       setEvents(evtRes.data ?? []);
+
+      // Send portal invite if email provided
+      if (tenantForm.email) {
+        const inviteRes = await fetch("/api/tenant/invite", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tenantId: data.id,
+            tenantEmail: tenantForm.email,
+            tenantName: tenantForm.name.trim(),
+            tenantPhone: tenantForm.phone || "",
+            propertyId: id,
+            propertyAddress: property?.address || "",
+            landlordUserId: user.id,
+          }),
+        });
+        const inviteData = await inviteRes.json();
+        if (inviteData.whatsappUrl) setLastInvite(inviteData);
+      }
     }
     setShowAddTenant(false);
     setTenantForm({ name: "", email: "", phone: "", monthly_rent: "", move_in_date: "", deposit_amount: "", deposit_scheme: "" });
@@ -857,6 +884,31 @@ export default function PropertyPassport() {
               })
             )}
 
+            {/* Tenant-reported issues */}
+            {tenantIssues.length > 0 && (
+              <div style={{ marginTop: 24, marginBottom: 4 }}>
+                <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Reported by tenant ({tenantIssues.length})</p>
+                {tenantIssues.map(ti => {
+                  const stCfg: Record<string, { label: string; color: string }> = { open: { label: "Open", color: "#dc2626" }, in_progress: { label: "In progress", color: "#ca8a04" }, scheduled: { label: "Scheduled", color: "#2563eb" }, resolved: { label: "Resolved", color: "#16a34a" } };
+                  const sc = stCfg[ti.status] ?? { label: ti.status, color: "#111" };
+                  return (
+                    <a key={ti.id} href={`/rentura/properties/${id}/issues/${ti.id}`} style={{ textDecoration: "none" }}>
+                      <div style={{ background: "rgba(26,41,66,0.03)", borderRadius: 10, padding: "13px 16px", border: `1px solid ${BORDER}`, marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                        <div>
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                            <span style={{ fontSize: 10, fontWeight: 700, color: sc.color, background: `${sc.color}14`, padding: "2px 7px", borderRadius: 5 }}>{sc.label}</span>
+                            <span style={{ fontSize: 11, color: INK2 }}>from {ti.tenant_name || "tenant"}</span>
+                          </div>
+                          <p style={{ fontSize: 14, fontWeight: 700, color: INK }}>{ti.title}</p>
+                        </div>
+                        <span style={{ color: INK2, fontSize: 16 }}>›</span>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+
             {/* Add issue inline modal */}
             {showAddMaint && (
               <div style={{ background: "white", borderRadius: 14, padding: "20px", border: `1px solid ${BORDER}`, marginTop: 16 }}>
@@ -1079,6 +1131,29 @@ export default function PropertyPassport() {
             </button>
           </div>
         </Modal>
+      )}
+
+      {/* Invite success modal */}
+      {lastInvite && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }} onClick={() => setLastInvite(null)}>
+          <div style={{ background: "white", borderRadius: 20, padding: "32px 28px", maxWidth: 440, width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }} onClick={e => e.stopPropagation()}>
+            <div style={{ fontSize: 40, textAlign: "center", marginBottom: 12 }}>✉️</div>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: CTA, textAlign: "center", marginBottom: 8 }}>Tenant portal invite sent!</h3>
+            <p style={{ fontSize: 13, color: INK2, textAlign: "center", lineHeight: 1.65, marginBottom: 24 }}>
+              An email was sent to the tenant with a link to create their account and access their portal.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <a href={lastInvite.whatsappUrl} target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                <span>📱</span> Also send via WhatsApp
+              </a>
+              <button onClick={() => setLastInvite(null)}
+                style={{ background: BG, color: INK2, fontWeight: 700, fontSize: 14, padding: "12px", borderRadius: 11, border: `1px solid ${BORDER}`, cursor: "pointer", fontFamily: "inherit" }}>
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
