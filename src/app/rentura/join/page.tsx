@@ -95,7 +95,7 @@ export default function RenturaJoinPage() {
                 {[
                   ["1", "Open the email from PropertyVault UK"],
                   ["2", "Click the confirmation link"],
-                  ["3", "Pay £9.99/mo — instant dashboard access"],
+                  ["3", "Add your card — no charge for 30 days, then £9.99/mo"],
                 ].map(([n, s]) => (
                   <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
                     <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(201,168,76,0.15)", color: "#c9a84c", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
@@ -109,9 +109,9 @@ export default function RenturaJoinPage() {
             </div>
           ) : (
             <>
-              <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b2d", marginBottom: 4, textAlign: "center" }}>Create your account</h1>
-              <p style={{ fontSize: 13, color: "rgba(15,27,45,0.45)", textAlign: "center", marginBottom: 4 }}>£9.99/month · Cancel anytime · No refunds</p>
-              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", textAlign: "center", marginBottom: 28 }}>Payment is the next step after account setup</p>
+              <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b2d", marginBottom: 4, textAlign: "center" }}>Start your free 30-day trial</h1>
+              <p style={{ fontSize: 13, color: "rgba(15,27,45,0.45)", textAlign: "center", marginBottom: 4 }}>Free for 30 days · Then £9.99/month · Cancel anytime</p>
+              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", textAlign: "center", marginBottom: 28 }}>We&apos;ll collect your card details now — no charge for 30 days</p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <div>
@@ -139,7 +139,7 @@ export default function RenturaJoinPage() {
                 )}
 
                 <button type="submit" disabled={loading} style={{ background: loading ? "rgba(15,27,45,0.4)" : "#0f1b2d", color: "white", fontWeight: 800, fontSize: 16, padding: "14px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "inherit", marginTop: 4 }}>
-                  {loading ? "Setting up account…" : "Continue to Payment →"}
+                  {loading ? "Setting up account…" : "Start free trial — add card →"}
                 </button>
               </form>
 
@@ -147,7 +147,7 @@ export default function RenturaJoinPage() {
                 By signing up you agree to our{" "}
                 <Link href="/terms" style={{ color: "rgba(15,27,45,0.5)", textDecoration: "underline" }}>Terms</Link>{" "}and{" "}
                 <Link href="/privacy" style={{ color: "rgba(15,27,45,0.5)", textDecoration: "underline" }}>Privacy Policy</Link>.
-                <br />All payments are non-refundable.
+                <br />Your card won&apos;t be charged for 30 days. Cancel anytime before then at no cost.
               </p>
             </>
           )}

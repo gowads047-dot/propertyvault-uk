@@ -19,8 +19,10 @@ export async function POST(req: Request) {
       metadata: { userId: userId || "" },
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/academy/dashboard?success=1`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/academy?cancelled=1`,
+      payment_method_collection: "always",
       subscription_data: {
         metadata: { userId: userId || "" },
+        trial_period_days: 30,
       },
       allow_promotion_codes: true,
     });

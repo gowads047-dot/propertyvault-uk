@@ -248,6 +248,26 @@ function AlertCard({ alert }: { alert: Alert }) {
   );
 }
 
+function RenturaTrialBanner({ userId }: { userId: string }) {
+  const [trialEnd, setTrialEnd] = useState<string | null>(null);
+  const [status, setStatus] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.from("rentura_subscriptions").select("status,trial_end").eq("user_id", userId).maybeSingle()
+      .then(({ data }) => { if (data) { setStatus(data.status); setTrialEnd(data.trial_end); } });
+  }, [userId]);
+
+  if (status !== "trialing" || !trialEnd) return null;
+  const chargeDate = new Date(trialEnd).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  return (
+    <div style={{ background: "rgba(201,168,76,0.08)", borderBottom: "1px solid rgba(201,168,76,0.2)", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+      <span style={{ fontSize: 14, color: "#c9a84c" }}>
+        🎁 Free trial active — your first payment of <strong>£9.99</strong> will be taken on <strong>{chargeDate}</strong>.
+      </span>
+    </div>
+  );
+}
+
 function SubscribedBanner() {
   const searchParams = useSearchParams();
   const isNew = searchParams.get("subscribed") === "1" || searchParams.get("success") === "1";
@@ -445,6 +465,9 @@ export default function RenturaDashboard() {
       <Suspense fallback={null}>
         <SubscribedBanner />
       </Suspense>
+
+      {/* Trial active banner — shown when Stripe subscription is trialing */}
+      <RenturaTrialBanner userId={user.id} />
 
       {/* ── NAV ── */}
       <nav style={{ borderBottom: `1px solid ${BORDER}`, padding: "12px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", background: BG, position: "sticky", top: 0, zIndex: 20 }}>

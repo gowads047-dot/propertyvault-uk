@@ -19,8 +19,10 @@ export async function POST(req: Request) {
       metadata: { userId: userId || "", platform: "rentura" },
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/dashboard?success=1`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura?cancelled=1`,
+      payment_method_collection: "always",
       subscription_data: {
         metadata: { userId: userId || "", platform: "rentura" },
+        trial_period_days: 30,
       },
       allow_promotion_codes: true,
     });

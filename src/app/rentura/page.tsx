@@ -52,13 +52,13 @@ export default function RenturaPage() {
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <Link href="/rentura/join" style={{ background: "#0f1b2d", color: "white", fontWeight: 800, fontSize: 16, padding: "15px 38px", borderRadius: 12, textDecoration: "none" }}>
-            Get started — £9.99/mo →
+            Start free 30-day trial →
           </Link>
           <Link href="/rentura/auth" style={{ background: "white", color: "#0f1b2d", fontWeight: 700, fontSize: 15, padding: "15px 28px", borderRadius: 12, textDecoration: "none", border: "1px solid rgba(15,27,45,0.12)" }}>
             Already a member? Log in
           </Link>
         </div>
-        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 14 }}>No refunds · Cancel anytime · Instant access on payment</p>
+        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 14 }}>Free for 30 days · Then £9.99/mo · Cancel before trial ends and pay nothing</p>
       </section>
 
       {/* STATS */}
@@ -142,7 +142,7 @@ export default function RenturaPage() {
               <span style={{ fontSize: 60, fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-0.03em" }}>£9.99</span>
               <span style={{ fontSize: 15, color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>/month</span>
             </div>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>No refunds · Cancel anytime · Billed monthly via Stripe</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32, textAlign: "left" }}>
               {INCLUDED.map(item => (
@@ -154,7 +154,7 @@ export default function RenturaPage() {
             </div>
 
             <Link href="/rentura/join" style={{ display: "block", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, textDecoration: "none", textAlign: "center" }}>
-              Get started — £9.99/mo →
+              Start free 30-day trial →
             </Link>
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 14 }}>Already a member? <Link href="/rentura/auth" style={{ color: "#c9a84c", textDecoration: "none" }}>Log in here →</Link></p>
           </div>
@@ -176,7 +176,7 @@ export default function RenturaPage() {
         <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)" }}>Ready to organise your portfolio?</h2>
         <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", marginBottom: 32 }}>Join UK landlords already using Rentura to manage smarter.</p>
         <Link href="/rentura/join" style={{ display: "inline-flex", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "15px 42px", borderRadius: 12, textDecoration: "none" }}>
-          Start for £9.99/month →
+          Start free 30-day trial →
         </Link>
       </section>
 

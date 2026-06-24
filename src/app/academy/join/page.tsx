@@ -98,7 +98,7 @@ export default function AcademyJoinPage() {
                 {[
                   ["1", "Open the confirmation email from PropertyVault UK"],
                   ["2", "Click the link — you'll land on the payment page"],
-                  ["3", "Pay £14.99/mo — instant access to all courses"],
+                  ["3", "Add your card — 30 days free, then £14.99/mo"],
                 ].map(([n, step]) => (
                   <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
                     <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.2)", color: "#d4af37", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
@@ -116,13 +116,13 @@ export default function AcademyJoinPage() {
           ) : (
             <>
               <h1 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>
-                Join the Academy
+                Start your free 30-day trial
               </h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 4 }}>
-                £14.99/month · Cancel anytime · No refunds
+                Free for 30 days · Then £14.99/month · Cancel anytime
               </p>
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textAlign: "center", marginBottom: 24 }}>
-                Create your account — payment is the next step
+                We&apos;ll collect your card details — no charge for 30 days
               </p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -173,7 +173,7 @@ export default function AcademyJoinPage() {
                   disabled={loading}
                   style={{ background: loading ? "rgba(212,175,55,0.5)" : "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 16, padding: "14px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", marginTop: 4, fontFamily: "inherit" }}
                 >
-                  {loading ? "Setting up account…" : "Continue to Payment →"}
+                  {loading ? "Setting up account…" : "Start free trial — add card →"}
                 </button>
               </form>
 

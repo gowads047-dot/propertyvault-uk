@@ -48,7 +48,7 @@ type Enrollment = {
 
 export default function AcademyDashboard() {
   const { user } = useAuth();
-  const [memberData, setMemberData] = useState<{ status: string; name?: string; stripe_customer_id?: string; access_until?: string | null } | null>(null);
+  const [memberData, setMemberData] = useState<{ status: string; name?: string; stripe_customer_id?: string; access_until?: string | null; trial_end?: string | null } | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [checkingAccess, setCheckingAccess] = useState(true);
   const [justPaid, setJustPaid] = useState(false);
@@ -168,6 +168,16 @@ export default function AcademyDashboard() {
 
   return (
     <div style={{ background: "#0a0f1e", minHeight: "100vh", color: "white", fontFamily: "var(--font-family-body)" }}>
+
+      {/* Trial active banner */}
+      {memberData?.status === "trialing" && memberData?.trial_end && (
+        <div style={{ background: "rgba(212,175,55,0.1)", borderBottom: "1px solid rgba(212,175,55,0.2)", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+          <span style={{ fontSize: 14, color: "#d4af37" }}>
+            🎁 Free trial active — your first payment of <strong>£14.99</strong> will be taken on <strong>{new Date(memberData.trial_end).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</strong>.
+          </span>
+          <Link href="/academy/dashboard" style={{ color: "rgba(212,175,55,0.6)", fontSize: 12, textDecoration: "none" }}>Manage subscription →</Link>
+        </div>
+      )}
 
       {/* Grace period warning banner */}
       {inGracePeriod && gracePeriodEnd && (

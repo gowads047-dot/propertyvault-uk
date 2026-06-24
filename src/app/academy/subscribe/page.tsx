@@ -47,7 +47,7 @@ export default function AcademySubscribePage() {
     ? "Redirecting to Stripe…"
     : loading
     ? "Verifying account…"
-    : "Start membership →";
+    : "Start free 30-day trial →";
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0f1e", fontFamily: "var(--font-family-body)", color: "rgba(255,255,255,0.88)" }}>
@@ -92,7 +92,7 @@ export default function AcademySubscribePage() {
               <span style={{ fontSize: 52, fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-0.03em" }}>£14.99</span>
               <span style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>/month</span>
             </div>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 32 }}>No refunds · Cancel anytime · Billed monthly via Stripe.</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
 
             {checkoutError && (
               <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#f87171", marginBottom: 16 }}>
@@ -121,7 +121,7 @@ export default function AcademySubscribePage() {
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
               {[
                 ["🔒", "Secure checkout via Stripe"],
-                ["⚡", "Instant access on payment"],
+                ["⚡", "Instant access — 30 days free, then £14.99/mo"],
                 ["↩️", "Cancel anytime from your dashboard"],
               ].map(([icon, text]) => (
                 <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
