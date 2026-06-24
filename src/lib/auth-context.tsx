@@ -38,23 +38,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      setLoading(false); // session known — unblock UI immediately
       if (session?.user) fetchProfile(session.user.id);
-      else setLoading(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      setLoading(false);
       if (session?.user) fetchProfile(session.user.id);
-      else { setProfile(null); setLoading(false); }
+      else setProfile(null);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
   async function fetchProfile(userId: string) {
-    const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
+    const { data } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
     setProfile(data);
-    setLoading(false);
   }
 
   async function signUp(email: string, password: string, name: string, role: string) {
