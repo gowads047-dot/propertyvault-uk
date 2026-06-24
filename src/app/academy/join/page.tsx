@@ -51,19 +51,6 @@ export default function AcademyJoinPage() {
       body: JSON.stringify({ email: email.trim(), name: name.trim(), type: "academy_welcome" }),
     }).catch(() => {});
 
-    // Redirect to Stripe checkout
-    const checkoutRes = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email.trim(), userId: data.user?.id }),
-    });
-    const { url, error: checkoutError } = await checkoutRes.json();
-    if (url) {
-      window.location.href = url;
-      return;
-    }
-    // If checkout fails, still let them in and show success
-    console.error("Checkout error:", checkoutError);
     setLoading(false);
     setDone(true);
   }
@@ -97,7 +84,7 @@ export default function AcademyJoinPage() {
                 {[
                   ["1", "Open the confirmation email from PropertyVault UK"],
                   ["2", "Click the \"Confirm your account\" link"],
-                  ["3", "Return here and log in — you're good to go"],
+                  ["3", "Log in — we'll take you to checkout to activate access"],
                 ].map(([n, step]) => (
                   <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
                     <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.2)", color: "#d4af37", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
@@ -108,7 +95,7 @@ export default function AcademyJoinPage() {
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 18 }}>
                 Can&apos;t find it? Check your spam folder or wait 2 minutes.
               </p>
-              <Link href="/makan/auth" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>
+              <Link href="/academy/auth" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>
                 Log in once confirmed →
               </Link>
             </div>
@@ -118,7 +105,7 @@ export default function AcademyJoinPage() {
                 Join the Academy
               </h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 28 }}>
-                Create your free account to get started.
+                Create your account — then activate with £14.99/mo.
               </p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -186,7 +173,7 @@ export default function AcademyJoinPage() {
 
         <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
           Already have an account?{" "}
-          <Link href="/makan/auth" style={{ color: "#d4af37", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
+          <Link href="/academy/auth" style={{ color: "#d4af37", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
         </p>
 
       </div>

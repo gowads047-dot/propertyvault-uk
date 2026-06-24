@@ -88,7 +88,8 @@ export default function AcademyDashboard() {
     return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 20, padding: 24, textAlign: "center" }}>
       <div style={{ fontSize: 48 }}>🔒</div>
       <h2 style={{ color: "white", fontSize: 24, fontWeight: 800 }}>Sign in to access the Academy</h2>
-      <Link href="/makan/auth" style={{ background: "#d4af37", color: "#0a0f1e", fontWeight: 700, padding: "12px 32px", borderRadius: 12, textDecoration: "none" }}>Sign In</Link>
+      <Link href="/academy/auth" style={{ background: "#d4af37", color: "#0a0f1e", fontWeight: 700, padding: "12px 32px", borderRadius: 12, textDecoration: "none" }}>Sign In</Link>
+      <Link href="/academy/subscribe" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>No account? Join for £14.99/mo →</Link>
     </div>;
   }
 
@@ -100,7 +101,7 @@ export default function AcademyDashboard() {
       <h2 style={{ color: "white", fontSize: 28, fontWeight: 800, maxWidth: 500 }}>Join the Deal Sourcing Academy</h2>
       <p style={{ color: "rgba(255,255,255,0.5)", maxWidth: 440 }}>Get instant access to all courses, playbooks, scripts, tools, and downloads for just £14.99/month.</p>
       <Link href="/academy/subscribe" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, padding: "14px 36px", borderRadius: 12, textDecoration: "none", fontSize: 16 }}>Subscribe — £14.99/mo →</Link>
-      <Link href="/academy/join" style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, textDecoration: "none", marginTop: -8 }}>No account yet? Sign up free</Link>
+      <Link href="/academy/join" style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, textDecoration: "none", marginTop: -8 }}>Create account first →</Link>
     </div>;
   }
 
