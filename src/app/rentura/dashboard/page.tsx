@@ -299,6 +299,8 @@ export default function RenturaDashboard() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [memberName, setMemberName] = useState<string | null>(null);
+  const [nameInput, setNameInput] = useState("");
+  const [nameSaving, setNameSaving] = useState(false);
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
@@ -323,6 +325,15 @@ export default function RenturaDashboard() {
     supabase.from("rentura_subscriptions").select("name").eq("user_id", user.id).maybeSingle()
       .then(({ data }) => { if (data?.name) setMemberName(data.name); });
   }, [user]);
+
+  async function saveName() {
+    if (!nameInput.trim() || !user) return;
+    setNameSaving(true);
+    await supabase.from("rentura_subscriptions").update({ name: nameInput.trim() }).eq("user_id", user.id);
+    setMemberName(nameInput.trim());
+    setNameInput("");
+    setNameSaving(false);
+  }
 
   // Load all portfolio data
   useEffect(() => {
@@ -395,10 +406,31 @@ export default function RenturaDashboard() {
           history: apiHistory,
           userInput: text.trim(),
           properties: properties.map(p => ({ id: p.id, address: p.address, nickname: p.nickname, property_type: p.property_type, bedrooms: p.bedrooms })),
+          context: {
+            today: new Date().toISOString().split("T")[0],
+            landlordName: memberName || null,
+            totalMonthlyIncome: totalIncome,
+            totalMortgagePayments: totalMortgage,
+            netMonthlyCashflow: netCashflow,
+            alerts: alerts.slice(0, 10).map(a => ({ title: a.title, urgency: a.urgency, type: a.type, property: a.property_address })),
+            tenants: properties.map(p => {
+              const t = tenants[p.id]?.[0];
+              return t
+                ? { property: shortAddress(p.address), name: t.name ?? `${t.first_name ?? ""} ${t.last_name ?? ""}`.trim(), rent: t.monthly_rent, moveIn: t.move_in_date ?? t.tenancy_start }
+                : { property: shortAddress(p.address), name: "Vacant", rent: null };
+            }),
+            mortgages: properties.map(p => {
+              const m = mortgages[p.id]?.[0];
+              return m ? { property: shortAddress(p.address), lender: m.lender, rate: m.interest_rate, monthly: m.monthly_payment, fixedExpiry: m.fixed_term_expiry } : null;
+            }).filter(Boolean),
+          },
         }),
       });
 
-      if (!res.ok) throw new Error("API error");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData?.error || "API error");
+      }
       const result = await res.json();
 
       const newHistory: APIHistory = [
@@ -438,8 +470,11 @@ export default function RenturaDashboard() {
         saved: !!savedTo,
         savedTo,
       }]);
-    } catch {
-      setMessages(m => [...m, { role: "ai", text: "Connection issue — please try again.", ts: "just now" }]);
+    } catch (err) {
+      const msg = err instanceof Error && err.message === "Chat unavailable"
+        ? "The AI assistant isn't available right now — the API key may not be configured in the deployment. Try again shortly or contact support."
+        : "Connection issue — please try again.";
+      setMessages(m => [...m, { role: "ai", text: msg, ts: "just now" }]);
     }
     setChatLoading(false);
   }, [chatLoading, apiHistory, user, properties]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -448,6 +483,12 @@ export default function RenturaDashboard() {
     .flat()
     .filter(t => t.is_current)
     .reduce((sum, t) => sum + (t.monthly_rent ?? 0), 0);
+
+  const totalMortgage = Object.values(mortgages)
+    .flat()
+    .reduce((sum, m) => sum + (m.monthly_payment ?? 0), 0);
+
+  const netCashflow = totalIncome - totalMortgage;
 
   const urgentCount = alerts.filter(a => a.urgency === "urgent").length;
 
@@ -508,9 +549,30 @@ export default function RenturaDashboard() {
 
         {/* ── GREETING ── */}
         <div style={{ padding: "40px 0 28px" }}>
-          <p style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, fontFamily: "var(--font-family-heading)" }}>
-            {greeting}, {firstName}.
-          </p>
+          {!dataLoading && !memberName ? (
+            <div>
+              <p style={{ fontSize: "clamp(24px,3.5vw,38px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, fontFamily: "var(--font-family-heading)", marginBottom: 14 }}>
+                {greeting}. What should we call you?
+              </p>
+              <div style={{ display: "flex", gap: 8, alignItems: "center", maxWidth: 360 }}>
+                <input
+                  type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
+                  onKeyDown={e => e.key === "Enter" && saveName()}
+                  placeholder="Your first name" autoFocus
+                  style={{ flex: 1, padding: "10px 14px", fontSize: 15, borderRadius: 10, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", background: "white" }}
+                />
+                <button onClick={saveName} disabled={nameSaving || !nameInput.trim()}
+                  style={{ padding: "10px 20px", background: CTA, color: "white", fontWeight: 800, fontSize: 14, borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", opacity: !nameInput.trim() ? 0.5 : 1 }}>
+                  {nameSaving ? "…" : "Save →"}
+                </button>
+              </div>
+              <p style={{ fontSize: 12, color: INK2, marginTop: 8 }}>This is how Rentura will address you across your dashboard.</p>
+            </div>
+          ) : (
+            <p style={{ fontSize: "clamp(28px,4vw,44px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, fontFamily: "var(--font-family-heading)" }}>
+              {greeting}, {firstName}.
+            </p>
+          )}
           <p style={{ fontSize: 14, color: INK2, marginTop: 6 }}>
             {new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
           </p>
@@ -518,14 +580,15 @@ export default function RenturaDashboard() {
 
         {/* ── PORTFOLIO SUMMARY — always visible ── */}
         {!dataLoading && (
-          <div style={{ display: "flex", gap: 0, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, marginBottom: 36 }}>
+          <div style={{ display: "flex", gap: 0, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, marginBottom: 36, overflowX: "auto" }}>
             {([
-              ["Properties", properties.length.toString()],
-              ["Monthly income", properties.length ? fmt(totalIncome) : "£0"],
+              ["Properties", properties.length.toString(), undefined],
+              ["Monthly income", properties.length ? fmt(totalIncome) : "£0", undefined],
+              ["Net cashflow", properties.length ? fmt(netCashflow) : "—", netCashflow < 0 ? "#dc2626" : netCashflow > 0 ? "#16a34a" : undefined],
               ["Urgent alerts", urgentCount.toString(), urgentCount > 0 ? "#dc2626" : undefined],
-              ["Compliance items", alerts.filter(a => a.type === "compliance").length.toString()],
+              ["Compliance items", alerts.filter(a => a.type === "compliance").length.toString(), undefined],
             ] as [string, string, string?][]).map(([label, val, color], i, arr) => (
-              <div key={label} style={{ flex: 1, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
+              <div key={label} style={{ flex: 1, minWidth: 120, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
                 <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</p>
                 <p style={{ fontSize: 26, fontWeight: 900, color: color ?? INK, letterSpacing: "-0.02em" }}>{val}</p>
               </div>
@@ -702,13 +765,30 @@ export default function RenturaDashboard() {
             <div ref={bottomRef} />
           </div>
 
-          {/* Quick prompts */}
+          {/* Quick prompts — contextual */}
           {messages.length === 1 && (
             <div style={{ background: "#0c0f1a", padding: "0 24px 16px", display: "flex", flexWrap: "wrap", gap: 6 }}>
-              {(properties.length === 0
-                ? ["Help me add my first property", "What should I track for each property?", "What is a Property Passport?", "How does compliance tracking work?"]
-                : ["What should I focus on today?", "Which mortgage expires next?", "Log a rent payment", "Report a maintenance issue"]
-              ).map(p => (
+              {(() => {
+                if (properties.length === 0) {
+                  return ["Help me add my first property", "What is a Property Passport?", "How does Rentura track compliance?", "What do I need to be legally compliant as a landlord?"];
+                }
+                const prompts: string[] = [];
+                // First urgent alert → specific action
+                const urgent = alerts.find(a => a.urgency === "urgent");
+                if (urgent) prompts.push(`What do I do about: ${urgent.title}?`);
+                // Tenant-specific
+                const firstTenant = Object.values(tenants).flat().find(t => t.is_current);
+                if (firstTenant) {
+                  const name = firstTenant.name ?? `${firstTenant.first_name ?? ""} ${firstTenant.last_name ?? ""}`.trim();
+                  prompts.push(`Log rent received from ${name}`);
+                }
+                // Generic smart prompts
+                if (netCashflow < 0) prompts.push("How can I improve my cashflow?");
+                prompts.push("What should I focus on today?");
+                prompts.push("Log a maintenance issue");
+                if (alerts.some(a => a.type === "compliance")) prompts.push("Walk me through my compliance checklist");
+                return prompts.slice(0, 4);
+              })().map(p => (
                 <button key={p} onClick={() => send(p)} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "rgba(255,255,255,0.65)", cursor: "pointer", fontFamily: "inherit" }}>
                   {p}
                 </button>

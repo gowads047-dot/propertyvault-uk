@@ -63,8 +63,18 @@ Direct, concise, professional. No affirmations ("Great!", "Sure!", "Of course!")
 
 type ConvMessage = { role: "user" | "assistant"; content: string };
 type PropertySummary = { id: string; address: string; nickname: string | null; property_type: string; bedrooms: number | null };
+type PortfolioContext = {
+  today?: string;
+  landlordName?: string | null;
+  totalMonthlyIncome?: number;
+  totalMortgagePayments?: number;
+  netMonthlyCashflow?: number;
+  alerts?: { title: string; urgency: string; type: string; property: string }[];
+  tenants?: { property: string; name: string; rent: number | null; moveIn?: string | null }[];
+  mortgages?: ({ property: string; lender: string | null; rate: number | null; monthly: number | null; fixedExpiry: string | null } | null)[];
+};
 
-function buildSystem(properties: PropertySummary[]): string {
+function buildSystem(properties: PropertySummary[], context?: PortfolioContext): string {
   let portfolio = "";
   if (properties.length === 0) {
     portfolio = "\n## PORTFOLIO\nThis landlord has no properties yet. If they try to log an event, remind them to add a property first.";
@@ -74,15 +84,45 @@ function buildSystem(properties: PropertySummary[]): string {
         `- ${p.address}${p.nickname ? ` (known as "${p.nickname}")` : ""} — ${p.bedrooms ?? "?"}bed ${p.property_type}`
       ).join("\n");
   }
-  return BASE_SYSTEM + portfolio;
+
+  let ctx = "";
+  if (context) {
+    ctx += `\n\n## LIVE PORTFOLIO DATA (today: ${context.today ?? "unknown"})`;
+    if (context.landlordName) ctx += `\nLandlord name: ${context.landlordName}`;
+    if (context.totalMonthlyIncome != null) ctx += `\nTotal monthly rental income: £${context.totalMonthlyIncome.toLocaleString()}`;
+    if (context.totalMortgagePayments != null) ctx += `\nTotal monthly mortgage payments: £${context.totalMortgagePayments.toLocaleString()}`;
+    if (context.netMonthlyCashflow != null) ctx += `\nNet monthly cashflow: £${context.netMonthlyCashflow.toLocaleString()} (${context.netMonthlyCashflow >= 0 ? "positive" : "negative"})`;
+
+    if (context.alerts && context.alerts.length > 0) {
+      ctx += "\n\n## ACTIVE ALERTS\n" + context.alerts.map(a => `- [${a.urgency.toUpperCase()}] ${a.title} (property: ${a.property})`).join("\n");
+    }
+
+    if (context.tenants && context.tenants.length > 0) {
+      ctx += "\n\n## CURRENT TENANTS\n" + context.tenants.map(t =>
+        t.name === "Vacant"
+          ? `- ${t.property}: VACANT`
+          : `- ${t.property}: ${t.name}, £${t.rent ?? "?"}/mo${t.moveIn ? `, moved in ${t.moveIn}` : ""}`
+      ).join("\n");
+    }
+
+    if (context.mortgages && context.mortgages.length > 0) {
+      const mortLines = context.mortgages.filter(Boolean).map(m =>
+        `- ${m!.property}: ${m!.lender ?? "unknown lender"}, ${m!.rate ?? "?"}% rate, £${m!.monthly ?? "?"}/mo${m!.fixedExpiry ? `, fixed until ${m!.fixedExpiry}` : ""}`
+      );
+      if (mortLines.length) ctx += "\n\n## MORTGAGES\n" + mortLines.join("\n");
+    }
+  }
+
+  return BASE_SYSTEM + portfolio + ctx;
 }
 
 export async function POST(req: Request) {
   try {
-    const { history, userInput, properties = [] } = await req.json() as {
+    const { history, userInput, properties = [], context } = await req.json() as {
       history: ConvMessage[];
       userInput: string;
       properties: PropertySummary[];
+      context?: PortfolioContext;
     };
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
@@ -92,7 +132,7 @@ export async function POST(req: Request) {
       { role: "user", content: userInput },
     ];
 
-    const SYSTEM = buildSystem(properties);
+    const SYSTEM = buildSystem(properties, context);
 
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
