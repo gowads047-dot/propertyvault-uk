@@ -63,7 +63,7 @@ const FAQS = [
   },
   {
     q: "How is this different from a £2,000 course?",
-    a: "Most courses give you theory and a Facebook group. The Academy gives you tools you actually use: a deal calculator, investor CRM, 11 copy-paste email templates, a compliance checklist, live deal reviews, a Q&A board where Nass answers personally. And it's free to join — no risk.",
+    a: "Most courses give you theory and a Facebook group. The Academy gives you tools you actually use: a deal calculator, investor CRM, 11 copy-paste email templates, a compliance checklist, live deal reviews, a Q&A board where Nass answers personally. £14.99/month — cancel anytime, no long-term commitment.",
     important: false,
   },
   {
@@ -102,7 +102,7 @@ export default function AcademyPage() {
   function CTAButton({ large = false }: { large?: boolean }) {
     return (
       <Link href="/academy/join" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: large ? 18 : 15, padding: large ? "16px 48px" : "13px 32px", borderRadius: 14, letterSpacing: "-0.3px", display: "inline-block", textDecoration: "none" }}>
-        Join the Academy — Free Sign Up
+        Join the Academy — £14.99/mo
       </Link>
     );
   }
@@ -137,7 +137,7 @@ export default function AcademyPage() {
         <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.35)", borderRadius: 100, padding: "7px 18px", fontSize: 12, color: "#d4af37", fontWeight: 800, marginBottom: 36, textTransform: "uppercase", letterSpacing: "0.1em" }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
-            Now open · Free to join
+            Now open · £14.99/month
           </div>
 
           <h1 style={{ fontSize: "clamp(52px,9vw,96px)", fontWeight: 900, lineHeight: 0.93, marginBottom: 32, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}>
@@ -178,7 +178,7 @@ export default function AcademyPage() {
             <p style={{ marginBottom: 18 }}>I built this because I couldn&apos;t find anything honest when I was starting out.</p>
             <p style={{ marginBottom: 18 }}>Every course was either £2,000+ with vague promises, or free YouTube content that told you what deal sourcing <em>was</em> but not how to actually <em>do it</em> — find investors, negotiate with sellers, price your fee, stay legal.</p>
             <p style={{ marginBottom: 18 }}>The Academy is what I wish I had. Practical. Compliance-first. Tools I use myself.</p>
-            <p style={{ fontWeight: 800, color: "white", fontSize: 18, marginBottom: 0 }}>It&apos;s free to join. Sign up, get access, start learning. No card. No catch.</p>
+            <p style={{ fontWeight: 800, color: "white", fontSize: 18, marginBottom: 0 }}>£14.99/month. Cancel anytime. Full access from day one — no drip-feeding, no upsells.</p>
           </div>
         </div>
       </section>
@@ -359,9 +359,9 @@ export default function AcademyPage() {
               ))}
             </div>
             <Link href="/academy/join" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#080d1a", fontWeight: 900, fontSize: 18, padding: "18px 0", borderRadius: 16, textDecoration: "none", marginBottom: 14, letterSpacing: "-0.3px" }}>
-              Join the Academy — Free Sign Up →
+              Join the Academy — £14.99/mo →
             </Link>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.7, textAlign: "center" }}>No payment required · Educational platform — not financial or legal advice</p>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.7, textAlign: "center" }}>Cancel anytime · Educational platform — not financial or legal advice</p>
           </div>
         </div>
       </section>
@@ -396,7 +396,7 @@ export default function AcademyPage() {
       <section style={{ padding: "80px 24px", textAlign: "center", background: "rgba(212,175,55,0.04)", borderTop: "1px solid rgba(212,175,55,0.15)" }}>
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, marginBottom: 14, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Ready to stop watching?</h2>
-          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", marginBottom: 36, lineHeight: 1.6 }}>Join free. Start the 7-Day Challenge today. No card required.</p>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", marginBottom: 36, lineHeight: 1.6 }}>£14.99/month. Start the 7-Day Challenge today. Cancel anytime.</p>
           <CTAButton large />
         </div>
       </section>
