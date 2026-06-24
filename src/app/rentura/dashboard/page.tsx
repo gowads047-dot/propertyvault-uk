@@ -289,7 +289,7 @@ function SubscribedBanner() {
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function RenturaDashboard() {
-  const { user, profile, loading: authLoading, signOut } = useAuth();
+  const { user, loading: authLoading, signOut } = useAuth();
   const router = useRouter();
 
   const [properties, setProperties] = useState<RenturaProperty[]>([]);
@@ -298,9 +298,13 @@ export default function RenturaDashboard() {
   const [compliance, setCompliance] = useState<Record<string, RenturaCompliance[]>>({});
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
+  const [memberName, setMemberName] = useState<string | null>(null);
 
-  // Chat state
-  const INIT: Message = { role: "ai", text: "Good morning. Tell me what happened today — or ask anything about your portfolio.", ts: "now" };
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+
+  // Chat state — greeting matches time of day
+  const INIT: Message = { role: "ai", text: `${greeting}. Tell me what happened today — or ask anything about your portfolio.`, ts: "now" };
   const [messages, setMessages] = useState<Message[]>([INIT]);
   const [apiHistory, setApiHistory] = useState<APIHistory>([]);
   const [input, setInput] = useState("");
@@ -312,6 +316,13 @@ export default function RenturaDashboard() {
   useEffect(() => {
     if (!authLoading && !user) router.push("/rentura/auth?next=/rentura/dashboard");
   }, [authLoading, user, router]);
+
+  // Fetch name from rentura_subscriptions (not profiles)
+  useEffect(() => {
+    if (!user) return;
+    supabase.from("rentura_subscriptions").select("name").eq("user_id", user.id).maybeSingle()
+      .then(({ data }) => { if (data?.name) setMemberName(data.name); });
+  }, [user]);
 
   // Load all portfolio data
   useEffect(() => {
@@ -445,9 +456,7 @@ export default function RenturaDashboard() {
   const INK2 = "rgba(17,17,17,0.52)";
   const BORDER = "rgba(17,17,17,0.09)";
   const CTA = "#0f1728";
-  const firstName = profile?.name?.split(" ")[0] ?? "there";
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const firstName = memberName?.split(" ")[0] ?? user?.email?.split("@")[0] ?? "there";
 
   if (authLoading) {
     return (
@@ -461,6 +470,7 @@ export default function RenturaDashboard() {
 
   return (
     <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh" }}>
+      <style>{`body > header, body > footer { display: none !important; }`}</style>
 
       <Suspense fallback={null}>
         <SubscribedBanner />
@@ -486,7 +496,7 @@ export default function RenturaDashboard() {
           <Link href="/rentura/properties/new" style={{ background: CTA, color: "white", fontSize: 13, fontWeight: 700, padding: "8px 18px", borderRadius: 8, textDecoration: "none" }}>
             + Add Property
           </Link>
-          <span style={{ fontSize: 12, color: INK2 }}>{profile?.name ?? user.email}</span>
+          <span style={{ fontSize: 12, color: INK2 }}>{memberName ?? user.email}</span>
           <button onClick={async () => { await signOut(); router.push("/rentura"); }}
             style={{ fontSize: 12, fontWeight: 600, color: "rgba(17,17,17,0.4)", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", fontFamily: "inherit" }}>
             Sign out
@@ -506,37 +516,78 @@ export default function RenturaDashboard() {
           </p>
         </div>
 
-        {!dataLoading && properties.length === 0 ? (
-          /* ── EMPTY STATE ── */
-          <div style={{ textAlign: "center", padding: "80px 24px" }}>
-            <div style={{ width: 72, height: 72, background: "rgba(17,17,17,0.06)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px", fontSize: 32 }}>🏠</div>
-            <h2 style={{ fontSize: 26, fontWeight: 900, marginBottom: 10, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Your Property Passport starts here.</h2>
-            <p style={{ fontSize: 15, color: INK2, lineHeight: 1.65, maxWidth: 420, margin: "0 auto 32px" }}>
-              Add your first property and Rentura builds a living record of everything — mortgage, tenants, compliance, maintenance, finances. One place. Trusted.
-            </p>
-            <Link href="/rentura/properties/new" style={{ display: "inline-block", background: CTA, color: "white", fontWeight: 800, fontSize: 16, padding: "14px 36px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.02em" }}>
-              Add your first property →
-            </Link>
-          </div>
-        ) : (
-          <>
-            {/* ── PORTFOLIO SUMMARY ── */}
-            {properties.length > 0 && (
-              <div style={{ display: "flex", gap: 0, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, marginBottom: 36 }}>
-                {[
-                  ["Properties", properties.length.toString()],
-                  ["Monthly income", fmt(totalIncome)],
-                  ["Urgent alerts", urgentCount.toString(), urgentCount > 0 ? "#dc2626" : undefined],
-                  ["Compliance alerts", alerts.filter(a => a.type === "compliance").length.toString()],
-                ].map(([label, val, color], i, arr) => (
-                  <div key={label} style={{ flex: 1, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</p>
-                    <p style={{ fontSize: 26, fontWeight: 900, color: (color as string | undefined) ?? INK, letterSpacing: "-0.02em" }}>{val}</p>
-                  </div>
-                ))}
+        {/* ── PORTFOLIO SUMMARY — always visible ── */}
+        {!dataLoading && (
+          <div style={{ display: "flex", gap: 0, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, marginBottom: 36 }}>
+            {([
+              ["Properties", properties.length.toString()],
+              ["Monthly income", properties.length ? fmt(totalIncome) : "£0"],
+              ["Urgent alerts", urgentCount.toString(), urgentCount > 0 ? "#dc2626" : undefined],
+              ["Compliance items", alerts.filter(a => a.type === "compliance").length.toString()],
+            ] as [string, string, string?][]).map(([label, val, color], i, arr) => (
+              <div key={label} style={{ flex: 1, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
+                <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</p>
+                <p style={{ fontSize: 26, fontWeight: 900, color: color ?? INK, letterSpacing: "-0.02em" }}>{val}</p>
               </div>
-            )}
+            ))}
+          </div>
+        )}
 
+        {!dataLoading && properties.length === 0 ? (
+          /* ── SMART ONBOARDING ── */
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}>
+
+            {/* Left: what you're building */}
+            <div style={{ background: "white", borderRadius: 20, padding: "28px 28px", border: `1px solid ${BORDER}` }}>
+              <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Getting started</p>
+              <h3 style={{ fontSize: 18, fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 8 }}>Build your Property Passport</h3>
+              <p style={{ fontSize: 13, color: INK2, lineHeight: 1.7, marginBottom: 24 }}>
+                Each property you add gets a living digital record — compliance dates, mortgage, tenant history, maintenance log, and finances. Everything in one place, forever.
+              </p>
+              {[
+                ["Add your first property", "/rentura/properties/new", true],
+                ["Set compliance certificates", "/rentura/properties/new", false],
+                ["Record your mortgage", "/rentura/properties/new", false],
+                ["Add a tenant", "/rentura/properties/new", false],
+                ["Tell the AI what happened", null, false],
+              ].map(([step, href, done]) => (
+                <div key={step as string} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+                  <div style={{ width: 20, height: 20, borderRadius: "50%", border: `2px solid ${done ? "#16a34a" : BORDER}`, background: done ? "#16a34a" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    {done && <span style={{ color: "white", fontSize: 10, fontWeight: 900 }}>✓</span>}
+                  </div>
+                  {href ? (
+                    <Link href={href as string} style={{ fontSize: 13, color: done ? "#16a34a" : INK, fontWeight: done ? 700 : 500, textDecoration: "none" }}>{step as string}</Link>
+                  ) : (
+                    <span style={{ fontSize: 13, color: INK2 }}>{step as string}</span>
+                  )}
+                </div>
+              ))}
+              <Link href="/rentura/properties/new" style={{ display: "inline-block", marginTop: 8, background: CTA, color: "white", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 10, textDecoration: "none" }}>
+                Add first property →
+              </Link>
+            </div>
+
+            {/* Right: what you unlock */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.1em" }}>What you&apos;ll unlock</p>
+              {[
+                ["🏠", "Property Passport", "A permanent digital record for every property — EPC, gas, electric, AST, mortgage, maintenance."],
+                ["⚠️", "Compliance alerts", "Never miss a gas safety or EPC expiry. Automated alerts 45, 14, and 0 days before expiry."],
+                ["💰", "Financial centre", "Yield, P&L, cashflow, and mortgage tracker per property. Export for your accountant."],
+                ["🤖", "AI assistant", "Log rent payments, maintenance calls, and tenant issues in plain English. Rentura records everything."],
+              ].map(([icon, title, desc]) => (
+                <div key={title as string} style={{ background: "white", border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 18px", display: "flex", gap: 14 }}>
+                  <span style={{ fontSize: 22, flexShrink: 0 }}>{icon as string}</span>
+                  <div>
+                    <p style={{ fontSize: 13, fontWeight: 800, marginBottom: 3 }}>{title as string}</p>
+                    <p style={{ fontSize: 12, color: INK2, lineHeight: 1.6 }}>{desc as string}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : properties.length > 0 ? (
+          <>
             {/* ── DAILY BRIEFING ── */}
             {alerts.length > 0 && (
               <div style={{ marginBottom: 40 }}>
@@ -567,7 +618,7 @@ export default function RenturaDashboard() {
               </div>
             </div>
           </>
-        )}
+        ) : null}
 
         {/* ── CHAT ── */}
         <div style={{ borderRadius: 20, overflow: "hidden", border: `1px solid ${BORDER}` }}>
@@ -652,9 +703,12 @@ export default function RenturaDashboard() {
           </div>
 
           {/* Quick prompts */}
-          {properties.length > 0 && messages.length === 1 && (
+          {messages.length === 1 && (
             <div style={{ background: "#0c0f1a", padding: "0 24px 16px", display: "flex", flexWrap: "wrap", gap: 6 }}>
-              {["What should I focus on today?", "Which mortgage expires next?", "Log a rent payment", "Report a maintenance issue"].map(p => (
+              {(properties.length === 0
+                ? ["Help me add my first property", "What should I track for each property?", "What is a Property Passport?", "How does compliance tracking work?"]
+                : ["What should I focus on today?", "Which mortgage expires next?", "Log a rent payment", "Report a maintenance issue"]
+              ).map(p => (
                 <button key={p} onClick={() => send(p)} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "rgba(255,255,255,0.65)", cursor: "pointer", fontFamily: "inherit" }}>
                   {p}
                 </button>
