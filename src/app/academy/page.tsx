@@ -30,7 +30,7 @@ const DAYS = [
 
 const REVIEWS = [
   { name: "James T.", area: "Birmingham", text: "I'd spent three months watching YouTube and still hadn't sent a single deal pack. Joined the Academy on a Sunday, completed the 7-day challenge, and sent my first pack on Day 6. Packaged my first deal three weeks later — £4,500 fee. The scripts are genuinely incredible.", stars: 5, result: "£4,500 first fee" },
-  { name: "Priya M.", area: "Manchester", text: "The compliance module alone was worth the subscription. I was terrified of getting the legal side wrong. After Module 11 I understood exactly what I needed to register for and why. I felt like a legitimate business for the first time.", stars: 5, result: "Fully compliant setup" },
+  { name: "Priya M.", area: "Manchester", text: "The compliance module alone was worth joining. I was terrified of getting the legal side wrong. After Module 11 I understood exactly what I needed to register for and why. I felt like a legitimate business for the first time.", stars: 5, result: "Fully compliant setup" },
   { name: "Dean W.", area: "Leeds", text: "I'd done a £2,000 course that gave me a load of theory and a Facebook group full of people asking the same questions. The Academy is different — it's actual tools. The email templates. The CRM. The deal calculator. I use them weekly.", stars: 5, result: "Active sourcer, 2 deals in" },
   { name: "Aaliya R.", area: "Nottingham", text: "I was a full-time nurse thinking about whether property sourcing was even possible around shifts. The 7-day challenge showed me I could do the work in 90-minute blocks. I'm still nursing but I've packaged two deals in four months.", stars: 5, result: "2 deals whilst working full-time" },
 ];
@@ -63,7 +63,7 @@ const FAQS = [
   },
   {
     q: "How is this different from a £2,000 course?",
-    a: "Most courses give you theory and a Facebook group. The Academy gives you tools you actually use: a deal calculator, investor CRM, 11 copy-paste email templates, a compliance checklist, live deal reviews, a Q&A board where Nass answers personally. At £14.99/month you can cancel when it's no longer valuable — no risk.",
+    a: "Most courses give you theory and a Facebook group. The Academy gives you tools you actually use: a deal calculator, investor CRM, 11 copy-paste email templates, a compliance checklist, live deal reviews, a Q&A board where Nass answers personally. And it's free to join — no risk.",
     important: false,
   },
   {
@@ -118,7 +118,7 @@ export default function AcademyPage() {
         <div style={{ maxWidth: 780, margin: "0 auto", position: "relative" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 100, padding: "6px 16px", fontSize: 12, color: "#d4af37", fontWeight: 700, marginBottom: 28, textTransform: "uppercase", letterSpacing: "0.05em" }}>
             <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
-            Now open · £14.99/month
+            Now open · Free to join
           </div>
 
           <h1 style={{ fontSize: "clamp(36px,6vw,62px)", fontWeight: 800, lineHeight: 1.08, marginBottom: 24, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>
@@ -133,7 +133,7 @@ export default function AcademyPage() {
 
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
             <CTAButton large />
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>14-day money-back guarantee · Cancel anytime · Secure checkout via Stripe</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>No payment required · Create your free account in 60 seconds</p>
           </div>
         </div>
       </section>
@@ -146,7 +146,7 @@ export default function AcademyPage() {
             <p style={{ marginBottom: 14 }}>I built this because I couldn&apos;t find anything honest when I was starting out.</p>
             <p style={{ marginBottom: 14 }}>Every course I looked at was either £2,000+ with vague promises, or free YouTube content that told you what deal sourcing <em>was</em> but not how to actually <em>do it</em> — find investors, negotiate with sellers, price your fee, stay legal.</p>
             <p style={{ marginBottom: 14 }}>The Academy is what I wish I had. It&apos;s practical, it covers the compliance properly (non-negotiable in this industry), and the tools are things I use myself.</p>
-            <p style={{ marginBottom: 0 }}>It costs £14.99/month because it should be accessible. If it&apos;s not worth it, cancel. No drama.</p>
+            <p style={{ marginBottom: 0 }}>It&apos;s free to join. Sign up, get access, and start learning. No card. No catch.</p>
           </div>
         </div>
       </section>
@@ -281,7 +281,7 @@ export default function AcademyPage() {
       <section style={{ padding: "72px 24px", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         <div style={{ maxWidth: 1000, margin: "0 auto" }}>
           <h2 style={{ fontSize: 30, fontWeight: 800, textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Everything else inside</h2>
-          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 40 }}>No upsells. No &ldquo;upgrade for the good stuff.&rdquo; All of this is included at £14.99/month.</p>
+          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 40 }}>No upsells. No &ldquo;upgrade for the good stuff.&rdquo; All of this is included — free.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 16 }}>
             {[
               { icon: "✉️", title: "Email Swipe File", desc: "11 copy-paste templates for reaching estate agents, investors, and motivated sellers. Includes subject lines and follow-up sequences.", href: "/academy/emails" },
@@ -330,8 +330,8 @@ export default function AcademyPage() {
         <div style={{ maxWidth: 520, margin: "0 auto" }}>
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(212,175,55,0.25)", borderRadius: 24, padding: "44px 36px" }}>
             <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 20 }}>Deal Sourcing Academy</p>
-            <div style={{ fontSize: 60, fontWeight: 900, lineHeight: 1, marginBottom: 4 }}>£14.99</div>
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, marginBottom: 32 }}>per month · cancel anytime</div>
+            <div style={{ fontSize: 60, fontWeight: 900, lineHeight: 1, marginBottom: 4 }}>Free</div>
+            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, marginBottom: 32 }}>No payment required · Sign up in 60 seconds</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, textAlign: "left" }}>
               {[
                 "12-Module Deal Sourcing Masterclass",
