@@ -17,7 +17,7 @@ const CalIcon = () => (
 
 export function WhatsAppButton() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/makan")) return null;
+  if (pathname?.startsWith("/makan") || pathname?.startsWith("/rentura")) return null;
 
   return (
     <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end gap-2">
