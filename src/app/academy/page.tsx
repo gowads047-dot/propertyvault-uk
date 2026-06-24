@@ -101,7 +101,7 @@ export default function AcademyPage() {
 
   function CTAButton({ large = false }: { large?: boolean }) {
     return (
-      <Link href="/academy/join" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: large ? 18 : 15, padding: large ? "16px 48px" : "13px 32px", borderRadius: 14, letterSpacing: "-0.3px", display: "inline-block", textDecoration: "none" }}>
+      <Link href="/academy/subscribe" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: large ? 18 : 15, padding: large ? "16px 48px" : "13px 32px", borderRadius: 14, letterSpacing: "-0.3px", display: "inline-block", textDecoration: "none" }}>
         Join the Academy — £14.99/mo
       </Link>
     );
@@ -343,13 +343,13 @@ export default function AcademyPage() {
       {/* ── PRICING ── */}
       <section style={{ padding: "88px 24px", background: "linear-gradient(145deg, #0d1530, #080d1a)", borderTop: "1px solid rgba(212,175,55,0.15)", textAlign: "center" }}>
         <div style={{ maxWidth: 540, margin: "0 auto" }}>
-          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, marginBottom: 8, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Everything. Free.</h2>
-          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, marginBottom: 40 }}>No trial. No credit card. No upsells. Just sign up.</p>
+          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, marginBottom: 8, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Everything. One price.</h2>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, marginBottom: 40 }}>Cancel anytime. No upsells. No hidden fees.</p>
           <div style={{ background: "rgba(255,255,255,0.04)", border: "2px solid rgba(212,175,55,0.3)", borderRadius: 28, padding: "48px 40px", textAlign: "left" }}>
             <div style={{ textAlign: "center", marginBottom: 6 }}>
-              <span style={{ fontSize: 72, fontWeight: 900, lineHeight: 1, background: "linear-gradient(135deg,#d4af37,#f5d96a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Free</span>
+              <span style={{ fontSize: 72, fontWeight: 900, lineHeight: 1, background: "linear-gradient(135deg,#d4af37,#f5d96a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>£14.99</span>
             </div>
-            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, textAlign: "center", marginBottom: 36 }}>No payment required · Sign up in 60 seconds</p>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, textAlign: "center", marginBottom: 36 }}>Per month · Cancel anytime · Instant access</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 36 }}>
               {["12-Module Deal Sourcing Masterclass","7-Day First Deal Challenge","8 Strategy Playbooks","11 Copy-Paste Email Templates","Advanced Deal Calculator (BRRR / JV / Packaging)","Investor CRM","37-Step Compliance Checklist","Weekly Live Deal Reviews","Area Research Tool (7 cities)","Q&A Board — Nass answers personally","Downloads Library","Legal & Compliance Hub","Monthly new content"].map(f => (
                 <div key={f} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14 }}>
@@ -358,7 +358,7 @@ export default function AcademyPage() {
                 </div>
               ))}
             </div>
-            <Link href="/academy/join" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#080d1a", fontWeight: 900, fontSize: 18, padding: "18px 0", borderRadius: 16, textDecoration: "none", marginBottom: 14, letterSpacing: "-0.3px" }}>
+            <Link href="/academy/subscribe" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#080d1a", fontWeight: 900, fontSize: 18, padding: "18px 0", borderRadius: 16, textDecoration: "none", marginBottom: 14, letterSpacing: "-0.3px" }}>
               Join the Academy — £14.99/mo →
             </Link>
             <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.7, textAlign: "center" }}>Cancel anytime · Educational platform — not financial or legal advice</p>

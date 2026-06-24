@@ -51,6 +51,19 @@ export default function AcademyJoinPage() {
       body: JSON.stringify({ email: email.trim(), name: name.trim(), type: "academy_welcome" }),
     }).catch(() => {});
 
+    // Redirect to Stripe checkout
+    const checkoutRes = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email.trim(), userId: data.user?.id }),
+    });
+    const { url, error: checkoutError } = await checkoutRes.json();
+    if (url) {
+      window.location.href = url;
+      return;
+    }
+    // If checkout fails, still let them in and show success
+    console.error("Checkout error:", checkoutError);
     setLoading(false);
     setDone(true);
   }
