@@ -89,13 +89,25 @@ export async function POST(req: Request) {
   // checkout.session.completed — wire up the subscription to the user
   if (event.type === "checkout.session.completed") {
     const checkoutSession = event.data.object as Stripe.Checkout.Session;
-    const cUserId = checkoutSession.metadata?.userId;
+    let cUserId = checkoutSession.metadata?.userId;
     const cPlatform = checkoutSession.metadata?.platform || "academy";
+
+    // If no userId in metadata, look up by email so non-logged-in payments still link correctly
+    if (!cUserId && checkoutSession.subscription) {
+      const email = checkoutSession.customer_details?.email || checkoutSession.customer_email;
+      if (email) {
+        const { data: authUsers } = await supabase.auth.admin.listUsers();
+        const match = authUsers?.users?.find((u: { email?: string; id: string }) => u.email === email);
+        if (match) cUserId = match.id;
+      }
+    }
+
     if (cUserId && checkoutSession.subscription) {
       const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string) as Stripe.Subscription & { current_period_end?: number };
       const periodEnd = subscription.current_period_end
         ? new Date((subscription.current_period_end as number) * 1000).toISOString()
         : null;
+      const customerEmail = checkoutSession.customer_details?.email || checkoutSession.customer_email || "";
       if (cPlatform === "rentura") {
         await supabase.from("rentura_subscriptions").upsert({
           user_id: cUserId,
@@ -103,17 +115,18 @@ export async function POST(req: Request) {
           stripe_subscription_id: subscription.id,
           status: subscription.status,
           current_period_end: periodEnd,
-          access_until: null, // fresh subscription — clear any old grace period
+          access_until: null,
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       } else {
         await supabase.from("academy_members").upsert({
           user_id: cUserId,
+          email: customerEmail,
           stripe_customer_id: checkoutSession.customer as string,
           stripe_subscription_id: subscription.id,
           status: subscription.status,
           current_period_end: periodEnd,
-          access_until: null, // fresh subscription — clear any old grace period
+          access_until: null,
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       }

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
-import { useRouter } from "next/navigation";
 
 const FEATURES = [
   "Full access to all property investment courses",
@@ -18,21 +17,37 @@ const FEATURES = [
 
 export default function AcademySubscribePage() {
   const { user, loading } = useAuth();
-  const router = useRouter();
   const [checking, setChecking] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
   async function startCheckout() {
-    if (!user) { router.push("/academy/join"); return; }
+    setCheckoutError("");
     setChecking(true);
+    // Pass userId if logged in — Stripe collects email itself if not
+    const body: Record<string, string> = {};
+    if (user?.email) body.email = user.email;
+    if (user?.id) body.userId = user.id;
+
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user.email, userId: user.id }),
+      body: JSON.stringify(body),
     });
     const { url, error } = await res.json();
-    if (url) window.location.href = url;
-    else { alert(error || "Checkout failed. Please try again."); setChecking(false); }
+    if (url) {
+      window.location.href = url;
+    } else {
+      setCheckoutError(error || "Checkout failed — please try again.");
+      setChecking(false);
+    }
   }
+
+  const buttonDisabled = checking || loading;
+  const buttonLabel = checking
+    ? "Redirecting to Stripe…"
+    : loading
+    ? "Verifying account…"
+    : "Start membership →";
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0f1e", fontFamily: "var(--font-family-body)", color: "rgba(255,255,255,0.88)" }}>
@@ -54,7 +69,7 @@ export default function AcademySubscribePage() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24, alignItems: "start" }}>
 
           {/* Features */}
           <div>
@@ -77,26 +92,36 @@ export default function AcademySubscribePage() {
               <span style={{ fontSize: 52, fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-0.03em" }}>£14.99</span>
               <span style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>/month</span>
             </div>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 32 }}>Cancel anytime. Billed monthly via Stripe.</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 32 }}>No refunds · Cancel anytime · Billed monthly via Stripe.</p>
+
+            {checkoutError && (
+              <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#f87171", marginBottom: 16 }}>
+                {checkoutError}
+              </div>
+            )}
 
             <button
               onClick={startCheckout}
-              disabled={checking}
-              style={{ width: "100%", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0f1b36", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, border: "none", cursor: checking ? "not-allowed" : "pointer", fontFamily: "inherit", opacity: checking ? 0.7 : 1, marginBottom: 16 }}
+              disabled={buttonDisabled}
+              style={{ width: "100%", background: buttonDisabled ? "rgba(212,175,55,0.5)" : "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0f1b36", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, border: "none", cursor: buttonDisabled ? "not-allowed" : "pointer", fontFamily: "inherit", marginBottom: 16, transition: "opacity 0.2s" }}
             >
-              {checking ? "Redirecting to Stripe…" : loading ? "Start membership →" : user ? "Start membership →" : "Join & subscribe →"}
+              {buttonLabel}
             </button>
 
-            {!user && (
+            {user ? (
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textAlign: "center", marginBottom: 16 }}>
+                Signed in as <strong style={{ color: "rgba(255,255,255,0.5)" }}>{user.email}</strong>
+              </p>
+            ) : !loading && (
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textAlign: "center", marginBottom: 16 }}>
-                No account yet? You&apos;ll create one during checkout.
+                Stripe will ask for your email and card details.
               </p>
             )}
 
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
               {[
                 ["🔒", "Secure checkout via Stripe"],
-                ["📧", "Instant access on payment"],
+                ["⚡", "Instant access on payment"],
                 ["↩️", "Cancel anytime from your dashboard"],
               ].map(([icon, text]) => (
                 <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -105,14 +130,6 @@ export default function AcademySubscribePage() {
                 </div>
               ))}
             </div>
-
-            {user && (
-              <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", textAlign: "center" }}>
-                  Signed in as {user.email}
-                </p>
-              </div>
-            )}
           </div>
         </div>
 
@@ -128,6 +145,11 @@ export default function AcademySubscribePage() {
             ))}
           </div>
         </div>
+
+        <p style={{ textAlign: "center", marginTop: 40, fontSize: 13, color: "rgba(255,255,255,0.25)" }}>
+          Already have an account?{" "}
+          <Link href="/academy/auth" style={{ color: "#d4af37", textDecoration: "none", fontWeight: 700 }}>Log in →</Link>
+        </p>
       </div>
     </div>
   );
