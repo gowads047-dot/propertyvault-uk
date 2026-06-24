@@ -153,7 +153,7 @@ export default function AcademyPage() {
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.32)", marginBottom: 48, fontStyle: "italic" }}>— Nass, PropertyVault UK</p>
 
           <CTAButton large />
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginTop: 16 }}>No payment required · Create your free account in 60 seconds</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginTop: 16 }}>£14.99/month · Cancel anytime · Instant access on payment</p>
         </div>
       </section>
 

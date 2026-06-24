@@ -34,12 +34,6 @@ export default function AcademySubscribePage() {
     else { alert(error || "Checkout failed. Please try again."); setChecking(false); }
   }
 
-  if (loading) return (
-    <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ color: "rgba(255,255,255,0.3)" }}>Loading…</p>
-    </div>
-  );
-
   return (
     <div style={{ minHeight: "100vh", background: "#0a0f1e", fontFamily: "var(--font-family-body)", color: "rgba(255,255,255,0.88)" }}>
       <style>{`body > header, body > footer { display: none !important; }`}</style>
@@ -90,7 +84,7 @@ export default function AcademySubscribePage() {
               disabled={checking}
               style={{ width: "100%", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0f1b36", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, border: "none", cursor: checking ? "not-allowed" : "pointer", fontFamily: "inherit", opacity: checking ? 0.7 : 1, marginBottom: 16 }}
             >
-              {checking ? "Redirecting…" : user ? "Start membership →" : "Join & subscribe →"}
+              {checking ? "Redirecting to Stripe…" : loading ? "Start membership →" : user ? "Start membership →" : "Join & subscribe →"}
             </button>
 
             {!user && (
