@@ -652,7 +652,7 @@ export default function PropertyPassport() {
                 {tenants.map(t => (
                   <div key={t.id} style={{ background: "white", borderRadius: 13, padding: "18px 20px", border: `1px solid ${BORDER}`, display: "flex", alignItems: "center", gap: 16 }}>
                     <div style={{ width: 40, height: 40, background: t.is_current ? CTA : "rgba(17,17,17,0.08)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 900, color: t.is_current ? "white" : INK2, flexShrink: 0 }}>
-                      {t.name[0].toUpperCase()}
+                      {(t.name || t.first_name || "?")[0].toUpperCase()}
                     </div>
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>

@@ -356,6 +356,11 @@ export default function ListingPage() {
                   🎬 Video tour
                 </span>
               )}
+              {(listing as any).verified && (
+                <span className="text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1" style={{ background: "rgba(34,197,94,0.85)", color: "white" }}>
+                  ✓ Verified
+                </span>
+              )}
             </div>
 
             {/* Photo label bottom left */}

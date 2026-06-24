@@ -215,7 +215,7 @@ export default function PassportExport() {
                 </div>
                 <div>
                   <p style={{ fontSize: 9, fontFamily: "system-ui, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: INK2, marginBottom: 4 }}>Move-in date</p>
-                  <p style={{ fontSize: 13, fontWeight: 700, fontFamily: "system-ui, sans-serif" }}>{fmtDate(currentTenant.move_in_date)}</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, fontFamily: "system-ui, sans-serif" }}>{fmtDate(currentTenant.move_in_date ?? null)}</p>
                 </div>
                 <div>
                   <p style={{ fontSize: 9, fontFamily: "system-ui, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: INK2, marginBottom: 4 }}>Deposit</p>

@@ -9,6 +9,8 @@ const NAV_ITEMS = [
   { href: "/rentura/properties",  label: "Properties",   icon: "🏠" },
   { href: "/rentura/tenants",     label: "Tenants",      icon: "👤" },
   { href: "/rentura/maintenance", label: "Maintenance",  icon: "🔧" },
+  { href: "/rentura/compliance",  label: "Compliance",   icon: "✓" },
+  { href: "/rentura/events",      label: "Timeline",     icon: "◎" },
   { href: "/rentura/financials",  label: "Financials",   icon: "£" },
   { href: "/rentura/documents",   label: "Documents",    icon: "📄" },
   { href: "/rentura/tax",         label: "Tax",          icon: "%" },

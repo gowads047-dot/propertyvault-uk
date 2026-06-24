@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import type { RenturaProperty, RenturaMaintenance, MaintenanceUrgency, MaintenanceStatus, MaintenanceCategory } from "@/lib/rentura/types";
@@ -320,21 +321,11 @@ export default function MaintenancePage() {
   );
 
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex" }}>
+      <style>{`body > header, body > footer { display: none !important; }`}</style>
+      <RenturaSidebar />
 
-      {/* Nav */}
-      <nav style={{ borderBottom: `1px solid ${BORDER}`, padding: "12px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", background: BG, position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13 }}>
-          <Link href="/rentura/dashboard" style={{ color: INK2, textDecoration: "none", fontWeight: 500 }}>Dashboard</Link>
-          <span style={{ color: INK2 }}>›</span>
-          <span style={{ color: INK, fontWeight: 800 }}>Maintenance</span>
-        </div>
-        <button onClick={() => { setForm(BLANK_FORM); setEditIssue(null); setShowAdd(true); }}
-          style={{ background: CTA, color: "white", fontWeight: 700, fontSize: 13, padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit" }}>
-          + Log issue
-        </button>
-      </nav>
-
+      <div style={{ flex: 1, overflowY: "auto" }}>
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "0 24px 80px" }}>
 
         {/* Header */}
@@ -517,6 +508,7 @@ export default function MaintenancePage() {
           </div>
         </Modal>
       )}
+      </div>
     </div>
   );
 }

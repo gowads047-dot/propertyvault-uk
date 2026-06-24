@@ -83,6 +83,14 @@ export default function DashboardPage() {
             <p className="text-sm" style={{ color: "var(--h-muted)" }}>Welcome back, {profile?.name}</p>
           </div>
           <div className="flex gap-3">
+            <Link href="/makan/messages" className="h-btn h-btn-secondary text-sm !py-2 relative">
+              Messages
+              {enquiries.filter(e => !e.read).length > 0 && (
+                <span style={{ position: "absolute", top: -6, right: -6, fontSize: 9, fontWeight: 800, background: "var(--h-accent)", color: "white", borderRadius: 20, padding: "1px 5px", minWidth: 16, textAlign: "center" }}>
+                  {enquiries.filter(e => !e.read).length}
+                </span>
+              )}
+            </Link>
             <Link href="/makan/list" className="h-btn h-btn-primary text-sm !py-2">New listing</Link>
             <Link href="/makan/settings" className="h-btn h-btn-secondary text-sm !py-2">Settings</Link>
             <button onClick={signOut} className="h-btn h-btn-secondary text-sm !py-2">Sign out</button>

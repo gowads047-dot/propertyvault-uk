@@ -35,17 +35,25 @@ export interface RenturaEvent {
 
 export interface RenturaTenant {
   id: string;
-  property_id: string;
+  property_id: string | null;
   user_id: string;
-  name: string;
+  // new columns (added via rentura-patch.sql)
+  first_name: string;
+  last_name: string;
+  tenancy_start: string | null;
+  tenancy_end: string | null;
+  status: "active" | "pending" | "notice" | "former";
+  deposit_held: boolean;
+  // legacy columns kept for dashboard compatibility
+  name?: string;
+  move_in_date?: string | null;
+  move_out_date?: string | null;
+  is_current?: boolean;
   email: string | null;
   phone: string | null;
   monthly_rent: number | null;
-  move_in_date: string | null;
-  move_out_date: string | null;
   deposit_amount: number | null;
   deposit_scheme: string | null;
-  is_current: boolean;
   created_at: string;
 }
 

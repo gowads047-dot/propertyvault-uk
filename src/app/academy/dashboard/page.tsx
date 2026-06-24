@@ -37,16 +37,41 @@ const ROAD_STAGES = [
   "Create Sustainable Business",
 ];
 
+type Enrollment = {
+  id: string;
+  course_id: string;
+  enrolled_at: string;
+  completed_at: string | null;
+  course: { title: string; slug: string; lesson_count: number; duration_hrs: number } | null;
+  completed_lessons: number;
+};
+
 export default function AcademyDashboard() {
   const { user, profile } = useAuth();
   const [memberData, setMemberData] = useState<{ status: string; stripe_customer_id?: string } | null>(null);
+  const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [checkingAccess, setCheckingAccess] = useState(true);
-  const [points] = useState(50); // starter points
+  const [points] = useState(50);
 
   useEffect(() => {
     if (!user) { setCheckingAccess(false); return; }
-    supabase.from("academy_members").select("*").eq("user_id", user.id).single()
-      .then(({ data }) => { setMemberData(data); setCheckingAccess(false); });
+    Promise.all([
+      supabase.from("academy_members").select("*").eq("user_id", user.id).single(),
+      supabase.from("academy_enrollments")
+        .select("id, course_id, enrolled_at, completed_at, course:academy_courses(title, slug, lesson_count, duration_hrs)")
+        .eq("user_id", user.id)
+        .order("enrolled_at", { ascending: false }),
+      supabase.from("academy_progress")
+        .select("course_id, completed")
+        .eq("user_id", user.id)
+        .eq("completed", true),
+    ]).then(([{ data: member }, { data: enr }, { data: prog }]) => {
+      setMemberData(member);
+      const progressByCourse: Record<string, number> = {};
+      (prog || []).forEach((p: any) => { progressByCourse[p.course_id] = (progressByCourse[p.course_id] || 0) + 1; });
+      setEnrollments((enr || []).map((e: any) => ({ ...e, completed_lessons: progressByCourse[e.course_id] || 0 })));
+      setCheckingAccess(false);
+    });
   }, [user]);
 
   const currentLevel = LEVELS.reduce((acc, l) => (points >= l.min ? l : acc), LEVELS[0]);
@@ -158,25 +183,33 @@ export default function AcademyDashboard() {
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 24 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <h2 style={{ fontWeight: 800, fontSize: 16 }}>🎓 Your Courses</h2>
-              <Link href="/academy/courses" style={{ fontSize: 12, color: "#d4af37", textDecoration: "none", fontWeight: 600 }}>View all →</Link>
+              <Link href="/academy/courses" style={{ fontSize: 12, color: "#d4af37", textDecoration: "none", fontWeight: 600 }}>Browse all →</Link>
             </div>
+            {enrollments.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "20px 0" }}>
+                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 12 }}>No courses enrolled yet.</p>
+                <Link href="/academy/courses" style={{ background: "#d4af37", color: "#0a0f1e", fontWeight: 700, fontSize: 12, padding: "8px 18px", borderRadius: 8, textDecoration: "none" }}>Browse courses →</Link>
+              </div>
+            ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { title: "7-Day First Deal Challenge", progress: 14, modules: 7 },
-                { title: "Deal Sourcing Masterclass", progress: 0, modules: 12 },
-              ].map(c => (
-                <div key={c.title} style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "12px 14px" }}>
+              {enrollments.map(e => {
+                const total = e.course?.lesson_count || 1;
+                const pct = Math.round((e.completed_lessons / total) * 100);
+                return (
+                <Link key={e.id} href={`/academy/courses/${e.course?.slug}`} style={{ textDecoration: "none", display: "block", background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "12px 14px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                    <span style={{ fontSize: 13, fontWeight: 600 }}>{c.title}</span>
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{c.progress}%</span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: "white" }}>{e.course?.title || "Course"}</span>
+                    <span style={{ fontSize: 11, color: pct === 100 ? "#22c55e" : "rgba(255,255,255,0.4)" }}>{pct === 100 ? "✓ Complete" : `${pct}%`}</span>
                   </div>
                   <div style={{ height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3 }}>
-                    <div style={{ height: "100%", width: `${c.progress}%`, background: "#d4af37", borderRadius: 3 }} />
+                    <div style={{ height: "100%", width: `${pct}%`, background: pct === 100 ? "#22c55e" : "#d4af37", borderRadius: 3 }} />
                   </div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{c.modules} modules</div>
-                </div>
-              ))}
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{e.completed_lessons}/{e.course?.lesson_count || 0} lessons · {e.course?.duration_hrs}h</div>
+                </Link>
+                );
+              })}
             </div>
+            )}
           </div>
 
           {/* DOWNLOADS */}

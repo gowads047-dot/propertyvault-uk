@@ -459,6 +459,7 @@ export default function MakanPage() {
                       {l.featured && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "var(--h-accent)", color: "white" }}>Featured</span>}
                       {l.listing_type === "sale" && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "var(--h-accent)", color: "white" }}>For Sale</span>}
                       {l.video_url && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "rgba(0,0,0,0.65)", color: "white" }}>🎬</span>}
+                      {(l as any).verified && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "rgba(34,197,94,0.85)", color: "white" }}>✓ Verified</span>}
                     </div>
 
                     <div style={{ position: "absolute", top: 10, right: 10 }}>

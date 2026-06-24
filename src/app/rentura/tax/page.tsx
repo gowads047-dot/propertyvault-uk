@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import type { RenturaProperty, RenturaMortgage } from "@/lib/rentura/types";
@@ -241,20 +242,11 @@ export default function TaxIntelligence() {
   const yearProgress = Math.min(100, Math.round((daysIntoYear / daysInYear) * 100));
 
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex" }}>
+      <style>{`body > header, body > footer { display: none !important; }`}</style>
+      <RenturaSidebar />
 
-      {/* Nav */}
-      <nav style={{ borderBottom: `1px solid ${BORDER}`, padding: "12px 28px", display: "flex", alignItems: "center", justifyContent: "space-between", background: BG, position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13 }}>
-          <Link href="/rentura/dashboard" style={{ color: INK2, textDecoration: "none", fontWeight: 500 }}>Dashboard</Link>
-          <span style={{ color: INK2 }}>›</span>
-          <span style={{ color: INK, fontWeight: 800 }}>Tax Intelligence</span>
-        </div>
-        <span style={{ fontSize: 11, fontWeight: 700, background: "rgba(217,119,6,0.1)", border: "1px solid rgba(217,119,6,0.2)", color: "#d97706", padding: "3px 10px", borderRadius: 20 }}>
-          ~ Estimate · Not tax advice
-        </span>
-      </nav>
-
+      <div style={{ flex: 1, overflowY: "auto" }}>
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px 80px" }}>
 
         {/* Header */}
@@ -488,6 +480,7 @@ export default function TaxIntelligence() {
       </div>
 
       <style>{`@media print { nav, .no-print { display: none !important; } }`}</style>
+      </div>
     </div>
   );
 }
