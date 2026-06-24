@@ -67,13 +67,29 @@ export default function AcademyJoinPage() {
 
           {done ? (
             <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
-              <h2 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 10 }}>You&apos;re in.</h2>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 24 }}>
-                Check your email to confirm your account, then log in to access the Academy.
+              <div style={{ fontSize: 48, marginBottom: 16 }}>✉️</div>
+              <h2 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 14 }}>Check your inbox.</h2>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.8, marginBottom: 24 }}>
+                We&apos;ve sent a confirmation link to <strong style={{ color: "rgba(255,255,255,0.8)" }}>{email}</strong>.<br />
+                Click the link in the email to activate your account,<br />then come back here and log in.
               </p>
-              <Link href="/academy/dashboard" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 15, padding: "13px 32px", borderRadius: 12, textDecoration: "none" }}>
-                Go to Dashboard →
+              <div style={{ background: "rgba(212,175,55,0.07)", border: "1px solid rgba(212,175,55,0.18)", borderRadius: 12, padding: "14px 18px", marginBottom: 24, textAlign: "left" }}>
+                {[
+                  ["1", "Open the confirmation email from PropertyVault UK"],
+                  ["2", "Click the \"Confirm your account\" link"],
+                  ["3", "Return here and log in — you're good to go"],
+                ].map(([n, step]) => (
+                  <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
+                    <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.2)", color: "#d4af37", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>{step}</span>
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 18 }}>
+                Can&apos;t find it? Check your spam folder or wait 2 minutes.
+              </p>
+              <Link href="/makan/auth" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>
+                Log in once confirmed →
               </Link>
             </div>
           ) : (
