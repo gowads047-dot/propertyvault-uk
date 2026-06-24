@@ -1,13 +1,7 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
-const SYSTEM = `You are Rentura, a conversational property management OS for UK landlords. You help landlords log events, track compliance, and manage their portfolio through natural language — no forms, no menus.
-
-## DEMO PORTFOLIO
-Assume the user has these properties (reference by name if mentioned):
-- 14 Maple Street, Birmingham B11 2TU — 2-bed house, tenant James Ward, rent £950/mo, Barclays mortgage 2.89% fixed expires Aug 2026
-- 22 Park Road, Nottingham NG1 4AB — 3-bed house, tenant Sarah Chen, rent £795/mo (below market ~£920), NatWest 3.2% fixed expires Nov 2026
-- Flat 4, Grove Lane, Derby DE1 1AA — 1-bed flat, tenant Mohammed Ali, rent £650/mo, Gas Safety expires in 9 days
+const BASE_SYSTEM = `You are Rentura, a conversational property management OS for UK landlords. You help landlords log events, track compliance, and manage their portfolio through natural language — no forms, no menus.
 
 ## YOUR TASK
 1. Detect what the landlord is telling you
@@ -41,7 +35,8 @@ Return ONLY valid JSON — no markdown, no explanation, nothing else.
   "confirmationSummary": "null or string — shown only when needsConfirmation true",
   "completed": false,
   "actions": [{ "type": "string", "label": "string", "value": "string", "color": "#hex" }],
-  "followUp": "null or string — one smart suggested next message for the user to click"
+  "followUp": "null or string — one smart suggested next message for the user to click",
+  "property_match": "null or string — the address of the property this event belongs to, exactly as given in the PORTFOLIO section"
 }
 
 ## ACTION CHIP COLOURS
@@ -67,12 +62,27 @@ Return ONLY valid JSON — no markdown, no explanation, nothing else.
 Direct, concise, professional. No affirmations ("Great!", "Sure!", "Of course!"). No filler. Get to the point. Short sentences. Sound like a smart colleague, not a chatbot.`;
 
 type ConvMessage = { role: "user" | "assistant"; content: string };
+type PropertySummary = { id: string; address: string; nickname: string | null; property_type: string; bedrooms: number | null };
+
+function buildSystem(properties: PropertySummary[]): string {
+  let portfolio = "";
+  if (properties.length === 0) {
+    portfolio = "\n## PORTFOLIO\nThis landlord has no properties yet. If they try to log an event, remind them to add a property first.";
+  } else {
+    portfolio = "\n## PORTFOLIO (reference these exact addresses for property_match)\n" +
+      properties.map(p =>
+        `- ${p.address}${p.nickname ? ` (known as "${p.nickname}")` : ""} — ${p.bedrooms ?? "?"}bed ${p.property_type}`
+      ).join("\n");
+  }
+  return BASE_SYSTEM + portfolio;
+}
 
 export async function POST(req: Request) {
   try {
-    const { history, userInput } = await req.json() as {
+    const { history, userInput, properties = [] } = await req.json() as {
       history: ConvMessage[];
       userInput: string;
+      properties: PropertySummary[];
     };
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
@@ -81,6 +91,8 @@ export async function POST(req: Request) {
       ...history,
       { role: "user", content: userInput },
     ];
+
+    const SYSTEM = buildSystem(properties);
 
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
@@ -107,6 +119,7 @@ export async function POST(req: Request) {
         completed: false,
         actions: [],
         followUp: null,
+        property_match: null,
       };
     }
 
