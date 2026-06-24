@@ -8,9 +8,8 @@ const mainLinks = [
   { href: "/makan", label: "Makan", sub: "Property listings" },
   { href: "/calculators", label: "Calculators", sub: "" },
   { href: "/templates", label: "Templates", sub: "" },
-  { href: "/areas", label: "Areas", sub: "" },
   { href: "/blog", label: "Blog", sub: "" },
-  { href: "/academy", label: "Academy", sub: "£14.99/mo", highlight: true },
+  { href: "/academy", label: "Academy", sub: "Free Sign Up", highlight: true },
 ];
 
 const mobileLinks = [
@@ -89,7 +88,7 @@ export function Header() {
                   className="ml-1 px-3.5 py-2 text-[13px] font-bold rounded-lg transition-all flex flex-col items-center leading-none"
                   style={{ background: "#c9a84c", color: "#0f1b36" }}>
                   <span>Academy</span>
-                  <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>£14.99/mo</span>
+                  <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>Free Sign Up</span>
                 </Link>
               ) : (
                 <Link key={link.href} href={link.href}
@@ -128,7 +127,7 @@ export function Header() {
             <Link href="/academy" onClick={() => setMobileOpen(false)}
               className="block text-center text-sm font-bold py-2.5 px-4 rounded-full transition-colors"
               style={{ background: "#c9a84c", color: "#0f1b36" }}>
-              🎓 Academy — £14.99/month →
+              🎓 Academy — Free Sign Up →
             </Link>
             {mobileLinks.map((group) => (
               <div key={group.heading}>
