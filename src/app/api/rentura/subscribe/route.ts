@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         },
       ],
       metadata: { userId: userId || "", platform: "rentura" },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/dashboard?subscribed=1`,
+      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/dashboard?success=1`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura?cancelled=1`,
       subscription_data: {
         metadata: { userId: userId || "", platform: "rentura" },

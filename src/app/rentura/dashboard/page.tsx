@@ -250,11 +250,18 @@ function AlertCard({ alert }: { alert: Alert }) {
 
 function SubscribedBanner() {
   const searchParams = useSearchParams();
-  if (searchParams.get("subscribed") !== "1") return null;
+  const isNew = searchParams.get("subscribed") === "1" || searchParams.get("success") === "1";
+  if (!isNew) return null;
   return (
-    <div style={{ background: "rgba(34,197,94,0.1)", borderBottom: "1px solid rgba(34,197,94,0.2)", padding: "12px 28px", display: "flex", alignItems: "center", gap: 12 }}>
-      <span style={{ fontSize: 18 }}>🎉</span>
-      <p style={{ fontSize: 14, fontWeight: 700, color: "#22c55e" }}>Welcome to Rentura! Your subscription is active — you have full access.</p>
+    <div style={{ background: "linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05))", borderBottom: "1px solid rgba(201,168,76,0.2)", padding: "16px 28px", display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
+      <span style={{ fontSize: 24 }}>🎉</span>
+      <div>
+        <p style={{ fontSize: 15, fontWeight: 800, color: "#0f1b2d", marginBottom: 2 }}>Welcome to Rentura — your Property Passport platform is ready.</p>
+        <p style={{ fontSize: 13, color: "rgba(15,27,45,0.5)" }}>Start by adding your first property. Your invoice has been sent to your email.</p>
+      </div>
+      <Link href="/rentura/properties/new" style={{ marginLeft: "auto", background: "#0f1b2d", color: "white", fontWeight: 700, fontSize: 13, padding: "9px 20px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap" }}>
+        Add first property →
+      </Link>
     </div>
   );
 }
