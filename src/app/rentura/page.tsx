@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
@@ -416,6 +416,125 @@ function SectionBadge({ n, label }: { n: string; label: string }) {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+// ─── Property Passport Card ───────────────────────────────────────────────────
+
+function PassportCard() {
+  const GOLD = "#b8962e";
+  const GREEN = "#16a34a";
+  const BLUE = "#2563eb";
+  const AMBER = "#d97706";
+  return (
+    <div style={{ background: "white", borderRadius: 20, padding: "28px 30px", boxShadow: "0 32px 80px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.06)", width: "100%", maxWidth: 480, border: "1px solid rgba(0,0,0,0.05)" }}>
+      {/* Header */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, paddingBottom: 18, borderBottom: "1px solid rgba(17,17,17,0.07)" }}>
+        <div>
+          <p style={{ fontSize: 9, fontWeight: 900, color: GOLD, letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 5 }}>Property Passport™</p>
+          <p style={{ fontSize: 16, fontWeight: 900, color: "#111", letterSpacing: "-0.02em", lineHeight: 1.2 }}>22 Park Road</p>
+          <p style={{ fontSize: 13, fontWeight: 500, color: "#111" }}>Birmingham B15 2GH</p>
+          <p style={{ fontSize: 11, color: "rgba(17,17,17,0.42)", marginTop: 3 }}>3-bed semi · Purchased Mar 2019</p>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ background: "#0f1728", borderRadius: 10, padding: "5px 12px", display: "inline-block" }}>
+            <p style={{ fontSize: 18, fontWeight: 900, color: "white", letterSpacing: "-0.02em" }}>94</p>
+            <p style={{ fontSize: 8, color: "rgba(255,255,255,0.55)", fontWeight: 600 }}>HEALTH</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Three columns */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 20, paddingBottom: 18, borderBottom: "1px solid rgba(17,17,17,0.07)" }}>
+        <div>
+          <p style={{ fontSize: 8, fontWeight: 800, color: GOLD, textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 7 }}>Mortgage</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#111" }}>NatWest</p>
+          <p style={{ fontSize: 11, color: "rgba(17,17,17,0.5)" }}>3.2% fixed</p>
+          <p style={{ fontSize: 11, color: AMBER, fontWeight: 700, marginTop: 5 }}>Exp Sep 2025</p>
+        </div>
+        <div>
+          <p style={{ fontSize: 8, fontWeight: 800, color: GREEN, textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 7 }}>Tenant</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#111" }}>S. Mitchell</p>
+          <p style={{ fontSize: 11, color: "rgba(17,17,17,0.5)" }}>Since Jan 2024</p>
+          <p style={{ fontSize: 11, color: GREEN, fontWeight: 700, marginTop: 5 }}>£1,150 / mo</p>
+        </div>
+        <div>
+          <p style={{ fontSize: 8, fontWeight: 800, color: BLUE, textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 7 }}>Returns</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#111" }}>5.6% yield</p>
+          <p style={{ fontSize: 11, color: "rgba(17,17,17,0.5)" }}>LTV: 58%</p>
+          <p style={{ fontSize: 11, color: BLUE, fontWeight: 700, marginTop: 5 }}>£412 CF/mo</p>
+        </div>
+      </div>
+
+      {/* Compliance */}
+      <div style={{ marginBottom: 18, paddingBottom: 18, borderBottom: "1px solid rgba(17,17,17,0.07)" }}>
+        <p style={{ fontSize: 8, fontWeight: 800, color: "#0891b2", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 10 }}>Compliance</p>
+        {[
+          { name: "Gas Safety Certificate", expiry: "Dec 2025", ok: true, trust: "verified" },
+          { name: "EPC (Rating D)", expiry: "Mar 2027", ok: true, trust: "verified" },
+          { name: "EICR", expiry: "Aug 2029", ok: true, trust: "verified" },
+          { name: "Boiler Service", expiry: "34 days", ok: false, trust: "confirmed" },
+        ].map(c => (
+          <div key={c.name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 6, marginBottom: 6, borderBottom: "1px solid rgba(17,17,17,0.04)" }}>
+            <span style={{ fontSize: 11, color: "#111" }}>{c.name}</span>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <span style={{ fontSize: 10, fontWeight: 700, color: c.ok ? GREEN : AMBER }}>{c.expiry}</span>
+              <span style={{ fontSize: 8, fontWeight: 800, padding: "1px 6px", borderRadius: 4, background: c.trust === "verified" ? "rgba(22,163,74,0.09)" : "rgba(217,119,6,0.09)", color: c.trust === "verified" ? GREEN : AMBER }}>{c.trust}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Timeline */}
+      <div>
+        <p style={{ fontSize: 8, fontWeight: 800, color: "rgba(17,17,17,0.35)", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 9 }}>Recent Timeline</p>
+        {[
+          { date: "Jun 24", text: "Rent received — £1,150", color: GREEN },
+          { date: "Jun 3",  text: "Maintenance logged — broken fence", color: AMBER },
+          { date: "May 24", text: "Rent received — £1,150", color: GREEN },
+        ].map(e => (
+          <div key={e.date} style={{ display: "flex", gap: 10, marginBottom: 7, alignItems: "flex-start" }}>
+            <span style={{ fontSize: 10, color: "rgba(17,17,17,0.32)", whiteSpace: "nowrap", marginTop: 1, minWidth: 42 }}>{e.date}</span>
+            <span style={{ fontSize: 11, color: "#111" }}>{e.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Daily Briefing Mockup ─────────────────────────────────────────────────────
+
+function BriefingCard() {
+  return (
+    <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "28px 30px", maxWidth: 520, width: "100%" }}>
+      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.38)", marginBottom: 4 }}>{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
+      <p style={{ fontSize: 20, fontWeight: 900, color: "white", letterSpacing: "-0.02em", marginBottom: 4 }}>Good morning, Nass.</p>
+      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>Here&apos;s what your portfolio needs today.</p>
+
+      <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
+        {[["94/100", "Portfolio Health"], ["3", "Properties"], ["£3,450", "Monthly Income"]].map(([val, lbl]) => (
+          <div key={lbl} style={{ flex: 1, background: "rgba(255,255,255,0.06)", borderRadius: 12, padding: "12px 14px" }}>
+            <p style={{ fontSize: 18, fontWeight: 900, color: "white", letterSpacing: "-0.02em" }}>{val}</p>
+            <p style={{ fontSize: 10, color: "rgba(255,255,255,0.38)", fontWeight: 600 }}>{lbl}</p>
+          </div>
+        ))}
+      </div>
+
+      <p style={{ fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,0.35)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>Today&apos;s Priorities</p>
+      {[
+        { icon: "⚠", text: "Gas Safety at Flat 4 expires in 9 days", urgency: "#dc2626" },
+        { icon: "⚡", text: "Barclays mortgage at Maple St expires in 41 days", urgency: "#d97706" },
+        { icon: "£", text: "Park Road rent is £120/mo below market — opportunity", urgency: "#16a34a" },
+      ].map(p => (
+        <div key={p.text} style={{ display: "flex", gap: 10, alignItems: "flex-start", padding: "10px 14px", borderRadius: 10, background: "rgba(255,255,255,0.04)", marginBottom: 8, border: `1px solid ${p.urgency}22` }}>
+          <span style={{ fontSize: 14, marginTop: 1 }}>{p.icon}</span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.8)", lineHeight: 1.45 }}>{p.text}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default function RenturaPage() {
   const INITIAL_MSG: Message = { role: "ai", text: "Hi. Tell me what happened — or ask me anything about your portfolio. I'll handle the rest.", ts: "now" };
 
@@ -545,40 +664,101 @@ export default function RenturaPage() {
       </nav>
 
       {/* ── §01 HERO ─────────────────────────────────────────────────────────── */}
-      <section style={{ position: "relative", zIndex: 1, padding: "88px 32px 80px", maxWidth: 1020, margin: "0 auto" }}>
-        <div ref={f1.ref} style={f1.style}>
-          <SectionBadge n="01" label="The Idea" />
-          <h1 style={{ fontSize: "clamp(52px, 8vw, 102px)", fontWeight: 900, lineHeight: 0.92, letterSpacing: "-0.04em", marginBottom: 30, fontFamily: "var(--font-family-heading)", color: INK, maxWidth: 800 }}>
-            Tell Rentura<br />what happened.
-          </h1>
-        </div>
-        <div ref={f2.ref} style={f2.style}>
-          <p style={{ fontSize: "clamp(18px, 2.2vw, 24px)", color: INK2, maxWidth: 560, lineHeight: 1.55, marginBottom: 40, fontWeight: 400 }}>
-            No forms. No menus. No dashboards.<br />Just say what happened — Rentura handles the rest.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0 48px", marginBottom: 48, borderTop: `1px solid ${BORDER}`, paddingTop: 24 }}>
-            {[["Type", "Conversational Property OS"], ["Built for", "UK Landlords"], ["Input", "Natural language · voice · email · WhatsApp"], ["Price", "£9.99 / month · Early Access"]].map(([k, v]) => (
-              <div key={k} style={{ marginBottom: 12 }}>
-                <p style={{ fontSize: 10, fontWeight: 700, color: INK3, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{k}</p>
-                <p style={{ fontSize: 14, color: INK2, fontWeight: 500 }}>{v}</p>
+      <section style={{ position: "relative", zIndex: 1, padding: "72px 32px 64px", maxWidth: 1080, margin: "0 auto" }}>
+        <div className="rentura-hero-grid">
+          {/* Left: headline */}
+          <div ref={f1.ref} style={f1.style}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, border: `1px solid ${BORDER_MED}`, borderRadius: 100, padding: "5px 16px", fontSize: 9, fontWeight: 800, color: INK3, letterSpacing: "0.16em", textTransform: "uppercase" as const, marginBottom: 28 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", display: "inline-block" }} />
+              The Operating System for Property Investors
+            </div>
+            <h1 style={{ fontSize: "clamp(38px, 5.5vw, 68px)", fontWeight: 900, lineHeight: 1.0, letterSpacing: "-0.04em", marginBottom: 22, fontFamily: "var(--font-family-heading)", color: INK }}>
+              Your entire property<br />business. Finally<br />organised.
+            </h1>
+            <div ref={f2.ref} style={f2.style}>
+              <p style={{ fontSize: "clamp(16px, 1.6vw, 19px)", color: INK2, maxWidth: 460, lineHeight: 1.65, marginBottom: 32, fontWeight: 400 }}>
+                Property Passport™ gives every property a living record — mortgage, tenant, compliance, maintenance, tax. One place. Always current. Trusted.
+              </p>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 36 }}>
+                {user ? (
+                  <Link href="/rentura/dashboard" style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 15, padding: "13px 22px", borderRadius: 10, textDecoration: "none", letterSpacing: "-0.01em" }}>
+                    Open Dashboard →
+                  </Link>
+                ) : (
+                  <>
+                    <Link href="/rentura/auth" style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 15, padding: "13px 22px", borderRadius: 10, textDecoration: "none", letterSpacing: "-0.01em" }}>
+                      Create your Property Passport →
+                    </Link>
+                    <a href="#demo" style={{ background: "transparent", color: INK, fontWeight: 700, fontSize: 15, padding: "13px 20px", borderRadius: 10, textDecoration: "none", border: `1px solid ${BORDER_MED}`, letterSpacing: "-0.01em" }}>
+                      See it live ↓
+                    </a>
+                  </>
+                )}
               </div>
-            ))}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px 28px", paddingTop: 20, borderTop: `1px solid ${BORDER}` }}>
+                {[["Property Passport™", "One living record per property"], ["Daily Briefing", "What matters — every morning"], ["£9.99 / month", "Early access price, locked forever"]].map(([k, v]) => (
+                  <div key={k}>
+                    <p style={{ fontSize: 9, fontWeight: 800, color: INK3, textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: 2 }}>{k}</p>
+                    <p style={{ fontSize: 12, color: INK2 }}>{v}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-        <div ref={f3.ref} style={f3.style}>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a href="#ask" style={{ display: "inline-block", background: CTA, color: "white", fontWeight: 700, fontSize: 14, padding: "13px 32px", borderRadius: 10, textDecoration: "none", letterSpacing: "-0.01em" }}>Try the demo →</a>
-            <a href="#compare" style={{ display: "inline-block", background: "transparent", border: `1px solid ${BORDER_MED}`, color: INK2, fontWeight: 600, fontSize: 14, padding: "13px 32px", borderRadius: 10, textDecoration: "none" }}>See how it compares</a>
+          {/* Right: Passport Card */}
+          <div ref={f3.ref} style={{ ...f3.style, display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
+            <PassportCard />
           </div>
         </div>
       </section>
 
-      {/* ── §02 DEMO ─────────────────────────────────────────────────────────── */}
-      <section id="ask" style={{ position: "relative", zIndex: 1, padding: "0 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
-        <div ref={f4.ref} style={{ ...f4.style, borderTop: `1px solid ${BORDER}`, paddingTop: 72 }}>
-          <SectionBadge n="02" label="The Demo" />
-          <h2 style={{ fontSize: "clamp(30px, 5vw, 56px)", fontWeight: 900, letterSpacing: "-0.035em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1 }}>Ask Rentura™</h2>
-          <p style={{ fontSize: 15, color: INK2, marginBottom: 28, maxWidth: 480 }}>Type what happened — or pick a prompt. This is a live demo; a real portfolio would power every response.</p>
+      {/* ── §02 PROBLEM ──────────────────────────────────────────────────────── */}
+      <section style={{ background: CHAT_BG, padding: "80px 32px 88px", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+          <div ref={f4.ref} style={f4.style}>
+            <p style={{ fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,0.28)", letterSpacing: "0.18em", textTransform: "uppercase" as const, marginBottom: 18 }}>§02 · The Problem</p>
+            <h2 style={{ fontSize: "clamp(26px, 3.8vw, 52px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", maxWidth: 660 }}>
+              Right now, you&apos;re running a property business from memory.
+            </h2>
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", marginBottom: 44, maxWidth: 480 }}>
+              The admin isn&apos;t the hard part. The hard part is knowing what you&apos;ve missed.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: 10, marginBottom: 40 }}>
+              {[
+                { icon: "📊", title: "Spreadsheets", body: "That haven't been updated since last month. Yields wrong. Dates forgotten." },
+                { icon: "📧", title: "Email threads", body: "Contractor quotes, renewal notices, tenant messages — all in your inbox, unsorted." },
+                { icon: "📱", title: "WhatsApp", body: "Contractor said £200. Did it end up £240? You can't find the message." },
+                { icon: "🗂️", title: "Folders", body: "Gas cert in Downloads, EPC in Google Drive, EICR on a USB stick from 2021." },
+                { icon: "🧠", title: "Memory", body: "When does the Barclays fix expire? When did you last review rent at Park Road?" },
+                { icon: "⏰", title: "Missed deadlines", body: "The Gas Safety renewal. The rent review. The HMRC deadline you rushed in a panic." },
+              ].map(c => (
+                <div key={c.title} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "18px 20px" }}>
+                  <div style={{ fontSize: 20, marginBottom: 8 }}>{c.icon}</div>
+                  <p style={{ fontSize: 13, fontWeight: 800, color: "rgba(255,255,255,0.82)", marginBottom: 5 }}>{c.title}</p>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.38)", lineHeight: 1.6 }}>{c.body}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "22px 26px", maxWidth: 600 }}>
+              <p style={{ fontSize: 16, color: "rgba(255,255,255,0.78)", lineHeight: 1.75, fontFamily: "Georgia, serif", fontStyle: "italic" }}>
+                &ldquo;The average UK landlord spends 12 hours a month on property admin. Most of it is finding information they already have.&rdquo;
+              </p>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", marginTop: 10, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" as const }}>Rentura was built to end this.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── §03 DEMO ─────────────────────────────────────────────────────────── */}
+      <section id="demo" style={{ position: "relative", zIndex: 1, padding: "72px 32px 88px", maxWidth: 1020, margin: "0 auto" }}>
+        <div ref={f5.ref} style={{ ...f5.style, borderTop: `1px solid ${BORDER}`, paddingTop: 64 }}>
+          <SectionBadge n="03" label="Ask Rentura™ — Live Demo" />
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.02 }}>
+            Don&apos;t take our word for it.
+          </h2>
+          <p style={{ fontSize: 15, color: INK2, marginBottom: 28, maxWidth: 480 }}>
+            Tell it what happened — or try a prompt. This is a real AI engine. A full portfolio would power every response.
+          </p>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 20 }}>
             {DEMO_PROMPTS.map(p => (
@@ -676,58 +856,14 @@ export default function RenturaPage() {
         </div>
       </section>
 
-      {/* ── §03 DIFFERENCE ───────────────────────────────────────────────────── */}
-      <section style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
-        <div ref={f5.ref} style={f5.style}>
-          <SectionBadge n="03" label="The Difference" />
-          <div className="rentura-grid-2">
-            <div>
-              <h2 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.02, marginBottom: 16, fontFamily: "var(--font-family-heading)", color: INK }}>One sentence.<br />Everything done.</h2>
-              <p style={{ fontSize: 15, color: INK2, lineHeight: 1.75, marginBottom: 24 }}>Every other platform asks you to navigate menus and fill forms. Rentura asks you what happened — and silently handles the rest.</p>
-              <div style={{ borderLeft: `2px solid ${BORDER_MED}`, paddingLeft: 18 }}>
-                {["7 steps replaced by 1 sentence", "Records updated automatically", "Tax, compliance and alerts — included", "No training required"].map(txt => (
-                  <p key={txt} style={{ fontSize: 14, color: INK2, marginBottom: 10, lineHeight: 1.55 }}>— {txt}</p>
-                ))}
-              </div>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.12)", borderRadius: 16, padding: "20px 22px" }}>
-                <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(220,38,38,0.6)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Traditional software</p>
-                {["Navigate to a menu", "Find the right form", "Fill multiple fields", "Link to the right property", "Save and confirm", "Repeat for each record"].map((s, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, marginBottom: 8, alignItems: "center" }}>
-                    <span style={{ fontSize: 10, color: "rgba(220,38,38,0.5)", background: "rgba(220,38,38,0.08)", borderRadius: "50%", width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontWeight: 700 }}>{i + 1}</span>
-                    <span style={{ fontSize: 13, color: "rgba(17,17,17,0.45)" }}>{s}</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(220,38,38,0.1)" }}>
-                  <p style={{ fontSize: 12, color: "rgba(220,38,38,0.7)", fontWeight: 600 }}>7 steps. 4 minutes. Landlord gives up.</p>
-                </div>
-              </div>
-              <div style={{ background: "rgba(255,255,255,0.65)", border: `1px solid ${BORDER_MED}`, borderRadius: 16, padding: "20px 22px" }}>
-                <p style={{ fontSize: 10, fontWeight: 700, color: INK3, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Rentura</p>
-                <p style={{ fontSize: 15, color: INK, fontFamily: "Georgia, serif", fontStyle: "italic", lineHeight: 1.6, marginBottom: 14 }}>&ldquo;Tenant paid £1,100 today.&rdquo;</p>
-                {["Payment logged", "Rent ledger updated", "Arrears cleared", "Receipt created", "Tax record updated"].map(item => (
-                  <div key={item} style={{ display: "flex", gap: 8, marginBottom: 7, alignItems: "center" }}>
-                    <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#16a34a", flexShrink: 0 }} />
-                    <span style={{ fontSize: 13, color: INK2 }}>{item}</span>
-                    <span style={{ fontSize: 10, color: INK3, marginLeft: "auto", fontWeight: 600 }}>Auto</span>
-                  </div>
-                ))}
-                <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${BORDER}` }}>
-                  <p style={{ fontSize: 12, color: "#16a34a", fontWeight: 700 }}>1 sentence. 8 seconds. Everything done.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── §04 WORKFLOWS ────────────────────────────────────────────────────── */}
-      <section id="compare" style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
+      {/* ── §04 BEFORE / AFTER ───────────────────────────────────────────────── */}
+      <section id="compare" style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 88px", maxWidth: 1020, margin: "0 auto" }}>
         <div ref={f6.ref} style={f6.style}>
-          <SectionBadge n="04" label="Every Workflow" />
-          <h2 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, letterSpacing: "-0.035em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.02 }}>Every task. Simplified.</h2>
-          <p style={{ fontSize: 15, color: INK2, marginBottom: 36, maxWidth: 480 }}>Tap any workflow to see the comparison.</p>
+          <SectionBadge n="04" label="Before and After" />
+          <h2 style={{ fontSize: "clamp(26px, 3.8vw, 48px)", fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.02 }}>
+            Every task. Simplified.
+          </h2>
+          <p style={{ fontSize: 15, color: INK2, marginBottom: 32, maxWidth: 480 }}>Tap any workflow below to see exactly what changes.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {COMPARISONS.map((c, i) => (
               <div key={i} style={{ background: openCompare === i ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.38)", border: `1px solid ${openCompare === i ? BORDER_MED : BORDER}`, borderRadius: 14, overflow: "hidden", transition: "all 0.2s" }}>
@@ -738,11 +874,11 @@ export default function RenturaPage() {
                 {openCompare === i && (
                   <div style={{ padding: "0 22px 22px" }} className="rentura-compare-grid">
                     <div style={{ background: "rgba(220,38,38,0.04)", border: "1px solid rgba(220,38,38,0.1)", borderRadius: 12, padding: "14px 16px" }}>
-                      <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(220,38,38,0.55)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Traditional</p>
+                      <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(220,38,38,0.55)", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: 8 }}>Before</p>
                       <p style={{ fontSize: 13, color: INK2, lineHeight: 1.7 }}>{c.old}</p>
                     </div>
                     <div style={{ background: "rgba(255,255,255,0.65)", border: `1px solid ${BORDER_MED}`, borderRadius: 12, padding: "14px 16px" }}>
-                      <p style={{ fontSize: 10, fontWeight: 700, color: INK3, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Rentura</p>
+                      <p style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: 8 }}>With Rentura</p>
                       <p style={{ fontSize: 13, color: INK, lineHeight: 1.7, fontFamily: "Georgia, serif", fontStyle: "italic" }}>{c.rentura}</p>
                     </div>
                   </div>
@@ -753,68 +889,32 @@ export default function RenturaPage() {
         </div>
       </section>
 
-      {/* ── §05 INPUT CHANNELS ───────────────────────────────────────────────── */}
-      <section style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
+      {/* ── §05 CAPABILITIES ─────────────────────────────────────────────────── */}
+      <section style={{ background: CHAT_BG, padding: "80px 32px 88px", position: "relative", zIndex: 1 }}>
         <div ref={f7.ref} style={f7.style}>
-          <SectionBadge n="05" label="How You Speak To It" />
-          <h2 style={{ fontSize: "clamp(28px, 3.8vw, 48px)", fontWeight: 900, letterSpacing: "-0.035em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.02 }}>Any way you want.</h2>
-          <p style={{ fontSize: 15, color: INK2, marginBottom: 40, maxWidth: 480 }}>Type. Talk. Forward an email. Upload a document. WhatsApp. Rentura reads it all.</p>
-          <div className="rentura-feature-grid">
-            {[
-              { icon: "💬", title: "Type it", eg: '"Boiler replaced at Flat 3. Cost £650."', result: "Job logged · Expense filed · Tax noted" },
-              { icon: "🎤", title: "Say it", eg: '"Tenant at B11TU reported a leaking radiator. Dave visiting Friday, estimated £200."', result: "Issue created · Contractor task added · Cost estimated" },
-              { icon: "📧", title: "Forward an email", eg: "Forward your gas certificate renewal email to Rentura", result: "Document read · Record updated · Reminder set" },
-              { icon: "📄", title: "Upload a document", eg: "Upload a mortgage statement, invoice, or tenancy agreement", result: "AI extracts all data · No manual entry required" },
-              { icon: "📱", title: "WhatsApp", eg: "Forward a contractor quote, tenant message, or invoice", result: "Filed to property · Workflow triggered" },
-              { icon: "📸", title: "Photo or video", eg: "Tenant photos of damage, receipts, certificates", result: "AI reads image · Data extracted · Record updated" },
-            ].map(ch => (
-              <div key={ch.title} style={{ background: CARD_BG, border: `1px solid ${BORDER}`, borderRadius: 16, padding: "22px 20px" }}>
-                <div style={{ fontSize: 24, marginBottom: 12 }}>{ch.icon}</div>
-                <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 10, color: INK }}>{ch.title}</h3>
-                <div style={{ background: "rgba(17,17,17,0.04)", borderRadius: 10, padding: "10px 14px", marginBottom: 12 }}>
-                  <p style={{ fontSize: 12, color: INK3, lineHeight: 1.6, fontFamily: "Georgia, serif", fontStyle: "italic" }}>&ldquo;{ch.eg}&rdquo;</p>
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                  {ch.result.split(" · ").map(r => <span key={r} style={{ fontSize: 10, fontWeight: 700, padding: "2px 9px", borderRadius: 6, background: "rgba(17,17,17,0.06)", color: INK2 }}>{r}</span>)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── §06 CO-PILOT ─────────────────────────────────────────────────────── */}
-      <section style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
-        <div ref={f8.ref} style={f8.style}>
-          <SectionBadge n="06" label="The Co-Pilot" />
-          <div className="rentura-grid-2">
-            <div>
-              <h2 style={{ fontSize: "clamp(28px, 3.8vw, 46px)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.02, marginBottom: 16, fontFamily: "var(--font-family-heading)", color: INK }}>It tells you first.</h2>
-              <p style={{ fontSize: 15, color: INK2, lineHeight: 1.75, marginBottom: 16 }}>You don&apos;t need to ask. Rentura watches your portfolio constantly and surfaces issues before they become problems.</p>
-              <p style={{ fontSize: 13, color: INK3, lineHeight: 1.7 }}>Tap any alert below to see exactly what Rentura would do.</p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {PROACTIVE_ALERTS.map((alert, i) => (
-                <div key={i} style={{ background: CARD_BG, border: `1px solid ${openAlert === i ? BORDER_MED : BORDER}`, borderRadius: 14, overflow: "hidden", transition: "all 0.2s" }}>
-                  <button onClick={() => setOpenAlert(openAlert === i ? null : i)} style={{ width: W, background: "none", border: "none", padding: "14px 18px", display: "flex", gap: 12, alignItems: "flex-start", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
-                    <span style={{ fontSize: 17, flexShrink: 0, marginTop: 1 }}>{alert.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <span style={{ fontSize: 10, fontWeight: 700, color: INK, background: "rgba(17,17,17,0.07)", padding: "2px 9px", borderRadius: 20 }}>{alert.type}</span>
-                        <span style={{ fontSize: 10, color: INK3, fontWeight: 600 }}>{alert.urgency}</span>
-                      </div>
-                      <p style={{ fontSize: 13, color: INK2, lineHeight: 1.6 }}>{alert.msg}</p>
-                    </div>
-                    <span style={{ fontSize: 14, color: INK3, fontWeight: 300, flexShrink: 0, marginTop: 2 }}>{openAlert === i ? "−" : "+"}</span>
-                  </button>
-                  {openAlert === i && (
-                    <div style={{ padding: "0 18px 18px", paddingLeft: 48 }}>
-                      <div style={{ background: "rgba(17,17,17,0.04)", borderRadius: 12, padding: "12px 16px", borderLeft: `3px solid rgba(17,17,17,0.15)` }}>
-                        <p style={{ fontSize: 11, fontWeight: 700, color: INK3, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>What Rentura would do</p>
-                        <p style={{ fontSize: 13, color: INK2, lineHeight: 1.7 }}>{alert.detail}</p>
-                      </div>
-                    </div>
-                  )}
+          <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+            <p style={{ fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,0.28)", letterSpacing: "0.18em", textTransform: "uppercase" as const, marginBottom: 18 }}>§05 · Capabilities</p>
+            <h2 style={{ fontSize: "clamp(26px, 3.8vw, 48px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", maxWidth: 600 }}>
+              Everything your portfolio needs. One operating system.
+            </h2>
+            <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", marginBottom: 44, maxWidth: 480 }}>
+              Not a feature list — a complete operating layer for your property business.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 14 }}>
+              {[
+                { num: "01", title: "Compliance Engine", body: "Gas Safety, EPC, EICR, HMO licence, deposit protection — tracked automatically. 90-day reminders before anything expires. Never miss a legal obligation.", accent: "#b8962e" },
+                { num: "02", title: "Tax Intelligence", body: "Every rent payment, repair cost, mortgage interest, and void period categorised for self-assessment. Live liability estimate. Missing receipt alerts.", accent: "#16a34a" },
+                { num: "03", title: "Mortgage Intelligence", body: "Rate expiry alerts. SVR reversion cost calculator. Broker brief generator. Never get caught when your fix ends.", accent: "#2563eb" },
+                { num: "04", title: "Maintenance Command", body: "Report an issue, assign a contractor, track cost, log to property history and tax record — all from one sentence.", accent: "#dc2626" },
+                { num: "05", title: "Tenant Management", body: "Rent ledger, arrears tracking, deposit status, tenancy end dates, Section 13 notices, reference records. Every tenant. Every property.", accent: "#0891b2" },
+                { num: "06", title: "Portfolio Intelligence", body: "Yield by property. Cash flow. LTV. Return on capital. Which properties are working. Which aren't. What to do about it.", accent: "#7c3aed" },
+              ].map(c => (
+                <div key={c.num} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "24px 22px" }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 14 }}>
+                    <span style={{ fontSize: 9, fontWeight: 900, color: c.accent, letterSpacing: "0.1em", marginTop: 2 }}>{c.num}</span>
+                    <h3 style={{ fontSize: 16, fontWeight: 900, color: "white", letterSpacing: "-0.02em", lineHeight: 1.2 }}>{c.title}</h3>
+                  </div>
+                  <p style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", lineHeight: 1.7 }}>{c.body}</p>
                 </div>
               ))}
             </div>
@@ -822,67 +922,115 @@ export default function RenturaPage() {
         </div>
       </section>
 
-      {/* ── §07 PROPERTY MEMORY ──────────────────────────────────────────────── */}
-      <section style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 1020, margin: "0 auto" }}>
-        <div ref={f9.ref} style={f9.style}>
-          <SectionBadge n="07" label="Property Memory" />
+      {/* ── §06 DAILY BRIEFING ───────────────────────────────────────────────── */}
+      <section style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 80px", maxWidth: 1080, margin: "0 auto" }}>
+        <div ref={f8.ref} style={f8.style}>
           <div className="rentura-grid-2">
             <div>
-              <h2 style={{ fontSize: "clamp(28px, 3.8vw, 46px)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.02, marginBottom: 16, fontFamily: "var(--font-family-heading)", color: INK }}>Every property<br />remembers everything.</h2>
-              <p style={{ fontSize: 15, color: INK2, lineHeight: 1.75, marginBottom: 20 }}>Every conversation, every contractor visit, every payment, every inspection — permanently attached to the property record.</p>
-              <p style={{ fontSize: 13, color: INK3, lineHeight: 1.7 }}>Sell the property? History exports with it. Switch letting agents? Your data stays with you. Cancel? Full data export — no lock-in.</p>
-            </div>
-            <div style={{ background: CARD_BG, border: `1px solid ${BORDER_MED}`, borderRadius: 18, overflow: "hidden" }}>
-              <div style={{ padding: "16px 20px", borderBottom: `1px solid ${BORDER}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div>
-                  <p style={{ fontSize: 14, fontWeight: 800, color: INK }}>22 Oak Avenue, Manchester</p>
-                  <p style={{ fontSize: 11, color: INK3 }}>Property Timeline</p>
-                </div>
-                <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: "rgba(22,163,74,0.1)", color: "#16a34a" }}>Live</span>
-              </div>
-              <div style={{ padding: "16px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
+              <SectionBadge n="06" label="Daily Briefing" />
+              <h2 style={{ fontSize: "clamp(26px, 3.5vw, 46px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, color: INK, marginBottom: 16, fontFamily: "var(--font-family-heading)" }}>
+                Rentura doesn&apos;t wait for you to ask.
+              </h2>
+              <p style={{ fontSize: 15, color: INK2, lineHeight: 1.75, marginBottom: 20, maxWidth: 440 }}>
+                Every morning, Rentura scans your portfolio and surfaces exactly what needs your attention — before your first coffee.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {[
-                  { date: "Jun 2026", event: "Rent reviewed — increased £900 → £975", color: "#16a34a" },
-                  { date: "May 2026", event: "EICR certificate uploaded and filed", color: "#b8962e" },
-                  { date: "Mar 2026", event: "Tenant reported damp — resolved in 6 days", color: "#2563eb" },
-                  { date: "Jan 2026", event: "Mortgage reviewed — retained Barclays 4.2%", color: "#7c3aed" },
-                  { date: "Nov 2025", event: "New tenant moved in — AST signed digitally", color: "#0891b2" },
-                  { date: "Jul 2025", event: "Property purchased — £195,000", color: "#b8962e" },
-                ].map((item, i) => (
-                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 4 }}>
-                      <div style={{ width: 7, height: 7, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
-                      {i < 5 && <div style={{ width: 1, height: 22, background: BORDER_MED, marginTop: 3 }} />}
-                    </div>
-                    <div>
-                      <p style={{ fontSize: 10, color: INK3, marginBottom: 2, fontWeight: 600 }}>{item.date}</p>
-                      <p style={{ fontSize: 13, color: INK2 }}>{item.event}</p>
-                    </div>
+                  "Expiring certificates — flagged 90 days early",
+                  "Mortgage fix-rate endings — 120 days before reversion",
+                  "Rent reviews — when market rate has moved",
+                  "Stalled maintenance — if a job is taking too long",
+                  "Arrears alerts — the morning after a missed payment",
+                ].map(item => (
+                  <div key={item} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ color: "#16a34a", fontWeight: 900, fontSize: 12, marginTop: 2, flexShrink: 0 }}>→</span>
+                    <span style={{ fontSize: 14, color: INK2, lineHeight: 1.55 }}>{item}</span>
                   </div>
                 ))}
               </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start" }}>
+              <BriefingCard />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── §08 EARLY ACCESS ─────────────────────────────────────────────────── */}
-      <section id="early-access" style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 100px", maxWidth: 640, margin: "0 auto" }}>
-        <SectionBadge n="08" label="Early Access" />
-        <h2 style={{ fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 900, letterSpacing: "-0.035em", marginBottom: 12, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.02 }}>£9.99 / month.<br />Cancel anytime.</h2>
-        <p style={{ fontSize: 15, color: INK2, marginBottom: 36, maxWidth: 440 }}>Early access members lock in this price permanently. No contract. No setup fee.</p>
+      {/* ── §07 TRUST ────────────────────────────────────────────────────────── */}
+      <section style={{ background: CHAT_BG, padding: "72px 32px 80px", position: "relative", zIndex: 1 }}>
+        <div ref={f9.ref} style={f9.style}>
+          <div style={{ maxWidth: 1080, margin: "0 auto" }}>
+            <p style={{ fontSize: 9, fontWeight: 800, color: "rgba(255,255,255,0.28)", letterSpacing: "0.18em", textTransform: "uppercase" as const, marginBottom: 18 }}>§07 · Trust</p>
+            <h2 style={{ fontSize: "clamp(26px, 3.5vw, 46px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", maxWidth: 560 }}>
+              No guesswork. Three levels of certainty.
+            </h2>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", marginBottom: 44, maxWidth: 480 }}>
+              Rentura is always transparent about what it knows — and how it knows it.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+              {[
+                {
+                  badge: "Verified",
+                  color: "#16a34a",
+                  bg: "rgba(22,163,74,0.07)",
+                  border: "rgba(22,163,74,0.2)",
+                  desc: "Comes from an official document you uploaded — mortgage statement, Gas Safety certificate, EPC, tenancy agreement. Rentura extracted it and filed it.",
+                  eg: "Gas Safety valid until Dec 2025",
+                },
+                {
+                  badge: "Confirmed",
+                  color: "#b8962e",
+                  bg: "rgba(184,150,46,0.07)",
+                  border: "rgba(184,150,46,0.2)",
+                  desc: "You told Rentura directly — or approved what it extracted. You checked it. You stand behind it.",
+                  eg: "Rent: £1,150/month · Confirmed by you",
+                },
+                {
+                  badge: "Suggested",
+                  color: "#2563eb",
+                  bg: "rgba(37,99,235,0.07)",
+                  border: "rgba(37,99,235,0.2)",
+                  desc: "Rentura's estimate, clearly labelled. Based on market data, industry averages, or pattern matching. Easy to upgrade to Confirmed with one click.",
+                  eg: "Est. yield: 5.6% · Based on rental market data",
+                },
+              ].map(t => (
+                <div key={t.badge} style={{ background: t.bg, border: `1px solid ${t.border}`, borderRadius: 16, padding: "24px 22px" }}>
+                  <span style={{ display: "inline-block", fontSize: 10, fontWeight: 900, color: t.color, background: t.bg, border: `1px solid ${t.border}`, borderRadius: 6, padding: "3px 10px", letterSpacing: "0.08em", marginBottom: 14 }}>{t.badge}</span>
+                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.65, marginBottom: 16 }}>{t.desc}</p>
+                  <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 9, padding: "10px 13px" }}>
+                    <p style={{ fontSize: 12, color: t.color, fontWeight: 600 }}>{t.eg}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── §08 PRICING ──────────────────────────────────────────────────────── */}
+      <section id="pricing" style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "72px 32px 88px", maxWidth: 720, margin: "0 auto" }}>
+        <SectionBadge n="08" label="Pricing" />
+        <h2 style={{ fontSize: "clamp(28px, 4vw, 52px)", fontWeight: 900, letterSpacing: "-0.04em", marginBottom: 8, fontFamily: "var(--font-family-heading)", color: INK, lineHeight: 1.0 }}>
+          £9.99 / month.<br />Everything included.
+        </h2>
+        <p style={{ fontSize: 15, color: INK2, marginBottom: 36, maxWidth: 440 }}>Early access price — locked forever for landlords who join during beta. No contract. No setup fee.</p>
         <div style={{ background: CARD_BG, border: `1px solid ${BORDER_MED}`, borderRadius: 20, padding: "32px 30px" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
-            {[["Ask Rentura™", "Natural language — the only interface you need"], ["Voice notes", "Talk to Rentura on the move"], ["Email forwarding", "Forward certificates, invoices, statements"], ["Document AI", "Upload anything — AI extracts everything"], ["Property Memory", "Complete history for every property, forever"], ["AI Co-Pilot", "Proactive alerts before you notice a problem"], ["Maintenance workflow", "AI triage, contractor dispatch, full tracking"], ["Tax Intelligence", "Live liability estimate, receipt capture, expense tagging"], ["Mortgage Intelligence", "Expiry alerts, rate comparisons, broker brief generation"], ["Compliance Engine", "Never miss a certificate, licence, or deadline"], ["Tenant Portal", "Premium self-service portal for your tenants"], ["WhatsApp integration", "Forward anything, get updates anywhere"]].map(([feature, desc]) => (
-              <div key={feature} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <span style={{ color: "#16a34a", fontWeight: 800, flexShrink: 0, fontSize: 13, marginTop: 1 }}>✓</span>
-                <div><span style={{ fontSize: 14, color: INK, fontWeight: 600 }}>{feature}</span><span style={{ fontSize: 13, color: INK3, marginLeft: 6 }}>— {desc}</span></div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", marginBottom: 28 }}>
+            {[
+              "Property Passport™", "Daily Briefing",
+              "Compliance Engine", "Tax Intelligence",
+              "Mortgage Intelligence", "Maintenance Command",
+              "Tenant Management", "Portfolio Intelligence",
+              "Document vault", "Full data export",
+              "Natural language AI", "Unlimited properties",
+            ].map(f => (
+              <div key={f} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <span style={{ color: "#16a34a", fontWeight: 800, fontSize: 12, flexShrink: 0 }}>✓</span>
+                <span style={{ fontSize: 13, color: INK2 }}>{f}</span>
               </div>
             ))}
           </div>
-
           {user ? (
-            /* Logged-in: go straight to the product */
             <div style={{ textAlign: "center" }}>
               <Link href="/rentura/dashboard" style={{ display: "block", background: CTA, color: "white", fontWeight: 800, fontSize: 16, padding: "17px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.02em", marginBottom: 14 }}>
                 Open Dashboard →
@@ -899,14 +1047,38 @@ export default function RenturaPage() {
               </Link>
             </div>
           ) : (
-            /* Not logged in: skip the waitlist, go straight to sign up */
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <Link href="/rentura/auth" style={{ display: "block", textAlign: "center", background: CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "16px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.01em" }}>
                 Create your Property Passport →
               </Link>
               <p style={{ fontSize: 11, color: INK3, textAlign: "center", lineHeight: 1.7 }}>
-                Free to start · No credit card required · Early access price locked in permanently
+                Free to start · No credit card required · Early access price locked forever
               </p>
+            </div>
+          )}
+        </div>
+        <p style={{ fontSize: 12, color: INK3, marginTop: 16, textAlign: "center" }}>14-day money-back guarantee. Cancel anytime. No questions asked.</p>
+      </section>
+
+      {/* ── §09 FINAL CTA ────────────────────────────────────────────────────── */}
+      <section style={{ background: CTA, padding: "88px 32px", position: "relative", zIndex: 1 }}>
+        <div style={{ maxWidth: 680, margin: "0 auto", textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(28px, 5vw, 60px)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.02, color: "white", marginBottom: 20, fontFamily: "var(--font-family-heading)" }}>
+            Your portfolio deserves better than a spreadsheet.
+          </h2>
+          <p style={{ fontSize: 17, color: "rgba(255,255,255,0.55)", marginBottom: 36, maxWidth: 440, margin: "0 auto 36px" }}>
+            One place for everything. Always current. Always trusted. Always yours.
+          </p>
+          {user ? (
+            <Link href="/rentura/dashboard" style={{ display: "inline-block", background: "white", color: CTA, fontWeight: 800, fontSize: 16, padding: "17px 36px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.02em" }}>
+              Open Dashboard →
+            </Link>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+              <Link href="/rentura/auth" style={{ display: "inline-block", background: "white", color: CTA, fontWeight: 800, fontSize: 16, padding: "17px 36px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.02em" }}>
+                Create your Property Passport →
+              </Link>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>Free to start · Takes 2 minutes · No credit card required</p>
             </div>
           )}
         </div>
@@ -916,7 +1088,7 @@ export default function RenturaPage() {
       <footer style={{ position: "relative", zIndex: 1, borderTop: `1px solid ${BORDER}`, padding: "32px", display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <p style={{ fontSize: 15, fontWeight: 900, letterSpacing: "-0.03em", color: INK, marginBottom: 3 }}>Rentura</p>
-          <p style={{ fontSize: 11, color: INK3 }}>by PropertyVault UK · Conversational OS for Landlords</p>
+          <p style={{ fontSize: 11, color: INK3 }}>by PropertyVault UK · The Operating System for Property Investors</p>
         </div>
         <p style={{ fontSize: 11, color: INK3, maxWidth: 460, lineHeight: 1.65, textAlign: "right" }}>
           Nothing on this page constitutes financial, legal, tax, or mortgage advice. AI-generated insights are indicative only. © {new Date().getFullYear()} PropertyVault UK.
@@ -929,16 +1101,15 @@ export default function RenturaPage() {
       </footer>
 
       <style>{`
-        /* Hide global header/footer on this page */
         body > header { display: none !important; }
         body > footer { display: none !important; }
 
-        /* Responsive grids */
+        .rentura-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
         .rentura-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
         .rentura-compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .rentura-feature-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 16px; }
 
         @media (max-width: 768px) {
+          .rentura-hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
           .rentura-grid-2 { grid-template-columns: 1fr !important; gap: 32px !important; }
           .rentura-compare-grid { grid-template-columns: 1fr !important; gap: 10px !important; }
           section { padding-left: 20px !important; padding-right: 20px !important; }
@@ -946,13 +1117,11 @@ export default function RenturaPage() {
           footer { padding: 24px 20px !important; }
         }
 
-        /* Dark mode — force cream regardless of system preference */
         @media (prefers-color-scheme: dark) {
           div[style*="background: #eceae2"],
           div[style*="background:#eceae2"] { background: #eceae2 !important; color: #111111 !important; }
         }
 
-        /* Bounce animation */
         @keyframes bounce {
           0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
           40% { transform: translateY(-5px); opacity: 1; }
