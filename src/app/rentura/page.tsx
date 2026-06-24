@@ -7,8 +7,16 @@ import { supabase } from "@/lib/supabase";
 // ─── Conversation engine ──────────────────────────────────────────────────────
 
 type Action = { type: string; label: string; value: string; color: string };
-type Message = { role: "user" | "ai"; text: string; actions?: Action[]; ts?: string };
+type Message = {
+  role: "user" | "ai";
+  text: string;
+  actions?: Action[];
+  ts?: string;
+  awaitingConfirm?: boolean;
+  followUp?: string | null;
+};
 type ConversationContext = { intent: string; gathered: Record<string, string>; pendingField: string } | null;
+type APIHistory = { role: "user" | "assistant"; content: string }[];
 
 // Required fields per intent, in collection order
 const FIELD_ORDER: Record<string, string[]> = {
@@ -297,6 +305,16 @@ function parseMessage(input: string, ctx: ConversationContext): { reply: string;
   return { reply: `Got it — I've noted that. In the live platform, Rentura would parse your message, update the right records, set any reminders, and flag anything that needs your attention. No forms. No menus. Just this.`, actions: [{ type: "ai", label: "Intent recognised", value: "Processing", color: "#2563eb" }, { type: "action", label: "Records would update", value: "Automatically", color: "#16a34a" }], newContext: null };
 }
 
+async function callRenturaAPI(history: APIHistory, userInput: string) {
+  const res = await fetch("/api/rentura/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ history, userInput }),
+  });
+  if (!res.ok) throw new Error("API error");
+  return res.json();
+}
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const DEMO_PROMPTS = [
@@ -401,6 +419,7 @@ export default function RenturaPage() {
   const INITIAL_MSG: Message = { role: "ai", text: "Hi. Tell me what happened — or ask me anything about your portfolio. I'll handle the rest.", ts: "now" };
 
   const [messages, setMessages] = useState<Message[]>([INITIAL_MSG]);
+  const [apiHistory, setApiHistory] = useState<APIHistory>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [chatContext, setChatContext] = useState<ConversationContext>(null);
@@ -418,21 +437,49 @@ export default function RenturaPage() {
   const [eaDone, setEaDone] = useState(false);
   const [eaError, setEaError] = useState("");
 
-  const send = useCallback((text: string) => {
+  const send = useCallback(async (text: string) => {
     if (!text.trim() || loading) return;
-    setMessages(m => [...m, { role: "user", text: text.trim(), ts: "just now" }]);
+    const userMsg: Message = { role: "user", text: text.trim(), ts: "just now" };
+    setMessages(m => [...m, userMsg]);
     setInput("");
     setLoading(true);
-    setTimeout(() => {
+
+    // Clear awaitingConfirm on any prior message
+    setMessages(m => m.map((msg, i) => i < m.length - 1 ? { ...msg, awaitingConfirm: false } : msg));
+
+    try {
+      const result = await callRenturaAPI(apiHistory, text.trim());
+
+      const newHistory: APIHistory = [
+        ...apiHistory,
+        { role: "user", content: text.trim() },
+        { role: "assistant", content: result.reply },
+      ];
+      setApiHistory(newHistory);
+
+      const aiMsg: Message = {
+        role: "ai",
+        text: result.reply,
+        actions: result.actions || [],
+        ts: "just now",
+        awaitingConfirm: result.needsConfirmation === true,
+        followUp: result.completed ? result.followUp : null,
+      };
+      setMessages(m => [...m, aiMsg]);
+      setChatContext(null);
+    } catch {
+      // Fallback to keyword engine if API unavailable
       const { reply, actions, newContext } = parseMessage(text, chatContext);
+      setApiHistory(h => [...h, { role: "user", content: text.trim() }, { role: "assistant", content: reply }]);
       setMessages(m => [...m, { role: "ai", text: reply, actions, ts: "just now" }]);
       setChatContext(newContext);
-      setLoading(false);
-    }, 800 + Math.random() * 400);
-  }, [loading, chatContext]);
+    }
+    setLoading(false);
+  }, [loading, chatContext, apiHistory]);
 
   const resetChat = useCallback(() => {
     setMessages([INITIAL_MSG]);
+    setApiHistory([]);
     setInput("");
     setChatContext(null);
     inputRef.current?.focus();
@@ -564,6 +611,28 @@ export default function RenturaPage() {
                           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.44)" }}>{a.value}</span>
                         </div>
                       ))}
+                    </div>
+                  )}
+
+                  {/* Confirmation buttons */}
+                  {msg.awaitingConfirm && idx === messages.length - 1 && (
+                    <div style={{ display: "flex", gap: 8, maxWidth: "82%" }}>
+                      <button onClick={() => send("Yes, confirmed — save that.")} style={{ flex: 1, background: "#16a34a", border: "none", borderRadius: 10, padding: "9px 16px", color: "white", fontWeight: 700, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
+                        Confirm & Save ✓
+                      </button>
+                      <button onClick={() => send("Actually, let me change something.")} style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, padding: "9px 16px", color: "rgba(255,255,255,0.55)", fontWeight: 600, fontSize: 13, cursor: "pointer", fontFamily: "inherit" }}>
+                        Edit
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Follow-up suggestion */}
+                  {msg.followUp && (
+                    <div style={{ maxWidth: "82%" }}>
+                      <p style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 600 }}>Suggested next step</p>
+                      <button onClick={() => send(msg.followUp!)} style={{ background: "rgba(255,255,255,0.04)", border: "1px dashed rgba(255,255,255,0.12)", borderRadius: 10, padding: "8px 14px", color: "rgba(255,255,255,0.5)", fontSize: 12, cursor: "pointer", fontFamily: "inherit", textAlign: "left", lineHeight: 1.5 }}>
+                        {msg.followUp} →
+                      </button>
                     </div>
                   )}
                 </div>
