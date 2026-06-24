@@ -242,10 +242,15 @@ export default function LessonPage() {
           {!next && isDone && (
             <div style={{ marginTop: 32, background: "rgba(201,168,76,0.06)", border: `1px solid rgba(201,168,76,0.2)`, borderRadius: 16, padding: "28px 32px", textAlign: "center" }}>
               <p style={{ fontSize: 22, fontWeight: 800, color: C.gold, marginBottom: 8 }}>Course complete!</p>
-              <p style={{ fontSize: 14, color: C.ink2, marginBottom: 20 }}>You have finished {course.title}. Your certificate is being generated.</p>
-              <Link href={`/academy/courses/${slug}`} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "10px 24px", borderRadius: 8, textDecoration: "none" }}>
-                Back to course overview
-              </Link>
+              <p style={{ fontSize: 14, color: C.ink2, marginBottom: 20 }}>You have finished {course.title}. Collect your certificate below.</p>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+                <Link href={`/academy/courses/${slug}/certificate`} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "10px 24px", borderRadius: 8, textDecoration: "none" }}>
+                  🏆 Get certificate
+                </Link>
+                <Link href={`/academy/courses/${slug}`} style={{ background: "rgba(255,255,255,0.08)", color: C.ink, fontWeight: 700, fontSize: 13, padding: "10px 24px", borderRadius: 8, textDecoration: "none" }}>
+                  Course overview
+                </Link>
+              </div>
             </div>
           )}
         </main>
