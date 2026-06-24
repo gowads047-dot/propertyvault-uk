@@ -9,7 +9,7 @@ const mainLinks = [
   { href: "/calculators", label: "Calculators", sub: "" },
   { href: "/templates", label: "Templates", sub: "" },
   { href: "/blog", label: "Blog", sub: "" },
-  { href: "/academy", label: "Academy", sub: "Free Sign Up", highlight: true },
+  { href: "/rentura", label: "Rentura", sub: "Early Access", highlight: true },
 ];
 
 const mobileLinks = [
@@ -87,8 +87,8 @@ export function Header() {
                 <Link key={link.href} href={link.href}
                   className="ml-1 px-3.5 py-2 text-[13px] font-bold rounded-lg transition-all flex flex-col items-center leading-none"
                   style={{ background: "#c9a84c", color: "#0f1b36" }}>
-                  <span>Academy</span>
-                  <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>Free Sign Up</span>
+                  <span>Rentura</span>
+                  <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>Early Access</span>
                 </Link>
               ) : (
                 <Link key={link.href} href={link.href}
@@ -127,7 +127,7 @@ export function Header() {
             <Link href="/academy" onClick={() => setMobileOpen(false)}
               className="block text-center text-sm font-bold py-2.5 px-4 rounded-full transition-colors"
               style={{ background: "#c9a84c", color: "#0f1b36" }}>
-              🎓 Academy — Free Sign Up →
+              Rentura — Early Access →
             </Link>
             {mobileLinks.map((group) => (
               <div key={group.heading}>
