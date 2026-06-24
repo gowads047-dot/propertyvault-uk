@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
@@ -47,40 +47,62 @@ type Enrollment = {
 };
 
 export default function AcademyDashboard() {
-  const { user, profile } = useAuth();
-  const [memberData, setMemberData] = useState<{ status: string; stripe_customer_id?: string; access_until?: string | null } | null>(null);
+  const { user } = useAuth();
+  const [memberData, setMemberData] = useState<{ status: string; name?: string; stripe_customer_id?: string; access_until?: string | null } | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [checkingAccess, setCheckingAccess] = useState(true);
+  const [justPaid, setJustPaid] = useState(false);
+  const [pollCount, setPollCount] = useState(0);
   const [points] = useState(50);
 
-  useEffect(() => {
-    if (!user) { setCheckingAccess(false); return; }
-    Promise.all([
-      supabase.from("academy_members").select("*").eq("user_id", user.id).single(),
+  const loadData = useCallback(async (userId: string) => {
+    const [{ data: member }, { data: enr }, { data: prog }] = await Promise.all([
+      supabase.from("academy_members").select("*").eq("user_id", userId).maybeSingle(),
       supabase.from("academy_enrollments")
         .select("id, course_id, enrolled_at, completed_at, course:academy_courses(title, slug, lesson_count, duration_hrs)")
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .order("enrolled_at", { ascending: false }),
       supabase.from("academy_progress")
         .select("course_id, completed")
-        .eq("user_id", user.id)
+        .eq("user_id", userId)
         .eq("completed", true),
-    ]).then(([{ data: member }, { data: enr }, { data: prog }]) => {
-      setMemberData(member);
-      const progressByCourse: Record<string, number> = {};
-      (prog || []).forEach((p: any) => { progressByCourse[p.course_id] = (progressByCourse[p.course_id] || 0) + 1; });
-      setEnrollments((enr || []).map((e: any) => ({ ...e, completed_lessons: progressByCourse[e.course_id] || 0 })));
-      setCheckingAccess(false);
-    });
-  }, [user]);
+    ]);
+    setMemberData(member);
+    const progressByCourse: Record<string, number> = {};
+    (prog || []).forEach((p: any) => { progressByCourse[p.course_id] = (progressByCourse[p.course_id] || 0) + 1; });
+    setEnrollments((enr || []).map((e: any) => ({ ...e, completed_lessons: progressByCourse[e.course_id] || 0 })));
+    setCheckingAccess(false);
+    return member;
+  }, []);
+
+  useEffect(() => {
+    if (!user) { setCheckingAccess(false); return; }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("success") === "1") setJustPaid(true);
+    loadData(user.id);
+  }, [user, loadData]);
+
+  // Poll for webhook activation if user just paid but status not active yet
+  useEffect(() => {
+    if (!justPaid || !user) return;
+    const isActive = memberData?.status === "active" || memberData?.status === "trialing";
+    if (isActive || pollCount >= 8) return; // stop after ~16 seconds
+    const t = setTimeout(async () => {
+      await loadData(user.id);
+      setPollCount(c => c + 1);
+    }, 2000);
+    return () => clearTimeout(t);
+  }, [justPaid, memberData, pollCount, user, loadData]);
 
   const currentLevel = LEVELS.reduce((acc, l) => (points >= l.min ? l : acc), LEVELS[0]);
   const nextLevel = LEVELS[LEVELS.findIndex(l => l.name === currentLevel.name) + 1];
   const progress = nextLevel ? Math.round(((points - currentLevel.min) / (nextLevel.min - currentLevel.min)) * 100) : 100;
 
   if (checkingAccess) {
-    return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div style={{ color: "rgba(255,255,255,0.5)", fontSize: 16 }}>Loading your academy...</div>
+    return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 14 }}>
+      <div style={{ width: 40, height: 40, border: "3px solid rgba(212,175,55,0.2)", borderTopColor: "#d4af37", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 14 }}>Loading your academy…</div>
     </div>;
   }
 
@@ -101,6 +123,25 @@ export default function AcademyDashboard() {
   const hasAccess = isActive || inGracePeriod;
 
   if (!hasAccess) {
+    // Just paid — webhook hasn't fired yet, poll until active
+    if (justPaid) {
+      return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 16, padding: 24, textAlign: "center" }}>
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <div style={{ fontSize: 48 }}>🎉</div>
+        <h2 style={{ color: "white", fontSize: 26, fontWeight: 800 }}>Payment confirmed!</h2>
+        <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, maxWidth: 360 }}>Setting up your access — this takes just a moment.</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
+          <div style={{ width: 18, height: 18, border: "2px solid rgba(212,175,55,0.3)", borderTopColor: "#d4af37", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
+          Activating your membership…
+        </div>
+        {pollCount >= 8 && (
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
+            Taking longer than expected.{" "}
+            <button onClick={() => window.location.reload()} style={{ color: "#d4af37", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: 13, textDecoration: "underline" }}>Refresh</button>
+          </p>
+        )}
+      </div>;
+    }
     const wasSubscriber = memberData?.status === "cancelled";
     return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 20, padding: 24, textAlign: "center" }}>
       <div style={{ fontSize: 48 }}>{wasSubscriber ? "⏰" : "🎓"}</div>
@@ -163,7 +204,7 @@ export default function AcademyDashboard() {
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{profile?.name || user.email}</span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{memberData?.name || user.email}</span>
           <button onClick={openBillingPortal} style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "4px 10px", cursor: "pointer" }}>Manage Subscription</button>
         </div>
       </div>
@@ -174,9 +215,11 @@ export default function AcademyDashboard() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 20, marginBottom: 28, alignItems: "start" }}>
           <div>
             <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 4, fontFamily: "var(--font-family-heading)" }}>
-              Welcome back, {profile?.name?.split(" ")[0] || "Sourcer"} 👋
+              {justPaid ? "Welcome to the Academy" : "Welcome back"}, {memberData?.name?.split(" ")[0] || "Sourcer"} 👋
             </h1>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>Your deal sourcing journey continues here. Keep building.</p>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14 }}>
+              {justPaid ? "Your membership is active. Start with a course below." : "Your deal sourcing journey continues here. Keep building."}
+            </p>
           </div>
           <div style={{ background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 14, padding: "14px 20px", textAlign: "center", minWidth: 160 }}>
             <div style={{ fontSize: 24 }}>{currentLevel.icon}</div>
@@ -187,6 +230,22 @@ export default function AcademyDashboard() {
             </div>
           </div>
         </div>
+
+        {/* NEW MEMBER WELCOME */}
+        {justPaid && enrollments.length === 0 && (
+          <div style={{ background: "linear-gradient(135deg,rgba(212,175,55,0.12),rgba(212,175,55,0.04))", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 16, padding: 24, marginBottom: 24, display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+            <div style={{ fontSize: 40 }}>🎓</div>
+            <div style={{ flex: 1 }}>
+              <h3 style={{ fontWeight: 800, fontSize: 17, color: "#d4af37", marginBottom: 4 }}>You&apos;re in. Start your first course.</h3>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>Browse all courses, pick one that fits your strategy, and begin earning your first deal fee.</p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <Link href="/academy/courses" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 13, padding: "10px 22px", borderRadius: 10, textDecoration: "none" }}>Browse all courses →</Link>
+                <Link href="/academy/playbooks" style={{ background: "rgba(255,255,255,0.06)", color: "white", fontWeight: 600, fontSize: 13, padding: "10px 22px", borderRadius: 10, textDecoration: "none" }}>Explore playbooks</Link>
+                <Link href="/academy/downloads" style={{ background: "rgba(255,255,255,0.06)", color: "white", fontWeight: 600, fontSize: 13, padding: "10px 22px", borderRadius: 10, textDecoration: "none" }}>Downloads & templates</Link>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* QUICK START */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
