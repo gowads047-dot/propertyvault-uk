@@ -272,7 +272,7 @@ export default function RenturaDashboard() {
 
   // Auth guard
   useEffect(() => {
-    if (!authLoading && !user) router.push("/makan/auth?next=/rentura/dashboard");
+    if (!authLoading && !user) router.push("/rentura/auth?next=/rentura/dashboard");
   }, [authLoading, user, router]);
 
   // Load all portfolio data

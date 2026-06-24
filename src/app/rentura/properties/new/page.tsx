@@ -34,7 +34,7 @@ export default function NewProperty() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!user) return router.push("/makan/auth?next=/rentura/properties/new");
+    if (!user) return router.push("/rentura/auth?next=/rentura/properties/new");
     if (!form.address.trim()) { setError("Address is required."); return; }
 
     setSaving(true);

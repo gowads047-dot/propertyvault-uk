@@ -126,7 +126,7 @@ export default function PropertyPassport() {
   const [certForm, setCertForm] = useState({ certificate_type: "gas_safety", issue_date: "", expiry_date: "", notes: "" });
 
   useEffect(() => {
-    if (!user) { router.push("/makan/auth?next=/rentura/dashboard"); return; }
+    if (!user) { router.push("/rentura/auth?next=/rentura/dashboard"); return; }
     async function load() {
       setLoading(true);
       const [propRes, evtRes, tenRes, mortRes, compRes] = await Promise.all([
