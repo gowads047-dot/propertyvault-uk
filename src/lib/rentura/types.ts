@@ -108,9 +108,11 @@ export interface RenturaMaintenance {
   urgency: MaintenanceUrgency;
   status: MaintenanceStatus;
   contractor_name: string | null;
+  contractor_company: string | null;
   contractor_phone: string | null;
   contractor_email: string | null;
   estimated_cost: number | null;
+  quoted_cost: number | null;
   actual_cost: number | null;
   reported_date: string;
   scheduled_date: string | null;

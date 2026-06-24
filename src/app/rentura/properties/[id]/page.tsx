@@ -115,7 +115,9 @@ export default function PropertyPassport() {
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("overview");
   const [showAddMaint, setShowAddMaint] = useState(false);
-  const [maintForm, setMaintForm] = useState({ title: "", description: "", category: "other" as MaintenanceCategory, urgency: "routine" as MaintenanceUrgency, contractor_name: "", contractor_phone: "", estimated_cost: "" });
+  const [maintForm, setMaintForm] = useState({ title: "", description: "", category: "other" as MaintenanceCategory, urgency: "routine" as MaintenanceUrgency, contractor_name: "", contractor_company: "", contractor_phone: "", contractor_email: "", estimated_cost: "", quoted_cost: "" });
+  const [lastContractorNotify, setLastContractorNotify] = useState<{ issueTitle: string; contractorName: string; whatsappUrl: string; contractorEmail: string } | null>(null);
+  const [editingCost, setEditingCost] = useState<{ id: string; field: "quoted_cost" | "actual_cost"; value: string } | null>(null);
   const [maintSaving, setMaintSaving] = useState(false);
 
   // Modals
@@ -404,8 +406,11 @@ export default function PropertyPassport() {
       description: maintForm.description.trim() || null,
       category: maintForm.category, urgency: maintForm.urgency, status: "open",
       contractor_name: maintForm.contractor_name.trim() || null,
+      contractor_company: maintForm.contractor_company.trim() || null,
       contractor_phone: maintForm.contractor_phone.trim() || null,
+      contractor_email: maintForm.contractor_email.trim() || null,
       estimated_cost: maintForm.estimated_cost ? parseFloat(maintForm.estimated_cost) : null,
+      quoted_cost: maintForm.quoted_cost ? parseFloat(maintForm.quoted_cost) : null,
       reported_date: new Date().toISOString().split("T")[0],
     }).select().single();
     if (data) {
@@ -419,8 +424,36 @@ export default function PropertyPassport() {
       const evtRes = await supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false });
       setEvents(evtRes.data ?? []);
     }
-    setMaintForm({ title: "", description: "", category: "other", urgency: "routine", contractor_name: "", contractor_phone: "", estimated_cost: "" });
+    setMaintForm({ title: "", description: "", category: "other", urgency: "routine", contractor_name: "", contractor_company: "", contractor_phone: "", contractor_email: "", estimated_cost: "", quoted_cost: "" });
     setShowAddMaint(false);
+
+    // Show contractor notification popup if contractor contact details provided
+    if (data) {
+      const d = data as RenturaMaintenance;
+      const hasContractorContact = d.contractor_phone || d.contractor_email;
+      if (hasContractorContact && (d.contractor_name || d.contractor_company)) {
+        const shortAddress = property?.address?.split(",")[0] || "the property";
+        const contractorFirst = (d.contractor_name || d.contractor_company || "").split(" ")[0];
+        const urgLabel = MAINT_URGENCY[d.urgency]?.label || d.urgency;
+        const waText = encodeURIComponent(
+          `Hi ${contractorFirst}! 👋\n\n` +
+          `I have a ${urgLabel.toLowerCase()} maintenance job at ${shortAddress} and would love to get your help.\n\n` +
+          `🔧 *${d.title}*\n` +
+          (d.description ? `${d.description}\n\n` : "\n") +
+          `Could you let me know your availability and provide a quote?\n\n` +
+          `Thanks, ${property?.address ? shortAddress : "your landlord"}`
+        );
+        const waUrl = d.contractor_phone
+          ? `https://wa.me/${d.contractor_phone.replace(/\D/g, "")}?text=${waText}`
+          : `https://wa.me/?text=${waText}`;
+        setLastContractorNotify({
+          issueTitle: d.title,
+          contractorName: d.contractor_name || d.contractor_company || "contractor",
+          whatsappUrl: waUrl,
+          contractorEmail: d.contractor_email || "",
+        });
+      }
+    }
 
     // Notify current tenant if one exists with an email
     if (data) {
@@ -462,6 +495,24 @@ export default function PropertyPassport() {
     if (status === "resolved") update.resolved_date = new Date().toISOString().split("T")[0];
     const { data } = await supabase.from("rentura_maintenance").update(update).eq("id", issueId).select().single();
     if (data) setMaintenance(prev => prev.map(m => m.id === issueId ? data as RenturaMaintenance : m));
+  }
+
+  async function saveMaintCost(issueId: string, field: "quoted_cost" | "actual_cost", value: string) {
+    const num = parseFloat(value);
+    if (isNaN(num) || num < 0) { setEditingCost(null); return; }
+    const { data } = await supabase.from("rentura_maintenance").update({ [field]: num, updated_at: new Date().toISOString() }).eq("id", issueId).select().single();
+    if (data) {
+      setMaintenance(prev => prev.map(m => m.id === issueId ? data as RenturaMaintenance : m));
+      if (field === "actual_cost") {
+        await supabase.from("rentura_events").insert({
+          property_id: id, user_id: user!.id, event_type: "maintenance_cost",
+          title: `Maintenance cost logged — ${(data as RenturaMaintenance).title}`,
+          description: `£${num.toFixed(2)}`,
+          amount: num, trust_level: "confirmed", metadata: {}, event_date: new Date().toISOString().split("T")[0],
+        });
+      }
+    }
+    setEditingCost(null);
   }
 
   if (loading) {
@@ -887,28 +938,140 @@ export default function PropertyPassport() {
               maintenance.map(issue => {
                 const urg = MAINT_URGENCY[issue.urgency] ?? { label: issue.urgency, color: "#111" };
                 const sta = MAINT_STATUS[issue.status] ?? { label: issue.status, color: "#111" };
+                const hasContractor = issue.contractor_name || issue.contractor_company;
+                const shortAddr = property?.address?.split(",")[0] || "the property";
+                const contractorFirst = (issue.contractor_name || issue.contractor_company || "").split(" ")[0];
+                const urgLabel = urg.label.toLowerCase();
+                const waMsg = encodeURIComponent(
+                  `Hi ${contractorFirst}! 👋\n\nFollowing up on the ${urgLabel} job at ${shortAddr}:\n\n🔧 *${issue.title}*\n` +
+                  (issue.description ? `${issue.description}\n\n` : "\n") +
+                  `Could you confirm your availability and quote please? Thanks`
+                );
+                const waUrl = issue.contractor_phone ? `https://wa.me/${issue.contractor_phone.replace(/\D/g, "")}?text=${waMsg}` : null;
+
                 return (
-                  <div key={issue.id} style={{ background: "white", borderRadius: 12, padding: "16px 18px", border: `1px solid ${issue.urgency === "emergency" ? "rgba(220,38,38,0.3)" : BORDER}`, marginBottom: 10 }}>
-                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 6 }}>
-                      <p style={{ fontSize: 14, fontWeight: 800, color: INK }}>{issue.title}</p>
-                      <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
-                        <span style={{ fontSize: 10, fontWeight: 800, color: urg.color, background: `${urg.color}12`, padding: "2px 8px", borderRadius: 20 }}>{urg.label}</span>
-                        <span style={{ fontSize: 10, fontWeight: 700, color: sta.color, background: `${sta.color}12`, padding: "2px 8px", borderRadius: 20 }}>{sta.label}</span>
+                  <div key={issue.id} style={{ background: "white", borderRadius: 14, padding: "18px 20px", border: `1px solid ${issue.urgency === "emergency" ? "rgba(220,38,38,0.3)" : BORDER}`, marginBottom: 12 }}>
+                    {/* Header */}
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 8 }}>
+                      <p style={{ fontSize: 15, fontWeight: 800, color: INK, lineHeight: 1.3 }}>{issue.title}</p>
+                      <div style={{ display: "flex", gap: 5, flexShrink: 0 }}>
+                        <span style={{ fontSize: 10, fontWeight: 800, color: urg.color, background: `${urg.color}12`, padding: "3px 9px", borderRadius: 20 }}>{urg.label}</span>
+                        <span style={{ fontSize: 10, fontWeight: 700, color: sta.color, background: `${sta.color}12`, padding: "3px 9px", borderRadius: 20 }}>{sta.label}</span>
                       </div>
                     </div>
-                    {issue.description && <p style={{ fontSize: 13, color: INK2, lineHeight: 1.5, marginBottom: 8 }}>{issue.description}</p>}
-                    {issue.contractor_name && <p style={{ fontSize: 12, color: INK2, marginBottom: 6 }}>👷 {issue.contractor_name}{issue.contractor_phone ? ` · ${issue.contractor_phone}` : ""}</p>}
-                    {issue.actual_cost && <p style={{ fontSize: 12, fontWeight: 700, color: INK, marginBottom: 6 }}>Cost: £{issue.actual_cost.toLocaleString("en-GB")}</p>}
+
+                    {issue.description && <p style={{ fontSize: 13, color: INK2, lineHeight: 1.55, marginBottom: 10 }}>{issue.description}</p>}
+
+                    {/* Contractor card */}
+                    {hasContractor && (
+                      <div style={{ background: BG, borderRadius: 10, padding: "10px 14px", marginBottom: 12 }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+                          <div>
+                            <p style={{ fontSize: 12, fontWeight: 800, color: INK, marginBottom: 2 }}>
+                              👷 {issue.contractor_name || ""}
+                              {issue.contractor_company && <span style={{ fontWeight: 500, color: INK2 }}> · {issue.contractor_company}</span>}
+                            </p>
+                            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                              {issue.contractor_phone && <span style={{ fontSize: 11, color: INK2 }}>📞 {issue.contractor_phone}</span>}
+                              {issue.contractor_email && <span style={{ fontSize: 11, color: INK2 }}>✉️ {issue.contractor_email}</span>}
+                            </div>
+                          </div>
+                          <div style={{ display: "flex", gap: 6 }}>
+                            {waUrl && (
+                              <a href={waUrl} target="_blank" rel="noopener noreferrer"
+                                style={{ display: "flex", alignItems: "center", gap: 5, background: "#25D366", color: "white", fontWeight: 700, fontSize: 11, padding: "6px 11px", borderRadius: 7, textDecoration: "none" }}>
+                                📱 WhatsApp
+                              </a>
+                            )}
+                            {issue.contractor_email && (
+                              <a href={`mailto:${issue.contractor_email}?subject=${encodeURIComponent(`Maintenance job — ${issue.title}`)}&body=${encodeURIComponent(`Hi ${contractorFirst},\n\nI have a ${urgLabel} maintenance issue at ${shortAddr}:\n\n${issue.title}\n${issue.description || ""}\n\nCould you please confirm availability and provide a quote?\n\nThanks`)}`}
+                                style={{ display: "flex", alignItems: "center", gap: 5, background: "#2563eb", color: "white", fontWeight: 700, fontSize: 11, padding: "6px 11px", borderRadius: 7, textDecoration: "none" }}>
+                                ✉️ Email
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Cost breakdown */}
+                    <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+                      {/* Estimated */}
+                      {issue.estimated_cost != null && (
+                        <div style={{ background: "rgba(107,114,128,0.07)", borderRadius: 8, padding: "7px 12px", minWidth: 90 }}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: INK2, marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>Estimated</p>
+                          <p style={{ fontSize: 14, fontWeight: 800, color: INK }}>£{issue.estimated_cost.toLocaleString("en-GB")}</p>
+                        </div>
+                      )}
+
+                      {/* Quoted */}
+                      {editingCost?.id === issue.id && editingCost.field === "quoted_cost" ? (
+                        <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+                          <input autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                            onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
+                            onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "quoted_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
+                            style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid ${CTA}`, outline: "none", fontFamily: "inherit" }} />
+                          <button onClick={() => saveMaintCost(issue.id, "quoted_cost", editingCost.value)} style={{ padding: "6px 10px", background: CTA, color: "white", fontWeight: 700, fontSize: 12, border: "none", borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>Save</button>
+                          <button onClick={() => setEditingCost(null)} style={{ padding: "6px 8px", background: "none", color: INK2, fontWeight: 700, fontSize: 12, border: `1px solid ${BORDER}`, borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>✕</button>
+                        </div>
+                      ) : issue.quoted_cost != null ? (
+                        <div style={{ background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.2)", borderRadius: 8, padding: "7px 12px", minWidth: 90, cursor: "pointer" }}
+                          onClick={() => setEditingCost({ id: issue.id, field: "quoted_cost", value: String(issue.quoted_cost) })}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#ca8a04", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>Quoted ✎</p>
+                          <p style={{ fontSize: 14, fontWeight: 800, color: "#ca8a04" }}>£{issue.quoted_cost.toLocaleString("en-GB")}</p>
+                        </div>
+                      ) : issue.status !== "resolved" ? (
+                        <button onClick={() => setEditingCost({ id: issue.id, field: "quoted_cost", value: "" })}
+                          style={{ background: "rgba(234,179,8,0.06)", border: "1px dashed rgba(234,179,8,0.35)", borderRadius: 8, padding: "7px 12px", cursor: "pointer", fontFamily: "inherit" }}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#ca8a04", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>+ Log quote</p>
+                          <p style={{ fontSize: 12, color: "#ca8a04" }}>£ —</p>
+                        </button>
+                      ) : null}
+
+                      {/* Actual */}
+                      {editingCost?.id === issue.id && editingCost.field === "actual_cost" ? (
+                        <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
+                          <input autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                            onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
+                            onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "actual_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
+                            style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid #16a34a`, outline: "none", fontFamily: "inherit" }} />
+                          <button onClick={() => saveMaintCost(issue.id, "actual_cost", editingCost.value)} style={{ padding: "6px 10px", background: "#16a34a", color: "white", fontWeight: 700, fontSize: 12, border: "none", borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>Save</button>
+                          <button onClick={() => setEditingCost(null)} style={{ padding: "6px 8px", background: "none", color: INK2, fontWeight: 700, fontSize: 12, border: `1px solid ${BORDER}`, borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>✕</button>
+                        </div>
+                      ) : issue.actual_cost != null ? (
+                        <div style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 8, padding: "7px 12px", minWidth: 90, cursor: "pointer" }}
+                          onClick={() => setEditingCost({ id: issue.id, field: "actual_cost", value: String(issue.actual_cost) })}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>Final cost ✎</p>
+                          <p style={{ fontSize: 14, fontWeight: 800, color: "#16a34a" }}>£{issue.actual_cost.toLocaleString("en-GB")}</p>
+                        </div>
+                      ) : (
+                        <button onClick={() => setEditingCost({ id: issue.id, field: "actual_cost", value: "" })}
+                          style={{ background: "rgba(34,197,94,0.05)", border: "1px dashed rgba(34,197,94,0.3)", borderRadius: 8, padding: "7px 12px", cursor: "pointer", fontFamily: "inherit" }}>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>+ Final cost</p>
+                          <p style={{ fontSize: 12, color: "#16a34a" }}>£ —</p>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Tax note if actual cost logged */}
+                    {issue.actual_cost != null && (
+                      <p style={{ fontSize: 11, color: INK2, background: "rgba(17,17,17,0.03)", borderRadius: 7, padding: "5px 10px", marginBottom: 10 }}>
+                        📋 This cost is included in your property expense report and tax summary.
+                        {issue.is_improvement && " Marked as improvement (capital expenditure)."}
+                      </p>
+                    )}
+
+                    {/* Actions */}
                     {issue.status !== "resolved" && (
-                      <div style={{ display: "flex", gap: 8, marginTop: 10, paddingTop: 10, borderTop: `1px solid ${BORDER}` }}>
+                      <div style={{ display: "flex", gap: 8, paddingTop: 10, borderTop: `1px solid ${BORDER}`, flexWrap: "wrap" }}>
                         {issue.status === "open" && (
                           <button onClick={() => updateMaintStatus(issue.id, "in_progress")}
-                            style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", background: "#0f1728", color: "white", cursor: "pointer", fontFamily: "inherit" }}>
+                            style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: CTA, color: "white", cursor: "pointer", fontFamily: "inherit" }}>
                             Mark in progress
                           </button>
                         )}
                         <button onClick={() => updateMaintStatus(issue.id, "resolved")}
-                          style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", background: "#16a34a", color: "white", cursor: "pointer", fontFamily: "inherit" }}>
+                          style={{ fontSize: 12, fontWeight: 700, padding: "7px 14px", borderRadius: 7, border: "none", background: "#16a34a", color: "white", cursor: "pointer", fontFamily: "inherit" }}>
                           Mark resolved
                         </button>
                       </div>
@@ -943,43 +1106,78 @@ export default function PropertyPassport() {
               </div>
             )}
 
-            {/* Add issue inline modal */}
+            {/* Add issue form */}
             {showAddMaint && (
-              <div style={{ background: "white", borderRadius: 14, padding: "20px", border: `1px solid ${BORDER}`, marginTop: 16 }}>
-                <p style={{ fontSize: 15, fontWeight: 800, marginBottom: 16 }}>Log Issue</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ background: "white", borderRadius: 16, padding: "24px 20px", border: `1px solid ${BORDER}`, marginTop: 16 }}>
+                <p style={{ fontSize: 16, fontWeight: 900, marginBottom: 20, letterSpacing: "-0.01em" }}>Log Issue</p>
+
+                {/* Issue details */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
                   <input type="text" placeholder="Issue title *" value={maintForm.title} onChange={e => setMaintForm(f => ({ ...f, title: e.target.value }))}
-                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                  <textarea placeholder="Description (optional)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
-                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 70, resize: "vertical" as const }} />
+                    style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                  <textarea placeholder="Describe the issue (optional — detail helps the contractor quote accurately)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
+                    style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 80, resize: "vertical" as const, lineHeight: 1.6 }} />
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                     <select value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
-                      style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, fontFamily: "inherit" }}>
-                      {[["plumbing","Plumbing"],["electrical","Electrical"],["structural","Structural"],["appliance","Appliance"],["damp","Damp / Mould"],["roofing","Roofing"],["other","Other"]].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
+                      style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, fontFamily: "inherit", color: INK }}>
+                      {[["plumbing","🚿 Plumbing"],["electrical","⚡ Electrical"],["structural","🏠 Structural"],["appliance","🔌 Appliance"],["damp","💧 Damp / Mould"],["roofing","🏚 Roofing"],["other","🔧 Other"]].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
                     </select>
                     <select value={maintForm.urgency} onChange={e => setMaintForm(f => ({ ...f, urgency: e.target.value as MaintenanceUrgency }))}
-                      style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, fontFamily: "inherit" }}>
-                      <option value="emergency">⚠ Emergency</option>
+                      style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, fontFamily: "inherit", color: INK }}>
+                      <option value="emergency">⚠️ Emergency</option>
                       <option value="urgent">◎ Urgent</option>
                       <option value="routine">○ Routine</option>
                     </select>
                   </div>
-                  <input type="text" placeholder="Contractor name (optional)" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
-                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                  <input type="tel" placeholder="Contractor phone (optional)" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
-                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                  <input type="text" placeholder="Estimated cost e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
-                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                  <div style={{ display: "flex", gap: 10 }}>
-                    <button onClick={saveMaintIssue} disabled={maintSaving || !maintForm.title.trim()}
-                      style={{ flex: 1, background: CTA, color: "white", fontWeight: 800, fontSize: 14, padding: "12px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit", opacity: (maintSaving || !maintForm.title.trim()) ? 0.5 : 1 }}>
-                      {maintSaving ? "Saving…" : "Log issue"}
-                    </button>
-                    <button onClick={() => setShowAddMaint(false)}
-                      style={{ padding: "12px 18px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, background: "none", cursor: "pointer", fontFamily: "inherit", color: INK2 }}>
-                      Cancel
-                    </button>
+                </div>
+
+                {/* Contractor section */}
+                <div style={{ marginBottom: 20 }}>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: INK2, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>👷 Contractor (optional)</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      <input type="text" placeholder="Contractor name" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
+                        style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                      <input type="text" placeholder="Company / trade" value={maintForm.contractor_company} onChange={e => setMaintForm(f => ({ ...f, contractor_company: e.target.value }))}
+                        style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      <input type="tel" placeholder="📞 Phone" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
+                        style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                      <input type="email" placeholder="✉️ Email" value={maintForm.contractor_email} onChange={e => setMaintForm(f => ({ ...f, contractor_email: e.target.value }))}
+                        style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                    </div>
+                    <p style={{ fontSize: 11, color: INK2, paddingLeft: 2 }}>Add contact details and we&apos;ll help you send a quote request via WhatsApp or email after saving.</p>
                   </div>
+                </div>
+
+                {/* Cost section */}
+                <div style={{ marginBottom: 20 }}>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: INK2, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>💷 Costs (used in tax reports)</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    <div>
+                      <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Your estimate (£)</p>
+                      <input type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
+                        style={{ width: "100%", padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", boxSizing: "border-box" as const }} />
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Contractor quote (£)</p>
+                      <input type="number" placeholder="Leave blank until quote received" value={maintForm.quoted_cost} onChange={e => setMaintForm(f => ({ ...f, quoted_cost: e.target.value }))}
+                        style={{ width: "100%", padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", boxSizing: "border-box" as const }} />
+                    </div>
+                  </div>
+                  <p style={{ fontSize: 11, color: INK2, marginTop: 6, paddingLeft: 2 }}>Final cost can be logged later once the job is complete — it feeds directly into your expense report and tax calculations.</p>
+                </div>
+
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button onClick={saveMaintIssue} disabled={maintSaving || !maintForm.title.trim()}
+                    style={{ flex: 1, background: CTA, color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", opacity: (maintSaving || !maintForm.title.trim()) ? 0.5 : 1 }}>
+                    {maintSaving ? "Saving…" : "Log issue"}
+                  </button>
+                  <button onClick={() => setShowAddMaint(false)}
+                    style={{ padding: "13px 20px", fontSize: 14, borderRadius: 10, border: `1px solid ${BORDER}`, background: "none", cursor: "pointer", fontFamily: "inherit", color: INK2 }}>
+                    Cancel
+                  </button>
                 </div>
               </div>
             )}
@@ -1165,6 +1363,39 @@ export default function PropertyPassport() {
             </button>
           </div>
         </Modal>
+      )}
+
+      {/* Contractor notification popup */}
+      {lastContractorNotify && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }} onClick={() => setLastContractorNotify(null)}>
+          <div style={{ background: "white", borderRadius: 20, padding: "32px 28px", maxWidth: 460, width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }} onClick={e => e.stopPropagation()}>
+            <div style={{ fontSize: 40, textAlign: "center", marginBottom: 12 }}>👷</div>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: CTA, textAlign: "center", marginBottom: 6 }}>Issue logged — notify your contractor?</h3>
+            <div style={{ background: BG, borderRadius: 10, padding: "10px 14px", marginBottom: 14, textAlign: "center" }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: CTA, marginBottom: 1 }}>{lastContractorNotify.issueTitle}</p>
+              <p style={{ fontSize: 12, color: INK2 }}>{lastContractorNotify.contractorName}</p>
+            </div>
+            <p style={{ fontSize: 13, color: INK2, textAlign: "center", lineHeight: 1.65, marginBottom: 20 }}>
+              Send {lastContractorNotify.contractorName} the job details and ask for a quote — we&apos;ve pre-written the message for you.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <a href={lastContractorNotify.whatsappUrl} target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                📱 Send via WhatsApp
+              </a>
+              {lastContractorNotify.contractorEmail && (
+                <a href={`mailto:${lastContractorNotify.contractorEmail}?subject=${encodeURIComponent(`Quote request — ${lastContractorNotify.issueTitle}`)}&body=${encodeURIComponent(`Hi ${lastContractorNotify.contractorName},\n\nI have a maintenance job I need help with:\n\n${lastContractorNotify.issueTitle}\n\nCould you please provide a quote and confirm your availability?\n\nMany thanks`)}`}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#2563eb", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                  ✉️ Send quote request by email
+                </a>
+              )}
+              <button onClick={() => setLastContractorNotify(null)}
+                style={{ background: BG, color: INK2, fontWeight: 700, fontSize: 14, padding: "12px", borderRadius: 11, border: `1px solid ${BORDER}`, cursor: "pointer", fontFamily: "inherit" }}>
+                Skip for now
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Maintenance issue logged — tenant notification popup */}
