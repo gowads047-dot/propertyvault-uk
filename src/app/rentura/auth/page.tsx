@@ -1,15 +1,19 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 
 function RenturaAuthForm() {
   const { user, signIn, signUp, loading } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? "/rentura/dashboard";
+  const [next, setNext] = useState("/rentura/dashboard");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setNext(params.get("next") ?? "/rentura/dashboard");
+  }, []);
 
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
@@ -179,13 +183,5 @@ function RenturaAuthForm() {
 }
 
 export default function RenturaAuth() {
-  return (
-    <Suspense fallback={
-      <div style={{ minHeight: "100vh", background: "#eceae2", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ color: "rgba(17,17,17,0.5)", fontSize: 14 }}>Loading…</p>
-      </div>
-    }>
-      <RenturaAuthForm />
-    </Suspense>
-  );
+  return <RenturaAuthForm />;
 }
