@@ -126,6 +126,7 @@ export default function PropertyPassport() {
 
   // Tenant portal invite
   const [lastInvite, setLastInvite] = useState<{ portalUrl: string; whatsappUrl: string } | null>(null);
+  const [lastMaintNotify, setLastMaintNotify] = useState<{ issueTitle: string; tenantEmail: string; whatsappUrl: string; alreadySignedUp: boolean } | null>(null);
   const [tenantIssues, setTenantIssues] = useState<{ id: string; title: string; status: string; priority: string; tenant_name: string; created_at: string }[]>([]);
 
   // Document upload
@@ -420,6 +421,39 @@ export default function PropertyPassport() {
     }
     setMaintForm({ title: "", description: "", category: "other", urgency: "routine", contractor_name: "", contractor_phone: "", estimated_cost: "" });
     setShowAddMaint(false);
+
+    // Notify current tenant if one exists with an email
+    if (data) {
+      const currentTenant = tenants.find(t => t.is_current);
+      if (currentTenant?.email) {
+        const notifyRes = await fetch("/api/tenant/notify-issue", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tenantEmail: currentTenant.email,
+            tenantName: currentTenant.name || null,
+            tenantPhone: currentTenant.phone || null,
+            propertyId: id,
+            propertyAddress: property?.address || null,
+            landlordUserId: user.id,
+            issueTitle: (data as { title: string }).title,
+            issueDescription: (data as { description?: string }).description || null,
+            issueCategory: (data as { category: string }).category,
+            issuePriority: (data as { urgency: string }).urgency === "emergency" ? "urgent" : (data as { urgency: string }).urgency === "routine" ? "normal" : "normal",
+          }),
+        });
+        const notifyData = await notifyRes.json();
+        if (notifyData.ok) {
+          setLastMaintNotify({
+            issueTitle: (data as { title: string }).title,
+            tenantEmail: currentTenant.email,
+            whatsappUrl: notifyData.whatsappUrl,
+            alreadySignedUp: notifyData.alreadySignedUp,
+          });
+        }
+      }
+    }
+
     setMaintSaving(false);
   }
 
@@ -1131,6 +1165,35 @@ export default function PropertyPassport() {
             </button>
           </div>
         </Modal>
+      )}
+
+      {/* Maintenance issue logged — tenant notification popup */}
+      {lastMaintNotify && (
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.45)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }} onClick={() => setLastMaintNotify(null)}>
+          <div style={{ background: "white", borderRadius: 20, padding: "32px 28px", maxWidth: 460, width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.15)" }} onClick={e => e.stopPropagation()}>
+            <div style={{ fontSize: 40, textAlign: "center", marginBottom: 12 }}>🔧</div>
+            <h3 style={{ fontSize: 18, fontWeight: 800, color: CTA, textAlign: "center", marginBottom: 8 }}>Issue logged — tenant notified!</h3>
+            <div style={{ background: BG, borderRadius: 10, padding: "12px 16px", marginBottom: 16, textAlign: "center" }}>
+              <p style={{ fontSize: 13, fontWeight: 700, color: CTA, marginBottom: 2 }}>{lastMaintNotify.issueTitle}</p>
+              <p style={{ fontSize: 12, color: INK2 }}>{lastMaintNotify.tenantEmail}</p>
+            </div>
+            <p style={{ fontSize: 13, color: INK2, textAlign: "center", lineHeight: 1.65, marginBottom: 20 }}>
+              {lastMaintNotify.alreadySignedUp
+                ? "An email has been sent letting your tenant know about this issue. They can log in to track the repair from their portal."
+                : "An email has been sent inviting your tenant to set up their portal account so they can track this repair and communicate with you."}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <a href={lastMaintNotify.whatsappUrl} target="_blank" rel="noopener noreferrer"
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                <span>📱</span> Also send via WhatsApp
+              </a>
+              <button onClick={() => setLastMaintNotify(null)}
+                style={{ background: BG, color: INK2, fontWeight: 700, fontSize: 14, padding: "12px", borderRadius: 11, border: `1px solid ${BORDER}`, cursor: "pointer", fontFamily: "inherit" }}>
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Invite success modal */}
