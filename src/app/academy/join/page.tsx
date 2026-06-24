@@ -36,12 +36,12 @@ export default function AcademyJoinPage() {
     // Add to academy_members table
     if (data.user) {
       await supabase.from("academy_members").upsert({
-        id: data.user.id,
+        user_id: data.user.id,
         email: email.trim(),
         name: name.trim(),
         status: "active",
         joined_at: new Date().toISOString(),
-      });
+      }, { onConflict: "user_id" });
     }
 
     setLoading(false);
