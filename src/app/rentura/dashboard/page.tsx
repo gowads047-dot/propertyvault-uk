@@ -432,6 +432,9 @@ export default function RenturaDashboard() {
           <Link href="/rentura/dashboard" style={{ color: INK, fontWeight: 800, textDecoration: "none", letterSpacing: "-0.02em" }}>Rentura</Link>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Link href="/rentura/tax" style={{ fontSize: 13, fontWeight: 700, color: INK2, textDecoration: "none", padding: "8px 14px", borderRadius: 8, border: `1px solid ${BORDER}`, background: "white" }}>
+            Tax
+          </Link>
           <Link href="/rentura/properties/new" style={{ background: CTA, color: "white", fontSize: 13, fontWeight: 700, padding: "8px 18px", borderRadius: 8, textDecoration: "none" }}>
             + Add Property
           </Link>
