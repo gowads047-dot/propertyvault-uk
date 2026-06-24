@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 // ─── Conversation engine ──────────────────────────────────────────────────────
 
@@ -231,6 +232,35 @@ export default function RenturaPage() {
   const [openCompare, setOpenCompare] = useState<number | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Early access form
+  const [eaOpen, setEaOpen] = useState(false);
+  const [eaName, setEaName] = useState("");
+  const [eaEmail, setEaEmail] = useState("");
+  const [eaPortfolio, setEaPortfolio] = useState("");
+  const [eaLoading, setEaLoading] = useState(false);
+  const [eaDone, setEaDone] = useState(false);
+  const [eaError, setEaError] = useState("");
+
+  async function handleEarlyAccess(e: React.FormEvent) {
+    e.preventDefault();
+    setEaError("");
+    if (!eaName.trim() || !eaEmail.trim()) { setEaError("Name and email are required."); return; }
+    setEaLoading(true);
+    try {
+      await supabase.from("rentura_waitlist").insert({
+        name: eaName.trim(),
+        email: eaEmail.trim(),
+        portfolio: eaPortfolio.trim() || null,
+        created_at: new Date().toISOString(),
+      });
+      setEaDone(true);
+    } catch {
+      setEaError("Something went wrong — please try again.");
+    } finally {
+      setEaLoading(false);
+    }
+  }
 
   const send = useCallback((text: string) => {
     if (!text.trim() || loading) return;
@@ -633,12 +663,53 @@ export default function RenturaPage() {
               </div>
             ))}
           </div>
-          <a href="mailto:gowads047@gmail.com?subject=Rentura Early Access Request&body=Hi Nass, I'd like early access to Rentura. My portfolio: " style={{ display: "block", textAlign: "center", background: CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "16px", borderRadius: 12, textDecoration: "none", marginBottom: 14, letterSpacing: "-0.01em" }}>
-            Request Early Access →
-          </a>
-          <p style={{ fontSize: 11, color: INK3, textAlign: "center", lineHeight: 1.7 }}>
-            Early access price locked in permanently · 14-day money-back guarantee<br />Consumer Contracts Regulations 2013 · Cancel anytime
-          </p>
+          {eaDone ? (
+            <div style={{ background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.18)", borderRadius: 14, padding: "24px", textAlign: "center" }}>
+              <div style={{ fontSize: 32, marginBottom: 10 }}>✓</div>
+              <p style={{ fontSize: 16, fontWeight: 800, color: INK, marginBottom: 6 }}>You&apos;re on the list.</p>
+              <p style={{ fontSize: 13, color: INK2, lineHeight: 1.65 }}>We&apos;ll be in touch within 24 hours with your early access details.</p>
+            </div>
+          ) : eaOpen ? (
+            <form onSubmit={handleEarlyAccess} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <input
+                type="text"
+                placeholder="Your full name"
+                value={eaName}
+                onChange={e => setEaName(e.target.value)}
+                required
+                style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit" }}
+              />
+              <input
+                type="email"
+                placeholder="Email address"
+                value={eaEmail}
+                onChange={e => setEaEmail(e.target.value)}
+                required
+                style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit" }}
+              />
+              <input
+                type="text"
+                placeholder="Portfolio size (e.g. 3 properties in Birmingham)"
+                value={eaPortfolio}
+                onChange={e => setEaPortfolio(e.target.value)}
+                style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit" }}
+              />
+              {eaError && <p style={{ fontSize: 12, color: "#dc2626", padding: "8px 12px", background: "rgba(220,38,38,0.06)", borderRadius: 8 }}>{eaError}</p>}
+              <button type="submit" disabled={eaLoading} style={{ background: eaLoading ? "rgba(15,23,40,0.5)" : CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "14px", borderRadius: 12, border: "none", cursor: eaLoading ? "not-allowed" : "pointer", fontFamily: "inherit", letterSpacing: "-0.01em" }}>
+                {eaLoading ? "Submitting…" : "Request Early Access →"}
+              </button>
+              <button type="button" onClick={() => setEaOpen(false)} style={{ background: "none", border: "none", fontSize: 12, color: INK3, cursor: "pointer", fontFamily: "inherit" }}>Cancel</button>
+            </form>
+          ) : (
+            <button onClick={() => setEaOpen(true)} style={{ display: "block", width: "100%", textAlign: "center", background: CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "16px", borderRadius: 12, border: "none", cursor: "pointer", marginBottom: 14, letterSpacing: "-0.01em", fontFamily: "inherit" }}>
+              Request Early Access →
+            </button>
+          )}
+          {!eaOpen && !eaDone && (
+            <p style={{ fontSize: 11, color: INK3, textAlign: "center", lineHeight: 1.7, marginTop: 12 }}>
+              Early access price locked in permanently · 14-day money-back guarantee<br />Consumer Contracts Regulations 2013 · Cancel anytime
+            </p>
+          )}
         </div>
       </section>
 
