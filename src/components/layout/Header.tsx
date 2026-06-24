@@ -9,7 +9,7 @@ const mainLinks = [
   { href: "/calculators", label: "Calculators", sub: "" },
   { href: "/templates", label: "Templates", sub: "" },
   { href: "/blog", label: "Blog", sub: "" },
-  { href: "/academy", label: "Academy", sub: "Free Sign Up" },
+  { href: "/areas", label: "Areas", sub: "" },
   { href: "/rentura", label: "Rentura", sub: "Early Access", highlight: true },
 ];
 
