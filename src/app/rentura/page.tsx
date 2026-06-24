@@ -8,248 +8,293 @@ import { supabase } from "@/lib/supabase";
 
 type Action = { type: string; label: string; value: string; color: string };
 type Message = { role: "user" | "ai"; text: string; actions?: Action[]; ts?: string };
+type ConversationContext = { intent: string; gathered: Record<string, string>; pendingField: string } | null;
 
-function parseMessage(input: string): { reply: string; actions: Action[] } {
-  const i = input.toLowerCase();
+// Required fields per intent, in collection order
+const FIELD_ORDER: Record<string, string[]> = {
+  new_property:      ["price", "mortgage", "tenant"],
+  payment:           ["amount", "property"],
+  maintenance_issue: ["property", "contractor"],
+  maintenance_cost:  ["property", "cost"],
+  arrears:           ["property", "amount_owed"],
+  tenant_leaving:    ["property", "move_out_date"],
+  new_tenant:        ["property", "rent", "move_in_date"],
+};
 
-  // Payment recorded
-  if (i.includes("paid") && (i.includes("£") || i.match(/\d{3,4}/))) {
-    const amount = input.match(/£[\d,]+/)?.[0] || input.match(/[\d,]{3,4}/)?.[0] || "amount";
+const FIELD_QUESTIONS: Record<string, Record<string, string>> = {
+  new_property: {
+    price:    "What was the purchase price?",
+    mortgage: "Are you using a mortgage? If so, which lender and what rate — or just say 'no mortgage' if it's a cash purchase.",
+    tenant:   "Will you be letting it out? If so, what's the monthly rent — or say 'vacant' if it's empty for now.",
+  },
+  payment: {
+    amount:   "How much was the payment?",
+    property: "Which property or tenant is this for?",
+  },
+  maintenance_issue: {
+    property:   "Which property is this for?",
+    contractor: "Do you have a contractor in mind, or shall I add it to the jobs list as needing one?",
+  },
+  maintenance_cost: {
+    property: "Which property is this for?",
+    cost:     "What was the total cost?",
+  },
+  arrears: {
+    property:    "Which property is this for?",
+    amount_owed: "How much is owed — or how many months are they behind?",
+  },
+  tenant_leaving: {
+    property:      "Which property is this for?",
+    move_out_date: "When are they vacating — do you have a move-out date?",
+  },
+  new_tenant: {
+    property:     "Which property are they moving into?",
+    rent:         "What's the monthly rent agreed?",
+    move_in_date: "When are they moving in?",
+  },
+};
+
+function completeIntent(intent: string, g: Record<string, string>): { reply: string; actions: Action[] } {
+  switch (intent) {
+    case "new_property": {
+      const isCash = /no mortgage|cash/i.test(g.mortgage || "");
+      const mortgageStr = isCash ? "Cash purchase — no mortgage" : (g.mortgage || "Not specified");
+      const isVacant = /vacant|empty|no tenant/i.test(g.tenant || "");
+      const tenantStr = isVacant ? "Vacant — no tenant yet" : (g.tenant || "Not specified");
+      return {
+        reply: `All done. Here's what I've recorded:\n\n• Property: ${g.area || "New property"}\n• Purchase price: ${g.price}\n• Mortgage: ${mortgageStr}\n• Rental: ${tenantStr}\n\nProperty record created, timeline started, and ${isCash ? "no mortgage tracker needed." : "mortgage expiry tracker configured — I'll alert you 60 days before renewal."}`,
+        actions: [
+          { type: "create", label: "Property created", value: g.area || "New property", color: "#2563eb" },
+          { type: "record", label: "Purchase price", value: g.price, color: "#7c3aed" },
+          { type: "record", label: "Mortgage", value: isCash ? "Cash" : mortgageStr.split(" ").slice(0,2).join(" "), color: "#b8962e" },
+          { type: "record", label: "Rental", value: isVacant ? "Vacant" : tenantStr, color: "#16a34a" },
+        ],
+      };
+    }
+    case "payment":
+      return {
+        reply: `Payment of ${g.amount} recorded for ${g.property}. Rent ledger updated, arrears cleared if any were outstanding. Receipt available under Financials.`,
+        actions: [
+          { type: "record", label: "Payment logged", value: g.amount, color: "#16a34a" },
+          { type: "update", label: "Ledger updated", value: g.property, color: "#2563eb" },
+          { type: "clear", label: "Arrears cleared", value: "£0 outstanding", color: "#16a34a" },
+        ],
+      };
+    case "maintenance_issue": {
+      const needsContractor = /list|need one|not sure|no|don't have/i.test(g.contractor || "");
+      return {
+        reply: `Maintenance issue logged at ${g.property}. ${needsContractor ? "Added to jobs list — contractor needed." : `Contractor noted: ${g.contractor}.`} Tenant will receive an auto-acknowledgement. I'll track this until it's resolved.`,
+        actions: [
+          { type: "create", label: "Issue created", value: g.property, color: "#dc2626" },
+          { type: "action", label: needsContractor ? "Contractor needed" : "Contractor noted", value: needsContractor ? "On jobs list" : g.contractor, color: "#d97706" },
+          { type: "notify", label: "Tenant notified", value: "Auto-sent", color: "#2563eb" },
+        ],
+      };
+    }
+    case "maintenance_cost":
+      return {
+        reply: `${g.cost} maintenance cost logged for ${g.property}. Categorised as repairs — tax allowable. Flagged for your self-assessment summary.`,
+        actions: [
+          { type: "record", label: "Expense logged", value: `${g.cost} — repairs`, color: "#16a34a" },
+          { type: "tax", label: "Tax allowable", value: "Added to SA summary", color: "#b8962e" },
+          { type: "history", label: "History updated", value: g.property, color: "#2563eb" },
+        ],
+      };
+    case "arrears":
+      return {
+        reply: `Arrears flagged for ${g.property}. Amount owed: ${g.amount_owed}. Ledger updated and arrears record created. I'd recommend sending a formal arrears notice — want me to draft one?`,
+        actions: [
+          { type: "alert", label: "Arrears flagged", value: g.property, color: "#dc2626" },
+          { type: "record", label: "Amount owed", value: g.amount_owed, color: "#d97706" },
+          { type: "action", label: "Arrears notice", value: "Ready to draft", color: "#2563eb" },
+        ],
+      };
+    case "tenant_leaving":
+      return {
+        reply: `Tenancy at ${g.property} marked as ending${g.move_out_date && g.move_out_date !== "not sure" ? ` on ${g.move_out_date}` : ""}. Deposit return checklist triggered, void period record opened, and property flagged as upcoming vacant.`,
+        actions: [
+          { type: "update", label: "Tenancy ending", value: g.property, color: "#2563eb" },
+          { type: "checklist", label: "Deposit checklist", value: "Triggered", color: "#d97706" },
+          { type: "record", label: "Void period", value: g.move_out_date || "Upcoming", color: "#16a34a" },
+        ],
+      };
+    case "new_tenant":
+      return {
+        reply: `New tenancy set up at ${g.property}. Rent: ${g.rent}, moving in ${g.move_in_date}. Tenant record created, first rent payment scheduled, compliance tracker opened.`,
+        actions: [
+          { type: "create", label: "Tenancy created", value: g.property, color: "#2563eb" },
+          { type: "schedule", label: "Rent scheduled", value: g.rent, color: "#16a34a" },
+          { type: "compliance", label: "Compliance tracker", value: "Opened", color: "#b8962e" },
+        ],
+      };
+    default:
+      return { reply: "All noted and saved.", actions: [{ type: "record", label: "Saved", value: "Done", color: "#16a34a" }] };
+  }
+}
+
+function parseMessage(input: string, ctx: ConversationContext): { reply: string; actions: Action[]; newContext: ConversationContext } {
+  const i = input.toLowerCase().trim();
+
+  // ── Continuing an active gathering flow ──────────────────────────────────
+  if (ctx) {
+    if (["cancel", "stop", "nevermind", "never mind", "forget it"].includes(i)) {
+      return { reply: "No problem — cleared. What else can I help with?", actions: [], newContext: null };
+    }
+    const updated = { ...ctx.gathered, [ctx.pendingField]: input };
+    const nextField = FIELD_ORDER[ctx.intent]?.find(f => !updated[f]);
+    if (nextField) {
+      return {
+        reply: FIELD_QUESTIONS[ctx.intent][nextField],
+        actions: [],
+        newContext: { intent: ctx.intent, gathered: updated, pendingField: nextField },
+      };
+    }
+    return { ...completeIntent(ctx.intent, updated), newContext: null };
+  }
+
+  // ── Fresh message — detect intent and extract what's already there ────────
+
+  // ── New property ─────────────────────────────────────────────────────────
+  if (i.includes("bought") || i.includes("purchased") || i.includes("new property") || i.includes("acquired")) {
+    const area = input.match(/(?:in|at)\s+([A-Za-z][A-Za-z\s]+?)(?:\s+for\b|\s+£|[,.]|$)/i)?.[1]?.trim() || "";
+    const price = input.match(/£[\d,]+k?/i)?.[0] || "";
+    const hasMortgage = /mortgage|barclays|natwest|halifax|santander|nationwide|hsbc|lloyds|cash buy|no mortgage/i.test(input);
+    const hasTenant = /tenant|letting|rent £|£\d+.{0,6}(?:\/mo|month|pcm|pw|week)|vacant/i.test(input);
+    const g: Record<string, string> = {};
+    if (area) g.area = area;
+    if (price) g.price = price;
+    if (hasMortgage) g.mortgage = input;
+    if (hasTenant) g.tenant = input;
+    const nextField = FIELD_ORDER.new_property.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("new_property", g), newContext: null };
     return {
-      reply: `Got it. Payment of ${amount} recorded against your rent ledger. Arrears cleared if any were outstanding. Tenant record updated. Receipt available under Financials.`,
-      actions: [
-        { type: "record", label: "Payment logged", value: amount, color: "#16a34a" },
-        { type: "update", label: "Ledger updated", value: "Rent account", color: "#2563eb" },
-        { type: "clear", label: "Arrears cleared", value: "£0 outstanding", color: "#16a34a" },
-      ],
+      reply: `${area ? `Got it — ${area}. ` : "New property noted. "}${FIELD_QUESTIONS.new_property[nextField]}`,
+      actions: [{ type: "pending", label: "New property", value: area || "details needed", color: "#2563eb" }],
+      newContext: { intent: "new_property", gathered: g, pendingField: nextField },
     };
   }
 
-  // New property
-  if (i.includes("bought") || i.includes("purchased") || (i.includes("new property") && i.match(/£[\d,k]+/i))) {
-    const address = input.match(/at\s+([^,for]+)/i)?.[1]?.trim() || "new address";
-    const price = input.match(/£[\d,]+k?/i)?.[0] || "purchase price";
-    return {
-      reply: `New property added. I've created the property record, mortgage placeholder, and timeline for ${address}. Add your mortgage details and I'll track the expiry, LTV, and refinancing windows automatically.`,
-      actions: [
-        { type: "create", label: "Property created", value: address, color: "#2563eb" },
-        { type: "create", label: "Timeline started", value: "Purchase recorded", color: "#7c3aed" },
-        { type: "pending", label: "Mortgage needed", value: price + " purchase", color: "#d97706" },
-      ],
-    };
+  // ── Payment ───────────────────────────────────────────────────────────────
+  if (i.includes("paid") && (i.includes("£") || i.match(/\d{3,}/))) {
+    const amount = input.match(/£[\d,]+/)?.[0] || "";
+    const property = input.match(/(?:for|at|from)\s+([A-Za-z][^\.,]+)/i)?.[1]?.trim() || "";
+    const g: Record<string, string> = {};
+    if (amount) g.amount = amount;
+    if (property) g.property = property;
+    const nextField = FIELD_ORDER.payment.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("payment", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.payment[nextField], actions: [], newContext: { intent: "payment", gathered: g, pendingField: nextField } };
   }
 
-  // Maintenance cost
-  if (i.includes("boiler") || i.includes("replaced") || (i.includes("cost") && i.match(/£\d+/))) {
-    const cost = input.match(/£[\d,]+/)?.[0] || "cost";
-    const property = input.match(/(?:at|flat|house|property)\s+([^\.\,]+)/i)?.[1]?.trim();
-    return {
-      reply: `Maintenance job logged and filed. ${cost} expense categorised as repairs — tax allowable. ${property ? `Attached to ${property}.` : ""} I've updated the maintenance history and flagged it for your self-assessment summary.`,
-      actions: [
-        { type: "record", label: "Expense logged", value: cost + " — repairs", color: "#16a34a" },
-        { type: "tax", label: "Tax allowable", value: "Added to SA summary", color: "#b8962e" },
-        { type: "history", label: "Property history updated", value: property || "property", color: "#2563eb" },
-      ],
-    };
+  // ── Maintenance cost ──────────────────────────────────────────────────────
+  if ((i.includes("replaced") || i.includes("boiler") || i.includes("installed") || i.includes("repaired") || (i.includes("cost") && i.match(/£\d/))) && i.match(/£\d/)) {
+    const cost = input.match(/£[\d,]+/)?.[0] || "";
+    const property = input.match(/(?:at|in|flat|house)\s+([A-Za-z][^\.,]+)/i)?.[1]?.trim() || "";
+    const g: Record<string, string> = {};
+    if (cost) g.cost = cost;
+    if (property) g.property = property;
+    const nextField = FIELD_ORDER.maintenance_cost.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("maintenance_cost", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.maintenance_cost[nextField], actions: [], newContext: { intent: "maintenance_cost", gathered: g, pendingField: nextField } };
   }
 
-  // Maintenance issue
-  if (i.includes("leak") || i.includes("damp") || i.includes("broken") || i.includes("reported") || i.includes("tap") || i.includes("radiator") || i.includes("crack") || i.includes("repair") || i.includes("fix") || i.includes("fault") || i.includes("not working")) {
+  // ── Maintenance issue ─────────────────────────────────────────────────────
+  if ((i.includes("leak") || i.includes("damp") || i.includes("broken") || i.includes("reported") || i.includes("tap") || i.includes("radiator") || i.includes("crack") || i.includes("fault") || i.includes("not working")) && !i.match(/£\d/)) {
     const issue = i.includes("leak") ? "leak" : i.includes("damp") ? "damp" : i.includes("radiator") ? "radiator fault" : i.includes("boiler") ? "boiler fault" : "maintenance issue";
-    return {
-      reply: `Maintenance issue created and flagged as urgent. I've categorised this as a ${issue}, assessed urgency as Medium-High, and prepared a contractor brief. Tenant will receive an auto-acknowledgement. Ready to share with your contractor via WhatsApp or email?`,
-      actions: [
-        { type: "create", label: "Issue created", value: issue.charAt(0).toUpperCase() + issue.slice(1), color: "#dc2626" },
-        { type: "alert", label: "Urgency assessed", value: "Medium-High", color: "#d97706" },
-        { type: "notify", label: "Tenant acknowledged", value: "Auto-sent", color: "#2563eb" },
-        { type: "action", label: "Contractor brief ready", value: "Tap to share", color: "#16a34a" },
-      ],
-    };
+    const property = input.match(/(?:at|in|flat|house)\s+([A-Za-z][^\.,]+?)(?:\s+reported|\s+has|\s+is|[.,]|$)/i)?.[1]?.trim() || "";
+    const g: Record<string, string> = { issue };
+    if (property) g.property = property;
+    const nextField = FIELD_ORDER.maintenance_issue.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("maintenance_issue", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.maintenance_issue[nextField], actions: [], newContext: { intent: "maintenance_issue", gathered: g, pendingField: nextField } };
   }
 
-  // Mortgage
+  // ── Rent arrears (multi-turn) ─────────────────────────────────────────────
+  if (i.includes("arrears") || i.includes("late rent") || i.includes("missed payment") || i.includes("not paid") || i.includes("overdue") || i.includes("hasn't paid") || i.includes("haven't paid")) {
+    const property = input.match(/(?:at|in|on)\s+([A-Za-z][^\.,]+)/i)?.[1]?.trim() || "";
+    const g: Record<string, string> = {};
+    if (property) g.property = property;
+    const nextField = FIELD_ORDER.arrears.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("arrears", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.arrears[nextField], actions: [], newContext: { intent: "arrears", gathered: g, pendingField: nextField } };
+  }
+
+  // ── Tenant leaving (multi-turn) ───────────────────────────────────────────
+  if (i.includes("moved out") || i.includes("vacated") || (i.includes("tenant") && (i.includes("leaving") || i.includes("left") || i.includes("ended") || i.includes("notice")))) {
+    const property = input.match(/(?:at|in|on)\s+([A-Za-z][^\.,]+)/i)?.[1]?.trim() || "";
+    const date = input.match(/\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*(?:\s+\d{4})?/i)?.[0] || "";
+    const g: Record<string, string> = {};
+    if (property) g.property = property;
+    if (date) g.move_out_date = date;
+    const nextField = FIELD_ORDER.tenant_leaving.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("tenant_leaving", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.tenant_leaving[nextField], actions: [], newContext: { intent: "tenant_leaving", gathered: g, pendingField: nextField } };
+  }
+
+  // ── New tenant (multi-turn) ───────────────────────────────────────────────
+  if ((i.includes("tenant") && (i.includes("new") || i.includes("moving in") || i.includes("signed") || i.includes("agreed"))) || i.includes("let agreed") || i.includes("tenancy start")) {
+    const property = input.match(/(?:at|in|on)\s+([A-Za-z][^\.,]+)/i)?.[1]?.trim() || "";
+    const rent = input.match(/£[\d,]+(?:\s*(?:\/mo|pcm|month|pw))?/i)?.[0] || "";
+    const g: Record<string, string> = {};
+    if (property) g.property = property;
+    if (rent) g.rent = rent;
+    const nextField = FIELD_ORDER.new_tenant.find(f => !g[f]);
+    if (!nextField) return { ...completeIntent("new_tenant", g), newContext: null };
+    return { reply: FIELD_QUESTIONS.new_tenant[nextField], actions: [], newContext: { intent: "new_tenant", gathered: g, pendingField: nextField } };
+  }
+
+  // ── Single-turn intents (no gathering needed) ─────────────────────────────
+
   if (i.includes("mortgage") && (i.includes("expir") || i.includes("this year") || i.includes("upcoming") || i.includes("renew") || i.includes("remortgage") || i.includes("rate"))) {
-    return {
-      reply: `You have 2 mortgages expiring in the next 12 months:\n\n• 14 Maple Street — Barclays 2.89% fixed, expires 3 Aug 2026 (41 days). SVR reversion would cost £284/month extra.\n• 22 Park Road — NatWest 3.2% fixed, expires 14 Nov 2026 (5 months). £196/month difference.\n\nWant me to prepare a broker brief for both?`,
-      actions: [
-        { type: "alert", label: "Maple Street", value: "41 days · urgent", color: "#dc2626" },
-        { type: "alert", label: "Park Road", value: "5 months", color: "#d97706" },
-        { type: "action", label: "Broker brief", value: "Ready to generate", color: "#2563eb" },
-      ],
-    };
+    return { reply: `You have 2 mortgages expiring in the next 12 months:\n\n• 14 Maple Street — Barclays 2.89% fixed, expires 3 Aug 2026 (41 days). SVR reversion would cost £284/month extra.\n• 22 Park Road — NatWest 3.2% fixed, expires 14 Nov 2026 (5 months). £196/month difference.\n\nWant me to prepare a broker brief for both?`, actions: [{ type: "alert", label: "Maple Street", value: "41 days · urgent", color: "#dc2626" }, { type: "alert", label: "Park Road", value: "5 months", color: "#d97706" }, { type: "action", label: "Broker brief", value: "Ready to generate", color: "#2563eb" }], newContext: null };
   }
 
-  // Today's priorities
-  if (i.includes("focus") || i.includes("today") || i.includes("priority") || i.includes("important") || i.includes("urgent") || i.includes("what should")) {
-    return {
-      reply: `3 things need your attention today:\n\n1. Gas Safety on Flat 4, Grove Lane — expires in 9 days. Book it now.\n2. Tenant at 22 Park Road has had an open maintenance issue for 6 days. Chase the contractor.\n3. Mortgage at 14 Maple Street expires in 41 days — rate reversion will cost £3,408/year extra.\n\nEverything else can wait.`,
-      actions: [
-        { type: "urgent", label: "Gas Safety due", value: "9 days", color: "#dc2626" },
-        { type: "chase", label: "Maintenance stalled", value: "6 days open", color: "#d97706" },
-        { type: "alert", label: "Mortgage expiry", value: "41 days", color: "#d97706" },
-      ],
-    };
+  if (i.includes("focus") || i.includes("today") || i.includes("priority") || i.includes("what should")) {
+    return { reply: `3 things need your attention today:\n\n1. Gas Safety on Flat 4, Grove Lane — expires in 9 days. Book it now.\n2. Tenant at 22 Park Road has had an open maintenance issue for 6 days. Chase the contractor.\n3. Mortgage at 14 Maple Street expires in 41 days — rate reversion will cost £3,408/year extra.\n\nEverything else can wait.`, actions: [{ type: "urgent", label: "Gas Safety due", value: "9 days", color: "#dc2626" }, { type: "chase", label: "Maintenance stalled", value: "6 days open", color: "#d97706" }, { type: "alert", label: "Mortgage expiry", value: "41 days", color: "#d97706" }], newContext: null };
   }
 
-  // Portfolio performance
   if (i.includes("profitable") || i.includes("best property") || i.includes("performing") || i.includes("yield") || i.includes("portfolio") || i.includes("return")) {
-    return {
-      reply: `Your best performer is 14 Maple Street. Net yield 8.4%, monthly cash flow £612, ROI since purchase 31.2%. It generates 43% of your total portfolio income on 28% of your total capital. Your weakest is 22 Park Road — yield 4.1%, high maintenance spend, rent below market rate.`,
-      actions: [
-        { type: "top", label: "14 Maple Street", value: "8.4% yield · £612/mo CF", color: "#16a34a" },
-        { type: "low", label: "22 Park Road", value: "4.1% yield · review needed", color: "#dc2626" },
-      ],
-    };
+    return { reply: `Your best performer is 14 Maple Street. Net yield 8.4%, monthly cash flow £612, ROI since purchase 31.2%. It generates 43% of your total portfolio income on 28% of your total capital. Your weakest is 22 Park Road — yield 4.1%, high maintenance spend, rent below market rate.`, actions: [{ type: "top", label: "14 Maple Street", value: "8.4% yield · £612/mo CF", color: "#16a34a" }, { type: "low", label: "22 Park Road", value: "4.1% yield · review needed", color: "#dc2626" }], newContext: null };
   }
 
-  // Tax
   if (i.includes("tax") || i.includes("owe") || i.includes("self assessment") || i.includes("hmrc") || i.includes("income tax") || i.includes("allowable") || i.includes("expenses")) {
-    return {
-      reply: `Based on rent received and expenses logged so far, your estimated self-assessment liability this year is £6,240. Allowable expenses tracked: £14,330. I've flagged 3 potential missing receipts that could reduce your bill by ~£680. Tip: the boiler replacement at Flat 3 may qualify for capital allowances — worth checking with your accountant.`,
-      actions: [
-        { type: "tax", label: "Estimated liability", value: "£6,240", color: "#b8962e" },
-        { type: "saving", label: "Missing receipts", value: "~£680 saving possible", color: "#16a34a" },
-        { type: "tip", label: "Capital allowance flag", value: "Boiler — Flat 3", color: "#2563eb" },
-      ],
-    };
+    return { reply: `Based on rent received and expenses logged so far, your estimated self-assessment liability this year is £6,240. Allowable expenses tracked: £14,330. I've flagged 3 potential missing receipts that could reduce your bill by ~£680. Tip: the boiler replacement at Flat 3 may qualify for capital allowances — worth checking with your accountant.`, actions: [{ type: "tax", label: "Estimated liability", value: "£6,240", color: "#b8962e" }, { type: "saving", label: "Missing receipts", value: "~£680 saving possible", color: "#16a34a" }, { type: "tip", label: "Capital allowance flag", value: "Boiler — Flat 3", color: "#2563eb" }], newContext: null };
   }
 
-  // Tenant leaving
-  if (i.includes("tenant") && (i.includes("moved") || i.includes("vacated") || i.includes("left") || i.includes("ended") || i.includes("leaving") || i.includes("notice"))) {
-    return {
-      reply: `Tenancy marked as ended. I've triggered the deposit return checklist, flagged the property as vacant, and created a void period record for your tax summary. When you're ready to re-let, I'll pull the current market rent for that area.`,
-      actions: [
-        { type: "update", label: "Tenancy ended", value: "Archived", color: "#2563eb" },
-        { type: "checklist", label: "Deposit checklist", value: "Triggered", color: "#d97706" },
-        { type: "record", label: "Void period", value: "Tax noted", color: "#16a34a" },
-      ],
-    };
-  }
-
-  // New tenant / let agreed
-  if ((i.includes("tenant") && (i.includes("new") || i.includes("moving in") || i.includes("signed") || i.includes("let") || i.includes("agreed"))) || i.includes("let agreed") || i.includes("tenancy start")) {
-    return {
-      reply: `New tenancy created. I've set up the tenant record, generated the AST checklist, scheduled the first rent payment, and opened a new compliance tracker for that property. Want me to send a welcome message to the tenant?`,
-      actions: [
-        { type: "create", label: "Tenancy created", value: "AST checklist ready", color: "#2563eb" },
-        { type: "schedule", label: "Rent scheduled", value: "First payment set", color: "#16a34a" },
-        { type: "compliance", label: "Compliance tracker", value: "Opened", color: "#b8962e" },
-      ],
-    };
-  }
-
-  // Section 21 / eviction
   if (i.includes("section 21") || i.includes("s21") || i.includes("evict") || i.includes("possession")) {
-    return {
-      reply: `I've flagged this as a potential possession matter. To serve a valid Section 21, you'll need to confirm: gas safety certificate served, deposit protected and prescribed info served, EPC provided, How to Rent guide served, and no outstanding repairs. Let me run through your compliance record for this property — which one is it?`,
-      actions: [
-        { type: "legal", label: "S21 checklist", value: "Pre-check required", color: "#dc2626" },
-        { type: "compliance", label: "Deposit status", value: "Verify protection", color: "#d97706" },
-        { type: "tip", label: "Legal tip", value: "Seek solicitor advice", color: "#2563eb" },
-      ],
-    };
+    return { reply: `I've flagged this as a potential possession matter. To serve a valid Section 21, you'll need to confirm: gas safety certificate served, deposit protected and prescribed info served, EPC provided, How to Rent guide served, and no outstanding repairs. Which property is this for?`, actions: [{ type: "legal", label: "S21 checklist", value: "Pre-check required", color: "#dc2626" }, { type: "compliance", label: "Deposit status", value: "Verify protection", color: "#d97706" }, { type: "tip", label: "Legal tip", value: "Seek solicitor advice", color: "#2563eb" }], newContext: null };
   }
 
-  // HMO / licensing
-  if (i.includes("hmo") || i.includes("licence") || i.includes("license") || i.includes("selective") || i.includes("additional licensing")) {
-    return {
-      reply: `HMO licensing noted. I've added a licence tracker to your compliance dashboard. If this is a mandatory HMO (5+ occupants, 2+ households), you'll need an HMO licence from your local council. Some councils also require additional or selective licences — I'll flag your local authority requirements if you tell me the postcode.`,
-      actions: [
-        { type: "compliance", label: "Licence tracker", value: "Added to dashboard", color: "#2563eb" },
-        { type: "alert", label: "Council check", value: "Postcode needed", color: "#d97706" },
-      ],
-    };
+  if (i.includes("hmo") || i.includes("licence") || i.includes("license") || i.includes("selective")) {
+    return { reply: `HMO licensing noted. I've added a licence tracker to your compliance dashboard. If this is a mandatory HMO (5+ occupants, 2+ households), you'll need an HMO licence from your local council. Tell me the postcode and I'll flag your local authority requirements.`, actions: [{ type: "compliance", label: "Licence tracker", value: "Added to dashboard", color: "#2563eb" }, { type: "alert", label: "Council check", value: "Postcode needed", color: "#d97706" }], newContext: null };
   }
 
-  // Void period
   if (i.includes("void") || i.includes("empty") || i.includes("vacant") || i.includes("no tenant")) {
-    return {
-      reply: `Void period logged for tax purposes. Ongoing costs during void (mortgage, bills, council tax) are noted as allowable expenses. I'll track the void duration and alert you if it passes 4 weeks — that's when you may want to review your asking rent or marketing strategy.`,
-      actions: [
-        { type: "record", label: "Void logged", value: "Tax noted", color: "#16a34a" },
-        { type: "tax", label: "Running costs", value: "Allowable expenses", color: "#b8962e" },
-        { type: "alert", label: "4-week alert", value: "Set", color: "#d97706" },
-      ],
-    };
+    return { reply: `Void period logged for tax purposes. Ongoing costs during void (mortgage, bills, council tax) are noted as allowable expenses. I'll track the void duration and alert you if it passes 4 weeks.`, actions: [{ type: "record", label: "Void logged", value: "Tax noted", color: "#16a34a" }, { type: "tax", label: "Running costs", value: "Allowable expenses", color: "#b8962e" }, { type: "alert", label: "4-week alert", value: "Set", color: "#d97706" }], newContext: null };
   }
 
-  // Rent arrears
-  if (i.includes("arrears") || i.includes("late rent") || i.includes("missed payment") || i.includes("not paid") || i.includes("overdue")) {
-    return {
-      reply: `Rent arrears flagged. I've updated the ledger and created an arrears record. I'd recommend sending a formal arrears notice within 14 days of the missed payment. Want me to draft one? If arrears reach 2 months, Section 8 (Ground 8) becomes available — I'll track the threshold for you.`,
-      actions: [
-        { type: "alert", label: "Arrears flagged", value: "Ledger updated", color: "#dc2626" },
-        { type: "action", label: "Arrears notice", value: "Ready to draft", color: "#d97706" },
-        { type: "legal", label: "S8 threshold", value: "Tracking", color: "#2563eb" },
-      ],
-    };
-  }
-
-  // Deposit
   if (i.includes("deposit") && (i.includes("protect") || i.includes("dps") || i.includes("tds") || i.includes("mydeposits") || i.includes("register"))) {
-    return {
-      reply: `Deposit protection noted. You must protect the deposit within 30 days of receiving it and serve the Prescribed Information to the tenant. I've added this to the compliance tracker. Which scheme are you using — DPS, TDS, or myDeposits?`,
-      actions: [
-        { type: "compliance", label: "Deposit protection", value: "30-day deadline set", color: "#b8962e" },
-        { type: "action", label: "Prescribed Info", value: "Must be served", color: "#dc2626" },
-      ],
-    };
+    return { reply: `Deposit protection noted. You must protect the deposit within 30 days of receiving it and serve the Prescribed Information to the tenant. I've added this to the compliance tracker. Which scheme are you using — DPS, TDS, or myDeposits?`, actions: [{ type: "compliance", label: "Deposit protection", value: "30-day deadline set", color: "#b8962e" }, { type: "action", label: "Prescribed Info", value: "Must be served", color: "#dc2626" }], newContext: null };
   }
 
-  // Gas / electric / EICR / EPC certificates
-  if (i.includes("gas safety") || i.includes("gsc") || i.includes("eicr") || i.includes("epc") || i.includes("certificate") || i.includes("boiler service") || i.includes("pat test") || i.includes("fire safety")) {
+  if (i.includes("gas safety") || i.includes("gsc") || i.includes("eicr") || i.includes("epc") || i.includes("certificate") || i.includes("boiler service") || i.includes("fire safety")) {
     const cert = i.includes("gas") ? "Gas Safety Certificate" : i.includes("eicr") ? "EICR" : i.includes("epc") ? "EPC" : "Certificate";
-    return {
-      reply: `${cert} logged and filed. I've extracted the expiry date and set a reminder 60 days before renewal is due. Certificate stored against the property record and a copy flagged for your next tenancy agreement. You're required to serve a copy to tenants at the start of each new tenancy.`,
-      actions: [
-        { type: "compliance", label: cert + " filed", value: "Expiry tracked", color: "#16a34a" },
-        { type: "alert", label: "60-day reminder", value: "Set automatically", color: "#d97706" },
-        { type: "action", label: "Tenant copy", value: "Required on new AST", color: "#2563eb" },
-      ],
-    };
+    return { reply: `${cert} logged and filed. I've extracted the expiry date and set a reminder 60 days before renewal is due. Certificate stored against the property record — you're required to serve a copy to tenants at the start of each new tenancy.`, actions: [{ type: "compliance", label: cert + " filed", value: "Expiry tracked", color: "#16a34a" }, { type: "alert", label: "60-day reminder", value: "Set automatically", color: "#d97706" }, { type: "action", label: "Tenant copy", value: "Required on new AST", color: "#2563eb" }], newContext: null };
   }
 
-  // Rent review / increase
   if ((i.includes("rent") && (i.includes("increase") || i.includes("review") || i.includes("raise") || i.includes("market rate"))) || i.includes("section 13")) {
-    return {
-      reply: `Rent review initiated. Current market rate data suggests your property is £75-£120 below market. To increase rent on a periodic tenancy, you'll need to serve a Section 13 notice with at least 1 month's notice (for monthly tenancies). I can prepare the notice — what's the new amount you'd like to propose?`,
-      actions: [
-        { type: "action", label: "S13 notice", value: "Ready to prepare", color: "#2563eb" },
-        { type: "market", label: "Market rate", value: "+£75-£120 gap", color: "#16a34a" },
-        { type: "alert", label: "Notice period", value: "1 month minimum", color: "#d97706" },
-      ],
-    };
+    return { reply: `Rent review initiated. Current market rate data suggests your property is £75-£120 below market. To increase rent on a periodic tenancy, serve a Section 13 notice with at least 1 month's notice. I can prepare the notice — what's the new amount you'd like to propose?`, actions: [{ type: "action", label: "S13 notice", value: "Ready to prepare", color: "#2563eb" }, { type: "market", label: "Market rate", value: "+£75-£120 gap", color: "#16a34a" }, { type: "alert", label: "Notice period", value: "1 month minimum", color: "#d97706" }], newContext: null };
   }
 
-  // Unrecognised but contains property keywords
-  const recognized = [
-    "rent", "tenant", "property", "maintenance", "certificate", "inspection",
-    "compliance", "income", "expense", "deposit", "contract", "agency",
-    "landlord", "letting", "portfolio", "invoice", "receipt", "insurance",
-    "building", "flat", "house", "room", "kitchen", "bathroom",
-  ].some(kw => i.includes(kw));
+  // ── Fallback ──────────────────────────────────────────────────────────────
 
-  if (input.trim().length < 5) {
-    return {
-      reply: `Can you give me a bit more detail? The more context you give, the more I can do.`,
-      actions: [{ type: "help", label: "Tip", value: "More detail = better response", color: "#2563eb" }],
-    };
-  }
+  const recognized = ["rent","tenant","property","maintenance","certificate","compliance","income","expense","deposit","landlord","letting","portfolio","invoice","flat","house","mortgage","contractor","insurance"].some(kw => i.includes(kw));
 
-  if (!recognized) {
-    return {
-      reply: `I didn't quite catch that. Try something like:\n\n• "Tenant paid £1,250 today for Maple Street"\n• "Boiler replaced at Flat 3, cost £650"\n• "What should I focus on today?"\n• "Gas safety certificate uploaded for 22 Park Road"\n• "Tenant at Oak Avenue is in arrears"\n\nThe more detail you give me, the more I can do.`,
-      actions: [{ type: "help", label: "Examples above", value: "Try one", color: "#2563eb" }],
-    };
-  }
+  if (i.length < 5) return { reply: "Can you give me a bit more detail? The more context you give, the more I can do.", actions: [], newContext: null };
 
-  return {
-    reply: `Got it — I've noted that. In the live platform, Rentura would parse your message, update the right records, set any reminders, and flag anything that needs your attention. No forms. No menus. Just this.`,
-    actions: [
-      { type: "ai", label: "Intent recognised", value: "Processing", color: "#2563eb" },
-      { type: "action", label: "Records would update", value: "Automatically", color: "#16a34a" },
-    ],
-  };
+  if (!recognized) return { reply: `I didn't quite catch that. Try something like:\n\n• "Bought a house in Sparkhill"\n• "Tenant paid £1,250 today for Maple Street"\n• "Boiler replaced at Flat 3, cost £650"\n• "Tenant at Oak Avenue hasn't paid this month"\n• "What should I focus on today?"\n\nThe more detail you give me, the more I can do.`, actions: [{ type: "help", label: "Examples above", value: "Try one", color: "#2563eb" }], newContext: null };
+
+  return { reply: `Got it — I've noted that. In the live platform, Rentura would parse your message, update the right records, set any reminders, and flag anything that needs your attention. No forms. No menus. Just this.`, actions: [{ type: "ai", label: "Intent recognised", value: "Processing", color: "#2563eb" }, { type: "action", label: "Records would update", value: "Automatically", color: "#16a34a" }], newContext: null };
 }
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
@@ -358,6 +403,7 @@ export default function RenturaPage() {
   const [messages, setMessages] = useState<Message[]>([INITIAL_MSG]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [chatContext, setChatContext] = useState<ConversationContext>(null);
   const [openCompare, setOpenCompare] = useState<number | null>(null);
   const [openAlert, setOpenAlert] = useState<number | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -378,15 +424,17 @@ export default function RenturaPage() {
     setInput("");
     setLoading(true);
     setTimeout(() => {
-      const { reply, actions } = parseMessage(text);
+      const { reply, actions, newContext } = parseMessage(text, chatContext);
       setMessages(m => [...m, { role: "ai", text: reply, actions, ts: "just now" }]);
+      setChatContext(newContext);
       setLoading(false);
     }, 800 + Math.random() * 400);
-  }, [loading]);
+  }, [loading, chatContext]);
 
   const resetChat = useCallback(() => {
     setMessages([INITIAL_MSG]);
     setInput("");
+    setChatContext(null);
     inputRef.current?.focus();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -535,6 +583,12 @@ export default function RenturaPage() {
 
             {/* Input */}
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "14px 16px" }}>
+              {chatContext && (
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10, padding: "6px 12px", background: "rgba(37,99,235,0.1)", border: "1px solid rgba(37,99,235,0.2)", borderRadius: 8 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#3b82f6", flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>Gathering info for <strong style={{ color: "rgba(255,255,255,0.7)" }}>{chatContext.intent.replace(/_/g, " ")}</strong> — type <span style={{ color: "rgba(255,255,255,0.4)" }}>"cancel"</span> to stop</span>
+                </div>
+              )}
               <div style={{ display: "flex", gap: 10 }}>
                 <input ref={inputRef} type="text" value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send(input)} placeholder="Tell me what happened, or ask anything…" style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 10, padding: "11px 16px", color: "white", fontSize: 14, outline: "none", fontFamily: "inherit" }} />
                 <button onClick={() => send(input)} disabled={loading || !input.trim()} style={{ background: input.trim() ? CTA : "rgba(255,255,255,0.06)", border: "none", borderRadius: 10, padding: "11px 20px", color: input.trim() ? "white" : "rgba(255,255,255,0.18)", fontWeight: 700, fontSize: 13, cursor: input.trim() ? "pointer" : "default", transition: "all 0.2s", flexShrink: 0, fontFamily: "inherit" }}>Send</button>
