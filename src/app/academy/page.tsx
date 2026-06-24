@@ -73,8 +73,15 @@ const FAQS = [
   },
 ];
 
+const TAG_COLORS: Record<string, string> = {
+  Foundation: "#6366f1", Strategy: "#d4af37", Sourcing: "#16a34a",
+  "Lead Gen": "#0891b2", Analysis: "#7c3aed", Investors: "#2563eb",
+  Packaging: "#d97706", Negotiation: "#dc2626", Closing: "#16a34a",
+  Legal: "#ef4444", Scale: "#a855f7",
+};
+
 function StarRating({ n }: { n: number }) {
-  return <span style={{ color: "#d4af37", fontSize: 14 }}>{"★".repeat(n)}</span>;
+  return <span style={{ color: "#d4af37", fontSize: 16 }}>{"★".repeat(n)}</span>;
 }
 
 export default function AcademyPage() {
@@ -100,149 +107,154 @@ export default function AcademyPage() {
     );
   }
 
+  const TOOLS = [
+    { icon: "✉️", title: "Email Swipe File", desc: "11 copy-paste templates for agents, investors, and motivated sellers. Includes subject lines and follow-up sequences.", href: "/academy/emails", accent: "#2563eb" },
+    { icon: "👥", title: "Investor CRM", desc: "Track every investor — strategy, budget, area, status. Export to CSV. Never lose a warm lead again.", href: "/academy/crm", accent: "#7c3aed" },
+    { icon: "📊", title: "Deal Calculator", desc: "Model BRRR, JV splits, and packaging fees with sliders and a live deal score. More detailed than the public version.", href: "/academy/calculator", accent: "#d4af37" },
+    { icon: "✅", title: "37-Step Checklist", desc: "From compliance setup to collecting your first fee — every step tracked. Tick off as you go.", href: "/academy/checklist", accent: "#16a34a" },
+    { icon: "📋", title: "Weekly Deal Reviews", desc: "Real deals — addresses blurred — with numbers, strengths, risks, and the lesson Nass took.", href: "/academy/deal-reviews", accent: "#0891b2" },
+    { icon: "🏘️", title: "Area Research Tool", desc: "7 major cities with sourcer-specific intelligence: discounts, refurb costs, and which strategies work where.", href: "/academy/area-research", accent: "#d97706" },
+    { icon: "❓", title: "Q&A Board", desc: "Ask anything. Nass answers personally within 48 hours. No AI auto-responses.", href: "/academy/qa", accent: "#6366f1" },
+    { icon: "⚖️", title: "Compliance Hub", desc: "Plain-English guide to FCA awareness, property redress, AML, GDPR, and sourcing contracts.", href: "/academy/legal", accent: "#ef4444" },
+    { icon: "📁", title: "Downloads Library", desc: "Investor pack templates, deal spreadsheets, compliance checklists, and presentation decks.", href: "/academy/downloads", accent: "#a855f7" },
+  ];
+
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: "#0a0f1e", color: "white", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-family-body)", background: "#080d1a", color: "white", minHeight: "100vh" }}>
 
       {/* LEGAL STRIP */}
-      <div style={{ background: "rgba(239,68,68,0.08)", borderBottom: "1px solid rgba(239,68,68,0.15)", padding: "8px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 11, color: "rgba(239,68,68,0.8)", fontWeight: 600 }}>
-          Educational platform only · Not financial advice · Not investment advice · Results vary · Deal sourcers must comply with applicable FCA rules and property redress scheme requirements
+      <div style={{ background: "rgba(239,68,68,0.1)", borderBottom: "1px solid rgba(239,68,68,0.18)", padding: "9px 24px", textAlign: "center" }}>
+        <p style={{ fontSize: 11, color: "rgba(239,68,68,0.9)", fontWeight: 600, letterSpacing: "0.01em" }}>
+          Educational platform only · Not financial advice · Not investment advice · Results vary · Deal sourcers must comply with FCA rules and property redress scheme requirements
         </p>
       </div>
 
-      {/* HERO */}
-      <section style={{ padding: "80px 24px 64px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 20% 50%, rgba(212,175,55,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(99,102,241,0.05) 0%, transparent 50%)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(212,175,55,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
+      {/* ── HERO ── */}
+      <section style={{ padding: "100px 24px 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 90% 55% at 50% 0%, rgba(212,175,55,0.14) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(212,175,55,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.025) 1px, transparent 1px)", backgroundSize: "72px 72px", pointerEvents: "none" }} />
 
-        <div style={{ maxWidth: 780, margin: "0 auto", position: "relative" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 100, padding: "6px 16px", fontSize: 12, color: "#d4af37", fontWeight: 700, marginBottom: 28, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
+        <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.35)", borderRadius: 100, padding: "7px 18px", fontSize: 12, color: "#d4af37", fontWeight: 800, marginBottom: 36, textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
             Now open · Free to join
           </div>
 
-          <h1 style={{ fontSize: "clamp(36px,6vw,62px)", fontWeight: 800, lineHeight: 1.08, marginBottom: 24, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontSize: "clamp(52px,9vw,96px)", fontWeight: 900, lineHeight: 0.93, marginBottom: 32, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.03em" }}>
             Stop watching.<br />
-            <span style={{ color: "#d4af37" }}>Start sourcing.</span>
+            <span style={{ background: "linear-gradient(135deg, #d4af37 0%, #f5d96a 50%, #d4af37 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              Start sourcing.
+            </span>
           </h1>
 
-          <p style={{ fontSize: "clamp(15px,2.2vw,18px)", color: "rgba(255,255,255,0.6)", maxWidth: 580, margin: "0 auto 14px", lineHeight: 1.7 }}>
-            The Deal Sourcing Academy is where aspiring sourcers get the real education — not the highlight reel. Courses, tools, live deal reviews, scripts, compliance guides, and a Q&A board where I answer personally.
+          <p style={{ fontSize: "clamp(16px,2.2vw,20px)", color: "rgba(255,255,255,0.72)", maxWidth: 600, margin: "0 auto 12px", lineHeight: 1.65 }}>
+            The Deal Sourcing Academy gives aspiring sourcers the real education — not the highlight reel. Courses, tools, live deal reviews, scripts, compliance guides, and a Q&A board where I answer personally.
           </p>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginBottom: 36, fontStyle: "italic" }}>— Nass, PropertyVault UK</p>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.32)", marginBottom: 48, fontStyle: "italic" }}>— Nass, PropertyVault UK</p>
 
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-            <CTAButton large />
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>No payment required · Create your free account in 60 seconds</p>
-          </div>
+          <CTAButton large />
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginTop: 16 }}>No payment required · Create your free account in 60 seconds</p>
         </div>
       </section>
 
-      {/* HONEST INTRO — Nass's voice */}
-      <section style={{ padding: "0 24px 64px" }}>
-        <div style={{ maxWidth: 700, margin: "0 auto", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "36px 40px" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>A message from Nass</p>
-          <div style={{ fontSize: 15, color: "rgba(255,255,255,0.72)", lineHeight: 1.85 }}>
-            <p style={{ marginBottom: 14 }}>I built this because I couldn&apos;t find anything honest when I was starting out.</p>
-            <p style={{ marginBottom: 14 }}>Every course I looked at was either £2,000+ with vague promises, or free YouTube content that told you what deal sourcing <em>was</em> but not how to actually <em>do it</em> — find investors, negotiate with sellers, price your fee, stay legal.</p>
-            <p style={{ marginBottom: 14 }}>The Academy is what I wish I had. It&apos;s practical, it covers the compliance properly (non-negotiable in this industry), and the tools are things I use myself.</p>
-            <p style={{ marginBottom: 0 }}>It&apos;s free to join. Sign up, get access, and start learning. No card. No catch.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* STATS BAR */}
-      <section style={{ background: "rgba(212,175,55,0.06)", borderTop: "1px solid rgba(212,175,55,0.12)", borderBottom: "1px solid rgba(212,175,55,0.12)", padding: "24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 36 }}>
-          {[
-            ["12", "Course modules"],
-            ["8", "Playbooks"],
-            ["11", "Email templates"],
-            ["37", "Step checklist"],
-            ["7", "Cities covered"],
-            ["Weekly", "Deal reviews"],
-          ].map(([val, label]) => (
-            <div key={label} style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 26, fontWeight: 800, color: "#d4af37" }}>{val}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 3, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</div>
+      {/* ── STATS BAR ── */}
+      <section style={{ background: "linear-gradient(90deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.04) 100%)", borderTop: "1px solid rgba(212,175,55,0.18)", borderBottom: "1px solid rgba(212,175,55,0.18)", padding: "36px 24px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+          {[["12","Course modules"],["8","Playbooks"],["11","Email templates"],["37","Step checklist"],["7","Cities covered"],["Weekly","Deal reviews"]].map(([val, label], i, arr) => (
+            <div key={label} style={{ textAlign: "center", padding: "0 36px", borderRight: i < arr.length - 1 ? "1px solid rgba(212,175,55,0.18)" : "none" }}>
+              <div style={{ fontSize: 44, fontWeight: 900, color: "#d4af37", lineHeight: 1, letterSpacing: "-0.02em" }}>{val}</div>
+              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.52)", marginTop: 8, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>{label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* INTERACTIVE QUIZ */}
-      <section style={{ padding: "72px 24px" }}>
+      {/* ── NASS MESSAGE ── */}
+      <section style={{ padding: "80px 24px" }}>
+        <div style={{ maxWidth: 740, margin: "0 auto", background: "linear-gradient(145deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02))", border: "1px solid rgba(212,175,55,0.22)", borderRadius: 28, padding: "52px 56px", position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", top: -16, left: 28, fontSize: 160, color: "rgba(212,175,55,0.07)", fontFamily: "Georgia, serif", lineHeight: 1, pointerEvents: "none", userSelect: "none" }}>&ldquo;</div>
+          <p style={{ fontSize: 11, fontWeight: 800, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.14em", marginBottom: 24, position: "relative" }}>A message from Nass</p>
+          <div style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", lineHeight: 1.85, position: "relative" }}>
+            <p style={{ marginBottom: 18 }}>I built this because I couldn&apos;t find anything honest when I was starting out.</p>
+            <p style={{ marginBottom: 18 }}>Every course was either £2,000+ with vague promises, or free YouTube content that told you what deal sourcing <em>was</em> but not how to actually <em>do it</em> — find investors, negotiate with sellers, price your fee, stay legal.</p>
+            <p style={{ marginBottom: 18 }}>The Academy is what I wish I had. Practical. Compliance-first. Tools I use myself.</p>
+            <p style={{ fontWeight: 800, color: "white", fontSize: 18, marginBottom: 0 }}>It&apos;s free to join. Sign up, get access, start learning. No card. No catch.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── QUIZ ── */}
+      <section style={{ padding: "0 24px 88px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <h2 style={{ fontSize: 26, fontWeight: 800, marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Is the Academy right for you?</h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)" }}>3 quick questions. Takes 20 seconds.</p>
+          <div style={{ textAlign: "center", marginBottom: 36 }}>
+            <h2 style={{ fontSize: "clamp(24px,4vw,34px)", fontWeight: 900, marginBottom: 10, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Is the Academy right for you?</h2>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.5)" }}>3 quick questions. Takes 20 seconds.</p>
           </div>
 
           {!quizDone ? (
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "32px 28px" }}>
-              <div style={{ display: "flex", gap: 6, marginBottom: 24 }}>
+            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 24, padding: "40px 36px" }}>
+              <div style={{ display: "flex", gap: 8, marginBottom: 32 }}>
                 {QUIZ.map((_, i) => (
-                  <div key={i} style={{ flex: 1, height: 3, borderRadius: 3, background: i <= quizStep ? "#d4af37" : "rgba(255,255,255,0.1)" }} />
+                  <div key={i} style={{ flex: 1, height: 4, borderRadius: 4, background: i <= quizStep ? "#d4af37" : "rgba(255,255,255,0.08)", transition: "background 0.3s" }} />
                 ))}
               </div>
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.05em" }}>Question {quizStep + 1} of {QUIZ.length}</p>
-              <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 24, lineHeight: 1.4 }}>{QUIZ[quizStep].q}</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 14, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700 }}>Question {quizStep + 1} of {QUIZ.length}</p>
+              <h3 style={{ fontSize: 21, fontWeight: 800, marginBottom: 28, lineHeight: 1.3 }}>{QUIZ[quizStep].q}</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {QUIZ[quizStep].opts.map((opt, i) => (
                   <button key={i} onClick={() => {
                     const newAnswers = [...quizAnswers, i];
                     setQuizAnswers(newAnswers);
                     if (quizStep < QUIZ.length - 1) setQuizStep(s => s + 1);
-                  }} style={{ padding: "13px 18px", borderRadius: 12, border: "1.5px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.8)", fontSize: 14, fontWeight: 600, cursor: "pointer", textAlign: "left", transition: "border-color 0.15s" }}
-                    className="hover:border-yellow-500/40">
+                  }} style={{ padding: "16px 22px", borderRadius: 14, border: "1.5px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.88)", fontSize: 15, fontWeight: 600, cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
                     {opt}
                   </button>
                 ))}
               </div>
             </div>
           ) : (
-            <div style={{ background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 20, padding: "32px 28px", textAlign: "center" }}>
-              <div style={{ fontSize: 40, marginBottom: 16 }}>✅</div>
-              <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 12 }}>Yes — the Academy is built for you.</h3>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.7, marginBottom: 24 }}>
-                Whether you&apos;re starting from scratch, stuck at a particular stage, or just need a proper system — the Academy covers it. The 7-Day Challenge was designed for exactly where you are right now.
+            <div style={{ background: "linear-gradient(145deg, rgba(212,175,55,0.1), rgba(212,175,55,0.03))", border: "2px solid rgba(212,175,55,0.35)", borderRadius: 24, padding: "48px 36px", textAlign: "center" }}>
+              <div style={{ width: 64, height: 64, background: "rgba(22,163,74,0.15)", border: "2px solid rgba(22,163,74,0.4)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", fontSize: 28 }}>✅</div>
+              <h3 style={{ fontSize: 24, fontWeight: 900, marginBottom: 14 }}>Yes — the Academy is built for you.</h3>
+              <p style={{ fontSize: 16, color: "rgba(255,255,255,0.68)", lineHeight: 1.7, marginBottom: 32 }}>
+                Whether you&apos;re starting from scratch or stuck at a particular stage — the Academy covers it. The 7-Day Challenge was built for exactly where you are right now.
               </p>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                <CTAButton />
-                <button onClick={() => { setQuizStep(0); setQuizAnswers([]); }} style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Retake quiz</button>
-              </div>
+              <CTAButton />
+              <br /><br />
+              <button onClick={() => { setQuizStep(0); setQuizAnswers([]); }} style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", fontFamily: "inherit" }}>Retake quiz</button>
             </div>
           )}
         </div>
       </section>
 
-      {/* 7-DAY CHALLENGE */}
-      <section style={{ padding: "72px 24px", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <div style={{ display: "inline-block", background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 100, padding: "4px 14px", fontSize: 11, color: "#d4af37", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>Start here</div>
-            <h2 style={{ fontSize: 30, fontWeight: 800, fontFamily: "var(--font-family-heading)", marginBottom: 8 }}>The 7-Day First Deal Challenge</h2>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}>Seven days. Seven tasks. Real progress — not just motivation.</p>
+      {/* ── 7-DAY CHALLENGE ── */}
+      <section style={{ padding: "88px 24px", borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(99,102,241,0.03)" }}>
+        <div style={{ maxWidth: 780, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <div style={{ display: "inline-block", background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 100, padding: "6px 18px", fontSize: 11, color: "#d4af37", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 18 }}>Start Here</div>
+            <h2 style={{ fontSize: "clamp(28px,4.5vw,46px)", fontWeight: 900, fontFamily: "var(--font-family-heading)", marginBottom: 12, letterSpacing: "-0.02em" }}>The 7-Day First Deal Challenge</h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>Seven days. Seven tasks. Real progress — not just motivation.</p>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {DAYS.map(d => (
-              <div key={d.day} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${openDay === d.day ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: 14, overflow: "hidden" }}>
-                <button onClick={() => setOpenDay(openDay === d.day ? null : d.day)} style={{ width: "100%", background: "none", border: "none", padding: "16px 20px", display: "flex", alignItems: "center", gap: 16, cursor: "pointer", color: "white", textAlign: "left" }}>
-                  <div style={{ width: 44, height: 44, background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 10, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "#d4af37", textTransform: "uppercase" }}>Day</span>
-                    <span style={{ fontSize: 18, fontWeight: 800, color: "#d4af37", lineHeight: 1 }}>{d.day}</span>
+              <div key={d.day} onClick={() => setOpenDay(openDay === d.day ? null : d.day)}
+                style={{ background: openDay === d.day ? "rgba(212,175,55,0.07)" : "rgba(255,255,255,0.03)", border: `1.5px solid ${openDay === d.day ? "rgba(212,175,55,0.4)" : "rgba(255,255,255,0.09)"}`, borderRadius: 18, overflow: "hidden", cursor: "pointer", transition: "all 0.2s" }}>
+                <div style={{ padding: "20px 24px", display: "flex", alignItems: "center", gap: 20 }}>
+                  <div style={{ width: 52, height: 52, background: openDay === d.day ? "rgba(212,175,55,0.22)" : "rgba(212,175,55,0.1)", border: `1.5px solid rgba(212,175,55,${openDay === d.day ? 0.5 : 0.28})`, borderRadius: 14, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <span style={{ fontSize: 8, fontWeight: 800, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.06em" }}>Day</span>
+                    <span style={{ fontSize: 22, fontWeight: 900, color: "#d4af37", lineHeight: 1.1 }}>{d.day}</span>
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: 15, fontWeight: 700 }}>{d.title}</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{d.task}</p>
+                    <p style={{ fontSize: 17, fontWeight: 800, color: "white", marginBottom: 4 }}>{d.title}</p>
+                    <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.5 }}>{d.task}</p>
                   </div>
-                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 16, flexShrink: 0 }}>{openDay === d.day ? "−" : "+"}</span>
-                </button>
+                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 22, fontWeight: 300, flexShrink: 0 }}>{openDay === d.day ? "−" : "+"}</span>
+                </div>
                 {openDay === d.day && (
-                  <div style={{ padding: "0 20px 20px 80px" }}>
-                    <div style={{ background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.15)", borderRadius: 10, padding: "12px 16px" }}>
-                      <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", marginBottom: 4 }}>NASS SAYS:</p>
-                      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.65, fontStyle: "italic" }}>&ldquo;{d.honest}&rdquo;</p>
+                  <div style={{ padding: "0 24px 22px 96px" }}>
+                    <div style={{ background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.22)", borderRadius: 12, padding: "16px 20px" }}>
+                      <p style={{ fontSize: 10, fontWeight: 800, color: "#d4af37", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.12em" }}>Nass says</p>
+                      <p style={{ fontSize: 15, color: "rgba(255,255,255,0.78)", lineHeight: 1.7, fontStyle: "italic" }}>&ldquo;{d.honest}&rdquo;</p>
                     </div>
                   </div>
                 )}
@@ -252,147 +264,150 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* 12 MODULES */}
-      <section style={{ padding: "72px 24px", maxWidth: 1000, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 40 }}>
-          <div style={{ display: "inline-block", background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)", borderRadius: 100, padding: "4px 14px", fontSize: 11, color: "#a5b4fc", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>Masterclass</div>
-          <h2 style={{ fontSize: 30, fontWeight: 800, fontFamily: "var(--font-family-heading)", marginBottom: 8 }}>12 Modules. No Fluff.</h2>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}>Every module ends with a task — not just reading material.</p>
+      {/* ── 12 MODULES ── */}
+      <section style={{ padding: "88px 24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 52 }}>
+          <div style={{ display: "inline-block", background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.28)", borderRadius: 100, padding: "6px 18px", fontSize: 11, color: "#a5b4fc", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 18 }}>Masterclass</div>
+          <h2 style={{ fontSize: "clamp(28px,4.5vw,46px)", fontWeight: 900, fontFamily: "var(--font-family-heading)", marginBottom: 12, letterSpacing: "-0.02em" }}>12 Modules. No Fluff.</h2>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>Every module ends with a task — not just reading material.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 14 }}>
-          {MODULES.map(m => (
-            <div key={m.n} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "18px 20px", display: "flex", gap: 14 }}>
-              <div style={{ flexShrink: 0, paddingTop: 2 }}>
-                <span style={{ fontSize: 11, fontWeight: 800, color: "#d4af37", opacity: 0.5 }}>M{m.n}</span>
-              </div>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                  <span style={{ fontSize: 13, fontWeight: 700 }}>{m.title}</span>
-                  <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px", borderRadius: 6, background: "rgba(212,175,55,0.1)", color: "#d4af37", flexShrink: 0 }}>{m.tag}</span>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: 16 }}>
+          {MODULES.map(m => {
+            const c = TAG_COLORS[m.tag] ?? "#d4af37";
+            return (
+              <div key={m.n} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: "22px 24px", display: "flex", gap: 18, borderLeft: `3px solid ${c}` }}>
+                <div style={{ flexShrink: 0, paddingTop: 3 }}>
+                  <span style={{ fontSize: 13, fontWeight: 900, color: c, opacity: 0.75, fontFamily: "var(--font-family-heading)" }}>{m.n}</span>
                 </div>
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{m.desc}</p>
+                <div>
+                  <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
+                    <span style={{ fontSize: 14, fontWeight: 800, color: "white", lineHeight: 1.3 }}>{m.title}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 6, background: `${c}18`, color: c, flexShrink: 0, letterSpacing: "0.04em", marginTop: 2 }}>{m.tag}</span>
+                  </div>
+                  <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", lineHeight: 1.65 }}>{m.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
+        </div>
         </div>
       </section>
 
-      {/* WHAT ELSE YOU GET */}
-      <section style={{ padding: "72px 24px", background: "rgba(255,255,255,0.02)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <h2 style={{ fontSize: 30, fontWeight: 800, textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Everything else inside</h2>
-          <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 40 }}>No upsells. No &ldquo;upgrade for the good stuff.&rdquo; All of this is included — free.</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 16 }}>
-            {[
-              { icon: "✉️", title: "Email Swipe File", desc: "11 copy-paste templates for reaching estate agents, investors, and motivated sellers. Includes subject lines and follow-up sequences.", href: "/academy/emails" },
-              { icon: "👥", title: "Investor CRM", desc: "Track every investor contact — their strategy, budget, area, and status. Export to CSV. No more losing track of warm leads.", href: "/academy/crm" },
-              { icon: "📊", title: "Advanced Deal Calculator", desc: "Model BRRR, JV splits, and packaging fees with sliders and a live deal score. More detailed than the public version.", href: "/academy/calculator" },
-              { icon: "✅", title: "37-Step Sourcing Checklist", desc: "From setting up compliantly to collecting your first fee — every step tracked. Tick off as you go. Never miss a stage.", href: "/academy/checklist" },
-              { icon: "📋", title: "Weekly Deal Reviews", desc: "Real deals — addresses blurred — with the numbers, strengths, risks, and the lesson. What went well. What I'd do differently.", href: "/academy/deal-reviews" },
-              { icon: "🏘️", title: "Area Research Tool", desc: "7 major cities with sourcer-specific intelligence — not just yield data. Average discounts, typical refurb cost, and which strategies work where.", href: "/academy/area-research" },
-              { icon: "❓", title: "Q&A Board", desc: "Ask me anything. I answer every question personally within 48 hours. No AI auto-responses. Real answers from someone who's done it.", href: "/academy/qa" },
-              { icon: "⚖️", title: "Compliance Hub", desc: "Plain-English guide to FCA awareness, property redress schemes, AML, GDPR, and sourcing contracts. The non-negotiable stuff, made simple.", href: "/academy/legal" },
-              { icon: "📁", title: "Downloads Library", desc: "Investor pack templates, deal analysis spreadsheets, compliance checklists, and presentation decks. Formats you can use tomorrow.", href: "/academy/downloads" },
-            ].map(item => (
-              <Link key={item.title} href={item.href} style={{ textDecoration: "none", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "22px 22px", display: "block", transition: "border-color 0.2s" }}
-                className="group hover:border-yellow-500/30">
-                <div style={{ fontSize: 28, marginBottom: 10 }}>{item.icon}</div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 6, color: "white" }}>{item.title}</h3>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{item.desc}</p>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", marginTop: 12 }}>Explore →</p>
+      {/* ── WHAT ELSE YOU GET ── */}
+      <section style={{ padding: "88px 24px", background: "linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%)", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <h2 style={{ fontSize: "clamp(28px,4.5vw,46px)", fontWeight: 900, fontFamily: "var(--font-family-heading)", marginBottom: 12, letterSpacing: "-0.02em" }}>Everything else inside</h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>No upsells. No &ldquo;upgrade for the good stuff.&rdquo; All included — free.</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 16 }}>
+            {TOOLS.map(item => (
+              <Link key={item.title} href={item.href} style={{ textDecoration: "none", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 20, padding: "26px 26px", display: "block", borderTop: `2px solid ${item.accent}` }}>
+                <div style={{ width: 44, height: 44, background: `${item.accent}18`, border: `1px solid ${item.accent}40`, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, marginBottom: 16 }}>{item.icon}</div>
+                <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 8, color: "white" }}>{item.title}</h3>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", lineHeight: 1.65, marginBottom: 16 }}>{item.desc}</p>
+                <p style={{ fontSize: 13, fontWeight: 700, color: item.accent }}>Explore →</p>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* REVIEWS */}
-      <section style={{ padding: "72px 24px", maxWidth: 1000, margin: "0 auto" }}>
-        <h2 style={{ fontSize: 30, fontWeight: 800, textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>What members actually say</h2>
-        <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 40 }}>Not curated highlights. What they told us when we asked.</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 20 }}>
-          {REVIEWS.map(r => (
-            <div key={r.name} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 18, padding: 26 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 }}>
-                <StarRating n={r.stars} />
-                <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: "rgba(212,175,55,0.1)", color: "#d4af37" }}>{r.result}</span>
-              </div>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.7, marginBottom: 16, fontStyle: "italic" }}>&ldquo;{r.text}&rdquo;</p>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{r.name}</div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{r.area}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* PRICING */}
-      <section style={{ padding: "72px 24px", background: "linear-gradient(135deg,#0d1a3a,#0a0f1e)", borderTop: "1px solid rgba(212,175,55,0.12)", textAlign: "center" }}>
-        <div style={{ maxWidth: 520, margin: "0 auto" }}>
-          <div style={{ background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(212,175,55,0.25)", borderRadius: 24, padding: "44px 36px" }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 20 }}>Deal Sourcing Academy</p>
-            <div style={{ fontSize: 60, fontWeight: 900, lineHeight: 1, marginBottom: 4 }}>Free</div>
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, marginBottom: 32 }}>No payment required · Sign up in 60 seconds</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 32, textAlign: "left" }}>
-              {[
-                "12-Module Deal Sourcing Masterclass",
-                "7-Day First Deal Challenge",
-                "8 Strategy Playbooks",
-                "11 Copy-Paste Email Templates",
-                "Advanced Deal Calculator (BRRR / JV / Packaging)",
-                "Investor CRM",
-                "37-Step Compliance Checklist",
-                "Weekly Live Deal Reviews",
-                "Area Research Tool (7 cities)",
-                "Q&A Board — Nass answers personally",
-                "Downloads Library",
-                "Legal & Compliance Hub",
-                "Monthly new content",
-              ].map(f => (
-                <div key={f} style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 13 }}>
-                  <span style={{ color: "#d4af37", fontWeight: 800, flexShrink: 0 }}>✓</span>
-                  <span style={{ color: "rgba(255,255,255,0.75)" }}>{f}</span>
+      {/* ── REVIEWS ── */}
+      <section style={{ padding: "88px 24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 1040, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 52 }}>
+            <h2 style={{ fontSize: "clamp(28px,4.5vw,46px)", fontWeight: 900, fontFamily: "var(--font-family-heading)", marginBottom: 12, letterSpacing: "-0.02em" }}>What members actually say</h2>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 16 }}>Not curated highlights. What they told us when we asked.</p>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 20 }}>
+            {REVIEWS.map(r => (
+              <div key={r.name} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 22, padding: "30px 28px", position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: 8, right: 18, fontSize: 80, color: "rgba(212,175,55,0.06)", fontFamily: "Georgia, serif", lineHeight: 1, pointerEvents: "none" }}>&rdquo;</div>
+                <div style={{ marginBottom: 14 }}><StarRating n={r.stars} /></div>
+                <p style={{ fontSize: 15, color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: 20, fontStyle: "italic" }}>&ldquo;{r.text}&rdquo;</p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: "white" }}>{r.name}</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{r.area}</div>
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 800, padding: "5px 12px", borderRadius: 20, background: "rgba(22,163,74,0.12)", color: "#4ade80", border: "1px solid rgba(22,163,74,0.25)", whiteSpace: "nowrap" }}>{r.result}</span>
                 </div>
-              ))}
-            </div>
-            <Link href="/academy/join" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "16px 0", borderRadius: 14, textDecoration: "none", marginBottom: 12 }}>
-              Join the Academy — Free Sign Up →
-            </Link>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.6 }}>
-              No payment required to sign up · Educational platform — not financial or legal advice
-            </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section style={{ padding: "72px 24px", maxWidth: 700, margin: "0 auto" }}>
-        <h2 style={{ fontSize: 28, fontWeight: 800, textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Questions worth asking</h2>
-        <p style={{ textAlign: "center", color: "rgba(255,255,255,0.4)", fontSize: 14, marginBottom: 32 }}>The legal ones are at the top because they matter most.</p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {FAQS.map((faq, i) => (
-            <div key={i} style={{ background: faq.important ? "rgba(212,175,55,0.04)" : "rgba(255,255,255,0.03)", border: `1px solid ${faq.important ? "rgba(212,175,55,0.2)" : "rgba(255,255,255,0.07)"}`, borderRadius: 14, overflow: "hidden" }}>
-              <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", background: "none", border: "none", padding: "16px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", color: "white", textAlign: "left", gap: 16 }}>
-                <span style={{ fontSize: 14, fontWeight: 700 }}>
-                  {faq.important && <span style={{ fontSize: 10, fontWeight: 800, color: "#d4af37", background: "rgba(212,175,55,0.1)", borderRadius: 4, padding: "2px 6px", marginRight: 8 }}>LEGAL</span>}
-                  {faq.q}
-                </span>
-                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18, flexShrink: 0 }}>{openFaq === i ? "−" : "+"}</span>
-              </button>
-              {openFaq === i && (
-                <div style={{ padding: "0 20px 18px", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.75 }}>{faq.a}</div>
-              )}
+      {/* ── PRICING ── */}
+      <section style={{ padding: "88px 24px", background: "linear-gradient(145deg, #0d1530, #080d1a)", borderTop: "1px solid rgba(212,175,55,0.15)", textAlign: "center" }}>
+        <div style={{ maxWidth: 540, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, marginBottom: 8, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Everything. Free.</h2>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15, marginBottom: 40 }}>No trial. No credit card. No upsells. Just sign up.</p>
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "2px solid rgba(212,175,55,0.3)", borderRadius: 28, padding: "48px 40px", textAlign: "left" }}>
+            <div style={{ textAlign: "center", marginBottom: 6 }}>
+              <span style={{ fontSize: 72, fontWeight: 900, lineHeight: 1, background: "linear-gradient(135deg,#d4af37,#f5d96a)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Free</span>
             </div>
-          ))}
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, textAlign: "center", marginBottom: 36 }}>No payment required · Sign up in 60 seconds</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 36 }}>
+              {["12-Module Deal Sourcing Masterclass","7-Day First Deal Challenge","8 Strategy Playbooks","11 Copy-Paste Email Templates","Advanced Deal Calculator (BRRR / JV / Packaging)","Investor CRM","37-Step Compliance Checklist","Weekly Live Deal Reviews","Area Research Tool (7 cities)","Q&A Board — Nass answers personally","Downloads Library","Legal & Compliance Hub","Monthly new content"].map(f => (
+                <div key={f} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14 }}>
+                  <span style={{ color: "#d4af37", fontWeight: 900, flexShrink: 0, fontSize: 16, marginTop: 1 }}>✓</span>
+                  <span style={{ color: "rgba(255,255,255,0.82)" }}>{f}</span>
+                </div>
+              ))}
+            </div>
+            <Link href="/academy/join" style={{ display: "block", textAlign: "center", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#080d1a", fontWeight: 900, fontSize: 18, padding: "18px 0", borderRadius: 16, textDecoration: "none", marginBottom: 14, letterSpacing: "-0.3px" }}>
+              Join the Academy — Free Sign Up →
+            </Link>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.7, textAlign: "center" }}>No payment required · Educational platform — not financial or legal advice</p>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER LEGAL */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "28px 24px", textAlign: "center" }}>
-        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.8, maxWidth: 700, margin: "0 auto" }}>
-          The Deal Sourcing Academy is an <strong style={{ color: "rgba(255,255,255,0.4)" }}>educational platform only</strong>. It does not constitute financial advice, investment advice, or legal advice. Educational content is provided for information purposes only. Results vary and are not guaranteed. Members who wish to operate commercially as deal sourcers must ensure they comply with all applicable legislation including FCA regulations, Property Redress Scheme membership requirements, Anti-Money Laundering (AML) supervision registration, and GDPR compliance. PropertyVault UK is not liable for any loss arising from your use of this content. Prices correct at time of publication and subject to change with notice.
+      {/* ── FAQ ── */}
+      <section style={{ padding: "88px 24px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ maxWidth: 720, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 48 }}>
+            <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, marginBottom: 10, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Questions worth asking</h2>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 15 }}>The legal ones are at the top — they matter most.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {FAQS.map((faq, i) => (
+              <div key={i} style={{ background: faq.important ? "rgba(212,175,55,0.05)" : "rgba(255,255,255,0.03)", border: `1.5px solid ${faq.important ? "rgba(212,175,55,0.25)" : "rgba(255,255,255,0.09)"}`, borderRadius: 16, overflow: "hidden" }}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", background: "none", border: "none", padding: "18px 22px", display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", color: "white", textAlign: "left", gap: 16, fontFamily: "inherit" }}>
+                  <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.4 }}>
+                    {faq.important && <span style={{ fontSize: 10, fontWeight: 800, color: "#d4af37", background: "rgba(212,175,55,0.12)", borderRadius: 6, padding: "2px 7px", marginRight: 10, verticalAlign: "middle" }}>LEGAL</span>}
+                    {faq.q}
+                  </span>
+                  <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 22, fontWeight: 300, flexShrink: 0 }}>{openFaq === i ? "−" : "+"}</span>
+                </button>
+                {openFaq === i && (
+                  <div style={{ padding: "4px 22px 22px", fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.8 }}>{faq.a}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER CTA ── */}
+      <section style={{ padding: "80px 24px", textAlign: "center", background: "rgba(212,175,55,0.04)", borderTop: "1px solid rgba(212,175,55,0.15)" }}>
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, marginBottom: 14, fontFamily: "var(--font-family-heading)", letterSpacing: "-0.02em" }}>Ready to stop watching?</h2>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", marginBottom: 36, lineHeight: 1.6 }}>Join free. Start the 7-Day Challenge today. No card required.</p>
+          <CTAButton large />
+        </div>
+      </section>
+
+      {/* ── FOOTER LEGAL ── */}
+      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "36px 24px", textAlign: "center" }}>
+        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.22)", lineHeight: 1.9, maxWidth: 720, margin: "0 auto" }}>
+          The Deal Sourcing Academy is an <strong style={{ color: "rgba(255,255,255,0.38)" }}>educational platform only</strong>. It does not constitute financial advice, investment advice, or legal advice. Content is for information purposes only. Results vary and are not guaranteed. Members who wish to operate commercially as deal sourcers must comply with all applicable legislation including FCA regulations, Property Redress Scheme requirements, AML supervision, and GDPR. PropertyVault UK is not liable for any loss arising from use of this content.
           <br /><br />
-          <Link href="/privacy" style={{ color: "rgba(255,255,255,0.3)", textDecoration: "underline", marginRight: 12 }}>Privacy Policy</Link>
-          <Link href="/terms" style={{ color: "rgba(255,255,255,0.3)", textDecoration: "underline", marginRight: 12 }}>Terms of Service</Link>
+          <Link href="/privacy" style={{ color: "rgba(255,255,255,0.3)", textDecoration: "underline", marginRight: 16 }}>Privacy Policy</Link>
+          <Link href="/terms" style={{ color: "rgba(255,255,255,0.3)", textDecoration: "underline", marginRight: 16 }}>Terms of Service</Link>
           <Link href="/academy/legal" style={{ color: "rgba(255,255,255,0.3)", textDecoration: "underline" }}>Compliance Hub</Link>
           <br /><br />
           &copy; {new Date().getFullYear()} PropertyVault UK. All rights reserved.
