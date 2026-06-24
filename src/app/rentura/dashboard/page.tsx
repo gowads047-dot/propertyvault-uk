@@ -251,7 +251,7 @@ function AlertCard({ alert }: { alert: Alert }) {
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function RenturaDashboard() {
-  const { user, profile, loading: authLoading } = useAuth();
+  const { user, profile, loading: authLoading, signOut } = useAuth();
   const router = useRouter();
 
   const [properties, setProperties] = useState<RenturaProperty[]>([]);
@@ -432,6 +432,9 @@ export default function RenturaDashboard() {
           <Link href="/rentura/dashboard" style={{ color: INK, fontWeight: 800, textDecoration: "none", letterSpacing: "-0.02em" }}>Rentura</Link>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <Link href="/rentura/maintenance" style={{ fontSize: 13, fontWeight: 700, color: INK2, textDecoration: "none", padding: "8px 14px", borderRadius: 8, border: `1px solid ${BORDER}`, background: "white" }}>
+            Maintenance
+          </Link>
           <Link href="/rentura/tax" style={{ fontSize: 13, fontWeight: 700, color: INK2, textDecoration: "none", padding: "8px 14px", borderRadius: 8, border: `1px solid ${BORDER}`, background: "white" }}>
             Tax
           </Link>
@@ -439,6 +442,10 @@ export default function RenturaDashboard() {
             + Add Property
           </Link>
           <span style={{ fontSize: 12, color: INK2 }}>{profile?.name ?? user.email}</span>
+          <button onClick={async () => { await signOut(); router.push("/rentura"); }}
+            style={{ fontSize: 12, fontWeight: 600, color: "rgba(17,17,17,0.4)", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", fontFamily: "inherit" }}>
+            Sign out
+          </button>
         </div>
       </nav>
 

@@ -86,6 +86,33 @@ export interface PropertyWithDetails extends RenturaProperty {
   events: RenturaEvent[];
 }
 
+export type MaintenanceCategory = "plumbing" | "electrical" | "structural" | "appliance" | "damp" | "roofing" | "other";
+export type MaintenanceUrgency = "emergency" | "urgent" | "routine";
+export type MaintenanceStatus = "open" | "in_progress" | "resolved";
+
+export interface RenturaMaintenance {
+  id: string;
+  property_id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  category: MaintenanceCategory;
+  urgency: MaintenanceUrgency;
+  status: MaintenanceStatus;
+  contractor_name: string | null;
+  contractor_phone: string | null;
+  contractor_email: string | null;
+  estimated_cost: number | null;
+  actual_cost: number | null;
+  reported_date: string;
+  scheduled_date: string | null;
+  resolved_date: string | null;
+  is_improvement: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Alert {
   property_id: string;
   property_address: string;

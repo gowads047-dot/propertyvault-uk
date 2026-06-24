@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import type { RenturaProperty, RenturaEvent, RenturaTenant, RenturaMortgage, RenturaCompliance } from "@/lib/rentura/types";
+import type { RenturaProperty, RenturaEvent, RenturaTenant, RenturaMortgage, RenturaCompliance, RenturaMaintenance, MaintenanceCategory, MaintenanceUrgency } from "@/lib/rentura/types";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -99,7 +99,7 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
-type Tab = "overview" | "timeline" | "tenants" | "mortgage" | "compliance" | "documents";
+type Tab = "overview" | "timeline" | "tenants" | "mortgage" | "compliance" | "documents" | "maintenance";
 
 export default function PropertyPassport() {
   const { id } = useParams<{ id: string }>();
@@ -111,8 +111,12 @@ export default function PropertyPassport() {
   const [tenants, setTenants] = useState<RenturaTenant[]>([]);
   const [mortgages, setMortgages] = useState<RenturaMortgage[]>([]);
   const [compliance, setCompliance] = useState<RenturaCompliance[]>([]);
+  const [maintenance, setMaintenance] = useState<RenturaMaintenance[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("overview");
+  const [showAddMaint, setShowAddMaint] = useState(false);
+  const [maintForm, setMaintForm] = useState({ title: "", description: "", category: "other" as MaintenanceCategory, urgency: "routine" as MaintenanceUrgency, contractor_name: "", contractor_phone: "", estimated_cost: "" });
+  const [maintSaving, setMaintSaving] = useState(false);
 
   // Modals
   const [showAddTenant, setShowAddTenant] = useState(false);
@@ -135,12 +139,13 @@ export default function PropertyPassport() {
     if (!user) { router.push("/rentura/auth?next=/rentura/dashboard"); return; }
     async function load() {
       setLoading(true);
-      const [propRes, evtRes, tenRes, mortRes, compRes] = await Promise.all([
+      const [propRes, evtRes, tenRes, mortRes, compRes, maintRes] = await Promise.all([
         supabase.from("rentura_properties").select("*").eq("id", id).eq("user_id", user!.id).single(),
         supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false }),
         supabase.from("rentura_tenants").select("*").eq("property_id", id).order("move_in_date", { ascending: false }),
         supabase.from("rentura_mortgages").select("*").eq("property_id", id).order("created_at", { ascending: false }),
         supabase.from("rentura_compliance").select("*").eq("property_id", id).order("expiry_date", { ascending: true }),
+        supabase.from("rentura_maintenance").select("*").eq("property_id", id).order("created_at", { ascending: false }),
       ]);
       if (!propRes.data) { router.push("/rentura/dashboard"); return; }
       setProperty(propRes.data);
@@ -148,6 +153,7 @@ export default function PropertyPassport() {
       setTenants(tenRes.data ?? []);
       setMortgages(mortRes.data ?? []);
       setCompliance(compRes.data ?? []);
+      setMaintenance((maintRes.data ?? []) as RenturaMaintenance[]);
       setLoading(false);
     }
     load();
@@ -345,8 +351,57 @@ export default function PropertyPassport() {
     { key: "tenants", label: `Tenants (${tenants.length})` },
     { key: "mortgage", label: "Mortgage" },
     { key: "compliance", label: `Compliance (${compliance.length})` },
+    { key: "maintenance", label: `Maintenance (${maintenance.filter(m => m.status !== "resolved").length})` },
     { key: "documents", label: "Documents" },
   ];
+
+  const MAINT_URGENCY: Record<string, { label: string; color: string }> = {
+    emergency: { label: "Emergency", color: "#dc2626" },
+    urgent:    { label: "Urgent",    color: "#d97706" },
+    routine:   { label: "Routine",   color: "#2563eb" },
+  };
+
+  const MAINT_STATUS: Record<string, { label: string; color: string }> = {
+    open:        { label: "Open",        color: "#d97706" },
+    in_progress: { label: "In progress", color: "#2563eb" },
+    resolved:    { label: "Resolved",    color: "#16a34a" },
+  };
+
+  async function saveMaintIssue() {
+    if (!user || !property || !maintForm.title.trim()) return;
+    setMaintSaving(true);
+    const { data } = await supabase.from("rentura_maintenance").insert({
+      property_id: id, user_id: user.id,
+      title: maintForm.title.trim(),
+      description: maintForm.description.trim() || null,
+      category: maintForm.category, urgency: maintForm.urgency, status: "open",
+      contractor_name: maintForm.contractor_name.trim() || null,
+      contractor_phone: maintForm.contractor_phone.trim() || null,
+      estimated_cost: maintForm.estimated_cost ? parseFloat(maintForm.estimated_cost) : null,
+      reported_date: new Date().toISOString().split("T")[0],
+    }).select().single();
+    if (data) {
+      setMaintenance(prev => [data as RenturaMaintenance, ...prev]);
+      await supabase.from("rentura_events").insert({
+        property_id: id, user_id: user.id, event_type: "maintenance_logged",
+        title: `Issue logged — ${maintForm.title.trim()}`,
+        description: `${MAINT_URGENCY[maintForm.urgency].label} · ${maintForm.category}`,
+        trust_level: "confirmed", metadata: {}, event_date: new Date().toISOString().split("T")[0],
+      });
+      const evtRes = await supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false });
+      setEvents(evtRes.data ?? []);
+    }
+    setMaintForm({ title: "", description: "", category: "other", urgency: "routine", contractor_name: "", contractor_phone: "", estimated_cost: "" });
+    setShowAddMaint(false);
+    setMaintSaving(false);
+  }
+
+  async function updateMaintStatus(issueId: string, status: string) {
+    const update: Record<string, unknown> = { status, updated_at: new Date().toISOString() };
+    if (status === "resolved") update.resolved_date = new Date().toISOString().split("T")[0];
+    const { data } = await supabase.from("rentura_maintenance").update(update).eq("id", issueId).select().single();
+    if (data) setMaintenance(prev => prev.map(m => m.id === issueId ? data as RenturaMaintenance : m));
+  }
 
   if (loading) {
     return (
@@ -390,6 +445,10 @@ export default function PropertyPassport() {
               </p>
             </div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              <button onClick={() => { setShowAddMaint(true); setTab("maintenance"); }}
+                style={{ background: "white", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
+                🔧 Log issue
+              </button>
               <button onClick={() => setTab("documents")}
                 style={{ background: "white", border: `1px solid ${BORDER}`, color: INK2, fontWeight: 700, fontSize: 13, padding: "9px 16px", borderRadius: 9, cursor: "pointer", fontFamily: "inherit" }}>
                 ↑ Upload doc
@@ -745,6 +804,102 @@ export default function PropertyPassport() {
             })}
           </div>
         )}
+        {/* ── MAINTENANCE ── */}
+        {tab === "maintenance" && (
+          <div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+              <p style={{ fontSize: 13, color: INK2 }}>
+                {maintenance.filter(m => m.status !== "resolved").length} open · {maintenance.filter(m => m.status === "resolved").length} resolved
+              </p>
+              <button onClick={() => setShowAddMaint(true)}
+                style={{ background: CTA, color: "white", fontWeight: 700, fontSize: 13, padding: "8px 18px", borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit" }}>
+                + Log issue
+              </button>
+            </div>
+
+            {maintenance.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "50px 0" }}>
+                <p style={{ fontSize: 32, marginBottom: 12 }}>✅</p>
+                <p style={{ fontWeight: 700 }}>No maintenance issues logged.</p>
+              </div>
+            ) : (
+              maintenance.map(issue => {
+                const urg = MAINT_URGENCY[issue.urgency] ?? { label: issue.urgency, color: "#111" };
+                const sta = MAINT_STATUS[issue.status] ?? { label: issue.status, color: "#111" };
+                return (
+                  <div key={issue.id} style={{ background: "white", borderRadius: 12, padding: "16px 18px", border: `1px solid ${issue.urgency === "emergency" ? "rgba(220,38,38,0.3)" : BORDER}`, marginBottom: 10 }}>
+                    <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 6 }}>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: INK }}>{issue.title}</p>
+                      <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                        <span style={{ fontSize: 10, fontWeight: 800, color: urg.color, background: `${urg.color}12`, padding: "2px 8px", borderRadius: 20 }}>{urg.label}</span>
+                        <span style={{ fontSize: 10, fontWeight: 700, color: sta.color, background: `${sta.color}12`, padding: "2px 8px", borderRadius: 20 }}>{sta.label}</span>
+                      </div>
+                    </div>
+                    {issue.description && <p style={{ fontSize: 13, color: INK2, lineHeight: 1.5, marginBottom: 8 }}>{issue.description}</p>}
+                    {issue.contractor_name && <p style={{ fontSize: 12, color: INK2, marginBottom: 6 }}>👷 {issue.contractor_name}{issue.contractor_phone ? ` · ${issue.contractor_phone}` : ""}</p>}
+                    {issue.actual_cost && <p style={{ fontSize: 12, fontWeight: 700, color: INK, marginBottom: 6 }}>Cost: £{issue.actual_cost.toLocaleString("en-GB")}</p>}
+                    {issue.status !== "resolved" && (
+                      <div style={{ display: "flex", gap: 8, marginTop: 10, paddingTop: 10, borderTop: `1px solid ${BORDER}` }}>
+                        {issue.status === "open" && (
+                          <button onClick={() => updateMaintStatus(issue.id, "in_progress")}
+                            style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", background: "#0f1728", color: "white", cursor: "pointer", fontFamily: "inherit" }}>
+                            Mark in progress
+                          </button>
+                        )}
+                        <button onClick={() => updateMaintStatus(issue.id, "resolved")}
+                          style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", background: "#16a34a", color: "white", cursor: "pointer", fontFamily: "inherit" }}>
+                          Mark resolved
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+
+            {/* Add issue inline modal */}
+            {showAddMaint && (
+              <div style={{ background: "white", borderRadius: 14, padding: "20px", border: `1px solid ${BORDER}`, marginTop: 16 }}>
+                <p style={{ fontSize: 15, fontWeight: 800, marginBottom: 16 }}>Log Issue</p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <input type="text" placeholder="Issue title *" value={maintForm.title} onChange={e => setMaintForm(f => ({ ...f, title: e.target.value }))}
+                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                  <textarea placeholder="Description (optional)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
+                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 70, resize: "vertical" as const }} />
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    <select value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
+                      style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, fontFamily: "inherit" }}>
+                      {[["plumbing","Plumbing"],["electrical","Electrical"],["structural","Structural"],["appliance","Appliance"],["damp","Damp / Mould"],["roofing","Roofing"],["other","Other"]].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
+                    </select>
+                    <select value={maintForm.urgency} onChange={e => setMaintForm(f => ({ ...f, urgency: e.target.value as MaintenanceUrgency }))}
+                      style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, fontFamily: "inherit" }}>
+                      <option value="emergency">⚠ Emergency</option>
+                      <option value="urgent">◎ Urgent</option>
+                      <option value="routine">○ Routine</option>
+                    </select>
+                  </div>
+                  <input type="text" placeholder="Contractor name (optional)" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
+                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                  <input type="tel" placeholder="Contractor phone (optional)" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
+                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                  <input type="text" placeholder="Estimated cost e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
+                    style={{ padding: "10px 14px", fontSize: 14, borderRadius: 8, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <button onClick={saveMaintIssue} disabled={maintSaving || !maintForm.title.trim()}
+                      style={{ flex: 1, background: CTA, color: "white", fontWeight: 800, fontSize: 14, padding: "12px", borderRadius: 9, border: "none", cursor: "pointer", fontFamily: "inherit", opacity: (maintSaving || !maintForm.title.trim()) ? 0.5 : 1 }}>
+                      {maintSaving ? "Saving…" : "Log issue"}
+                    </button>
+                    <button onClick={() => setShowAddMaint(false)}
+                      style={{ padding: "12px 18px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, background: "none", cursor: "pointer", fontFamily: "inherit", color: INK2 }}>
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* ── DOCUMENTS ── */}
         {tab === "documents" && (
           <div>
