@@ -24,11 +24,21 @@ export default function AcademyAuthPage() {
       setLoading(false);
       return;
     }
-    // Check if they have an active subscription — if not, send to checkout
+    // Check subscription / grace period access
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
-      const { data: member } = await supabase.from("academy_members").select("status, stripe_subscription_id").eq("user_id", user.id).maybeSingle();
-      if (!member?.stripe_subscription_id || member?.status !== "active") {
+      const { data: member } = await supabase.from("academy_members")
+        .select("status, stripe_subscription_id, access_until")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+      const isActive = member?.status === "active" || member?.status === "trialing";
+      const inGrace = member?.status === "cancelled" && member?.access_until
+        ? new Date(member.access_until) > new Date()
+        : false;
+
+      if (!isActive && !inGrace) {
+        // No active sub and no grace period — send to checkout
         router.push("/academy/subscribe");
         return;
       }

@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 export default function AcademyJoinPage() {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +19,16 @@ export default function AcademyJoinPage() {
     if (password.length < 6) { setError("Password must be at least 6 characters."); return; }
     setLoading(true);
 
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://propertyvaultuk.co.uk";
+
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: email.trim(),
       password,
-      options: { data: { full_name: name.trim() } },
+      options: {
+        data: { full_name: name.trim() },
+        // If email confirmation is required, clicking the link lands them on the checkout page already logged in
+        emailRedirectTo: `${origin}/academy/subscribe`,
+      },
     });
 
     if (signUpError) {
@@ -33,30 +37,40 @@ export default function AcademyJoinPage() {
       return;
     }
 
-    // Add to academy_members table
+    // Pre-create the member row (status will be updated by Stripe webhook after payment)
     if (data.user) {
       await supabase.from("academy_members").upsert({
         user_id: data.user.id,
         email: email.trim(),
         name: name.trim(),
-        status: "active",
+        status: "pending",
         joined_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
     }
 
-    // Send welcome email (fire-and-forget)
-    fetch("/api/notifications/welcome", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: email.trim(), name: name.trim(), type: "academy_welcome" }),
-    }).catch(() => {});
+    // If session is available immediately (email confirmation is disabled in Supabase),
+    // redirect straight to Stripe checkout — payment happens before they can access anything
+    if (data.session && data.user) {
+      const checkoutRes = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), userId: data.user.id }),
+      });
+      const { url } = await checkoutRes.json();
+      if (url) {
+        window.location.href = url;
+        return;
+      }
+    }
 
+    // Email confirmation required — user must confirm then the redirect takes them to /academy/subscribe
     setLoading(false);
     setDone(true);
   }
 
   return (
     <div style={{ background: "#0a0f1e", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px", fontFamily: "var(--font-family-body)" }}>
+      <style>{`body > header, body > footer { display: none !important; }`}</style>
       <div style={{ width: "100%", maxWidth: 440 }}>
 
         {/* Logo */}
@@ -78,13 +92,13 @@ export default function AcademyJoinPage() {
               <h2 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 14 }}>Check your inbox.</h2>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.8, marginBottom: 24 }}>
                 We&apos;ve sent a confirmation link to <strong style={{ color: "rgba(255,255,255,0.8)" }}>{email}</strong>.<br />
-                Click the link in the email to activate your account,<br />then come back here and log in.
+                Click the link — it&apos;ll take you directly to the payment page.
               </p>
               <div style={{ background: "rgba(212,175,55,0.07)", border: "1px solid rgba(212,175,55,0.18)", borderRadius: 12, padding: "14px 18px", marginBottom: 24, textAlign: "left" }}>
                 {[
                   ["1", "Open the confirmation email from PropertyVault UK"],
-                  ["2", "Click the \"Confirm your account\" link"],
-                  ["3", "Log in — we'll take you to checkout to activate access"],
+                  ["2", "Click the link — you'll land on the payment page"],
+                  ["3", "Pay £14.99/mo — instant access to all courses"],
                 ].map(([n, step]) => (
                   <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
                     <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(212,175,55,0.2)", color: "#d4af37", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
@@ -96,7 +110,7 @@ export default function AcademyJoinPage() {
                 Can&apos;t find it? Check your spam folder or wait 2 minutes.
               </p>
               <Link href="/academy/auth" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>
-                Log in once confirmed →
+                Already confirmed? Log in →
               </Link>
             </div>
           ) : (
@@ -104,8 +118,11 @@ export default function AcademyJoinPage() {
               <h1 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>
                 Join the Academy
               </h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 28 }}>
-                Create your account — then activate with £14.99/mo.
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 4 }}>
+                £14.99/month · Cancel anytime · No refunds
+              </p>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textAlign: "center", marginBottom: 24 }}>
+                Create your account — payment is the next step
               </p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -156,7 +173,7 @@ export default function AcademyJoinPage() {
                   disabled={loading}
                   style={{ background: loading ? "rgba(212,175,55,0.5)" : "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 16, padding: "14px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", marginTop: 4, fontFamily: "inherit" }}
                 >
-                  {loading ? "Creating account…" : "Create Account →"}
+                  {loading ? "Setting up account…" : "Continue to Payment →"}
                 </button>
               </form>
 
@@ -166,6 +183,7 @@ export default function AcademyJoinPage() {
                 {" "}and{" "}
                 <Link href="/privacy" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
                 <br />Educational platform only — not financial advice.
+                <br />All payments are non-refundable. Cancel anytime.
               </p>
             </>
           )}

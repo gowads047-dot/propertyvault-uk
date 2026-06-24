@@ -48,7 +48,7 @@ type Enrollment = {
 
 export default function AcademyDashboard() {
   const { user, profile } = useAuth();
-  const [memberData, setMemberData] = useState<{ status: string; stripe_customer_id?: string } | null>(null);
+  const [memberData, setMemberData] = useState<{ status: string; stripe_customer_id?: string; access_until?: string | null } | null>(null);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [checkingAccess, setCheckingAccess] = useState(true);
   const [points] = useState(50);
@@ -94,14 +94,27 @@ export default function AcademyDashboard() {
   }
 
   const isActive = memberData?.status === "active" || memberData?.status === "trialing";
+  const inGracePeriod = memberData?.status === "cancelled" && memberData?.access_until
+    ? new Date(memberData.access_until) > new Date()
+    : false;
+  const gracePeriodEnd = memberData?.access_until ? new Date(memberData.access_until) : null;
+  const hasAccess = isActive || inGracePeriod;
 
-  if (!isActive) {
+  if (!hasAccess) {
+    const wasSubscriber = memberData?.status === "cancelled";
     return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 20, padding: 24, textAlign: "center" }}>
-      <div style={{ fontSize: 48 }}>🎓</div>
-      <h2 style={{ color: "white", fontSize: 28, fontWeight: 800, maxWidth: 500 }}>Join the Deal Sourcing Academy</h2>
-      <p style={{ color: "rgba(255,255,255,0.5)", maxWidth: 440 }}>Get instant access to all courses, playbooks, scripts, tools, and downloads for just £14.99/month.</p>
-      <Link href="/academy/subscribe" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, padding: "14px 36px", borderRadius: 12, textDecoration: "none", fontSize: 16 }}>Subscribe — £14.99/mo →</Link>
-      <Link href="/academy/join" style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, textDecoration: "none", marginTop: -8 }}>Create account first →</Link>
+      <div style={{ fontSize: 48 }}>{wasSubscriber ? "⏰" : "🎓"}</div>
+      <h2 style={{ color: "white", fontSize: 28, fontWeight: 800, maxWidth: 500 }}>
+        {wasSubscriber ? "Your access has ended" : "Join the Deal Sourcing Academy"}
+      </h2>
+      <p style={{ color: "rgba(255,255,255,0.5)", maxWidth: 440 }}>
+        {wasSubscriber
+          ? "Your free grace period has expired. Resubscribe to get instant access back to all your courses and progress."
+          : "Get instant access to all courses, playbooks, scripts, tools, and downloads for just £14.99/month."}
+      </p>
+      <Link href="/academy/subscribe" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, padding: "14px 36px", borderRadius: 12, textDecoration: "none", fontSize: 16 }}>
+        {wasSubscriber ? "Resubscribe — £14.99/mo →" : "Subscribe — £14.99/mo →"}
+      </Link>
     </div>;
   }
 
@@ -114,6 +127,18 @@ export default function AcademyDashboard() {
 
   return (
     <div style={{ background: "#0a0f1e", minHeight: "100vh", color: "white", fontFamily: "var(--font-family-body)" }}>
+
+      {/* Grace period warning banner */}
+      {inGracePeriod && gracePeriodEnd && (
+        <div style={{ background: "rgba(239,68,68,0.12)", borderBottom: "1px solid rgba(239,68,68,0.25)", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+          <span style={{ fontSize: 14, color: "#fca5a5" }}>
+            ⚠️ Your subscription was cancelled. Free access ends on <strong>{gracePeriodEnd.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</strong>.
+          </span>
+          <Link href="/academy/subscribe" style={{ background: "#ef4444", color: "white", fontWeight: 700, fontSize: 13, padding: "6px 16px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap" }}>
+            Resubscribe →
+          </Link>
+        </div>
+      )}
 
       {/* TOP BAR */}
       <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>

@@ -23,6 +23,7 @@ export async function POST(req: Request) {
   const userId = sub.metadata?.userId as string | undefined;
   const platform = (sub.metadata?.platform as string | undefined) || "academy";
 
+  // Subscription created or updated (including cancel_at_period_end = true)
   if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") {
     if (userId) {
       const periodEnd = sub.current_period_end
@@ -36,6 +37,8 @@ export async function POST(req: Request) {
           stripe_subscription_id: sub.id,
           status: sub.status,
           current_period_end: periodEnd,
+          // Clear grace period if they reactivated
+          access_until: sub.status === "active" && !sub.cancel_at_period_end ? null : undefined,
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       } else {
@@ -45,27 +48,45 @@ export async function POST(req: Request) {
           stripe_subscription_id: sub.id,
           status: sub.status,
           current_period_end: periodEnd,
+          // Clear grace period if they reactivated
+          access_until: sub.status === "active" && !sub.cancel_at_period_end ? null : undefined,
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       }
     }
   }
 
+  // Subscription fully deleted — grant 30-day grace period from period end
   if (event.type === "customer.subscription.deleted") {
     if (userId) {
+      // Stripe gives current_period_end on the deleted subscription object
+      const periodEndMs = sub.current_period_end
+        ? sub.current_period_end * 1000
+        : Date.now();
+      // Grace period = end of last paid period + 30 days
+      const accessUntil = new Date(periodEndMs + 30 * 24 * 60 * 60 * 1000).toISOString();
+
       if (platform === "rentura") {
         await supabase.from("rentura_subscriptions")
-          .update({ status: "cancelled", updated_at: new Date().toISOString() })
+          .update({
+            status: "cancelled",
+            access_until: accessUntil,
+            updated_at: new Date().toISOString(),
+          })
           .eq("user_id", userId);
       } else {
         await supabase.from("academy_members")
-          .update({ status: "cancelled", updated_at: new Date().toISOString() })
+          .update({
+            status: "cancelled",
+            access_until: accessUntil,
+            updated_at: new Date().toISOString(),
+          })
           .eq("user_id", userId);
       }
     }
   }
 
-  // Handle checkout.session.completed for both platforms
+  // checkout.session.completed — wire up the subscription to the user
   if (event.type === "checkout.session.completed") {
     const checkoutSession = event.data.object as Stripe.Checkout.Session;
     const cUserId = checkoutSession.metadata?.userId;
@@ -82,6 +103,7 @@ export async function POST(req: Request) {
           stripe_subscription_id: subscription.id,
           status: subscription.status,
           current_period_end: periodEnd,
+          access_until: null, // fresh subscription — clear any old grace period
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       } else {
@@ -91,17 +113,15 @@ export async function POST(req: Request) {
           stripe_subscription_id: subscription.id,
           status: subscription.status,
           current_period_end: periodEnd,
+          access_until: null, // fresh subscription — clear any old grace period
           updated_at: new Date().toISOString(),
         }, { onConflict: "user_id" });
       }
     }
-  }
 
-  // Send subscription confirmation email on new checkout completion
-  if (event.type === "checkout.session.completed") {
+    // Send subscription confirmation email
     const cs = event.data.object as Stripe.Checkout.Session;
     const emailAddr = cs.customer_details?.email || cs.customer_email;
-    const cPlatform = cs.metadata?.platform || "academy";
     if (emailAddr) {
       const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertyvaultuk.co.uk";
       fetch(`${baseUrl}/api/notifications/welcome`, {
