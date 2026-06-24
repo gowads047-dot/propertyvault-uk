@@ -44,6 +44,13 @@ export default function AcademyJoinPage() {
       }, { onConflict: "user_id" });
     }
 
+    // Send welcome email (fire-and-forget)
+    fetch("/api/notifications/welcome", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email.trim(), name: name.trim(), type: "academy_welcome" }),
+    }).catch(() => {});
+
     setLoading(false);
     setDone(true);
   }

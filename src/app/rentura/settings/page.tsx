@@ -61,6 +61,14 @@ export default function RenturaSettings() {
     else alert(error || "No billing account found. Subscribe first.");
   }
 
+  async function openCheckout() {
+    if (!user) return;
+    const res = await fetch("/api/rentura/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: user.email, userId: user.id }) });
+    const { url, error } = await res.json();
+    if (url) window.location.href = url;
+    else alert(error || "Could not start checkout. Please try again.");
+  }
+
   const C = {
     bg: "#0c0f1a", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
     ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.45)", ink3: "rgba(255,255,255,0.22)",
@@ -178,13 +186,19 @@ export default function RenturaSettings() {
                   </span>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 12 }}>
-                <button onClick={openPortal} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer" }}>
-                  Manage billing →
-                </button>
-                <a href="/rentura/auth" style={{ display: "inline-flex", alignItems: "center", background: "transparent", color: C.ink2, fontWeight: 600, fontSize: 13, padding: "10px 20px", borderRadius: 8, border: `1px solid ${C.border}`, textDecoration: "none" }}>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                {(!sub || sub.status !== "active") ? (
+                  <button onClick={openCheckout} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "10px 22px", borderRadius: 8, border: "none", cursor: "pointer" }}>
+                    Subscribe now — £9.99/mo →
+                  </button>
+                ) : (
+                  <button onClick={openPortal} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer" }}>
+                    Manage billing →
+                  </button>
+                )}
+                <button onClick={openPortal} style={{ display: "inline-flex", alignItems: "center", background: "transparent", color: C.ink2, fontWeight: 600, fontSize: 13, padding: "10px 20px", borderRadius: 8, border: `1px solid ${C.border}`, cursor: "pointer", fontFamily: "inherit" }}>
                   View invoices
-                </a>
+                </button>
               </div>
               <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 12, padding: "16px 20px" }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: C.red, marginBottom: 4 }}>Cancel subscription</p>

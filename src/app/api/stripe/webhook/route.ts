@@ -97,5 +97,20 @@ export async function POST(req: Request) {
     }
   }
 
+  // Send subscription confirmation email on new checkout completion
+  if (event.type === "checkout.session.completed") {
+    const cs = event.data.object as Stripe.Checkout.Session;
+    const emailAddr = cs.customer_details?.email || cs.customer_email;
+    const cPlatform = cs.metadata?.platform || "academy";
+    if (emailAddr) {
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertyvaultuk.co.uk";
+      fetch(`${baseUrl}/api/notifications/welcome`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: emailAddr, type: "subscription_confirm", platform: cPlatform }),
+      }).catch(() => {});
+    }
+  }
+
   return NextResponse.json({ received: true });
 }

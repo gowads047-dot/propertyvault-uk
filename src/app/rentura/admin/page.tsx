@@ -33,7 +33,7 @@ export default function RenturaAdmin() {
   useEffect(() => {
     if (!user || user.email !== ADMIN_EMAIL) return;
     Promise.all([
-      supabase.from("profiles").select("id, name, email: id, created_at").limit(100),
+      fetch("/api/admin/users").then(r => r.json()).then(d => ({ data: d.users || [] })),
       supabase.from("rentura_subscriptions").select("*").order("created_at", { ascending: false }),
       supabase.from("rentura_waitlist").select("*").order("created_at", { ascending: false }),
     ]).then(([u, s, w]) => {
@@ -133,7 +133,7 @@ export default function RenturaAdmin() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                  {["User ID", "Joined", ""].map(h => (
+                  {["Email", "Name", "Joined", "Verified", "Plan"].map(h => (
                     <th key={h} style={{ padding: "12px 18px", fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "left" }}>{h}</th>
                   ))}
                 </tr>
@@ -141,8 +141,14 @@ export default function RenturaAdmin() {
               <tbody>
                 {users.map((u: any) => (
                   <tr key={u.id} style={{ borderBottom: `1px solid ${C.border}` }}>
-                    <td style={{ padding: "12px 18px", fontSize: 12, color: C.ink, fontFamily: "monospace" }}>{u.id.slice(0, 24)}…</td>
+                    <td style={{ padding: "12px 18px", fontSize: 13, color: C.ink }}>{u.email || "—"}</td>
+                    <td style={{ padding: "12px 18px", fontSize: 12, color: C.ink2 }}>{u.name || "—"}</td>
                     <td style={{ padding: "12px 18px", fontSize: 12, color: C.ink2 }}>{u.created_at ? new Date(u.created_at).toLocaleDateString("en-GB") : "—"}</td>
+                    <td style={{ padding: "12px 18px" }}>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: u.confirmed ? C.green : C.amber, background: u.confirmed ? "rgba(34,197,94,0.1)" : "rgba(245,158,11,0.1)", padding: "2px 8px", borderRadius: 10 }}>
+                        {u.confirmed ? "✓" : "Pending"}
+                      </span>
+                    </td>
                     <td style={{ padding: "12px 18px" }}>
                       {subs.find((s: any) => s.user_id === u.id) ? (
                         <span style={{ fontSize: 10, fontWeight: 700, color: C.green, background: "rgba(34,197,94,0.1)", padding: "2px 8px", borderRadius: 10 }}>Subscriber</span>
