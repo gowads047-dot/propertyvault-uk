@@ -61,7 +61,7 @@ export default function Home() {
             <div>
               <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", boxShadow: "0 0 0 3px rgba(201,168,76,0.25)", animation: "pulse 2s infinite" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Guaranteed Rent</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · UK-wide</span>
               </div>
 
               <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
@@ -72,7 +72,7 @@ export default function Home() {
               </h1>
 
               <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 16, maxWidth: 420 }}>
-                Join Midlands landlords earning a predictable monthly income with our 3–5 year guaranteed rent scheme. We pay you whether the tenant pays or not.
+                Landlords across the UK earning a predictable monthly income with our 3–5 year guaranteed rent scheme. We pay you whether the tenant pays or not.
               </p>
 
               <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 32 }}>
@@ -85,7 +85,7 @@ export default function Home() {
 
               <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
                 <Link href="/guaranteed-rent" className="btn-gold" style={{ fontSize: 15, padding: "13px 24px" }}>
-                  Get My Free Rent Estimate →
+                  Get Free Rent Estimate →
                 </Link>
                 <Link href="/calculators" className="btn-primary" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.12)" }}>
                   Explore Free Tools
@@ -94,9 +94,9 @@ export default function Home() {
 
               <div className="hero-line" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
                 {[
-                  { icon: "★", text: "5-star rated service" },
+                  { icon: "★", text: "5-star on Google" },
                   { icon: "🔒", text: "No obligation estimate" },
-                  { icon: "⚡", text: "Response within 2 hrs" },
+                  { icon: "⚡", text: "WhatsApp reply in 2hrs" },
                 ].map(t => (
                   <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <span style={{ fontSize: 13 }}>{t.icon}</span>
@@ -197,7 +197,7 @@ export default function Home() {
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Why PropertyVault</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 52, letterSpacing: "-0.01em" }}>
-              Built for landlords who want<br />less hassle, more return
+              No agents. No voids.<br />No calls at midnight.
             </h2>
           </FadeIn>
           <FadeIn>
@@ -332,7 +332,7 @@ export default function Home() {
               },
               {
                 href: "/templates",
-                tag: "17 templates",
+                tag: "40+ templates",
                 title: "Legal document templates",
                 desc: "Section 8 notices, rent increase letters, tenancy applications, inspection records — print-ready in minutes.",
                 items: ["Section 8 & 13 notices", "Inventory & inspection", "Tenant application form"],
@@ -379,13 +379,13 @@ export default function Home() {
           <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
             {[
-              { step: "01", title: "Book a free valuation", desc: "Tell us about your property. We'll assess it and give you a guaranteed monthly figure — no obligation.", icon: "📋" },
-              { step: "02", title: "We take it on", desc: "We sign a 3–5 year lease and take over full management. You receive your first payment within days.", icon: "✍️" },
-              { step: "03", title: "You get paid — every month", desc: "We handle tenants, repairs, compliance, and inspections. Your rent lands in your account no matter what.", icon: "💷" },
+              { step: "01", title: "Book in 60 seconds", desc: "Tell us about your property. We'll give you a guaranteed monthly figure — no obligation, no commitment.", icon: (<svg viewBox="0 0 32 32" fill="none" width="28" height="28"><rect x="4" y="2" width="24" height="28" rx="4" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.4)" strokeWidth="1.5"/><path d="M10 10h12M10 15h8M10 20h10" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round"/></svg>) },
+              { step: "02", title: "We take it on", desc: "We sign a 3–5 year lease and take over full management. You receive your first payment within 5 working days.", icon: (<svg viewBox="0 0 32 32" fill="none" width="28" height="28"><path d="M16 3L4 9v9c0 6.075 5.373 10.5 12 12 6.627-1.5 12-5.925 12-12V9L16 3z" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.4)" strokeWidth="1.5"/><path d="M11 16l3.5 3.5L21 13" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>) },
+              { step: "03", title: "You get paid — every month", desc: "We handle tenants, repairs, compliance, and inspections. Your rent lands in your account no matter what.", icon: (<svg viewBox="0 0 32 32" fill="none" width="28" height="28"><rect x="3" y="8" width="26" height="18" rx="4" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.4)" strokeWidth="1.5"/><path d="M3 13h26" stroke="rgba(201,168,76,0.4)" strokeWidth="1.5"/><circle cx="10" cy="20" r="2" fill="#c9a84c"/></svg>) },
             ].map(s => (
               <div key={s.step} className="step-card" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                  <span style={{ fontSize: 36 }}>{s.icon}</span>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>{s.icon}</div>
                   <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(201,168,76,0.5)", letterSpacing: "0.08em" }}>{s.step}</span>
                 </div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: "white", marginBottom: 10 }}>{s.title}</h3>
@@ -736,8 +736,8 @@ export default function Home() {
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "white", marginBottom: 16, letterSpacing: "-0.01em" }}>
-              Start making smarter<br />
-              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>property decisions.</em>
+              Less hassle. More return.<br />
+              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Starting now.</em>
             </h2>
             <p style={{ color: "rgba(255,255,255,0.35)", marginBottom: 36, fontSize: 15, maxWidth: 400, margin: "0 auto 36px" }}>Free forever. No sign-up. No paywalls. No catch.</p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
