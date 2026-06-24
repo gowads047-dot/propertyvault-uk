@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/lib/auth-context";
 
 // ─── Conversation engine ──────────────────────────────────────────────────────
 
@@ -428,6 +429,8 @@ export default function RenturaPage() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { user } = useAuth();
+
   // Early access form
   const [eaOpen, setEaOpen] = useState(false);
   const [eaName, setEaName] = useState("");
@@ -529,10 +532,16 @@ export default function RenturaPage() {
           <span style={{ color: INK3 }}>›</span>
           <span style={{ color: INK, fontWeight: 800, letterSpacing: "-0.02em" }}>Rentura</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontWeight: 700, color: INK3, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", display: "inline-block" }} />
-          Early Access · Beta
-        </div>
+        {user ? (
+          <Link href="/rentura/dashboard" style={{ background: "#0f1728", color: "white", fontSize: 13, fontWeight: 800, padding: "8px 18px", borderRadius: 8, textDecoration: "none", letterSpacing: "-0.01em" }}>
+            Open Dashboard →
+          </Link>
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontWeight: 700, color: INK3, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", display: "inline-block" }} />
+            Early Access · Beta
+          </div>
+        )}
       </nav>
 
       {/* ── §01 HERO ─────────────────────────────────────────────────────────── */}
@@ -872,26 +881,33 @@ export default function RenturaPage() {
             ))}
           </div>
 
-          {eaDone ? (
+          {user ? (
+            /* Logged-in: go straight to the product */
+            <div style={{ textAlign: "center" }}>
+              <Link href="/rentura/dashboard" style={{ display: "block", background: CTA, color: "white", fontWeight: 800, fontSize: 16, padding: "17px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.02em", marginBottom: 14 }}>
+                Open Dashboard →
+              </Link>
+              <p style={{ fontSize: 12, color: INK3 }}>Your Property Passport is waiting.</p>
+            </div>
+          ) : eaDone ? (
             <div style={{ background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.18)", borderRadius: 14, padding: "24px", textAlign: "center" }}>
               <div style={{ fontSize: 32, marginBottom: 10 }}>✓</div>
               <p style={{ fontSize: 16, fontWeight: 800, color: INK, marginBottom: 6 }}>You&apos;re on the list.</p>
-              <p style={{ fontSize: 13, color: INK2, lineHeight: 1.65 }}>We&apos;ll be in touch within 24 hours with your early access details.</p>
+              <p style={{ fontSize: 13, color: INK2, lineHeight: 1.65, marginBottom: 16 }}>We&apos;ll be in touch within 24 hours with your early access details.</p>
+              <Link href="/rentura/auth" style={{ display: "inline-block", background: CTA, color: "white", fontWeight: 700, fontSize: 14, padding: "12px 24px", borderRadius: 10, textDecoration: "none" }}>
+                Create your account now →
+              </Link>
             </div>
-          ) : eaOpen ? (
-            <form onSubmit={handleEarlyAccess} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <input type="text" placeholder="Your full name" value={eaName} onChange={e => setEaName(e.target.value)} required style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit", width: "100%", boxSizing: "border-box" as const }} />
-              <input type="email" placeholder="Email address" value={eaEmail} onChange={e => setEaEmail(e.target.value)} required style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit", width: "100%", boxSizing: "border-box" as const }} />
-              <input type="text" placeholder="Portfolio size e.g. 3 properties, Birmingham" value={eaPortfolio} onChange={e => setEaPortfolio(e.target.value)} style={{ background: "rgba(17,17,17,0.04)", border: `1px solid ${BORDER_MED}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, outline: "none", fontFamily: "inherit", width: "100%", boxSizing: "border-box" as const }} />
-              {eaError && <p style={{ fontSize: 12, color: "#dc2626", padding: "8px 12px", background: "rgba(220,38,38,0.06)", borderRadius: 8 }}>{eaError}</p>}
-              <button type="submit" disabled={eaLoading} style={{ background: eaLoading ? "rgba(15,23,40,0.5)" : CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "14px", borderRadius: 12, border: "none", cursor: eaLoading ? "not-allowed" : "pointer", fontFamily: "inherit" }}>{eaLoading ? "Submitting…" : "Request Early Access →"}</button>
-              <button type="button" onClick={() => setEaOpen(false)} style={{ background: "none", border: "none", fontSize: 12, color: INK3, cursor: "pointer", fontFamily: "inherit" }}>Cancel</button>
-            </form>
           ) : (
-            <button onClick={() => setEaOpen(true)} style={{ display: "block", width: W, textAlign: "center", background: CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "16px", borderRadius: 12, border: "none", cursor: "pointer", marginBottom: 14, letterSpacing: "-0.01em", fontFamily: "inherit" }}>Request Early Access →</button>
-          )}
-          {!eaOpen && !eaDone && (
-            <p style={{ fontSize: 11, color: INK3, textAlign: "center", lineHeight: 1.7, marginTop: 12 }}>Early access price locked in permanently · 14-day money-back guarantee<br />Consumer Contracts Regulations 2013 · Cancel anytime</p>
+            /* Not logged in: skip the waitlist, go straight to sign up */
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <Link href="/rentura/auth" style={{ display: "block", textAlign: "center", background: CTA, color: "white", fontWeight: 700, fontSize: 15, padding: "16px", borderRadius: 12, textDecoration: "none", letterSpacing: "-0.01em" }}>
+                Create your Property Passport →
+              </Link>
+              <p style={{ fontSize: 11, color: INK3, textAlign: "center", lineHeight: 1.7 }}>
+                Free to start · No credit card required · Early access price locked in permanently
+              </p>
+            </div>
           )}
         </div>
       </section>
