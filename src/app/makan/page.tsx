@@ -559,6 +559,58 @@ export default function MakanPage() {
         </div>
       </section>
 
+      {/* ── THE STORY ─────────────────────────────────────── */}
+      <section style={{ background: "#0b0f14", borderTop: "1px solid rgba(232,85,61,0.12)", padding: "80px 24px" }}>
+        <div className="h-container" style={{ maxWidth: 820 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 40 }}>
+
+            {/* Eyebrow */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(232,85,61,0.1)", border: "1px solid rgba(232,85,61,0.25)", borderRadius: 20, padding: "6px 16px", width: "fit-content" }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#e8553d" }} />
+              <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why Makan exists</span>
+            </div>
+
+            {/* Headline */}
+            <div>
+              <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "white", lineHeight: 1.2, marginBottom: 32, letterSpacing: "-0.02em" }}>
+                The property market was built for people who are <em style={{ fontStyle: "italic", color: "#e8553d" }}>physically there.</em><br />
+                We built Makan for everyone else.
+              </h2>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, fontSize: "clamp(14px, 1.8vw, 16px)", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, maxWidth: 680 }}>
+                <p>
+                  The word <strong style={{ color: "white" }}>مكان</strong> means &ldquo;place&rdquo; in Arabic. Not just any address — somewhere that matters. The home you&apos;re trying to get back to. The apartment you&apos;re saving for your parents. The city you left but never really left.
+                </p>
+                <p>
+                  Makan was built for people who live between worlds. The UK-based professional whose family still lives in Cairo. The British-Moroccan investor who wants to buy in Marrakech but doesn&apos;t know who to trust from two thousand miles away. The diaspora family renting privately who shouldn&apos;t have to pay an agent 3% just to open a door.
+                </p>
+                <p>
+                  Traditional property platforms assume you&apos;re on the ground. They assume you can attend viewings, visit the agent&apos;s office, do your due diligence in person. That&apos;s not everyone&apos;s reality — and the market has been slow to acknowledge it.
+                </p>
+                <p>
+                  On Makan, landlords list directly. Tenants and buyers contact them directly via WhatsApp — the same way you&apos;d arrange it through a trusted contact in the city. No agents taking commissions. No platform fees. No listing charges. <strong style={{ color: "white" }}>Browse free, list free, forever.</strong>
+                </p>
+              </div>
+            </div>
+
+            {/* 3-stat strip */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "rgba(232,85,61,0.1)", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(232,85,61,0.15)" }}>
+              {[
+                { icon: "£0", label: "Agent fees, always", sub: "Direct landlord contact only" },
+                { icon: `${countries.length}`, label: "Countries live", sub: "UK, Egypt, Morocco & growing" },
+                { icon: "∞", label: "Free forever", sub: "Browse, list, no charges" },
+              ].map(s => (
+                <div key={s.label} style={{ padding: "28px 24px", background: "#0b0f14", textAlign: "center" }}>
+                  <div style={{ fontSize: 30, fontWeight: 900, color: "#e8553d", marginBottom: 6, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.icon}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "white", marginBottom: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{s.sub}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── EXPLORE BY COUNTRY ───────────────────────────── */}
       <section style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)", paddingTop: 40, paddingBottom: 48 }}>
         <div className="h-container">

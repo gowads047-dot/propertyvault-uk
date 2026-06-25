@@ -459,6 +459,69 @@ export default function AcademyPage() {
         </div>
       </section>
 
+      {/* ── WHY WE BUILT THIS ── */}
+      <section style={{ padding: "80px 24px", background: "#080d1a", borderTop: "1px solid rgba(212,175,55,0.1)" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+
+          {/* Eyebrow */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 20, padding: "6px 16px", marginBottom: 36 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37" }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: "#d4af37", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why we built the Academy</span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 56, alignItems: "start" }}>
+
+            {/* Story text */}
+            <div>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 900, color: "white", lineHeight: 1.15, marginBottom: 28, letterSpacing: "-0.025em" }}>
+                Most people who want to source deals don&apos;t lack drive. They lack{" "}
+                <span style={{ color: "#d4af37" }}>access.</span>
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18, fontSize: 15, color: "rgba(255,255,255,0.55)", lineHeight: 1.85 }}>
+                <p>
+                  The Deal Sourcing Academy was built to close the gap between &ldquo;I&apos;ve been watching YouTube for six months&rdquo; and &ldquo;I sent my first deal pack this week.&rdquo; That gap is mostly confidence, real tools, and honest information — not raw capital or luck.
+                </p>
+                <p>
+                  We&apos;re direct about what deal sourcing actually is: it&apos;s not passive income. It&apos;s a business. The early conversations are awkward. The first deal sometimes falls through. We say that upfront — because the people who still want to do it after hearing the truth are the people who close deals.
+                </p>
+                <p>
+                  <strong style={{ color: "rgba(255,255,255,0.85)" }}>Module 11 — Compliance — is non-negotiable.</strong> Operating commercially as a deal sourcer without proper registration isn&apos;t just risky, it&apos;s illegal in certain circumstances. We cover it fully because we want members building legitimate businesses they&apos;re proud of, not scrambling to catch up when it matters.
+                </p>
+                <p>
+                  The Q&amp;A board is answered personally by Nass within 48 hours — no AI auto-responses, no community managers redirecting you to the FAQ. If you&apos;re stuck on a deal, a conversation, or a compliance question, you get a real answer.
+                </p>
+              </div>
+            </div>
+
+            {/* What makes this different */}
+            <div>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>What makes this different</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {[
+                  { icon: "✉️", point: "11 email templates you can send today — not adapt from scratch" },
+                  { icon: "📊", point: "A deal calculator that models BRRR, JV splits, and sourcing fees with sliders" },
+                  { icon: "👥", point: "An investor CRM to track every buyer — strategy, budget, and how warm they are" },
+                  { icon: "✅", point: "A 37-step checklist from compliance setup to collecting your first fee" },
+                  { icon: "🏘️", point: "Weekly deal reviews — real deals, numbers included, lessons from Nass" },
+                  { icon: "⚖️", point: "A plain-English compliance hub: PRS, AML, FCA awareness, GDPR, sourcing contracts" },
+                  { icon: "❓", point: "Nass answers personally on the Q&A board — not a community manager" },
+                ].map(item => (
+                  <div key={item.point} style={{ display: "flex", gap: 12, alignItems: "flex-start", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 16px" }}>
+                    <span style={{ fontSize: 16, flexShrink: 0 }}>{item.icon}</span>
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.5 }}>{item.point}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ marginTop: 28 }}>
+                <Link href="/academy/subscribe" style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 15, padding: "13px 32px", borderRadius: 14, display: "inline-block", textDecoration: "none" }}>
+                  Join the Academy — £14.99/mo
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── FOOTER CTA ── */}
       <section style={{ padding: "80px 24px", textAlign: "center", background: "rgba(212,175,55,0.04)", borderTop: "1px solid rgba(212,175,55,0.15)" }}>
         <div style={{ maxWidth: 600, margin: "0 auto" }}>

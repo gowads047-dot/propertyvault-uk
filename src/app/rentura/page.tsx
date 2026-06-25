@@ -287,6 +287,63 @@ export default function RenturaPage() {
         </div>
       </section>
 
+      {/* THE STORY */}
+      <section style={{ background: "white", padding: "80px 24px", borderTop: "1px solid rgba(15,27,45,0.07)" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+
+          {/* Eyebrow */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 20, padding: "6px 16px", marginBottom: 32 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c" }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why we built Rentura</span>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 56, alignItems: "start" }}>
+
+            {/* Story text */}
+            <div>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 900, color: "#0f1b2d", lineHeight: 1.15, marginBottom: 28, letterSpacing: "-0.025em" }}>
+                Most landlords are managing their portfolio across four places at once.
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: 18, fontSize: 15, color: "rgba(15,27,45,0.65)", lineHeight: 1.8 }}>
+                <p>
+                  A spreadsheet for the numbers. A folder for the documents. A phone calendar for the renewals. And their own memory for everything else. This system works — until it doesn&apos;t.
+                </p>
+                <p>
+                  A missed EPC renewal. A deposit not protected on time. A tenant move-out with no proper inventory. The cost of small oversights in property management is disproportionately high — both financially and legally.
+                </p>
+                <p>
+                  Rentura was built to be the one place everything lives. Every property gets its own <strong style={{ color: "#0f1b2d" }}>Property Passport</strong> — compliance documents, tenancy history, maintenance records, EPC status, all searchable and shareable. The compliance calendar sends 60-day alerts before anything expires. The AI assistant answers questions about your own portfolio in plain English.
+                </p>
+                <p>
+                  It&apos;s not a spreadsheet replacement. It&apos;s the operating system for landlords who are done running a business on sticky notes.
+                </p>
+              </div>
+            </div>
+
+            {/* 4 problem/solution cards */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {[
+                { before: "Compliance renewals missed", after: "60-day alerts before anything expires" },
+                { before: "Documents scattered across folders", after: "One searchable vault per property" },
+                { before: "Portfolio numbers spread across spreadsheets", after: "Live P&L per property, one dashboard" },
+                { before: "Maintenance logged in WhatsApp", after: "Jobs tracked with costs, photos & status" },
+              ].map(item => (
+                <div key={item.before} style={{ background: "#f5f3ef", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(15,27,45,0.06)" }}>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ fontSize: 13, color: "rgba(239,68,68,0.6)", marginTop: 2, flexShrink: 0 }}>✗</span>
+                    <span style={{ fontSize: 13, color: "rgba(15,27,45,0.45)", textDecoration: "line-through" }}>{item.before}</span>
+                  </div>
+                  <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 6 }}>
+                    <span style={{ fontSize: 13, color: "#22c55e", marginTop: 2, flexShrink: 0 }}>✓</span>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1b2d" }}>{item.after}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER CTA */}
       <section style={{ background: "#0f1b2d", padding: "64px 24px", textAlign: "center" }}>
         <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)" }}>Ready to organise your portfolio?</h2>
