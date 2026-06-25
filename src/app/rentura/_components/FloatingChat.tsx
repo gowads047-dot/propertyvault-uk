@@ -205,9 +205,13 @@ export default function FloatingChat() {
                       {msg.actions && msg.actions.length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
                           {msg.actions.map((a, i) => (
-                            <span key={i} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}40` }}>
-                              {a.label}{a.value ? ` · ${a.value}` : ""}
-                            </span>
+                            a.type === "log_when_done"
+                              ? <button key={i} onClick={() => send(a.label)} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}60`, cursor: "pointer", fontFamily: "inherit" }}>
+                                  {a.label} →
+                                </button>
+                              : <span key={i} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}40` }}>
+                                  {a.label}{a.value ? ` · ${a.value}` : ""}
+                                </span>
                           ))}
                         </div>
                       )}
