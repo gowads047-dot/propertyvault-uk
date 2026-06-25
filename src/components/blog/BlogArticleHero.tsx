@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ShareButtons } from "@/components/hetta/ShareButtons";
 
 interface Props {
   title: string;
@@ -55,9 +56,13 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
         <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 48px)", fontWeight: 800, color: "white", lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 16, maxWidth: 760 }}>
           {title}
         </h1>
-        <p style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, maxWidth: 600 }}>
+        <p style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, maxWidth: 600, marginBottom: 24 }}>
           {excerpt}
         </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>Share</span>
+          <ShareButtons title={title} />
+        </div>
       </div>
     </section>
   );
