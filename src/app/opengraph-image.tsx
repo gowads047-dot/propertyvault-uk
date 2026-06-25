@@ -1,28 +1,76 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "PropertyVault UK — Free Property Calculators, Templates & Guides";
+export const alt = "PropertyVault UK — Free Property Tools, Calculators & Guides";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default async function Image() {
+export default function Image() {
   return new ImageResponse(
     (
-      <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", background: "linear-gradient(160deg, #050912 0%, #0f1b36 40%, #1a2e5a 100%)", padding: "60px 80px", justifyContent: "space-between" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: "#f4d35e", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", fontWeight: 800, color: "#0f1b36" }}>P</div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: "20px", fontWeight: 800, color: "#ffffff" }}>PropertyVault<span style={{ color: "#f4d35e" }}>.co.uk</span></span>
+      <div style={{ width: 1200, height: 630, display: "flex", background: "#0c1730", position: "relative" }}>
+
+        {/* Gold left accent bar */}
+        <div style={{ position: "absolute", left: 0, top: 0, width: 6, height: 630, background: "#c9a84c", display: "flex" }} />
+
+        {/* Left: wordmark + tagline */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", paddingLeft: 72, paddingRight: 40, flex: 1 }}>
+          <span style={{ fontSize: 90, fontWeight: 800, color: "#ffffff", letterSpacing: "-2px", lineHeight: 1, fontFamily: "serif" }}>PROPERTY</span>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: -6 }}>
+            <span style={{ fontSize: 90, fontWeight: 800, color: "#c9a84c", letterSpacing: "-2px", lineHeight: 1, fontFamily: "serif" }}>VAULT</span>
+            <span style={{ fontSize: 56, fontWeight: 300, color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>UK</span>
+          </div>
+
+          {/* Gold divider */}
+          <div style={{ width: 460, height: 2, background: "rgba(201,168,76,0.4)", marginTop: 22, marginBottom: 22, display: "flex" }} />
+
+          <span style={{ fontSize: 19, color: "rgba(255,255,255,0.48)", letterSpacing: "5px", fontFamily: "sans-serif" }}>
+            FREE TOOLS · CALCULATORS · GUARANTEED RENT
+          </span>
+          <span style={{ fontSize: 15, color: "rgba(255,255,255,0.28)", letterSpacing: "4px", fontFamily: "sans-serif", marginTop: 14 }}>
+            PROPERTYVAULTUK.CO.UK
+          </span>
+        </div>
+
+        {/* Right: PV monogram panel */}
+        <div style={{
+          width: 400,
+          height: 630,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          borderLeft: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(255,255,255,0.02)",
+        }}>
+          {/* PV */}
+          <div style={{ display: "flex", alignItems: "baseline", gap: 0, marginBottom: 36 }}>
+            <span style={{ fontSize: 130, fontWeight: 800, color: "rgba(255,255,255,0.88)", lineHeight: 1, fontFamily: "serif" }}>P</span>
+            <span style={{ fontSize: 100, fontWeight: 300, color: "rgba(201,168,76,0.7)", lineHeight: 1, fontFamily: "serif" }}>V</span>
+          </div>
+
+          {/* Sub-brand circles */}
+          <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+            {([
+              ["MAKAN", "#c9a84c"],
+              ["ACADEMY", "#22c55e"],
+              ["RENTURA", "#3b82f6"],
+            ] as [string, string][]).map(([label, color]) => (
+              <div key={label} style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 76,
+                height: 76,
+                borderRadius: "50%",
+                border: `2.5px solid ${color}`,
+              }}>
+                <span style={{ fontSize: 9, fontWeight: 700, color, letterSpacing: "0.5px", fontFamily: "sans-serif" }}>{label}</span>
+              </div>
+            ))}
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-          <div style={{ fontSize: "52px", fontWeight: 800, color: "#ffffff", lineHeight: 1.1, maxWidth: "900px" }}>Free Property Calculators, Templates & Guides</div>
-          <div style={{ fontSize: "22px", color: "#97a5c5", maxWidth: "700px" }}>17 calculators · 40+ templates · 49 glossary terms · 3 area guides</div>
-        </div>
-        <div style={{ display: "flex", gap: "12px" }}>
-          <div style={{ padding: "10px 24px", borderRadius: "8px", background: "linear-gradient(135deg, #f4d35e, #d4a843)", color: "#0f1b36", fontWeight: 700, fontSize: "16px" }}>Analyse a deal</div>
-          <div style={{ padding: "10px 24px", borderRadius: "8px", background: "rgba(255,255,255,0.1)", color: "#ffffff", fontWeight: 600, fontSize: "16px" }}>propertyvaultuk.co.uk</div>
-        </div>
+
       </div>
     ),
     { ...size }
