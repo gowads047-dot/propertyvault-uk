@@ -7,7 +7,8 @@ import { supabase } from "@/lib/supabase";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type Prop = { id: string; address: string; nickname: string | null; property_type: string; bedrooms: number | null };
-type Tenant = { id: string; first_name: string; last_name: string; property_id: string | null; monthly_rent: number | null; status: string | null };
+type Tenant = { id: string; first_name: string; last_name: string; property_id: string | null; monthly_rent: number | null; status: string | null; phone: string | null };
+type Contact = { id: string; name: string; role: string; specialty: string | null; phone: string | null; whatsapp: string | null };
 type ScanAction = { id: string; label: string; description: string; color: string; primary: boolean; data: Record<string, unknown> };
 type ScanResult = {
   reply: string;
@@ -100,6 +101,7 @@ export default function FloatingChat() {
   const [ctx, setCtx] = useState<PortfolioCtx | null>(null);
   const [props, setProps] = useState<Prop[]>([]);
   const [tenants, setTenants] = useState<Tenant[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [apiHistory, setApiHistory] = useState<APIHistory>([]);
   const [input, setInput] = useState("");
@@ -129,18 +131,21 @@ export default function FloatingChat() {
   const loadCtx = useCallback(async () => {
     if (ready || !user) return;
 
-    const [propRes, tenantRes, mortRes, taxRes, issuesRes] = await Promise.all([
+    const [propRes, tenantRes, mortRes, taxRes, issuesRes, contactsRes] = await Promise.all([
       supabase.from("rentura_properties").select("id,address,nickname,property_type,bedrooms").eq("user_id", user.id),
-      supabase.from("rentura_tenants").select("id,first_name,last_name,property_id,monthly_rent,status,tenancy_start,move_in_date").eq("user_id", user.id),
+      supabase.from("rentura_tenants").select("id,first_name,last_name,property_id,monthly_rent,status,phone,tenancy_start,move_in_date").eq("user_id", user.id),
       supabase.from("rentura_mortgages").select("*").eq("user_id", user.id).eq("is_current", true),
       fetch(`/api/rentura/tax-summary/?userId=${user.id}`).then(r => r.json()).catch(() => null),
-      supabase.from("tenant_issues").select("id,title,priority,tenant_name,property_id").eq("landlord_user_id", user.id).neq("status", "resolved").is("landlord_first_response_at", null).limit(8),
+      supabase.from("tenant_issues").select("id,title,priority,tenant_name,tenant_phone,property_id").eq("landlord_user_id", user.id).neq("status", "resolved").is("landlord_first_response_at", null).limit(8),
+      supabase.from("rentura_contacts").select("id,name,role,specialty,phone,whatsapp").eq("user_id", user.id).order("preferred", { ascending: false }),
     ]);
 
     const properties: Prop[] = (propRes.data ?? []) as Prop[];
     const tenantList: Tenant[] = (tenantRes.data ?? []) as Tenant[];
+    const contactList: Contact[] = (contactsRes.data ?? []) as Contact[];
     setProps(properties);
     setTenants(tenantList);
+    setContacts(contactList);
 
     const activeTenants = tenantList.filter(t => t.status === "active" || !t.status);
     const tenantByProp: Record<string, Tenant> = {};
@@ -160,15 +165,21 @@ export default function FloatingChat() {
       taxYearExpenses: taxRes?.expenses, taxYearNet: taxRes?.net,
       tenants: properties.map(p => {
         const t = tenantByProp[p.id];
-        return t ? { property: shortAddr(p.address), name: `${t.first_name} ${t.last_name}`.trim(), rent: t.monthly_rent } : { property: shortAddr(p.address), name: "Vacant", rent: null };
+        return t
+          ? { property: shortAddr(p.address), name: `${t.first_name} ${t.last_name}`.trim(), rent: t.monthly_rent, phone: t.phone ?? null }
+          : { property: shortAddr(p.address), name: "Vacant", rent: null, phone: null };
       }),
+      contacts: contactList.map(c => ({
+        id: c.id, name: c.name, role: c.role, specialty: c.specialty,
+        phone: c.phone, whatsapp: c.whatsapp,
+      })),
       mortgages: properties.map(p => {
         const m = mortByProp[p.id];
         return m ? { property: shortAddr(p.address), lender: m.lender, rate: m.interest_rate, monthly: m.monthly_payment, fixedExpiry: m.fixed_term_expiry } : null;
       }).filter(Boolean),
-      unrespondedIssues: (issuesRes.data ?? []).map((i: { title: string; tenant_name: string | null; property_id: string; priority: string }) => {
+      unrespondedIssues: (issuesRes.data ?? []).map((i: { title: string; tenant_name: string | null; tenant_phone: string | null; property_id: string; priority: string }) => {
         const prop = properties.find(p => p.id === i.property_id);
-        return { title: i.title, tenantName: i.tenant_name ?? "Tenant", property: prop ? shortAddr(prop.address) : "Property", priority: i.priority };
+        return { title: i.title, tenantName: i.tenant_name ?? "Tenant", tenantPhone: i.tenant_phone ?? null, property: prop ? shortAddr(prop.address) : "Property", priority: i.priority };
       }),
     });
 
@@ -455,8 +466,27 @@ export default function FloatingChat() {
       const result = await res.json();
       setApiHistory(h => [...h, { role: "user", content: text.trim() }, { role: "assistant", content: result.reply ?? "" }]);
 
+      // Open WhatsApp for messaging intents (contractor or tenant) — auto-opens on complete
+      const isMessageIntent = ["message_contractor", "message_tenant"].includes(result.intent ?? "");
+      if (result.completed && isMessageIntent && result.gathered?.phone && result.gathered?.message_content) {
+        const phone = String(result.gathered.phone).replace(/\D/g, "");
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(String(result.gathered.message_content))}`, "_blank");
+      }
+
+      // Inject message_content into whatsapp chip value so the rendered button can pre-fill it
+      if (result.actions) {
+        for (const a of result.actions) {
+          if (a.type === "whatsapp" && result.gathered?.message_content) {
+            a.value = `${a.value}|||${String(result.gathered.message_content)}`;
+          }
+        }
+      }
+
+      // Also handle whatsapp chips — these are rendered as clickable buttons, handled in the render section
+      // Log non-messaging completed intents to the property timeline
+      const noLog = ["unknown", "message_tenant", "message_contractor", "compliance_advice", "contractor_update", "tenant_response"];
       let saved = false;
-      if (result.completed && result.intent && !["unknown", "message_tenant"].includes(result.intent)) {
+      if (result.completed && result.intent && !noLog.includes(result.intent)) {
         const mp = matchProp(result.property_match ?? result.gathered?.property ?? null);
         if (mp) {
           await supabase.from("rentura_events").insert({
@@ -470,9 +500,23 @@ export default function FloatingChat() {
           saved = true;
         }
       }
-      if (result.intent === "message_tenant" && result.completed && result.gathered?.phone && result.gathered?.message_content) {
-        window.open(`https://wa.me/${String(result.gathered.phone).replace(/\D/g, "")}?text=${encodeURIComponent(String(result.gathered.message_content))}`, "_blank");
+      // Log contractor updates (quote received, scheduled, etc.) with amount if present
+      if (result.completed && result.intent === "contractor_update") {
+        const mp = matchProp(result.property_match ?? result.gathered?.property ?? null);
+        if (mp) {
+          await supabase.from("rentura_events").insert({
+            property_id: mp.id, user_id: user.id, event_type: "maintenance",
+            title: result.gathered?.title ?? `Contractor update — ${result.gathered?.contractor_name ?? "contractor"}`,
+            description: result.reply,
+            amount: result.gathered?.quote_amount ? parseFloat(String(result.gathered.quote_amount).replace(/[£,]/g, "")) : null,
+            trust_level: "confirmed",
+            metadata: { ...result.gathered ?? {}, source: "chat" },
+            event_date: (result.gathered?.scheduled_date as string) ?? new Date().toISOString().split("T")[0],
+          });
+          saved = true;
+        }
       }
+
       setMessages(m => [...m, { role: "ai", text: result.reply ?? "Something went wrong.", actions: result.actions ?? [], awaitingConfirm: result.needsConfirmation === true, followUp: result.completed ? result.followUp : null, saved }]);
     } catch {
       setMessages(m => [...m, { role: "ai", text: "Connection issue — please try again." }]);
@@ -625,7 +669,7 @@ export default function FloatingChat() {
               <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 900, color: "#111" }}>R</div>
               <div>
                 <p style={{ color: "white", fontWeight: 800, fontSize: 13, lineHeight: 1.2 }}>Rentura AI</p>
-                <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 11 }}>{ready ? "Portfolio loaded · scan any document" : "Loading…"}</p>
+                <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 11 }}>{ready ? `Portfolio loaded · ${contacts.length > 0 ? `${contacts.length} contacts · ` : ""}message, log, scan` : "Loading…"}</p>
               </div>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
@@ -660,11 +704,26 @@ export default function FloatingChat() {
                       <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 13, lineHeight: 1.65, whiteSpace: "pre-line" }}>{msg.text}</p>
                       {msg.actions && msg.actions.length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
-                          {msg.actions.map((a, i) => (
-                            a.type === "log_when_done"
-                              ? <button key={i} onClick={() => send(a.label)} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}60`, cursor: "pointer", fontFamily: "inherit" }}>{a.label} →</button>
-                              : <span key={i} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}40` }}>{a.label}{a.value ? ` · ${a.value}` : ""}</span>
-                          ))}
+                          {msg.actions.map((a, i) => {
+                            if (a.type === "whatsapp") {
+                              const [rawPhone, msgContent] = String(a.value ?? "").split("|||");
+                              const phone = rawPhone.replace(/\D/g, "");
+                              const url = phone
+                                ? `https://wa.me/${phone}${msgContent ? `?text=${encodeURIComponent(msgContent)}` : ""}`
+                                : `https://wa.me/`;
+                              return (
+                                <button key={i}
+                                  onClick={() => window.open(url, "_blank")}
+                                  style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, padding: "7px 13px", borderRadius: 20, background: "#16a34a22", color: "#16a34a", border: "1px solid #16a34a60", cursor: "pointer", fontFamily: "inherit" }}>
+                                  <span style={{ fontSize: 15 }}>📱</span> {a.label}
+                                </button>
+                              );
+                            }
+                            if (a.type === "log_when_done") {
+                              return <button key={i} onClick={() => send(a.label)} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}60`, cursor: "pointer", fontFamily: "inherit" }}>{a.label} →</button>;
+                            }
+                            return <span key={i} style={{ fontSize: 11, fontWeight: 700, padding: "3px 9px", borderRadius: 20, background: `${a.color}20`, color: a.color, border: `1px solid ${a.color}40` }}>{a.label}{a.value ? ` · ${a.value}` : ""}</span>;
+                          })}
                         </div>
                       )}
                       {msg.saved && <p style={{ fontSize: 11, color: "#16a34a", fontWeight: 700, marginTop: 6 }}>✓ Saved to Property Passport</p>}
