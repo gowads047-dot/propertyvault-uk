@@ -123,7 +123,7 @@ export default function GuaranteedRentArticle() {
           </ul>
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent in Your Area</h2>
-          <p>Guaranteed rent schemes are available across the UK, with particularly strong demand in the Midlands. We cover:</p>
+          <p>Guaranteed rent schemes are available across the UK, with particularly strong demand in the Midlands. The elimination of <Link href="/calculators/void-period" className="text-gold-600 font-semibold">void periods</Link> alone can make guaranteed rent the more profitable option — we cover:</p>
           <div className="not-prose flex flex-wrap gap-3 mt-3">
             <Link href="/guaranteed-rent/birmingham" className="px-4 py-2 bg-navy-50 text-navy-700 rounded-lg text-sm font-medium hover:bg-navy-100">Birmingham →</Link>
             <Link href="/guaranteed-rent/nottingham" className="px-4 py-2 bg-navy-50 text-navy-700 rounded-lg text-sm font-medium hover:bg-navy-100">Nottingham →</Link>

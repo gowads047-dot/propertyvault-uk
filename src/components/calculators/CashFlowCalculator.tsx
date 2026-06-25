@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 export function CashFlowCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(950);
@@ -143,6 +144,10 @@ export function CashFlowCalculator() {
           <Link href="/calculators/deal-analyser" className="btn-primary text-sm !py-2.5 !px-5">Full Deal Analysis →</Link>
           <Link href="/calculators/btl-mortgage" className="btn-outline text-sm !py-2.5 !px-5">Stress Test →</Link>
         </div>
+        <ShareResults
+          title="BTL Monthly Cash Flow Calculator"
+          summary={`BTL cash flow: ${results.monthlyCashFlow >= 0 ? "+" : ""}£${Math.round(results.monthlyCashFlow).toLocaleString("en-GB")}/mo on a £${purchasePrice.toLocaleString("en-GB")} property at £${monthlyRent}/mo rent`}
+        />
       </div>
     </div>
   );

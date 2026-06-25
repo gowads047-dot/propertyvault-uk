@@ -53,9 +53,10 @@ export default function Section24Article() {
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Changed</h2>
           <p><strong>Before Section 24 (pre-2017):</strong> Landlords could deduct their full mortgage interest from rental income before calculating tax. This meant you only paid tax on your actual profit after mortgage costs.</p>
-          <p><strong>After Section 24 (from April 2020, fully phased in):</strong> Mortgage interest is no longer an allowable expense. You pay tax on your rental income as if you had no mortgage, then receive a 20% tax credit on your mortgage interest. For basic rate (20%) taxpayers, this makes no difference. For higher rate (40%) and additional rate (45%) taxpayers, it significantly increases the tax bill.</p>
+          <p><strong>After Section 24 (from April 2020, fully phased in):</strong> Mortgage interest is no longer an allowable expense. You pay tax on your rental income as if you had no mortgage, then receive a 20% tax credit on your mortgage interest. For basic rate (20%) taxpayers, this makes no difference. For higher rate (40%) and additional rate (45%) taxpayers, it significantly increases the tax bill. Use our <Link href="/calculators/landlord-tax" className="text-gold-600 font-semibold">landlord tax calculator</Link> to see your full tax position.</p>
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>How It Affects Different Tax Bands</h2>
+          <p>The table below compares how the <Link href="/calculators/section-24" className="text-gold-600 font-semibold">Section 24 rules</Link> affect landlords at each tax band compared with the old rules:</p>
           <div className="bg-navy-50 rounded-xl p-6 text-sm not-prose">
             <p className="font-bold text-navy-800 mb-3">Example: £12,000 rent, £6,000 mortgage interest, £2,000 expenses</p>
             <table className="w-full"><thead><tr className="border-b border-navy-200"><th className="text-left py-2">Tax Band</th><th className="text-right py-2">Old Rules</th><th className="text-right py-2">Section 24</th><th className="text-right py-2">Extra Tax</th></tr></thead><tbody>

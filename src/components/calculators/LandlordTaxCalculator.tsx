@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 export function LandlordTaxCalculator() {
   const [rentalIncome, setRentalIncome] = useState(12000);
@@ -116,6 +117,10 @@ export function LandlordTaxCalculator() {
           <Link href="/calculators/section-24" className="btn-primary text-sm !py-2.5 !px-5">Section 24 Deep Dive →</Link>
           <Link href="/calculators/personal-vs-ltd" className="btn-outline text-sm !py-2.5 !px-5">Personal vs Ltd →</Link>
         </div>
+        <ShareResults
+          title="Landlord Tax Calculator"
+          summary={`Landlord tax: net cash profit £${Math.round(results.netProfitS24).toLocaleString("en-GB")} after Section 24 on £${rentalIncome.toLocaleString("en-GB")} rental income (${results.marginalRate}% marginal rate)`}
+        />
       </div>
     </div>
   );

@@ -79,7 +79,7 @@ export default function HMOArticle() {
         <p>Many councils have introduced <strong>Article 4 Directions</strong> that remove permitted development rights for converting a dwelling to an HMO. This means you need <strong>planning permission</strong> before converting — not just a licence. Councils can refuse. Always check with the local planning authority before purchasing a property you intend to convert. Birmingham, Nottingham, Leicester, Sheffield, and most other major cities have Article 4 Directions covering significant areas.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>HMO Finance — What to Expect</h2>
-        <p>HMO mortgages are specialist products not available through standard BTL lenders:</p>
+        <p>HMO mortgages are specialist products not available through standard BTL lenders. Use our <Link href="/calculators/mortgage" className="text-gold-600 font-semibold">mortgage calculator</Link> to model your monthly payments before you approach a lender:</p>
         <ul className="list-disc pl-6 space-y-1">
           <li>Typically require a <strong>25-30% deposit</strong></li>
           <li>Interest rates are <strong>0.5-1.5% higher</strong> than standard BTL rates</li>
@@ -100,7 +100,7 @@ export default function HMOArticle() {
           </tbody></table>
           <p className="text-xs text-navy-500 mt-2">Net yield assumes management, maintenance, Council Tax (if landlord-liable), licensing, insurance, and voids.</p>
         </div>
-        <p className="mt-4">The key is thorough due diligence, accurate cost modelling, and compliance with all licensing and safety requirements before you commit to the purchase.</p>
+        <p className="mt-4">The key is thorough due diligence, accurate cost modelling, and compliance with all licensing and safety requirements before you commit to the purchase. Run your numbers through our <Link href="/calculators/hmo-yield" className="text-gold-600 font-semibold">HMO yield calculator</Link> to see your projected gross and net returns.</p>
 
         <div className="not-prose flex flex-wrap gap-3 mt-6">
           <Link href="/calculators/hmo-yield" className="btn-primary text-sm !py-2.5 !px-5">HMO Yield Calculator →</Link>

@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 const fmtD = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
@@ -276,6 +277,10 @@ export function MortgageCalculator() {
             Deal Analyser →
           </Link>
         </div>
+        <ShareResults
+          title="Mortgage Calculator"
+          summary={`Mortgage: £${Math.round(results.monthlyPmt).toLocaleString("en-GB")}/mo on a £${price.toLocaleString("en-GB")} property at ${rate}% interest (${depositPct}% deposit, ${termYrs} yr ${repayType})`}
+        />
       </div>
     </div>
   );

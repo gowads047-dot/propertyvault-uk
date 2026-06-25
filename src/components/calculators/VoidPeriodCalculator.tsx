@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 export function VoidPeriodCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(900);
@@ -120,6 +121,10 @@ export function VoidPeriodCalculator() {
         </div>
 
         <Link href="/guaranteed-rent" className="btn-gold w-full text-center block">Get a free guaranteed rent estimate →</Link>
+        <ShareResults
+          title="Void Period Cost Calculator"
+          summary={`Void period cost: £${Math.round(results.annualVoidCost).toLocaleString("en-GB")}/yr (${voidWeeks} weeks × ${voidsPerYear} void${voidsPerYear > 1 ? "s" : ""} per year, £${monthlyRent}/mo rent)`}
+        />
       </div>
     </div>
   );

@@ -90,7 +90,7 @@ export default function GuaranteedRentComparison() {
               </div>
             </div>
 
-            <p>In this example, guaranteed rent delivers <strong>£984 more per year</strong> in actual income — despite the lower headline rent. And that&apos;s before factoring in the value of your time, stress, and the risk of a bad tenant.</p>
+            <p>In this example, guaranteed rent delivers <strong>£984 more per year</strong> in actual income — despite the lower headline rent. And that&apos;s before factoring in the value of your time, stress, and the risk of a bad tenant. You can model your own <Link href="/calculators/void-period" className="text-gold-600 font-semibold">void period costs</Link> and <Link href="/calculators/monthly-cashflow" className="text-gold-600 font-semibold">monthly cash flow</Link> with our free calculators.</p>
 
             <h2>When traditional letting wins</h2>
             <p>Traditional letting can be the better choice if:</p>

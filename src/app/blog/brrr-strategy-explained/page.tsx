@@ -79,7 +79,7 @@ export default function BRRRArticle() {
           <p>Always get at least three quotes from contractors, use a detailed specification document, and budget a 10-15% contingency for unexpected costs.</p>
 
           <h3 className="text-lg font-bold text-navy-800 mt-6">Step 3: Rent</h3>
-          <p>Once refurbished, the property is let to a tenant at market rent. The rental income must comfortably cover the refinanced mortgage payment to produce positive monthly cash flow. Before letting, you must ensure the property is fully compliant:</p>
+          <p>Once refurbished, the property is let to a tenant at market rent. The rental income must comfortably cover the refinanced mortgage payment to produce positive monthly cash flow — use our <Link href="/calculators/rental-yield" className="text-gold-600 font-semibold">rental yield calculator</Link> to check whether your projected rent stacks up before committing. Before letting, you must ensure the property is fully compliant:</p>
           <ul className="list-disc pl-6 space-y-1">
             <li>Gas Safety Certificate (CP12) — annual requirement</li>
             <li>EICR (Electrical Installation Condition Report) — every 5 years</li>
@@ -118,7 +118,7 @@ export default function BRRRArticle() {
           </ul>
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Model Your BRRR Deal</h2>
-          <p>Use our free BRRR Calculator to model any deal before you commit. Enter purchase price, refurb cost, ARV, rent, and mortgage details — see money left in, capital recycled, ROI, and monthly cash flow instantly.</p>
+          <p>Use our free <Link href="/calculators/brrr" className="text-gold-600 font-semibold">BRRR Calculator</Link> to model any deal before you commit. Enter purchase price, refurb cost, ARV, rent, and mortgage details — see money left in, capital recycled, ROI, and monthly cash flow instantly.</p>
           <div className="not-prose flex flex-wrap gap-3 mt-4">
             <Link href="/calculators/brrr" className="btn-primary text-sm !py-2.5 !px-5">BRRR Calculator →</Link>
             <Link href="/brrr-academy" className="btn-outline text-sm !py-2.5 !px-5">Full BRRR Academy →</Link>

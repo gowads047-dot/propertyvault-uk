@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ShareResults } from "./ShareResults";
 
 export function RentalYieldCalculator() {
   const [propertyPrice, setPropertyPrice] = useState(200000);
@@ -116,6 +117,10 @@ export function RentalYieldCalculator() {
             <div className="flex justify-between py-2 border-t border-navy-200 font-bold"><span className="text-navy-800">Net Operating Income</span><span className="text-navy-800">{fmt(results.netIncome)}</span></div>
           </div>
         </div>
+        <ShareResults
+          title="Rental Yield Calculator"
+          summary={`Rental yield: ${results.grossYield.toFixed(2)}% gross / ${results.netYield.toFixed(2)}% net on a £${propertyPrice.toLocaleString("en-GB")} property at £${monthlyRent}/mo`}
+        />
       </div>
     </div>
   );

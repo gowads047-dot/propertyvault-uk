@@ -53,7 +53,7 @@ export default function FTBArticle() {
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>2. Get a Mortgage Agreement in Principle</h2>
         <p>An AIP (also called Decision in Principle) confirms how much a lender is prepared to offer you. It involves a soft credit check and is usually valid for 60-90 days. Having an AIP makes your offer stronger and shows sellers you are serious.</p>
-        <p>Most lenders will lend 4-4.5x your annual gross income. Use our affordability calculator to estimate your borrowing capacity.</p>
+        <p>Most lenders will lend 4-4.5x your annual gross income. Use our <Link href="/calculators/affordability" className="text-gold-600 font-semibold">affordability calculator</Link> to estimate your borrowing capacity, and our <Link href="/calculators/mortgage" className="text-gold-600 font-semibold">mortgage calculator</Link> to model your monthly repayments.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>3. Find Your Property</h2>
         <p>Search on Rightmove, Zoopla, and OnTheMarket. Register with local estate agents so they call you before listings go online — this matters in fast-moving markets. Write down what matters (bedrooms, commute time, school catchment, parking, garden) before viewing so emotion doesn&apos;t cloud your judgement.</p>
@@ -75,7 +75,7 @@ export default function FTBArticle() {
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>6. Exchange and Complete</h2>
         <p><strong>Exchange</strong> is the legally binding moment. You pay your deposit (typically 10%) to your solicitor, who transfers it to the seller. Neither party can pull out after this point without significant penalty.</p>
-        <p><strong>Completion</strong> happens 1–4 weeks after exchange. Your mortgage funds are drawn down, the balance transferred, and you collect the keys. Stamp duty must be paid within 14 days of completion — your solicitor handles this.</p>
+        <p><strong>Completion</strong> happens 1–4 weeks after exchange. Your mortgage funds are drawn down, the balance transferred, and you collect the keys. <Link href="/calculators/stamp-duty" className="text-gold-600 font-semibold">Stamp duty</Link> must be paid within 14 days of completion — your solicitor handles this.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>7. Budget for Additional Costs</h2>
         <p>The deposit is not the only cost. For a £250,000 property with a 10% deposit, budget roughly <strong>£27,500–31,000 total</strong>:</p>

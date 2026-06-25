@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ShareResults } from "./ShareResults";
 
 // SDLT rates effective from 1 April 2025 (thresholds reverted from temporary Covid-era levels)
 const residentialBands = [
@@ -160,6 +161,10 @@ export function StampDutyCalculator() {
         <p className="text-xs text-navy-400 mt-4">
           Based on SDLT rates for England and Northern Ireland from 1 April 2025 (nil-rate threshold £125,000; additional property surcharge 5%). Scotland (LBTT) and Wales (LTT) have different rates. This calculator is for guidance only.
         </p>
+        <ShareResults
+          title="Stamp Duty Calculator"
+          summary={`Stamp duty: £${Math.round(results.totalTax).toLocaleString("en-GB")} on a £${price.toLocaleString("en-GB")} property (${results.effectiveRate.toFixed(2)}% effective rate)`}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { ShareResults } from "./ShareResults";
 
 export function BRRRCalculator() {
   const [purchasePrice, setPurchasePrice] = useState(120000);
@@ -172,6 +173,10 @@ export function BRRRCalculator() {
             <div className="flex justify-between py-1"><span className="text-navy-600">Monthly Mortgage</span><span className="font-semibold">{fmt(results.monthlyMortgage)}</span></div>
           </div>
         </div>
+        <ShareResults
+          title="BRRR Calculator"
+          summary={`BRRR deal: ${results.recyclePercent.toFixed(0)}% capital recycled, £${Math.round(results.monthlyCashFlow).toLocaleString("en-GB")}/mo cash flow, ${results.grossYield.toFixed(1)}% yield`}
+        />
       </div>
     </div>
   );

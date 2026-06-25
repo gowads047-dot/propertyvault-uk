@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LandlordTaxCalculator } from "@/components/calculators/LandlordTaxCalculator";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import Link from "next/link";
@@ -39,6 +40,7 @@ export default function LandlordTaxPage() {
           <div className="mt-8">
             <EmailResults />
           </div>
+          <EmbedCode slug="landlord-tax" title="Landlord Tax Calculator UK" />
 
           <div className="mt-10 pt-8 border-t border-navy-200 space-y-4 max-w-3xl text-sm text-navy-600">
             <h2 className="text-xl font-bold text-navy-800">How is Rental Income Taxed in the UK?</h2>

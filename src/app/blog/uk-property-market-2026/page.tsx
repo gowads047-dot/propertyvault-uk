@@ -51,13 +51,13 @@ export default function PropertyMarket2026() {
           <p>For investors, this is actually good news. The frenzy that priced sensible deals out of reach has ended. Cash-flow investing is back in focus, and the market is rewarding those who can analyse deals properly rather than those who simply bought early.</p>
 
           <h2>Mortgage rates: the new normal</h2>
-          <p>Base rate has held steady as the Bank of England balances stubborn services inflation against weak economic growth. Buy-to-let mortgage rates have settled in the 4.5-6% range for most products, depending on LTV and deal type.</p>
+          <p>Base rate has held steady as the Bank of England balances stubborn services inflation against weak economic growth. Buy-to-let mortgage rates have settled in the 4.5-6% range for most products, depending on LTV and deal type — check current rates and model payments with our <Link href="/calculators/btl-mortgage" className="text-gold-600 font-semibold">BTL mortgage calculator</Link>.</p>
           <p>This is higher than the sub-2% era, but it&apos;s also no longer a shock. Lenders have recalibrated stress tests, and the deals that work at these rates are genuinely robust investments — not leveraged bets on capital growth.</p>
           <p><strong>What to do:</strong> Use our <Link href="/calculators/mortgage" className="text-gold-600 font-semibold">mortgage calculator</Link> to model payments at current rates, and the <Link href="/calculators/deal-analyser" className="text-gold-600 font-semibold">deal analyser</Link> to see whether your cash flow survives them.</p>
 
           <h2>Rental demand remains strong</h2>
           <p>The supply-demand imbalance in the rental market hasn&apos;t corrected. Landlords leaving the market (driven by Section 24, EPC requirements, and the Renters Reform Act) has reduced supply faster than new build-to-rent can replace it. Average rents have risen 5-7% year-on-year in most cities.</p>
-          <p>For buy-to-let investors, this means yields are improving — particularly in the Midlands and the North, where purchase prices remain accessible and rental growth has been strongest.</p>
+          <p>For buy-to-let investors, this means yields are improving — particularly in the Midlands and the North, where purchase prices remain accessible and rental growth has been strongest. Use our <Link href="/calculators/rental-yield" className="text-gold-600 font-semibold">rental yield calculator</Link> to see the gross and net return on any deal.</p>
 
           <h2>Best areas for 2026</h2>
           <p>The cities offering the strongest combination of yield, affordability, and rental demand remain in the Midlands corridor:</p>

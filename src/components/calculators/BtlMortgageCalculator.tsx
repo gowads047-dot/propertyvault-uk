@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 export function BtlMortgageCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(1000);
@@ -126,6 +127,10 @@ export function BtlMortgageCalculator() {
           <Link href="/calculators/mortgage" className="btn-primary text-sm !py-2.5 !px-5">Mortgage Calculator →</Link>
           <Link href="/calculators/rental-yield" className="btn-outline text-sm !py-2.5 !px-5">Rental Yield →</Link>
         </div>
+        <ShareResults
+          title="BTL Mortgage Stress Test"
+          summary={`BTL stress test: ${results.passes ? "PASSES" : "FAILS"} — ICR ${results.icrStress.toFixed(0)}% vs ${icr}% required, rent £${monthlyRent}/mo on £${propertyValue.toLocaleString("en-GB")} at ${ltv}% LTV`}
+        />
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ export default function StampDutyArticle() {
         image="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1400&q=80"
       />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
-        <p className="text-lg">Stamp Duty Land Tax (SDLT) is a tax you pay when you buy residential property in England or Northern Ireland above certain price thresholds. Scotland has Land and Buildings Transaction Tax (LBTT), and Wales has Land Transaction Tax (LTT) — different rates apply in those countries.</p>
+        <p className="text-lg">Stamp Duty Land Tax (SDLT) is a tax you pay when you buy residential property in England or Northern Ireland above certain price thresholds. Scotland has Land and Buildings Transaction Tax (LBTT), and Wales has Land Transaction Tax (LTT) — different rates apply in those countries. Use our <Link href="/calculators/stamp-duty" className="text-gold-600 font-semibold">stamp duty calculator</Link> to find out exactly what you will owe on your purchase.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Standard SDLT Rates (from 1 April 2025)</h2>
         <p>The nil-rate threshold reverted to £125,000 on 1 April 2025 (it was temporarily £250,000).</p>

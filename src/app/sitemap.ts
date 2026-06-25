@@ -77,6 +77,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/is-guaranteed-rent-a-scam/`,           lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/blog/deal-sourcing-uk-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/blog/best-areas-invest-birmingham-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/best-areas-invest-nottingham-2026/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/best-areas-invest-derby-2026/`,      lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/best-areas-invest-sheffield-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
 
     // New pages
     { url: `${BASE}/reviews/`,    lastModified: now, changeFrequency: "monthly", priority: 0.8 },

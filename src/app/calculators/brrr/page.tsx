@@ -2,6 +2,8 @@ import { BRRRCalculator } from "@/components/calculators/BRRRCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
 
 const brrrFaqs = [
   { q: "What does BRRR stand for?", a: "BRRR stands for Buy, Refurbish, Rent, Refinance. It is a property investment strategy where you purchase below market value, add value through refurbishment, rent the property out, then refinance against the higher value to recycle your original capital." },
@@ -29,6 +31,10 @@ export default function BRRRPage() {
       <section className="section-padding bg-white">
         <div className="container-max">
           <BRRRCalculator />
+          <div className="mt-8">
+            <EmailResults />
+          </div>
+          <EmbedCode slug="brrr" title="BRRR Calculator UK" />
           <FAQSchema faqs={brrrFaqs} />
           <Disclaimer type="calculator" />
         </div>

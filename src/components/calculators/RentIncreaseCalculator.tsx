@@ -1,6 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { ShareResults } from "./ShareResults";
 
 export function RentIncreaseCalculator() {
   const [currentRent, setCurrentRent] = useState(850);
@@ -114,6 +115,10 @@ export function RentIncreaseCalculator() {
           <Link href="/templates/section-13-notice" className="btn-primary text-sm !py-2.5 !px-5">Section 13 Template →</Link>
           <Link href="/calculators/landlord-costs" className="btn-outline text-sm !py-2.5 !px-5">Full P&amp;L →</Link>
         </div>
+        <ShareResults
+          title="Rent Increase Calculator"
+          summary={`Rent increase: from £${currentRent}/mo to £${results.newRent}/mo (+£${results.annualExtra.toLocaleString("en-GB")} extra per year)`}
+        />
       </div>
     </div>
   );

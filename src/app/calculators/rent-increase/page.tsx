@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { RentIncreaseCalculator } from "@/components/calculators/RentIncreaseCalculator";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import Link from "next/link";
@@ -39,6 +40,7 @@ export default function RentIncreasePage() {
           <div className="mt-8">
             <EmailResults />
           </div>
+          <EmbedCode slug="rent-increase" title="Rent Increase Calculator UK" />
 
           <div className="mt-10 pt-8 border-t border-navy-200 space-y-4 max-w-3xl text-sm text-navy-600">
             <h2 className="text-xl font-bold text-navy-800">How to Increase Rent Legally in the UK</h2>

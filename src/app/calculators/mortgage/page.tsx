@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { PrintButton } from "@/components/calculators/PrintButton";
 
 const mortgageFaqs = [
@@ -35,6 +36,7 @@ export default function MortgageCalculatorPage() {
         <div className="container-max">
           <MortgageCalculator />
           <div className="mt-8"><EmailResults /></div>
+          <EmbedCode slug="mortgage" title="Mortgage Calculator UK" />
           <FAQSchema faqs={mortgageFaqs} />
           <Disclaimer type="calculator" />
         </div>
