@@ -33,7 +33,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/calculators/personal-vs-ltd/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/calculators/rent-vs-buy/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/calculators/moving-costs/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/calculators/epc-retrofit/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/calculators/epc-retrofit/`,     lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/calculators/landlord-tax/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/calculators/btl-mortgage/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
 
     // Templates
     { url: `${BASE}/templates/`,                lastModified: now, changeFrequency: "monthly", priority: 0.9 },

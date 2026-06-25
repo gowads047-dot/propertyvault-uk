@@ -4,12 +4,44 @@ import { FadeIn } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
   title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-  description: "17 free property calculators, 40+ templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+  description: "19 free property calculators, 40+ templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+};
+
+const LOCAL_BUSINESS_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "PropertyVault UK",
+  "description": "Guaranteed rent scheme for landlords across the UK. No void periods, no management fees, 3–5 year leases.",
+  "url": "https://propertyvaultuk.co.uk",
+  "logo": "https://propertyvaultuk.co.uk/logo.png",
+  "areaServed": [
+    { "@type": "City", "name": "Birmingham" },
+    { "@type": "City", "name": "Nottingham" },
+    { "@type": "City", "name": "Derby" },
+    { "@type": "City", "name": "Leicester" },
+    { "@type": "City", "name": "Coventry" },
+    { "@type": "City", "name": "Sheffield" },
+  ],
+  "serviceType": "Guaranteed Rent Scheme",
+  "priceRange": "£0",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "08:00",
+    "closes": "20:00",
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "availableLanguage": "English",
+    "areaServed": "GB",
+  },
 };
 
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }} />
       <style>{`
         @keyframes countUp {
           from { opacity: 0; transform: translateY(10px); }
@@ -61,7 +93,7 @@ export default function Home() {
             <div>
               <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", boxShadow: "0 0 0 3px rgba(201,168,76,0.25)", animation: "pulse 2s infinite" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · UK-wide</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Leicester · Coventry · Sheffield</span>
               </div>
 
               <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
@@ -163,7 +195,7 @@ export default function Home() {
           {/* Bottom stats bar — glassmorphic */}
           <div style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
             {[
-              { n: "17", l: "Free calculators" },
+              { n: "19", l: "Free calculators" },
               { n: "40+", l: "Templates" },
               { n: "£0", l: "Sign-up cost" },
               { n: "3–5yr", l: "Guaranteed leases" },
@@ -171,6 +203,26 @@ export default function Home() {
               <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none", padding: "0 24px" }}>
                 <p style={{ fontSize: 32, fontWeight: 800, color: "white", lineHeight: 1, fontFamily: "ui-monospace, 'Cascadia Code', monospace", fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
                 <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{s.l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TRUST STRIP ───────────────────────────────────── */}
+      <section style={{ background: "#0a0d1a", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+        <div className="container-max px-4" style={{ padding: "16px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "24px 40px" }}>
+            {[
+              { icon: "★★★★★", text: "5-star rated on Google" },
+              { icon: "🏘️", text: "Active in 6 UK cities" },
+              { icon: "⚡", text: "WhatsApp reply within 2 hrs" },
+              { icon: "🔒", text: "No obligation — free estimate" },
+              { icon: "✅", text: "0 void days guaranteed" },
+            ].map(t => (
+              <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 14 }}>{t.icon}</span>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 600, whiteSpace: "nowrap" }}>{t.text}</span>
               </div>
             ))}
           </div>
@@ -325,9 +377,9 @@ export default function Home() {
             {[
               {
                 href: "/calculators",
-                tag: "17 calculators",
+                tag: "19 calculators",
                 title: "Property calculators",
-                desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, Section 24 — all in one place.",
+                desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, landlord tax, BTL stress test — all free.",
                 items: ["Rental yield & cash flow", "Stamp duty & CGT", "BRRR & HMO analysis"],
               },
               {
@@ -415,8 +467,8 @@ export default function Home() {
                 { label: "Stamp Duty", tag: "Calculator", href: "/calculators/stamp-duty" },
                 { label: "BRRR Strategy", tag: "Calculator", href: "/calculators/brrr" },
                 { label: "Rental Yield", tag: "Calculator", href: "/calculators/rental-yield" },
-                { label: "Mortgage", tag: "Calculator", href: "/calculators/mortgage" },
-                { label: "Section 24 Tax", tag: "Calculator", href: "/calculators/section-24" },
+                { label: "Landlord Tax", tag: "New", href: "/calculators/landlord-tax" },
+                { label: "BTL Stress Test", tag: "New", href: "/calculators/btl-mortgage" },
               ].map(t => (
                 <Link key={t.label} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "16px 14px", textDecoration: "none", display: "block" }}
                   className="hover:border-gold-300 transition-colors">
@@ -430,13 +482,13 @@ export default function Home() {
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                17 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
+                19 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
               </h2>
               <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
                 From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/calculators" className="btn-gold">All 17 calculators</Link>
+                <Link href="/calculators" className="btn-gold">All 19 calculators</Link>
                 <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
                   40+ templates
                 </Link>
@@ -626,8 +678,8 @@ export default function Home() {
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>17 Free Calculators</h3>
-              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, and more.</p>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>19 Free Calculators</h3>
+              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
             </Link>
             <Link href="/templates" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>

@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Calculators UK — 17 Tools for Investors & Landlords | PropertyVault UK",
-  description: "17 free UK property calculators. Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, HMO, affordability, remortgage, bridging, flip ROI, and more.",
+  title: "Free Property Calculators UK — 19 Tools for Investors & Landlords | PropertyVault UK",
+  description: "19 free UK property calculators. Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, HMO, affordability, remortgage, bridging, flip ROI, and more.",
 };
 
 const calculators = [
@@ -74,6 +74,14 @@ const calculators = [
   {
     title: "EPC Retrofit Cost", desc: "Cost of improving EPC rating with grants and payback period.", href: "/calculators/epc-retrofit", cat: "Landlord", tag: "New",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><path d="M16 2L6 16h7l-2 10 12-14h-8L16 2z" fill="#c9a84c"/><path d="M16 2L6 16h7l-2 10" fill="#0f1b36" opacity="0.2"/></svg>,
+  },
+  {
+    title: "Landlord Tax Calculator", desc: "Income tax on rental income — old rules vs Section 24, net profit after tax.", href: "/calculators/landlord-tax", cat: "Tax", tag: "New",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="4" width="24" height="20" rx="3" fill="#0f1b36"/><path d="M7 22l4-12 3 8 2-4 4 8" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><text x="22" y="10" textAnchor="middle" fill="#c9a84c" fontSize="8" fontWeight="bold">£</text></svg>,
+  },
+  {
+    title: "BTL Mortgage Stress Test", desc: "Check if your rental income passes the lender's interest coverage ratio test.", href: "/calculators/btl-mortgage", cat: "Finance", tag: "New",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="8" width="22" height="16" rx="3" fill="#E8D5B7"/><path d="M2 10L14 3l12 7" stroke="#0f1b36" strokeWidth="2" strokeLinecap="round"/><path d="M10 24v-6h8v6" stroke="#0f1b36" strokeWidth="1.5" strokeLinecap="round"/><circle cx="22" cy="8" r="5" fill="#22c55e"/><path d="M19.5 8l2 2 3-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
   },
 ];
 
