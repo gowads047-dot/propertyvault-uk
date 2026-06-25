@@ -1,4 +1,5 @@
 ﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -21,6 +22,8 @@ export default function PersonalVsLtdArticle() {
         image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80"
       />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
+        {/* Replace YOUTUBE_VIDEO_ID with your video ID once uploaded */}
+        <YouTubeEmbed videoId="YOUTUBE_VIDEO_ID" title="Personal vs Limited Company for Buy-to-Let — UK Tax Guide" />
         <p className="text-lg">Since Section 24 removed mortgage interest relief for individual landlords, more investors are asking whether they should hold property through a limited company (SPV — Special Purpose Vehicle) instead. The answer depends on your tax band, mortgage situation, and long-term plans.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Personal Ownership</h2>

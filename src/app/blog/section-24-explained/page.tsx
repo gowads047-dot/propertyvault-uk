@@ -1,4 +1,5 @@
 ﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -22,6 +23,8 @@ export default function Section24Article() {
       />
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
+          {/* Replace YOUTUBE_VIDEO_ID with your video ID once uploaded */}
+          <YouTubeEmbed videoId="YOUTUBE_VIDEO_ID" title="Section 24 Explained — How it Affects UK Landlords" />
           <p className="text-lg"><strong>Section 24 of the Finance (No. 2) Act 2015</strong> changed how individual landlords are taxed on their rental income. Since April 2020, landlords can no longer deduct mortgage interest as an expense from their rental income. Instead, they receive a basic rate (20%) tax credit on their mortgage interest costs.</p>
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Changed</h2>

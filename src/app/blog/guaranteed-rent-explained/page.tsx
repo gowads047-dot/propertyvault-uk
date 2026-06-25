@@ -1,4 +1,5 @@
 ﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -23,6 +24,9 @@ export default function GuaranteedRentArticle() {
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
           <p className="text-lg">Guaranteed rent is a scheme where a property company leases your property from you for an agreed period — typically 3 to 5 years — and pays you a fixed monthly rent regardless of whether the property is occupied or not. The company handles all tenant management, maintenance, and compliance.</p>
+
+          {/* Replace YOUTUBE_VIDEO_ID with your video ID once uploaded */}
+          <YouTubeEmbed videoId="YOUTUBE_VIDEO_ID" title="What is Guaranteed Rent? Explained for UK Landlords" />
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>How Guaranteed Rent Works</h2>
           <p>The process is straightforward:</p>

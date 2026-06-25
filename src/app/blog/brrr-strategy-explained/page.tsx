@@ -1,4 +1,5 @@
 ﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -23,6 +24,9 @@ export default function BRRRArticle() {
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
           <p className="text-lg">BRRR stands for <strong>Buy, Refurbish, Rent, Refinance</strong>. It is one of the most popular property investment strategies in the UK because it allows investors to recycle their capital and build a portfolio faster than traditional buy-to-let.</p>
+
+          {/* Replace YOUTUBE_VIDEO_ID with your video ID once uploaded */}
+          <YouTubeEmbed videoId="YOUTUBE_VIDEO_ID" title="BRRR Strategy Explained — UK Property Investing" />
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>How the BRRR Strategy Works</h2>
           <p>The concept is straightforward. You purchase a property below its market value — typically one that needs refurbishment. You renovate it to increase its value, rent it out to a tenant, and then refinance against the new higher value. The refinance releases most or all of your original investment, which you can then use to repeat the process with another property.</p>
