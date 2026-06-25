@@ -32,18 +32,40 @@ export default function FTBArticle() {
         <p>Most lenders will lend 4-4.5x your annual gross income. Use our affordability calculator to estimate your borrowing capacity.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>3. Find Your Property</h2>
-        <p>Search on Rightmove, Zoopla, and OnTheMarket. Register with local estate agents. Attend viewings with our property viewing checklist to make sure you don&apos;t miss anything important.</p>
+        <p>Search on Rightmove, Zoopla, and OnTheMarket. Register with local estate agents so they call you before listings go online — this matters in fast-moving markets. Write down what matters (bedrooms, commute time, school catchment, parking, garden) before viewing so emotion doesn&apos;t cloud your judgement.</p>
+        <p>When viewing, check: boiler age, EPC rating (anything below D will cost you to upgrade), mobile signal, signs of damp or recent plastering to hide it, and street parking at different times of day. Never view just once before offering.</p>
 
-        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>4. Budget for Additional Costs</h2>
-        <p>The deposit is not the only cost. Budget for:</p>
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>4. Make an Offer</h2>
+        <p>Make your offer through the estate agent verbally and follow up in writing. Mention you are chain-free (as a first-time buyer you are) and confirm you have an AIP — this makes you a credible buyer.</p>
+        <p>Your opening offer can be below the asking price, especially if the property has been on the market for a while. Check Rightmove/Zoopla for what similar properties have actually sold for, not just listed at. Negotiation is normal.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>5. Instruct a Solicitor and Arrange a Survey</h2>
+        <p>Once an offer is accepted, instruct a solicitor (or conveyancer) immediately. They handle searches, review the seller&apos;s title, raise enquiries, and manage exchange and completion. Budget <strong>£800–1,500</strong>.</p>
+        <p>Also arrange a survey. Three options:</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>Solicitor/conveyancer fees:</strong> £800-1,500</li>
-          <li><strong>Survey:</strong> £400-1,500 depending on type</li>
-          <li><strong>Mortgage arrangement fee:</strong> £0-2,000</li>
-          <li><strong>Stamp duty:</strong> £0 on first £300,000 for first-time buyers</li>
-          <li><strong>Buildings insurance:</strong> required from exchange (£150-400/year)</li>
-          <li><strong>Removal costs:</strong> £300-1,500</li>
+          <li><strong>Valuation only:</strong> Required by your lender — does NOT reveal defects. Don&apos;t rely on this alone.</li>
+          <li><strong>Homebuyer Report (RICS Level 2):</strong> Highlights visible defects. Suitable for most standard properties. Cost: £400–750.</li>
+          <li><strong>Building Survey (RICS Level 3):</strong> Full structural inspection. Best for older, unusual, or extended properties. Cost: £600–1,500.</li>
         </ul>
+        <p>A survey can reveal issues that allow you to renegotiate the price before you&apos;re committed. It is almost always worth the money.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>6. Exchange and Complete</h2>
+        <p><strong>Exchange</strong> is the legally binding moment. You pay your deposit (typically 10%) to your solicitor, who transfers it to the seller. Neither party can pull out after this point without significant penalty.</p>
+        <p><strong>Completion</strong> happens 1–4 weeks after exchange. Your mortgage funds are drawn down, the balance transferred, and you collect the keys. Stamp duty must be paid within 14 days of completion — your solicitor handles this.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>7. Budget for Additional Costs</h2>
+        <p>The deposit is not the only cost. For a £250,000 property with a 10% deposit, budget roughly <strong>£27,500–31,000 total</strong>:</p>
+        <div className="not-prose bg-navy-50 rounded-xl p-5">
+          <table className="w-full text-sm"><thead><tr className="border-b border-navy-200"><th className="text-left py-2">Cost</th><th className="text-right py-2">Typical Range</th></tr></thead><tbody>
+            <tr className="border-b border-navy-100"><td className="py-2">Deposit (10%)</td><td className="py-2 text-right">£25,000</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">Solicitor/conveyancer</td><td className="py-2 text-right">£800–1,500</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">Survey (Homebuyer/Building)</td><td className="py-2 text-right">£400–1,500</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">Mortgage arrangement fee</td><td className="py-2 text-right">£0–2,000</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">Stamp duty (first-time buyer, under £300k)</td><td className="py-2 text-right">£0</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">Buildings insurance (from exchange)</td><td className="py-2 text-right">£150–400/yr</td></tr>
+            <tr><td className="py-2">Removals</td><td className="py-2 text-right">£300–1,500</td></tr>
+          </tbody></table>
+        </div>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Useful Tools for First-Time Buyers</h2>
         <div className="not-prose flex flex-wrap gap-3 mt-4">

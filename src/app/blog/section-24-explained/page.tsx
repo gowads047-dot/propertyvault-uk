@@ -50,6 +50,16 @@ export default function Section24Article() {
           </ul>
           <p><strong>Important:</strong> Transferring existing personally-held properties into a company triggers Capital Gains Tax and Stamp Duty on the transfer. This makes it uneconomical for most existing properties. The SPV approach works best for new purchases.</p>
 
+          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>When Section 24 Pushes You into a Higher Tax Band</h2>
+          <p>One of the most damaging effects of Section 24 is that it can push landlords into a higher income tax band even when their real profit (after mortgage) is modest. Because you&apos;re taxed on gross rental income before deducting mortgage interest, your total taxable income is inflated.</p>
+          <p>Example: a landlord earning £35,000 from employment plus £14,000 gross rental income now has £49,000 of taxable income — near the £50,270 higher rate threshold. After deducting £10,000 mortgage interest their real profit is only £4,000, but they&apos;re taxed as if they earned much more. Section 24 has not increased their wealth — it has increased their tax.</p>
+
+          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Does Section 24 Apply to Limited Companies?</h2>
+          <p>No. Section 24 applies only to individuals (and partnerships of individuals) receiving residential property income. A limited company can still deduct mortgage interest in full as a business expense before calculating Corporation Tax. This is the main structural advantage of a limited company for highly leveraged landlords — and the key driver behind the growth of SPV ownership since 2017.</p>
+
+          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Does Section 24 Apply to Commercial Property?</h2>
+          <p>No. Section 24 applies only to residential property income. Commercial property (offices, retail, industrial) mortgage interest remains fully deductible under normal loan relationship rules, making commercial property more tax-efficient for leveraged investors.</p>
+
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Calculate Your Section 24 Impact</h2>
           <p>Use our free calculators to see exactly how Section 24 affects you and whether a limited company structure would save you money:</p>
           <div className="not-prose flex flex-wrap gap-3 mt-4">

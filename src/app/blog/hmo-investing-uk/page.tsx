@@ -51,14 +51,32 @@ export default function HMOArticle() {
           <li>Fire risk assessment reviewed annually</li>
         </ul>
 
-        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Is HMO Investing Still Profitable?</h2>
-        <p>Yes, but margins are tighter than they were 5 years ago due to increased regulation, licensing costs, and Section 24 tax changes. However, the yield premium over single-lets remains significant:</p>
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Article 4 Directions — A Critical Pre-Purchase Check</h2>
+        <p>Many councils have introduced <strong>Article 4 Directions</strong> that remove permitted development rights for converting a dwelling to an HMO. This means you need <strong>planning permission</strong> before converting — not just a licence. Councils can refuse. Always check with the local planning authority before purchasing a property you intend to convert. Birmingham, Nottingham, Leicester, Sheffield, and most other major cities have Article 4 Directions covering significant areas.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>HMO Finance — What to Expect</h2>
+        <p>HMO mortgages are specialist products not available through standard BTL lenders:</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>Single-let gross yield:</strong> typically 4-8% depending on area</li>
-          <li><strong>HMO gross yield:</strong> typically 10-18% in the same areas</li>
-          <li>The yield premium is 2-3x, which absorbs the higher management costs</li>
+          <li>Typically require a <strong>25-30% deposit</strong></li>
+          <li>Interest rates are <strong>0.5-1.5% higher</strong> than standard BTL rates</li>
+          <li>Lenders stress test on projected HMO rental income, not single-let comparables</li>
+          <li>Most HMO landlords use <strong>interest-only mortgages</strong> to maximise monthly cash flow</li>
         </ul>
-        <p>The key to profitable HMO investing is thorough due diligence, accurate cost modelling, and compliance with all licensing and safety requirements.</p>
+        <p>Licensing costs vary by council but budget <strong>£500–1,200 per licence</strong> (covering 5 years in most areas) — a deductible business expense, but a real upfront cost to factor in.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Council Tax — Don&apos;t Get Caught Out</h2>
+        <p>For room-by-room ASTs (the most common HMO structure), the <strong>landlord pays Council Tax</strong> in most councils. This is deductible as an expense but adds £1,000–2,500/year to running costs depending on the property&apos;s band — a figure many first-time HMO investors miss. Always confirm Council Tax liability with the local council and factor it into your cash flow projections.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Is HMO Investing Still Profitable?</h2>
+        <p>Yes, but margins are tighter than they were five years ago. The yield premium over single-lets remains significant enough to justify the complexity:</p>
+        <div className="not-prose bg-navy-50 rounded-xl p-5 text-sm">
+          <table className="w-full"><thead><tr className="border-b border-navy-200"><th className="text-left py-2">Type</th><th className="text-right py-2">Gross Yield</th><th className="text-right py-2">Net Yield (est.)</th></tr></thead><tbody>
+            <tr className="border-b border-navy-100"><td className="py-2">Single-let (standard BTL)</td><td className="py-2 text-right">4–8%</td><td className="py-2 text-right">3–6%</td></tr>
+            <tr><td className="py-2">HMO (per-room letting)</td><td className="py-2 text-right">10–18%</td><td className="py-2 text-right">7–13%</td></tr>
+          </tbody></table>
+          <p className="text-xs text-navy-500 mt-2">Net yield assumes management, maintenance, Council Tax (if landlord-liable), licensing, insurance, and voids.</p>
+        </div>
+        <p className="mt-4">The key is thorough due diligence, accurate cost modelling, and compliance with all licensing and safety requirements before you commit to the purchase.</p>
 
         <div className="not-prose flex flex-wrap gap-3 mt-6">
           <Link href="/calculators/hmo-yield" className="btn-primary text-sm !py-2.5 !px-5">HMO Yield Calculator →</Link>

@@ -56,6 +56,26 @@ export default function EPCArticle() {
           <li><strong>Local authority grants:</strong> Many councils offer additional funding — check with your local authority</li>
         </ul>
 
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Exemptions — When EPC C May Not Apply</h2>
+        <p>Not every property will be required to reach EPC C. The government has proposed exemptions where:</p>
+        <ul className="list-disc pl-6 space-y-1">
+          <li>The cost of improvements exceeds a proposed spend cap (expected around £15,000 per property)</li>
+          <li>The property is a listed building where works would alter its character</li>
+          <li>All recommended improvements have been made but the property still cannot reach C</li>
+          <li>Third-party consent (e.g., freeholder for a leasehold flat) has been refused</li>
+          <li>Planning permission for the recommended works is denied</li>
+        </ul>
+        <p>Exemptions must be registered on the PRS Exemptions Register and are property-specific — they do not transfer to a new owner on sale.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Impact on Property Values</h2>
+        <p>EPC ratings are increasingly affecting property values. Research suggests properties rated F or G may face discounts of 10–20% compared to equivalent C-rated properties as buyers price in required improvement costs. Improving EPC ratings is not just a compliance cost — it protects asset value and rental desirability as tenants become more energy-cost-aware.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent as a Simpler Alternative</h2>
+        <p>If EPC compliance, licensing, and ongoing regulation is becoming too much to manage alongside your day job, guaranteed rent removes all the complexity. We lease your property for 3-5 years at a fixed monthly income — we take on all management, maintenance, compliance responsibility, and tenant relations. You receive your rent payment on the same date every month.</p>
+        <div className="not-prose mt-3 mb-2">
+          <Link href="/guaranteed-rent" className="btn-primary text-sm !py-2.5 !px-5">Learn About Guaranteed Rent →</Link>
+        </div>
+
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Should Landlords Do Now?</h2>
         <ol className="list-decimal pl-6 space-y-2">
           <li>Check your current EPC rating at gov.uk/find-energy-certificate</li>

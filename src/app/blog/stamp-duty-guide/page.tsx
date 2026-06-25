@@ -42,6 +42,36 @@ export default function StampDutyArticle() {
         <p>First-time buyers pay no SDLT on the first <strong>£300,000</strong> and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply and standard rates are charged.</p>
         <p>The temporary higher thresholds (£425,000 nil-rate / £625,000 cap) ended on 31 March 2025.</p>
 
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>First-Time Buyer Relief (from 1 April 2025)</h2>
+        <p>First-time buyers pay no SDLT on the first <strong>£300,000</strong> and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply and standard rates are charged on the full amount from £0.</p>
+        <p>The temporary higher thresholds (£425,000 nil-rate / £625,000 cap) ended on 31 March 2025.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>SDLT Examples — How Much Will You Pay?</h2>
+        <div className="not-prose bg-navy-50 rounded-xl p-5">
+          <table className="w-full text-sm"><thead><tr className="border-b border-navy-200"><th className="text-left py-2">Property Price</th><th className="text-right py-2">Standard (Owner)</th><th className="text-right py-2">Additional Property</th><th className="text-right py-2">First-Time Buyer</th></tr></thead><tbody>
+            <tr className="border-b border-navy-100"><td className="py-2">£150,000</td><td className="py-2 text-right">£500</td><td className="py-2 text-right">£8,000</td><td className="py-2 text-right">£0</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">£250,000</td><td className="py-2 text-right">£2,500</td><td className="py-2 text-right">£15,000</td><td className="py-2 text-right">£0</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">£350,000</td><td className="py-2 text-right">£7,500</td><td className="py-2 text-right">£25,000</td><td className="py-2 text-right">£2,500</td></tr>
+            <tr className="border-b border-navy-100"><td className="py-2">£500,000</td><td className="py-2 text-right">£15,000</td><td className="py-2 text-right">£40,000</td><td className="py-2 text-right">£10,000</td></tr>
+            <tr><td className="py-2">£750,000</td><td className="py-2 text-right">£27,500</td><td className="py-2 text-right">£65,000</td><td className="py-2 text-right">N/A</td></tr>
+          </tbody></table>
+        </div>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Exemptions and Reliefs You Should Know About</h2>
+        <p><strong>Transfers between spouses or civil partners</strong> carry no SDLT if no money changes hands. This is useful for tax planning — transferring a share in a property to a lower-earning partner creates no SDLT liability.</p>
+        <p><strong>Gifted properties</strong> where no cash consideration changes hands carry no SDLT — but if the recipient takes on a mortgage, SDLT applies to the value of that mortgage.</p>
+        <p><strong>Multiple dwellings relief</strong> allows buyers purchasing two or more properties in a single transaction to average the purchase price, potentially reducing SDLT. This was partially restricted in 2024 but still applies in some scenarios — consult a tax adviser.</p>
+        <p><strong>Property purchased through a company</strong> by a corporate entity attracts a flat 15% SDLT rate if the residential property costs over £500,000 — an important consideration for investors thinking of using corporate structures.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>When Do You Have to Pay Stamp Duty?</h2>
+        <p>SDLT must be paid and the return filed within <strong>14 days of completion</strong>. Your solicitor or conveyancer normally handles this on your behalf using funds you provide. Missing this deadline incurs an automatic penalty of £100 (under 3 months late) rising to £200 (over 3 months) plus daily interest on the unpaid amount.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>SDLT in Scotland and Wales</h2>
+        <p>Scotland replaced SDLT with <strong>Land and Buildings Transaction Tax (LBTT)</strong> in April 2015. Wales replaced SDLT with <strong>Land Transaction Tax (LTT)</strong> in April 2018. Both have different rate structures and thresholds from SDLT. If you are buying in Scotland or Wales, use the relevant LBTT or LTT calculator rather than this SDLT guide.</p>
+
+        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Can You Reclaim Stamp Duty?</h2>
+        <p>You can reclaim the 5% additional property surcharge if you sell your previous main home within <strong>3 years</strong> of paying the higher rate. This applies if you paid the surcharge on a new main home because your existing main home had not yet sold. Contact HMRC within 12 months of the sale to claim the refund.</p>
+
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Calculate Your Stamp Duty</h2>
         <p>Use our free calculator to work out your exact SDLT bill for standard purchases, additional properties, and first-time buyer relief:</p>
         <div className="not-prose mt-4">
