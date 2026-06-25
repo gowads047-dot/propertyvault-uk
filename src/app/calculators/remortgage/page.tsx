@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function RemortgagePage() {
@@ -127,6 +128,18 @@ export default function RemortgagePage() {
           <p>Loan-to-value (LTV) is the mortgage as a percentage of property value. Lower LTV = better rate. Best rates are typically at 60% LTV, increasing at 65%, 70%, 75% (most common BTL maximum), and 80%+. If your property has appreciated since purchase, your LTV may have fallen significantly — giving access to far better rates than when you first bought.</p>
           <h3 className="font-bold text-navy-800">Product Transfer vs Full Remortgage</h3>
           <p>A product transfer (same lender, new rate) is faster, cheaper, and doesn't require full affordability checks. A full remortgage (switching lender) takes 4-8 weeks but may offer better rates or allow additional borrowing. Start the process 3-6 months before your current deal ends to avoid falling onto the SVR and to compare the full market properly.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/affordability" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Affordability</p><p className="text-xs text-navy-400 mt-0.5">Borrowing power</p></Link>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Check returns</p></Link>
+              <Link href="/calculators/brrr" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">BRRR Calculator</p><p className="text-xs text-navy-400 mt-0.5">Recycle capital</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">BRRR Strategy Explained</p></Link>
+              <Link href="/blog/uk-property-market-2026" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">UK Property Market 2026</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

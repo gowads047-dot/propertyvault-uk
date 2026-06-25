@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function RentVsBuyPage() {
@@ -134,6 +135,18 @@ export default function RentVsBuyPage() {
           <p>Renters don't build equity, can face rent increases at renewal (the Renters' Rights Act 2025 restricts in-tenancy increases to once per year and removes Section 21 "no-fault" evictions), and have less long-term certainty. These are real costs that don't appear in a monthly payment comparison but significantly affect quality of life and financial planning.</p>
           <h3 className="font-bold text-navy-800">When Buying Wins and When Renting Wins</h3>
           <p>Buying typically wins if: you plan to stay 5+ years (long enough to amortise purchase costs), the area has strong price growth potential, and mortgage payments are comparable to rent. Renting typically wins if: you need flexibility, the price-to-rent ratio is very high (over 25x annual rent), or you have high-return alternatives for the deposit capital. Run both scenarios with your actual numbers above.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/affordability" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Affordability</p><p className="text-xs text-navy-400 mt-0.5">How much to borrow</p></Link>
+              <Link href="/calculators/moving-costs" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Moving Costs</p><p className="text-xs text-navy-400 mt-0.5">Total cost</p></Link>
+              <Link href="/calculators/remortgage" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Remortgage</p><p className="text-xs text-navy-400 mt-0.5">Switch & save</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/first-time-buyer-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">First Time Buyer Guide</p></Link>
+              <Link href="/blog/biggest-financial-lie-britain" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">The Biggest Financial Lie in Britain</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function AffordabilityPage() {
@@ -121,6 +122,18 @@ export default function AffordabilityPage() {
           <p>Salaried employment income is straightforward. For self-employed applicants, most lenders use the average of the last 2-3 years' net profit or salary + dividends (for company directors). Bonus and commission income is typically included at 50-100% depending on the lender. Rental income from existing properties can usually be included, typically at 125-145% of the gross rent to cover costs.</p>
           <h3 className="font-bold text-navy-800">Buy-to-Let Affordability Is Different</h3>
           <p>Buy-to-let affordability is based primarily on rental income, not your personal income. Lenders typically require the monthly rent to cover 125-145% of the mortgage payment (at a stressed rate of 5-5.5%). Personal income matters mainly for portfolio landlords and for minimum income thresholds (usually £25,000).</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/remortgage" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Remortgage Savings</p><p className="text-xs text-navy-400 mt-0.5">Switch & save</p></Link>
+              <Link href="/calculators/rent-vs-buy" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rent vs Buy</p><p className="text-xs text-navy-400 mt-0.5">Compare options</p></Link>
+              <Link href="/calculators/moving-costs" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Moving Costs</p><p className="text-xs text-navy-400 mt-0.5">Total cost</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/first-time-buyer-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">First Time Buyer Guide</p></Link>
+              <Link href="/blog/stamp-duty-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Stamp Duty Guide</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

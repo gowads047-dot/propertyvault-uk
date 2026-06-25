@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function Section24Page() {
@@ -123,6 +124,18 @@ export default function Section24Page() {
           <p>The restriction applies to mortgage interest only — not capital repayment. It also covers interest on loans taken out to purchase furnishings for the property. Arrangement fees, legal fees, and other finance costs are also restricted under the same rules.</p>
           <h3 className="font-bold text-navy-800">Can Section 24 Push You Into a Higher Tax Band?</h3>
           <p>Yes. Because you now declare the full rental income (before mortgage interest) on your self-assessment return, this can push your total income into the higher-rate band even if your actual cash profit is modest. This is one of the most damaging aspects for landlords with large mortgages relative to rental income.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/personal-vs-ltd" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Personal vs Ltd</p><p className="text-xs text-navy-400 mt-0.5">Compare structures</p></Link>
+              <Link href="/calculators/capital-gains-tax" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">CGT Calculator</p><p className="text-xs text-navy-400 mt-0.5">Tax on sale</p></Link>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Property returns</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/section-24-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Section 24 Explained</p></Link>
+              <Link href="/blog/personal-vs-limited-company" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Personal vs Ltd Company</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

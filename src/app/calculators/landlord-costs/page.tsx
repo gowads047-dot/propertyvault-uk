@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function LandlordCostsPage() {
@@ -129,6 +130,18 @@ export default function LandlordCostsPage() {
           <p>Reserve 1% of the property's value per year for maintenance and repairs. On a £150,000 property that's £1,500/year — you won't spend it every year, but you'll spend far more in years when a boiler, roof, or kitchen needs attention. Pre-1960s stock costs more to maintain than newer builds.</p>
           <h3 className="font-bold text-navy-800">Compliance Costs Landlords Forget</h3>
           <p>Annual Gas Safety Certificate: £60-£120. EICR (every 5 years): £150-£350. EPC (every 10 years): £60-£120. Smoke and CO alarm maintenance, deposit protection fees, Right to Rent checks, HMO licensing where applicable — all legal requirements with fines for non-compliance. Total compliance cost for a single-let: typically £150-300/year.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Gross & net yield</p></Link>
+              <Link href="/calculators/hmo-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">HMO Yield</p><p className="text-xs text-navy-400 mt-0.5">HMO returns</p></Link>
+              <Link href="/calculators/section-24" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Section 24</p><p className="text-xs text-navy-400 mt-0.5">Tax impact</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/guaranteed-rent-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Guaranteed Rent Explained</p></Link>
+              <Link href="/blog/renters-rights-act" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Renters Rights Act 2025</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

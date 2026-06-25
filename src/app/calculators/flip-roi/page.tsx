@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function FlipROIPage() {
@@ -110,6 +111,18 @@ export default function FlipROIPage() {
           <p>Beyond purchase price and refurb: stamp duty (3% surcharge if not your only property), bridging finance (0.65-1.2%/month), utilities during works, council tax, estate agent fees on sale (1-2.5%), both sides' legal fees, and CGT on the profit. This calculator captures all of these so your ROI figure reflects reality.</p>
           <h3 className="font-bold text-navy-800">Refurbishment Cost Control</h3>
           <p>Get three quotes for every trade. Build in a 20% contingency from the start — it's almost always needed. Project-managing trades yourself saves 15-20% vs a main contractor but requires significant time. For a first flip, a JV partner with experience protects you from the mistakes that wipe out margins.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/deal-analyser" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Deal Analyser</p><p className="text-xs text-navy-400 mt-0.5">Full deal model</p></Link>
+              <Link href="/calculators/bridging" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Bridging Loan</p><p className="text-xs text-navy-400 mt-0.5">Finance costs</p></Link>
+              <Link href="/calculators/capital-gains-tax" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">CGT Calculator</p><p className="text-xs text-navy-400 mt-0.5">Tax on profit</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">BRRR Strategy Explained</p></Link>
+              <Link href="/blog/stamp-duty-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Stamp Duty Guide</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

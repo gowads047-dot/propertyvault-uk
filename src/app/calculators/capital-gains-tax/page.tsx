@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
@@ -166,6 +167,18 @@ export default function CGTCalculatorPage() {
           <p>If you've lived in the property as your main home at any point, you may qualify for Private Residence Relief, which can reduce or eliminate CGT entirely. PRR covers the period you lived there plus the final 9 months of ownership regardless of whether you were living there. This is particularly relevant for accidental landlords who moved out and then let the property.</p>
           <h3 className="font-bold text-navy-800">Halve Your CGT with a Spouse or Civil Partner</h3>
           <p>If you own property jointly with a spouse or civil partner, each person uses their own £3,000 AEA and pays CGT at their own marginal rate. Transfers between spouses occur at no-gain/no-loss for CGT — so transferring a share of a property to a lower-earning spouse before selling is a legitimate tax planning strategy worth exploring with an accountant.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/section-24" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Section 24</p><p className="text-xs text-navy-400 mt-0.5">Income tax</p></Link>
+              <Link href="/calculators/personal-vs-ltd" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Personal vs Ltd</p><p className="text-xs text-navy-400 mt-0.5">Company ownership</p></Link>
+              <Link href="/calculators/flip-roi" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Flip ROI</p><p className="text-xs text-navy-400 mt-0.5">Sale profit</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/stamp-duty-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Stamp Duty Guide</p></Link>
+              <Link href="/blog/personal-vs-limited-company" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Personal vs Ltd Company</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

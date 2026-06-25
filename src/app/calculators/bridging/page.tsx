@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function BridgingPage() {
@@ -103,6 +104,18 @@ export default function BridgingPage() {
           <p>The total cost includes: monthly interest (usually rolled up and paid on exit), arrangement fee (1-2% of the loan), exit fee (0-1%), valuation fee, and legal fees for both sides. On a £200,000 loan for 6 months at 0.9%/month with a 2% arrangement fee, total costs exceed £18,000. This calculator shows you the exact breakdown so you can factor it into your deal analysis before committing.</p>
           <h3 className="font-bold text-navy-800">Regulated vs Unregulated Bridging</h3>
           <p>Bridging on your main home (or a home a close family member will live in) is regulated by the FCA. Bridging on investment property is unregulated — always use a specialist broker and ensure you understand the risks, including what happens if your exit strategy fails.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/deal-analyser" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Deal Analyser</p><p className="text-xs text-navy-400 mt-0.5">Full deal model</p></Link>
+              <Link href="/calculators/flip-roi" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Flip ROI</p><p className="text-xs text-navy-400 mt-0.5">Refurb profit</p></Link>
+              <Link href="/calculators/brrr" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">BRRR Calculator</p><p className="text-xs text-navy-400 mt-0.5">Recycle capital</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">BRRR Strategy Explained</p></Link>
+              <Link href="/blog/hmo-investing-uk" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">HMO Investing UK</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function HMOYieldPage() {
@@ -145,6 +146,18 @@ export default function HMOYieldPage() {
           <p>Most experienced HMO investors target a minimum 10% gross yield and at least £200 net cash flow per room per month after all costs including mortgage. Below 8% gross and the extra complexity of HMO management rarely justifies itself over a well-located single-let. Use this calculator to test those thresholds before committing to a deal.</p>
           <h3 className="font-bold text-navy-800">Article 4 Directions and HMO Licensing</h3>
           <p>Many councils have introduced Article 4 directions that require planning permission to convert a family home (C3) to an HMO (C4). Always check the local planning authority before purchasing. Mandatory HMO licensing applies to properties with 5 or more people from 2 or more households sharing facilities — failure to license carries an unlimited fine and a Rent Repayment Order risk.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/deal-analyser" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Deal Analyser</p><p className="text-xs text-navy-400 mt-0.5">Full deal model</p></Link>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Single-let returns</p></Link>
+              <Link href="/calculators/landlord-costs" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Landlord Costs</p><p className="text-xs text-navy-400 mt-0.5">Running costs</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/hmo-investing-uk" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">HMO Investing UK</p></Link>
+              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">BRRR Strategy Explained</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

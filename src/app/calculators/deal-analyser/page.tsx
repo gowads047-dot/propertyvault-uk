@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -977,6 +977,18 @@ export default function DealAnalyserPage() {
           <p>Total investment includes: deposit, stamp duty (3% surcharge on additional properties), legal fees (£1,000-£2,500), survey (£300-£700), mortgage arrangement fee, refurbishment, and initial furnishing. Missing any of these inflates your apparent ROI — this calculator captures all of them.</p>
           <h3 className="font-bold text-navy-800">Model Void Periods Realistically</h3>
           <p>Assuming 100% occupancy is the most common mistake in property analysis. A 5% void allowance (about 2.5 weeks/year) is conservative and realistic for well-located properties. HMOs and short-lets can have higher voids. Baking in realistic voids shows what the deal actually returns in the real world.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Yield check</p></Link>
+              <Link href="/calculators/hmo-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">HMO Yield</p><p className="text-xs text-navy-400 mt-0.5">HMO returns</p></Link>
+              <Link href="/calculators/bridging" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Bridging Loan</p><p className="text-xs text-navy-400 mt-0.5">Finance costs</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/brrr-strategy-explained" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">BRRR Strategy Explained</p></Link>
+              <Link href="/blog/hmo-investing-uk" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">HMO Investing UK</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 type Measure = {
@@ -278,6 +279,17 @@ export default function EPCRetrofitPage() {
           <p>The Boiler Upgrade Scheme offers £7,500 towards an air source heat pump. The Great British Insulation Scheme and ECO4 provide free or subsidised insulation for lower-rated properties. Always check grant availability before paying full price — thousands of pounds in support goes unclaimed by landlords every year.</p>
           <h3 className="font-bold text-navy-800">Exemptions and Cost Cap</h3>
           <p>Under the proposed rules, the maximum spend required to reach EPC C is £15,000. Spend up to this and still can't reach C? Register for an exemption. Exemptions also apply where improvements would damage the property's structure — common with listed buildings and older stone properties.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/landlord-costs" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Landlord Costs</p><p className="text-xs text-navy-400 mt-0.5">Running costs</p></Link>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Yield impact</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/epc-c-deadline-landlords" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">EPC C Deadline for Landlords</p></Link>
+              <Link href="/blog/renters-rights-act" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Renters Rights Act 2025</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

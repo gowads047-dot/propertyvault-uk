@@ -1,6 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export default function MovingCostsPage() {
@@ -116,6 +117,18 @@ export default function MovingCostsPage() {
           <p>RICS HomeBuyer Report (Level 2): £400-£700 — recommended for most standard properties. RICS Building Survey (Level 3): £600-£1,500 — recommended for older, larger, or unusual properties. Never skip the survey to save money — issues identified can be used to renegotiate the price or exit the deal before you're legally bound.</p>
           <h3 className="font-bold text-navy-800">Estate Agent Fees When Selling</h3>
           <p>High street agents typically charge 1-3% plus VAT. On a £300,000 sale that's £3,600-£10,800. Online agents charge a fixed fee of £500-£2,000 — significant savings if your property sells quickly. Many online agents require upfront payment before the property sells, so the saving comes with added risk if it takes longer than expected.</p>
+          <div className="pt-4 border-t border-navy-200">
+            <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+              <Link href="/calculators/affordability" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Affordability</p><p className="text-xs text-navy-400 mt-0.5">How much to borrow</p></Link>
+              <Link href="/calculators/rent-vs-buy" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rent vs Buy</p><p className="text-xs text-navy-400 mt-0.5">Compare options</p></Link>
+              <Link href="/calculators/remortgage" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Remortgage</p><p className="text-xs text-navy-400 mt-0.5">Switch & save</p></Link>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/blog/first-time-buyer-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">First Time Buyer Guide</p></Link>
+              <Link href="/blog/stamp-duty-guide" className="group block bg-white rounded-lg border border-navy-100 p-3 hover:shadow-md transition-all"><span className="text-xs font-bold text-gold-600">Guide</span><p className="font-bold text-navy-800 text-xs group-hover:text-gold-600 mt-0.5">Stamp Duty Guide</p></Link>
+            </div>
+          </div>
         </div>
       </section>
     </>
