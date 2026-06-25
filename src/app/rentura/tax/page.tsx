@@ -28,6 +28,8 @@ function monthsBetween(a: Date, b: Date): number {
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface EventRow { id: string; property_id: string; event_type: string; title: string; amount: number | null; event_date: string; metadata: Record<string, unknown> }
+interface FExpense { id: string; category: string; description: string; amount: number; date: string; property_id: string | null }
+interface FIncome { id: string; amount: number; type: string; date: string; property_id: string | null; notes: string | null }
 interface PropAdj { insurance: number; agent_pct: number; accountant: number; advertising: number; legal: number; repairs_extra: number; other: number }
 const DEFAULT_ADJ = (): PropAdj => ({ insurance: 0, agent_pct: 0, accountant: 0, advertising: 0, legal: 0, repairs_extra: 0, other: 0 });
 
@@ -41,6 +43,8 @@ interface PropTaxLine {
   loggedExpenses: number;
   incomeEvents: EventRow[];
   expenseEvents: EventRow[];
+  fIncomeRows: FIncome[];
+  fExpenseRows: FExpense[];
   adjExpenses: number;
   mortgageInterest: number;
   totalIncome: number;
@@ -69,7 +73,8 @@ const EXPENSE_TYPES = new Set(["maintenance_cost", "maintenance_resolved"]);
 // ── Core computation ──────────────────────────────────────────────────────────
 function computeTax(
   props: RenturaProperty[], events: EventRow[], mortgages: RenturaMortgage[],
-  tenants: RenturaTenant[], adjustments: Record<string, PropAdj>,
+  tenants: RenturaTenant[], fExpenses: FExpense[], fIncome: FIncome[],
+  adjustments: Record<string, PropAdj>,
   missed: Record<string, MissedItem>, whatIfSpend: number,
   taxYear: TaxYear, taxRate: number,
 ) {
@@ -78,11 +83,23 @@ function computeTax(
   const periodEnd = now < taxYear.end ? now : taxYear.end;
 
   const lines: PropTaxLine[] = props.map(p => {
+    // Events (from AI chat + old logging)
     const pe = events.filter(e => e.property_id === p.id && inTY(e.event_date));
     const incomeEvents = pe.filter(e => INCOME_TYPES.has(e.event_type) && (e.amount ?? 0) > 0);
     const expenseEvents = pe.filter(e => EXPENSE_TYPES.has(e.event_type) && (e.amount ?? 0) > 0);
-    const loggedIncome = incomeEvents.reduce((s, e) => s + (e.amount ?? 0), 0);
-    const loggedExpenses = expenseEvents.reduce((s, e) => s + (e.amount ?? 0), 0);
+
+    // Financials page dedicated tables (primary source of truth)
+    const fIncomeRows = fIncome.filter(i => i.property_id === p.id && inTY(i.date));
+    const fExpenseRows = fExpenses.filter(e => e.property_id === p.id && inTY(e.date));
+
+    // Combine: financial tables are authoritative; events fill gaps
+    const financialIncome = fIncomeRows.reduce((s, i) => s + (i.amount || 0), 0);
+    const eventIncome = incomeEvents.reduce((s, e) => s + (e.amount ?? 0), 0);
+    const loggedIncome = financialIncome + eventIncome;
+
+    const financialExpenses = fExpenseRows.reduce((s, e) => s + (e.amount || 0), 0);
+    const eventExpenses = expenseEvents.reduce((s, e) => s + (e.amount ?? 0), 0);
+    const loggedExpenses = financialExpenses + eventExpenses;
 
     const tenant = tenants.find(t => t.property_id === p.id && t.is_current) ?? null;
     const mortgage = mortgages.find(m => m.property_id === p.id && m.is_current) ?? null;
@@ -92,22 +109,28 @@ function computeTax(
     const periodStart = tenantStart && new Date(tenantStart) > taxYear.start ? new Date(tenantStart) : taxYear.start;
     const months = monthsBetween(periodStart, periodEnd);
     const estimatedIncome = (tenant?.monthly_rent ?? 0) * months;
+    // Gap only shown if actual logged income is less than estimate
     const incomeGap = Math.max(0, estimatedIncome - loggedIncome);
 
     // Manual per-property adjustments
     const adj = adjustments[p.id] ?? DEFAULT_ADJ();
-    const agentFees = adj.agent_pct > 0 ? (estimatedIncome * adj.agent_pct / 100) : adj.agent_pct;
-    const adjExpenses = adj.insurance + (agentFees || 0) + adj.accountant + adj.advertising + adj.legal + adj.repairs_extra + adj.other;
+    const agentFees = adj.agent_pct > 0 ? (Math.max(loggedIncome, estimatedIncome) * adj.agent_pct / 100) : 0;
+    const adjExpenses = adj.insurance + agentFees + adj.accountant + adj.advertising + adj.legal + adj.repairs_extra + adj.other;
 
     const mortgageInterest = (mortgage?.monthly_payment ?? 0) * 12;
-    const totalIncome = Math.max(loggedIncome, estimatedIncome);
+    // Use actual logged income as the figure — estimation only supplements if nothing logged
+    const totalIncome = loggedIncome > 0 ? loggedIncome : estimatedIncome;
     const totalExpenses = loggedExpenses + adjExpenses;
-    return { property: p, tenant, mortgage, loggedIncome, estimatedIncome, incomeGap, loggedExpenses, incomeEvents, expenseEvents, adjExpenses, mortgageInterest, totalIncome, totalExpenses, netProfit: totalIncome - totalExpenses };
+    return { property: p, tenant, mortgage, loggedIncome, estimatedIncome, incomeGap, loggedExpenses, incomeEvents, expenseEvents, fIncomeRows, fExpenseRows, adjExpenses, mortgageInterest, totalIncome, totalExpenses, netProfit: totalIncome - totalExpenses };
   });
 
+  // Also include unassigned financial entries (no property_id set)
+  const unassignedFIncome = fIncome.filter(i => !i.property_id && inTY(i.date)).reduce((s, i) => s + (i.amount || 0), 0);
+  const unassignedFExpenses = fExpenses.filter(e => !e.property_id && inTY(e.date)).reduce((s, e) => s + (e.amount || 0), 0);
+
   const missedTotal = Object.values(missed).filter(m => m.checked).reduce((s, m) => s + m.amount, 0);
-  const totalIncome = lines.reduce((s, l) => s + l.totalIncome, 0);
-  const totalExpenses = lines.reduce((s, l) => s + l.totalExpenses, 0) + missedTotal + whatIfSpend;
+  const totalIncome = lines.reduce((s, l) => s + l.totalIncome, 0) + unassignedFIncome;
+  const totalExpenses = lines.reduce((s, l) => s + l.totalExpenses, 0) + unassignedFExpenses + missedTotal + whatIfSpend;
   const totalMortgage = lines.reduce((s, l) => s + l.mortgageInterest, 0);
   const netProfit = Math.max(0, totalIncome - totalExpenses);
   const taxOnProfit = netProfit * taxRate;
@@ -119,36 +142,50 @@ function computeTax(
   const taxUnderOldRules = profitUnderOldRules * taxRate;
   const s24ExtraCost = Math.max(0, netTaxOwed - taxUnderOldRules);
 
-  // Confidence score
+  // Confidence score — now counts financial rows too
   const missing: string[] = [];
   let confidence = 100;
-  const expectedPayments = props.length * monthsBetween(taxYear.start, periodEnd);
-  const loggedPayments = lines.reduce((s, l) => s + l.incomeEvents.length, 0);
-  if (expectedPayments > 0 && loggedPayments < expectedPayments * 0.5) { missing.push(`${expectedPayments - loggedPayments} estimated rent payments not yet logged`); confidence -= 25; }
-  if (totalExpenses === 0) { missing.push("No expenses logged — most landlords have insurance, repairs, management fees"); confidence -= 20; }
+  const totalLoggedIncome = lines.reduce((s, l) => s + l.loggedIncome, 0) + unassignedFIncome;
+  const totalLoggedExpenses = lines.reduce((s, l) => s + l.loggedExpenses, 0) + unassignedFExpenses;
+  const expectedPayments = props.filter(p => tenants.some(t => t.property_id === p.id && t.is_current)).length * monthsBetween(taxYear.start, periodEnd);
+  const loggedPaymentCount = lines.reduce((s, l) => s + l.incomeEvents.length + l.fIncomeRows.length, 0);
+  if (expectedPayments > 0 && totalLoggedIncome === 0) { missing.push("No income logged yet — add rent payments in Financials or via chat"); confidence -= 30; }
+  else if (expectedPayments > 0 && loggedPaymentCount < expectedPayments * 0.5) { missing.push(`Estimated ${expectedPayments - loggedPaymentCount} rent payments may be missing`); confidence -= 15; }
+  if (totalLoggedExpenses === 0) { missing.push("No expenses logged — add via Financials page or use the checklist below"); confidence -= 20; }
   if (lines.some(l => !l.mortgage && (l.property.purchase_price ?? 0) > 0)) { missing.push("Some properties missing mortgage details — add if mortgaged"); confidence -= 10; }
   if (missedTotal === 0) { missing.push("Common expenses may be unclaimed — check the checklist below"); confidence -= 10; }
   confidence = Math.max(0, confidence);
 
-  return { lines, totalIncome, totalExpenses, totalMortgage, netProfit, taxOnProfit, financeCredit, netTaxOwed, taxUnderOldRules, s24ExtraCost, confidence, missing, missedTotal };
+  return { lines, totalIncome, totalExpenses, totalMortgage, netProfit, taxOnProfit, financeCredit, netTaxOwed, taxUnderOldRules, s24ExtraCost, confidence, missing, missedTotal, unassignedFIncome, unassignedFExpenses };
 }
 
 // ── CSV export ────────────────────────────────────────────────────────────────
-function exportCSV(lines: PropTaxLine[], taxYear: TaxYear, missed: Record<string, MissedItem>) {
+function exportCSV(lines: PropTaxLine[], taxYear: TaxYear, missed: Record<string, MissedItem>, fExpenses: FExpense[], fIncome: FIncome[]) {
+  const esc = (s: string) => `"${s.replace(/"/g, '""')}"`;
+  const inTY = (d: string) => d >= taxYear.startStr && d <= taxYear.endStr;
   const rows: string[] = [
-    ["Tax Year", "Property", "Date", "Type", "Category", "Description", "Amount (£)", "Income/Expense"].join(",")
+    ["Tax Year", "Property", "Date", "Type", "Category", "Description", "Amount (£)", "Source"].join(",")
   ];
   for (const l of lines) {
-    const addr = `"${l.property.address}"`;
-    for (const e of l.incomeEvents) rows.push([taxYear.label, addr, e.event_date, "Income", "Rental income", `"${e.title}"`, e.amount ?? 0, "Income"].join(","));
-    for (const e of l.expenseEvents) rows.push([taxYear.label, addr, e.event_date, "Expense", "Maintenance/repairs", `"${e.title}"`, e.amount ?? 0, "Expense"].join(","));
-    if (l.adjExpenses > 0) rows.push([taxYear.label, addr, taxYear.endStr, "Expense", "Other allowable expenses", "Manual adjustment", l.adjExpenses, "Expense"].join(","));
-    if (l.mortgageInterest > 0) rows.push([taxYear.label, addr, taxYear.endStr, "Finance cost", "Mortgage interest (estimated)", `"${l.mortgage?.lender ?? "Lender"}"`, l.mortgageInterest, "Finance cost (S24)"].join(","));
+    const addr = esc(l.property.address);
+    // Financial income rows (from Financials page)
+    for (const i of l.fIncomeRows) rows.push([taxYear.label, addr, i.date, "Income", esc(i.type), esc(i.notes ?? i.type), i.amount, "Financials page"].join(","));
+    // Event income rows (from chat/events)
+    for (const e of l.incomeEvents) rows.push([taxYear.label, addr, e.event_date, "Income", "Rental income", esc(e.title), e.amount ?? 0, "Event log"].join(","));
+    // Financial expense rows (from Financials page)
+    for (const e of l.fExpenseRows) rows.push([taxYear.label, addr, e.date, "Expense", esc(e.category), esc(e.description), e.amount, "Financials page"].join(","));
+    // Event expense rows (from chat/events)
+    for (const e of l.expenseEvents) rows.push([taxYear.label, addr, e.event_date, "Expense", "Maintenance/repairs", esc(e.title), e.amount ?? 0, "Event log"].join(","));
+    if (l.adjExpenses > 0) rows.push([taxYear.label, addr, taxYear.endStr, "Expense", "Other allowable expenses", "Manual adjustment", l.adjExpenses, "Manual"].join(","));
+    if (l.mortgageInterest > 0) rows.push([taxYear.label, addr, taxYear.endStr, "Finance cost", "Mortgage interest (est.)", esc(l.mortgage?.lender ?? "Lender"), l.mortgageInterest, "Mortgage record"].join(","));
   }
+  // Unassigned financial entries
+  for (const i of fIncome.filter(x => !x.property_id && inTY(x.date))) rows.push([taxYear.label, '"Unassigned"', i.date, "Income", esc(i.type), esc(i.notes ?? i.type), i.amount, "Financials page"].join(","));
+  for (const e of fExpenses.filter(x => !x.property_id && inTY(x.date))) rows.push([taxYear.label, '"Unassigned"', e.date, "Expense", esc(e.category), esc(e.description), e.amount, "Financials page"].join(","));
   for (const [key, item] of Object.entries(missed)) {
     if (item.checked) {
       const label = MISSED_ITEMS.find(m => m.key === key)?.label ?? key;
-      rows.push([taxYear.label, '"All properties"', taxYear.endStr, "Expense", "Allowable expense", `"${label}"`, item.amount, "Expense"].join(","));
+      rows.push([taxYear.label, '"All properties"', taxYear.endStr, "Expense", "Allowable expense", esc(label), item.amount, "Checklist"].join(","));
     }
   }
   const csv = rows.join("\n");
@@ -208,6 +245,8 @@ export default function TaxIntelligence() {
   const [events, setEvents] = useState<EventRow[]>([]);
   const [mortgages, setMortgages] = useState<RenturaMortgage[]>([]);
   const [tenants, setTenants] = useState<RenturaTenant[]>([]);
+  const [fExpenses, setFExpenses] = useState<FExpense[]>([]);
+  const [fIncome, setFIncome] = useState<FIncome[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [taxYearOffset, setTaxYearOffset] = useState(0);
@@ -228,17 +267,21 @@ export default function TaxIntelligence() {
     if (!user) { router.push("/rentura/auth?next=/rentura/tax"); return; }
     async function load() {
       setLoading(true);
-      const [pR, eR, mR, tR] = await Promise.all([
+      const [pR, eR, mR, tR, exR, incR] = await Promise.all([
         supabase.from("rentura_properties").select("*").eq("user_id", user!.id),
         supabase.from("rentura_events").select("id,property_id,event_type,title,amount,event_date,metadata").eq("user_id", user!.id).not("amount", "is", null).order("event_date", { ascending: false }),
         supabase.from("rentura_mortgages").select("*").eq("user_id", user!.id).eq("is_current", true),
         supabase.from("rentura_tenants").select("*").eq("user_id", user!.id).eq("is_current", true),
+        supabase.from("rentura_expenses").select("id,category,description,amount,date,property_id").eq("user_id", user!.id).order("date", { ascending: false }),
+        supabase.from("rentura_income").select("id,amount,type,date,property_id,notes").eq("user_id", user!.id).order("date", { ascending: false }),
       ]);
       const props = pR.data ?? [];
       setProperties(props);
       setEvents((eR.data ?? []) as EventRow[]);
       setMortgages(mR.data ?? []);
       setTenants((tR.data ?? []) as RenturaTenant[]);
+      setFExpenses((exR.data ?? []) as FExpense[]);
+      setFIncome((incR.data ?? []) as FIncome[]);
       // Init adjustments per property
       const adj: Record<string, PropAdj> = {};
       for (const p of props) adj[p.id] = DEFAULT_ADJ();
@@ -248,7 +291,7 @@ export default function TaxIntelligence() {
     load();
   }, [user, router]);
 
-  const result = loading ? null : computeTax(properties, events, mortgages, tenants, adjustments, missed, whatIfSpend, taxYear, taxRate);
+  const result = loading ? null : computeTax(properties, events, mortgages, tenants, fExpenses, fIncome, adjustments, missed, whatIfSpend, taxYear, taxRate);
 
   const updateAdj = useCallback((propId: string, field: keyof PropAdj, val: number) => {
     setAdjustments(prev => ({ ...prev, [propId]: { ...(prev[propId] ?? DEFAULT_ADJ()), [field]: val } }));
@@ -469,31 +512,47 @@ export default function TaxIntelligence() {
 
                       {/* Income section */}
                       <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Income — logged</p>
-                      {l.incomeEvents.length === 0 ? (
-                        <p style={{ fontSize: 12, color: INK2, marginBottom: 8 }}>No rent payments logged this tax year.</p>
-                      ) : l.incomeEvents.map(e => (
-                        <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
-                          <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title}</span>
-                          <span style={{ fontWeight: 700, color: "#16a34a" }}>+{fmt(e.amount ?? 0)}</span>
-                        </div>
-                      ))}
+                      {l.fIncomeRows.length === 0 && l.incomeEvents.length === 0 ? (
+                        <p style={{ fontSize: 12, color: INK2, marginBottom: 8 }}>No income logged for this property this tax year. Add via the Financials page.</p>
+                      ) : (
+                        <>
+                          {l.fIncomeRows.map(i => (
+                            <div key={i.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
+                              <span style={{ color: INK2 }}>{fmtDate(i.date)} · {i.notes || i.type} <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Financials</span></span>
+                              <span style={{ fontWeight: 700, color: "#16a34a" }}>+{fmt(i.amount)}</span>
+                            </div>
+                          ))}
+                          {l.incomeEvents.map(e => (
+                            <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
+                              <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title} <span style={{ fontSize: 10, background: "#e0e7ff", color: "#4338ca", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Chat</span></span>
+                              <span style={{ fontWeight: 700, color: "#16a34a" }}>+{fmt(e.amount ?? 0)}</span>
+                            </div>
+                          ))}
+                        </>
+                      )}
 
-                      {/* Estimated income gap */}
-                      {l.incomeGap > 0 && (
+                      {/* Estimated income gap — only show if actual logged income is less than estimate */}
+                      {l.incomeGap > 0 && l.estimatedIncome > 0 && (
                         <div style={{ marginTop: 8, padding: "8px 12px", background: "#fef3c7", borderRadius: 8, borderLeft: "3px solid #d97706" }}>
                           <p style={{ fontSize: 12, color: "#92400e", fontWeight: 600 }}>
-                            Estimated from tenant record: {fmt(l.estimatedIncome)} · {fmt(l.incomeGap)} may be missing from logs
+                            Tenant record suggests {fmt(l.estimatedIncome)} expected · {fmt(l.incomeGap)} may not yet be logged
                           </p>
                         </div>
                       )}
 
                       {/* Expenses — logged */}
-                      {l.expenseEvents.length > 0 && (
+                      {(l.fExpenseRows.length > 0 || l.expenseEvents.length > 0) && (
                         <>
                           <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, marginTop: 14 }}>Expenses — logged</p>
+                          {l.fExpenseRows.map(e => (
+                            <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
+                              <span style={{ color: INK2 }}>{fmtDate(e.date)} · {e.description} <span style={{ fontSize: 10, background: "#fee2e2", color: "#dc2626", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>{e.category}</span> <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 5px", borderRadius: 4 }}>Financials</span></span>
+                              <span style={{ fontWeight: 700, color: "#dc2626" }}>−{fmt(e.amount)}</span>
+                            </div>
+                          ))}
                           {l.expenseEvents.map(e => (
                             <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
-                              <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title}</span>
+                              <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title} <span style={{ fontSize: 10, background: "#e0e7ff", color: "#4338ca", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Chat</span></span>
                               <span style={{ fontWeight: 700, color: "#dc2626" }}>−{fmt(e.amount ?? 0)}</span>
                             </div>
                           ))}
@@ -779,7 +838,7 @@ export default function TaxIntelligence() {
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: 14 }}>
                 Export a CSV with all transactions categorised by HMRC type, or print this page as a PDF with all figures and confidence ratings.
               </p>
-              <button onClick={() => exportCSV(result.lines, taxYear, missed)}
+              <button onClick={() => exportCSV(result.lines, taxYear, missed, fExpenses, fIncome)}
                 style={{ background: "white", color: CTA, fontWeight: 800, fontSize: 13, padding: "10px 18px", borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit", width: "100%", marginBottom: 8 }}>
                 Download CSV for accountant →
               </button>
