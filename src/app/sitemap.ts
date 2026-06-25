@@ -75,6 +75,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/guaranteed-rent/birmingham/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/guaranteed-rent/nottingham/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/guaranteed-rent/derby/`,      lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/guaranteed-rent/leicester/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/guaranteed-rent/coventry/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/guaranteed-rent/sheffield/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
 
     // Area guides
     { url: `${BASE}/areas/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
