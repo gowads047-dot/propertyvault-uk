@@ -129,7 +129,7 @@ export default function PropertyPassport() {
   // Tenant portal invite
   const [lastInvite, setLastInvite] = useState<{ portalUrl: string; whatsappUrl: string } | null>(null);
   const [lastMaintNotify, setLastMaintNotify] = useState<{ issueTitle: string; tenantEmail: string; whatsappUrl: string; alreadySignedUp: boolean } | null>(null);
-  const [tenantIssues, setTenantIssues] = useState<{ id: string; title: string; status: string; priority: string; tenant_name: string; created_at: string }[]>([]);
+  const [tenantIssues, setTenantIssues] = useState<{ id: string; title: string; status: string; priority: string; category: string; tenant_name?: string; created_at: string; landlord_first_response_at?: string | null }[]>([]);
 
   // Document upload
   const [uploading, setUploading] = useState(false);
@@ -1083,22 +1083,51 @@ export default function PropertyPassport() {
 
             {/* Tenant-reported issues */}
             {tenantIssues.length > 0 && (
-              <div style={{ marginTop: 24, marginBottom: 4 }}>
-                <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Reported by tenant ({tenantIssues.length})</p>
-                {tenantIssues.map(ti => {
+              <div style={{ marginTop: 28, marginBottom: 4 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Reported by tenant ({tenantIssues.length})</p>
+                  {tenantIssues.filter((ti: { landlord_first_response_at?: string | null; status: string }) => !ti.landlord_first_response_at && ti.status !== "resolved").length > 0 && (
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "rgba(220,38,38,0.08)", padding: "3px 9px", borderRadius: 20 }}>
+                      {tenantIssues.filter((ti: { landlord_first_response_at?: string | null; status: string }) => !ti.landlord_first_response_at && ti.status !== "resolved").length} awaiting your response
+                    </span>
+                  )}
+                </div>
+                {tenantIssues.map((ti: { id: string; title: string; status: string; priority: string; category: string; tenant_name?: string; created_at: string; landlord_first_response_at?: string | null }) => {
                   const stCfg: Record<string, { label: string; color: string }> = { open: { label: "Open", color: "#dc2626" }, in_progress: { label: "In progress", color: "#ca8a04" }, scheduled: { label: "Scheduled", color: "#2563eb" }, resolved: { label: "Resolved", color: "#16a34a" } };
                   const sc = stCfg[ti.status] ?? { label: ti.status, color: "#111" };
+                  const awaitingResponse = !ti.landlord_first_response_at && ti.status !== "resolved";
+                  const isUrgent = ti.priority === "urgent";
                   return (
-                    <a key={ti.id} href={`/rentura/properties/${id}/issues/${ti.id}`} style={{ textDecoration: "none" }}>
-                      <div style={{ background: "rgba(26,41,66,0.03)", borderRadius: 10, padding: "13px 16px", border: `1px solid ${BORDER}`, marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                        <div>
-                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                    <a key={ti.id} href={`/rentura/properties/${id}/issues/${ti.id}`} style={{ textDecoration: "none", display: "block", marginBottom: 8 }}>
+                      <div style={{
+                        borderRadius: 12,
+                        padding: "14px 18px",
+                        border: awaitingResponse
+                          ? `2px solid ${isUrgent ? "rgba(220,38,38,0.4)" : "rgba(234,179,8,0.35)"}`
+                          : `1px solid ${BORDER}`,
+                        background: awaitingResponse
+                          ? (isUrgent ? "rgba(220,38,38,0.04)" : "rgba(234,179,8,0.04)")
+                          : "rgba(26,41,66,0.02)",
+                        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+                      }}>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 4, flexWrap: "wrap" }}>
+                            {awaitingResponse && (
+                              <span style={{ fontSize: 10, fontWeight: 800, color: isUrgent ? "#dc2626" : "#ca8a04", background: isUrgent ? "rgba(220,38,38,0.1)" : "rgba(234,179,8,0.1)", padding: "2px 8px", borderRadius: 5 }}>
+                                {isUrgent ? "🚨 URGENT — " : ""}Awaiting response
+                              </span>
+                            )}
                             <span style={{ fontSize: 10, fontWeight: 700, color: sc.color, background: `${sc.color}14`, padding: "2px 7px", borderRadius: 5 }}>{sc.label}</span>
-                            <span style={{ fontSize: 11, color: INK2 }}>from {ti.tenant_name || "tenant"}</span>
+                            <span style={{ fontSize: 11, color: INK2 }}>· {ti.tenant_name || "tenant"} · {new Date(ti.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}</span>
                           </div>
-                          <p style={{ fontSize: 14, fontWeight: 700, color: INK }}>{ti.title}</p>
+                          <p style={{ fontSize: 14, fontWeight: awaitingResponse ? 800 : 700, color: INK }}>{ti.title}</p>
                         </div>
-                        <span style={{ color: INK2, fontSize: 16 }}>›</span>
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                          {awaitingResponse && (
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "white", background: isUrgent ? "#dc2626" : "#ca8a04", padding: "5px 12px", borderRadius: 7 }}>Respond →</span>
+                          )}
+                          <span style={{ color: INK2, fontSize: 16 }}>›</span>
+                        </div>
                       </div>
                     </a>
                   );

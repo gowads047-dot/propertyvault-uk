@@ -301,6 +301,8 @@ export default function RenturaDashboard() {
   const [memberName, setMemberName] = useState<string | null>(null);
   const [nameInput, setNameInput] = useState("");
   const [nameSaving, setNameSaving] = useState(false);
+  const [taxSummary, setTaxSummary] = useState<{ taxYear: string; income: number; expenses: number; net: number } | null>(null);
+  const [unrespondedIssues, setUnrespondedIssues] = useState<{ id: string; title: string; status: string; priority: string; tenant_name?: string; property_id: string; created_at: string }[]>([]);
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
@@ -341,11 +343,13 @@ export default function RenturaDashboard() {
     async function loadData() {
       setDataLoading(true);
       try {
-        const [propRes, tenantRes, mortRes, compRes] = await Promise.all([
+        const [propRes, tenantRes, mortRes, compRes, issuesRes] = await Promise.all([
           supabase.from("rentura_properties").select("*").eq("user_id", user!.id).order("created_at", { ascending: false }),
           supabase.from("rentura_tenants").select("*").eq("user_id", user!.id).eq("is_current", true),
           supabase.from("rentura_mortgages").select("*").eq("user_id", user!.id).eq("is_current", true),
           supabase.from("rentura_compliance").select("*").eq("user_id", user!.id),
+          supabase.from("tenant_issues").select("id,title,status,priority,tenant_name,property_id,created_at,landlord_first_response_at")
+            .eq("landlord_user_id", user!.id).neq("status", "resolved").is("landlord_first_response_at", null).order("created_at", { ascending: false }),
         ]);
 
         const props: RenturaProperty[] = propRes.data ?? [];
@@ -372,6 +376,17 @@ export default function RenturaDashboard() {
         setMortgages(mortMap);
         setCompliance(compMap);
         setAlerts(computeAlerts(props, compMap, mortMap, tenantMap));
+        setUnrespondedIssues((issuesRes.data ?? []).sort((a, b) => {
+          if (a.priority === "urgent" && b.priority !== "urgent") return -1;
+          if (a.priority !== "urgent" && b.priority === "urgent") return 1;
+          return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        }));
+
+        // Fetch tax year summary
+        fetch(`/api/rentura/tax-summary/?userId=${user!.id}`)
+          .then(r => r.json())
+          .then(data => { if (data.taxYear) setTaxSummary(data); })
+          .catch(() => {});
       } finally {
         setDataLoading(false);
       }
@@ -412,6 +427,10 @@ export default function RenturaDashboard() {
             totalMonthlyIncome: totalIncome,
             totalMortgagePayments: totalMortgage,
             netMonthlyCashflow: netCashflow,
+            taxYear: taxSummary?.taxYear,
+            taxYearIncome: taxSummary?.income,
+            taxYearExpenses: taxSummary?.expenses,
+            taxYearNet: taxSummary?.net,
             alerts: alerts.slice(0, 10).map(a => ({ title: a.title, urgency: a.urgency, type: a.type, property: a.property_address })),
             tenants: properties.map(p => {
               const t = tenants[p.id]?.[0];
@@ -423,6 +442,10 @@ export default function RenturaDashboard() {
               const m = mortgages[p.id]?.[0];
               return m ? { property: shortAddress(p.address), lender: m.lender, rate: m.interest_rate, monthly: m.monthly_payment, fixedExpiry: m.fixed_term_expiry } : null;
             }).filter(Boolean),
+            unrespondedIssues: unrespondedIssues.slice(0, 8).map(i => {
+              const prop = properties.find(p => p.id === i.property_id);
+              return { title: i.title, tenantName: i.tenant_name ?? "Tenant", property: prop ? shortAddress(prop.address) : "Property", priority: i.priority };
+            }),
           },
         }),
       });
@@ -443,20 +466,50 @@ export default function RenturaDashboard() {
       // If completed, save to Supabase
       let savedTo: string | undefined;
       if (result.completed && result.intent && result.intent !== "unknown") {
-        const matchedProp = matchProperty(result.property_match ?? result.gathered?.property ?? null);
-        if (matchedProp) {
-          savedTo = shortAddress(matchedProp.address);
-          await supabase.from("rentura_events").insert({
-            property_id: matchedProp.id,
-            user_id: user.id,
-            event_type: result.intent,
-            title: result.actions?.[0]?.label ?? result.intent.replace(/_/g, " "),
-            description: result.reply,
-            amount: result.gathered?.amount ? parseFloat(String(result.gathered.amount).replace(/[£,]/g, "")) : null,
-            trust_level: "confirmed",
-            metadata: result.gathered ?? {},
-            event_date: new Date().toISOString().split("T")[0],
-          });
+
+        // Bulk rent payment — log for all tenants
+        if (result.intent === "bulk_payment") {
+          const tenantList = (result.gathered?.tenants as { property: string; name: string; amount: number }[] | undefined) ?? [];
+          const today = new Date().toISOString().split("T")[0];
+          for (const t of tenantList) {
+            const mp = matchProperty(t.property);
+            if (mp) {
+              await supabase.from("rentura_events").insert({
+                property_id: mp.id, user_id: user.id, event_type: "payment",
+                title: `Rent received from ${t.name}`,
+                amount: t.amount ?? null, trust_level: "confirmed",
+                metadata: result.gathered ?? {}, event_date: today,
+              });
+            }
+          }
+          // Also catch any without structured data — fall through to single save below
+          savedTo = "all properties";
+
+        } else if (result.intent === "message_tenant") {
+          // Open WhatsApp with pre-drafted message
+          const phone = result.gathered?.phone as string | undefined;
+          const msg = result.gathered?.message_content as string | undefined;
+          if (phone && msg) {
+            window.open(`https://wa.me/${phone.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`, "_blank");
+          }
+          savedTo = result.gathered?.tenant_name as string | undefined;
+
+        } else {
+          const matchedProp = matchProperty(result.property_match ?? result.gathered?.property ?? null);
+          if (matchedProp) {
+            savedTo = shortAddress(matchedProp.address);
+            await supabase.from("rentura_events").insert({
+              property_id: matchedProp.id,
+              user_id: user.id,
+              event_type: result.intent,
+              title: result.actions?.[0]?.label ?? result.intent.replace(/_/g, " "),
+              description: result.reply,
+              amount: result.gathered?.amount ? parseFloat(String(result.gathered.amount).replace(/[£,]/g, "")) : null,
+              trust_level: "confirmed",
+              metadata: result.gathered ?? {},
+              event_date: result.gathered?.date as string ?? new Date().toISOString().split("T")[0],
+            });
+          }
         }
       }
 
@@ -585,8 +638,8 @@ export default function RenturaDashboard() {
               ["Properties", properties.length.toString(), undefined],
               ["Monthly income", properties.length ? fmt(totalIncome) : "£0", undefined],
               ["Net cashflow", properties.length ? fmt(netCashflow) : "—", netCashflow < 0 ? "#dc2626" : netCashflow > 0 ? "#16a34a" : undefined],
+              ["Tax year profit", taxSummary ? fmt(taxSummary.net) : "—", taxSummary && taxSummary.net < 0 ? "#dc2626" : taxSummary && taxSummary.net > 0 ? "#16a34a" : undefined],
               ["Urgent alerts", urgentCount.toString(), urgentCount > 0 ? "#dc2626" : undefined],
-              ["Compliance items", alerts.filter(a => a.type === "compliance").length.toString(), undefined],
             ] as [string, string, string?][]).map(([label, val, color], i, arr) => (
               <div key={label} style={{ flex: 1, minWidth: 120, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
                 <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</p>
@@ -657,6 +710,41 @@ export default function RenturaDashboard() {
                 <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Today&apos;s Briefing</p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 12 }}>
                   {alerts.slice(0, 6).map((alert, i) => <AlertCard key={i} alert={alert} />)}
+                </div>
+              </div>
+            )}
+
+            {/* ── TENANT MESSAGES ── */}
+            {unrespondedIssues.length > 0 && (
+              <div style={{ marginBottom: 40 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Tenant Messages</p>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "rgba(220,38,38,0.08)", padding: "3px 10px", borderRadius: 20 }}>
+                    {unrespondedIssues.length} awaiting response
+                  </span>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  {unrespondedIssues.slice(0, 5).map(issue => {
+                    const prop = properties.find(p => p.id === issue.property_id);
+                    const isUrgent = issue.priority === "urgent";
+                    const daysAgo = Math.floor((Date.now() - new Date(issue.created_at).getTime()) / 86400000);
+                    return (
+                      <a key={issue.id} href={`/rentura/properties/${issue.property_id}/issues/${issue.id}`} style={{ textDecoration: "none" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 14, background: "white", border: `2px solid ${isUrgent ? "rgba(220,38,38,0.3)" : "rgba(217,119,6,0.25)"}`, borderRadius: 12, padding: "13px 18px" }}>
+                          <span style={{ fontSize: 16, flexShrink: 0 }}>{isUrgent ? "🚨" : "💬"}</span>
+                          <div style={{ flex: 1 }}>
+                            <p style={{ fontSize: 13, fontWeight: 800, color: INK, marginBottom: 2 }}>{issue.title}</p>
+                            <p style={{ fontSize: 12, color: INK2 }}>
+                              {issue.tenant_name ?? "Tenant"} · {prop ? shortAddress(prop.address) : "Property"} · {daysAgo === 0 ? "today" : `${daysAgo}d ago`}
+                            </p>
+                          </div>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "white", background: isUrgent ? "#dc2626" : "#d97706", padding: "5px 13px", borderRadius: 7, flexShrink: 0 }}>
+                            Respond →
+                          </span>
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -773,20 +861,27 @@ export default function RenturaDashboard() {
                   return ["Help me add my first property", "What is a Property Passport?", "How does Rentura track compliance?", "What do I need to be legally compliant as a landlord?"];
                 }
                 const prompts: string[] = [];
-                // First urgent alert → specific action
-                const urgent = alerts.find(a => a.urgency === "urgent");
-                if (urgent) prompts.push(`What do I do about: ${urgent.title}?`);
-                // Tenant-specific
-                const firstTenant = Object.values(tenants).flat().find(t => t.is_current);
-                if (firstTenant) {
-                  const name = firstTenant.name ?? `${firstTenant.first_name ?? ""} ${firstTenant.last_name ?? ""}`.trim();
+                // Unresponded tenant issue → most urgent first
+                const urgentIssue = unrespondedIssues.find(i => i.priority === "urgent") ?? unrespondedIssues[0];
+                if (urgentIssue) prompts.push(`Reply to ${urgentIssue.tenant_name ?? "tenant"} about "${urgentIssue.title}"`);
+                // Bulk rent prompt if multiple tenants
+                const allTenants = Object.values(tenants).flat().filter(t => t.is_current);
+                if (allTenants.length > 1) {
+                  prompts.push("Log rent received from all tenants");
+                } else if (allTenants.length === 1) {
+                  const name = allTenants[0].name ?? `${allTenants[0].first_name ?? ""} ${allTenants[0].last_name ?? ""}`.trim();
                   prompts.push(`Log rent received from ${name}`);
                 }
-                // Generic smart prompts
-                if (netCashflow < 0) prompts.push("How can I improve my cashflow?");
-                prompts.push("What should I focus on today?");
-                prompts.push("Log a maintenance issue");
-                if (alerts.some(a => a.type === "compliance")) prompts.push("Walk me through my compliance checklist");
+                // Tax query
+                if (taxSummary) prompts.push(`How am I doing this tax year?`);
+                // Alert-driven
+                const urgent = alerts.find(a => a.urgency === "urgent");
+                if (urgent && prompts.length < 4) prompts.push(`What do I do about: ${urgent.title}?`);
+                // Fallbacks
+                if (prompts.length < 4) prompts.push("What should I focus on today?");
+                if (prompts.length < 4 && netCashflow < 0) prompts.push("How can I improve my cashflow?");
+                if (prompts.length < 4) prompts.push("Log a maintenance issue");
+                if (prompts.length < 4 && alerts.some(a => a.type === "compliance")) prompts.push("Walk me through my compliance checklist");
                 return prompts.slice(0, 4);
               })().map(p => (
                 <button key={p} onClick={() => send(p)} style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "rgba(255,255,255,0.65)", cursor: "pointer", fontFamily: "inherit" }}>

@@ -63,11 +63,16 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     created_at: new Date().toISOString(),
   }).select().single();
 
+  const issueUpdate: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (statusChange) {
-    await supabase.from("tenant_issues").update({ status: statusChange, updated_at: new Date().toISOString(), resolved_at: statusChange === "resolved" ? new Date().toISOString() : null }).eq("id", id);
-  } else {
-    await supabase.from("tenant_issues").update({ updated_at: new Date().toISOString() }).eq("id", id);
+    issueUpdate.status = statusChange;
+    if (statusChange === "resolved") issueUpdate.resolved_at = new Date().toISOString();
   }
+  // Mark landlord's first response time (used to highlight unresponded issues)
+  if (authorType === "landlord" && !issue.landlord_first_response_at) {
+    issueUpdate.landlord_first_response_at = new Date().toISOString();
+  }
+  await supabase.from("tenant_issues").update(issueUpdate).eq("id", id);
 
   // Cross-notify: tenant update → email landlord; landlord update → email tenant
   if (process.env.RESEND_API_KEY) {

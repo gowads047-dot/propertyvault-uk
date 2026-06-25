@@ -1,163 +1,324 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
-const S = { bg: "#f8f7f5", card: "white", ink: "#1a2942", ink2: "rgba(26,41,66,0.55)", border: "rgba(26,41,66,0.1)", accent: "#1a2942", gold: "#c9a84c" };
+type Message = {
+  role: "user" | "ai";
+  text: string;
+  issueCreated?: { id: string; title: string; priority: string };
+  followUp?: string | null;
+};
+type ApiHistory = { role: "user" | "assistant"; content: string }[];
+type TenantInfo = { name: string; email: string; propertyAddress: string; landlordName: string; phone: string | null };
+type Issue = { id: string; title: string; status: string; priority: string; category: string; created_at: string; landlord_first_response_at?: string | null };
 
-const STYLING_TIPS = [
-  { icon: "🪴", title: "Add a mirror to a small room", tip: "A large mirror on the longest wall doubles the perceived space and bounces natural light. Charity shops are great for affordable finds." },
-  { icon: "💡", title: "Swap bulbs for warm-white LEDs", tip: "Cool white lighting feels clinical. 2700K warm-white bulbs cost under £3 each and instantly make a home feel cosier and more inviting." },
-  { icon: "🪟", title: "Hang curtains high and wide", tip: "Hang curtain rails 10cm above the window frame and extend them 15cm either side. Makes windows look larger and ceilings higher — no renovation needed." },
-  { icon: "🎨", title: "Neutral walls, colour in textiles", tip: "If you can't paint, bring colour through cushions, throws, and a rug. Layer 2–3 complementary tones. It's renter-friendly and changeable." },
-  { icon: "📦", title: "Use vertical space for storage", tip: "Tall bookcases, wall shelves and pegboards keep floors clear. Clutter makes rooms look smaller — vertical storage makes them look taller." },
-  { icon: "🌿", title: "Plants on every windowsill", tip: "A pothos or spider plant needs almost no care and adds life to any room. Group 3 pots of different heights for a proper plant moment." },
-  { icon: "🛏️", title: "Layer your bed like a hotel", tip: "White duvet, two pillows per person, two decorative cushions, one throw folded at the foot. It takes 2 minutes and makes your whole room feel put together." },
-  { icon: "🔲", title: "Create a gallery wall on a budget", tip: "Print 4–6 photos at 5x7\", frame them in matching black frames from IKEA (£2 each). Arrange them in a grid — instant designer look, under £20." },
-];
+const STATUS_COLOR: Record<string, string> = {
+  open: "#dc2626",
+  in_progress: "#ca8a04",
+  scheduled: "#2563eb",
+  resolved: "#16a34a",
+};
 
-type Issue = { id: string; title: string; category: string; priority: string; status: string; created_at: string; description?: string };
-
-function StatusBadge({ status }: { status: string }) {
-  const cfg: Record<string, { label: string; bg: string; color: string }> = {
-    open: { label: "Open", bg: "rgba(239,68,68,0.1)", color: "#dc2626" },
-    in_progress: { label: "In progress", bg: "rgba(234,179,8,0.1)", color: "#ca8a04" },
-    scheduled: { label: "Scheduled", bg: "rgba(59,130,246,0.1)", color: "#2563eb" },
-    resolved: { label: "Resolved", bg: "rgba(34,197,94,0.1)", color: "#16a34a" },
-  };
-  const c = cfg[status] ?? { label: status, bg: "rgba(26,41,66,0.08)", color: S.ink2 };
-  return <span style={{ fontSize: 11, fontWeight: 700, background: c.bg, color: c.color, padding: "3px 9px", borderRadius: 6 }}>{c.label}</span>;
-}
-
-function TenantDashboardInner() {
+function TenantPortalInner() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const token = searchParams.get("token") || "";
 
-  const [tenantName, setTenantName] = useState("");
-  const [propertyAddress, setPropertyAddress] = useState("");
-  const [issues, setIssues] = useState<Issue[]>([]);
-  const [tab, setTab] = useState<"issues" | "styling">("issues");
+  const [info, setInfo] = useState<TenantInfo | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [apiHistory, setApiHistory] = useState<ApiHistory>([]);
+  const [input, setInput] = useState("");
+  const [chatLoading, setChatLoading] = useState(false);
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!token) { router.push("/tenant"); return; }
-    Promise.all([
-      fetch(`/api/tenant/validate?token=${token}`).then(r => r.json()),
-      fetch(`/api/tenant/issues?token=${token}`).then(r => r.json()),
-    ]).then(([inv, iss]) => {
-      if (!inv.valid) { router.push("/tenant"); return; }
-      setTenantName(inv.tenant_name || inv.email);
-      setPropertyAddress(inv.property_address || "");
-      setIssues(iss.issues || []);
+    if (!token) {
+      setError("No access link found. Please use the link from your invitation email.");
       setLoading(false);
-    });
-  }, [token, router]);
+      return;
+    }
 
-  if (loading) return <div style={{ minHeight: "100vh", background: S.bg, display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ color: S.ink2 }}>Loading…</p></div>;
+    fetch(`/api/tenant/validate?token=${token}`)
+      .then(r => r.json())
+      .then(async (data) => {
+        if (!data.valid) {
+          setError("This link is invalid or has expired. Please contact your landlord for a new one.");
+          setLoading(false);
+          return;
+        }
 
-  const firstName = tenantName.split(" ")[0];
+        const tenantInfo: TenantInfo = {
+          name: data.tenant_name || data.email?.split("@")[0] || "there",
+          email: data.email,
+          propertyAddress: data.property_address || "your property",
+          landlordName: data.landlord_name || "your landlord",
+          phone: data.phone || null,
+        };
+        setInfo(tenantInfo);
+
+        const issuesRes = await fetch(`/api/tenant/issues?token=${token}`);
+        const issuesData = await issuesRes.json();
+        const tenantIssues: Issue[] = issuesData.issues || [];
+        setIssues(tenantIssues);
+
+        const firstName = tenantInfo.name?.split(" ")[0] || "there";
+        const shortAddr = tenantInfo.propertyAddress?.split(",")[0];
+        const openIssues = tenantIssues.filter(i => i.status !== "resolved");
+
+        let greeting = `Hi ${firstName} 👋\n\nWelcome to your home portal at ${shortAddr}.`;
+        if (openIssues.length > 0) {
+          greeting += `\n\nYou have ${openIssues.length} open issue${openIssues.length > 1 ? "s" : ""}. I can give you an update on any of them, or help you report something new.`;
+        } else {
+          greeting += `\n\nI'm here to help you communicate with ${tenantInfo.landlordName} and report any maintenance issues. What can I help you with today?`;
+        }
+
+        setMessages([{ role: "ai", text: greeting }]);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load your portal. Please try again.");
+        setLoading(false);
+      });
+  }, [token]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, chatLoading]);
+
+  async function send(text: string) {
+    if (!text.trim() || chatLoading || !info) return;
+    const userText = text.trim();
+    setMessages(m => [...m, { role: "user", text: userText }]);
+    setInput("");
+    setChatLoading(true);
+
+    try {
+      const res = await fetch("/api/tenant/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, history: apiHistory, userInput: userText }),
+      });
+      const result = await res.json();
+
+      setApiHistory(prev => [
+        ...prev,
+        { role: "user", content: userText },
+        { role: "assistant", content: result.reply || "" },
+      ]);
+
+      const aiMsg: Message = {
+        role: "ai",
+        text: result.reply || "Sorry, something went wrong. Please try again.",
+        followUp: result.followUp || null,
+      };
+
+      if (result.action === "create_issue" && result.issueId && result.issueData) {
+        aiMsg.issueCreated = {
+          id: result.issueId,
+          title: result.issueData.title,
+          priority: result.issueData.priority || "normal",
+        };
+        setIssues(prev => [{
+          id: result.issueId,
+          title: result.issueData.title,
+          status: "open",
+          priority: result.issueData.priority || "normal",
+          category: result.issueData.category || "general",
+          created_at: new Date().toISOString(),
+          landlord_first_response_at: null,
+        }, ...prev]);
+      }
+
+      setMessages(m => [...m, aiMsg]);
+    } catch {
+      setMessages(m => [...m, { role: "ai", text: "Connection issue — please try again." }]);
+    }
+    setChatLoading(false);
+  }
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    window.location.href = `/tenant?token=${token}`;
+  }
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#0c0f1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <style>{`body > header, body > footer { display: none !important; }`}</style>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 900, color: "#111", margin: "0 auto 16px" }}>R</div>
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontFamily: "sans-serif" }}>Loading your portal…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#0c0f1a", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "sans-serif" }}>
+        <style>{`body > header, body > footer { display: none !important; }`}</style>
+        <div style={{ textAlign: "center", maxWidth: 380 }}>
+          <p style={{ fontSize: 40, marginBottom: 16 }}>🔒</p>
+          <p style={{ color: "white", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Access issue</p>
+          <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, lineHeight: 1.7 }}>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const firstName = info?.name?.split(" ")[0] || "there";
+  const shortAddr = info?.propertyAddress?.split(",")[0];
   const openCount = issues.filter(i => i.status !== "resolved").length;
 
+  const quickPrompts = [
+    "I need to report a maintenance issue",
+    openCount > 0 ? "What's the status of my open issues?" : "What kind of issues can I report?",
+    "I have a question about my tenancy",
+  ];
+
   return (
-    <div style={{ minHeight: "100vh", background: S.bg, fontFamily: "var(--font-family-body)", color: S.ink }}>
-      <style>{`body > header, body > footer { display: none !important; }`}</style>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column", background: "#0c0f1a", fontFamily: "var(--font-family-body, system-ui, sans-serif)", color: "white" }}>
+      <style>{`
+        body > header, body > footer { display: none !important; }
+        * { box-sizing: border-box; }
+        @keyframes pulse { 0%,100%{opacity:0.3;transform:scale(0.8)} 50%{opacity:1;transform:scale(1)} }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+      `}</style>
 
       {/* NAV */}
-      <nav style={{ background: S.accent, padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 56 }}>
+      <div style={{ background: "#111827", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0 20px", height: 52, display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ color: S.gold, fontWeight: 900, fontSize: 15 }}>PV</span>
-          <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 13 }}>›</span>
-          <span style={{ color: "white", fontWeight: 700, fontSize: 13 }}>Tenant Portal</span>
+          <span style={{ color: "#c9a84c", fontWeight: 900, fontSize: 13 }}>PropertyVault</span>
+          <span style={{ color: "rgba(255,255,255,0.12)", fontSize: 16 }}>·</span>
+          <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortAddr}</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>{propertyAddress.split(",")[0]}</span>
-          <button onClick={() => router.push("/tenant")} style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>Sign out</button>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {openCount > 0 && (
+            <button onClick={() => setPanelOpen(v => !v)}
+              style={{ background: panelOpen ? "rgba(201,168,76,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${panelOpen ? "rgba(201,168,76,0.3)" : "rgba(255,255,255,0.1)"}`, borderRadius: 20, padding: "4px 12px", color: panelOpen ? "#c9a84c" : "rgba(255,255,255,0.55)", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>
+              {openCount} open issue{openCount > 1 ? "s" : ""}
+            </button>
+          )}
+          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>{firstName}</span>
+          <button onClick={handleSignOut}
+            style={{ background: "none", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: "4px 10px", color: "rgba(255,255,255,0.22)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
+            Sign out
+          </button>
         </div>
-      </nav>
+      </div>
 
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "32px 24px 80px" }}>
-
-        {/* Header */}
-        <div style={{ marginBottom: 32 }}>
-          <h1 style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 4 }}>Hi {firstName} 👋</h1>
-          <p style={{ fontSize: 14, color: S.ink2 }}>{propertyAddress || "Your property"} · {openCount} open issue{openCount !== 1 ? "s" : ""}</p>
-        </div>
-
-        {/* Quick action */}
-        <Link href={`/tenant/issues/new?token=${token}`} style={{ display: "flex", alignItems: "center", gap: 14, background: S.accent, borderRadius: 14, padding: "18px 22px", textDecoration: "none", marginBottom: 32 }}>
-          <div style={{ width: 40, height: 40, background: "rgba(255,255,255,0.1)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🔧</div>
-          <div style={{ flex: 1 }}>
-            <p style={{ color: "white", fontWeight: 800, fontSize: 15, marginBottom: 2 }}>Report a maintenance issue</p>
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 12 }}>Add photos or videos · Your landlord is notified instantly</p>
+      {/* ISSUES PANEL */}
+      {panelOpen && issues.length > 0 && (
+        <div style={{ background: "#111827", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "14px 20px", flexShrink: 0, maxHeight: 240, overflowY: "auto" }}>
+          <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10 }}>Your issues</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            {issues.map(issue => (
+              <button key={issue.id}
+                onClick={() => { send(`Give me an update on my "${issue.title}" issue`); setPanelOpen(false); }}
+                style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 13px", borderRadius: 9, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)", textAlign: "left", cursor: "pointer", fontFamily: "inherit", width: "100%" }}>
+                <span style={{ width: 7, height: 7, borderRadius: "50%", background: STATUS_COLOR[issue.status] ?? "#ca8a04", flexShrink: 0 }} />
+                <span style={{ flex: 1, fontSize: 13, color: "rgba(255,255,255,0.78)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{issue.title}</span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", flexShrink: 0 }}>{issue.category}</span>
+                <span style={{ fontSize: 11, fontWeight: 600, color: STATUS_COLOR[issue.status] ?? "#ca8a04", flexShrink: 0 }}>{issue.status.replace("_", " ")}</span>
+              </button>
+            ))}
           </div>
-          <span style={{ color: S.gold, fontSize: 18, fontWeight: 700 }}>→</span>
-        </Link>
+        </div>
+      )}
 
-        {/* Tabs */}
-        <div style={{ display: "flex", gap: 0, borderBottom: `2px solid ${S.border}`, marginBottom: 28 }}>
-          {([["issues", `Issues (${issues.length})`], ["styling", "Home Styling Tips"]] as const).map(([key, label]) => (
-            <button key={key} onClick={() => setTab(key)} style={{ background: "none", border: "none", padding: "10px 20px", fontSize: 14, fontWeight: tab === key ? 800 : 500, color: tab === key ? S.ink : S.ink2, cursor: "pointer", borderBottom: tab === key ? `2px solid ${S.accent}` : "2px solid transparent", marginBottom: -2, fontFamily: "inherit" }}>
-              {label}
+      {/* MESSAGES */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "24px 20px 16px" }}>
+        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+          {messages.map((msg, idx) => (
+            <div key={idx} style={{ marginBottom: 20 }}>
+              {msg.role === "user" ? (
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div style={{ background: "#1e3a5f", borderRadius: "16px 16px 3px 16px", padding: "11px 16px", maxWidth: "78%" }}>
+                    <p style={{ color: "white", fontSize: 14, lineHeight: 1.6, margin: 0 }}>{msg.text}</p>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ display: "flex", gap: 12, alignItems: "flex-start", maxWidth: "88%" }}>
+                  <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 14, fontWeight: 900, color: "#111", marginTop: 1 }}>R</div>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 14, lineHeight: 1.75, margin: 0, whiteSpace: "pre-wrap" }}>{msg.text}</p>
+
+                    {msg.issueCreated && (
+                      <div style={{ marginTop: 12, background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.18)", borderRadius: 12, padding: "13px 16px" }}>
+                        <p style={{ color: "#4ade80", fontSize: 13, fontWeight: 800, marginBottom: 4 }}>✓ Issue logged — {msg.issueCreated.title}</p>
+                        <p style={{ color: "rgba(74,222,128,0.55)", fontSize: 12, lineHeight: 1.55, margin: 0 }}>
+                          {msg.issueCreated.priority === "urgent" ? "🚨 Marked urgent. " : ""}
+                          Your landlord has been notified by email. You&apos;ll hear back when there&apos;s an update.
+                        </p>
+                      </div>
+                    )}
+
+                    {msg.followUp && idx === messages.length - 1 && !chatLoading && (
+                      <button onClick={() => send(msg.followUp!)}
+                        style={{ marginTop: 10, background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "5px 13px", color: "rgba(255,255,255,0.45)", fontSize: 12, cursor: "pointer", fontFamily: "inherit" }}>
+                        {msg.followUp} →
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {chatLoading && (
+            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 20 }}>
+              <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 900, color: "#111", flexShrink: 0 }}>R</div>
+              <div style={{ display: "flex", gap: 5, padding: "8px 0" }}>
+                {[0, 1, 2].map(i => (
+                  <div key={i} style={{ width: 7, height: 7, borderRadius: "50%", background: "rgba(255,255,255,0.28)", animation: `pulse 1.2s ${i * 0.2}s infinite` }} />
+                ))}
+              </div>
+            </div>
+          )}
+          <div ref={bottomRef} />
+        </div>
+      </div>
+
+      {/* QUICK PROMPTS */}
+      {messages.length === 1 && !chatLoading && (
+        <div style={{ padding: "0 20px 12px", display: "flex", flexWrap: "wrap", gap: 7, flexShrink: 0, justifyContent: "center" }}>
+          {quickPrompts.map(p => (
+            <button key={p} onClick={() => send(p)}
+              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 20, padding: "8px 16px", fontSize: 12, color: "rgba(255,255,255,0.58)", cursor: "pointer", fontFamily: "inherit" }}>
+              {p}
             </button>
           ))}
         </div>
+      )}
 
-        {tab === "issues" && (
-          issues.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "60px 24px", background: S.card, borderRadius: 16, border: `1px solid ${S.border}` }}>
-              <div style={{ fontSize: 48, marginBottom: 14 }}>✅</div>
-              <p style={{ fontWeight: 800, fontSize: 16, marginBottom: 6 }}>No issues reported yet</p>
-              <p style={{ fontSize: 14, color: S.ink2, marginBottom: 20 }}>If something needs fixing, report it here and your landlord will be notified straight away.</p>
-              <Link href={`/tenant/issues/new?token=${token}`} style={{ display: "inline-block", background: S.accent, color: "white", fontWeight: 700, fontSize: 14, padding: "11px 24px", borderRadius: 10, textDecoration: "none" }}>Report an issue →</Link>
-            </div>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {issues.map(issue => (
-                <Link key={issue.id} href={`/tenant/issues/${issue.id}?token=${token}`} style={{ textDecoration: "none" }}>
-                  <div style={{ background: S.card, border: `1px solid ${S.border}`, borderRadius: 14, padding: "18px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14 }}>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                        <StatusBadge status={issue.status} />
-                        <span style={{ fontSize: 11, color: S.ink2 }}>{issue.category}</span>
-                      </div>
-                      <p style={{ fontWeight: 700, fontSize: 15, color: S.ink, marginBottom: 2 }}>{issue.title}</p>
-                      <p style={{ fontSize: 12, color: S.ink2 }}>{new Date(issue.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</p>
-                    </div>
-                    <span style={{ color: S.ink2, fontSize: 18 }}>›</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )
-        )}
-
-        {tab === "styling" && (
-          <div>
-            <p style={{ fontSize: 13, color: S.ink2, marginBottom: 24, lineHeight: 1.7 }}>
-              Small changes, big difference. Here are practical tips for making your home feel more like yours — all renter-friendly, most under £20.
-            </p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 14 }}>
-              {STYLING_TIPS.map(tip => (
-                <div key={tip.title} style={{ background: S.card, border: `1px solid ${S.border}`, borderRadius: 14, padding: "18px 18px" }}>
-                  <div style={{ fontSize: 28, marginBottom: 10 }}>{tip.icon}</div>
-                  <p style={{ fontWeight: 800, fontSize: 14, color: S.ink, marginBottom: 6 }}>{tip.title}</p>
-                  <p style={{ fontSize: 13, color: S.ink2, lineHeight: 1.65 }}>{tip.tip}</p>
-                </div>
-              ))}
-            </div>
-            <div style={{ background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 14, padding: "18px 20px", marginTop: 20 }}>
-              <p style={{ fontWeight: 800, fontSize: 14, color: S.ink, marginBottom: 4 }}>💡 Want personalised advice?</p>
-              <p style={{ fontSize: 13, color: S.ink2, lineHeight: 1.65 }}>Message your landlord through an issue if you want to ask about painting walls, putting up shelves, or making other changes — they may be happy to help or contribute.</p>
-            </div>
-          </div>
-        )}
+      {/* INPUT */}
+      <div style={{ background: "#111827", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "12px 16px", display: "flex", gap: 10, flexShrink: 0 }}>
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
+          placeholder="Type a message…"
+          disabled={chatLoading}
+          autoComplete="off"
+          style={{ flex: 1, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "12px 16px", color: "white", fontSize: 14, outline: "none", fontFamily: "inherit" }}
+        />
+        <button onClick={() => send(input)} disabled={chatLoading || !input.trim()}
+          style={{ background: "#c9a84c", color: "#111", border: "none", borderRadius: 12, padding: "12px 22px", fontSize: 14, fontWeight: 800, cursor: chatLoading || !input.trim() ? "not-allowed" : "pointer", fontFamily: "inherit", opacity: chatLoading || !input.trim() ? 0.4 : 1 }}>
+          Send
+        </button>
       </div>
     </div>
   );
 }
 
 export default function TenantDashboard() {
-  return <Suspense fallback={null}><TenantDashboardInner /></Suspense>;
+  return <Suspense fallback={null}><TenantPortalInner /></Suspense>;
 }

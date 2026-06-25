@@ -79,8 +79,27 @@ export async function GET(req: Request) {
   }
 
   if (landlordId && propertyId) {
-    const { data: issues } = await supabase.from("tenant_issues").select("*").eq("landlord_user_id", landlordId).eq("property_id", propertyId).order("created_at", { ascending: false });
-    return NextResponse.json({ issues: issues ?? [] });
+    const { data: issues } = await supabase
+      .from("tenant_issues")
+      .select("*, landlord_first_response_at")
+      .eq("landlord_user_id", landlordId)
+      .eq("property_id", propertyId)
+      .order("created_at", { ascending: false });
+
+    // Sort: urgent unresponded first, then normal unresponded, then responded/resolved
+    const sorted = (issues ?? []).sort((a, b) => {
+      const aWaiting = !a.landlord_first_response_at && a.status !== "resolved";
+      const bWaiting = !b.landlord_first_response_at && b.status !== "resolved";
+      if (aWaiting && !bWaiting) return -1;
+      if (!aWaiting && bWaiting) return 1;
+      if (aWaiting && bWaiting) {
+        if (a.priority === "urgent" && b.priority !== "urgent") return -1;
+        if (a.priority !== "urgent" && b.priority === "urgent") return 1;
+      }
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+
+    return NextResponse.json({ issues: sorted });
   }
 
   return NextResponse.json({ error: "Missing params" }, { status: 400 });

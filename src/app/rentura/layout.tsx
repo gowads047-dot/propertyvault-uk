@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
+import FloatingChat from "./_components/FloatingChat";
 
 export const metadata: Metadata = {
   title: "Rentura — The Conversational Property OS for UK Landlords",
@@ -27,5 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default function RenturaLayout({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      {children}
+      <FloatingChat />
+    </AuthProvider>
+  );
 }

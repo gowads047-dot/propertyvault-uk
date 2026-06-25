@@ -10,17 +10,24 @@ export async function GET(req: Request) {
   const token = searchParams.get("token");
   if (!token) return NextResponse.json({ valid: false });
 
-  const { data: invite } = await supabase.from("tenant_invites").select("email, tenant_name, accepted_at, property_id").eq("token", token).maybeSingle();
+  const { data: invite } = await supabase.from("tenant_invites").select("email, tenant_name, accepted_at, property_id, landlord_user_id, phone").eq("token", token).maybeSingle();
   if (!invite) return NextResponse.json({ valid: false });
 
-  // Fetch property address
-  let property_address = "";
-  if (invite.property_id) {
-    const { data: prop } = await supabase.from("rentura_properties").select("address").eq("id", invite.property_id).maybeSingle();
-    property_address = prop?.address || "";
-  }
+  // Parallel: property + landlord name
+  const [propRes, landlordRes] = await Promise.all([
+    invite.property_id ? supabase.from("rentura_properties").select("address").eq("id", invite.property_id).maybeSingle() : Promise.resolve({ data: null }),
+    invite.landlord_user_id ? supabase.from("rentura_subscriptions").select("name").eq("user_id", invite.landlord_user_id).maybeSingle() : Promise.resolve({ data: null }),
+  ]);
 
-  return NextResponse.json({ valid: true, email: invite.email, tenant_name: invite.tenant_name, accepted: !!invite.accepted_at, property_address });
+  return NextResponse.json({
+    valid: true,
+    email: invite.email,
+    tenant_name: invite.tenant_name,
+    accepted: !!invite.accepted_at,
+    property_address: propRes.data?.address || "",
+    landlord_name: landlordRes.data?.name || "Your landlord",
+    phone: invite.phone || null,
+  });
 }
 
 // PATCH — mark invite as accepted with auth ID
