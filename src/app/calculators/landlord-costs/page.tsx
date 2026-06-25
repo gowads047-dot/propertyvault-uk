@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What costs does a UK landlord have to pay?", a: "Landlords are responsible for mortgage payments, buildings insurance, landlord liability insurance, maintenance and repairs, letting agent fees (if used), Gas Safety Certificates (annual), Electrical Installation Condition Reports (every 5 years), EPC renewal (every 10 years), and any HMO licensing fees. Void periods with no rental income are also a recurring cost to budget for." },
+  { q: "How much should I budget for maintenance on a rental property?", a: "A common rule of thumb is 1% of the property's value per year for maintenance. On a £150,000 property that's £1,500/year — though spending is lumpy: quiet for several years then a boiler replacement or new kitchen costs £3,000-£10,000 in one go. Older stock costs proportionally more to maintain." },
+  { q: "What is the difference between gross yield and net yield?", a: "Gross yield is annual rent divided by property value, expressed as a percentage. Net yield deducts all costs (management fees, insurance, maintenance, voids, compliance) before dividing by property value. Net yield gives a realistic picture of actual returns; gross yield is useful only as a quick comparison tool." },
+  { q: "Can I deduct landlord costs from my tax bill?", a: "Yes. Allowable expenses include letting agent fees, insurance premiums, repairs and maintenance (not improvements), accountancy fees, and legal costs for tenancy renewals. Mortgage interest is no longer fully deductible for individual landlords due to Section 24 — only a 20% basic rate tax credit is available." },
+  { q: "Do I need landlord insurance separate from buildings insurance?", a: "Yes. Standard buildings insurance does not cover landlord-specific risks such as malicious damage by tenants, loss of rent due to an insured event, or legal expenses for eviction proceedings. Dedicated landlord insurance combines buildings cover with these additional protections and is strongly recommended for all rental properties." },
+];
 
 export default function LandlordCostsPage() {
   const [monthlyRent, setMonthlyRent] = useState(950);
@@ -116,6 +126,8 @@ export default function LandlordCostsPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

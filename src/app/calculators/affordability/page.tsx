@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "How much can I borrow for a mortgage in the UK?", a: "Most UK lenders cap borrowing at 4-4.5 times your gross annual income. Some lenders go up to 5.5x for high earners or certain professions. The actual amount also depends on a stress test: you must be able to afford repayments if interest rates rose by 3%." },
+  { q: "Does a joint mortgage increase how much I can borrow?", a: "Yes. Joint applications combine both applicants' incomes, which directly increases the income multiple and therefore the maximum loan. The lender will also assess both applicants' credit histories and existing financial commitments." },
+  { q: "What deposit do I need to get a mortgage?", a: "The minimum deposit for most residential mortgages is 5% of the purchase price. A 10% deposit gives access to more products and better rates, while 15-20%+ unlocks the best available rates and the widest choice of lenders." },
+  { q: "What is a mortgage-to-income ratio and what is a good level?", a: "Your mortgage-to-income ratio is your monthly repayment as a percentage of gross monthly income. Most lenders prefer this below 35%. Below 28% is considered comfortable; above 40% and many mainstream lenders will decline. Lower is always better for long-term financial resilience." },
+  { q: "Does my credit score affect how much I can borrow?", a: "Yes. A poor credit score can reduce the amount lenders are willing to offer or lead to outright refusal. It also affects the interest rates available — a lower score typically means higher rates, which affects the monthly payment and lender stress test calculations." },
+];
 
 export default function AffordabilityPage() {
   const [income1, setIncome1] = useState(35000);
@@ -107,6 +117,8 @@ export default function AffordabilityPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

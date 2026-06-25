@@ -1,0 +1,126 @@
+"use client";
+import { useState, useMemo } from "react";
+import Link from "next/link";
+
+export function VoidPeriodCalculator() {
+  const [monthlyRent, setMonthlyRent] = useState(900);
+  const [monthlyMortgage, setMonthlyMortgage] = useState(600);
+  const [councilTax, setCouncilTax] = useState(120);
+  const [monthlyInsurance, setMonthlyInsurance] = useState(30);
+  const [utilities, setUtilities] = useState(50);
+  const [voidWeeks, setVoidWeeks] = useState(4);
+  const [voidsPerYear, setVoidsPerYear] = useState(1);
+
+  const results = useMemo(() => {
+    const voidMonths = voidWeeks / 4.33;
+    const lostRent = monthlyRent * voidMonths;
+    const ongoingCosts = (monthlyMortgage + councilTax + monthlyInsurance + utilities) * voidMonths;
+    const totalVoidCost = lostRent + ongoingCosts;
+    const annualVoidCost = totalVoidCost * voidsPerYear;
+    const annualRent = monthlyRent * 12;
+    const pctOfAnnualRent = (annualVoidCost / annualRent) * 100;
+    const effectiveMonthlyIncome = (annualRent - annualVoidCost) / 12;
+    const guaranteedRentComparison = monthlyRent * 0.88; // typical guaranteed rent at 88% of market
+    const guaranteedRentAnnual = guaranteedRentComparison * 12;
+    const savingVsGuaranteed = guaranteedRentAnnual - (annualRent - annualVoidCost);
+    return { lostRent, ongoingCosts, totalVoidCost, annualVoidCost, pctOfAnnualRent, effectiveMonthlyIncome, guaranteedRentComparison, guaranteedRentAnnual, savingVsGuaranteed };
+  }, [monthlyRent, monthlyMortgage, councilTax, monthlyInsurance, utilities, voidWeeks, voidsPerYear]);
+
+  const fmt = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
+
+  return (
+    <div className="grid lg:grid-cols-2 gap-8">
+      <div className="space-y-5">
+        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent</label>
+          <input type="range" min={400} max={3000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month</p>
+        </div>
+
+        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Monthly Costs (still paid during void)</h3>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Mortgage / Finance Payment</label>
+          <input type="range" min={0} max={2500} step={25} value={monthlyMortgage} onChange={e => setMonthlyMortgage(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{fmt(monthlyMortgage)}/month</p>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Council Tax (while empty)</label>
+          <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{fmt(councilTax)}/month</p>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Buildings Insurance</label>
+          <input type="range" min={10} max={200} step={5} value={monthlyInsurance} onChange={e => setMonthlyInsurance(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{fmt(monthlyInsurance)}/month</p>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Utilities / Other Fixed Costs</label>
+          <input type="range" min={0} max={300} step={10} value={utilities} onChange={e => setUtilities(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{fmt(utilities)}/month</p>
+        </div>
+
+        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Void Pattern</h3>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Duration per Void Period</label>
+          <input type="range" min={1} max={26} step={1} value={voidWeeks} onChange={e => setVoidWeeks(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{voidWeeks} week{voidWeeks !== 1 ? "s" : ""}</p>
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-navy-700 mb-1">Void Periods per Year</label>
+          <input type="range" min={1} max={6} step={1} value={voidsPerYear} onChange={e => setVoidsPerYear(+e.target.value)} className="w-full accent-gold-500" />
+          <p className="text-center font-bold text-navy-800">{voidsPerYear} per year</p>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="bg-gradient-to-br from-red-700 to-red-900 rounded-2xl p-6 text-white">
+          <p className="text-sm opacity-80 mb-1">Annual void cost to your income</p>
+          <p className="text-5xl font-bold">{fmt(results.annualVoidCost)}</p>
+          <p className="text-sm opacity-70 mt-1">= {results.pctOfAnnualRent.toFixed(1)}% of your annual rental income</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          <div className="bg-white rounded-xl border border-navy-100 p-4">
+            <p className="text-xs font-bold text-navy-500 mb-1">Lost rent per void</p>
+            <p className="text-2xl font-bold text-navy-800">{fmt(results.lostRent)}</p>
+          </div>
+          <div className="bg-white rounded-xl border border-navy-100 p-4">
+            <p className="text-xs font-bold text-navy-500 mb-1">Ongoing costs per void</p>
+            <p className="text-2xl font-bold text-navy-800">{fmt(results.ongoingCosts)}</p>
+          </div>
+          <div className="bg-white rounded-xl border border-navy-100 p-4">
+            <p className="text-xs font-bold text-navy-500 mb-1">Total per void period</p>
+            <p className="text-2xl font-bold text-red-700">{fmt(results.totalVoidCost)}</p>
+          </div>
+          <div className="bg-white rounded-xl border border-navy-100 p-4">
+            <p className="text-xs font-bold text-navy-500 mb-1">Effective monthly income</p>
+            <p className="text-2xl font-bold text-navy-800">{fmt(results.effectiveMonthlyIncome)}</p>
+          </div>
+        </div>
+
+        <div className={`rounded-2xl p-5 border-2 ${results.savingVsGuaranteed > 0 ? "bg-green-50 border-green-300" : "bg-amber-50 border-amber-300"}`}>
+          <p className="font-bold text-navy-800 mb-2 text-sm">Guaranteed Rent Comparison</p>
+          <p className="text-xs text-navy-600 mb-3">If guaranteed rent pays you {fmt(results.guaranteedRentComparison)}/month (88% of market rate, zero voids, zero management):</p>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <p className="text-xs text-navy-500">Current (after voids)</p>
+              <p className="text-lg font-bold text-navy-800">{fmt((monthlyRent * 12 - results.annualVoidCost) / 12)}/mo</p>
+            </div>
+            <div>
+              <p className="text-xs text-navy-500">Guaranteed rent</p>
+              <p className="text-lg font-bold text-green-700">{fmt(results.guaranteedRentComparison)}/mo</p>
+            </div>
+          </div>
+          {results.savingVsGuaranteed > 0 ? (
+            <p className="text-xs text-green-700 mt-3 font-semibold">Guaranteed rent earns you {fmt(results.savingVsGuaranteed)} MORE per year with zero hassle</p>
+          ) : (
+            <p className="text-xs text-amber-700 mt-3 font-semibold">Your voids are low — you currently earn more managing it yourself</p>
+          )}
+        </div>
+
+        <Link href="/guaranteed-rent" className="btn-gold w-full text-center block">Get a free guaranteed rent estimate →</Link>
+      </div>
+    </div>
+  );
+}

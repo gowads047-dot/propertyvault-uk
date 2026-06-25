@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "How much does it cost to move house in the UK?", a: "On a £250,000 property, total moving costs typically range from £10,000-£20,000. This includes stamp duty, solicitor fees (£1,000-£2,500), searches (£250-£400), survey (£400-£1,500), mortgage arrangement fees, removal costs, and any redecoration or furniture purchases. Buyers often underestimate these costs significantly." },
+  { q: "Do I need a solicitor to buy a house?", a: "Yes. In England and Wales you need a solicitor or licensed conveyancer to handle the legal transfer of ownership. They conduct property searches, review the title, handle the exchange and completion, and register the new ownership with HM Land Registry. Fees typically range from £800-£2,000 plus disbursements." },
+  { q: "What type of survey should I get when buying a house?", a: "A RICS Level 2 HomeBuyer Report (£400-£700) is suitable for standard modern properties in reasonable condition. A RICS Level 3 Building Survey (£600-£1,500) is recommended for older, larger, or unusual properties. Never skip the survey to save money — issues identified can be used to renegotiate the price or safely exit the purchase." },
+  { q: "What are search fees when buying a house?", a: "Search fees cover local authority searches (planning history, road schemes, environmental risks), drainage searches, environmental searches, and chancel repair liability. Typical cost is £250-£450. Searches are required by most mortgage lenders and are a standard part of conveyancing." },
+  { q: "How much do removals cost in the UK?", a: "A local move within the same city typically costs £300-£800 for a removal firm. A regional move costs £700-£1,500, while a long-distance or full-service move can exceed £2,000. Getting three quotes is strongly recommended. Moving on a Friday or at month-end is typically more expensive due to demand." },
+];
 
 export default function MovingCostsPage() {
   const [propertyPrice, setPropertyPrice] = useState(250000);
@@ -103,6 +113,8 @@ export default function MovingCostsPage() {
             <p className="text-4xl font-bold text-gold-400">{fmt(totalCosts)}</p>
           </div>
 
+          <EmailResults />
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

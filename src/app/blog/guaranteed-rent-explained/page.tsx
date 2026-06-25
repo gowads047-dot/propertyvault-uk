@@ -3,12 +3,36 @@ import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",
   description: "What is guaranteed rent? How it works, the pros and cons, and whether it's worth it for UK landlords. Complete guide with income comparison.",
   keywords: "guaranteed rent UK, guaranteed rent scheme, is guaranteed rent worth it, guaranteed rent for landlords, guaranteed rent Birmingham",
 };
+
+const faqs = [
+  {
+    q: "What is guaranteed rent and how does it work for UK landlords?",
+    a: "Guaranteed rent is an arrangement where a property management company leases your property directly from you for an agreed term — typically 3 to 5 years — and pays you a fixed monthly rent whether or not the property is occupied. The company handles all tenant management, maintenance, and compliance. You receive the same amount on the same date every month regardless of voids or tenant issues.",
+  },
+  {
+    q: "How much less will I receive under a guaranteed rent scheme?",
+    a: "Guaranteed rent providers typically offer 80–90% of the open market rent. However, when you account for the hidden costs of self-managing — letting agent fees (typically 10%), void periods, maintenance, compliance costs, and tenant-find fees — guaranteed rent often puts more money in your pocket than self-managing. On a £1,000 per month property, self-managed net income after deductions is often closer to £725–800 per month.",
+  },
+  {
+    q: "Who are the tenants in a guaranteed rent scheme?",
+    a: "Guaranteed rent providers typically work with local councils and housing associations to house tenants referred through local authority housing programmes. The provider acts as the tenant in your lease agreement — they sublet to the occupants. You have no direct tenancy relationship with the end occupants and no responsibility for managing them.",
+  },
+  {
+    q: "What happens to my property at the end of a guaranteed rent lease?",
+    a: "At the end of the agreed lease term, the property is returned to you in the condition it was at the start of the agreement, subject to fair wear and tear. Any damage beyond fair wear and tear is typically the provider's responsibility. You then have the option to renew the arrangement, revert to self-managing, or sell.",
+  },
+  {
+    q: "Is guaranteed rent affected by the Renters' Rights Act 2025?",
+    a: "No. Because the guaranteed rent provider — not you — is the legal landlord for the occupying tenants, you are not directly affected by the Renters' Rights Act as a property owner in this arrangement. The provider handles all compliance with current legislation including Section 21 abolition, periodic tenancy rules, and maintenance obligations.",
+  },
+];
 
 export default function GuaranteedRentArticle() {
   return (
@@ -125,6 +149,7 @@ export default function GuaranteedRentArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="general" />
         </div>
       </article>

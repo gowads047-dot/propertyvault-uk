@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Birmingham — Landlords Get Paid Every Month | PropertyVault UK",
@@ -95,6 +96,89 @@ export default function BirminghamPage() {
             ))}
           </ul>
 
+          {/* Income Comparison Table */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>How Your Income Compares</h3>
+            <div className="overflow-x-auto rounded-xl border border-navy-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-800 text-white">
+                    <th className="px-4 py-3 text-left font-semibold">Scenario</th>
+                    <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                    <th className="px-4 py-3 text-center font-semibold">Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-navy-100 bg-white">
+                    <td className="px-4 py-3 text-navy-700 font-medium">Market rent (gross)</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£950</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£11,400</td>
+                  </tr>
+                  <tr className="border-b border-navy-100 bg-navy-50/50">
+                    <td className="px-4 py-3 text-navy-700 font-medium">After agent fees + voids</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£780</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£9,360</td>
+                  </tr>
+                  <tr className="bg-gold-50 border-b-2 border-gold-400">
+                    <td className="px-4 py-3 text-navy-800 font-bold">Guaranteed rent (PropertyVault)</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£840</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£10,080</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Birmingham. Agent fee assumed at 10% + 1 month average void per year.</p>
+          </div>
+
+          {/* Case Study */}
+          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
+            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
+            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>David T. — 3-bed terraced house, Erdington</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
+                <p className="font-bold text-white">£950/mo</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
+                <p className="font-bold text-white">£780/mo</p>
+              </div>
+              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
+                <p className="font-bold text-gold-400">£840/mo</p>
+              </div>
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
+                <p className="font-bold text-green-400">+£720/yr</p>
+              </div>
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed">"After two difficult tenancies and a 6-week void in Erdington, I was getting roughly £780 a month after my agent took their cut. PropertyVault gave me £840 guaranteed from day one — no more chasing rent or worrying about empty months. The annual difference of £720 more than covered my boiler service and new carpets."</p>
+            <p className="text-navy-400 text-xs mt-2">— David T., landlord in Erdington, Birmingham (3-year lease signed 2024)</p>
+          </div>
+
+          {/* Testimonials */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Birmingham Landlords Say</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I handed over my Sparkhill property in January and haven't had to deal with a single tenant call since. The rent lands in my account on the 1st every month like clockwork. Honestly the best decision I've made as a landlord."</p>
+                <p className="font-bold text-navy-800 text-sm">Marcus O.</p>
+                <p className="text-navy-400 text-xs">Sparkhill, Birmingham — 2-bed mid-terrace</p>
+              </div>
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I was skeptical at first — guaranteed rent sounded too good. But my Handsworth property has been leased for 18 months now with zero issues. No void, no agent hassle, just income. I wish I'd done this years ago with my other properties."</p>
+                <p className="font-bold text-navy-800 text-sm">Priya S.</p>
+                <p className="text-navy-400 text-xs">Handsworth, Birmingham — 3-bed semi-detached</p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">
             <p className="text-gold-400 font-bold text-sm mb-2">Birmingham Landlord?</p>
             <p className="text-xl font-extrabold mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Get your free guaranteed rent quote today</p>
@@ -113,6 +197,33 @@ export default function BirminghamPage() {
         <div className="container-max max-w-3xl text-center">
           <p className="text-sm text-navy-500">Want to learn more about how guaranteed rent works?</p>
           <Link href="/guaranteed-rent" className="text-sm font-semibold text-gold-600 hover:text-gold-700">Read the full guaranteed rent guide →</Link>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <FAQSchema faqs={[
+            {
+              q: "How much guaranteed rent will I receive for my Birmingham property?",
+              a: "Guaranteed rent amounts depend on your property type, size, and location within Birmingham. For a typical 3-bed terraced house we offer around £840 per month — paid every month regardless of occupancy. Contact us for a free, no-obligation quote specific to your property.",
+            },
+            {
+              q: "Which areas of Birmingham does PropertyVault UK cover?",
+              a: "We cover all Birmingham postcodes including Erdington, Sparkhill, Handsworth, Small Heath, Aston, Kings Heath, Moseley, Selly Oak, Edgbaston, Acocks Green, Hall Green, Yardley, and all surrounding B postcode areas. If you're unsure, contact us and we'll confirm immediately.",
+            },
+            {
+              q: "How quickly can I start receiving guaranteed rent in Birmingham?",
+              a: "Once we've assessed your property and agreed terms, most Birmingham landlords are up and running within 7–14 days. We handle all the paperwork, inspection, and tenant placement — you simply sign the lease and start receiving rent on your agreed payment date.",
+            },
+            {
+              q: "Who handles maintenance and repairs at my Birmingham property?",
+              a: "PropertyVault UK manages all day-to-day maintenance and tenant-reported repairs. We have a network of trusted local contractors across Birmingham. Minor maintenance is covered by us — for structural or major works we'll notify you in advance as per your lease agreement.",
+            },
+            {
+              q: "Can I sell my Birmingham property during the guaranteed rent lease?",
+              a: "Yes. If you wish to sell during the lease period, we can discuss your options including early lease termination terms or selling the property with the lease in place (which can be attractive to buy-to-let investors). We aim to be flexible and work with landlords who need to exit.",
+            },
+          ]} />
         </div>
       </section>
     </>

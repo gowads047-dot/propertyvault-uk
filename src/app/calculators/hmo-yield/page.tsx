@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What is an HMO property?", a: "A House in Multiple Occupation (HMO) is a property rented by three or more people from two or more separate households who share facilities such as kitchens or bathrooms. HMOs with five or more people from two or more households require a mandatory HMO licence from the local council." },
+  { q: "What yield should I target on an HMO?", a: "Most experienced HMO investors target a minimum 10% gross yield and at least £200 net cash flow per room per month after all costs including mortgage. Below 8% gross and the additional complexity of HMO management rarely justifies itself over a single-let alternative in the same area." },
+  { q: "Do I need planning permission to convert a house into an HMO?", a: "In many areas, yes. Councils with Article 4 directions require planning permission to convert a standard dwelling (C3) to a small HMO (C4). Always check with the local planning authority before purchasing. In areas without Article 4, conversion for up to 6 people does not require planning permission." },
+  { q: "Who pays the bills in an HMO?", a: "In most HMO arrangements, the landlord pays all utilities (gas, electricity, water, broadband) and includes these within the room rent. This simplifies billing for tenants and is standard practice in the market. It does, however, mean the landlord bears the risk of rising energy costs and usage by tenants." },
+  { q: "What are the licensing requirements for HMOs?", a: "Mandatory HMO licensing applies to properties with 5+ people from 2+ households sharing facilities. Many councils also operate additional or selective licensing schemes covering smaller HMOs. Failure to license can result in an unlimited fine, a Rent Repayment Order (tenants can reclaim up to 12 months' rent), and a banning order." },
+];
 
 export default function HMOYieldPage() {
   const [purchasePrice, setPurchasePrice] = useState(200000);
@@ -131,6 +141,8 @@ export default function HMOYieldPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

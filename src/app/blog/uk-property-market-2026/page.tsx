@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
   description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
   keywords: "UK property market 2026, house prices 2026, mortgage rates 2026, buy to let 2026, property investment outlook",
 };
+
+const faqs = [
+  {
+    q: "What is happening to UK house prices in 2026?",
+    a: "UK house prices have been broadly flat since the rapid correction in 2023. The market has entered a low-volatility period — prices are not falling sharply but are not rising meaningfully either in most regions. Mortgage affordability constraints remain the primary brake on demand. The Midlands and North offer more accessible entry prices than the South East, where price-to-income ratios remain very stretched.",
+  },
+  {
+    q: "What are buy-to-let mortgage rates in 2026?",
+    a: "Buy-to-let mortgage rates have settled in the 4.5–6% range for most standard products at 75% LTV, depending on the lender and deal type. This is significantly higher than the sub-2% era of 2020–2022 but has stabilised as the Bank of England has held base rate steady. Investors are running deals on these numbers rather than waiting for a return to near-zero rates.",
+  },
+  {
+    q: "Where are the best areas for buy-to-let investment in the UK in 2026?",
+    a: "The Midlands corridor offers the strongest combination of rental yield, affordability, and rental demand. Birmingham delivers gross yields of 5–8% with strong professional and student demand. Nottingham offers 5–9% yields with low entry prices relative to most major UK cities. Derby provides 5–8% yields supported by major employers including Rolls-Royce, with properties available from under £100,000.",
+  },
+  {
+    q: "Is rental demand still strong in the UK in 2026?",
+    a: "Yes. The supply-demand imbalance in the private rental market has not corrected. Landlords leaving the sector — driven by Section 24 tax changes, EPC compliance costs, and the Renters Reform Act — have reduced rental supply faster than new build-to-rent completions can replace it. Average rents have risen 5–7% year-on-year in most cities, supporting the investment case for quality buy-to-let property.",
+  },
+  {
+    q: "How has the Renters' Rights Act 2025 affected the buy-to-let market?",
+    a: "The Renters' Rights Act has contributed to landlord exits, tightening rental supply and supporting rents. For remaining professional landlords, the practical impact is manageable through good tenant referencing, maintained properties, and proper compliance systems. Landlords using guaranteed rent arrangements are unaffected by the Act's provisions as the management company handles all tenancy obligations.",
+  },
+];
 
 export default function PropertyMarket2026() {
   return (
@@ -95,6 +119,7 @@ export default function PropertyMarket2026() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
       </article>

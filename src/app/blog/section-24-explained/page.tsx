@@ -3,12 +3,36 @@ import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",
   description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
   keywords: "Section 24 UK, Section 24 explained, mortgage interest relief landlords, Section 24 tax calculator, SPV property",
 };
+
+const faqs = [
+  {
+    q: "What is Section 24 and when did it take effect?",
+    a: "Section 24 of the Finance (No. 2) Act 2015 removed the right for individual landlords to deduct mortgage interest as an expense from rental income. It was phased in from 2017 and fully applied from April 2020. Instead of deducting interest, landlords now receive a basic rate (20%) tax credit on their mortgage interest costs — which significantly increases the tax bill for higher and additional rate taxpayers.",
+  },
+  {
+    q: "How does Section 24 affect higher rate taxpayers?",
+    a: "Before Section 24, a higher rate taxpayer paying £6,000 per year in mortgage interest could deduct it from rental income before calculating their 40% tax. Now they cannot deduct it — they pay 40% tax on the gross rental income and receive only a 20% tax credit on the interest. On the same figures, this can mean £1,200 or more in additional tax per property per year, compared to pre-2017 rules.",
+  },
+  {
+    q: "Does Section 24 apply to limited companies?",
+    a: "No. Section 24 applies only to individuals (and partnerships of individuals) receiving residential property rental income. Limited companies can still deduct mortgage interest in full as a business expense before calculating Corporation Tax. This is the primary structural reason why many higher rate taxpayer landlords now purchase new investment properties through limited company SPVs.",
+  },
+  {
+    q: "Can Section 24 push a landlord into a higher income tax band?",
+    a: "Yes, and this is one of its most harmful effects. Because you are taxed on gross rental income before deducting mortgage interest, your taxable income is inflated even if your real profit after mortgage costs is modest. A landlord earning £35,000 from employment plus £14,000 gross rent has £49,000 of taxable income — pushing them close to the 40% threshold — even if their actual profit after £10,000 mortgage interest is only £4,000.",
+  },
+  {
+    q: "Does Section 24 apply to commercial property?",
+    a: "No. Section 24 applies only to residential property income. Commercial property mortgage interest (offices, retail units, industrial property) remains fully deductible under normal loan relationship rules, making commercial property more tax-efficient for leveraged investors. Similarly, furnished holiday lets had their own tax treatment, though this was reformed from April 2025.",
+  },
+];
 
 export default function Section24Article() {
   return (
@@ -100,6 +124,7 @@ export default function Section24Article() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </article>

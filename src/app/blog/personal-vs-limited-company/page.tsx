@@ -3,12 +3,36 @@ import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Personal vs Limited Company — Which Is Better for BTL? | PropertyVault UK",
   description: "Should you hold buy-to-let property personally or through a limited company (SPV)? Tax comparison, pros, cons, and which structure suits you.",
   keywords: "personal vs limited company property, SPV property, limited company buy to let, Section 24 SPV, corporation tax rental income",
 };
+
+const faqs = [
+  {
+    q: "Should I hold buy-to-let property personally or through a limited company?",
+    a: "The answer depends on your income tax band and whether the property has a mortgage. Higher rate (40%) and additional rate (45%) taxpayers with mortgaged properties generally pay significantly less tax through a limited company SPV, because companies are not affected by Section 24 and can deduct mortgage interest in full. Basic rate (20%) taxpayers and those with unencumbered properties often find personal ownership simpler and equally efficient.",
+  },
+  {
+    q: "What is an SPV and how is it used for property investment?",
+    a: "SPV stands for Special Purpose Vehicle — a limited company set up specifically to hold investment property, typically using Companies House SIC code 68100 (letting of own property). The company buys and owns the properties, receives the rental income, pays corporation tax on the net profit, and can deduct mortgage interest in full — unlike individual landlords subject to Section 24.",
+  },
+  {
+    q: "Can I transfer my existing buy-to-let properties into a limited company?",
+    a: "Technically yes, but it is rarely cost-effective. Transferring personally held properties into a company triggers Capital Gains Tax on the gain at the time of transfer and Stamp Duty Land Tax at current rates (including the 5% additional property surcharge) on the market value. For most landlords, this makes transfer uneconomical. The limited company structure works best when used for new purchases.",
+  },
+  {
+    q: "What are the extra costs of running a limited company for buy-to-let?",
+    a: "Limited company landlords typically pay an accountant £500–1,500 per year for bookkeeping, accounts preparation, and corporation tax filings — compared to £150–300 for personal rental income. Mortgage rates on limited company BTL products are also typically 0.5–1% higher than equivalent personal mortgages. These costs must be weighed against the tax saving when deciding on structure.",
+  },
+  {
+    q: "How is Capital Gains Tax different for a limited company versus personal ownership?",
+    a: "Individual landlords pay Capital Gains Tax at 18% (basic rate) or 24% (higher or additional rate) on residential property gains, with a £3,000 annual exempt amount. A limited company pays Corporation Tax (19–25%) on the gain. If you then extract those proceeds as dividends, dividend tax applies on top, creating a double tax layer. Personal ownership is often more efficient for properties you plan to sell; company ownership suits long-term holds where profits are reinvested.",
+  },
+];
 
 export default function PersonalVsLtdArticle() {
   return (
@@ -109,6 +133,7 @@ export default function PersonalVsLtdArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
       </div></article>
     </>

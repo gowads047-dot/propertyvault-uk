@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Leicester — Landlords Get Paid Every Month | PropertyVault UK",
@@ -95,6 +96,89 @@ export default function LeicesterPage() {
             ))}
           </ul>
 
+          {/* Income Comparison Table */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>How Your Income Compares</h3>
+            <div className="overflow-x-auto rounded-xl border border-navy-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-800 text-white">
+                    <th className="px-4 py-3 text-left font-semibold">Scenario</th>
+                    <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                    <th className="px-4 py-3 text-center font-semibold">Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-navy-100 bg-white">
+                    <td className="px-4 py-3 text-navy-700 font-medium">Market rent (gross)</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£875</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£10,500</td>
+                  </tr>
+                  <tr className="border-b border-navy-100 bg-navy-50/50">
+                    <td className="px-4 py-3 text-navy-700 font-medium">After agent fees + voids</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£720</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£8,640</td>
+                  </tr>
+                  <tr className="bg-gold-50 border-b-2 border-gold-400">
+                    <td className="px-4 py-3 text-navy-800 font-bold">Guaranteed rent (PropertyVault)</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£775</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£9,300</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Leicester. Agent fee assumed at 10% + 1 month average void per year.</p>
+          </div>
+
+          {/* Case Study */}
+          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
+            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
+            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Sunita P. — 3-bed terraced house, Belgrave</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
+                <p className="font-bold text-white">£875/mo</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
+                <p className="font-bold text-white">£720/mo</p>
+              </div>
+              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
+                <p className="font-bold text-gold-400">£775/mo</p>
+              </div>
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
+                <p className="font-bold text-green-400">+£660/yr</p>
+              </div>
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed">"My Belgrave property was generating about £720 a month after my letting agent's fees and a month-long void over Christmas. PropertyVault offered me £775 guaranteed and set everything up within two weeks. That extra £660 a year goes straight into my pension, and I haven't had to deal with a single tenant issue."</p>
+            <p className="text-navy-400 text-xs mt-2">— Sunita P., landlord in Belgrave, Leicester (3-year lease signed 2024)</p>
+          </div>
+
+          {/* Testimonials */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Leicester Landlords Say</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I had constant issues with my Highfields property — late rent, maintenance calls at all hours, the works. PropertyVault took it over and I haven't had a single worry since. The guaranteed income has genuinely changed how I think about property investment."</p>
+                <p className="font-bold text-navy-800 text-sm">Tariq M.</p>
+                <p className="text-navy-400 text-xs">Highfields, Leicester — 3-bed terraced house</p>
+              </div>
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I live abroad and managing a property remotely in Braunstone was a nightmare. PropertyVault handle everything — I just receive the rent each month. The security of a guaranteed income while living overseas is absolutely invaluable. Professional and reliable."</p>
+                <p className="font-bold text-navy-800 text-sm">Fatima A.</p>
+                <p className="text-navy-400 text-xs">Braunstone, Leicester — 2-bed flat</p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">
             <p className="text-gold-400 font-bold text-sm mb-2">Leicester Landlord?</p>
             <p className="text-xl font-extrabold mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Get your free guaranteed rent quote today</p>
@@ -113,6 +197,33 @@ export default function LeicesterPage() {
         <div className="container-max max-w-3xl text-center">
           <p className="text-sm text-navy-500">Want to learn more about how guaranteed rent works?</p>
           <Link href="/guaranteed-rent" className="text-sm font-semibold text-gold-600 hover:text-gold-700">Read the full guaranteed rent guide →</Link>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <FAQSchema faqs={[
+            {
+              q: "How much guaranteed rent will I receive for my Leicester property?",
+              a: "Our offer is based on your property's size, condition, and location in Leicester. For a typical 3-bed terraced house in areas like Belgrave or Highfields we offer around £775 per month — guaranteed every month with no voids and no agent fees deducted. Contact us for a free, no-obligation quote.",
+            },
+            {
+              q: "Which areas of Leicester does PropertyVault UK cover?",
+              a: "We cover all Leicester postcodes including Belgrave, Highfields, Braunstone, Evington, Spinney Hills, New Parks, Beaumont Leys, Aylestone, Saffron Lane, Rushey Mead, Humberstone, Wigston, Oadby, and all surrounding LE postcode areas. Contact us to confirm your area.",
+            },
+            {
+              q: "How quickly can I start receiving guaranteed rent in Leicester?",
+              a: "Most Leicester landlords are up and running within 7–14 days of first contact. We carry out a quick property inspection, draft the lease agreement, and set up your payment schedule — there are no long queues or complex processes to navigate.",
+            },
+            {
+              q: "Who handles maintenance and repairs at my Leicester property?",
+              a: "We handle all routine maintenance and day-to-day repairs through our local Leicester contractor network. Minor works are covered by PropertyVault UK at no cost to you. For any major repairs we'll always consult you beforehand as stipulated in your lease.",
+            },
+            {
+              q: "Can I sell my Leicester property during the guaranteed rent lease?",
+              a: "Yes. If your circumstances change and you need to sell, we can discuss early termination options or arrange a sale with the lease in place — an attractive proposition for many buy-to-let investors. We work flexibly with landlords who need to make changes.",
+            },
+          ]} />
         </div>
       </section>
     </>

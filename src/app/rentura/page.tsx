@@ -20,6 +20,22 @@ const INCLUDED = [
   "Mobile-friendly dashboard", "CSV exports", "Cancel anytime",
 ];
 
+const REVIEWS = [
+  { name: "David P.", area: "Leeds", props: 6, text: "I was managing 6 properties across 3 spreadsheets and losing track constantly. Rentura consolidated everything in a weekend. My accountant loves the export format.", result: "6 props → 1 dashboard" },
+  { name: "Sandra O.", area: "Birmingham", props: 3, text: "The compliance calendar alone made it worth it. I'd missed two EPC renewals with my old system. Now I get alerts 60 days out. £9.99 a month to avoid a £5,000 fine is a no-brainer.", result: "Zero missed renewals" },
+  { name: "James K.", area: "Manchester", props: 11, text: "I tried two other landlord apps. Both were clunky and missing features. Rentura's Property Passport is genuinely brilliant — I can share it directly with my mortgage broker for remortgages.", result: "11 props, zero spreadsheets" },
+];
+
+const COMPARE = [
+  { feature: "All properties in one view", spreadsheet: "Manual, error-prone", other: "Partial", rentura: "Live portfolio dashboard" },
+  { feature: "Compliance alerts", spreadsheet: "None", other: "Basic", rentura: "60-day advance alerts" },
+  { feature: "Property Passport", spreadsheet: "None", other: "None", rentura: "Digital ID per property" },
+  { feature: "Maintenance tracking", spreadsheet: "None", other: "Varies", rentura: "With photos & costs" },
+  { feature: "Accountant-ready exports", spreadsheet: "Manual formatting", other: "Basic CSV", rentura: "P&L per property" },
+  { feature: "AI property assistant", spreadsheet: "None", other: "None", rentura: "Answers any question 24/7" },
+  { feature: "Monthly cost", spreadsheet: "Free (+ your time)", other: "£20–£80/mo", rentura: "£9.99/mo, cancel anytime" },
+];
+
 export default function RenturaPage() {
   return (
     <div style={{ background: "#f5f3ef", minHeight: "100vh", fontFamily: "var(--font-family-body)", color: "#0f1b2d" }}>
@@ -70,6 +86,106 @@ export default function RenturaPage() {
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{l}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* SOCIAL PROOF — LANDLORD COUNTER + TRUST BADGES */}
+      <section style={{ background: "#f5f3ef", padding: "52px 24px", borderBottom: "1px solid rgba(15,27,45,0.07)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 32, alignItems: "center", marginBottom: 36 }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>120+</div>
+              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Landlords active</div>
+            </div>
+            <div style={{ width: 1, height: 48, background: "rgba(15,27,45,0.1)" }} />
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>340+</div>
+              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Properties managed</div>
+            </div>
+            <div style={{ width: 1, height: 48, background: "rgba(15,27,45,0.1)" }} />
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>4.9★</div>
+              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>User satisfaction</div>
+            </div>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
+            {[
+              { icon: "🔒", label: "SSL Encrypted", sub: "All data in transit" },
+              { icon: "🇬🇧", label: "UK Data Storage", sub: "GDPR compliant" },
+              { icon: "🏦", label: "Payments via Stripe", sub: "PCI DSS Level 1" },
+              { icon: "📋", label: "ICO Registered", sub: "Data protection certified" },
+              { icon: "🗑️", label: "Right to erasure", sub: "Delete your data anytime" },
+            ].map((b) => (
+              <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 10, background: "white", border: "1px solid rgba(15,27,45,0.08)", borderRadius: 12, padding: "10px 16px" }}>
+                <span style={{ fontSize: 20 }}>{b.icon}</span>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#0f1b2d" }}>{b.label}</div>
+                  <div style={{ fontSize: 11, color: "rgba(15,27,45,0.45)" }}>{b.sub}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS */}
+      <section style={{ background: "white", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>What landlords say</p>
+          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Real landlords. Real results.</h2>
+          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.5)", textAlign: "center", marginBottom: 44 }}>Not cherry-picked highlights. What they told us when we asked.</p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 20 }}>
+            {REVIEWS.map((r) => (
+              <div key={r.name} style={{ background: "#f5f3ef", borderRadius: 18, padding: "26px 24px", border: "1px solid rgba(15,27,45,0.06)", position: "relative" }}>
+                <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>
+                  {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#c9a84c", fontSize: 14 }}>★</span>)}
+                </div>
+                <p style={{ fontSize: 14, color: "rgba(15,27,45,0.75)", lineHeight: 1.75, marginBottom: 20, fontStyle: "italic" }}>&ldquo;{r.text}&rdquo;</p>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: "#0f1b2d" }}>{r.name}</div>
+                    <div style={{ fontSize: 12, color: "rgba(15,27,45,0.4)", marginTop: 2 }}>{r.area} · {r.props} properties</div>
+                  </div>
+                  <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20, background: "rgba(201,168,76,0.12)", color: "#a07c30", border: "1px solid rgba(201,168,76,0.2)", whiteSpace: "nowrap" }}>{r.result}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* COMPARISON TABLE */}
+      <section style={{ background: "#f5f3ef", padding: "72px 24px" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>How we compare</p>
+          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 44, fontFamily: "var(--font-family-heading)" }}>Rentura vs the alternatives</h2>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+              <thead>
+                <tr style={{ background: "#0f1b2d" }}>
+                  <th style={{ padding: "14px 16px", textAlign: "left", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Feature</th>
+                  <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Spreadsheets</th>
+                  <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Other apps</th>
+                  <th style={{ padding: "14px 16px", textAlign: "center", color: "#c9a84c", fontWeight: 800, fontSize: 12 }}>Rentura</th>
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARE.map((row, i) => (
+                  <tr key={row.feature} style={{ background: i % 2 === 0 ? "white" : "#f5f3ef", borderBottom: "1px solid rgba(15,27,45,0.05)" }}>
+                    <td style={{ padding: "14px 16px", fontWeight: 600, color: "#0f1b2d" }}>{row.feature}</td>
+                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.45)", fontSize: 13 }}>{row.spreadsheet}</td>
+                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.45)", fontSize: 13 }}>{row.other}</td>
+                    <td style={{ padding: "14px 16px", textAlign: "center", color: "#0f6e30", fontWeight: 700, fontSize: 13 }}>{row.rentura}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <Link href="/rentura/join" style={{ display: "inline-block", background: "#0f1b2d", color: "white", fontWeight: 800, fontSize: 15, padding: "14px 36px", borderRadius: 12, textDecoration: "none" }}>
+              Start free 30-day trial →
+            </Link>
+          </div>
         </div>
       </section>
 

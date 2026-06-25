@@ -157,6 +157,73 @@ export default function AcademyPage() {
         </div>
       </section>
 
+      {/* ── FREE MODULE 1 PREVIEW ── */}
+      <section style={{ background: "rgba(212,175,55,0.04)", borderTop: "1px solid rgba(212,175,55,0.18)", borderBottom: "1px solid rgba(212,175,55,0.18)", padding: "56px 24px" }}>
+        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 36 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(22,163,74,0.12)", border: "1px solid rgba(22,163,74,0.3)", borderRadius: 100, padding: "6px 18px", fontSize: 11, color: "#4ade80", fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 16 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", display: "inline-block" }} />
+              Free — no account needed
+            </div>
+            <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, fontFamily: "var(--font-family-heading)", marginBottom: 10, letterSpacing: "-0.02em" }}>Module 1 — Free Preview</h2>
+            <p style={{ fontSize: 15, color: "rgba(255,255,255,0.55)", maxWidth: 560, margin: "0 auto" }}>Read the first module before you pay a penny. No sign-up, no email required.</p>
+          </div>
+
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "1.5px solid rgba(212,175,55,0.25)", borderRadius: 24, overflow: "hidden" }}>
+            <div style={{ background: "rgba(212,175,55,0.1)", borderBottom: "1px solid rgba(212,175,55,0.2)", padding: "20px 32px", display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ width: 48, height: 48, background: "rgba(212,175,55,0.15)", border: "1.5px solid rgba(212,175,55,0.4)", borderRadius: 12, display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ fontSize: 7, fontWeight: 800, color: "#d4af37", textTransform: "uppercase" as const }}>Module</span>
+                <span style={{ fontSize: 20, fontWeight: 900, color: "#d4af37", lineHeight: 1.1 }}>01</span>
+              </div>
+              <div>
+                <div style={{ fontSize: 11, color: "#d4af37", fontWeight: 800, textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: 4 }}>Foundation</div>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: "white", margin: 0 }}>What Deal Sourcing Actually Is</h3>
+              </div>
+            </div>
+
+            <div style={{ padding: "32px 32px" }}>
+              <p style={{ fontSize: 15, color: "rgba(255,255,255,0.8)", lineHeight: 1.8, marginBottom: 24 }}>
+                Most people who &ldquo;want to do property&rdquo; think deal sourcing is finding a house on Rightmove and flipping it. It&apos;s not. Deal sourcing is a <strong style={{ color: "white" }}>B2B service business</strong>. You find below-market properties, package them professionally, and sell the opportunity to investors who buy them. Your fee — typically £2,000 to £10,000 — comes from the investor, not the seller.
+              </p>
+
+              <div style={{ background: "rgba(212,175,55,0.06)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 16, padding: "20px 24px", marginBottom: 24 }}>
+                <p style={{ fontSize: 11, fontWeight: 800, color: "#d4af37", textTransform: "uppercase" as const, letterSpacing: "0.12em", marginBottom: 14 }}>How the money actually moves</p>
+                <div style={{ display: "flex", flexDirection: "column" as const, gap: 12 }}>
+                  {[
+                    "Find a motivated seller (probate, divorce, repossession, reluctant landlord)",
+                    "Agree to source the deal — negotiate below market value",
+                    "Package it: numbers, area analysis, strategy, projected returns",
+                    "Present to a qualified investor on your buyers list",
+                    "Investor buys. You collect your sourcing fee (£2k–£10k) on completion",
+                  ].map((text, i) => (
+                    <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                      <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(212,175,55,0.2)", border: "1px solid rgba(212,175,55,0.4)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 11, fontWeight: 800, color: "#d4af37" }}>{i + 1}</div>
+                      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.75)", lineHeight: 1.65, margin: 0 }}>{text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 12, padding: "16px 20px", marginBottom: 24 }}>
+                <p style={{ fontSize: 12, fontWeight: 800, color: "#f87171", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: 8 }}>The mistake most beginners make</p>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.7, margin: 0 }}>They source deals before they have investors. This is backwards. You need a buyer before you find the deal — otherwise you&apos;re doing free research. Module 8 covers building your buyers list first.</p>
+              </div>
+
+              <div style={{ background: "rgba(22,163,74,0.06)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 12, padding: "16px 20px", marginBottom: 28 }}>
+                <p style={{ fontSize: 12, fontWeight: 800, color: "#4ade80", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginBottom: 8 }}>Module 1 task</p>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.72)", lineHeight: 1.7, margin: 0 }}>Write down three types of motivated seller situations in your target area. Not properties — situations. Then write one sentence on why each seller might accept below market value. This trains your eye before you hit the streets.</p>
+              </div>
+
+              <div style={{ textAlign: "center", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 28 }}>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>That&apos;s Module 1. There are 11 more — plus 8 playbooks, tools, live deal reviews, and a Q&A board where I answer personally.</p>
+                <CTAButton large />
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>£14.99/month · Cancel anytime · 14-day money-back guarantee</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── STATS BAR ── */}
       <section style={{ background: "linear-gradient(90deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.04) 100%)", borderTop: "1px solid rgba(212,175,55,0.18)", borderBottom: "1px solid rgba(212,175,55,0.18)", padding: "36px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "center" }}>

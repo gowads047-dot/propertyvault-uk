@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
   description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
   keywords: "stamp duty UK, SDLT rates, stamp duty calculator, first time buyer stamp duty, additional property surcharge, stamp duty 2025",
 };
+
+const faqs = [
+  {
+    q: "What are the current stamp duty rates in England?",
+    a: "From 1 April 2025, the standard SDLT rates are: 0% on up to £125,000; 2% on £125,001–£250,000; 5% on £250,001–£925,000; 10% on £925,001–£1,500,000; and 12% above £1,500,000. These rates apply to each band rather than the whole purchase price, so a £300,000 property attracts SDLT of £5,000 (0% on first £125k, 2% on next £125k, 5% on final £50k).",
+  },
+  {
+    q: "How much stamp duty do first-time buyers pay?",
+    a: "First-time buyers in England pay no SDLT on the first £300,000 and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply and standard rates are charged from £0. The temporary higher thresholds (£425,000 nil-rate / £625,000 cap) ended on 31 March 2025.",
+  },
+  {
+    q: "What is the additional property stamp duty surcharge?",
+    a: "If you already own a property and are purchasing an additional one — such as a buy-to-let, second home, or investment property — you pay a 5% surcharge on the entire purchase price on top of the standard SDLT rates. This surcharge was increased from 3% to 5% on 31 October 2024. On a £250,000 investment property, the additional surcharge alone adds £12,500 to the stamp duty bill.",
+  },
+  {
+    q: "When must stamp duty be paid after completing a property purchase?",
+    a: "SDLT must be paid and a return filed with HMRC within 14 days of completion. Your solicitor or conveyancer normally handles this on your behalf using funds you transfer to them. Missing this deadline results in an automatic penalty of £100 (up to 3 months late), rising to £200 for over 3 months late, plus daily interest on the unpaid tax.",
+  },
+  {
+    q: "Can you reclaim the stamp duty surcharge on a second property?",
+    a: "Yes, if you paid the 5% additional property surcharge because your previous main home had not yet sold, you can reclaim it provided you sell the old main home within 3 years of paying the higher rate. You must contact HMRC within 12 months of the sale to claim the refund. This applies specifically to replacement main homes — buy-to-let surcharges are generally not reclaimable.",
+  },
+];
 
 export default function StampDutyArticle() {
   return (
@@ -93,6 +117,7 @@ export default function StampDutyArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
       </div></article>
     </>

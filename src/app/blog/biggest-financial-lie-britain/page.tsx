@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
   description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
   keywords: "UK housing market, property market UK, house prices UK, property investment, housing crisis, property freeze, wealth through property",
 };
+
+const faqs = [
+  {
+    q: "Are UK house prices really going to stop rising?",
+    a: "House prices in the UK are not expected to crash, but the era of near-automatic annual gains is under pressure. Affordability constraints, higher mortgage rates, and weak wage growth mean price growth in many regions has stalled or turned flat. Certain pockets — particularly in high-demand cities — continue to perform, but the blanket assumption that all property rises has weakened significantly.",
+  },
+  {
+    q: "What is a frozen housing market and why is it worse than a crash?",
+    a: "A frozen market is one where transaction volumes collapse because buyers and sellers cannot agree on price. Sellers refuse to accept lower prices; buyers cannot afford current asking prices. Unlike a crash, which resets and recovers, a freeze can persist for years — trapping homeowners in properties they cannot sell, preventing chains from forming, and squeezing rental supply as mobility falls.",
+  },
+  {
+    q: "How have interest rate rises affected UK property values?",
+    a: "The rapid rise in Bank of England base rate from near-zero to over 5% dramatically increased mortgage costs, reducing buying power for most households. A buyer who could afford a £300,000 mortgage in 2021 may only qualify for £200,000 at current rates. This demand destruction has suppressed prices in many areas and contributed to the market freeze described in this article.",
+  },
+  {
+    q: "Can property still be a good investment in Britain in 2026?",
+    a: "Yes, but the approach needs to change. Passive buy-and-hold strategies relying on capital growth alone are less reliable than they were. Investors focusing on income yield, cash flow, and adding genuine value — through BRRR strategies, HMO conversion, or guaranteed rent arrangements — are finding opportunities that work in the current environment.",
+  },
+  {
+    q: "What alternatives exist for landlords struggling with the current market?",
+    a: "Landlords facing pressure from higher mortgage costs, regulation, and flat capital values are increasingly turning to guaranteed rent schemes, which provide a fixed monthly income without voids or management responsibilities. Some are also restructuring into limited companies to mitigate the Section 24 mortgage interest restriction, or pivoting to higher-yielding HMO strategies.",
+  },
+];
 
 export default function BiggestLieArticle() {
   return (
@@ -246,6 +270,7 @@ export default function BiggestLieArticle() {
           </div>
 
           <div className="mt-8">
+            <FAQSchema faqs={faqs} />
             <Disclaimer type="financial" />
           </div>
         </div>

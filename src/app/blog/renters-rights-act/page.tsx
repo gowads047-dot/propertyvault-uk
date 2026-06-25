@@ -2,12 +2,36 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
   description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
   keywords: "Renters Rights Act 2025, Section 21 abolished, renters reform UK, landlord guide renters rights, no fault eviction ban, periodic tenancy UK",
 };
+
+const faqs = [
+  {
+    q: "What did the Renters' Rights Act 2025 change for UK landlords?",
+    a: "The Renters' Rights Act is the most significant change to the private rented sector in England for 30 years. It abolishes Section 21 no-fault evictions, ends fixed-term ASTs (replacing them with periodic tenancies), restricts rent increases to once per year via Section 13 notices, bans rental bidding wars, requires landlords to respond to pet requests within 28 days, introduces mandatory repair timescales under Awaab's Law, and makes membership of the PRS Ombudsman compulsory.",
+  },
+  {
+    q: "Can landlords still evict tenants after Section 21 was abolished?",
+    a: "Yes, but only through Section 8, which requires you to prove a specific legal ground. Grounds include selling the property (4 months' notice), a family member moving in (4 months' notice), two months' rent arrears (4 weeks' notice), and antisocial behaviour (immediate notice from the date served). Courts can refuse possession even on mandatory grounds if the correct procedure has not been followed.",
+  },
+  {
+    q: "Do existing fixed-term tenancies become periodic under the Renters' Rights Act?",
+    a: "Yes. All existing fixed-term ASTs were automatically converted to periodic (rolling monthly) tenancies when the Act came into force in 2025. New tenancies cannot be granted on a fixed-term basis. Tenants can give 2 months' written notice to leave at any time; landlords must use a Section 8 ground to regain possession.",
+  },
+  {
+    q: "How can landlords raise rents under the Renters' Rights Act?",
+    a: "Rent can only be increased once every 12 months and must be done using a formal Section 13 notice with at least 2 months' written notice. Any rent review clause written into a tenancy agreement is void — the statutory Section 13 process is the only legal route. Tenants can challenge any proposed increase at the First-tier Tribunal, which will assess whether the rent reflects open market rates.",
+  },
+  {
+    q: "What is Awaab's Law and how does it apply to private landlords?",
+    a: "Awaab's Law was named after Awaab Ishak, a toddler who died following prolonged mould exposure in social housing. Extended to private rented properties under the Renters' Rights Act, it requires landlords to investigate and begin fixing emergency hazards (such as total heating failure) within 24 hours and non-emergency hazards (such as damp and mould) within 14 days. Failure to comply within these timescales can result in council enforcement action and rent repayment orders.",
+  },
+];
 
 export default function RentersRightsActArticle() {
   return (
@@ -218,6 +242,7 @@ export default function RentersRightsActArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="legal" />
         </div>
       </article>

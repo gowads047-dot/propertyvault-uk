@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "Should I buy investment property personally or through a limited company?", a: "For higher-rate (40%) and additional-rate (45%) taxpayers buying new properties, a limited company (SPV) is usually more tax-efficient because mortgage interest is fully deductible and corporation tax is 25% rather than 40-45% income tax. For basic-rate taxpayers with one or two properties, the extra accountancy costs often outweigh the tax saving." },
+  { q: "What is Section 24 and why does it affect personal landlords?", a: "Section 24 removed the right for individual landlords to deduct mortgage interest from rental income before calculating tax. Instead, a 20% basic rate credit applies. Higher-rate taxpayers pay 40% on the full rental profit (before interest) and only receive a 20% credit — meaning Section 24 can nearly double their effective tax rate." },
+  { q: "Can I transfer my existing buy-to-let properties into a limited company?", a: "Yes, but it is expensive. Transferring triggers SDLT at the 5% additional property surcharge on market value, and Capital Gains Tax on any gains since purchase. These costs typically make it uneconomical to transfer existing properties. A company structure is most advantageous when buying new properties from scratch." },
+  { q: "What are the extra costs of running a property SPV?", a: "Additional costs include accountancy fees (£500-£2,000 per year), Companies House annual confirmation statement (£34), corporation tax filing, and potentially higher mortgage rates with fewer lender options for limited company BTL. Directors may also need to take personal guarantees on company mortgages." },
+  { q: "What tax do I pay when taking money out of a property SPV?", a: "Profit retained in the company is taxed at 25% corporation tax. When you extract the profit, additional personal tax applies: salary is subject to income tax and National Insurance, while dividends are taxed at 8.75% (basic rate), 33.75% (higher rate), or 39.35% (additional rate) above the £500 annual dividend allowance." },
+];
 
 export default function PersonalVsLtdPage() {
   const [rentalIncome, setRentalIncome] = useState(24000);
@@ -112,6 +122,8 @@ export default function PersonalVsLtdPage() {
             <strong>Important:</strong> This is a simplified comparison. Ltd companies have additional costs (accountant fees £500-1,500/year, Companies House filing £13/year, confirmation statements) and different mortgage products (often higher rates). CGT treatment also differs. Retained profits in a company are not taxed again until extracted. Always consult a qualified property tax accountant before making a decision.
           </div>
 
+          <div className="mt-6"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

@@ -1,57 +1,31 @@
-"use client";
-import { useState, useMemo } from "react";
-import Link from "next/link";
+import type { Metadata } from "next";
+import { LandlordTaxCalculator } from "@/components/calculators/LandlordTaxCalculator";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Free Landlord Tax Calculator UK 2025 — Section 24 Income Tax on Rental Income | PropertyVault",
+  description: "Calculate exactly how much income tax you pay on rental income. See the Section 24 impact vs old rules, net profit after tax, and whether a limited company saves you money.",
+  keywords: "landlord tax calculator, rental income tax UK, Section 24 calculator, income tax on rent, landlord tax 2025",
+};
+
+const faqs = [
+  { q: "How is rental income taxed in the UK?", a: "Rental income is added to your other income (salary, pension, self-employment) and taxed at your marginal rate — 20%, 40%, or 45%. The first £12,570 is covered by your Personal Allowance and taxed at 0%. You can deduct allowable expenses such as repairs, insurance, letting agent fees, and accountancy costs." },
+  { q: "What is Section 24 and how does it affect landlords?", a: "Section 24 (Finance Act 2015) restricts mortgage interest relief for individual landlords. Since April 2020, you cannot deduct mortgage interest as an expense. Instead, you receive a 20% tax credit on the interest paid. This significantly increases tax bills for higher and additional rate (40%/45%) taxpayers — they are taxed on gross rental income as if they had no mortgage." },
+  { q: "Can I deduct mortgage interest from rental income?", a: "No — not for individual landlords. Under Section 24, mortgage interest is no longer an allowable expense. You receive a 20% tax credit instead. This means basic rate (20%) taxpayers are unaffected, but higher rate (40%) and additional rate (45%) taxpayers pay significantly more tax than before 2017." },
+  { q: "What expenses can I deduct from rental income?", a: "Allowable expenses include: letting agent fees, property repairs and maintenance, buildings and contents insurance, accountancy fees, ground rent and service charges (leasehold), advertising costs, and professional subscriptions. Capital improvements (extensions, new kitchens) are NOT deductible as revenue expenses — they reduce your Capital Gains Tax bill when you sell." },
+  { q: "Does Section 24 affect basic rate (20%) taxpayers?", a: "No — for basic rate taxpayers, Section 24 makes no difference. The 20% tax credit exactly offsets the 20% tax on the interest. The impact is felt only by higher rate (40%) and additional rate (45%) taxpayers, who previously deducted interest at their full marginal rate but now only receive a 20% credit." },
+];
 
 export default function LandlordTaxPage() {
-  const [rentalIncome, setRentalIncome] = useState(12000);
-  const [expenses, setExpenses] = useState(2000);
-  const [mortgageInterest, setMortgageInterest] = useState(6000);
-  const [otherIncome, setOtherIncome] = useState(30000);
-
-  const results = useMemo(() => {
-    const personalAllowance = 12570;
-    const basicRateLimit = 50270;
-    const higherRateLimit = 125140;
-
-    const netRentalProfit = rentalIncome - expenses;
-    const totalIncome = otherIncome + netRentalProfit;
-
-    function calcTax(income: number): number {
-      if (income <= personalAllowance) return 0;
-      let tax = 0;
-      const taxable = income - personalAllowance;
-      const basic = Math.min(taxable, basicRateLimit - personalAllowance);
-      tax += basic * 0.20;
-      const higher = Math.min(Math.max(taxable - (basicRateLimit - personalAllowance), 0), higherRateLimit - basicRateLimit);
-      tax += higher * 0.40;
-      const additional = Math.max(taxable - (higherRateLimit - personalAllowance), 0);
-      tax += additional * 0.45;
-      return tax;
-    }
-
-    const taxOnOtherIncome = calcTax(otherIncome);
-    const totalTaxOld = calcTax(totalIncome) - taxOnOtherIncome;
-    const s24Credit = mortgageInterest * 0.20;
-    const taxableIncomeS24 = otherIncome + rentalIncome - expenses;
-    const totalTaxS24gross = calcTax(taxableIncomeS24) - taxOnOtherIncome;
-    const totalTaxS24 = Math.max(totalTaxS24gross - s24Credit, 0);
-
-    const extraTaxS24 = totalTaxS24 - totalTaxOld;
-    const netProfitOld = netRentalProfit - mortgageInterest - totalTaxOld;
-    const netProfitS24 = netRentalProfit - mortgageInterest - totalTaxS24;
-
-    const marginalRate = totalIncome > higherRateLimit ? 45 : totalIncome > basicRateLimit ? 40 : 20;
-
-    return { totalTaxOld, totalTaxS24, extraTaxS24, netProfitOld, netProfitS24, marginalRate, netRentalProfit, s24Credit };
-  }, [rentalIncome, expenses, mortgageInterest, otherIncome]);
-
-  const fmt = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
-
   return (
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Landlord Tax" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Landlord Tax Calculator</h1>
           <p className="text-navy-200 max-w-2xl">See exactly how much income tax you pay on rental income — and how Section 24 affects your bill versus the old rules.</p>
@@ -60,87 +34,17 @@ export default function LandlordTaxPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max">
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div className="space-y-5">
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
-              <div>
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Rental Income</label>
-                <input type="range" min={3000} max={60000} step={500} value={rentalIncome} onChange={e => setRentalIncome(+e.target.value)} className="w-full accent-gold-500" />
-                <p className="text-center font-bold text-navy-800">{fmt(rentalIncome)}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Allowable Expenses (repairs, insurance, agent fees etc.)</label>
-                <input type="range" min={0} max={15000} step={250} value={expenses} onChange={e => setExpenses(+e.target.value)} className="w-full accent-gold-500" />
-                <p className="text-center font-bold text-navy-800">{fmt(expenses)}</p>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Mortgage Interest</label>
-                <input type="range" min={0} max={30000} step={250} value={mortgageInterest} onChange={e => setMortgageInterest(+e.target.value)} className="w-full accent-gold-500" />
-                <p className="text-center font-bold text-navy-800">{fmt(mortgageInterest)}</p>
-              </div>
+          <LandlordTaxCalculator />
 
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Your Other Income</h3>
-              <div>
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Employment / Self-Employment Income</label>
-                <input type="range" min={0} max={150000} step={1000} value={otherIncome} onChange={e => setOtherIncome(+e.target.value)} className="w-full accent-gold-500" />
-                <p className="text-center font-bold text-navy-800">{fmt(otherIncome)}</p>
-              </div>
-
-              <div className="bg-navy-50 rounded-xl p-4 text-xs text-navy-600">
-                <strong>Marginal tax rate:</strong> {results.marginalRate}% — this is the rate at which your rental profit is taxed.
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-green-50 border border-green-200 rounded-2xl p-5">
-                  <p className="text-xs font-bold text-green-700 mb-1">OLD RULES (pre-2017)</p>
-                  <p className="text-3xl font-bold text-green-800">{fmt(results.totalTaxOld)}</p>
-                  <p className="text-xs text-green-600 mt-1">Tax on rental income</p>
-                  <p className="text-xs text-green-600 mt-2">Net profit: <strong>{fmt(results.netProfitOld)}</strong></p>
-                </div>
-                <div className="bg-red-50 border border-red-200 rounded-2xl p-5">
-                  <p className="text-xs font-bold text-red-700 mb-1">SECTION 24 (now)</p>
-                  <p className="text-3xl font-bold text-red-800">{fmt(results.totalTaxS24)}</p>
-                  <p className="text-xs text-red-600 mt-1">Tax on rental income</p>
-                  <p className="text-xs text-red-600 mt-2">Net profit: <strong>{fmt(results.netProfitS24)}</strong></p>
-                </div>
-              </div>
-
-              {results.extraTaxS24 > 0 ? (
-                <div className="bg-gradient-to-br from-red-700 to-red-900 rounded-2xl p-6 text-white">
-                  <p className="text-sm opacity-80 mb-1">Section 24 is costing you an extra</p>
-                  <p className="text-4xl font-bold">{fmt(results.extraTaxS24)}</p>
-                  <p className="text-sm opacity-70 mt-1">per year vs the old rules</p>
-                </div>
-              ) : (
-                <div className="bg-gradient-to-br from-green-700 to-green-900 rounded-2xl p-6 text-white">
-                  <p className="text-lg font-bold">Section 24 does not affect you</p>
-                  <p className="text-sm opacity-70 mt-1">At the basic rate (20%) the credit exactly offsets — no extra tax.</p>
-                </div>
-              )}
-
-              <div className="bg-white rounded-xl border border-navy-100 p-5 space-y-3 text-sm">
-                <div className="flex justify-between"><span className="text-navy-600">Gross rental income</span><span className="font-semibold">{fmt(rentalIncome)}</span></div>
-                <div className="flex justify-between"><span className="text-navy-600">Allowable expenses</span><span className="font-semibold">−{fmt(expenses)}</span></div>
-                <div className="flex justify-between border-t border-navy-100 pt-2"><span className="text-navy-700 font-semibold">Net rental profit</span><span className="font-bold">{fmt(results.netRentalProfit)}</span></div>
-                <div className="flex justify-between"><span className="text-navy-600">Mortgage interest</span><span className="font-semibold">−{fmt(mortgageInterest)}</span></div>
-                <div className="flex justify-between"><span className="text-navy-600">S24 tax credit (20%)</span><span className="font-semibold text-green-600">+{fmt(results.s24Credit)}</span></div>
-                <div className="flex justify-between border-t border-navy-100 pt-2 font-bold"><span>Actual net cash profit</span><span>{fmt(results.netProfitS24)}</span></div>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <Link href="/calculators/section-24" className="btn-primary text-sm !py-2.5 !px-5">Section 24 Deep Dive →</Link>
-                <Link href="/calculators/personal-vs-ltd" className="btn-outline text-sm !py-2.5 !px-5">Personal vs Ltd Company →</Link>
-              </div>
-            </div>
+          <div className="mt-8">
+            <EmailResults />
           </div>
 
           <div className="mt-10 pt-8 border-t border-navy-200 space-y-4 max-w-3xl text-sm text-navy-600">
             <h2 className="text-xl font-bold text-navy-800">How is Rental Income Taxed in the UK?</h2>
             <p>Rental income is added to your other income (employment, self-employment, pension) and taxed at your marginal rate — 20%, 40%, or 45%. The first £12,570 of total income is covered by your Personal Allowance and taxed at 0%.</p>
             <p>Allowable expenses (repairs, letting agent fees, insurance, accounting) reduce your taxable rental profit. Mortgage interest no longer reduces taxable profit under Section 24 — instead you receive a 20% tax credit on the interest paid.</p>
-            <p>If you pay 40% or 45% income tax, Section 24 means you're taxed on more income than you actually receive in cash — you may owe tax even when your rental property barely breaks even after mortgage payments.</p>
+            <p>If you pay 40% or 45% income tax, Section 24 means you&apos;re taxed on more income than you actually receive in cash — you may owe tax even when your rental property barely breaks even after mortgage payments.</p>
           </div>
 
           <div className="pt-4 border-t border-navy-200 not-prose mt-6">
@@ -148,9 +52,11 @@ export default function LandlordTaxPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               <Link href="/calculators/section-24" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Section 24</p><p className="text-xs text-navy-400 mt-0.5">Mortgage interest tax</p></Link>
               <Link href="/calculators/personal-vs-ltd" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Personal vs Ltd</p><p className="text-xs text-navy-400 mt-0.5">Structure comparison</p></Link>
-              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Gross & net yield</p></Link>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-lg border border-navy-100 p-3 text-center hover:shadow-md transition-all"><p className="font-semibold text-navy-800 text-xs">Rental Yield</p><p className="text-xs text-navy-400 mt-0.5">Gross &amp; net yield</p></Link>
             </div>
           </div>
+
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

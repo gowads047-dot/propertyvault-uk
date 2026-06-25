@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "When should I remortgage my property?", a: "The best time to start the remortgage process is 3-6 months before your current fixed-rate deal expires. At expiry, you revert to the lender's Standard Variable Rate (SVR), which is typically 1-2% above the best available fixed rates — costing hundreds per month extra. Starting early gives time to compare the full market." },
+  { q: "How much does it cost to remortgage?", a: "Switching costs typically include an arrangement fee (£0-£1,999 depending on the deal), legal fees (£0-£500, often free on competitive remortgage products), valuation fee (£0-£600, often free), and any early repayment charge (ERC) if you're still in a fixed-rate period. The break-even calculation — total costs divided by monthly saving — tells you whether switching is worthwhile." },
+  { q: "What is a product transfer and how is it different from a remortgage?", a: "A product transfer means switching to a new rate with your existing lender without moving the mortgage elsewhere. It is faster (often same day), cheaper (usually no legal or valuation fees), and does not require a full affordability reassessment. A full remortgage to a new lender takes 4-8 weeks but may offer better rates or allow you to borrow more." },
+  { q: "Can I remortgage to release equity?", a: "Yes. If your property has increased in value since purchase, your loan-to-value (LTV) will have fallen. You can borrow against this additional equity by remortgaging to a higher loan amount. This is commonly used to fund deposit for additional buy-to-let properties (the BRRR strategy) or to fund home improvements." },
+  { q: "Does remortgaging affect my credit score?", a: "A full remortgage to a new lender involves a hard credit search, which temporarily reduces your credit score by a small amount. Multiple applications in a short period have a greater impact. Product transfers with your existing lender typically only involve a soft search and have minimal credit impact." },
+];
 
 export default function RemortgagePage() {
   const [outstandingBalance, setOutstandingBalance] = useState(180000);
@@ -113,6 +123,8 @@ export default function RemortgagePage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

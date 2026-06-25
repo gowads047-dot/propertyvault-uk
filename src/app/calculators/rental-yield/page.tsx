@@ -1,6 +1,17 @@
 import { RentalYieldCalculator } from "@/components/calculators/RentalYieldCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
+
+const faqs = [
+  { q: "What is a good rental yield in the UK?", a: "A gross yield above 6% is generally considered strong for UK single-let buy-to-let. Net yields above 5% (after costs) are solid. London and the South East typically yield 3-5% gross, while northern cities like Manchester, Liverpool, and Nottingham regularly achieve 7-10%+. HMOs typically yield 10-15% in the same areas." },
+  { q: "What is the difference between gross yield and net yield?", a: "Gross yield is annual rent divided by purchase price. Net yield deducts all running costs — management fees, insurance, maintenance, void periods, compliance costs — before dividing by property value. Net yield gives a realistic picture of actual returns; gross yield is a quick comparison tool only." },
+  { q: "How do void periods affect rental yield?", a: "Each week a property sits empty costs you approximately 1.9% of annual rent. Two void weeks per year reduces effective yield by 3.8%. Building void periods into your calculation is essential — budgeting one to three void weeks per year is realistic for most single-let properties in normal market conditions." },
+  { q: "Does the purchase price or current value matter for yield calculations?", a: "Yield on purchase price (initial yield) shows the return you locked in at acquisition. Yield on current value (revaluation yield) shows your current income return if you were buying today. Both are useful: initial yield shows deal quality, current yield shows whether to hold, sell, or refinance." },
+  { q: "What costs should I include when calculating net rental yield?", a: "Include management fees (8-15% of rent if using an agent), buildings and landlord insurance, maintenance (typically 1% of property value per year), void period allowance, Gas Safety Certificates, EICR, EPC costs, and any licensing fees. Mortgage payments are excluded from yield calculations but included in cash flow analysis." },
+];
 
 export const metadata: Metadata = {
   title: "Rental Yield Calculator UK — Gross & Net Yield | PropertyVault",
@@ -41,6 +52,9 @@ export default function RentalYieldPage() {
       <section className="section-padding bg-white">
         <div className="container-max">
           <RentalYieldCalculator />
+          <div className="mt-8"><EmailResults /></div>
+          <EmbedCode slug="rental-yield" title="Rental Yield Calculator UK" />
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

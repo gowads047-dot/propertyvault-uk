@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Calculators UK — 19 Tools for Investors & Landlords | PropertyVault UK",
-  description: "19 free UK property calculators. Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, HMO, affordability, remortgage, bridging, flip ROI, and more.",
+  title: "Free Property Calculators UK — 22 Tools for Investors & Landlords | PropertyVault UK",
+  description: "22 free UK property calculators. Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, void period cost, rent increase, monthly cash flow, HMO, affordability, remortgage, bridging, flip ROI, and more.",
 };
 
 const calculators = [
@@ -82,6 +82,18 @@ const calculators = [
   {
     title: "BTL Mortgage Stress Test", desc: "Check if your rental income passes the lender's interest coverage ratio test.", href: "/calculators/btl-mortgage", cat: "Finance", tag: "New",
     icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="8" width="22" height="16" rx="3" fill="#E8D5B7"/><path d="M2 10L14 3l12 7" stroke="#0f1b36" strokeWidth="2" strokeLinecap="round"/><path d="M10 24v-6h8v6" stroke="#0f1b36" strokeWidth="1.5" strokeLinecap="round"/><circle cx="22" cy="8" r="5" fill="#22c55e"/><path d="M19.5 8l2 2 3-3" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  },
+  {
+    title: "Void Period Cost", desc: "See how much empty weeks cost you in lost rent plus ongoing bills.", href: "/calculators/void-period", cat: "Landlord", tag: "New",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="3" y="4" width="22" height="20" rx="3" fill="#E8D5B7"/><rect x="3" y="4" width="22" height="7" rx="3" fill="#0f1b36"/><circle cx="9" cy="7.5" r="1.5" fill="#c9a84c"/><circle cx="14" cy="7.5" r="1.5" fill="white" opacity="0.5"/><circle cx="19" cy="7.5" r="1.5" fill="white" opacity="0.5"/><text x="14" y="21" textAnchor="middle" fill="#ef4444" fontSize="9" fontWeight="bold">£0</text></svg>,
+  },
+  {
+    title: "Rent Increase Calculator", desc: "Calculate impact of a rent increase, check Section 13 notice rules.", href: "/calculators/rent-increase", cat: "Landlord", tag: "New",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#0f1b36"/><path d="M6 18l5-6 4 4 7-8" stroke="#c9a84c" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 8h-4v4" stroke="#c9a84c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  },
+  {
+    title: "BTL Monthly Cash Flow", desc: "Full income vs expenses breakdown — net yield, cash-on-cash return.", href: "/calculators/monthly-cashflow", cat: "Investing", tag: "New",
+    icon: <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="4" width="24" height="20" rx="3" fill="#E8D5B7"/><path d="M6 20V14" stroke="#22c55e" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V10" stroke="#22c55e" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V13" stroke="#22c55e" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V7" stroke="#22c55e" strokeWidth="3" strokeLinecap="round"/><text x="14" y="6" textAnchor="middle" fill="#c9a84c" fontSize="5" fontWeight="bold">£</text></svg>,
   },
 ];
 

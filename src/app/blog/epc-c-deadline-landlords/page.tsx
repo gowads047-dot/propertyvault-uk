@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
   description: "The proposed EPC C deadline for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
   keywords: "EPC C deadline 2030, EPC requirements landlords, EPC retrofit cost, EPC C rental properties, energy efficiency rental",
 };
+
+const faqs = [
+  {
+    q: "What is the proposed EPC C deadline for rental properties in England?",
+    a: "The UK Government has proposed that all privately rented properties in England must achieve a minimum EPC rating of band C by 2028 for new tenancies and 2030 for all existing tenancies. These dates have not yet been confirmed in legislation — landlords should check gov.uk for the latest position, but should begin planning improvements now.",
+  },
+  {
+    q: "What is the current minimum EPC rating required for rental properties?",
+    a: "Since April 2020, all privately rented properties in England and Wales must have a minimum EPC rating of E. Landlords who let a property with an F or G rating face fines of up to £5,000 per property. The proposed uplift to band C would represent a significant increase in the standard required.",
+  },
+  {
+    q: "How much does it cost to improve a property's EPC rating to band C?",
+    a: "Costs vary significantly depending on the property's current rating and construction type. For a D-rated property, common improvements such as loft insulation, cavity wall insulation, and LED lighting may cost £1,000–3,000 combined and could be sufficient. For older solid-wall properties currently rated E or F, solid wall insulation and a new boiler could cost £8,000–16,000. A spend cap of around £15,000 per property is expected to be part of any exemption scheme.",
+  },
+  {
+    q: "Are there government grants to help landlords meet the EPC C requirement?",
+    a: "Yes. The Boiler Upgrade Scheme offers up to £7,500 towards an air source heat pump. The Great British Insulation Scheme and ECO4 provide free or subsidised insulation for eligible properties. Many local councils also offer additional funding. Landlords should check eligibility before paying for improvements out of pocket.",
+  },
+  {
+    q: "Can landlords be exempt from the EPC C requirement?",
+    a: "The government has proposed exemptions where improvements would exceed a cost cap (expected around £15,000), where the property is listed and works would alter its character, where third-party consent such as a freeholder has been refused, or where all recommended measures have been made but the property still cannot reach band C. Exemptions must be registered on the PRS Exemptions Register and do not transfer to a new owner on sale.",
+  },
+];
 
 export default function EPCArticle() {
   return (
@@ -106,6 +130,7 @@ export default function EPCArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="general" />
       </div></article>
     </>

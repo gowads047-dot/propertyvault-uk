@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
+import { EmbedCode } from "@/components/calculators/EmbedCode";
 
 const stampDutyFaqs = [
   { q: "How much is stamp duty on a £300,000 house?", a: "For a standard purchase at £300,000 from April 2025: £0 on the first £125,000, 2% on £125,001-£250,000 (£2,500), and 5% on £250,001-£300,000 (£2,500) = £5,000 total. First-time buyers pay £0 (nil rate up to £300,000)." },
@@ -35,6 +36,7 @@ export default function StampDutyPage() {
         <div className="container-max">
           <StampDutyCalculator />
           <div className="mt-8"><EmailResults /></div>
+          <EmbedCode slug="stamp-duty" title="Stamp Duty Calculator UK 2025" />
           <FAQSchema faqs={stampDutyFaqs} />
           <Disclaimer type="calculator" />
         </div>

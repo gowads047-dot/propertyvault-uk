@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Derby — Landlords Get Paid Every Month | PropertyVault UK",
@@ -91,6 +92,89 @@ export default function DerbyPage() {
             ))}
           </ul>
 
+          {/* Income Comparison Table */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>How Your Income Compares</h3>
+            <div className="overflow-x-auto rounded-xl border border-navy-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-800 text-white">
+                    <th className="px-4 py-3 text-left font-semibold">Scenario</th>
+                    <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                    <th className="px-4 py-3 text-center font-semibold">Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-navy-100 bg-white">
+                    <td className="px-4 py-3 text-navy-700 font-medium">Market rent (gross)</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£800</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£9,600</td>
+                  </tr>
+                  <tr className="border-b border-navy-100 bg-navy-50/50">
+                    <td className="px-4 py-3 text-navy-700 font-medium">After agent fees + voids</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£660</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£7,920</td>
+                  </tr>
+                  <tr className="bg-gold-50 border-b-2 border-gold-400">
+                    <td className="px-4 py-3 text-navy-800 font-bold">Guaranteed rent (PropertyVault)</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£710</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£8,520</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Derby. Agent fee assumed at 10% + 1 month average void per year.</p>
+          </div>
+
+          {/* Case Study */}
+          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
+            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
+            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Steve M. — 3-bed terraced house, Normanton</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
+                <p className="font-bold text-white">£800/mo</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
+                <p className="font-bold text-white">£660/mo</p>
+              </div>
+              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
+                <p className="font-bold text-gold-400">£710/mo</p>
+              </div>
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
+                <p className="font-bold text-green-400">+£600/yr</p>
+              </div>
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed">"My Normanton property was managed by a local agent at 12% — and I still had eight weeks of voids last year. After all that, I was taking home about £660. PropertyVault offered me £710 guaranteed and signed the lease within a week. Getting £600 more a year without any tenant hassle was an easy decision."</p>
+            <p className="text-navy-400 text-xs mt-2">— Steve M., landlord in Normanton, Derby (4-year lease signed 2024)</p>
+          </div>
+
+          {/* Testimonials */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Derby Landlords Say</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I was spending hours every month dealing with tenant queries and chasing my agent for updates. Since signing up with PropertyVault in Chaddesden, I haven't had a single problem. The rent arrives, I move on with my life. Couldn't ask for more."</p>
+                <p className="font-bold text-navy-800 text-sm">Rachel T.</p>
+                <p className="text-navy-400 text-xs">Chaddesden, Derby — 2-bed terraced house</p>
+              </div>
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I inherited a property in Spondon and had no idea how to manage it. PropertyVault took care of everything — inspection, tenants, compliance, the lot. I now receive my guaranteed rent on the 1st of every month and the whole process has been completely hands-off."</p>
+                <p className="font-bold text-navy-800 text-sm">Oliver H.</p>
+                <p className="text-navy-400 text-xs">Spondon, Derby — 3-bed semi-detached</p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">
             <p className="text-gold-400 font-bold text-sm mb-2">Derby Landlord?</p>
             <p className="text-xl font-extrabold mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Get your free guaranteed rent quote today</p>
@@ -111,7 +195,33 @@ export default function DerbyPage() {
           <Link href="/guaranteed-rent" className="text-sm font-semibold text-gold-600 hover:text-gold-700">Read the full guaranteed rent guide →</Link>
         </div>
       </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <FAQSchema faqs={[
+            {
+              q: "How much guaranteed rent will I receive for my Derby property?",
+              a: "Our offer depends on your property's location, size, and condition within Derby. For a typical 3-bed terraced house in areas like Normanton or Chaddesden, we offer around £710 per month — guaranteed every month with no voids or agent fees. Contact us for a free quote.",
+            },
+            {
+              q: "Which areas of Derby does PropertyVault UK cover?",
+              a: "We cover all Derby postcodes including Normanton, Pear Tree, Chaddesden, Spondon, Littleover, Alvaston, Chellaston, Mickleover, Oakwood, Allestree, Sunnyhill, Sinfin, and surrounding DE postcode areas. Contact us to confirm your specific postcode.",
+            },
+            {
+              q: "How quickly can I start receiving guaranteed rent in Derby?",
+              a: "Once you contact us, most Derby landlords have their lease signed and first rent payment scheduled within 7–14 days. We move quickly — property inspection, paperwork, and onboarding are all handled by our team so you don't face any unnecessary delays.",
+            },
+            {
+              q: "Who handles maintenance and repairs at my Derby property?",
+              a: "PropertyVault UK manages all tenant-reported maintenance through our local Derby contractor network. Routine repairs are handled by us with no extra charges to you. For larger structural works we'll notify you beforehand in line with the terms of your lease.",
+            },
+            {
+              q: "Can I sell my Derby property during the guaranteed rent lease?",
+              a: "Yes. If you need to sell during the lease, we'll discuss your options openly — including early termination or selling with the lease intact, which many investors find desirable. We aim to support landlords who need flexibility during the lease period.",
+            },
+          ]} />
+        </div>
+      </section>
     </>
   );
 }
-

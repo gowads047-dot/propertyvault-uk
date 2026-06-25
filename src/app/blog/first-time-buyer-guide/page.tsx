@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "First-Time Buyer Guide UK — Step by Step | PropertyVault UK",
   description: "Complete first-time buyer guide. From saving a deposit to getting your keys. Mortgages, stamp duty relief, LISA, government schemes, and what to expect.",
   keywords: "first time buyer guide UK, how to buy first home, first time buyer mortgage, LISA property, first time buyer stamp duty",
 };
+
+const faqs = [
+  {
+    q: "How much deposit do first-time buyers need in the UK?",
+    a: "Most lenders require a minimum 5% deposit, though 10% unlocks significantly better mortgage rates. On a £250,000 property, a 5% deposit is £12,500 and a 10% deposit is £25,000. First-time buyers saving into a Lifetime ISA (LISA) can receive a 25% government bonus of up to £1,000 per year, making it one of the most effective savings vehicles available.",
+  },
+  {
+    q: "Do first-time buyers pay stamp duty in the UK?",
+    a: "First-time buyers in England pay no stamp duty on the first £300,000 of the purchase price and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the first-time buyer relief does not apply and standard rates are charged on the full amount. These thresholds apply from 1 April 2025.",
+  },
+  {
+    q: "What is a mortgage Agreement in Principle (AIP) and do I need one?",
+    a: "An Agreement in Principle (also called a Decision in Principle) is a written statement from a lender confirming how much they would be willing to lend you, subject to a full application and valuation. It involves a soft credit check and does not affect your credit score. Estate agents and sellers take offers more seriously from buyers who have an AIP, as it demonstrates you are financially prepared.",
+  },
+  {
+    q: "What additional costs should first-time buyers budget for beyond the deposit?",
+    a: "Beyond the deposit, first-time buyers should budget for a solicitor or conveyancer (£800–1,500), a survey (£400–1,500 depending on type), mortgage arrangement fees (£0–2,000), buildings insurance from exchange, and removal costs. On a £250,000 property with a 10% deposit, total costs including the deposit are typically £27,500–31,000.",
+  },
+  {
+    q: "What is the difference between exchange and completion when buying a home?",
+    a: "Exchange of contracts is the legally binding point at which both buyer and seller commit to the transaction. You pay your deposit (typically 10%) to your solicitor and neither party can pull out without significant financial penalty. Completion usually happens 1–4 weeks later, when your mortgage funds are drawn down, the balance is transferred, and you collect the keys.",
+  },
+];
 
 export default function FTBArticle() {
   return (
@@ -90,6 +114,7 @@ export default function FTBArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
       </div></article>
     </>

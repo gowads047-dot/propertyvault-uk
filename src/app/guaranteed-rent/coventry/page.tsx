@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Coventry — Landlords Get Paid Every Month | PropertyVault UK",
@@ -95,6 +96,89 @@ export default function CoventryPage() {
             ))}
           </ul>
 
+          {/* Income Comparison Table */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>How Your Income Compares</h3>
+            <div className="overflow-x-auto rounded-xl border border-navy-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-800 text-white">
+                    <th className="px-4 py-3 text-left font-semibold">Scenario</th>
+                    <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                    <th className="px-4 py-3 text-center font-semibold">Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-navy-100 bg-white">
+                    <td className="px-4 py-3 text-navy-700 font-medium">Market rent (gross)</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£825</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£9,900</td>
+                  </tr>
+                  <tr className="border-b border-navy-100 bg-navy-50/50">
+                    <td className="px-4 py-3 text-navy-700 font-medium">After agent fees + voids</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£675</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£8,100</td>
+                  </tr>
+                  <tr className="bg-gold-50 border-b-2 border-gold-400">
+                    <td className="px-4 py-3 text-navy-800 font-bold">Guaranteed rent (PropertyVault)</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£730</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£8,760</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Coventry. Agent fee assumed at 10% + 1 month average void per year.</p>
+          </div>
+
+          {/* Case Study */}
+          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
+            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
+            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Liam F. — 3-bed terraced house, Foleshill</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
+                <p className="font-bold text-white">£825/mo</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
+                <p className="font-bold text-white">£675/mo</p>
+              </div>
+              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
+                <p className="font-bold text-gold-400">£730/mo</p>
+              </div>
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
+                <p className="font-bold text-green-400">+£660/yr</p>
+              </div>
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed">"My Foleshill property was sitting empty for six weeks after my last tenant left. By the time I'd paid the agent's reletting fee and covered the void, I was netting about £675. PropertyVault signed a lease within ten days and now I get £730 without fail every month. That £660 annual difference is just the icing on the cake."</p>
+            <p className="text-navy-400 text-xs mt-2">— Liam F., landlord in Foleshill, Coventry (3-year lease signed 2024)</p>
+          </div>
+
+          {/* Testimonials */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Coventry Landlords Say</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I've had my Bell Green property for eight years and it's been a constant headache. Since PropertyVault took it on I haven't had a single call. Rent on the 1st, no fuss, no drama. It genuinely feels like passive income for the first time."</p>
+                <p className="font-bold text-navy-800 text-sm">Denise C.</p>
+                <p className="text-navy-400 text-xs">Bell Green, Coventry — 3-bed terraced house</p>
+              </div>
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I'd been trying to sell my Wyken property for months with no luck. A friend suggested guaranteed rent and I'm so glad I looked into it. PropertyVault made it simple — now I earn a reliable income from the property while the market stabilises. Brilliant solution."</p>
+                <p className="font-bold text-navy-800 text-sm">Paul R.</p>
+                <p className="text-navy-400 text-xs">Wyken, Coventry — 2-bed semi-detached</p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">
             <p className="text-gold-400 font-bold text-sm mb-2">Coventry Landlord?</p>
             <p className="text-xl font-extrabold mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Get your free guaranteed rent quote today</p>
@@ -113,6 +197,33 @@ export default function CoventryPage() {
         <div className="container-max max-w-3xl text-center">
           <p className="text-sm text-navy-500">Want to learn more about how guaranteed rent works?</p>
           <Link href="/guaranteed-rent" className="text-sm font-semibold text-gold-600 hover:text-gold-700">Read the full guaranteed rent guide →</Link>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <FAQSchema faqs={[
+            {
+              q: "How much guaranteed rent will I receive for my Coventry property?",
+              a: "Our guaranteed rent offer depends on your property's location, size, and condition in Coventry. For a typical 3-bed terraced house in areas like Foleshill or Hillfields, we offer around £730 per month — paid every month with no voids or agent fees. Contact us for a tailored, no-obligation quote.",
+            },
+            {
+              q: "Which areas of Coventry does PropertyVault UK cover?",
+              a: "We cover all Coventry postcodes including Foleshill, Hillfields, Radford, Stoke, Bell Green, Wood End, Holbrooks, Longford, Binley, Willenhall, Wyken, Earlsdon, Tile Hill, Coundon, Bedworth, Nuneaton, and all surrounding CV postcode areas.",
+            },
+            {
+              q: "How quickly can I start receiving guaranteed rent in Coventry?",
+              a: "Most Coventry landlords are up and running within 7–14 days of first contact. We inspect the property, prepare the lease agreement, and onboard you quickly — so you start earning guaranteed rent with minimal delay.",
+            },
+            {
+              q: "Who handles maintenance and repairs at my Coventry property?",
+              a: "PropertyVault UK manages all routine maintenance and tenant repair requests through our local Coventry contractor network. Day-to-day repairs are handled by us with no extra cost to you. Major structural works are always discussed with you in advance.",
+            },
+            {
+              q: "Can I sell my Coventry property during the guaranteed rent lease?",
+              a: "Yes. We can accommodate landlords who need to sell during the lease period. Options include early termination under agreed terms or selling with the lease in place, which many investors find appealing as an income-generating asset. Contact us to discuss your specific situation.",
+            },
+          ]} />
         </div>
       </section>
     </>

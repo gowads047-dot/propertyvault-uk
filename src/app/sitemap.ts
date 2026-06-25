@@ -36,6 +36,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/calculators/epc-retrofit/`,     lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/calculators/landlord-tax/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/calculators/btl-mortgage/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/calculators/void-period/`,       lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/calculators/rent-increase/`,    lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/calculators/monthly-cashflow/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
 
     // Templates
     { url: `${BASE}/templates/`,                lastModified: now, changeFrequency: "monthly", priority: 0.9 },
@@ -71,6 +74,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/epc-c-deadline-landlords/`,           lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/blog/first-time-buyer-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/blog/personal-vs-limited-company/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/blog/is-guaranteed-rent-a-scam/`,           lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/deal-sourcing-uk-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/best-areas-invest-birmingham-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+
+    // New pages
+    { url: `${BASE}/reviews/`,    lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/faq/`,        lastModified: now, changeFrequency: "monthly", priority: 0.8 },
 
     // Guaranteed rent
     { url: `${BASE}/guaranteed-rent/`,            lastModified: now, changeFrequency: "monthly", priority: 0.9 },

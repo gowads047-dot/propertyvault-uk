@@ -8,18 +8,18 @@ const guaranteedRentFaqs = [
   { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
   { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
   { q: "What types of property qualify for guaranteed rent?", a: "Most residential properties qualify — houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability and safety standards." },
-  { q: "Who are the tenants in a guaranteed rent scheme?", a: "We work with local councils and registered social housing providers in Birmingham, Nottingham, and Derby to house families and individuals. All tenants are managed by our team." },
+  { q: "Who are the tenants in a guaranteed rent scheme?", a: "We work with local councils and registered social housing providers across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield to house families and individuals. All tenants are managed by our team." },
   { q: "What about repairs and maintenance with guaranteed rent?", a: "We handle all day-to-day maintenance at our cost during the lease. Major structural issues (roof, subsidence) remain the property owner's responsibility, but we coordinate everything." },
   { q: "How long is a guaranteed rent lease?", a: "Typically 3-5 years. Longer leases provide greater income security and may attract a higher guaranteed rent amount." },
   { q: "How quickly can guaranteed rent start?", a: "Once you accept our offer, we can typically complete the lease within 7-14 days. Your first guaranteed rent payment follows shortly after." },
-  { q: "What areas do you cover for guaranteed rent?", a: "We currently operate across Birmingham, Nottingham, Derby, and surrounding areas within approximately 30 minutes of each city centre." },
+  { q: "What areas do you cover for guaranteed rent?", a: "We currently operate across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield — and the surrounding areas within approximately 30 minutes of each city centre." },
   { q: "Is guaranteed rent better than using a letting agent?", a: "For many landlords, yes. When you add up void periods, agent fees (8-12%), maintenance costs, and compliance spend, guaranteed rent at 80-90% of market rate often delivers more net income with zero effort." },
   { q: "What happens at the end of a guaranteed rent lease?", a: "Your property is returned in the condition it was at the start of the lease (fair wear and tear excepted). You can then renew the lease with us, let privately, or sell." },
 ];
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent for Landlords — Birmingham, Nottingham & Derby | PropertyVault UK",
-  description: "Guaranteed rent for landlords in Birmingham, Nottingham, and Derby. No voids, no management, guaranteed income for 3-5 years. Get a free quote today.",
+  title: "Guaranteed Rent for Landlords — Birmingham, Nottingham, Derby, Leicester, Coventry & Sheffield | PropertyVault UK",
+  description: "Guaranteed rent for landlords across the Midlands. No voids, no management, guaranteed income for 3-5 years. Covering Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
 };
 
 export default function GuaranteedRentPage() {
@@ -35,7 +35,7 @@ export default function GuaranteedRentPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-gold-400 text-sm font-semibold mb-8">
               <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse" />
-              Birmingham · Nottingham · Derby
+              Birmingham · Nottingham · Derby · Leicester · Coventry · Sheffield
             </div>
             <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-[1.1]" style={{ fontFamily: "var(--font-family-heading)" }}>
               Your Rent.
@@ -215,11 +215,14 @@ export default function GuaranteedRentPage() {
         <div className="container-max text-center">
           <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Areas We Cover</h2>
           <p className="text-navy-200 text-sm mb-8">We are actively looking for properties in these areas right now.</p>
-          <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {[
-              { city: "Birmingham", areas: "All Birmingham postcodes — Edgbaston, Erdington, Handsworth, Small Heath, Sparkhill, Aston, Kings Heath, Moseley, and more", href: "/guaranteed-rent/birmingham" },
-              { city: "Nottingham", areas: "All Nottingham postcodes — Hyson Green, Sneinton, Radford, Bulwell, Bestwood, Lenton, Beeston, Carlton, and more", href: "/guaranteed-rent/nottingham" },
-              { city: "Derby", areas: "All Derby postcodes — Normanton, Pear Tree, Chaddesden, Spondon, Littleover, Alvaston, Chellaston, and more", href: "/guaranteed-rent/derby" },
+              { city: "Birmingham", areas: "Edgbaston, Erdington, Handsworth, Small Heath, Sparkhill, Aston, Kings Heath, Moseley, and all B postcodes", href: "/guaranteed-rent/birmingham" },
+              { city: "Nottingham", areas: "Hyson Green, Sneinton, Radford, Bulwell, Bestwood, Lenton, Beeston, Carlton, and all NG postcodes", href: "/guaranteed-rent/nottingham" },
+              { city: "Derby", areas: "Normanton, Pear Tree, Chaddesden, Spondon, Littleover, Alvaston, Chellaston, and all DE postcodes", href: "/guaranteed-rent/derby" },
+              { city: "Leicester", areas: "Highfields, Evington, Belgrave, Braunstone, Beaumont Leys, Aylestone, North Evington, and all LE postcodes", href: "/guaranteed-rent/leicester" },
+              { city: "Coventry", areas: "Foleshill, Stoke, Hillfields, Radford, Tile Hill, Wood End, Binley, Earlsdon, and all CV postcodes", href: "/guaranteed-rent/coventry" },
+              { city: "Sheffield", areas: "Burngreave, Firth Park, Hillsborough, Walkley, Crookes, Heeley, Meersbrook, and all S postcodes", href: "/guaranteed-rent/sheffield" },
             ].map((c) => (
               <a key={c.city} href={c.href} className="glass rounded-2xl p-6 text-left hover:bg-white/10 transition-all block">
                 <h3 className="font-extrabold text-gold-400 text-xl mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>{c.city}</h3>

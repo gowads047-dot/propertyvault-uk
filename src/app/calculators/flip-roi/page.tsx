@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What is a good ROI for a property flip in the UK?", a: "A successful flip in the UK typically targets 15-25% profit on total project cost. After accounting for bridging finance, stamp duty, refurbishment, and sale costs, anything under 10% leaves too little margin for cost overruns. Annualised returns of 30-60% are achievable on well-executed short-cycle flips." },
+  { q: "Do I pay stamp duty when flipping a property?", a: "Yes. If you already own another property (including your home), you pay the 5% additional property surcharge on top of standard SDLT rates. On a £150,000 flip property, this adds £7,500 to your costs. First-time investor buyers pay the surcharge too if buying through a company, though company purchases have different rules." },
+  { q: "What is the difference between profit on cost and ROI in a flip?", a: "Profit on cost is the gross profit divided by total project cost — it measures how efficiently you deployed capital throughout the project. ROI (return on investment) here measures profit against the initial purchase cost only. Both are useful: profit on cost tells you deal quality, annualised ROI lets you compare against other investments." },
+  { q: "Do I pay Capital Gains Tax when I sell a flipped property?", a: "If you flip properties as a business activity, profits may be treated as trading income and taxed as income tax rather than Capital Gains Tax. If you flip occasionally as an investor, CGT applies at 18% (basic rate) or 24% (higher rate) on residential property gains from April 2024. HMRC will determine the treatment based on the frequency and nature of activity." },
+  { q: "What refurbishment costs can I deduct when flipping?", a: "All costs directly related to the flip are deductible: purchase price, stamp duty, legal fees, survey, refurbishment materials and labour, bridging finance costs, estate agent fees, and sale legal fees. Keep receipts for everything — these reduce your taxable profit significantly." },
+];
 
 export default function FlipROIPage() {
   const [purchasePrice, setPurchasePrice] = useState(120000);
@@ -96,6 +106,8 @@ export default function FlipROIPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

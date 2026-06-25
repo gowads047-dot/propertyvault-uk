@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What EPC rating do rental properties need by 2030?", a: "The UK Government has proposed that all privately rented properties in England and Wales must achieve a minimum EPC rating of C by 2030. While the legislation is not yet finalised, landlords are advised to plan ahead — costs and contractor availability will worsen as the deadline approaches." },
+  { q: "What is the cheapest way to improve an EPC rating?", a: "The most cost-effective measures are typically loft insulation (£300-£600), draught-proofing (£150-£300), LED lighting (£50-£150), and hot water cylinder insulation (£20-£30). These low-cost measures can often shift a property by one EPC band without major disruption." },
+  { q: "Can I get grants to help pay for EPC improvements?", a: "Yes. The Boiler Upgrade Scheme offers up to £7,500 towards an air source heat pump. The Great British Insulation Scheme provides free or subsidised insulation for eligible homes. ECO4 targets lower-income households. Always check eligibility before paying full price — significant funding goes unclaimed annually." },
+  { q: "How much does it cost to go from EPC E to EPC C?", a: "Typical costs range from £5,000-£15,000 depending on the property type and starting condition. A semi-detached house in poor condition may require cavity wall insulation, loft insulation, and a new boiler or heat pump. A property that already has good insulation may only need a boiler upgrade or solar panels." },
+  { q: "What happens if my rental property doesn't meet the EPC requirement?", a: "Under the proposed rules, landlords could face fines of up to £30,000 per property for non-compliance. An exemption register exists for properties where the maximum spend (proposed at £15,000) has been reached but EPC C is still not achievable, or where improvements would damage the building's structure." },
+];
 
 type Measure = {
   id: string;
@@ -264,6 +274,8 @@ export default function EPCRetrofitPage() {
 
       <section className="section-padding bg-navy-50">
         <div className="container-max max-w-4xl">
+          <EmailResults />
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

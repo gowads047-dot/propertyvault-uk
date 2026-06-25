@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/ui/FadeIn";
 
 export const metadata: Metadata = {
   title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-  description: "19 free property calculators, 40+ templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+  description: "22 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
 };
 
 const LOCAL_BUSINESS_SCHEMA = {
@@ -195,8 +195,8 @@ export default function Home() {
           {/* Bottom stats bar — glassmorphic */}
           <div style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
             {[
-              { n: "19", l: "Free calculators" },
-              { n: "40+", l: "Templates" },
+              { n: "22", l: "Free calculators" },
+              { n: "19", l: "Free templates" },
               { n: "£0", l: "Sign-up cost" },
               { n: "3–5yr", l: "Guaranteed leases" },
             ].map((s, i) => (
@@ -377,14 +377,14 @@ export default function Home() {
             {[
               {
                 href: "/calculators",
-                tag: "19 calculators",
+                tag: "22 calculators",
                 title: "Property calculators",
                 desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, landlord tax, BTL stress test — all free.",
                 items: ["Rental yield & cash flow", "Stamp duty & CGT", "BRRR & HMO analysis"],
               },
               {
                 href: "/templates",
-                tag: "40+ templates",
+                tag: "19 free templates",
                 title: "Legal document templates",
                 desc: "Section 8 notices, rent increase letters, tenancy applications, inspection records — print-ready in minutes.",
                 items: ["Section 8 & 13 notices", "Inventory & inspection", "Tenant application form"],
@@ -488,9 +488,9 @@ export default function Home() {
                 From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/calculators" className="btn-gold">All 19 calculators</Link>
+                <Link href="/calculators" className="btn-gold">All 22 calculators</Link>
                 <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
-                  40+ templates
+                  19 free templates
                 </Link>
               </div>
             </div>
@@ -686,7 +686,7 @@ export default function Home() {
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>40+ Templates</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>19 Free Templates</h3>
               <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
             </Link>

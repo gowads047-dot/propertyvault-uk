@@ -3,12 +3,36 @@ import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",
   description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
   keywords: "BRRR strategy UK, buy refurbish rent refinance, BRRR property investing, BRRR explained, BRRR calculator",
 };
+
+const faqs = [
+  {
+    q: "What does BRRR stand for in UK property investing?",
+    a: "BRRR stands for Buy, Refurbish, Rent, Refinance. It is a strategy where you purchase a property below market value, renovate it to increase its value, let it to a tenant, and then refinance against the new higher value to recycle your original capital into your next deal.",
+  },
+  {
+    q: "How much deposit do you need for a BRRR deal in the UK?",
+    a: "For a standard BRRR deal you typically need to fund the purchase and refurbishment costs upfront — either with cash or bridging finance. After refinancing at 75% LTV on the new value, you recover most or all of your initial outlay. On a well-executed deal, you may have only a small amount of capital permanently tied up in the property.",
+  },
+  {
+    q: "What is the 6-month rule for BRRR refinancing in the UK?",
+    a: "Most mainstream buy-to-let mortgage lenders require you to have owned the property for at least 6 months before they will refinance it. This means you need bridging finance or cash to fund the purchase and refurbishment period. Some specialist lenders offer day-one refinance products but these typically carry higher rates.",
+  },
+  {
+    q: "What are the biggest risks of the BRRR strategy?",
+    a: "The main risks are refurbishment cost overruns, the property valuing lower than expected after refurbishment (meaning you cannot recycle as much capital), bridging finance costs if the project takes longer than planned, and interest rate changes between purchase and refinance. Thorough due diligence on purchase price, refurb costs, and comparable sales is essential.",
+  },
+  {
+    q: "Can you use the BRRR strategy with a limited company in the UK?",
+    a: "Yes, and many investors do. A limited company (SPV) can implement the BRRR strategy and benefits from full mortgage interest deductibility under corporation tax, unlike individual landlords affected by Section 24. However, limited company BTL mortgages are specialist products with slightly higher rates and fewer lender options than personal mortgages.",
+  },
+];
 
 export default function BRRRArticle() {
   return (
@@ -130,6 +154,7 @@ export default function BRRRArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
       </article>

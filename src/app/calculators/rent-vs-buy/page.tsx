@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "Is it cheaper to rent or buy in the UK?", a: "It depends on the local market, time horizon, and what you'd do with a deposit if you didn't buy. In most UK cities outside London, buying becomes cheaper than renting over a 5-10 year period when capital growth is factored in. In London and the South East, the higher purchase costs and price-to-rent ratios make the calculation less clear-cut." },
+  { q: "How long do I need to stay in a property for buying to make sense?", a: "Buying costs (stamp duty, legal fees, survey, moving) are typically 3-5% of the purchase price. To amortise these costs, you generally need to stay at least 3-5 years, and ideally longer. Buying for short periods in a flat or slow-growth market can be more expensive than renting the equivalent property." },
+  { q: "What are the hidden costs of buying that renters don't have?", a: "Homeowners pay buildings insurance, bear all maintenance and repair costs, pay for boiler servicing, and are responsible for structural issues. Renters also benefit from flexibility to move without incurring transaction costs. The opportunity cost of the deposit — invested elsewhere — is another cost buyers implicitly accept." },
+  { q: "What is the price-to-rent ratio and how is it used?", a: "The price-to-rent ratio compares a property's purchase price to its annual rent. A ratio of 15 or below generally favours buying; above 20-25 generally favours renting. In London, ratios of 25-35 are common, making renting relatively more attractive. In northern cities, ratios of 12-18 typically favour buying." },
+  { q: "How does the Renters' Rights Act 2025 affect the rent vs buy decision?", a: "The Renters' Rights Act 2025 abolished Section 21 'no-fault' evictions and restricts in-tenancy rent increases to once per year. This gives renters more security and predictability, making renting a more viable long-term option for those who previously felt forced to buy for stability reasons." },
+];
 
 export default function RentVsBuyPage() {
   const [propertyPrice, setPropertyPrice] = useState(250000);
@@ -121,6 +131,8 @@ export default function RentVsBuyPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

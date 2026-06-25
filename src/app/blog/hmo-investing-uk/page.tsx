@@ -2,12 +2,36 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "HMO Investing UK — Is It Still Profitable? | PropertyVault UK",
   description: "HMO investing explained. Licensing, room sizes, fire safety, yields, and whether Houses in Multiple Occupation are still worth it for UK landlords.",
   keywords: "HMO investing UK, HMO yield, HMO licensing, houses in multiple occupation, HMO calculator",
 };
+
+const faqs = [
+  {
+    q: "What is an HMO and when does it require a licence in the UK?",
+    a: "A House in Multiple Occupation (HMO) is a property rented to three or more people from two or more separate households who share facilities such as a kitchen or bathroom. Mandatory HMO licensing in England applies to properties with five or more occupants from two or more households. Many councils also operate additional licensing schemes covering smaller HMOs — always check with your local authority before purchasing.",
+  },
+  {
+    q: "What yields can HMO investors achieve in the UK?",
+    a: "HMOs typically achieve gross yields of 10–18%, significantly higher than the 4–8% achievable on standard single-let buy-to-let properties. Net yields after management, Council Tax (often the landlord's responsibility in HMOs), maintenance, licensing, and voids are typically 7–13%. The yield premium over single-lets compensates for the additional complexity and compliance obligations.",
+  },
+  {
+    q: "What are Article 4 Directions and how do they affect HMO investors?",
+    a: "Article 4 Directions are planning designations used by many councils to remove the permitted development right to convert a family home (Use Class C3) to an HMO (Use Class C4). In areas covered by Article 4, you need full planning permission — not just an HMO licence — before converting. Planning can be refused. Birmingham, Nottingham, Leicester, and most major UK cities have Article 4 Directions covering significant areas. Always check with the local planning authority before purchasing.",
+  },
+  {
+    q: "What are the minimum room sizes required in an HMO?",
+    a: "Under the Management of Houses in Multiple Occupation (England) Regulations, single bedrooms for one person aged 10 or over must be at least 6.51 m², and double bedrooms for two people aged 10 or over must be at least 10.22 m². Rooms below these sizes cannot be used as sleeping accommodation. Local councils can also impose stricter standards than the national minimum.",
+  },
+  {
+    q: "Do HMO landlords pay Council Tax?",
+    a: "In most cases yes. Where rooms are let individually on separate Assured Shorthold Tenancy agreements — the most common HMO structure — the landlord is typically liable for Council Tax rather than the tenants. This adds £1,000–2,500 per year depending on the property's council tax band and local rates. It is fully deductible as a business expense but must be factored into cash flow projections from the outset.",
+  },
+];
 
 export default function HMOArticle() {
   return (
@@ -98,6 +122,7 @@ export default function HMOArticle() {
             </div>
           </div>
 
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
       </div></article>
     </>

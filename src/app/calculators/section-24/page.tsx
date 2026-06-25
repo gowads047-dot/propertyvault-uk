@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What is Section 24 of the Finance Act 2015?", a: "Section 24 removed the right for individual buy-to-let landlords to deduct mortgage interest from rental income before calculating tax. It was phased in from 2017 and fully in force since April 2020. Instead of a deduction, landlords now receive a 20% basic rate tax credit on their mortgage interest costs." },
+  { q: "Who is affected by Section 24?", a: "Only individual landlords holding property in their personal name are affected. Limited companies (SPVs) can still deduct mortgage interest in full and pay corporation tax at 25% on the net profit. Basic-rate taxpayers are largely unaffected by Section 24 — the main impact falls on higher-rate (40%) and additional-rate (45%) taxpayers." },
+  { q: "Can Section 24 cause me to pay more tax than I earned in profit?", a: "Yes. Because you declare the full rental income on your self-assessment (before deducting mortgage interest), this can push your apparent income into the higher-rate band even if your actual cash profit is modest or negative. In extreme cases where mortgage interest is high relative to rent, the tax bill can exceed the net rental income." },
+  { q: "Does Section 24 apply to limited companies?", a: "No. Section 24 only applies to individual landlords. Limited companies pay corporation tax (25% for profits over £50,000) on net rental profit after deducting mortgage interest, management fees, and all other allowable expenses. This is why many higher-rate landlords have incorporated into SPV structures in recent years." },
+  { q: "What expenses can individual landlords still deduct under Section 24?", a: "Individual landlords can still deduct all genuine rental expenses except mortgage interest. Allowable deductions include letting agent fees, buildings and landlord insurance, maintenance and repairs (not improvements), accountancy fees, legal costs for tenancy renewals, ground rent, and service charges. Mortgage interest is restricted to a 20% tax credit only." },
+];
 
 export default function Section24Page() {
   const [rentalIncome, setRentalIncome] = useState(12000);
@@ -109,6 +119,8 @@ export default function Section24Page() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

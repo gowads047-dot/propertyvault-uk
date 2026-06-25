@@ -3,6 +3,16 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { FAQSchema } from "@/components/seo/FAQSchema";
+import { EmailResults } from "@/components/calculators/EmailResults";
+
+const faqs = [
+  { q: "What is a bridging loan and how does it work?", a: "A bridging loan is short-term secured finance used to bridge a gap — typically between buying a new property and selling another, or between purchasing and refinancing onto a long-term mortgage. They complete in days rather than weeks and are commonly used for auction purchases, uninhabitable properties, or chain breaks." },
+  { q: "How much does bridging finance cost?", a: "Bridging loans are charged at a monthly rate, typically 0.65-1.2% per month (8-14% annualised). On top of interest, expect an arrangement fee of 1-2%, possibly an exit fee of 0-1%, valuation fees, and legal costs for both sides. Always calculate the total cost — not just the monthly rate — before committing." },
+  { q: "What is the difference between retained and serviced bridging interest?", a: "With retained (rolled-up) interest, the lender adds all projected interest to the loan upfront and you repay it on exit — you don't make monthly payments. With serviced interest, you pay monthly like a mortgage. Retained is more expensive overall but is better for cash flow during a refurbishment period." },
+  { q: "What is the maximum LTV on a bridging loan?", a: "Most bridging lenders offer up to 70-75% LTV on residential property, though 65-70% is more common for commercial or development. Some lenders will go to 80% on very strong security. The higher the LTV, the higher the monthly rate will be." },
+  { q: "What happens if I cannot repay a bridging loan on time?", a: "Failure to repay on time can trigger default interest rates (often 2-3x the standard monthly rate) and ultimately repossession. Always have a credible, documented exit strategy — either a confirmed sale or a mortgage offer in principle — before taking out a bridge." },
+];
 
 export default function BridgingPage() {
   const [loanAmount, setLoanAmount] = useState(150000);
@@ -89,6 +99,8 @@ export default function BridgingPage() {
               </div>
             </div>
           </div>
+          <div className="mt-8"><EmailResults /></div>
+          <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

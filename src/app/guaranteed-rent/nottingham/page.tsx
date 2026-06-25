@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import Link from "next/link";
+import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Nottingham — Landlords Get Paid Every Month | PropertyVault UK",
@@ -91,6 +92,89 @@ export default function NottinghamPage() {
             ))}
           </ul>
 
+          {/* Income Comparison Table */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>How Your Income Compares</h3>
+            <div className="overflow-x-auto rounded-xl border border-navy-100">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-navy-800 text-white">
+                    <th className="px-4 py-3 text-left font-semibold">Scenario</th>
+                    <th className="px-4 py-3 text-center font-semibold">Monthly</th>
+                    <th className="px-4 py-3 text-center font-semibold">Annual</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b border-navy-100 bg-white">
+                    <td className="px-4 py-3 text-navy-700 font-medium">Market rent (gross)</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£850</td>
+                    <td className="px-4 py-3 text-center text-navy-600">£10,200</td>
+                  </tr>
+                  <tr className="border-b border-navy-100 bg-navy-50/50">
+                    <td className="px-4 py-3 text-navy-700 font-medium">After agent fees + voids</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£700</td>
+                    <td className="px-4 py-3 text-center text-navy-500">£8,400</td>
+                  </tr>
+                  <tr className="bg-gold-50 border-b-2 border-gold-400">
+                    <td className="px-4 py-3 text-navy-800 font-bold">Guaranteed rent (PropertyVault)</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£755</td>
+                    <td className="px-4 py-3 text-center text-gold-600 font-bold">£9,060</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Nottingham. Agent fee assumed at 10% + 1 month average void per year.</p>
+          </div>
+
+          {/* Case Study */}
+          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
+            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
+            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Karen B. — 3-bed terraced house, Bulwell</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
+                <p className="font-bold text-white">£850/mo</p>
+              </div>
+              <div className="bg-white/10 rounded-xl p-3 text-center">
+                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
+                <p className="font-bold text-white">£700/mo</p>
+              </div>
+              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
+                <p className="font-bold text-gold-400">£755/mo</p>
+              </div>
+              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
+                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
+                <p className="font-bold text-green-400">+£660/yr</p>
+              </div>
+            </div>
+            <p className="text-navy-200 text-sm leading-relaxed">"My Bulwell property had two void months last year and my agent's fees took another chunk. I was clearing about £700 a month by the time the dust settled. PropertyVault guaranteed me £755 from month one — and I've had zero calls from tenants since. That £660 a year difference is just a bonus on top of the peace of mind."</p>
+            <p className="text-navy-400 text-xs mt-2">— Karen B., landlord in Bulwell, Nottingham (3-year lease signed 2024)</p>
+          </div>
+
+          {/* Testimonials */}
+          <div className="mb-10">
+            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Nottingham Landlords Say</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I've had two properties in Hyson Green sit empty over the years — always at the worst times. Since switching to PropertyVault I haven't had a single void month. The rent is in my account on the same day every month and I don't have to think about it."</p>
+                <p className="font-bold text-navy-800 text-sm">James W.</p>
+                <p className="text-navy-400 text-xs">Hyson Green, Nottingham — 2-bed flat</p>
+              </div>
+              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
+                <div className="flex gap-0.5 mb-3">
+                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
+                </div>
+                <p className="text-navy-600 text-sm leading-relaxed mb-3">"The setup was incredibly straightforward. I spoke with someone on Wednesday, they inspected the property Thursday, and I had a lease agreement by the following Monday. Rent started 7 days after that. Brilliant service for Nottingham landlords."</p>
+                <p className="font-bold text-navy-800 text-sm">Amara K.</p>
+                <p className="text-navy-400 text-xs">Sneinton, Nottingham — 3-bed terraced house</p>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">
             <p className="text-gold-400 font-bold text-sm mb-2">Nottingham Landlord?</p>
             <p className="text-xl font-extrabold mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Get your free guaranteed rent quote today</p>
@@ -109,6 +193,33 @@ export default function NottinghamPage() {
         <div className="container-max max-w-3xl text-center">
           <p className="text-sm text-navy-500">Want to learn more about how guaranteed rent works?</p>
           <Link href="/guaranteed-rent" className="text-sm font-semibold text-gold-600 hover:text-gold-700">Read the full guaranteed rent guide →</Link>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl">
+          <FAQSchema faqs={[
+            {
+              q: "How much guaranteed rent will I receive for my Nottingham property?",
+              a: "Our guaranteed rent offer depends on your property's size, type, and location in Nottingham. For a typical 3-bed terraced house in areas like Bulwell or Hyson Green we offer around £755 per month — paid every month with no voids. Contact us for a tailored, no-obligation quote.",
+            },
+            {
+              q: "Which areas of Nottingham does PropertyVault UK cover?",
+              a: "We cover all Nottingham postcodes including Hyson Green, Sneinton, Bulwell, Bestwood, Radford, Lenton, Beeston, Carlton, Arnold, Mapperley, Sherwood, Clifton, and surrounding NG postcode areas. Get in touch and we'll confirm your postcode immediately.",
+            },
+            {
+              q: "How quickly can I start receiving guaranteed rent in Nottingham?",
+              a: "Most Nottingham landlords are up and receiving rent within 7–14 days of initial contact. We complete the property inspection, lease agreement, and onboarding quickly so you can start earning sooner. There are no lengthy delays or complex legal processes to navigate.",
+            },
+            {
+              q: "Who handles maintenance and repairs at my Nottingham property?",
+              a: "We manage all routine maintenance and tenant repairs through our local Nottingham contractor network. Day-to-day issues are handled by us at no extra cost to you. For major structural works we'll always notify you in advance, in line with your lease agreement.",
+            },
+            {
+              q: "Can I sell my Nottingham property during the guaranteed rent lease?",
+              a: "Yes. We can discuss options if you need to sell during the lease period — including early termination clauses or selling with the lease in place, which many buy-to-let investors find attractive. We're flexible and aim to work around your circumstances.",
+            },
+          ]} />
         </div>
       </section>
     </>
