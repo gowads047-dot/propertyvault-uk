@@ -5,11 +5,32 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Rental Yield Calculator UK — Gross & Net Yield | PropertyVault",
   description: "Calculate gross yield, net yield, and monthly cash flow on any UK buy-to-let property. Factor in voids, management fees, and running costs.",
+  openGraph: {
+    title: "Rental Yield Calculator UK | PropertyVault",
+    description: "Calculate gross and net rental yield on any UK property — factor in voids, management, and all costs.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/calculators/rental-yield/",
+    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Rental Yield Calculator — PropertyVault UK" }],
+  },
+  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/rental-yield/" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Rental Yield Calculator UK",
+  description: "Calculate gross yield, net yield, and monthly cash flow on any UK buy-to-let property.",
+  url: "https://propertyvaultuk.co.uk/calculators/rental-yield/",
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
+  provider: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
 };
 
 export default function RentalYieldPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>

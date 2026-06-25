@@ -5,11 +5,43 @@ export const metadata: Metadata = {
   title: "Guaranteed Rent Birmingham — Landlords Get Paid Every Month | PropertyVault UK",
   description: "Guaranteed rent for landlords in Birmingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Birmingham postcodes covered.",
   keywords: "guaranteed rent Birmingham, guaranteed rent scheme Birmingham, landlord guaranteed rent B postcode, lease my property Birmingham",
+  openGraph: {
+    title: "Guaranteed Rent Birmingham | PropertyVault UK",
+    description: "Lease your Birmingham property for 3-5 years — guaranteed rent every month, no voids, no management.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Guaranteed Rent Birmingham — PropertyVault UK" }],
+  },
+  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Guaranteed Rent Birmingham",
+  description: "Guaranteed rent for landlords in Birmingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees.",
+  url: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+  provider: {
+    "@type": "Organization",
+    name: "PropertyVault UK",
+    url: "https://propertyvaultuk.co.uk",
+    telephone: "+447415721628",
+    email: "gowads047@gmail.com",
+    areaServed: { "@type": "City", name: "Birmingham", sameAs: "https://en.wikipedia.org/wiki/Birmingham" },
+  },
+  serviceType: "Guaranteed Rent Property Leasing",
+  areaServed: { "@type": "City", name: "Birmingham" },
+  availableChannel: {
+    "@type": "ServiceChannel",
+    serviceUrl: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+  },
 };
 
 export default function BirminghamPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="gradient-navy relative overflow-hidden py-20 md:py-28">
         <div className="absolute inset-0"><div className="absolute top-10 right-[10%] w-[300px] h-[300px] bg-gold-400/5 rounded-full blur-[80px]" /></div>
         <div className="container-max px-4 relative z-10 text-center">

@@ -5,11 +5,39 @@ export const metadata: Metadata = {
   title: "Guaranteed Rent Derby — Landlords Get Paid Every Month | PropertyVault UK",
   description: "Guaranteed rent for landlords in Derby. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Derby postcodes covered.",
   keywords: "guaranteed rent Derby, guaranteed rent scheme Derby, landlord guaranteed rent DE postcode, lease my property Derby",
+  openGraph: {
+    title: "Guaranteed Rent Derby | PropertyVault UK",
+    description: "Lease your Derby property for 3-5 years — guaranteed rent every month, no voids, no management.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/guaranteed-rent/derby/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Guaranteed Rent Derby — PropertyVault UK" }],
+  },
+  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/derby/" },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Guaranteed Rent Derby",
+  description: "Guaranteed rent for landlords in Derby. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees.",
+  url: "https://propertyvaultuk.co.uk/guaranteed-rent/derby/",
+  provider: {
+    "@type": "Organization",
+    name: "PropertyVault UK",
+    url: "https://propertyvaultuk.co.uk",
+    telephone: "+447415721628",
+    email: "gowads047@gmail.com",
+    areaServed: { "@type": "City", name: "Derby" },
+  },
+  serviceType: "Guaranteed Rent Property Leasing",
+  areaServed: { "@type": "City", name: "Derby" },
 };
 
 export default function DerbyPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="gradient-navy relative overflow-hidden py-20 md:py-28">
         <div className="absolute inset-0"><div className="absolute top-10 right-[10%] w-[300px] h-[300px] bg-gold-400/5 rounded-full blur-[80px]" /></div>
         <div className="container-max px-4 relative z-10 text-center">
