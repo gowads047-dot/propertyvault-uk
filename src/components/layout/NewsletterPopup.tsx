@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [userType, setUserType] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const dismissed = localStorage.getItem("newsletter_dismissed");
     if (dismissed) return;
-
-    const timer = setTimeout(() => {
-      setVisible(true);
-    }, 60000); // Show after 60 seconds
-
+    const timer = setTimeout(() => setVisible(true), 60000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -21,64 +22,143 @@ export function NewsletterPopup() {
     localStorage.setItem("newsletter_dismissed", "true");
   }
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, user_type: userType || null }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error ?? "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+
+      setStatus("success");
+      localStorage.setItem("newsletter_dismissed", "true");
+    } catch {
+      setErrorMsg("Network error. Please try again.");
+      setStatus("error");
+    }
+  }
+
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4" onClick={dismiss}>
-      <div className="bg-white rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
-        <button onClick={dismiss} className="absolute top-4 right-4 text-navy-400 hover:text-navy-600 transition-colors" aria-label="Close">
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
-
-        <div className="text-center mb-5">
-          <span className="text-3xl block mb-3">📬</span>
-          <h3 className="text-xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>
-            Free Property Starter Pack
-          </h3>
-          <p className="text-sm text-navy-500 mt-2">
-            Get our best calculator links, top guides, and a landlord compliance checklist — delivered straight to your inbox. Free, no spam.
-          </p>
-        </div>
-
-        <form action="https://formsubmit.co/gowads047@gmail.com" method="POST" className="space-y-3">
-          <input type="hidden" name="_subject" value="New Newsletter Signup — PropertyVault" />
-          <input type="hidden" name="_next" value="https://propertyvaultuk.co.uk/?subscribed=true" />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="text" name="_honey" style={{ display: "none" }} />
-
-          <input
-            type="text" name="name" placeholder="Your first name" required
-            className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
-          />
-          <input
-            type="email" name="email" placeholder="Your email address" required
-            className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
-          />
-
-          <div>
-            <p className="text-xs text-navy-500 mb-2 font-medium">I am a...</p>
-            <div className="flex flex-wrap gap-2">
-              {["Landlord", "Investor", "First-Time Buyer", "Agent", "Other"].map((type) => (
-                <label key={type} className="flex items-center gap-1.5 text-xs text-navy-600 cursor-pointer">
-                  <input type="radio" name="user_type" value={type} className="text-gold-500" />
-                  {type}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <button type="submit" className="btn-primary w-full !py-3.5 text-sm">
-            Send Me the Free Pack →
+    <div
+      className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4"
+      onClick={status !== "success" ? dismiss : undefined}
+    >
+      <div
+        className="bg-navy-900 rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {status !== "success" && (
+          <button
+            onClick={dismiss}
+            className="absolute top-4 right-4 text-navy-400 hover:text-white transition-colors"
+            aria-label="Close"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
+        )}
 
-          <p className="text-[10px] text-navy-400 text-center">
-            No spam. Unsubscribe anytime. We respect your privacy.
-          </p>
-        </form>
+        {status === "success" ? (
+          <div className="text-center py-4">
+            <span className="text-4xl block mb-4">🎉</span>
+            <h3 className="text-xl font-extrabold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
+              You&apos;re in!
+            </h3>
+            <p className="text-navy-300 text-sm mb-6">
+              Check your inbox — your free property starter pack is on its way.
+            </p>
+            <button
+              onClick={dismiss}
+              className="bg-gold-400 text-navy-900 font-bold text-sm px-6 py-2.5 rounded-xl hover:bg-gold-300 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-5">
+              <span className="text-3xl block mb-3">📬</span>
+              <h3 className="text-xl font-extrabold text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
+                Free Property Starter Pack
+              </h3>
+              <p className="text-sm text-navy-300 mt-2">
+                Get our best calculator links, top guides, and a landlord compliance checklist — delivered straight to your inbox. Free, no spam.
+              </p>
+            </div>
 
-        <button onClick={dismiss} className="block text-xs text-navy-400 hover:text-navy-600 mx-auto mt-3">
-          No thanks, I&apos;ll skip this
-        </button>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <input
+                type="text"
+                placeholder="Your first name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 bg-navy-800 border border-navy-600 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
+              />
+              <input
+                type="email"
+                placeholder="Your email address"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 bg-navy-800 border border-navy-600 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
+              />
+
+              <div>
+                <p className="text-xs text-navy-400 mb-2 font-medium">I am a...</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-2">
+                  {["Landlord", "Investor", "First-Time Buyer", "Agent", "Other"].map((type) => (
+                    <label key={type} className="flex items-center gap-1.5 text-xs text-navy-300 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="user_type"
+                        value={type}
+                        checked={userType === type}
+                        onChange={() => setUserType(type)}
+                        className="accent-gold-400"
+                      />
+                      {type}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {errorMsg && (
+                <p className="text-xs text-red-400 font-medium">{errorMsg}</p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full bg-gold-400 text-navy-900 font-bold text-sm py-3.5 rounded-xl hover:bg-gold-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {status === "loading" ? "Sending…" : "Send Me the Free Pack →"}
+              </button>
+
+              <p className="text-[10px] text-navy-500 text-center">
+                No spam. Unsubscribe anytime. We respect your privacy.
+              </p>
+            </form>
+
+            <button onClick={dismiss} className="block text-xs text-navy-500 hover:text-navy-300 mx-auto mt-3 transition-colors">
+              No thanks, I&apos;ll skip this
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
