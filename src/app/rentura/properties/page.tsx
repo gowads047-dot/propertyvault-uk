@@ -54,7 +54,7 @@ export default function RenturaPropertiesPage() {
   const filtered = properties.filter(p =>
     !search ||
     p.address.toLowerCase().includes(search.toLowerCase()) ||
-    p.city.toLowerCase().includes(search.toLowerCase()) ||
+    (p.city || "").toLowerCase().includes(search.toLowerCase()) ||
     (p.postcode || "").toLowerCase().includes(search.toLowerCase())
   );
 
