@@ -17,5 +17,25 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <style>{`@media print { .pv-template-disclaimer { display: none !important; } }`}</style>
+      <div className="pv-template-disclaimer" style={{
+        background: "#fefce8",
+        borderBottom: "1px solid #fde047",
+        padding: "10px 20px",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 10,
+      }}>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
+          <path fillRule="evenodd" clipRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.516-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" fill="#a16207"/>
+        </svg>
+        <p style={{ fontSize: 13, color: "#713f12", margin: 0, lineHeight: 1.5 }}>
+          <strong>Template — for guidance only.</strong> These documents are starting points, not legal advice. For legally binding agreements or formal notices, have a solicitor review before use. Compliant with England &amp; Wales law as of 2025 — verify current requirements before use.
+        </p>
+      </div>
+      {children}
+    </>
+  );
 }

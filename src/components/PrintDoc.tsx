@@ -60,14 +60,17 @@ interface PrintFooterProps {
 
 export function PrintFooter({ docTitle, note }: PrintFooterProps) {
   return (
-    <div style={{ marginTop: 32, paddingTop: 12, borderTop: "1px solid #e5e7eb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      <p style={{ fontSize: 8.5, color: "#9ca3af", margin: 0, fontFamily: "Arial, sans-serif" }}>
-        {docTitle} · Generated via PropertyVault.co.uk · For guidance purposes only — seek legal advice for complex matters
-      </p>
-      <p style={{ fontSize: 8.5, color: "#9ca3af", margin: 0, fontFamily: "Arial, sans-serif" }}>
-        {note || "England & Wales"}
-      </p>
-    </div>
+    <>
+      <style>{`@media print { .pv-print-footer { display: none !important; } }`}</style>
+      <div className="pv-print-footer" style={{ marginTop: 32, paddingTop: 12, borderTop: "1px solid #e5e7eb", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <p style={{ fontSize: 8.5, color: "#9ca3af", margin: 0, fontFamily: "Arial, sans-serif" }}>
+          {docTitle} · Generated via PropertyVault.co.uk · For guidance purposes only — seek legal advice for complex matters
+        </p>
+        <p style={{ fontSize: 8.5, color: "#9ca3af", margin: 0, fontFamily: "Arial, sans-serif" }}>
+          {note || "England &amp; Wales"}
+        </p>
+      </div>
+    </>
   );
 }
 
