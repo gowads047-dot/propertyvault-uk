@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/calculators/personal-vs-ltd/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Personal vs Limited Company Calculator — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Personal vs Limited Company Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Personal vs Limited Company Property Calculator UK | PropertyVault", description: "Free tool — find the most tax-efficient ownership structure." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/personal-vs-ltd/" },

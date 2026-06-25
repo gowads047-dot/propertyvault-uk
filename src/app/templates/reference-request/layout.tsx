@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/reference-request/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Tenant Reference Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Tenant Reference Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Tenant Reference Request Letter UK | PropertyVault", description: "Free landlord reference request template — collect tenant references the right way." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/reference-request/" },

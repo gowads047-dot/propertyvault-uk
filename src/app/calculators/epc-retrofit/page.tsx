@@ -266,6 +266,20 @@ export default function EPCRetrofitPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-white">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">EPC C Deadline for Landlords — What's Required and When</h2>
+          <p>The government has proposed that all new tenancies must have a minimum EPC rating of C by 2025, with all existing tenancies following by 2028. While the legislation is not yet finalised, most industry experts advise landlords to plan now — retrofitting a whole portfolio close to a deadline is expensive and qualified contractors will be scarce.</p>
+          <p>Currently, all rental properties must have a minimum EPC rating of E. Properties rated F or G cannot legally be let (unless an exemption applies) — landlords face fines of up to £30,000 per property.</p>
+          <h3 className="font-bold text-navy-800">What Improvements Move the EPC Rating Most?</h3>
+          <p>Common improvements and typical point impact: loft insulation (£300-£600, +8-12 SAP points), cavity wall insulation (£500-£1,500, +6-10 points), heat pump replacing gas boiler (£7,000-£14,000 after grant, +5-15 points), double glazing replacing single (£3,000-£8,000, +4-8 points), solar panels (+10-20 points). The most cost-effective path depends on your starting EPC and property type.</p>
+          <h3 className="font-bold text-navy-800">Grants Available — Don't Pay Full Price</h3>
+          <p>The Boiler Upgrade Scheme offers £7,500 towards an air source heat pump. The Great British Insulation Scheme and ECO4 provide free or subsidised insulation for lower-rated properties. Always check grant availability before paying full price — thousands of pounds in support goes unclaimed by landlords every year.</p>
+          <h3 className="font-bold text-navy-800">Exemptions and Cost Cap</h3>
+          <p>Under the proposed rules, the maximum spend required to reach EPC C is £15,000. Spend up to this and still can't reach C? Register for an exemption. Exemptions also apply where improvements would damage the property's structure — common with listed buildings and older stone properties.</p>
+        </div>
+      </section>
     </>
   );
 }

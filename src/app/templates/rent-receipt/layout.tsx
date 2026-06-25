@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/rent-receipt/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Rent Receipt Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Rent Receipt Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Rent Receipt Template UK | PropertyVault", description: "Free rent receipt template — print or send digitally in seconds." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/rent-receipt/" },

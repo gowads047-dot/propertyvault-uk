@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/section-8-notice/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Section 8 Notice Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Section 8 Notice Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Section 8 Notice Template UK 2025 | PropertyVault", description: "Free Section 8 notice — all grounds for possession, updated 2025." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/section-8-notice/" },

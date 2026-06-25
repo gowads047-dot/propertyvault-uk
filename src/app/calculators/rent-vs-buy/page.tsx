@@ -123,6 +123,19 @@ export default function RentVsBuyPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">Renting vs Buying in the UK — What the Maths Actually Says</h2>
+          <p>The rent-vs-buy debate is rarely simple. In some UK cities, buying is dramatically cheaper than renting over the long term. In others — particularly London and the South East — the deposit and purchase costs are so large that investing that capital elsewhere can outperform property ownership for a decade or more. The right answer depends on your local market, time horizon, and what you'd do with the deposit if you didn't buy.</p>
+          <h3 className="font-bold text-navy-800">The Hidden Costs of Buying</h3>
+          <p>Buyers often compare the monthly mortgage payment to rent but forget: stamp duty (thousands tied up immediately), legal fees, survey, arrangement fee, building insurance, maintenance responsibility, and the opportunity cost of the deposit. A £30,000 deposit invested at 7% average return grows to £59,000 in 10 years — this is the benchmark your property equity needs to beat.</p>
+          <h3 className="font-bold text-navy-800">The Hidden Costs of Renting</h3>
+          <p>Renters don't build equity, can face rent increases at renewal (the Renters' Rights Act 2025 restricts in-tenancy increases to once per year and removes Section 21 "no-fault" evictions), and have less long-term certainty. These are real costs that don't appear in a monthly payment comparison but significantly affect quality of life and financial planning.</p>
+          <h3 className="font-bold text-navy-800">When Buying Wins and When Renting Wins</h3>
+          <p>Buying typically wins if: you plan to stay 5+ years (long enough to amortise purchase costs), the area has strong price growth potential, and mortgage payments are comparable to rent. Renting typically wins if: you need flexibility, the price-to-rent ratio is very high (over 25x annual rent), or you have high-return alternatives for the deposit capital. Run both scenarios with your actual numbers above.</p>
+        </div>
+      </section>
     </>
   );
 }

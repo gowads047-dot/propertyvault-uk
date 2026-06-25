@@ -154,6 +154,20 @@ export default function CGTCalculatorPage() {
           <Disclaimer type="tax" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">Capital Gains Tax on UK Property — What You Need to Know</h2>
+          <p>Capital Gains Tax (CGT) is charged on the profit when you sell a property that is not your main home. Since October 2024, the CGT rates on residential property are 18% for basic-rate taxpayers and 24% for higher-rate taxpayers. The Annual Exempt Amount (AEA) is currently £3,000 per person per tax year — anything above this is taxable.</p>
+          <p>You must report and pay CGT within 60 days of completion on the property sale — not by the following 31 January. Missing this deadline incurs an automatic penalty and interest charges from HMRC.</p>
+          <h3 className="font-bold text-navy-800">What Can You Deduct to Reduce CGT?</h3>
+          <p>Your CGT liability is based on your net gain after deducting: the original purchase price, stamp duty paid on purchase, legal and survey fees on purchase, capital improvement costs (not maintenance or repairs), estate agent fees on sale, and legal fees on sale. Keep receipts for all capital improvements — HMRC may request evidence of these deductions.</p>
+          <h3 className="font-bold text-navy-800">Private Residence Relief (PRR)</h3>
+          <p>If you've lived in the property as your main home at any point, you may qualify for Private Residence Relief, which can reduce or eliminate CGT entirely. PRR covers the period you lived there plus the final 9 months of ownership regardless of whether you were living there. This is particularly relevant for accidental landlords who moved out and then let the property.</p>
+          <h3 className="font-bold text-navy-800">Halve Your CGT with a Spouse or Civil Partner</h3>
+          <p>If you own property jointly with a spouse or civil partner, each person uses their own £3,000 AEA and pays CGT at their own marginal rate. Transfers between spouses occur at no-gain/no-loss for CGT — so transferring a share of a property to a lower-earning spouse before selling is a legitimate tax planning strategy worth exploring with an accountant.</p>
+        </div>
+      </section>
     </>
   );
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/section-13-notice/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Section 13 Notice Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Section 13 Notice Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Section 13 Rent Increase Notice UK | PropertyVault", description: "Free Section 13 notice — increase rent legally with one click." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/section-13-notice/" },

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Guaranteed Rent Birmingham — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Birmingham — PropertyVault UK" }],
   },
   alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/" },
 };

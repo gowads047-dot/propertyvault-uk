@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Property Templates — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Templates — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free UK Property Templates | PropertyVault", description: "40+ free legal documents for UK landlords and property investors." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/" },

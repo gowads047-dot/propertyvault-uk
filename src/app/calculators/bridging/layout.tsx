@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/calculators/bridging/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Bridging Loan Calculator — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Bridging Loan Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Bridging Loan Calculator UK | PropertyVault", description: "Free tool — calculate bridging finance costs before you commit." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/bridging/" },

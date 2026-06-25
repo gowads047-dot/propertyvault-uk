@@ -133,6 +133,20 @@ export default function HMOYieldPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">Why HMO Yields Are Higher Than Standard Buy-to-Let</h2>
+          <p>Houses in Multiple Occupation (HMOs) generate higher yields than single-let properties because you rent each room individually rather than the whole house to one household. A 5-bed property in a typical Midlands city might achieve £400/month as a single let, but £350-£450 per room as an HMO — delivering £1,750-£2,250 in total monthly rent from the same building.</p>
+          <p>Gross HMO yields of 10-15% are common in cities like Nottingham, Derby, and Birmingham. Single-let buy-to-let in the same areas typically yields 4-7% gross. That difference compounds significantly over a portfolio.</p>
+          <h3 className="font-bold text-navy-800">HMO Expenses to Factor In</h3>
+          <p>HMOs have higher running costs than single-lets. As the landlord you typically pay all utilities (gas, electric, water, broadband) and include these in the room rent. Management fees are higher — often 12-15% with specialist agents vs 8-10% for single-let. Maintenance is more frequent with more tenants. Licensing fees (mandatory for large HMOs and in Article 4 areas) range from £250-£1,500 depending on the council.</p>
+          <h3 className="font-bold text-navy-800">What Is a Good HMO Yield?</h3>
+          <p>Most experienced HMO investors target a minimum 10% gross yield and at least £200 net cash flow per room per month after all costs including mortgage. Below 8% gross and the extra complexity of HMO management rarely justifies itself over a well-located single-let. Use this calculator to test those thresholds before committing to a deal.</p>
+          <h3 className="font-bold text-navy-800">Article 4 Directions and HMO Licensing</h3>
+          <p>Many councils have introduced Article 4 directions that require planning permission to convert a family home (C3) to an HMO (C4). Always check the local planning authority before purchasing. Mandatory HMO licensing applies to properties with 5 or more people from 2 or more households sharing facilities — failure to license carries an unlimited fine and a Rent Repayment Order risk.</p>
+        </div>
+      </section>
     </>
   );
 }

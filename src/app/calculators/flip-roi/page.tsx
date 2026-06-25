@@ -98,6 +98,20 @@ export default function FlipROIPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">Property Flipping in the UK — How to Make It Work</h2>
+          <p>Property flipping (buying, renovating, and selling for profit) can generate significant returns but carries more risk than buy-to-let — your capital is tied up during refurbishment, the market can move against you, and costs almost always exceed initial estimates. A well-executed flip in the right area can return 15-25% on invested capital in 4-9 months. A poorly planned one loses money even in a rising market.</p>
+          <p>The fundamental rule: <strong>profit is made on the purchase, not the sale.</strong> If you pay too much at acquisition, no renovation will make the numbers work. Target properties at least 20-25% below market value after works.</p>
+          <h3 className="font-bold text-navy-800">Flip vs BRRR — Which Is Better?</h3>
+          <p>Flipping generates a lump sum profit but you pay CGT on it and lose the asset. BRRR (Buy, Refurb, Refinance, Rent) recycles your capital — same refurbishment, but then remortgage to extract capital back out and hold for rental income. For long-term wealth building, BRRR typically wins. Flipping is better for generating short-term cash.</p>
+          <h3 className="font-bold text-navy-800">The True Cost of a Flip</h3>
+          <p>Beyond purchase price and refurb: stamp duty (3% surcharge if not your only property), bridging finance (0.65-1.2%/month), utilities during works, council tax, estate agent fees on sale (1-2.5%), both sides' legal fees, and CGT on the profit. This calculator captures all of these so your ROI figure reflects reality.</p>
+          <h3 className="font-bold text-navy-800">Refurbishment Cost Control</h3>
+          <p>Get three quotes for every trade. Build in a 20% contingency from the start — it's almost always needed. Project-managing trades yourself saves 15-20% vs a main contractor but requires significant time. For a first flip, a JV partner with experience protects you from the mistakes that wipe out margins.</p>
+        </div>
+      </section>
     </>
   );
 }

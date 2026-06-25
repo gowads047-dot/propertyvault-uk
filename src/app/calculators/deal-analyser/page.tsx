@@ -965,6 +965,20 @@ export default function DealAnalyserPage() {
           <Disclaimer type="financial" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">How to Analyse a Property Deal Properly</h2>
+          <p>Most amateur investors make a decision based on asking price alone. Professional investors build a full deal model — purchase costs, refurb, finance, running costs, rental income, void assumptions, and exit strategy — before they even view the property. This calculator helps you build that model.</p>
+          <p>The key metrics to focus on: <strong>net yield</strong> (annual profit ÷ total invested), <strong>monthly cash flow</strong> (rent minus all costs including mortgage), and <strong>ROI</strong> which factors in capital appreciation alongside income.</p>
+          <h3 className="font-bold text-navy-800">What Is a Good Deal?</h3>
+          <p>For a standard buy-to-let, most experienced investors require a minimum 6% net yield and positive monthly cash flow after all costs. Below this, the risk-adjusted return rarely justifies tying up capital. In the Midlands and North, deals with 8-12% net yield and £200-500/month positive cash flow exist — these are the benchmarks worth targeting.</p>
+          <h3 className="font-bold text-navy-800">Don't Forget Acquisition Costs</h3>
+          <p>Total investment includes: deposit, stamp duty (3% surcharge on additional properties), legal fees (£1,000-£2,500), survey (£300-£700), mortgage arrangement fee, refurbishment, and initial furnishing. Missing any of these inflates your apparent ROI — this calculator captures all of them.</p>
+          <h3 className="font-bold text-navy-800">Model Void Periods Realistically</h3>
+          <p>Assuming 100% occupancy is the most common mistake in property analysis. A 5% void allowance (about 2.5 weeks/year) is conservative and realistic for well-located properties. HMOs and short-lets can have higher voids. Baking in realistic voids shows what the deal actually returns in the real world.</p>
+        </div>
+      </section>
     </>
   );
 }

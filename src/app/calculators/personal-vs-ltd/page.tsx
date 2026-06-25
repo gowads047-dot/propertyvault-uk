@@ -114,6 +114,20 @@ export default function PersonalVsLtdPage() {
           <Disclaimer type="tax" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">Personal Name vs Limited Company — The Tax Difference Explained</h2>
+          <p>Since Section 24 removed mortgage interest relief for individual landlords, buying through a Special Purpose Vehicle (SPV) limited company has become significantly more tax-efficient for higher-rate taxpayers. A company pays 25% corporation tax on net profit and deducts mortgage interest in full — an individual higher-rate taxpayer pays 40% on gross rental income with only a 20% credit on mortgage interest.</p>
+          <p>The tax saving can be substantial. A landlord with £50,000 rental income and £20,000 mortgage interest saves over £6,000/year via a company structure. But it's not free — setup costs, accountancy, and tax implications of transferring existing properties all need factoring in.</p>
+          <h3 className="font-bold text-navy-800">The Hidden Costs of Company Ownership</h3>
+          <p>Additional accountancy: £500-£2,000/year. BTL mortgages for limited companies typically carry higher rates and fewer lender options. Extracting profit as salary or dividends creates personal tax liability — the company tax saving is partly offset here. Transferring existing personally-owned properties to a company triggers SDLT at the 3% surcharge rate plus CGT on any gains since purchase.</p>
+          <h3 className="font-bold text-navy-800">When Does a Limited Company Make Sense?</h3>
+          <p>A company structure typically makes sense if: you're a higher or additional-rate taxpayer, you're buying new properties (not transferring existing ones), you intend to retain profit within the company, and you're building a portfolio of 5+ properties long-term. For basic-rate taxpayers with 1-2 properties, admin costs often outweigh the tax benefit.</p>
+          <h3 className="font-bold text-navy-800">Always Get Professional Advice</h3>
+          <p>This decision depends heavily on your individual tax position, existing portfolio, income sources, and long-term goals. This calculator illustrates the structural difference — but consult a property-specialist accountant before acting. The cost of advice (£200-£500) is trivial compared to the potential tax implications of the wrong structure.</p>
+        </div>
+      </section>
     </>
   );
 }

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
     url: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "The Biggest Financial Lie in Britain — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "The Biggest Financial Lie in Britain — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -23,7 +23,7 @@ const jsonLd = {
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
-  image: "https://propertyvaultuk.co.uk/og-image.png",
+  image: "https://propertyvaultuk.co.uk/opengraph-image",
   articleSection: "Market Analysis",
   keywords: ["UK housing market", "property market UK", "house prices UK", "housing crisis"],
 };

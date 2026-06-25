@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: "Complete first-time buyer guide. From saving a deposit to getting your keys. Mortgages, stamp duty relief, LISA, government schemes, and what to expect.",
     url: "https://propertyvaultuk.co.uk/blog/first-time-buyer-guide/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "First Time Buyer Guide UK — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "First Time Buyer Guide UK — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -23,7 +23,7 @@ const jsonLd = {
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
-  image: "https://propertyvaultuk.co.uk/og-image.png",
+  image: "https://propertyvaultuk.co.uk/opengraph-image",
   articleSection: "Buying",
   keywords: ["first time buyer guide UK", "first time buyer mortgage", "LISA property", "first time buyer stamp duty"],
 };

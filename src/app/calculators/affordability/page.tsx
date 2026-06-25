@@ -109,6 +109,20 @@ export default function AffordabilityPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">How Do UK Lenders Calculate Mortgage Affordability?</h2>
+          <p>UK mortgage lenders use two main tests: an income multiple cap (typically 4-4.5x your annual income, occasionally up to 5.5x for high earners) and a stress test that checks you can still afford repayments if interest rates rise by 3%. The combination of these two tests determines the maximum you can borrow — the lower result of the two wins.</p>
+          <p>This calculator applies the income multiple approach. To understand what a lender will actually offer, you'll need a Decision in Principle (DIP) which factors in your credit score, outgoings, employment type, and the specific property.</p>
+          <h3 className="font-bold text-navy-800">Mortgage-to-Income Ratio Explained</h3>
+          <p>Your mortgage-to-income ratio is your monthly mortgage payment as a percentage of your gross monthly income. Most lenders prefer this to be below 35%, with 28% considered comfortable. Above 40% and you may struggle to find mainstream lenders willing to lend — specialist lenders exist but at higher rates.</p>
+          <h3 className="font-bold text-navy-800">What Counts as Income for a Mortgage?</h3>
+          <p>Salaried employment income is straightforward. For self-employed applicants, most lenders use the average of the last 2-3 years' net profit or salary + dividends (for company directors). Bonus and commission income is typically included at 50-100% depending on the lender. Rental income from existing properties can usually be included, typically at 125-145% of the gross rent to cover costs.</p>
+          <h3 className="font-bold text-navy-800">Buy-to-Let Affordability Is Different</h3>
+          <p>Buy-to-let affordability is based primarily on rental income, not your personal income. Lenders typically require the monthly rent to cover 125-145% of the mortgage payment (at a stressed rate of 5-5.5%). Personal income matters mainly for portfolio landlords and for minimum income thresholds (usually £25,000).</p>
+        </div>
+      </section>
     </>
   );
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/checkout-report/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Check-Out Report Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Check-Out Report Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Check-Out Report Template UK | PropertyVault", description: "Free end-of-tenancy inspection template — protect your deposit claim." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/checkout-report/" },

@@ -115,6 +115,20 @@ export default function RemortgagePage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">When and Why to Remortgage Your Property</h2>
+          <p>Remortgaging means switching your mortgage to a new deal — with your current lender (product transfer) or a new lender. Most fixed-rate mortgages revert to the lender's Standard Variable Rate (SVR) when the term ends. SVRs are typically 1-2% above the best available fixed rates, meaning you can save hundreds per month simply by remortgaging at the right time.</p>
+          <p>For buy-to-let investors, remortgaging is also how you pull equity out of appreciated properties to fund further acquisitions — the cornerstone of the BRRR strategy.</p>
+          <h3 className="font-bold text-navy-800">Is Remortgaging Worth the Cost?</h3>
+          <p>Calculate total switching costs: early repayment charge (ERC) if still in a fixed term, valuation fee, legal fees (often free on competitive deals), and arrangement fee. Then calculate the monthly saving on the new rate. Divide total costs by monthly saving to get the break-even month. If this is less than the new deal term, remortgaging is financially justified.</p>
+          <h3 className="font-bold text-navy-800">What LTV Means for Your Rate</h3>
+          <p>Loan-to-value (LTV) is the mortgage as a percentage of property value. Lower LTV = better rate. Best rates are typically at 60% LTV, increasing at 65%, 70%, 75% (most common BTL maximum), and 80%+. If your property has appreciated since purchase, your LTV may have fallen significantly — giving access to far better rates than when you first bought.</p>
+          <h3 className="font-bold text-navy-800">Product Transfer vs Full Remortgage</h3>
+          <p>A product transfer (same lender, new rate) is faster, cheaper, and doesn't require full affordability checks. A full remortgage (switching lender) takes 4-8 weeks but may offer better rates or allow additional borrowing. Start the process 3-6 months before your current deal ends to avoid falling onto the SVR and to compare the full market properly.</p>
+        </div>
+      </section>
     </>
   );
 }

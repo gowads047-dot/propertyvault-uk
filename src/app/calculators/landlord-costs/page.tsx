@@ -118,6 +118,19 @@ export default function LandlordCostsPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">The Real Cost of Being a UK Landlord</h2>
+          <p>New landlords consistently underestimate running costs. The two most common errors are forgetting to provision for void periods and maintenance. A well-run rental property typically has costs (excluding mortgage) equal to 30-40% of gross rent once you factor in agent fees, insurance, maintenance, compliance costs, and voids.</p>
+          <h3 className="font-bold text-navy-800">Letting Agent Fees</h3>
+          <p>Full management fees range from 10-15% of monthly rent plus VAT. Tenant-find only is typically 8-12% of the first year's rent. On a £1,000/month property, full management costs £1,440-£2,160/year. Self-managing saves this cost but requires time, landlord law knowledge, and the ability to handle maintenance emergencies and problem tenants directly.</p>
+          <h3 className="font-bold text-navy-800">Budgeting for Maintenance</h3>
+          <p>Reserve 1% of the property's value per year for maintenance and repairs. On a £150,000 property that's £1,500/year — you won't spend it every year, but you'll spend far more in years when a boiler, roof, or kitchen needs attention. Pre-1960s stock costs more to maintain than newer builds.</p>
+          <h3 className="font-bold text-navy-800">Compliance Costs Landlords Forget</h3>
+          <p>Annual Gas Safety Certificate: £60-£120. EICR (every 5 years): £150-£350. EPC (every 10 years): £60-£120. Smoke and CO alarm maintenance, deposit protection fees, Right to Rent checks, HMO licensing where applicable — all legal requirements with fines for non-compliance. Total compliance cost for a single-let: typically £150-300/year.</p>
+        </div>
+      </section>
     </>
   );
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/landlord-compliance/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Landlord Compliance Checklist — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Landlord Compliance Checklist — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Landlord Compliance Checklist UK 2025 | PropertyVault", description: "Free compliance checklist — every landlord legal requirement in one place." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/landlord-compliance/" },

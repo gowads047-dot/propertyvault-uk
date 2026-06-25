@@ -111,6 +111,20 @@ export default function Section24Page() {
           <Disclaimer type="tax" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">What is Section 24 and Why Does It Matter?</h2>
+          <p>Section 24 of the Finance Act 2015 — commonly called the "landlord tax" — phased out the ability for individual buy-to-let landlords to deduct mortgage interest from rental income before calculating tax. It was fully in force from April 2020. Before Section 24, a landlord earning £12,000 in rent with £6,000 in mortgage interest only paid tax on £6,000. Now, they pay tax on the full £12,000 and receive a 20% tax credit on the interest instead.</p>
+          <p>For basic-rate (20%) taxpayers the maths roughly balances out. For higher-rate (40%) and additional-rate (45%) taxpayers, the effective tax rate on rental profit can exceed 100% — meaning some landlords now make a loss after tax on properties that were previously profitable.</p>
+          <h3 className="font-bold text-navy-800">Who Is Affected?</h3>
+          <p>Only <strong>individual landlords</strong> are affected. Limited companies (SPVs) can still deduct mortgage interest in full and pay corporation tax at 25% on net profit. This is why so many landlords have incorporated in recent years, though the costs and tax implications of transferring existing properties into a company need careful consideration.</p>
+          <h3 className="font-bold text-navy-800">What Counts as Mortgage Interest?</h3>
+          <p>The restriction applies to mortgage interest only — not capital repayment. It also covers interest on loans taken out to purchase furnishings for the property. Arrangement fees, legal fees, and other finance costs are also restricted under the same rules.</p>
+          <h3 className="font-bold text-navy-800">Can Section 24 Push You Into a Higher Tax Band?</h3>
+          <p>Yes. Because you now declare the full rental income (before mortgage interest) on your self-assessment return, this can push your total income into the higher-rate band even if your actual cash profit is modest. This is one of the most damaging aspects for landlords with large mortgages relative to rental income.</p>
+        </div>
+      </section>
     </>
   );
 }

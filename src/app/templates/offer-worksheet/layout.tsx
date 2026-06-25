@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/offer-worksheet/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Property Offer Worksheet — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Offer Worksheet — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Property Offer Worksheet UK | PropertyVault", description: "Free template — calculate exactly what to offer on your next deal." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/offer-worksheet/" },

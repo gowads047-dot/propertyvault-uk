@@ -91,6 +91,20 @@ export default function BridgingPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">What Is Bridging Finance and When Should You Use It?</h2>
+          <p>Bridging loans are short-term, secured finance used to "bridge" a gap — typically between buying a property and either selling another, or refinancing onto a longer-term mortgage. They complete much faster than mortgages (often within 3-14 days) and lend against properties that standard mortgages won't touch: uninhabitable condition, no kitchen or bathroom, structural issues, or auction purchases requiring completion in 28 days.</p>
+          <p>Bridging is expensive — monthly rates of 0.65-1.2% mean an annualised cost of 8-14%. The justification is that you're buying at a discount (because the property needs work) that far exceeds the finance cost, and you exit via a remortgage or sale once the property is habitable or improved.</p>
+          <h3 className="font-bold text-navy-800">Closed vs Open Bridging</h3>
+          <p>A <strong>closed bridge</strong> has a defined exit date — you've already exchanged on a sale, for example, and just need to bridge 6 weeks to completion. These are cheaper. An <strong>open bridge</strong> has no fixed exit, which lenders price in with higher rates and shorter maximum terms (usually 12-18 months). Always have a realistic exit strategy — lenders will ask for it.</p>
+          <h3 className="font-bold text-navy-800">How Bridging Loan Costs Add Up</h3>
+          <p>The total cost includes: monthly interest (usually rolled up and paid on exit), arrangement fee (1-2% of the loan), exit fee (0-1%), valuation fee, and legal fees for both sides. On a £200,000 loan for 6 months at 0.9%/month with a 2% arrangement fee, total costs exceed £18,000. This calculator shows you the exact breakdown so you can factor it into your deal analysis before committing.</p>
+          <h3 className="font-bold text-navy-800">Regulated vs Unregulated Bridging</h3>
+          <p>Bridging on your main home (or a home a close family member will live in) is regulated by the FCA. Bridging on investment property is unregulated — always use a specialist broker and ensure you understand the risks, including what happens if your exit strategy fails.</p>
+        </div>
+      </section>
     </>
   );
 }

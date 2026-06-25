@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/commercial-lease/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Commercial Lease Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Commercial Lease Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Commercial Lease Template UK | PropertyVault", description: "Free basic commercial lease template for UK landlords." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/commercial-lease/" },

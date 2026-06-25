@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/templates/inspection-record/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Free Property Inspection Template — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Inspection Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Property Inspection Report Template UK | PropertyVault", description: "Free landlord inspection form — professional and legally defensible." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/templates/inspection-record/" },

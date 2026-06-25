@@ -105,6 +105,19 @@ export default function MovingCostsPage() {
           <Disclaimer type="calculator" />
         </div>
       </section>
+
+      <section className="section-padding bg-navy-50">
+        <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
+          <h2 className="text-xl font-bold text-navy-800">The True Cost of Moving House in the UK</h2>
+          <p>Moving house costs far more than most people budget for. On a £250,000 property, the combined costs of stamp duty, legal fees, survey, mortgage fees, estate agent commission, and removal firm can easily exceed £15,000-£20,000. Knowing this upfront — rather than discovering it at completion — lets you plan properly and avoid financial stress.</p>
+          <h3 className="font-bold text-navy-800">Solicitor and Conveyancer Fees</h3>
+          <p>Legal fees for a standard purchase: £800-£2,000 plus disbursements (land registry fees, search fees, electronic transfer fee). Buying and selling simultaneously means two sets of fees. Leasehold transactions typically cost more than freehold due to additional work around the lease, ground rent clauses, and service charge review.</p>
+          <h3 className="font-bold text-navy-800">Survey Types and Costs</h3>
+          <p>RICS HomeBuyer Report (Level 2): £400-£700 — recommended for most standard properties. RICS Building Survey (Level 3): £600-£1,500 — recommended for older, larger, or unusual properties. Never skip the survey to save money — issues identified can be used to renegotiate the price or exit the deal before you're legally bound.</p>
+          <h3 className="font-bold text-navy-800">Estate Agent Fees When Selling</h3>
+          <p>High street agents typically charge 1-3% plus VAT. On a £300,000 sale that's £3,600-£10,800. Online agents charge a fixed fee of £500-£2,000 — significant savings if your property sells quickly. Many online agents require upfront payment before the property sells, so the saving comes with added risk if it takes longer than expected.</p>
+        </div>
+      </section>
     </>
   );
 }

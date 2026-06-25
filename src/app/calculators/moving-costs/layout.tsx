@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/calculators/moving-costs/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Moving Costs Calculator — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Moving Costs Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Moving Costs Calculator UK 2025 | PropertyVault", description: "Free tool — see every cost you'll face when moving house." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/moving-costs/" },

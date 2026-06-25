@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://propertyvaultuk.co.uk/calculators/flip-roi/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Property Flip ROI Calculator — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Flip ROI Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Property Flip ROI Calculator UK | PropertyVault", description: "Free tool — model your flip deal profit before you buy." },
   alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/flip-roi/" },

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
     url: "https://propertyvaultuk.co.uk/blog/section-24-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/og-image.png", width: 1200, height: 630, alt: "Section 24 Explained — PropertyVault UK" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 Explained — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -23,7 +23,7 @@ const jsonLd = {
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
-  image: "https://propertyvaultuk.co.uk/og-image.png",
+  image: "https://propertyvaultuk.co.uk/opengraph-image",
   articleSection: "Tax",
   keywords: ["Section 24", "mortgage interest relief", "landlord tax", "SPV property"],
 };
