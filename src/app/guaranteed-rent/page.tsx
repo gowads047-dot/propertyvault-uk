@@ -4,6 +4,51 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { GRQuoteWidget } from "@/components/guaranteed-rent/GRQuoteWidget";
 
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Guaranteed Rent Scheme",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "PropertyVault UK",
+    url: "https://propertyvaultuk.co.uk",
+  },
+  description: "Fixed monthly rental income for landlords for 3–5 years with no voids, no management, and no arrears. PropertyVault UK pays you whether the property is occupied or not.",
+  serviceType: "Guaranteed Rent",
+  areaServed: [
+    { "@type": "City", name: "Birmingham" },
+    { "@type": "City", name: "Nottingham" },
+    { "@type": "City", name: "Derby" },
+    { "@type": "City", name: "Leicester" },
+    { "@type": "City", name: "Coventry" },
+    { "@type": "City", name: "Sheffield" },
+  ],
+  offers: {
+    "@type": "Offer",
+    description: "Free rent estimate — no obligation. Get a guaranteed rent figure for your property within 24 hours.",
+    price: "0",
+    priceCurrency: "GBP",
+    url: "https://propertyvaultuk.co.uk/guaranteed-rent",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Guaranteed Rent Terms",
+    itemListElement: [
+      { "@type": "Offer", name: "3-Year Guaranteed Rent Lease" },
+      { "@type": "Offer", name: "5-Year Guaranteed Rent Lease" },
+    ],
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://propertyvaultuk.co.uk" },
+    { "@type": "ListItem", position: 2, name: "Guaranteed Rent", item: "https://propertyvaultuk.co.uk/guaranteed-rent" },
+  ],
+};
+
 const guaranteedRentFaqs = [
   { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
   { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
@@ -25,6 +70,8 @@ export const metadata: Metadata = {
 export default function GuaranteedRentPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden py-20 md:py-28">
         <div className="absolute inset-0">

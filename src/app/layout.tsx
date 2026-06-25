@@ -69,6 +69,75 @@ const orgJsonLd = {
   sameAs: [],
 };
 
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["RealEstateAgent", "LocalBusiness"],
+  name: "PropertyVault UK",
+  description: "Guaranteed rent scheme for landlords across the Midlands. We pay a fixed monthly income for 3–5 years — no voids, no management, no arrears. Serving Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
+  url: "https://propertyvaultuk.co.uk",
+  logo: "https://propertyvaultuk.co.uk/favicon.ico",
+  image: "https://propertyvaultuk.co.uk/opengraph-image",
+  email: "gowads047@gmail.com",
+  priceRange: "££",
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "West Midlands",
+    addressCountry: "GB",
+  },
+  areaServed: [
+    { "@type": "City", "name": "Birmingham", "sameAs": "https://www.wikidata.org/wiki/Q2256" },
+    { "@type": "City", "name": "Nottingham", "sameAs": "https://www.wikidata.org/wiki/Q41262" },
+    { "@type": "City", "name": "Derby", "sameAs": "https://www.wikidata.org/wiki/Q43296" },
+    { "@type": "City", "name": "Leicester", "sameAs": "https://www.wikidata.org/wiki/Q44306" },
+    { "@type": "City", "name": "Coventry", "sameAs": "https://www.wikidata.org/wiki/Q43684" },
+    { "@type": "City", "name": "Sheffield", "sameAs": "https://www.wikidata.org/wiki/Q42448" },
+  ],
+  knowsAbout: [
+    "Guaranteed Rent",
+    "Buy to Let",
+    "Property Investment",
+    "Landlord Management",
+    "BRRR Strategy",
+    "HMO Investment",
+    "Section 24",
+    "Renters Rights Act 2025",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "PropertyVault Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Guaranteed Rent Scheme",
+          description: "Fixed monthly rental income for landlords for 3–5 years. No voids, no tenant management, no arrears. We handle everything.",
+          url: "https://propertyvaultuk.co.uk/guaranteed-rent",
+          areaServed: ["Birmingham", "Nottingham", "Derby", "Leicester", "Coventry", "Sheffield"],
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Free Property Calculators",
+          description: "17 free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.",
+          url: "https://propertyvaultuk.co.uk/calculators",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Free Legal Templates",
+          description: "18 free landlord legal document templates including AST, Section 8, Section 13 and more — compliant with 2025 legislation.",
+          url: "https://propertyvaultuk.co.uk/templates",
+        },
+      },
+    ],
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -86,6 +155,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
       <body className="min-h-full flex flex-col">

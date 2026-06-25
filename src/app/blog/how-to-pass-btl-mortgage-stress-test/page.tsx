@@ -4,6 +4,35 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Pass the BTL Mortgage Stress Test",
+  description: "Six strategies to pass the buy-to-let mortgage stress test when your deal is failing the ICR requirement.",
+  step: [
+    { "@type": "HowToStep", position: 1, name: "Increase your deposit", text: "A larger deposit means a smaller loan. Reducing LTV from 75% to 65% can shift a failing deal to a comfortable pass at 145% ICR." },
+    { "@type": "HowToStep", position: 2, name: "Switch to a limited company (SPV)", text: "Limited company BTL mortgages use 125% ICR instead of 145%. The same property, rent, and loan can pass in a company when it fails personally." },
+    { "@type": "HowToStep", position: 3, name: "Choose a lender with a lower stress rate", text: "Stress rates vary from 5.5% to 6.5% across lenders. A whole-of-market broker can find lenders using lower rates that your deal passes." },
+    { "@type": "HowToStep", position: 4, name: "Increase the rent", text: "Higher rent directly improves your ICR. Check if the property is underrented — even £50/month more can shift a borderline deal." },
+    { "@type": "HowToStep", position: 5, name: "Move to interest-only", text: "BTL stress tests use the interest-only payment. A repayment mortgage has a higher monthly payment, making it harder to pass the ICR test." },
+    { "@type": "HowToStep", position: 6, name: "Use a specialist or portfolio lender", text: "Portfolio landlords with 4+ properties should use specialist BTL lenders (Paragon, Precise, Foundation) instead of high-street banks." },
+  ],
+  tool: [{ "@type": "HowToTool", name: "BTL Mortgage Stress Test Calculator", url: "https://propertyvaultuk.co.uk/calculators/btl-mortgage" }],
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "How to Pass the BTL Mortgage Stress Test",
+  description: "BTL mortgage stress tests failing? Learn how lenders calculate ICR, what 145% means in practice, and 6 ways to fix a failing deal.",
+  author: { "@type": "Person", name: "Nass" },
+  publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
+  datePublished: "2025-06-25",
+  dateModified: "2025-06-25",
+  url: "https://propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test",
+  image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
+};
+
 export const metadata: Metadata = {
   title: "How to Pass the BTL Mortgage Stress Test — A Landlord's Guide 2025 | PropertyVault UK",
   description: "BTL mortgage stress tests failing? Learn how lenders calculate ICR, what 145% means in practice, why your deal is failing, and 6 ways to fix it — including limited company, higher deposit, and rent increases.",
@@ -190,6 +219,8 @@ export default function BtlStressTestPage() {
       </article>
 
       <FAQSchema faqs={faqs} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
     </>
   );
 }
