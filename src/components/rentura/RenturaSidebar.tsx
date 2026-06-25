@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { href: "/rentura/financials",  label: "Financials",   icon: "£" },
   { href: "/rentura/documents",   label: "Documents",    icon: "📄" },
   { href: "/rentura/tax",         label: "Tax",          icon: "%" },
+  { href: "/rentura/rrb",         label: "RRB 2025",     icon: "⚖" },
   { href: "/rentura/settings",    label: "Settings",     icon: "⚙" },
 ];
 
