@@ -494,6 +494,61 @@ export default function RenturaDashboard() {
           }
           savedTo = result.gathered?.tenant_name as string | undefined;
 
+        } else if (result.intent === "new_property" && result.gathered?.full_address) {
+          // Create actual property record in rentura_properties
+          const g = result.gathered as Record<string, unknown>;
+          const addr = String(g.full_address ?? "");
+          const parseAmt = (v: unknown) => v ? parseFloat(String(v).replace(/[£,\s]/g, "")) || null : null;
+
+          const { data: newProp } = await supabase.from("rentura_properties").insert({
+            user_id: user.id,
+            address: addr,
+            property_type: String(g.property_type ?? "house").toLowerCase().replace("apartment", "flat"),
+            bedrooms: g.bedrooms ? parseInt(String(g.bedrooms)) || null : null,
+            purchase_price: parseAmt(g.purchase_price),
+            current_value: parseAmt(g.purchase_price), // default to purchase price
+            purchase_date: g.purchase_date ? String(g.purchase_date) : null,
+          }).select().single();
+
+          if (newProp) {
+            savedTo = shortAddress(addr);
+
+            // Create mortgage record if mortgage details collected
+            if (g.purchase_type !== "cash" && (g.lender_name || g.interest_rate)) {
+              await supabase.from("rentura_mortgages").insert({
+                property_id: newProp.id,
+                user_id: user.id,
+                lender: g.lender_name ? String(g.lender_name) : null,
+                interest_rate: parseAmt(g.interest_rate),
+                monthly_payment: parseAmt(g.monthly_payment),
+                fixed_term_expiry: g.fixed_term_expiry ? String(g.fixed_term_expiry) : null,
+                trust_level: "confirmed",
+                is_current: true,
+              });
+            }
+
+            // Log the property_created event
+            await supabase.from("rentura_events").insert({
+              property_id: newProp.id,
+              user_id: user.id,
+              event_type: "property_created",
+              title: `Property added — ${shortAddress(addr)}`,
+              description: result.reply,
+              amount: parseAmt(g.purchase_price),
+              trust_level: "confirmed",
+              metadata: g,
+              event_date: g.purchase_date ? String(g.purchase_date) : new Date().toISOString().split("T")[0],
+            });
+
+            // Refresh properties list so it appears in sidebar immediately
+            const { data: refreshed } = await supabase
+              .from("rentura_properties")
+              .select("*")
+              .eq("user_id", user.id)
+              .order("created_at", { ascending: false });
+            if (refreshed) setProperties(refreshed);
+          }
+
         } else {
           const matchedProp = matchProperty(result.property_match ?? result.gathered?.property ?? null);
           if (matchedProp) {
