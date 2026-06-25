@@ -31,9 +31,24 @@ type PendingScan = {
   tenantId: string | null;
 };
 type PendingFile = { file: File; base64: string; mediaType: string };
+type SummaryCard = {
+  title: string;
+  stage: string;
+  items: string[];
+  color: string;
+};
+type PendingAction = {
+  id: string;
+  type: "landlord_decide" | "send_to_tenant" | "chase_contractor" | "log_action";
+  label: string;
+  message: string | null;
+  phone: string | null;
+  dismissed?: boolean;
+};
 type Message = {
   role: "user" | "ai";
   text: string;
+  card?: SummaryCard | null;
   attachment?: { filename: string };
   actions?: { type: string; label: string; value: string; color: string }[];
   followUp?: string | null;
@@ -110,6 +125,7 @@ export default function FloatingChat() {
   const [pendingScan, setPendingScan] = useState<PendingScan | null>(null);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [showAttachMenu, setShowAttachMenu] = useState(false);
+  const [pendingActions, setPendingActions] = useState<PendingAction[]>([]);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -517,7 +533,26 @@ export default function FloatingChat() {
         }
       }
 
-      setMessages(m => [...m, { role: "ai", text: result.reply ?? "Something went wrong.", actions: result.actions ?? [], awaitingConfirm: result.needsConfirmation === true, followUp: result.completed ? result.followUp : null, saved }]);
+      // Merge incoming pending_actions into state (deduplicate by label)
+      if (result.pending_actions && Array.isArray(result.pending_actions) && result.pending_actions.length > 0) {
+        setPendingActions(prev => {
+          const existingLabels = new Set(prev.filter(p => !p.dismissed).map(p => p.label));
+          const fresh: PendingAction[] = (result.pending_actions as Omit<PendingAction, "id">[])
+            .filter((a) => !existingLabels.has(a.label))
+            .map((a) => ({ ...a, id: `${Date.now()}-${Math.random()}` }));
+          return [...prev, ...fresh];
+        });
+      }
+
+      setMessages(m => [...m, {
+        role: "ai",
+        text: result.reply ?? "Something went wrong.",
+        card: result.summary_card ?? null,
+        actions: result.actions ?? [],
+        awaitingConfirm: result.needsConfirmation === true,
+        followUp: result.completed ? result.followUp : null,
+        saved,
+      }]);
     } catch {
       setMessages(m => [...m, { role: "ai", text: "Connection issue — please try again." }]);
     }
@@ -674,7 +709,7 @@ export default function FloatingChat() {
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               {messages.length > 1 && (
-                <button onClick={() => { setMessages([]); setApiHistory([]); setReady(false); setCtx(null); setPendingScan(null); setPendingFile(null); }}
+                <button onClick={() => { setMessages([]); setApiHistory([]); setReady(false); setCtx(null); setPendingScan(null); setPendingFile(null); setPendingActions([]); }}
                   style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>Clear</button>
               )}
               <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: 18, cursor: "pointer", lineHeight: 1, fontFamily: "inherit" }}>×</button>
@@ -702,6 +737,36 @@ export default function FloatingChat() {
                     <div style={{ width: 24, height: 24, background: "#1e293b", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 10, fontWeight: 800, color: "rgba(255,255,255,0.6)" }}>R</div>
                     <div style={{ flex: 1 }}>
                       <p style={{ color: "rgba(255,255,255,0.88)", fontSize: 13, lineHeight: 1.65, whiteSpace: "pre-line" }}>{msg.text}</p>
+
+                      {/* Summary card */}
+                      {msg.card && (
+                        <div style={{ marginTop: 10, borderRadius: 10, overflow: "hidden", border: `1px solid ${msg.card.color}35`, borderLeft: `3px solid ${msg.card.color}` }}>
+                          <div style={{ background: `${msg.card.color}18`, padding: "8px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                            <span style={{ fontSize: 11, fontWeight: 800, color: msg.card.color, letterSpacing: "0.02em" }}>
+                              {msg.card.stage === "quote_received" && "💬 "}
+                              {msg.card.stage === "scheduled" && "✅ "}
+                              {msg.card.stage === "completed" && "🔧 "}
+                              {msg.card.stage === "awaiting_landlord" && "⏳ "}
+                              {msg.card.stage === "tenant_updated" && "📨 "}
+                              {msg.card.stage === "invoice_pending" && "🧾 "}
+                              {msg.card.title}
+                            </span>
+                          </div>
+                          <div style={{ background: `${msg.card.color}08`, padding: "8px 12px" }}>
+                            {msg.card.items.map((item, i) => {
+                              const [k, ...rest] = item.split(":");
+                              const v = rest.join(":").trim();
+                              return (
+                                <div key={i} style={{ display: "flex", gap: 6, marginBottom: i < msg.card!.items.length - 1 ? 4 : 0 }}>
+                                  <span style={{ fontSize: 11, color: `${msg.card!.color}99`, minWidth: 80, flexShrink: 0, lineHeight: 1.5 }}>{k}</span>
+                                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.8)", lineHeight: 1.5, fontWeight: 500 }}>{v || item}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
                       {msg.actions && msg.actions.length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginTop: 8 }}>
                           {msg.actions.map((a, i) => {
@@ -760,6 +825,76 @@ export default function FloatingChat() {
 
           {/* Scan results panel */}
           {ScanPanel}
+
+          {/* Pending actions strip */}
+          {pendingActions.filter(a => !a.dismissed).length > 0 && (
+            <div style={{ background: "#090d1a", borderTop: "1px solid rgba(255,255,255,0.07)", flexShrink: 0 }}>
+              <div style={{ padding: "7px 12px 2px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 10, fontWeight: 800, color: "rgba(255,255,255,0.28)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Needs action · {pendingActions.filter(a => !a.dismissed).length}
+                </span>
+                <button onClick={() => setPendingActions(p => p.map(a => ({ ...a, dismissed: true })))}
+                  style={{ background: "none", border: "none", color: "rgba(255,255,255,0.18)", fontSize: 10, cursor: "pointer", fontFamily: "inherit" }}>
+                  clear all
+                </button>
+              </div>
+              <div style={{ padding: "0 10px 8px", display: "flex", flexDirection: "column", gap: 4, maxHeight: 160, overflowY: "auto" }}>
+                {pendingActions.filter(a => !a.dismissed).map(a => {
+                  const ICON: Record<string, string> = {
+                    landlord_decide: "🟡",
+                    send_to_tenant: "📨",
+                    chase_contractor: "📞",
+                    log_action: "📋",
+                  };
+                  const COL: Record<string, string> = {
+                    landlord_decide: "#d97706",
+                    send_to_tenant: "#7c3aed",
+                    chase_contractor: "#0891b2",
+                    log_action: "#16a34a",
+                  };
+                  const col = COL[a.type] ?? "#64748b";
+                  return (
+                    <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 8, background: `${col}0d`, border: `1px solid ${col}25`, borderRadius: 8, padding: "6px 10px" }}>
+                      <span style={{ fontSize: 13, flexShrink: 0 }}>{ICON[a.type] ?? "•"}</span>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.72)", flex: 1, lineHeight: 1.4 }}>{a.label}</span>
+                      <div style={{ display: "flex", gap: 5, flexShrink: 0 }}>
+                        {a.message && a.phone && (
+                          <button
+                            onClick={() => {
+                              const phone = a.phone!.replace(/\D/g, "");
+                              window.open(`https://wa.me/${phone}?text=${encodeURIComponent(a.message!)}`, "_blank");
+                              setPendingActions(p => p.map(x => x.id === a.id ? { ...x, dismissed: true } : x));
+                            }}
+                            style={{ fontSize: 10, fontWeight: 700, padding: "3px 9px", background: "#16a34a1a", border: "1px solid #16a34a55", borderRadius: 10, color: "#16a34a", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
+                            📱 Send
+                          </button>
+                        )}
+                        {a.message && !a.phone && (
+                          <button
+                            onClick={() => send(`Draft message: ${a.message}`)}
+                            style={{ fontSize: 10, fontWeight: 700, padding: "3px 9px", background: `${col}1a`, border: `1px solid ${col}55`, borderRadius: 10, color: col, cursor: "pointer", fontFamily: "inherit" }}>
+                            Draft →
+                          </button>
+                        )}
+                        {!a.message && a.type === "landlord_decide" && (
+                          <button
+                            onClick={() => { setInput(a.label); inputRef.current?.focus(); }}
+                            style={{ fontSize: 10, fontWeight: 700, padding: "3px 9px", background: `${col}1a`, border: `1px solid ${col}55`, borderRadius: 10, color: col, cursor: "pointer", fontFamily: "inherit" }}>
+                            Reply →
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setPendingActions(p => p.map(x => x.id === a.id ? { ...x, dismissed: true } : x))}
+                          style={{ background: "none", border: "none", color: "rgba(255,255,255,0.2)", fontSize: 13, cursor: "pointer", padding: "0 2px", lineHeight: 1 }}>
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Quick prompts */}
           {messages.length <= 1 && ready && !pendingFile && !pendingScan && (
