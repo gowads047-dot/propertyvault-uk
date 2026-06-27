@@ -42,11 +42,9 @@ export default function AcademySubscribePage() {
     }
   }
 
-  const buttonDisabled = checking || loading;
+  const buttonDisabled = checking;
   const buttonLabel = checking
     ? "Redirecting to Stripe…"
-    : loading
-    ? "Verifying account…"
     : "Start free 30-day trial →";
 
   return (
