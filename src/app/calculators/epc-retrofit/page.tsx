@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What EPC rating do rental properties need by 2030?", a: "The UK Government has proposed that all privately rented properties in England and Wales must achieve a minimum EPC rating of C by 2030. While the legislation is not yet finalised, landlords are advised to plan ahead — costs and contractor availability will worsen as the deadline approaches." },
@@ -275,6 +276,7 @@ export default function EPCRetrofitPage() {
       <section className="section-padding bg-navy-50">
         <div className="container-max max-w-4xl">
           <EmailResults />
+          <ShareResults title="EPC Retrofit Cost Calculator" summary={`EPC retrofit: ${results.selectedCount} measure${results.selectedCount !== 1 ? 's' : ''} selected, ${fmt(results.afterGrant)} cost after grant, ${results.paybackYears.toFixed(1)}-year payback`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

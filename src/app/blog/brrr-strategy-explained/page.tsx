@@ -140,6 +140,14 @@ export default function BRRRArticle() {
                 <p className="font-semibold text-navy-800 text-sm">Bridging Loan</p>
                 <p className="text-xs text-navy-400 mt-0.5">Finance costs</p>
               </Link>
+              <Link href="/calculators/monthly-cashflow" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Monthly Cash Flow</p>
+                <p className="text-xs text-navy-400 mt-0.5">Post-BRRR income</p>
+              </Link>
+              <Link href="/calculators/btl-mortgage" className="block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">BTL Mortgage</p>
+                <p className="text-xs text-navy-400 mt-0.5">Stress test refinance</p>
+              </Link>
             </div>
             <h3 className="font-bold text-navy-800 mb-4">Related Articles</h3>
             <div className="grid sm:grid-cols-2 gap-3">

@@ -102,10 +102,26 @@ export default function DealSourcingGuideArticle() {
 
           <div className="mt-10 pt-8 border-t border-navy-200 not-prose">
             <h3 className="font-bold text-navy-800 mb-4">Related Resources</h3>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
               <Link href="/calculators/deal-analyser" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
                 <span className="text-xs font-bold text-navy-500">Calculator</span>
                 <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">Deal Analyser Tool</p>
+              </Link>
+              <Link href="/calculators/rental-yield" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <span className="text-xs font-bold text-navy-500">Calculator</span>
+                <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">Rental Yield Calculator</p>
+              </Link>
+              <Link href="/calculators/brrr" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <span className="text-xs font-bold text-navy-500">Calculator</span>
+                <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">BRRR Calculator</p>
+              </Link>
+              <Link href="/calculators/btl-mortgage" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <span className="text-xs font-bold text-navy-500">Calculator</span>
+                <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">BTL Mortgage Stress Test</p>
+              </Link>
+              <Link href="/calculators/bridging" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <span className="text-xs font-bold text-navy-500">Calculator</span>
+                <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">Bridging Loan Calculator</p>
               </Link>
               <Link href="/academy" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
                 <span className="text-xs font-bold text-navy-500">Academy</span>

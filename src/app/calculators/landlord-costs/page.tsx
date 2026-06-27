@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What costs does a UK landlord have to pay?", a: "Landlords are responsible for mortgage payments, buildings insurance, landlord liability insurance, maintenance and repairs, letting agent fees (if used), Gas Safety Certificates (annual), Electrical Installation Condition Reports (every 5 years), EPC renewal (every 10 years), and any HMO licensing fees. Void periods with no rental income are also a recurring cost to budget for." },
@@ -127,6 +128,7 @@ export default function LandlordCostsPage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Landlord Costs Calculator" summary={`Landlord costs: ${fmt(results.totalMonthlyExpenses)}/mo expenses, ${fmt(results.monthlyCashFlow)}/mo net cash flow`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

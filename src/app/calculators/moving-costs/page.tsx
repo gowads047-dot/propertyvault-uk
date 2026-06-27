@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "How much does it cost to move house in the UK?", a: "On a £250,000 property, total moving costs typically range from £10,000-£20,000. This includes stamp duty, solicitor fees (£1,000-£2,500), searches (£250-£400), survey (£400-£1,500), mortgage arrangement fees, removal costs, and any redecoration or furniture purchases. Buyers often underestimate these costs significantly." },
@@ -114,6 +115,7 @@ export default function MovingCostsPage() {
           </div>
 
           <EmailResults />
+          <ShareResults title="Moving Costs Calculator" summary={`Moving costs: stamp duty ${fmt(stampDuty)} + fees = ${fmt(totalCosts)} total for ${fmt(propertyPrice)} property`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

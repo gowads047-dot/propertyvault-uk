@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "When should I remortgage my property?", a: "The best time to start the remortgage process is 3-6 months before your current fixed-rate deal expires. At expiry, you revert to the lender's Standard Variable Rate (SVR), which is typically 1-2% above the best available fixed rates — costing hundreds per month extra. Starting early gives time to compare the full market." },
@@ -124,6 +125,7 @@ export default function RemortgagePage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Remortgage Savings Calculator" summary={`Remortgage: ${fmt(results.annualSaving)}/yr saving, ${results.worthSwitching ? `${results.breakEvenMonths}-month payback, ${fmt(results.netSaving)} net gain` : 'not worth switching at current costs'}`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ShareResultsProps {
   title: string;
@@ -9,8 +9,12 @@ interface ShareResultsProps {
 
 export function ShareResults({ title, summary, url }: ShareResultsProps) {
   const [copied, setCopied] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const pageUrl = url ?? (typeof window !== "undefined" ? window.location.href : "");
+  useEffect(() => setMounted(true), []);
+
+  // Use empty string on SSR to avoid hydration mismatch; resolved on client after mount
+  const pageUrl = mounted ? (url ?? window.location.href) : (url ?? "");
   const waText = encodeURIComponent(`${summary}\n\nCalculated with the free ${title} on PropertyVault UK: ${pageUrl}`);
   const xText = encodeURIComponent(`${summary} — calculated with the free ${title} 👇`);
 
@@ -41,6 +45,7 @@ export function ShareResults({ title, summary, url }: ShareResultsProps) {
           href={`https://wa.me/?text=${waText}`}
           target="_blank"
           rel="noopener noreferrer"
+          suppressHydrationWarning
           className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-green-50 border border-green-200 text-green-700 hover:bg-green-100 transition-all"
         >
           <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
@@ -54,6 +59,7 @@ export function ShareResults({ title, summary, url }: ShareResultsProps) {
           href={`https://x.com/intent/tweet?text=${xText}&url=${encodeURIComponent(pageUrl)}`}
           target="_blank"
           rel="noopener noreferrer"
+          suppressHydrationWarning
           className="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 transition-all"
         >
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">

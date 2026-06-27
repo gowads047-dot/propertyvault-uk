@@ -36,7 +36,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Safety timeout — unblock UI if Supabase doesn't respond (e.g. paused project in dev)
+    const timeout = setTimeout(() => setLoading(false), 7000);
+
     supabase.auth.getSession().then(({ data: { session } }) => {
+      clearTimeout(timeout);
       setUser(session?.user ?? null);
       setLoading(false); // session known — unblock UI immediately
       if (session?.user) fetchProfile(session.user.id);

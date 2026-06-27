@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const cgtFaqs = [
   { q: "When do I pay Capital Gains Tax on property?", a: "You pay CGT when you sell a property that is not your main home (principal private residence). This includes buy-to-let properties, second homes, inherited properties you don't live in, and commercial property. You must report and pay within 60 days of completion." },
@@ -151,6 +152,7 @@ export default function CGTCalculatorPage() {
 
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
+          <ShareResults title="Capital Gains Tax Calculator" summary={`CGT: ${fmt(results.tax)} tax on ${fmt(results.totalGain)} total gain (${results.effectiveRate.toFixed(1)}% effective rate) — net profit ${fmt(results.netProfit)}`} />
           <FAQSchema faqs={cgtFaqs} />
           <Disclaimer type="tax" />
         </div>

@@ -2,18 +2,60 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export function FadeIn({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+type FadeFrom = "bottom" | "top" | "left" | "right" | "scale" | "fade";
+
+interface FadeInProps {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  from?: FadeFrom;
+  distance?: number;
+  duration?: number;
+  blur?: boolean;
+}
+
+export function FadeIn({
+  children,
+  className = "",
+  delay = 0,
+  from = "bottom",
+  distance = 28,
+  duration = 680,
+  blur = false,
+}: FadeInProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.07, rootMargin: "0px 0px -20px 0px" }
     );
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  const initialTransform: Record<FadeFrom, string> = {
+    bottom: `translateY(${distance}px)`,
+    top:    `translateY(-${distance}px)`,
+    left:   `translateX(-${distance}px)`,
+    right:  `translateX(${distance}px)`,
+    scale:  `scale(${1 - distance / 400})`,
+    fade:   "none",
+  };
+
+  const transition = [
+    `opacity ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+    from !== "fade" ? `transform ${duration}ms cubic-bezier(0.22,1,0.36,1) ${delay}ms` : null,
+    blur ? `filter ${duration}ms ease ${delay}ms` : null,
+  ].filter(Boolean).join(", ");
 
   return (
     <div
@@ -21,8 +63,9 @@ export function FadeIn({ children, className = "", delay = 0 }: { children: Reac
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+        transform: visible ? "none" : initialTransform[from],
+        filter: blur ? (visible ? "blur(0px)" : "blur(6px)") : undefined,
+        transition,
       }}
     >
       {children}

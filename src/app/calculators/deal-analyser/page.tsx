@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
 
 const faqs = [
@@ -736,6 +737,7 @@ export default function DealAnalyserPage() {
                     </div>
                   </div>
                   <EmailResults />
+                  <ShareResults title="Property Deal Analyser" summary={`Deal score ${calc.dealScore}/100: ${calc.grossYield.toFixed(1)}% gross yield, ${fmt(calc.monthlyCF)}/mo cash flow, ${calc.cashOnCash.toFixed(1)}% cash-on-cash`} />
                 </div>
               )}
 

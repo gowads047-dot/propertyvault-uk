@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "Should I buy investment property personally or through a limited company?", a: "For higher-rate (40%) and additional-rate (45%) taxpayers buying new properties, a limited company (SPV) is usually more tax-efficient because mortgage interest is fully deductible and corporation tax is 25% rather than 40-45% income tax. For basic-rate taxpayers with one or two properties, the extra accountancy costs often outweigh the tax saving." },
@@ -123,6 +124,7 @@ export default function PersonalVsLtdPage() {
           </div>
 
           <div className="mt-6"><EmailResults /></div>
+          <ShareResults title="Personal vs Limited Company BTL Calculator" summary={`Personal: ${fmt(results.personalNet)}/yr net vs Ltd: ${fmt(results.ltdNet)}/yr net — ${results.ltdBetter ? `Ltd saves ${fmt(results.saving)}/yr` : `personal saves ${fmt(-results.saving)}/yr`}`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What is Section 24 of the Finance Act 2015?", a: "Section 24 removed the right for individual buy-to-let landlords to deduct mortgage interest from rental income before calculating tax. It was phased in from 2017 and fully in force since April 2020. Instead of a deduction, landlords now receive a 20% basic rate tax credit on their mortgage interest costs." },
@@ -120,6 +121,7 @@ export default function Section24Page() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Section 24 Tax Calculator" summary={`Section 24: ${fmt(results.extraTax)} extra tax/yr, net income ${fmt(results.netIncomeNew)}/yr (was ${fmt(results.netIncomeOld)}/yr before S24)`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>

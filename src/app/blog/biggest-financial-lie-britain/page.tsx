@@ -254,9 +254,21 @@ export default function BiggestLieArticle() {
           <div className="mt-10 pt-8 border-t border-navy-200">
             <h3 className="font-bold text-navy-800 mb-4">Prepare for What&apos;s Coming</h3>
             <div className="grid sm:grid-cols-3 gap-3">
-              <Link href="/calculators" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
-                <p className="font-bold text-navy-800 text-sm">15 Free Calculators</p>
-                <p className="text-xs text-navy-500">Analyse any deal before you invest</p>
+              <Link href="/calculators/rental-yield" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <p className="font-bold text-navy-800 text-sm">Rental Yield Calculator</p>
+                <p className="text-xs text-navy-500">Find deals that still stack up</p>
+              </Link>
+              <Link href="/calculators/btl-mortgage" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <p className="font-bold text-navy-800 text-sm">BTL Mortgage Stress Test</p>
+                <p className="text-xs text-navy-500">Can your deal survive rate rises?</p>
+              </Link>
+              <Link href="/calculators/monthly-cashflow" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <p className="font-bold text-navy-800 text-sm">Monthly Cash Flow</p>
+                <p className="text-xs text-navy-500">Model your net monthly income</p>
+              </Link>
+              <Link href="/calculators/deal-analyser" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
+                <p className="font-bold text-navy-800 text-sm">Deal Analyser</p>
+                <p className="text-xs text-navy-500">Full investment breakdown</p>
               </Link>
               <Link href="/property-investing" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
                 <p className="font-bold text-navy-800 text-sm">Investment Strategies</p>

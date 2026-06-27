@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What is an HMO property?", a: "A House in Multiple Occupation (HMO) is a property rented by three or more people from two or more separate households who share facilities such as kitchens or bathrooms. HMOs with five or more people from two or more households require a mandatory HMO licence from the local council." },
@@ -142,6 +143,7 @@ export default function HMOYieldPage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="HMO Yield Calculator" summary={`HMO: ${results.grossYield.toFixed(1)}% gross / ${results.netYield.toFixed(1)}% net yield, ${fmt(results.monthlyCashFlow)}/mo cash flow (${results.occupiedCount}/${results.totalRooms} rooms)`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

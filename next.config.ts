@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "ubmxpuukspfponiesasc.supabase.co" },
     ],
   },
+  async redirects() {
+    return [
+      // Wrong calculator slug used in older content
+      { source: "/calculators/cashflow", destination: "/calculators/monthly-cashflow", permanent: true },
+      // Old glossary URL
+      { source: "/property-glossary", destination: "/glossary", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

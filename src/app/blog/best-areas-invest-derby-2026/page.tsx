@@ -180,13 +180,17 @@ export default function BestAreasDerby2026Article() {
               <p className="font-bold text-navy-800 text-sm">BRRR Calculator</p>
               <p className="text-xs text-navy-400 mt-1">Model your refinance and recycle strategy</p>
             </Link>
+            <Link href="/calculators/deal-analyser" className="block bg-navy-50 border border-navy-100 rounded-xl p-4 hover:shadow-md transition-all">
+              <p className="font-bold text-navy-800 text-sm">Deal Analyser</p>
+              <p className="text-xs text-navy-400 mt-1">Full investment analysis in 60 seconds</p>
+            </Link>
+            <Link href="/calculators/btl-mortgage" className="block bg-navy-50 border border-navy-100 rounded-xl p-4 hover:shadow-md transition-all">
+              <p className="font-bold text-navy-800 text-sm">BTL Mortgage Stress Test</p>
+              <p className="text-xs text-navy-400 mt-1">Does the deal pass lender criteria?</p>
+            </Link>
             <Link href="/guaranteed-rent/derby" className="block bg-gold-50 border border-gold-200 rounded-xl p-4 hover:shadow-md transition-all">
               <p className="font-bold text-navy-800 text-sm">Guaranteed Rent — Derby</p>
               <p className="text-xs text-navy-400 mt-1">What your property earns with us</p>
-            </Link>
-            <Link href="/calculators/brrr" className="block bg-navy-50 border border-navy-100 rounded-xl p-4 hover:shadow-md transition-all">
-              <p className="font-bold text-navy-800 text-sm">Deal Analyser</p>
-              <p className="text-xs text-navy-400 mt-1">Full investment analysis in 60 seconds</p>
             </Link>
           </div>
 

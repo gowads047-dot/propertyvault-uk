@@ -253,6 +253,8 @@ export default function RentersRightsActArticle() {
           <div className="grid sm:grid-cols-3 gap-4">
             {[
               { href: "/calculators/landlord-costs", label: "Landlord Costs Calculator", icon: "💰" },
+              { href: "/calculators/monthly-cashflow", label: "Monthly Cash Flow Calculator", icon: "📊" },
+              { href: "/calculators/void-period", label: "Void Period Cost Calculator", icon: "📅" },
               { href: "/templates/landlord-compliance", label: "Compliance Checklist", icon: "✅" },
               { href: "/blog/guaranteed-rent-explained", label: "Guaranteed Rent Explained", icon: "🏠" },
             ].map(l => (

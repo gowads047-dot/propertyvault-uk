@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What is a bridging loan and how does it work?", a: "A bridging loan is short-term secured finance used to bridge a gap — typically between buying a new property and selling another, or between purchasing and refinancing onto a long-term mortgage. They complete in days rather than weeks and are commonly used for auction purchases, uninhabitable properties, or chain breaks." },
@@ -100,6 +101,7 @@ export default function BridgingPage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Bridging Loan Calculator" summary={`Bridging loan ${fmt(loanAmount)} for ${termMonths} months at ${monthlyRate}%/mo: total cost ${fmt(results.totalCost)}`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

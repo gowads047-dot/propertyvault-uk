@@ -139,7 +139,7 @@ export default function Home() {
             </div>
 
             {/* Right: dashboard mockup */}
-            <div className="hero-line" style={{ position: "relative" }}>
+            <div className="hero-line hero-dashboard-hide float-anim" style={{ position: "relative" }}>
               {/* Main card */}
               <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: 24, backdropFilter: "blur(8px)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
@@ -193,7 +193,7 @@ export default function Home() {
           </div>
 
           {/* Bottom stats bar — glassmorphic */}
-          <div style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0", display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
+          <div className="stats-grid-4" style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0" }}>
             {[
               { n: "22", l: "Free calculators" },
               { n: "19", l: "Free templates" },
@@ -252,7 +252,6 @@ export default function Home() {
               No agents. No voids.<br />No calls at midnight.
             </h2>
           </FadeIn>
-          <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
             {[
               {
@@ -298,26 +297,27 @@ export default function Home() {
                 href: "/guaranteed-rent",
                 cta: "How it works",
               },
-            ].map(p => (
-              <div key={p.title} className="pillar-card" style={{ border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 32, display: "flex", flexDirection: "column" }}>
-                <div style={{ width: 56, height: 56, borderRadius: 16, background: "#f8f9fc", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
-                  {p.icon}
+            ].map((p, i) => (
+              <FadeIn key={p.title} delay={i * 100} from="bottom">
+                <div className="pillar-card" style={{ border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 32, display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ width: 56, height: 56, borderRadius: 16, background: "#f8f9fc", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                    {p.icon}
+                  </div>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
+                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
+                  <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
+                  <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    {p.cta} <span style={{ color: "#c9a84c" }}>→</span>
+                  </Link>
                 </div>
-                <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
-                <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
-                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
-                <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  {p.cta} <span style={{ color: "#c9a84c" }}>→</span>
-                </Link>
-              </div>
+              </FadeIn>
             ))}
           </div>
-          </FadeIn>
         </div>
       </section>
 
       {/* ── ALTERNATING SECTION 1: Guaranteed Rent ────────── */}
-      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
+      <section className="section-warm" style={{ padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
@@ -420,7 +420,7 @@ export default function Home() {
       </section>
 
       {/* ── HOW IT WORKS — Step cards ─────────────────────── */}
-      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+      <section className="section-dark-rich dot-grid-gold" style={{ padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Simple process</p>
@@ -554,7 +554,7 @@ export default function Home() {
       </section>
 
       {/* ── LANDLORD TESTIMONIALS ─────────────────────────── */}
-      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+      <section className="section-dark-rich" style={{ padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Real landlords</p>
@@ -565,7 +565,6 @@ export default function Home() {
               Landlords in Birmingham, Nottingham, and Derby earning more — doing less.
             </p>
           </FadeIn>
-          <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 40 }}>
             {[
               {
@@ -589,30 +588,31 @@ export default function Home() {
                 tag: "Now earns more, does less",
                 city: "DRB",
               },
-            ].map(t => (
-              <div key={t.name} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "28px 24px" }}>
-                <span style={{ display: "inline-block", padding: "3px 10px", background: "rgba(201,168,76,0.15)", color: "#c9a84c", fontSize: 10, fontWeight: 700, borderRadius: 20, marginBottom: 16 }}>
-                  {t.tag}
-                </span>
-                <div style={{ display: "flex", gap: 3, marginBottom: 16 }}>
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} width="14" height="14" fill="#c9a84c" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                  ))}
-                </div>
-                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 20 }}>&ldquo;{t.quote}&rdquo;</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(201,168,76,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#c9a84c", flexShrink: 0 }}>
-                    {t.city}
+            ].map((t, i) => (
+              <FadeIn key={t.name} delay={i * 110} from="bottom">
+                <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "28px 24px" }}>
+                  <span style={{ display: "inline-block", padding: "3px 10px", background: "rgba(201,168,76,0.15)", color: "#c9a84c", fontSize: 10, fontWeight: 700, borderRadius: 20, marginBottom: 16 }}>
+                    {t.tag}
+                  </span>
+                  <div style={{ display: "flex", gap: 3, marginBottom: 16 }}>
+                    {[...Array(5)].map((_, j) => (
+                      <svg key={j} width="14" height="14" fill="#c9a84c" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    ))}
                   </div>
-                  <div>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{t.name}</p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{t.desc}</p>
+                  <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 20 }}>&ldquo;{t.quote}&rdquo;</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(201,168,76,0.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#c9a84c", flexShrink: 0 }}>
+                      {t.city}
+                    </div>
+                    <div>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{t.name}</p>
+                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{t.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
-          </FadeIn>
           <FadeIn>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Testimonials based on real landlord experiences in Birmingham, Nottingham & Derby. Names initialised for privacy. Verified via WhatsApp conversations.</p>
@@ -783,7 +783,7 @@ export default function Home() {
       </section>
 
       {/* ── FINAL CTA ─────────────────────────────────────── */}
-      <section style={{ background: "#0f1b36", padding: "80px 0" }}>
+      <section className="section-dark-rich dot-grid-gold" style={{ padding: "80px 0" }}>
         <div className="container-max px-4" style={{ textAlign: "center" }}>
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>

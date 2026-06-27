@@ -298,7 +298,7 @@ export default function HowToStartInvestingPage() {
                 <p className="font-bold text-navy-800 text-sm mb-1">Monthly cashflow</p>
                 <p className="text-navy-600 text-sm leading-relaxed">
                   Rent minus mortgage, agent fees (if applicable), insurance, and a maintenance allowance (typically 10% of rent). What&apos;s left is your cashflow. Model it in the{" "}
-                  <Link href="/calculators/cashflow" className="text-gold-600 font-semibold hover:underline">
+                  <Link href="/calculators/monthly-cashflow" className="text-gold-600 font-semibold hover:underline">
                     Cashflow Calculator
                   </Link>{" "}
                   — a lot of deals look positive but go negative once you include all costs.
@@ -396,7 +396,7 @@ export default function HowToStartInvestingPage() {
               <Link href="/calculators/rental-yield" className="bg-gold-400 text-navy-900 font-bold text-sm px-5 py-3 rounded-xl hover:bg-gold-500 transition-colors">
                 Rental Yield Calculator
               </Link>
-              <Link href="/calculators/cashflow" className="bg-white/10 text-white font-semibold text-sm px-5 py-3 rounded-xl hover:bg-white/20 transition-colors border border-white/20">
+              <Link href="/calculators/monthly-cashflow" className="bg-white/10 text-white font-semibold text-sm px-5 py-3 rounded-xl hover:bg-white/20 transition-colors border border-white/20">
                 Cashflow Calculator
               </Link>
               <Link href="/calculators/stamp-duty" className="bg-white/10 text-white font-semibold text-sm px-5 py-3 rounded-xl hover:bg-white/20 transition-colors border border-white/20">

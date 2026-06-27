@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "Is it cheaper to rent or buy in the UK?", a: "It depends on the local market, time horizon, and what you'd do with a deposit if you didn't buy. In most UK cities outside London, buying becomes cheaper than renting over a 5-10 year period when capital growth is factored in. In London and the South East, the higher purchase costs and price-to-rent ratios make the calculation less clear-cut." },
@@ -132,6 +133,7 @@ export default function RentVsBuyPage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Rent vs Buy Calculator" summary={`Rent vs Buy over ${years} years: ${results.buyingIsCheaper ? `buying saves ${fmt(results.savingAmount)}` : `renting saves ${fmt(results.savingAmount)}`}`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

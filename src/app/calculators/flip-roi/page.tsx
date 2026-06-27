@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
+import { ShareResults } from "@/components/calculators/ShareResults";
 
 const faqs = [
   { q: "What is a good ROI for a property flip in the UK?", a: "A successful flip in the UK typically targets 15-25% profit on total project cost. After accounting for bridging finance, stamp duty, refurbishment, and sale costs, anything under 10% leaves too little margin for cost overruns. Annualised returns of 30-60% are achievable on well-executed short-cycle flips." },
@@ -107,6 +108,7 @@ export default function FlipROIPage() {
             </div>
           </div>
           <div className="mt-8"><EmailResults /></div>
+          <ShareResults title="Flip ROI Calculator" summary={`Flip ROI: ${fmt(results.grossProfit)} profit on ${fmt(results.totalProjectCost)} total cost — ${results.roi.toFixed(1)}% ROI (${results.annualisedROI.toFixed(1)}% annualised)`} />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>

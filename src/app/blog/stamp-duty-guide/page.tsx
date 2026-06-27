@@ -104,8 +104,26 @@ export default function StampDutyArticle() {
 
         
           <div className="mt-10 pt-8 border-t border-navy-200 not-prose">
-            <h3 className="font-bold text-navy-800 mb-4">Related Articles</h3>
-            <div className="grid sm:grid-cols-2 gap-3">
+            <h3 className="font-bold text-navy-800 mb-4">Related Tools &amp; Guides</h3>
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-3">
+              <Link href="/calculators/stamp-duty" className="group block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Stamp Duty Calculator</p>
+                <p className="text-xs text-navy-400 mt-0.5">Calculate your bill</p>
+              </Link>
+              <Link href="/calculators/moving-costs" className="group block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Moving Costs</p>
+                <p className="text-xs text-navy-400 mt-0.5">Total purchase costs</p>
+              </Link>
+              <Link href="/calculators/rental-yield" className="group block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Rental Yield</p>
+                <p className="text-xs text-navy-400 mt-0.5">Does the deal still stack?</p>
+              </Link>
+              <Link href="/calculators/affordability" className="group block bg-navy-50 rounded-xl p-4 text-center card-hover">
+                <p className="font-semibold text-navy-800 text-sm">Affordability</p>
+                <p className="text-xs text-navy-400 mt-0.5">How much can you borrow</p>
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3 mt-3">
               <Link href="/blog/first-time-buyer-guide" className="group block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
                 <span className="text-xs font-bold text-navy-500">Buying</span>
                 <p className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors mt-1">First-Time Buyer Guide</p>
