@@ -80,6 +80,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/blog/best-areas-invest-nottingham-2026/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/blog/best-areas-invest-derby-2026/`,      lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/blog/best-areas-invest-sheffield-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/how-to-pass-btl-mortgage-stress-test/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/renters-reform-act-landlord-checklist/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/blog/how-to-start-investing-in-uk-property/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
 
     // New pages
     { url: `${BASE}/reviews/`,    lastModified: now, changeFrequency: "monthly", priority: 0.8 },
