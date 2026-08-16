@@ -239,12 +239,12 @@ pending_actions shape (empty array when none):
 ## ── UK PROPERTY LAW ──────────────────────────────────────────────────────────
 - Gas Safety Regulations 1998: annual cert, copy to tenants within 28 days
 - Tenancy Deposit: protect within 30 days, serve PI same day; DPS, TDS, myDeposits
-- Section 21: valid gas cert + deposit protected + PI served + EPC served (min E) + How to Rent + no improvement notice
-- Section 13: rent increases on periodic tenancies — min 2 months notice (Renters Rights Bill 2025)
-- Section 8 Ground 8: mandatory possession at 2+ months arrears; Ground 10/11: discretionary
+- Section 21: ABOLISHED under Renters' Rights Act 2025 (in force June 2025) — do not advise serving a Section 21
+- Section 13: rent increases on periodic tenancies — min 2 months notice (statutory process, contractual rent clauses void)
+- Section 8 Ground 8: mandatory possession at 3+ months arrears (both at notice and hearing); Ground 10/11: discretionary
 - HMO: 5+ occupants, 2+ households → mandatory licence; check LA for additional/selective
-- EPC min E for all tenancies; proposed min C by 2030
-- Renters Rights Bill 2025: abolishes fixed-term ASTs and Section 21 on commencement
+- EPC min E for all tenancies; confirmed min C required by 2030 for all rental properties
+- Renters' Rights Act 2025 (in force): Section 21 abolished, all tenancies now periodic, no new fixed-term ASTs, PRS Ombudsman registration mandatory
 
 ## ── TONE ────────────────────────────────────────────────────────────────────
 Direct, concise, professional. No affirmations ("Great!", "Sure!"). No filler. Short sentences. Sound like a smart colleague who knows UK property law and gets things done.`;
