@@ -7,7 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { monthlyRepayment } from "@/lib/finance";
+import { monthlyRepayment, compoundGrowth } from "@/lib/finance";
 
 const faqs = [
   { q: "Is it cheaper to rent or buy in the UK?", a: "It depends on the local market, time horizon, and what you'd do with a deposit if you didn't buy. In most UK cities outside London, buying becomes cheaper than renting over a 5-10 year period when capital growth is factored in. In London and the South East, the higher purchase costs and price-to-rent ratios make the calculation less clear-cut." },
@@ -44,14 +44,14 @@ export default function RentVsBuyPage() {
     let totalBuyingCost = depositAmt + (propertyPrice * 0.03); // stamp duty estimate + fees
     totalBuyingCost += totalMonthlyBuying * 12 * years;
 
-    const futureValue = propertyPrice * Math.pow(1 + annualGrowth / 100, years);
+    const futureValue = compoundGrowth(propertyPrice, annualGrowth, years);
     const equityGained = futureValue - loan; // simplified
     const netCostBuying = totalBuyingCost - equityGained;
     const buyingIsCheaper = netCostBuying < totalRentPaid;
 
     return {
       depositAmt, loan, monthlyMortgage, totalMonthlyBuying,
-      monthlyRent, finalMonthlyRent: monthlyRent * Math.pow(1 + annualRentIncrease / 100, years),
+      monthlyRent, finalMonthlyRent: compoundGrowth(monthlyRent, annualRentIncrease, years),
       totalRentPaid, totalBuyingCost, futureValue, equityGained,
       netCostBuying, buyingIsCheaper,
       savingAmount: Math.abs(totalRentPaid - netCostBuying),
