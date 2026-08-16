@@ -5,6 +5,20 @@ export const metadata: Metadata = {
   title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
   description:
     "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/about/" },
+  openGraph: {
+    title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
+    description: "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/about/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "About PropertyVault UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
+    description: "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+  },
 };
 
 export default function AboutPage() {
@@ -19,7 +33,7 @@ export default function AboutPage() {
               className="text-4xl md:text-6xl font-black text-white leading-tight mb-6"
               style={{ letterSpacing: "-0.03em" }}
             >
-              Built because the good stuff was locked behind a{" "}
+              PropertyVault UK — free property investing tools & guides, built because the good stuff was locked behind a{" "}
               <span className="text-gold-400">£2,000 course.</span>
             </h1>
             <p className="text-navy-200 text-xl leading-relaxed">
@@ -91,7 +105,7 @@ export default function AboutPage() {
                 The hub. Free calculators, legal templates, expert guides, and a guaranteed rent service for UK landlords. Everything a property investor, landlord, or buyer needs — without a paywall in sight.
               </p>
               <div className="flex flex-wrap gap-2 mb-5">
-                {["17 calculators", "18 templates", "Guaranteed rent", "Expert guides"].map((t) => (
+                {["23 calculators", "19 templates", "Guaranteed rent", "Expert guides"].map((t) => (
                   <span key={t} className="text-xs font-semibold px-3 py-1 rounded-full bg-navy-50 text-navy-600 border border-navy-100">
                     {t}
                   </span>
@@ -255,7 +269,7 @@ export default function AboutPage() {
             The fastest way to reach Nass is via WhatsApp. Whether it&apos;s about the tools, the Academy, Rentura, or anything else — send a message.
           </p>
           <Link
-            href="https://wa.me/4407415721628"
+            href="https://wa.me/447415721628"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-green-500 text-white font-bold px-8 py-4 rounded-xl hover:bg-green-600 transition-colors text-lg"

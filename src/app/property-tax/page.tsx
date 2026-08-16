@@ -5,6 +5,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
   description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/property-tax/" },
+  openGraph: {
+    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
+    description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/property-tax/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Tax UK Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
+    description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
+  },
 };
 
 export default function PropertyTaxPage() {
@@ -28,7 +42,7 @@ export default function PropertyTaxPage() {
             <div className="space-y-3 text-navy-600 leading-relaxed">
               <p>SDLT is paid when you purchase property or land in England and Northern Ireland above £125,000 (standard purchases, from 1 April 2025 — the temporary £250,000 threshold ended on 31 March 2025). Rates are progressive — you only pay the higher rate on the portion above each threshold.</p>
               <p><strong>Additional Property Surcharge:</strong> If you already own a property and are buying an additional one (buy-to-let, second home), you pay an extra 5% on the entire purchase price on top of standard rates. This applies from the first pound.</p>
-              <p><strong>Company purchases:</strong> Properties bought through a limited company are subject to the additional surcharge. For properties over £500,000, there may be an additional 17% flat rate under the Annual Tax on Enveloped Dwellings (ATED) rules.</p>
+              <p><strong>Company purchases:</strong> Properties bought through a limited company are subject to the additional surcharge. For residential properties over £500,000 purchased by a company, a flat 15% SDLT rate applies (in place of the standard banded rates). Separately, companies holding residential property worth over £500,000 may also be subject to the Annual Tax on Enveloped Dwellings (ATED) — an annual charge based on the property's value band.</p>
               <Link href="/calculators/stamp-duty" className="inline-block text-gold-600 font-semibold text-sm mt-2">Calculate your stamp duty →</Link>
             </div>
           </div>
@@ -48,7 +62,7 @@ export default function PropertyTaxPage() {
             <div className="space-y-3 text-navy-600 leading-relaxed">
               <p>Since April 2020, individual landlords can no longer deduct mortgage interest from rental income. Instead, you receive a basic rate (20%) tax credit on your mortgage interest costs. This significantly impacts higher-rate taxpayers.</p>
               <p><strong>Example:</strong> A higher-rate taxpayer with £12,000 rental income and £8,000 mortgage interest previously paid tax on £4,000 profit. Now they pay 40% tax on £12,000 (£4,800) minus a 20% credit on £8,000 (£1,600) = £3,200 tax. This is £1,600 more than before Section 24.</p>
-              <p><strong>The SPV Solution:</strong> Limited company (SPV) structures are not affected by Section 24. Companies can still deduct mortgage interest as a business expense and pay corporation tax (25%) on the net profit. This is why many landlords are now purchasing through SPVs.</p>
+              <p><strong>The SPV Solution:</strong> Limited company (SPV) structures are not affected by Section 24. Companies can still deduct mortgage interest as a business expense and pay corporation tax (19–25%) on the net profit. This is why many landlords are now purchasing through SPVs.</p>
             </div>
           </div>
 

@@ -4,6 +4,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
   description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/property-law/" },
+  openGraph: {
+    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
+    description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/property-law/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Law Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
+    description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
+  },
 };
 
 export default function PropertyLawPage() {
@@ -66,13 +80,13 @@ export default function PropertyLawPage() {
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Gas Safety Certificate</strong> — annual inspection by a Gas Safe registered engineer. Must be provided to tenants within 28 days of the check.</li>
                 <li><strong>EICR</strong> — Electrical Installation Condition Report every 5 years by a qualified electrician. Must be satisfactory or remedial works completed within 28 days.</li>
-                <li><strong>EPC</strong> — Energy Performance Certificate rated E or above. Minimum C rating expected for new tenancies from 2028.</li>
+                <li><strong>EPC</strong> — Energy Performance Certificate rated E or above. EPC C will be required for all rental properties by 2030 — properties rated D or E need an upgrade plan now.</li>
                 <li><strong>Smoke and CO alarms</strong> — smoke alarms on every floor, carbon monoxide alarms in rooms with fixed combustion appliances. Must be checked at the start of each tenancy.</li>
                 <li><strong>Legionella risk assessment</strong> — assess the risk of Legionella bacteria in the water system.</li>
                 <li><strong>Fire safety</strong> — fire-safe furniture, clear escape routes, fire doors in HMOs.</li>
               </ul>
               <h3 className="text-lg font-bold text-navy-800 mt-6">Deposit Protection</h3>
-              <p>All tenancy deposits must be protected in a government-approved scheme within 30 days of receipt: DPS (Deposit Protection Service), MyDeposits, or TDS (Tenancy Deposit Scheme). Failure to protect a deposit means you cannot serve a valid Section 21 notice and may face a penalty of 1-3x the deposit amount.</p>
+              <p>All tenancy deposits must be protected in a government-approved scheme within 30 days of receipt: DPS (Deposit Protection Service), MyDeposits, or TDS (Tenancy Deposit Scheme). Failure to protect a deposit is a criminal offence and the court may award the tenant a penalty of 1–3x the deposit amount. Note: Section 21 was abolished under the Renters' Rights Act 2025 — landlords now use Section 8 grounds to recover possession.</p>
               <h3 className="text-lg font-bold text-navy-800 mt-6">Right to Rent</h3>
               <p>Landlords must verify that all adult tenants have the legal right to rent in England. This involves checking original documents (passport, visa, share code) before the tenancy begins. Failure to check can result in fines up to £20,000 per tenant.</p>
             </div>

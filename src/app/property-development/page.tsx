@@ -1,10 +1,24 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
   description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/property-development/" },
+  openGraph: {
+    title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
+    description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/property-development/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Development UK Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
+    description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
+  },
 };
 
 export default function PropertyDevelopmentPage() {

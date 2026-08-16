@@ -1,8 +1,22 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Find a Property Professional — Agents, Brokers, Solicitors | PropertyVault UK",
   description: "Find vetted UK property professionals. Estate agents, letting agents, mortgage brokers, solicitors, surveyors, accountants, and contractors in your area.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/find-agent/" },
+  openGraph: {
+    title: "Find a Property Professional — Agents, Brokers, Solicitors | PropertyVault UK",
+    description: "Find vetted UK property professionals. Estate agents, letting agents, mortgage brokers, solicitors, surveyors, accountants, and contractors in your area.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/find-agent/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Find a Property Agent UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Find a Property Professional — Agents, Brokers, Solicitors | PropertyVault UK",
+    description: "Find vetted UK property professionals. Estate agents, letting agents, mortgage brokers, solicitors, surveyors, accountants, and contractors in your area.",
+  },
 };
 
 const categories = [

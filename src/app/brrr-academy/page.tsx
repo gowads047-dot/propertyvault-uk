@@ -1,10 +1,24 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
   description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/brrr-academy/" },
+  openGraph: {
+    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
+    description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/brrr-academy/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BRRR Strategy UK Academy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
+    description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
+  },
 };
 
 export default function BRRRAcademyPage() {
@@ -96,7 +110,7 @@ export default function BRRRAcademyPage() {
                 <li>Deposit protection in a government-approved scheme within 30 days</li>
                 <li>Gas Safety Certificate annually</li>
                 <li>EICR (Electrical Installation Condition Report) every 5 years</li>
-                <li>EPC rating of E or above (C by 2028 for new tenancies)</li>
+                <li>EPC rating of E or above (C required by 2030 — start planning upgrades now)</li>
                 <li>How to Rent guide provided to tenants</li>
                 <li>Right to Rent checks on all adult occupants</li>
               </ul>
@@ -121,12 +135,13 @@ export default function BRRRAcademyPage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span>Purchase price</span><span className="font-bold">£120,000</span></div>
                   <div className="flex justify-between"><span>Refurbishment cost</span><span className="font-bold">£30,000</span></div>
-                  <div className="flex justify-between"><span>Purchase costs (stamp duty, legal, etc.)</span><span className="font-bold">£5,000</span></div>
-                  <div className="flex justify-between border-t border-navy-200 pt-2 mt-2"><span className="font-bold">Total invested</span><span className="font-bold">£155,000</span></div>
+                  <div className="flex justify-between"><span>SDLT (5% additional property surcharge)</span><span className="font-bold">£6,000</span></div>
+                  <div className="flex justify-between"><span>Legal fees &amp; survey</span><span className="font-bold">£2,000</span></div>
+                  <div className="flex justify-between border-t border-navy-200 pt-2 mt-2"><span className="font-bold">Total invested</span><span className="font-bold">£158,000</span></div>
                   <div className="flex justify-between mt-4"><span>After repair value (ARV)</span><span className="font-bold text-green-600">£200,000</span></div>
                   <div className="flex justify-between"><span>Refinance at 75% LTV</span><span className="font-bold">£150,000</span></div>
-                  <div className="flex justify-between border-t border-navy-200 pt-2 mt-2"><span className="font-bold">Money left in deal</span><span className="font-bold text-gold-600">£5,000</span></div>
-                  <div className="flex justify-between"><span>Capital recycled</span><span className="font-bold text-green-600">96.8%</span></div>
+                  <div className="flex justify-between border-t border-navy-200 pt-2 mt-2"><span className="font-bold">Money left in deal</span><span className="font-bold text-gold-600">£8,000</span></div>
+                  <div className="flex justify-between"><span>Capital recycled</span><span className="font-bold text-green-600">94.9%</span></div>
                   <div className="flex justify-between"><span>Equity created</span><span className="font-bold text-green-600">£50,000</span></div>
                 </div>
               </div>

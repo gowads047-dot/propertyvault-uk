@@ -1,10 +1,24 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
   description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/first-time-buyer/" },
+  openGraph: {
+    title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
+    description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/first-time-buyer/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "First-Time Buyer UK Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
+    description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
+  },
 };
 
 export default function FirstTimeBuyerPage() {

@@ -1,8 +1,18 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Use — PropertyVault UK",
   description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/terms/" },
+  openGraph: {
+    title: "Terms of Use — PropertyVault UK",
+    description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/terms/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+  },
+  twitter: { card: "summary_large_image", title: "Terms of Use — PropertyVault UK", description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services." },
 };
 
 export default function TermsPage() {

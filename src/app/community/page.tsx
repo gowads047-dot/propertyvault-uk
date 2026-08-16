@@ -3,6 +3,20 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Property Community — Coming Soon | PropertyVault UK",
   description: "Join the PropertyVault community. Connect with UK property investors, share deals, ask questions, and network. Coming soon.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/community/" },
+  openGraph: {
+    title: "Property Community — Coming Soon | PropertyVault UK",
+    description: "Join the PropertyVault community. Connect with UK property investors, share deals, ask questions, and network. Coming soon.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/community/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Community" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Community — Coming Soon | PropertyVault UK",
+    description: "Join the PropertyVault community. Connect with UK property investors, share deals, ask questions, and network. Coming soon.",
+  },
 };
 
 export default function CommunityPage() {

@@ -4,6 +4,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Property Listings — List & Browse Properties | PropertyVault UK",
   description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/properties/" },
+  openGraph: {
+    title: "Property Listings — List & Browse Properties | PropertyVault UK",
+    description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/properties/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Properties" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Listings — List & Browse Properties | PropertyVault UK",
+    description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
+  },
 };
 
 export default function PropertiesPage() {

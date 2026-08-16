@@ -3,6 +3,20 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
   description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/area-guide/" },
+  openGraph: {
+    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
+    description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/area-guide/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Area Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
+    description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
+  },
 };
 
 const tools = [

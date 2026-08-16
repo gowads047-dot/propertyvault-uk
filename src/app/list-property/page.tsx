@@ -4,6 +4,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
   description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/list-property/" },
+  openGraph: {
+    title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
+    description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/list-property/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "List Your Property on PropertyVault UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
+    description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
+  },
 };
 
 export default function ListPropertyPage() {

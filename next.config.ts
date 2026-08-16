@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Coming-soon lockdown — redirect all sub-routes to root coming soon page
+      { source: "/academy/:path+", destination: "/academy", permanent: false },
+      { source: "/makan/:path+", destination: "/makan", permanent: false },
       // Wrong calculator slug used in older content
       { source: "/calculators/cashflow", destination: "/calculators/monthly-cashflow", permanent: true },
       // Old glossary URL

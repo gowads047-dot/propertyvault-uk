@@ -1,8 +1,18 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Complaints Policy — PropertyVault UK",
   description: "PropertyVault UK complaints procedure. How to raise a complaint and our process for handling it.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/complaints/" },
+  openGraph: {
+    title: "Complaints Policy — PropertyVault UK",
+    description: "PropertyVault UK complaints procedure. How to raise a complaint and our process for handling it.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/complaints/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+  },
+  twitter: { card: "summary_large_image", title: "Complaints Policy — PropertyVault UK", description: "PropertyVault UK complaints procedure. How to raise a complaint and our process for handling it." },
 };
 
 export default function ComplaintsPage() {

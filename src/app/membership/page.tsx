@@ -4,6 +4,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Membership — Coming Soon | PropertyVault UK",
   description: "PropertyVault membership is coming soon. Join the waiting list to be the first to access exclusive courses, tools, and community features.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/membership/" },
+  openGraph: {
+    title: "Membership — Coming Soon | PropertyVault UK",
+    description: "PropertyVault membership is coming soon. Join the waiting list to be the first to access exclusive courses, tools, and community features.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/membership/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Membership" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Membership — Coming Soon | PropertyVault UK",
+    description: "PropertyVault membership is coming soon. Join the waiting list to be the first to access exclusive courses, tools, and community features.",
+  },
 };
 
 export default function MembershipPage() {

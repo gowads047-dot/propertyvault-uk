@@ -1,8 +1,18 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cookie Policy — PropertyVault UK",
   description: "PropertyVault UK cookie policy. What cookies we use, why we use them, and how to manage your cookie preferences.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/cookies/" },
+  openGraph: {
+    title: "Cookie Policy — PropertyVault UK",
+    description: "PropertyVault UK cookie policy. What cookies we use, why we use them, and how to manage your cookie preferences.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/cookies/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+  },
+  twitter: { card: "summary_large_image", title: "Cookie Policy — PropertyVault UK", description: "PropertyVault UK cookie policy. What cookies we use, why we use them, and how to manage your cookie preferences." },
 };
 
 export default function CookiesPage() {

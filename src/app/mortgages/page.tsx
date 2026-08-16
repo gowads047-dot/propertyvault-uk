@@ -5,6 +5,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
   description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/mortgages/" },
+  openGraph: {
+    title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
+    description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/mortgages/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Mortgages Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
+    description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
+  },
 };
 
 const mortgageTypes = [
@@ -41,7 +55,7 @@ const mortgageTypes = [
     desc: "BTL mortgages for properties held in a Special Purpose Vehicle (SPV).",
     deposit: "25%+",
     rates: "5.0-7.5%",
-    details: "Increasingly popular since Section 24 removed mortgage interest relief for individual landlords. SPV structures allow full mortgage interest deduction against rental income and corporation tax (currently 25%) instead of personal income tax. Most lenders require a personal guarantee from directors."
+    details: "Increasingly popular since Section 24 removed mortgage interest relief for individual landlords. SPV structures allow full mortgage interest deduction against rental income and corporation tax (currently 19–25%) instead of personal income tax. Most lenders require a personal guarantee from directors."
   },
   {
     title: "Commercial Mortgages",

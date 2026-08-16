@@ -4,6 +4,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk | PropertyVault UK",
   description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/tools/" },
+  openGraph: {
+    title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk | PropertyVault UK",
+    description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/tools/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Property Tools" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk | PropertyVault UK",
+    description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
+  },
 };
 
 const tools = [
