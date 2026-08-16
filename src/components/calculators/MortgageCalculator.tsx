@@ -3,23 +3,10 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
+import { calcSDLT } from "@/lib/tax";
 
 const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 const fmtD = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
-
-// England SDLT April 2025 rates (incl 5% additional property surcharge from Oct 2024)
-function calcSDLT(price: number, isBTL: boolean): number {
-  const bands = isBTL
-    ? [{ up: 125000, rate: 0.05 }, { up: 250000, rate: 0.07 }, { up: 925000, rate: 0.10 }, { up: 1500000, rate: 0.15 }, { up: Infinity, rate: 0.17 }]
-    : [{ up: 125000, rate: 0 },    { up: 250000, rate: 0.02 }, { up: 925000, rate: 0.05 }, { up: 1500000, rate: 0.10 }, { up: Infinity, rate: 0.12 }];
-  let tax = 0, prev = 0;
-  for (const b of bands) {
-    if (price <= prev) break;
-    tax += (Math.min(price, b.up) - prev) * b.rate;
-    prev = b.up;
-  }
-  return Math.round(tax);
-}
 
 function Slider({ label, value, onChange, min, max, step, display }: {
   label: string; value: number; onChange: (v: number) => void;

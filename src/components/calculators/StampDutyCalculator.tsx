@@ -2,24 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { ShareResults } from "./ShareResults";
-
-// SDLT rates effective from 1 April 2025 (thresholds reverted from temporary Covid-era levels)
-const residentialBands = [
-  { threshold: 125000, rate: 0 },
-  { threshold: 250000, rate: 0.02 },
-  { threshold: 925000, rate: 0.05 },
-  { threshold: 1500000, rate: 0.10 },
-  { threshold: Infinity, rate: 0.12 },
-];
-
-// Surcharge increased to 5% from 31 October 2024 (previously 3%)
-const additionalSurcharge = 0.05;
-// FTB relief: nil rate threshold reverted to £300,000 from 1 April 2025 (was temporarily £425,000)
-const firstTimeBuyerThreshold = 300000;
-const firstTimeBuyerCap = 500000;
-
-// Non-UK resident surcharge: additional 2% on all SDLT bands (from 1 April 2021)
-const nonResidentSurcharge = 0.02;
+import { sdltBreakdown } from "@/lib/tax";
 
 type BuyerType = "standard" | "additional" | "first-time";
 
@@ -29,44 +12,17 @@ export function StampDutyCalculator() {
   const [isNonResident, setIsNonResident] = useState(false);
 
   const results = useMemo(() => {
-    const bands: { from: number; to: number; rate: number; tax: number }[] = [];
-    let totalTax = 0;
-    let prev = 0;
-    const nrSurcharge = isNonResident ? nonResidentSurcharge : 0;
-
-    if (buyerType === "first-time" && price <= firstTimeBuyerCap) {
-      const ftbBands = [
-        { threshold: firstTimeBuyerThreshold, rate: 0 + nrSurcharge },
-        { threshold: firstTimeBuyerCap, rate: 0.05 + nrSurcharge },
-        { threshold: Infinity, rate: 0.05 + nrSurcharge },
-      ];
-      for (const band of ftbBands) {
-        if (price <= prev) break;
-        const taxable = Math.min(price, band.threshold) - prev;
-        if (taxable <= 0) { prev = band.threshold; continue; }
-        const tax = taxable * band.rate;
-        bands.push({ from: prev, to: Math.min(price, band.threshold), rate: band.rate, tax });
-        totalTax += tax;
-        prev = band.threshold;
-      }
-    } else {
-      const surcharge = (buyerType === "additional" ? additionalSurcharge : 0) + nrSurcharge;
-      for (const band of residentialBands) {
-        if (price <= prev) break;
-        const taxable = Math.min(price, band.threshold) - prev;
-        if (taxable <= 0) { prev = band.threshold; continue; }
-        const rate = band.rate + surcharge;
-        const tax = taxable * rate;
-        bands.push({ from: prev, to: Math.min(price, band.threshold), rate, tax });
-        totalTax += tax;
-        prev = band.threshold;
-      }
-    }
+    const { bands, total } = sdltBreakdown(
+      price,
+      buyerType === "additional",
+      buyerType === "first-time",
+      isNonResident,
+    );
 
     return {
       bands,
-      totalTax,
-      effectiveRate: price > 0 ? (totalTax / price) * 100 : 0,
+      totalTax: total,
+      effectiveRate: price > 0 ? (total / price) * 100 : 0,
     };
   }, [price, buyerType, isNonResident]);
 
