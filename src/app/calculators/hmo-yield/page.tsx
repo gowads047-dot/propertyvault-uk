@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { grossYield as calcGrossYield, netYield as calcNetYield } from "@/lib/finance";
 
 const faqs = [
   { q: "What is an HMO property?", a: "A House in Multiple Occupation (HMO) is a property rented by three or more people from two or more separate households who share facilities such as kitchens or bathrooms. HMOs with five or more people from two or more households require a mandatory HMO licence from the local council." },
@@ -48,9 +49,9 @@ export default function HMOYieldPage() {
     const monthlyExpenses = billsPerMonth + insurance + maintenance + management + licensing;
     const annualExpenses = monthlyExpenses * 12;
     const annualMortgage = mortgagePayment * 12;
-    const grossYield = (maxMonthlyRent * 12 / purchasePrice) * 100;
+    const grossYield = calcGrossYield(maxMonthlyRent * 12, purchasePrice);
     const netIncome = annualRent - annualExpenses;
-    const netYield = (netIncome / purchasePrice) * 100;
+    const netYield = calcNetYield(netIncome, 0, purchasePrice);
     const monthlyCashFlow = (totalMonthlyRent - monthlyExpenses - mortgagePayment);
     const annualCashFlow = monthlyCashFlow * 12;
     const occupancy = rooms.length > 0 ? (occupiedRooms.length / rooms.length * 100) : 0;
