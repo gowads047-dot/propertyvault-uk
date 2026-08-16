@@ -10,6 +10,7 @@ import { PrintButton } from "@/components/calculators/PrintButton";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax, calcSDLT } from "@/lib/tax";
+import { monthlyRepayment, monthlyInterestOnly } from "@/lib/finance";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
@@ -334,11 +335,9 @@ export default function DealAnalyserPage() {
     const grossYield = (annualRent / purchasePrice) * 100;
     const depositAmount = purchasePrice * (depositPct / 100);
     const loanAmount = purchasePrice - depositAmount;
-    const monthlyRate = mortgageRate / 100 / 12;
-    const n = mortgageTerm * 12;
     const monthlyMortgage = mortgageType === "interest"
-      ? loanAmount * monthlyRate
-      : loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+      ? monthlyInterestOnly(loanAmount, mortgageRate)
+      : monthlyRepayment(loanAmount, mortgageRate, mortgageTerm);
     const annualMortgage = monthlyMortgage * 12;
     const management  = annualRent * (managementPct / 100);
     const maintenance = annualRent * (maintenancePct / 100);
@@ -376,9 +375,9 @@ export default function DealAnalyserPage() {
       const r = monthlyRent * (1 + rentAdj);
       const annualR = r * 12;
       const loan = purchasePrice * (1 - depositPct / 100);
-      const mr2 = (mortgageRate + rateAdj) / 100 / 12;
-      const n = mortgageTerm * 12;
-      const mtg = mortgageType === "interest" ? loan * mr2 : loan * (mr2 * Math.pow(1 + mr2, n)) / (Math.pow(1 + mr2, n) - 1);
+      const mtg = mortgageType === "interest"
+        ? monthlyInterestOnly(loan, mortgageRate + rateAdj)
+        : monthlyRepayment(loan, mortgageRate + rateAdj, mortgageTerm);
       const mgmt = annualR * managementPct / 100;
       const maint = annualR * maintenancePct / 100;
       const ins = insuranceMonthly * 12;
@@ -435,8 +434,9 @@ export default function DealAnalyserPage() {
     const originalLoan = purchasePrice * (1 - depositPct / 100);
     const moneyOut = refiLoan - originalLoan;
     const cashLeft = calc.totalCashIn - Math.max(0, moneyOut);
-    const newMR = (mortgageRate / 100 / 12);
-    const newMtg = mortgageType === "interest" ? refiLoan * newMR : refiLoan * (newMR * Math.pow(1 + newMR, mortgageTerm * 12)) / (Math.pow(1 + newMR, mortgageTerm * 12) - 1);
+    const newMtg = mortgageType === "interest"
+      ? monthlyInterestOnly(refiLoan, mortgageRate)
+      : monthlyRepayment(refiLoan, mortgageRate, mortgageTerm);
     const newNetIncome = calc.annualRent - (newMtg * 12 + calc.management + calc.maintenance + calc.insurance + calc.voidCost);
     const newCoC = cashLeft > 0 ? (newNetIncome / cashLeft) * 100 : Infinity;
     return { refiLoan, originalLoan, moneyOut, cashLeft, newMtg, newNetIncome: newNetIncome / 12, newCoC };
