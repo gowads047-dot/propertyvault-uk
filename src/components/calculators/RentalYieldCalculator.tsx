@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { ShareResults } from "./ShareResults";
+import { grossYield, netYield, roi } from "@/lib/finance";
 
 export function RentalYieldCalculator() {
   const [propertyPrice, setPropertyPrice] = useState(200000);
@@ -22,8 +23,8 @@ export function RentalYieldCalculator() {
     const cashFlow = netIncome - annualMortgage;
 
     return {
-      grossYield: (annualRent / propertyPrice) * 100,
-      netYield: (netIncome / propertyPrice) * 100,
+      grossYield: grossYield(annualRent, propertyPrice),
+      netYield: netYield(netIncome, 0, propertyPrice),
       annualRent,
       adjustedRent,
       managementCost,
@@ -31,7 +32,7 @@ export function RentalYieldCalculator() {
       netIncome,
       monthlyCashFlow: cashFlow / 12,
       annualCashFlow: cashFlow,
-      roi: propertyPrice > 0 ? (cashFlow / propertyPrice) * 100 : 0,
+      roi: roi(cashFlow, propertyPrice),
     };
   }, [propertyPrice, monthlyRent, annualCosts, managementFee, voidWeeks, mortgagePayment]);
 
