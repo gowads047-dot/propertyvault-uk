@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { monthlyRepayment } from "@/lib/finance";
 
 const faqs = [
   { q: "When should I remortgage my property?", a: "The best time to start the remortgage process is 3-6 months before your current fixed-rate deal expires. At expiry, you revert to the lender's Standard Variable Rate (SVR), which is typically 1-2% above the best available fixed rates — costing hundreds per month extra. Starting early gives time to compare the full market." },
@@ -28,14 +29,9 @@ export default function RemortgagePage() {
 
   const results = useMemo(() => {
     const months = remainingTerm * 12;
-    const calcPayment = (balance: number, rate: number, m: number) => {
-      const r = rate / 100 / 12;
-      if (r === 0) return balance / m;
-      return balance * (r * Math.pow(1 + r, m)) / (Math.pow(1 + r, m) - 1);
-    };
 
-    const currentMonthly = calcPayment(outstandingBalance, currentRate, months);
-    const newMonthly = calcPayment(outstandingBalance, newRate, months);
+    const currentMonthly = monthlyRepayment(outstandingBalance, currentRate, remainingTerm);
+    const newMonthly = monthlyRepayment(outstandingBalance, newRate, remainingTerm);
     const monthlySaving = currentMonthly - newMonthly;
     const annualSaving = monthlySaving * 12;
     const totalSavingOverTerm = monthlySaving * months;
