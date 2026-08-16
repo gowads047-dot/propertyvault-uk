@@ -1,0 +1,23 @@
+# Store and check out every text file with LF, on every OS.
+# Without this, Windows tooling rewrites line endings on checkout and whole
+# files show up as modified when nothing meaningful changed.
+* text=auto eol=lf
+
+# Binary assets — never normalize these
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.pdf   binary
+*.mp4   binary
+*.zip   binary
+*.tar   binary
+*.gz    binary
+
+# Generated — collapsed by default in GitHub diffs
+package-lock.json linguist-generated=true
