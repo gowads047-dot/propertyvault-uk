@@ -76,6 +76,19 @@ export function pvAnnuity(annualAmount: number, annualRatePct: number, years: nu
   return (annualAmount * (1 - Math.pow(1 + r, -years))) / r;
 }
 
+/**
+ * Discount factor for a sum received `years` from now — (1 + r)^-years.
+ * Multiply a future amount, or a pvAnnuity, by this to defer it.
+ */
+export function discountFactor(annualRatePct: number, years: number): number {
+  return Math.pow(1 + annualRatePct / 100, -years);
+}
+
+/** Present value of a single lump sum received `years` from now. */
+export function pvLumpSum(amount: number, annualRatePct: number, years: number): number {
+  return amount * discountFactor(annualRatePct, years);
+}
+
 /** Value after compounding at an annual rate for a number of years. */
 export function compoundGrowth(value: number, annualRatePct: number, years: number): number {
   return value * Math.pow(1 + annualRatePct / 100, years);

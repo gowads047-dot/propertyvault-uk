@@ -8,6 +8,7 @@ import { ShareResults } from "@/components/calculators/ShareResults";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { pvAnnuity, pvLumpSum, discountFactor } from "@/lib/finance";
 
 const leaseholdFaqs = [
   { q: "What happens when a lease drops below 80 years?", a: "Below 80 years, 'marriage value' kicks in — the freeholder is entitled to 50% of the value created by the extension. This significantly increases the premium. As a rule of thumb, extend before the lease drops below 85 years to avoid this cost." },
@@ -50,9 +51,10 @@ function calcExtensionPremium(
   groundRentDoubling: number, // years between doublings
   capRate: number // deferment rate (typically 5%)
 ): number {
-  const r = capRate / 100;
   const n = yearsLeft;
-  // PV of ground rent income stream
+  // PV of the ground rent income stream. With a doubling clause this is a run of
+  // deferred annuities: each period's rent valued as an annuity, then discounted
+  // back to today by the years until that period starts.
   const grPV = groundRentAnnual > 0 && groundRentDoubling > 0
     ? (() => {
         let pv = 0;
@@ -60,16 +62,16 @@ function calcExtensionPremium(
         let t = 0;
         while (t < n) {
           const period = Math.min(groundRentDoubling, n - t);
-          pv += rent * (1 - Math.pow(1 + r, -period)) / r * Math.pow(1 + r, -t);
+          pv += pvAnnuity(rent, capRate, period) * discountFactor(capRate, t);
           rent *= 2;
           t += groundRentDoubling;
         }
         return pv;
       })()
-    : groundRentAnnual * (1 - Math.pow(1 + r, -n)) / r;
+    : pvAnnuity(groundRentAnnual, capRate, n);
 
   // Reversion value (PV of getting freehold back at lease end)
-  const reversion = freeholdValue * Math.pow(1 + r, -n);
+  const reversion = pvLumpSum(freeholdValue, capRate, n);
 
   // Marriage value (only if < 80 years)
   const relBefore = getRelativity(n);
@@ -380,8 +382,8 @@ export default function LeaseholdCalculatorPage() {
 
                     <div className="grid grid-cols-2 gap-3 mb-4">
                       {[
-                        { label: "Ground Rent (PV)", value: fmt(Math.max(0, calc.extensionPremium - calc.freeholdValue * Math.pow(1 + capRate/100, -yearsLeft) - (yearsLeft < 80 ? Math.max(0, calc.freeholdValue * (calc.relAfterExtension - calc.relativity)) * 0.5 : 0))), note: "PV of freeholder's income" },
-                        { label: "Reversion Value", value: fmt(calc.freeholdValue * Math.pow(1 + capRate/100, -yearsLeft)), note: "PV of freehold reversion" },
+                        { label: "Ground Rent (PV)", value: fmt(Math.max(0, calc.extensionPremium - pvLumpSum(calc.freeholdValue, capRate, yearsLeft) - (yearsLeft < 80 ? Math.max(0, calc.freeholdValue * (calc.relAfterExtension - calc.relativity)) * 0.5 : 0))), note: "PV of freeholder's income" },
+                        { label: "Reversion Value", value: fmt(pvLumpSum(calc.freeholdValue, capRate, yearsLeft)), note: "PV of freehold reversion" },
                         { label: "Marriage Value", value: yearsLeft < 80 ? fmt(Math.max(0, calc.freeholdValue * (calc.relAfterExtension - calc.relativity)) * 0.5) : "£0 (n/a)", note: yearsLeft < 80 ? "50% of value created (statutory)" : "Only applies below 80 years" },
                         { label: "Total Premium", value: fmt(calc.extensionPremium), note: "Estimated cost to extend", highlight: true },
                       ].map(s => (

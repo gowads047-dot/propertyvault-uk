@@ -10,6 +10,8 @@ import {
   borrowingFromPayment,
   pvAnnuity,
   compoundGrowth,
+  discountFactor,
+  pvLumpSum,
   grossYield,
   netYield,
   cashOnCash,
@@ -124,5 +126,28 @@ describe("yields and returns", () => {
   it("allows negative returns", () => {
     expect(netYield(5_000, 9_000, 200_000)).toBe(-2);
     expect(roi(-10_000, 100_000)).toBe(-10);
+  });
+});
+
+describe("discountFactor / pvLumpSum", () => {
+  it("is 1 for a sum received today", () => expect(discountFactor(5, 0)).toBe(1));
+  it("halves roughly every 14 years at 5%", () => {
+    expect(p2(discountFactor(5, 14))).toBe(0.51);
+  });
+  it("is unchanged at a 0% rate", () => {
+    expect(discountFactor(0, 30)).toBe(1);
+    expect(pvLumpSum(100_000, 0, 30)).toBe(100_000);
+  });
+  it("pvLumpSum discounts a reversion", () => {
+    // £300k freehold reverting in 60 years at a 5% deferment rate
+    expect(Math.round(pvLumpSum(300_000, 5, 60))).toBe(16_061);
+    expect(pvLumpSum(300_000, 5, 60)).toBeCloseTo(300_000 / Math.pow(1.05, 60), 6);
+  });
+  it("a deferred annuity equals pvAnnuity × discountFactor", () => {
+    // £250/yr for 10 years, starting 15 years from now, at 5%.
+    // Compared against the closed form rather than rounded constants.
+    const deferred = pvAnnuity(250, 5, 10) * discountFactor(5, 15);
+    const closedForm = (250 * (1 - Math.pow(1.05, -10))) / 0.05 / Math.pow(1.05, 15);
+    expect(deferred).toBeCloseTo(closedForm, 9);
   });
 });
