@@ -2,6 +2,11 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
+import {
+  grossYield as calcGrossYield,
+  netYield as calcNetYield,
+  cashOnCash as calcCashOnCash,
+} from "@/lib/finance";
 
 export function CashFlowCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(950);
@@ -29,9 +34,9 @@ export function CashFlowCalculator() {
     const annualCashFlow = monthlyCashFlow * 12;
 
     const deposit = purchasePrice * (depositPct / 100);
-    const grossYield = (annualRent / purchasePrice) * 100;
-    const netYield = (annualCashFlow / purchasePrice) * 100;
-    const cashOnCash = deposit > 0 ? (annualCashFlow / deposit) * 100 : 0;
+    const grossYield = calcGrossYield(annualRent, purchasePrice);
+    const netYield = calcNetYield(annualCashFlow, 0, purchasePrice);
+    const cashOnCash = calcCashOnCash(annualCashFlow, deposit);
 
     const breakEven = monthlyExpenses;
     const coverageRatio = effectiveMonthlyRent > 0 ? (effectiveMonthlyRent / monthlyExpenses) * 100 : 0;

@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { monthlyRepayment } from "@/lib/finance";
 
 const faqs = [
   { q: "Is it cheaper to rent or buy in the UK?", a: "It depends on the local market, time horizon, and what you'd do with a deposit if you didn't buy. In most UK cities outside London, buying becomes cheaper than renting over a 5-10 year period when capital growth is factored in. In London and the South East, the higher purchase costs and price-to-rent ratios make the calculation less clear-cut." },
@@ -29,9 +30,7 @@ export default function RentVsBuyPage() {
   const results = useMemo(() => {
     const depositAmt = propertyPrice * (depositPct / 100);
     const loan = propertyPrice - depositAmt;
-    const monthlyRate = mortgageRate / 100 / 12;
-    const totalPayments = term * 12;
-    const monthlyMortgage = loan * (monthlyRate * Math.pow(1 + monthlyRate, totalPayments)) / (Math.pow(1 + monthlyRate, totalPayments) - 1);
+    const monthlyMortgage = monthlyRepayment(loan, mortgageRate, term);
     const monthlyOwnerCosts = 150; // insurance, maintenance average
     const totalMonthlyBuying = monthlyMortgage + monthlyOwnerCosts;
 

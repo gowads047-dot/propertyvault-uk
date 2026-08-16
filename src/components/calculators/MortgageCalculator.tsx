@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
 import { calcSDLT } from "@/lib/tax";
+import { monthlyRepayment, monthlyInterestOnly } from "@/lib/finance";
 
 const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 const fmtD = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
@@ -42,8 +43,8 @@ export function MortgageCalculator() {
 
   const results = useMemo(() => {
     const monthlyPmt = repayType === "repayment"
-      ? (mr === 0 ? loan / n : loan * mr / (1 - Math.pow(1 + mr, -n)))
-      : loan * mr;
+      ? monthlyRepayment(loan, rate, termYrs)
+      : monthlyInterestOnly(loan, rate);
 
     const totalRepaid  = repayType === "repayment" ? monthlyPmt * n : monthlyPmt * n + loan;
     const totalInterest = totalRepaid - loan;
@@ -204,8 +205,8 @@ export function MortgageCalculator() {
             </thead>
             <tbody>
               {[
-                { l: "Monthly payment", rep: fmtD(loan * mr / (1 - Math.pow(1 + mr, -n))), io: fmtD(results.ioMonthly) },
-                { l: "Total interest",  rep: fmt(loan * mr / (1 - Math.pow(1 + mr, -n)) * n - loan), io: fmt(results.ioTotalInterest) },
+                { l: "Monthly payment", rep: fmtD(monthlyRepayment(loan, rate, termYrs)), io: fmtD(results.ioMonthly) },
+                { l: "Total interest",  rep: fmt(monthlyRepayment(loan, rate, termYrs) * n - loan), io: fmt(results.ioTotalInterest) },
                 { l: "Balance at end",  rep: "£0",    io: fmt(loan) },
               ].map(r => (
                 <tr key={r.l} className="border-b border-navy-50">
