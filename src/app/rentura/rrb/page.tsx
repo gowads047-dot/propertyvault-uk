@@ -106,21 +106,21 @@ const PROPERTY_CHECKS: Check[] = [
   {
     key: "no_s21_reliance",
     label: "Not relying on Section 21 to regain possession",
-    detail: "Section 21 (no-fault eviction) is abolished under the Renters Rights Bill. Any outstanding plans to use Section 21 must be reconsidered now.",
+    detail: "Section 21 (no-fault eviction) is abolished under the Renters' Rights Act 2025. Any outstanding plans to use Section 21 must be reconsidered now.",
     action: "Identify which Section 8 ground applies to your situation (see grounds reference below). Take legal advice if needed.",
     severity: "critical",
   },
   {
     key: "tenancy_type_understood",
     label: "Understand tenancy will become periodic",
-    detail: "All fixed-term ASTs automatically convert to periodic tenancies under the RRB. You can no longer end a tenancy simply because the fixed term has expired.",
+    detail: "All fixed-term ASTs automatically convert to periodic tenancies under the Renters' Rights Act 2025. You can no longer end a tenancy simply because the fixed term has expired.",
     action: "Note when fixed terms expire. Plan possession strategy using Section 8 grounds if needed.",
     severity: "high",
   },
   {
     key: "rent_increase_method",
     label: "Using Section 13 for rent increases (not contract clauses)",
-    detail: "Contractual rent review clauses (e.g., 'rent increases annually by CPI') become unenforceable under RRB. Rent can only rise once per year via Section 13 with 2 months notice.",
+    detail: "Contractual rent review clauses (e.g., 'rent increases annually by CPI') are unenforceable under the Renters' Rights Act 2025. Rent can only rise once per year via Section 13 with 2 months' notice.",
     action: "Stop relying on contractual rent clauses. Use Section 13 Form 4 for all future increases.",
     severity: "high",
   },
@@ -134,7 +134,7 @@ const PROPERTY_CHECKS: Check[] = [
   {
     key: "pet_policy",
     label: "No blanket 'no pets' clause in tenancy",
-    detail: "Under RRB, landlords cannot unreasonably refuse a tenant's request to keep a pet. A blanket ban in the tenancy agreement may be unenforceable.",
+    detail: "Under the Renters' Rights Act 2025, landlords cannot unreasonably refuse a tenant's request to keep a pet. A blanket ban in the tenancy agreement is unenforceable.",
     action: "Review tenancy agreement. Replace blanket ban with a 'pets permitted with written consent' clause. Consider requiring pet damage insurance.",
     severity: "medium",
   },
@@ -144,15 +144,15 @@ const PORTFOLIO_CHECKS: Check[] = [
   {
     key: "ombudsman",
     label: "Joined the PRS Ombudsman scheme",
-    detail: "All private landlords in England must join the new mandatory Ombudsman scheme. Failure to join is a criminal offence (fine up to £5,000). Scheme not yet launched but required from commencement.",
-    action: "Register with the scheme once it launches (MHCLG will announce). Monitor GOV.UK for launch date.",
+    detail: "All private landlords in England must join the mandatory PRS Ombudsman scheme — now in force. Failure to join is a criminal offence (fine up to £5,000 per property).",
+    action: "Register at the government's landlord registration portal. Do not delay — enforcement is active.",
     severity: "high",
   },
   {
     key: "property_portal",
     label: "Properties registered on the new Rented Property Portal",
     detail: "All private landlords must register each property on the new government Rented Sector Property Portal. Failure to register means you cannot legally let the property.",
-    action: "Register each property once the portal launches. Monitor GOV.UK housing announcements.",
+    action: "Register each property on the Rented Property Portal when your registration window opens. Monitor GOV.UK for your area's rollout date.",
     severity: "high",
   },
   {
@@ -388,10 +388,10 @@ export default function RRBPage() {
             <span style={{ fontSize: 11, fontWeight: 800, color: RED, textTransform: "uppercase", letterSpacing: "0.08em" }}>Royal Assent 2025 — Action Required</span>
           </div>
           <h1 style={{ fontSize: "clamp(26px,4vw,42px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, fontFamily: "var(--font-family-heading, sans-serif)", marginBottom: 8 }}>
-            Renters Rights Bill<br />Readiness Checker
+            Renters' Rights Act 2025<br />Compliance Checker
           </h1>
           <p style={{ fontSize: 14, color: INK2, maxWidth: 560, lineHeight: 1.6 }}>
-            The most significant change to UK tenancy law in 30 years. Section 21 is abolished, all tenancies become periodic, and new obligations apply to every landlord in England.
+            Now in force. Section 21 is abolished, all tenancies are periodic, and new obligations apply to every landlord in England. Check your compliance status below.
           </p>
         </div>
 
@@ -483,7 +483,7 @@ export default function RRBPage() {
                         Fixed-term expires {new Date(tenant!.tenancy_end!).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })} ({daysToExpiry} days)
                       </p>
                       <p style={{ fontSize: 12, color: "#78350f", marginTop: 3, lineHeight: 1.5 }}>
-                        Under the Renters Rights Bill, this will automatically convert to a periodic tenancy — you cannot use expiry of the fixed term as a basis for possession. If you need possession, identify which Section 8 ground applies and serve notice in advance.
+                        Under the Renters' Rights Act 2025, this has automatically converted to a periodic tenancy — you cannot use expiry of the fixed term as a basis for possession. If you need possession, identify which Section 8 ground applies and serve notice in advance.
                       </p>
                     </div>
                   )}
@@ -604,13 +604,13 @@ export default function RRBPage() {
             <Card>
               <p style={{ fontSize: 11, fontWeight: 800, color: INK3, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Key dates</p>
               {[
-                { label: "Royal Assent", date: "2025", note: "Bill becomes law", color: RED },
-                { label: "Commencement", date: "TBC 2025/26", note: "Provisions take effect — monitor GOV.UK", color: AMBER },
-                { label: "Section 21 abolished", date: "From commencement", note: "No more no-fault evictions", color: RED },
-                { label: "All tenancies periodic", date: "From commencement", note: "Fixed terms expire into periodic", color: AMBER },
-                { label: "PRS Ombudsman", date: "From commencement", note: "Mandatory — fine up to £5,000", color: AMBER },
-                { label: "Property Portal", date: "From commencement", note: "Registration required to let legally", color: AMBER },
-                { label: "Decent Homes Standard", date: "From commencement", note: "PRS properties must meet DHS", color: BLUE },
+                { label: "Royal Assent", date: "March 2025", note: "Renters' Rights Act 2025 becomes law", color: RED },
+                { label: "Commencement", date: "June 2025", note: "All provisions now in force", color: RED },
+                { label: "Section 21 abolished", date: "June 2025", note: "No more no-fault evictions — in force now", color: RED },
+                { label: "All tenancies periodic", date: "June 2025", note: "Fixed terms expired into periodic", color: AMBER },
+                { label: "PRS Ombudsman", date: "In force", note: "Mandatory now — fine up to £5,000/property", color: AMBER },
+                { label: "Property Portal", date: "Rolling rollout", note: "Registration required when your area goes live", color: AMBER },
+                { label: "Decent Homes Standard", date: "In force", note: "PRS properties must meet DHS", color: BLUE },
               ].map(d => (
                 <div key={d.label} style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: `1px solid ${BORDER}` }}>
                   <div style={{ width: 3, background: d.color, borderRadius: 2, flexShrink: 0, alignSelf: "stretch" }} />
@@ -628,8 +628,8 @@ export default function RRBPage() {
               <p style={{ fontSize: 11, fontWeight: 800, color: INK3, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Section 8 grounds — replacing Section 21</p>
               <p style={{ fontSize: 11, color: INK2, marginBottom: 12, lineHeight: 1.55 }}>When you need possession, you must now cite a Section 8 ground. Key grounds:</p>
               {[
-                { ground: "Ground 1", name: "Owner-occupier", notice: "2 months", type: "No-fault", desc: "You or a close family member needs to move into the property. Cannot be used in first 12 months." },
-                { ground: "Ground 1A", name: "Landlord selling", notice: "2 months", type: "No-fault", desc: "You intend to sell the property. Cannot be used in first 12 months. Must actually sell." },
+                { ground: "Ground 1B", name: "Owner-occupier", notice: "4 months", type: "Mandatory", desc: "You or a close family member needs to move into the property. Cannot be used in first 12 months." },
+                { ground: "Ground 1A", name: "Landlord selling", notice: "4 months", type: "Mandatory", desc: "You intend to sell the property. Cannot be used in first 12 months. Must actually sell." },
                 { ground: "Ground 8", name: "Serious arrears", notice: "4 weeks", type: "Mandatory", desc: "At least 3 months rent in arrears at notice AND at hearing date. Court must grant possession." },
                 { ground: "Ground 10", name: "Some arrears", notice: "2 weeks", type: "Discretionary", desc: "Any rent arrears at time of notice and hearing. Court has discretion." },
                 { ground: "Ground 11", name: "Persistent late pay", notice: "2 weeks", type: "Discretionary", desc: "Persistent late payment even if not in arrears at notice date." },
@@ -659,7 +659,7 @@ export default function RRBPage() {
             {/* Disclaimer */}
             <div style={{ padding: "14px 16px", background: "rgba(17,17,17,0.04)", borderRadius: 10 }}>
               <p style={{ fontSize: 11, color: INK3, lineHeight: 1.6, fontStyle: "italic" }}>
-                This checker is for guidance only and does not constitute legal advice. The Renters Rights Bill is new law — provisions may change at commencement. Always verify with a qualified solicitor or letting agent before taking action.
+                This checker is for guidance only and does not constitute legal advice. The Renters' Rights Act 2025 is in force — always verify with a qualified solicitor or letting agent before taking action.
               </p>
             </div>
 

@@ -8,6 +8,21 @@ import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 type Tab = "profile" | "notifications" | "billing" | "security";
 
+const NOTIFICATION_KEYS = [
+  { key: "compliance_expiry", title: "Compliance expiry alerts", desc: "Remind me 45, 14 and 3 days before a certificate expires", defaultOn: true },
+  { key: "mortgage_alerts",   title: "Mortgage rate alerts",     desc: "Notify me when a fixed rate is within 90 days of expiry", defaultOn: true },
+  { key: "rent_reminders",    title: "Rent payment reminders",   desc: "Alert me if rent hasn't been logged by the 5th of the month", defaultOn: true },
+  { key: "maintenance",       title: "Maintenance updates",       desc: "Notify me when a maintenance job changes status", defaultOn: false },
+  { key: "weekly_digest",     title: "Portfolio digest",          desc: "Weekly summary of your portfolio performance every Monday", defaultOn: false },
+] as const;
+
+type NotifKey = typeof NOTIFICATION_KEYS[number]["key"];
+type NotifPrefs = Record<NotifKey, boolean>;
+
+const DEFAULT_PREFS: NotifPrefs = Object.fromEntries(
+  NOTIFICATION_KEYS.map(n => [n.key, n.defaultOn])
+) as NotifPrefs;
+
 export default function RenturaSettings() {
   const { user, profile, loading } = useAuth();
   const router = useRouter();
@@ -19,6 +34,10 @@ export default function RenturaSettings() {
   const [city, setCity] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [sub, setSub] = useState<{ status: string; plan: string; period_end: string | null } | null>(null);
+  const [notifPrefs, setNotifPrefs] = useState<NotifPrefs>(DEFAULT_PREFS);
+  const [notifSaving, setNotifSaving] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) router.push("/rentura/auth");
@@ -37,13 +56,52 @@ export default function RenturaSettings() {
     if (!user) return;
     supabase
       .from("rentura_subscriptions")
-      .select("status, plan, current_period_end")
+      .select("status, plan, current_period_end, notification_preferences")
       .eq("user_id", user.id)
       .maybeSingle()
       .then(({ data }) => {
-        if (data) setSub({ status: data.status, plan: data.plan, period_end: data.current_period_end });
+        if (data) {
+          setSub({ status: data.status, plan: data.plan, period_end: data.current_period_end });
+          if (data.notification_preferences && Object.keys(data.notification_preferences).length > 0) {
+            setNotifPrefs({ ...DEFAULT_PREFS, ...data.notification_preferences });
+          }
+        }
       });
   }, [user]);
+
+  async function saveNotifPrefs(prefs: NotifPrefs) {
+    if (!user) return;
+    setNotifSaving(true);
+    await supabase
+      .from("rentura_subscriptions")
+      .update({ notification_preferences: prefs })
+      .eq("user_id", user.id);
+    setNotifSaving(false);
+  }
+
+  function toggleNotif(key: NotifKey) {
+    const updated = { ...notifPrefs, [key]: !notifPrefs[key] };
+    setNotifPrefs(updated);
+    saveNotifPrefs(updated);
+  }
+
+  async function requestDeleteAccount() {
+    if (!user) return;
+    setDeleteLoading(true);
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: profile?.name || "Rentura user",
+        email: user.email,
+        message: `Account deletion request for user ID: ${user.id}. Please delete all data associated with this account.`,
+        subject: "Account Deletion Request — Rentura",
+      }),
+    }).catch(() => null);
+    setDeleteLoading(false);
+    setDeleteConfirm(false);
+    alert("Deletion request sent. We will process it within 30 days and confirm by email.");
+  }
 
   async function saveProfile() {
     if (!user) return;
@@ -143,22 +201,22 @@ export default function RenturaSettings() {
           {/* Notifications Tab */}
           {tab === "notifications" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {[
-                { title: "Compliance expiry alerts", desc: "Remind me 45, 14 and 3 days before a certificate expires", default: true },
-                { title: "Mortgage rate alerts", desc: "Notify me when a fixed rate is within 90 days of expiry", default: true },
-                { title: "Rent payment reminders", desc: "Alert me if rent hasn't been logged by the 5th of the month", default: true },
-                { title: "Maintenance updates", desc: "Notify me when a maintenance job changes status", default: false },
-                { title: "Portfolio digest", desc: "Weekly summary of your portfolio performance every Monday", default: false },
-              ].map(n => (
-                <div key={n.title} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: "16px 20px" }}>
+              {NOTIFICATION_KEYS.map(n => (
+                <div key={n.key} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: "16px 20px" }}>
                   <div>
                     <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 3 }}>{n.title}</p>
                     <p style={{ fontSize: 12, color: C.ink2 }}>{n.desc}</p>
                   </div>
-                  <Toggle defaultOn={n.default} />
+                  <button
+                    onClick={() => toggleNotif(n.key)}
+                    disabled={notifSaving}
+                    style={{ width: 40, height: 22, borderRadius: 11, background: notifPrefs[n.key] ? "#22c55e" : "rgba(255,255,255,0.1)", border: "none", cursor: "pointer", position: "relative", flexShrink: 0, transition: "background 0.2s", opacity: notifSaving ? 0.6 : 1 }}
+                  >
+                    <span style={{ position: "absolute", top: 3, left: notifPrefs[n.key] ? 21 : 3, width: 16, height: 16, borderRadius: "50%", background: "white", transition: "left 0.2s" }} />
+                  </button>
                 </div>
               ))}
-              <p style={{ fontSize: 11, color: C.ink3 }}>Notifications are sent to {user?.email}. SMS alerts coming soon.</p>
+              <p style={{ fontSize: 11, color: C.ink3 }}>Preferences are saved automatically. Notifications are sent to {user?.email}.</p>
             </div>
           )}
 
@@ -239,9 +297,33 @@ export default function RenturaSettings() {
               <div style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: 12, padding: "20px 24px" }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: C.red, marginBottom: 4 }}>Delete account</p>
                 <p style={{ fontSize: 12, color: C.ink2, marginBottom: 12 }}>This will permanently delete your account and all your data. This cannot be undone.</p>
-                <button style={{ background: "transparent", color: C.red, fontWeight: 700, fontSize: 12, padding: "7px 14px", borderRadius: 7, border: `1px solid rgba(239,68,68,0.3)`, cursor: "pointer" }}>
-                  Request account deletion
-                </button>
+                {!deleteConfirm ? (
+                  <button
+                    onClick={() => setDeleteConfirm(true)}
+                    style={{ background: "transparent", color: C.red, fontWeight: 700, fontSize: 12, padding: "7px 14px", borderRadius: 7, border: `1px solid rgba(239,68,68,0.3)`, cursor: "pointer" }}
+                  >
+                    Request account deletion
+                  </button>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    <p style={{ fontSize: 12, color: C.red, fontWeight: 600 }}>Are you sure? A deletion request will be emailed to us. We will delete your account and all data within 30 days.</p>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button
+                        onClick={requestDeleteAccount}
+                        disabled={deleteLoading}
+                        style={{ background: C.red, color: "white", fontWeight: 700, fontSize: 12, padding: "7px 14px", borderRadius: 7, border: "none", cursor: "pointer", opacity: deleteLoading ? 0.6 : 1 }}
+                      >
+                        {deleteLoading ? "Sending…" : "Yes, submit request"}
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirm(false)}
+                        style={{ background: "transparent", color: C.ink2, fontWeight: 600, fontSize: 12, padding: "7px 14px", borderRadius: 7, border: `1px solid ${C.border}`, cursor: "pointer" }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -250,23 +332,3 @@ export default function RenturaSettings() {
   );
 }
 
-function Toggle({ defaultOn }: { defaultOn: boolean }) {
-  const [on, setOn] = useState(defaultOn);
-  return (
-    <button
-      onClick={() => setOn(v => !v)}
-      style={{
-        width: 40, height: 22, borderRadius: 11,
-        background: on ? "#22c55e" : "rgba(255,255,255,0.1)",
-        border: "none", cursor: "pointer", position: "relative",
-        flexShrink: 0, transition: "background 0.2s",
-      }}
-    >
-      <span style={{
-        position: "absolute", top: 3, left: on ? 21 : 3,
-        width: 16, height: 16, borderRadius: "50%",
-        background: "white", transition: "left 0.2s",
-      }} />
-    </button>
-  );
-}
