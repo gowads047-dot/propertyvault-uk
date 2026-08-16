@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "What is an HMO property?", a: "A House in Multiple Occupation (HMO) is a property rented by three or more people from two or more separate households who share facilities such as kitchens or bathrooms. HMOs with five or more people from two or more households require a mandatory HMO licence from the local council." },
@@ -33,9 +34,9 @@ export default function HMOYieldPage() {
 
   const addRoom = () => setRooms([...rooms, { name: `Room ${rooms.length + 1}`, rent: 500, occupied: true }]);
   const removeRoom = () => { if (rooms.length > 1) setRooms(rooms.slice(0, -1)); };
-  const updateRoom = (i: number, field: string, value: any) => {
+  const updateRoom = (i: number, field: string, value: string | number | boolean) => {
     const updated = [...rooms];
-    (updated[i] as any)[field] = value;
+    (updated[i] as Record<string, string | number | boolean>)[field] = value;
     setRooms(updated);
   };
 
@@ -64,6 +65,7 @@ export default function HMOYieldPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "HMO Yield" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">HMO Yield Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Calculate room-by-room income, gross and net yields, and monthly cash flow for any House in Multiple Occupation.</p>

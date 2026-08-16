@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Personal vs Limited Company Property Calculator UK 2025 | PropertyVault",
+  title: "Personal vs Limited Company Property Calculator UK 2026 | PropertyVault",
   description: "Compare buying property in your personal name vs a limited company (SPV). Calculate tax, mortgage costs, profit, and dividend income to find the most efficient structure.",
   keywords: "personal vs limited company property UK, SPV property calculator, should I use a limited company property, property company vs personal name tax",
   openGraph: {

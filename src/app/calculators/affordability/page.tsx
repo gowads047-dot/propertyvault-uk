@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "How much can I borrow for a mortgage in the UK?", a: "Most UK lenders cap borrowing at 4-4.5 times your gross annual income. Some lenders go up to 5.5x for high earners or certain professions. The actual amount also depends on a stress test: you must be able to afford repayments if interest rates rose by 3%." },
@@ -45,6 +46,7 @@ export default function AffordabilityPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Affordability" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Mortgage Affordability Calculator</h1>
           <p className="text-navy-200 max-w-2xl">How much can you borrow? Enter your income, deposit, and outgoings to estimate your maximum mortgage and the property price you could afford.</p>

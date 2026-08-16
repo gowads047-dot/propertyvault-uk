@@ -1,9 +1,23 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Serviced Accommodation UK — Airbnb & Short-Let Guide | PropertyVault",
   description: "Complete guide to serviced accommodation investing. Airbnb strategy, pricing, compliance, 90-day rule, furnishing, and management for short-term lets.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/serviced-accommodation/" },
+  openGraph: {
+    title: "Serviced Accommodation UK — Airbnb & Short-Let Guide | PropertyVault",
+    description: "Complete guide to serviced accommodation investing. Airbnb strategy, pricing, compliance, 90-day rule, furnishing, and management for short-term lets.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/serviced-accommodation/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Serviced Accommodation UK Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Serviced Accommodation UK — Airbnb & Short-Let Guide | PropertyVault",
+    description: "Complete guide to serviced accommodation investing. Airbnb strategy, pricing, compliance, 90-day rule, furnishing, and management for short-term lets.",
+  },
 };
 
 export default function ServicedAccommodationPage() {
@@ -58,7 +72,7 @@ export default function ServicedAccommodationPage() {
 
           <div>
             <h2 className="text-2xl font-bold text-navy-800 mb-4">Tax Benefits</h2>
-            <p className="text-navy-600 leading-relaxed">If your SA property qualifies as a Furnished Holiday Let (FHL), you may benefit from capital allowances on furniture, mortgage interest relief as a business expense, and more favourable CGT treatment. FHL status requires the property to be available for let for at least 210 days per year and actually let for at least 105 days. Note: The government has announced changes to FHL tax treatment — check the latest HMRC guidance.</p>
+            <p className="text-navy-600 leading-relaxed"><strong>Important:</strong> The Furnished Holiday Lettings (FHL) tax regime was abolished from 6 April 2025. SA properties no longer qualify for the special FHL reliefs — including capital allowances on furniture, full mortgage interest deduction, and Business Asset Disposal Relief on sale. From April 2025, SA income is taxed in the same way as other property income (subject to Section 24 interest restriction for individual landlords). Check current HMRC guidance for transitional provisions if you held FHL properties before April 2025.</p>
           </div>
         </div>
       </section>

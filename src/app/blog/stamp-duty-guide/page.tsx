@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
   description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
   keywords: "stamp duty UK, SDLT rates, stamp duty calculator, first time buyer stamp duty, additional property surcharge, stamp duty 2025",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
+  openGraph: {
+    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+    description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/stamp-duty-guide/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Stamp Duty UK Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+    description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
+  },
 };
 
 const faqs = [
@@ -61,10 +75,6 @@ export default function StampDutyArticle() {
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Additional Property Surcharge</h2>
         <p>If you already own a property and are buying an additional one (buy-to-let, second home, investment), you pay a <strong>5% surcharge</strong> on top of the standard rates on the entire purchase price. This surcharge was increased from 3% to 5% on 31 October 2024.</p>
-
-        <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>First-Time Buyer Relief (from 1 April 2025)</h2>
-        <p>First-time buyers pay no SDLT on the first <strong>£300,000</strong> and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply and standard rates are charged.</p>
-        <p>The temporary higher thresholds (£425,000 nil-rate / £625,000 cap) ended on 31 March 2025.</p>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>First-Time Buyer Relief (from 1 April 2025)</h2>
         <p>First-time buyers pay no SDLT on the first <strong>£300,000</strong> and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply and standard rates are charged on the full amount from £0.</p>

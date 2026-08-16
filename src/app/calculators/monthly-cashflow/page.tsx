@@ -11,6 +11,20 @@ export const metadata: Metadata = {
   title: "Free BTL Monthly Cash Flow Calculator UK — Net Yield, Cash-on-Cash Return | PropertyVault",
   description: "Calculate monthly cash flow on any buy-to-let property. See gross yield, net yield, cash-on-cash return, and every expense broken down — including voids and management fees.",
   keywords: "BTL cash flow calculator, buy to let monthly income calculator, net yield calculator UK, cash on cash return calculator, rental property cash flow",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/monthly-cashflow/" },
+  openGraph: {
+    title: "Free BTL Monthly Cash Flow Calculator UK — Net Yield, Cash-on-Cash Return | PropertyVault",
+    description: "Calculate monthly cash flow on any buy-to-let property. See gross yield, net yield, cash-on-cash return, and every expense broken down — including voids and management fees.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/calculators/monthly-cashflow/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BTL Monthly Cash Flow Calculator" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free BTL Monthly Cash Flow Calculator UK — Net Yield, Cash-on-Cash Return | PropertyVault",
+    description: "Calculate monthly cash flow on any buy-to-let property. See gross yield, net yield, cash-on-cash return, and every expense broken down — including voids and management fees.",
+  },
 };
 
 const faqs = [

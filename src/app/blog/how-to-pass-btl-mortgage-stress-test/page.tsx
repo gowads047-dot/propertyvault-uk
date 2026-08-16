@@ -34,11 +34,11 @@ const articleSchema = {
 };
 
 export const metadata: Metadata = {
-  title: "How to Pass the BTL Mortgage Stress Test — A Landlord's Guide 2025 | PropertyVault UK",
+  title: "How to Pass the BTL Mortgage Stress Test — A Landlord's Guide 2026 | PropertyVault UK",
   description: "BTL mortgage stress tests failing? Learn how lenders calculate ICR, what 145% means in practice, why your deal is failing, and 6 ways to fix it — including limited company, higher deposit, and rent increases.",
-  keywords: "BTL mortgage stress test, buy to let stress test 2025, ICR 145%, interest coverage ratio buy to let, BTL mortgage failing stress test, buy to let mortgage limited company",
+  keywords: "BTL mortgage stress test, buy to let stress test 2026, ICR 145%, interest coverage ratio buy to let, BTL mortgage failing stress test, buy to let mortgage limited company",
   openGraph: {
-    title: "How to Pass the BTL Mortgage Stress Test 2025 | PropertyVault UK",
+    title: "How to Pass the BTL Mortgage Stress Test 2026 | PropertyVault UK",
     description: "Learn exactly how the BTL stress test works, why deals fail, and 6 strategies to pass — including limited company lending, higher deposits, and rent optimisation.",
     type: "article",
     url: "https://propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/",
@@ -124,7 +124,7 @@ export default function BtlStressTestPage() {
       <BlogArticleHero
         title="How to Pass the BTL Mortgage Stress Test"
         excerpt="Your deal is cash-flow positive but the lender says no. Here is exactly why stress tests work the way they do — and 6 strategies to get your deal approved."
-        date="25 June 2025"
+        date="25 June 2026"
         readTime="8 min"
         category="Finance"
         image="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80"

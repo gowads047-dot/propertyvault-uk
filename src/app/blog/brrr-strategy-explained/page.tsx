@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -9,6 +9,20 @@ export const metadata: Metadata = {
   title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",
   description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
   keywords: "BRRR strategy UK, buy refurbish rent refinance, BRRR property investing, BRRR explained, BRRR calculator",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/brrr-strategy-explained/" },
+  openGraph: {
+    title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",
+    description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/brrr-strategy-explained/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property refurbishment for BRRR strategy UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",
+    description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
+  },
 };
 
 const faqs = [
@@ -83,7 +97,7 @@ export default function BRRRArticle() {
           <ul className="list-disc pl-6 space-y-1">
             <li>Gas Safety Certificate (CP12) — annual requirement</li>
             <li>EICR (Electrical Installation Condition Report) — every 5 years</li>
-            <li>EPC rating of E or above (C expected by 2028 for new tenancies)</li>
+            <li>EPC rating of E or above (C required by 2030 — plan upgrades now)</li>
             <li>Smoke alarms on every floor, CO alarms where required</li>
             <li>Deposit protected in a government-approved scheme within 30 days</li>
             <li>Right to Rent checks on all adult occupants</li>

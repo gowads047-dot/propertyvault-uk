@@ -25,6 +25,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
   Finance:    { bg: "#d1fae5", text: "#065f46" },
   Buying:     { bg: "#e0f2fe", text: "#0e7490" },
   Comparison: { bg: "#f1f5f9", text: "#475569" },
+  Academy:    { bg: "#e0e7ff", text: "#3730a3" },
 };
 
 function CategoryBadge({ cat, small = false }: { cat: string; small?: boolean }) {
@@ -48,12 +49,28 @@ function CategoryBadge({ cat, small = false }: { cat: string; small?: boolean })
 function NewsletterBlock() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
-    window.location.href = `mailto:gowads047@gmail.com?subject=Blog%20Newsletter%20Signup&body=Please%20add%20me%20to%20the%20PropertyVault%20blog%20newsletter%3A%20${encodeURIComponent(email)}`;
-    setSent(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: email.split("@")[0], email, user_type: "blog" }),
+      });
+      const data = await res.json();
+      if (!res.ok) { setError(data.error ?? "Something went wrong."); return; }
+      setSent(true);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -82,6 +99,7 @@ function NewsletterBlock() {
             ✓ Thanks! We&apos;ll be in touch shortly.
           </div>
         ) : (
+          <>
           <form onSubmit={handleSubmit} style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <input
               type="email"
@@ -89,6 +107,7 @@ function NewsletterBlock() {
               onChange={e => setEmail(e.target.value)}
               placeholder="your@email.com"
               required
+              disabled={loading}
               style={{
                 flex: 1,
                 minWidth: 200,
@@ -101,7 +120,7 @@ function NewsletterBlock() {
                 outline: "none",
               }}
             />
-            <button type="submit" style={{
+            <button type="submit" disabled={loading} style={{
               background: "#c9a84c",
               color: "#0f1b36",
               border: "none",
@@ -109,12 +128,15 @@ function NewsletterBlock() {
               padding: "12px 24px",
               fontSize: 14,
               fontWeight: 700,
-              cursor: "pointer",
+              cursor: loading ? "not-allowed" : "pointer",
               whiteSpace: "nowrap",
+              opacity: loading ? 0.7 : 1,
             }}>
-              Subscribe →
+              {loading ? "Subscribing…" : "Subscribe →"}
             </button>
           </form>
+          {error && <p style={{ fontSize: 12, color: "#fca5a5", marginTop: 8 }}>{error}</p>}
+          </>
         )}
         <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>
           Join 1,200+ landlords, investors and deal sourcers.

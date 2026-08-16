@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -13,15 +14,19 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://propertyvaultuk.co.uk"),
   title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
   description:
-    "The UK's most comprehensive free property platform. 15 calculators, 40+ templates, property search, area research tools, and expert guides for investors, landlords, and buyers.",
+    "The UK's most comprehensive free property platform. 23 free calculators, 19 legal templates, guaranteed rent, and expert guides for UK investors, landlords, and buyers.",
   keywords:
-    "property investing UK, buy to let, BRRR calculator, stamp duty calculator, rental yield calculator, property templates, HMO yield, Section 24 calculator, UK mortgages, property law, guaranteed rent Birmingham",
+    "property investing UK, buy to let, BRRR calculator, stamp duty calculator, rental yield calculator, property templates, HMO yield, Section 24 calculator, UK mortgages, property law, guaranteed rent Birmingham, Renters Rights Act 2025",
   openGraph: {
-    title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
+    title: {
+      template: "%s",
+      default: "PropertyVault UK — Free Property Calculators, Templates & Guides",
+    },
     description:
-      "17 free calculators, 40+ templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.",
+      "23 free calculators, 19 free templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.",
     type: "website",
     locale: "en_GB",
     siteName: "PropertyVault UK",
@@ -31,13 +36,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PropertyVault UK",
-    description: "15 free property calculators, 40+ templates, and expert UK property guides.",
+    description: "23 free property calculators, 19 legal templates, and expert UK property guides.",
     images: ["https://propertyvaultuk.co.uk/opengraph-image"],
   },
   robots: { index: true, follow: true },
-  alternates: {
-    canonical: "https://propertyvaultuk.co.uk",
-  },
 };
 
 const jsonLd = {
@@ -121,7 +123,7 @@ const localBusinessJsonLd = {
         itemOffered: {
           "@type": "Service",
           name: "Free Property Calculators",
-          description: "17 free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.",
+          description: "23 free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.",
           url: "https://propertyvaultuk.co.uk/calculators",
         },
       },
@@ -130,7 +132,7 @@ const localBusinessJsonLd = {
         itemOffered: {
           "@type": "Service",
           name: "Free Legal Templates",
-          description: "18 free landlord legal document templates including AST, Section 8, Section 13 and more — compliant with 2025 legislation.",
+          description: "19 free landlord legal document templates including AST, Section 8, Section 13 and more — compliant with 2026 legislation.",
           url: "https://propertyvaultuk.co.uk/templates",
         },
       },
@@ -146,8 +148,8 @@ export default function RootLayout({
   return (
     <html lang="en-GB" className={`${inter.variable} h-full antialiased`}>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8YZQZP5L4Q" />
-        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8YZQZP5L4Q');` }} />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MG7FKKCKWQ" />
+        <script dangerouslySetInnerHTML={{ __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MG7FKKCKWQ');` }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -168,6 +170,7 @@ export default function RootLayout({
         <CookieConsent />
         <WhatsAppButton />
         <NewsletterPopup />
+        <Analytics />
       </body>
     </html>
   );

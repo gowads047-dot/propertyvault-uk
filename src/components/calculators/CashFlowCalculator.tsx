@@ -126,7 +126,7 @@ export function CashFlowCalculator() {
           <div className="bg-white rounded-xl border border-navy-100 p-4">
             <p className="text-xs font-bold text-navy-500 mb-1">Coverage ratio</p>
             <p className={`text-2xl font-bold ${results.coverageRatio >= 125 ? "text-green-700" : "text-amber-600"}`}>{fmtPct(results.coverageRatio)}</p>
-            <p className="text-xs text-navy-400 mt-0.5">Need 125%+ for lender</p>
+            <p className="text-xs text-navy-400 mt-0.5">125%+ basic / 145%+ higher-rate</p>
           </div>
         </div>
 

@@ -4,6 +4,8 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
+import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const brrrFaqs = [
   { q: "What does BRRR stand for?", a: "BRRR stands for Buy, Refurbish, Rent, Refinance. It is a property investment strategy where you purchase below market value, add value through refurbishment, rent the property out, then refinance against the higher value to recycle your original capital." },
@@ -16,6 +18,20 @@ const brrrFaqs = [
 export const metadata: Metadata = {
   title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
   description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/brrr/" },
+  openGraph: {
+    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
+    description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/calculators/brrr/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BRRR Calculator UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
+    description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
+  },
 };
 
 export default function BRRRPage() {
@@ -23,6 +39,7 @@ export default function BRRRPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "BRRR Calculator" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">BRRR Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Model your Buy, Refurbish, Rent, Refinance deal from start to finish. See how much capital you recycle, your cash flow, ROI, and whether you get all your money out.</p>
@@ -35,6 +52,7 @@ export default function BRRRPage() {
             <EmailResults />
           </div>
           <EmbedCode slug="brrr" title="BRRR Calculator UK" />
+          <GuaranteedRentCTA context="brrr" />
           <FAQSchema faqs={brrrFaqs} />
           <Disclaimer type="calculator" />
         </div>

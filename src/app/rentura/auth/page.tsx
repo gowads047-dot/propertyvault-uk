@@ -4,28 +4,39 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
+import { supabase } from "@/lib/supabase";
+
+type Mode = "signin" | "signup" | "forgot" | "update";
 
 function RenturaAuthForm() {
-  const { user, signIn, signUp, loading } = useAuth();
+  const { user, signIn, signUp, resetPassword, updatePassword, loading } = useAuth();
   const router = useRouter();
   const [next, setNext] = useState("/rentura/dashboard");
+  const [mode, setMode] = useState<Mode>("signin");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setNext(params.get("next") ?? "/rentura/dashboard");
   }, []);
 
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  // Detect Supabase password-recovery redirect (arrives with #type=recovery in hash)
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") setMode("update");
+    });
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
-    if (!loading && user) router.replace(next);
-  }, [user, loading, router, next]);
+    if (!loading && user && mode !== "update") router.replace(next);
+  }, [user, loading, router, next, mode]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,7 +48,8 @@ function RenturaAuthForm() {
       const { error: err } = await signIn(email, password);
       if (err) { setError(err); setSubmitting(false); return; }
       router.replace(next);
-    } else {
+
+    } else if (mode === "signup") {
       if (!name.trim()) { setError("Please enter your name."); setSubmitting(false); return; }
       if (password.length < 8) { setError("Password must be at least 8 characters."); setSubmitting(false); return; }
       const { error: err } = await signUp(email, password, name.trim(), "landlord");
@@ -45,7 +57,22 @@ function RenturaAuthForm() {
       setSuccess("Account created — check your email to confirm, then sign in.");
       setMode("signin");
       setPassword("");
+
+    } else if (mode === "forgot") {
+      if (!email.trim()) { setError("Please enter your email address."); setSubmitting(false); return; }
+      const { error: err } = await resetPassword(email.trim());
+      if (err) { setError(err); setSubmitting(false); return; }
+      setSuccess("Reset link sent — check your inbox (and spam folder).");
+
+    } else if (mode === "update") {
+      if (password.length < 8) { setError("New password must be at least 8 characters."); setSubmitting(false); return; }
+      if (password !== confirmPassword) { setError("Passwords don't match."); setSubmitting(false); return; }
+      const { error: err } = await updatePassword(password);
+      if (err) { setError(err); setSubmitting(false); return; }
+      setSuccess("Password updated — signing you in…");
+      setTimeout(() => router.replace(next), 1500);
     }
+
     setSubmitting(false);
   }
 
@@ -86,6 +113,13 @@ function RenturaAuthForm() {
     );
   }
 
+  const headings: Record<Mode, { title: string; sub: string }> = {
+    signin:  { title: "Welcome back.",               sub: "Sign in to your Rentura account." },
+    signup:  { title: "Start your Property Passport.", sub: "Every property. One living record. Trusted." },
+    forgot:  { title: "Reset your password.",         sub: "Enter your email and we'll send a reset link." },
+    update:  { title: "Set a new password.",          sub: "Choose a strong password for your account." },
+  };
+
   return (
     <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
@@ -108,41 +142,68 @@ function RenturaAuthForm() {
               R
             </div>
             <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.03em", marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>
-              {mode === "signin" ? "Welcome back." : "Start your Property Passport."}
+              {headings[mode].title}
             </h1>
             <p style={{ fontSize: 14, color: INK2, lineHeight: 1.5 }}>
-              {mode === "signin"
-                ? "Sign in to your Rentura account."
-                : "Every property. One living record. Trusted."}
+              {headings[mode].sub}
             </p>
           </div>
 
-          {/* Mode toggle */}
-          <div style={{ display: "flex", background: "rgba(17,17,17,0.06)", borderRadius: 10, padding: 4, marginBottom: 28 }}>
-            {(["signin", "signup"] as const).map(m => (
-              <button key={m} onClick={() => { setMode(m); setError(null); setSuccess(null); }}
-                style={{ flex: 1, padding: "9px 0", fontSize: 13, fontWeight: 700, borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", background: mode === m ? "white" : "transparent", color: mode === m ? INK : INK2, boxShadow: mode === m ? "0 1px 4px rgba(0,0,0,0.1)" : "none" }}>
-                {m === "signin" ? "Sign in" : "Create account"}
-              </button>
-            ))}
-          </div>
+          {/* Mode toggle — only for signin/signup */}
+          {(mode === "signin" || mode === "signup") && (
+            <div style={{ display: "flex", background: "rgba(17,17,17,0.06)", borderRadius: 10, padding: 4, marginBottom: 28 }}>
+              {(["signin", "signup"] as const).map(m => (
+                <button key={m} onClick={() => { setMode(m); setError(null); setSuccess(null); }}
+                  style={{ flex: 1, padding: "9px 0", fontSize: 13, fontWeight: 700, borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit", transition: "all 0.15s", background: mode === m ? "white" : "transparent", color: mode === m ? INK : INK2, boxShadow: mode === m ? "0 1px 4px rgba(0,0,0,0.1)" : "none" }}>
+                  {m === "signin" ? "Sign in" : "Create account"}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+
             {mode === "signup" && (
               <div>
                 <label style={labelStyle}>Your name</label>
                 <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nass" autoComplete="name" required style={inputStyle} />
               </div>
             )}
-            <div>
-              <label style={labelStyle}>Email address</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com" autoComplete="email" required style={inputStyle} />
-            </div>
-            <div>
-              <label style={labelStyle}>Password</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder={mode === "signup" ? "At least 8 characters" : "••••••••"} autoComplete={mode === "signin" ? "current-password" : "new-password"} required style={inputStyle} />
-            </div>
+
+            {mode !== "update" && (
+              <div>
+                <label style={labelStyle}>Email address</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com" autoComplete="email" required style={inputStyle} />
+              </div>
+            )}
+
+            {(mode === "signin" || mode === "signup" || mode === "update") && (
+              <div>
+                <label style={labelStyle}>{mode === "update" ? "New password" : "Password"}</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+                  placeholder={mode === "signup" || mode === "update" ? "At least 8 characters" : "••••••••"}
+                  autoComplete={mode === "signin" ? "current-password" : "new-password"} required style={inputStyle} />
+              </div>
+            )}
+
+            {mode === "update" && (
+              <div>
+                <label style={labelStyle}>Confirm new password</label>
+                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                  placeholder="Repeat your new password" autoComplete="new-password" required style={inputStyle} />
+              </div>
+            )}
+
+            {/* Forgot password link */}
+            {mode === "signin" && (
+              <div style={{ textAlign: "right", marginTop: -8 }}>
+                <button type="button" onClick={() => { setMode("forgot"); setError(null); setSuccess(null); }}
+                  style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, color: INK2, fontFamily: "inherit", padding: 0, textDecoration: "underline" }}>
+                  Forgot password?
+                </button>
+              </div>
+            )}
 
             {error && (
               <div style={{ background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 9, padding: "11px 14px", color: "#dc2626", fontSize: 13, fontWeight: 600 }}>
@@ -158,9 +219,19 @@ function RenturaAuthForm() {
 
             <button type="submit" disabled={submitting}
               style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 16, padding: "15px 0", borderRadius: 11, border: "none", cursor: "pointer", fontFamily: "inherit", letterSpacing: "-0.02em", opacity: submitting ? 0.6 : 1, transition: "opacity 0.15s", marginTop: 4 }}>
-              {submitting ? "…" : mode === "signin" ? "Sign in →" : "Create account →"}
+              {submitting ? "…" : mode === "signin" ? "Sign in →" : mode === "signup" ? "Create account →" : mode === "forgot" ? "Send reset link →" : "Update password →"}
             </button>
           </form>
+
+          {/* Back to sign in */}
+          {(mode === "forgot" || mode === "update") && (
+            <p style={{ textAlign: "center", marginTop: 20, fontSize: 13 }}>
+              <button type="button" onClick={() => { setMode("signin"); setError(null); setSuccess(null); }}
+                style={{ background: "none", border: "none", cursor: "pointer", color: INK2, fontFamily: "inherit", textDecoration: "underline" }}>
+                ← Back to sign in
+              </button>
+            </p>
+          )}
 
           <p style={{ fontSize: 12, color: INK2, textAlign: "center", marginTop: 24, lineHeight: 1.6 }}>
             By continuing you agree to our{" "}

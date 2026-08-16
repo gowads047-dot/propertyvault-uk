@@ -1,9 +1,13 @@
 export type TrustLevel = "verified" | "confirmed" | "suggested";
 export type PropertyType = "house" | "flat" | "hmo" | "commercial" | "other";
 export type EventType =
-  | "payment" | "maintenance_logged" | "maintenance_resolved"
-  | "maintenance_cost" | "tenant_in" | "tenant_out"
-  | "compliance" | "mortgage" | "rent_review" | "arrears" | "note" | "property_created";
+  | "payment" | "rent_payment" | "bulk_payment"
+  | "maintenance_logged" | "maintenance_resolved" | "maintenance_cost" | "maintenance_issue"
+  | "tenant_in" | "tenant_out" | "new_tenant" | "tenant_leaving"
+  | "compliance" | "deposit_protection"
+  | "mortgage" | "mortgage_renewal" | "insurance_renewal"
+  | "rent_review" | "arrears" | "void_period"
+  | "note" | "property_created" | "new_property";
 
 export interface RenturaProperty {
   id: string;

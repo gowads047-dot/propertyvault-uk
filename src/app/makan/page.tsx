@@ -1,659 +1,293 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
-import { supabase } from "@/lib/supabase";
-import { useLang } from "@/lib/lang-context";
-import { countries, propertyTypes, formatPrice } from "@/lib/hetta-config";
-import { SmartSearch } from "@/components/hetta/SmartSearch";
 
+const FEATURES = [
+  {
+    icon: "🇬🇧",
+    title: "UK Property Listings",
+    desc: "Buy, rent, and find rooms across the UK. From Birmingham to London, Manchester to Nottingham — properties listed in English and Arabic for the Arab diaspora community.",
+  },
+  {
+    icon: "🇲🇦",
+    title: "Morocco Listings",
+    desc: "Marrakech, Casablanca, Agadir, Rabat — buy or invest in Moroccan property with listings verified by local partners. Pricing in both GBP and MAD.",
+  },
+  {
+    icon: "🌍",
+    title: "North Africa & Middle East",
+    desc: "Egypt, UAE, and beyond. Makan is building the first bilingual property platform connecting the Arab world diaspora in the UK to investment opportunities back home.",
+  },
+  {
+    icon: "🌐",
+    title: "Fully Bilingual",
+    desc: "Every listing, every search, every message — available in Arabic and English. Right-to-left layout fully supported. No more translating your own home search.",
+  },
+  {
+    icon: "🔍",
+    title: "Smart Bilingual Search",
+    desc: "Search in Arabic or English and get the same results. Our search understands both languages natively — no clunky auto-translation.",
+  },
+  {
+    icon: "✅",
+    title: "Verified Listings Only",
+    desc: "Every landlord and agent is verified before listing. No ghost properties, no fake photos, no bait-and-switch. What you see is what exists.",
+  },
+  {
+    icon: "💬",
+    title: "Message in Your Language",
+    desc: "Contact landlords and agents directly in Arabic or English via in-app messaging. No awkward Google Translate conversations.",
+  },
+  {
+    icon: "🆓",
+    title: "Free to List",
+    desc: "Landlords and agents list for free. Always. Makan makes its money on premium placements and featured listings — never by charging the people listing their properties.",
+  },
+];
 
-interface Listing {
-  id: string;
-  title: string;
-  property_type: string;
-  bedrooms: number;
-  price: number;
-  city: string;
-  area: string;
-  available_from: string;
-  features: string[];
-  images: string[];
-  featured?: boolean;
-  listing_type?: string;
-  country?: string;
-  size_sqm?: number;
-  video_url?: string;
-  highlights?: string[];
-}
-
-const CARD_FEATURE_ICONS: Record<string, string> = {
-  "Parking": "🅿️", "Garage": "🏗️",
-  "Pool": "🏊", "Swimming pool": "🏊",
-  "Gym": "🏋️",
-  "Garden": "🌿", "Private garden": "🌿",
-  "Balcony": "🌤️", "Terrace": "☀️",
-  "Sea view": "🌊", "Marina view": "⛵", "City view": "🌆",
-  "Furnished": "🛋️", "Part furnished": "🪑",
-  "Air conditioning": "❄️", "Chiller free": "❄️", "District cooling": "❄️",
-  "En-suite": "🚿", "Bills included": "💡",
-  "Pets OK": "🐾", "Pet friendly": "🐾",
-  "Concierge": "🎩", "Security": "🔐",
-  "Near transport": "🚇", "Near metro": "🚇",
-  "Private beach": "🏖️", "Beach access": "🏖️",
-  "Students welcome": "🎓", "Professionals only": "💼",
-};
-
-// Scroll-reveal hook
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) el.classList.add("revealed"); },
-      { threshold: 0.08 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return ref;
-}
-
-function RevealCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => el.classList.add("revealed"), delay);
-        }
-      },
-      { threshold: 0.05 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [delay]);
-  return (
-    <div ref={ref} className="reveal-card">
-      {children}
-    </div>
-  );
-}
+const MARKETS = [
+  { flag: "🇬🇧", country: "United Kingdom", cities: ["London", "Birmingham", "Manchester", "Nottingham", "Derby", "Leicester", "Sheffield", "Leeds", "Bradford"], status: "Launching first" },
+  { flag: "🇲🇦", country: "Morocco", cities: ["Marrakech", "Casablanca", "Agadir", "Rabat", "Fez", "Tangier"], status: "Phase 2" },
+  { flag: "🇪🇬", country: "Egypt", cities: ["Cairo", "Alexandria", "El Gouna", "New Cairo"], status: "Phase 3" },
+  { flag: "🇦🇪", country: "UAE", cities: ["Dubai", "Abu Dhabi", "Sharjah"], status: "Future" },
+];
 
 export default function MakanPage() {
-  const { t } = useLang();
-  const [typeFilter, setTypeFilter] = useState("All");
-  const [countryFilter, setCountryFilter] = useState("All");
-  const [cityFilter, setCityFilter] = useState("All cities");
-  const [search, setSearch] = useState("");
-  const [maxPrice, setMaxPrice] = useState(5000);
-  const [listings, setListings] = useState<Listing[]>([]);
-  const [featuredListing, setFeaturedListing] = useState<Listing | null>(null);
-  const heroRef = useScrollReveal();
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [lang, setLang] = useState<"en" | "ar">("en");
 
-  const selectedCountry = countries.find(c => c.code === countryFilter);
-  const cityOptions = countryFilter === "All" ? [] : (selectedCountry?.cities || []);
-
-  useEffect(() => {
-    supabase.from("listings").select("*").eq("status", "active").order("created_at", { ascending: false })
-      .then(({ data }) => {
-        setListings(data || []);
-        const withImg = (data || []).find((l: Listing) => l.images?.[0]);
-        if (withImg) setFeaturedListing(withImg);
-      });
-  }, []);
-
-  const filtered = listings.filter(l => {
-    if (typeFilter !== "All" && l.property_type !== typeFilter) return false;
-    if (countryFilter !== "All" && l.country && l.country !== countryFilter) return false;
-    if (cityFilter !== "All cities" && l.city !== cityFilter) return false;
-    if (l.listing_type !== "sale" && l.price > maxPrice) return false;
-    if (search && !l.title.toLowerCase().includes(search.toLowerCase()) && !l.area.toLowerCase().includes(search.toLowerCase())) return false;
-    return true;
-  });
-
-  const isAvailableNow = (d: string) => !d || new Date(d) <= new Date();
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: "Makan Waitlist", email: email.trim(), user_type: "makan_waitlist" }),
+    }).catch(() => {});
+    setSubmitted(true);
+  }
 
   return (
-    <>
-      <style>{`
-        .reveal-card {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .reveal-card.revealed {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        .hero-reveal {
-          opacity: 0;
-          transform: translateY(16px);
-          animation: heroIn 0.8s ease 0.1s forwards;
-        }
-        .hero-reveal-2 {
-          opacity: 0;
-          transform: translateY(16px);
-          animation: heroIn 0.8s ease 0.3s forwards;
-        }
-        .hero-reveal-3 {
-          opacity: 0;
-          transform: translateY(16px);
-          animation: heroIn 0.8s ease 0.5s forwards;
-        }
-        @keyframes heroIn {
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .preview-card-reveal {
-          opacity: 0;
-          transform: translateX(20px);
-          animation: heroIn 0.9s ease 0.7s forwards;
-        }
-        .type-btn {
-          padding: 6px 14px;
-          border-radius: 20px;
-          font-size: 13px;
-          font-weight: 500;
-          cursor: pointer;
-          border: 1px solid var(--h-border);
-          background: var(--h-surface);
-          color: var(--h-muted);
-          transition: all 0.15s;
-        }
-        .type-btn:hover { color: var(--h-text); border-color: var(--h-text); }
-        .type-btn.active {
-          background: var(--h-accent);
-          color: white;
-          border-color: var(--h-accent);
-        }
-        .listing-card {
-          border-radius: 16px;
-          overflow: hidden;
-          border: 1px solid var(--h-border);
-          background: var(--h-surface);
-          transition: box-shadow 0.2s, transform 0.2s;
-          cursor: pointer;
-          display: block;
-          text-decoration: none;
-        }
-        .listing-card:hover {
-          box-shadow: 0 8px 32px rgba(0,0,0,0.10);
-          transform: translateY(-2px);
-        }
-        .listing-card:hover .card-img { transform: scale(1.04); }
-        .card-img {
-          width: 100%; height: 100%;
-          object-fit: cover;
-          transition: transform 0.5s ease;
-          display: block;
-        }
-      `}</style>
+    <main className="min-h-screen bg-[#0a1628] text-white">
 
-      {/* ── HERO ─────────────────────────────────────────── */}
-      <section style={{ background: "#0b0f14", position: "relative", overflow: "hidden", minHeight: 480 }}>
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 py-24 overflow-hidden">
+        {/* Grid bg */}
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+        {/* Dual glow — left blue for UK, right gold for MENA */}
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 65%)" }} />
+        <div className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(201,168,76,0.1) 0%,transparent 65%)" }} />
 
-        {/* Background texture */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(ellipse at 70% 50%, rgba(232,85,61,0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(45,45,55,0.8) 0%, transparent 50%)",
-          pointerEvents: "none"
-        }} />
+        <div className="relative max-w-3xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-4 py-2 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
+            <span className="text-[#c9a84c] text-sm font-semibold tracking-wide">COMING SOON — JOIN THE WAITLIST</span>
+          </div>
 
-        {/* Floating preview card — top right, desktop only */}
-        {featuredListing && (
-          <Link href={`/makan/listing/${featuredListing.id}`}
-            className="preview-card-reveal hidden md:block"
-            style={{
-              position: "absolute", top: 32, right: 32,
-              width: 200, background: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 14, overflow: "hidden",
-              backdropFilter: "blur(8px)",
-              textDecoration: "none",
-              zIndex: 10
-            }}>
-            {featuredListing.images?.[0] && (
-              <img src={featuredListing.images[0]} alt=""
-                style={{ width: "100%", height: 110, objectFit: "cover", display: "block" }}
-                onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-            )}
-            <div style={{ padding: "10px 12px" }}>
-              <p style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", marginBottom: 4 }}>
-                {featuredListing.area}, {featuredListing.city}
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-[#c9a84c]/30 to-blue-500/20 border border-[#c9a84c]/30 mb-4">
+              <span className="text-4xl font-black" style={{ fontFamily: "serif", color: "#c9a84c" }}>م</span>
+            </div>
+            <div className="flex items-baseline justify-center gap-3">
+              <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: "serif" }}>مكان</h1>
+              <span className="text-white/30 text-2xl">·</span>
+              <h1 className="text-4xl font-black text-white tracking-tight">MAKAN</h1>
+            </div>
+          </div>
+
+          {/* Language toggle */}
+          <div className="flex justify-center gap-2 mb-6">
+            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${lang === "en" ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60"}`}>English</button>
+            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${lang === "ar" ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60"}`}>العربية</button>
+          </div>
+
+          {lang === "en" ? (
+            <>
+              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-5">
+                The First Bilingual Property<br />
+                Platform for the <span className="text-[#c9a84c]">Arab Diaspora</span>
+              </h2>
+              <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+                Search for homes, rooms, and investment properties in the UK, Morocco, Egypt and beyond — in Arabic or English. One platform. Two languages. Your community.
               </p>
-              <p style={{ fontSize: 13, fontWeight: 600, color: "white", lineHeight: 1.3, marginBottom: 6 }}>
-                {featuredListing.title.split(",")[0]}
+            </>
+          ) : (
+            <div dir="rtl">
+              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-5" style={{ fontFamily: "serif" }}>
+                المنصة العقارية الأولى<br />
+                <span className="text-[#c9a84c]">للجالية العربية</span> في بريطانيا
+              </h2>
+              <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+                ابحث عن منازل وغرف وعقارات للاستثمار في المملكة المتحدة والمغرب ومصر وما بعدها — بالعربية أو الإنجليزية. منصة واحدة. لغتان. مجتمعك.
               </p>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#e8553d" }}>
-                  {formatPrice(featuredListing.price, featuredListing.country || "gb")}
-                  {featuredListing.listing_type !== "sale" && <span style={{ fontSize: 10, fontWeight: 400, color: "rgba(255,255,255,0.4)" }}>/mo</span>}
-                </span>
-                {featuredListing.size_sqm && (
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>{featuredListing.size_sqm} m²</span>
-                )}
-              </div>
-            </div>
-          </Link>
-        )}
-
-        {/* Hero content */}
-        <div className="h-container" style={{ paddingTop: 56, paddingBottom: 52, position: "relative", zIndex: 2 }}>
-
-          {/* Eyebrow */}
-          <div className="hero-reveal" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 20, padding: "6px 14px", borderRadius: 20, background: "rgba(232,85,61,0.15)", border: "1px solid rgba(232,85,61,0.3)" }}>
-            <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#e8553d" }} />
-            <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.8)", letterSpacing: "0.04em" }}>
-              🇬🇧 UK · 🇪🇬 Egypt · 🇲🇦 Morocco · Zero agent fees
-            </span>
-          </div>
-
-          {/* Headline */}
-          <h1 className="hero-reveal-2" style={{
-            fontFamily: "'Plus Jakarta Sans', 'Inter', system-ui, sans-serif",
-            fontSize: "clamp(38px, 5.5vw, 66px)",
-            fontWeight: 900,
-            color: "white",
-            lineHeight: 1.06,
-            letterSpacing: "-0.035em",
-            marginBottom: 16,
-            maxWidth: 620
-          }}>
-            List and find property<br />
-            <span style={{ color: "#e8553d" }}>free.</span>{" "}
-            <span style={{ color: "rgba(255,255,255,0.35)", fontWeight: 700 }}>No agents.</span>
-          </h1>
-
-          {/* Sub-headline */}
-          <p className="hero-reveal-2" style={{ fontSize: "clamp(15px, 2vw, 18px)", color: "rgba(255,255,255,0.55)", marginBottom: 32, maxWidth: 480, lineHeight: 1.6, fontWeight: 400 }}>
-            Built for the diaspora. Direct landlord &amp; agent contact via WhatsApp. Browse for free, list for free — forever.
-          </p>
-
-          {/* Search */}
-          <div className="hero-reveal-3" style={{ maxWidth: 520, marginBottom: 36 }}>
-            <div style={{
-              display: "flex", alignItems: "center",
-              background: "white", borderRadius: 12,
-              overflow: "hidden", height: 50
-            }}>
-              <div style={{ padding: "0 14px", color: "#aaa", flexShrink: 0 }}>
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                </svg>
-              </div>
-              <SmartSearch
-                value={search}
-                onChange={setSearch}
-                onSelectCity={(city, code) => { setSearch(city); setCountryFilter(code); setCityFilter(city); }}
-                placeholder="Search city, area, or keyword..."
-              />
-              <button
-                className="h-btn h-btn-primary"
-                style={{ borderRadius: "0 12px 12px 0", height: 50, padding: "0 24px", flexShrink: 0 }}
-              >
-                Search
-              </button>
-            </div>
-          </div>
-
-          {/* Stats row */}
-          <div className="hero-reveal-3" style={{ display: "flex", gap: "clamp(16px, 5vw, 32px)" }}>
-            {[
-              ...(listings.length > 0 ? [{ num: `${listings.length}+`, label: "listings live" }] : [{ num: "New", label: "be first to list" }]),
-              { num: `${countries.length}`, label: "countries" },
-              { num: "£0", label: "agent fees" },
-              { num: "Free", label: "forever" },
-            ].map(s => (
-              <div key={s.label}>
-                <p style={{ fontSize: 20, fontWeight: 700, color: "white", lineHeight: 1 }}>{s.num}</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTRAST STRIP — diaspora mode ───────────────── */}
-      <section style={{ background: "var(--h-surface)", borderBottom: "1px solid var(--h-border)" }}>
-        <div className="h-container" style={{ padding: "0" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-            {/* Left: browsing from */}
-            <div style={{ padding: "14px 20px", borderRight: "1px solid var(--h-border)", display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 20 }}>
-                {countries.find(c => c.code === "gb")?.flag ?? "🌍"}
-              </span>
-              <div>
-                <p style={{ fontSize: 10, fontWeight: 600, color: "var(--h-muted)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 2 }}>Browsing from</p>
-                <p style={{ fontSize: 13, fontWeight: 600, color: "var(--h-text)" }}>United Kingdom</p>
-              </div>
-            </div>
-            {/* Right: show me properties in */}
-            <div style={{ padding: "14px 20px", display: "flex", alignItems: "center", gap: 10 }}>
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: "var(--h-muted)", flexShrink: 0 }}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75" />
-              </svg>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 10, fontWeight: 600, color: "var(--h-muted)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 2 }}>Showing properties in</p>
-                <select
-                  value={countryFilter}
-                  onChange={e => { setCountryFilter(e.target.value); setCityFilter("All cities"); }}
-                  style={{
-                    fontSize: 13, fontWeight: 600, color: "var(--h-text)",
-                    background: "transparent", border: "none", outline: "none", cursor: "pointer", padding: 0
-                  }}
-                >
-                  <option value="All">All countries</option>
-                  {countries.map(c => <option key={c.code} value={c.code}>{c.flag} {c.name}</option>)}
-                </select>
-              </div>
-              {countryFilter !== "All" && (
-                <select
-                  value={cityFilter}
-                  onChange={e => setCityFilter(e.target.value)}
-                  style={{
-                    fontSize: 12, color: "var(--h-muted)",
-                    background: "var(--h-warm)", border: "none", outline: "none", cursor: "pointer",
-                    padding: "4px 8px", borderRadius: 8
-                  }}
-                >
-                  <option value="All cities">All cities</option>
-                  {cityOptions.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Country context panel ─────────────────────────── */}
-      {countryFilter !== "All" && (() => {
-        const c = countries.find(x => x.code === countryFilter);
-        if (!c) return null;
-        const cityStory = cityFilter !== "All cities" ? c.cityStories?.[cityFilter] : null;
-        return (
-          <section style={{ background: "var(--h-accent-light)", borderBottom: "1px solid var(--h-border)" }}>
-            <div className="h-container" style={{ paddingTop: 16, paddingBottom: 16 }}>
-              <div style={{ display: "flex", alignItems: "flex-start", gap: 16, flexWrap: "wrap" }}>
-                <div style={{ flex: 1, minWidth: 240 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-                    <span style={{ fontSize: 28 }}>{c.flag}</span>
-                    <div>
-                      <p style={{ fontWeight: 700, fontSize: 15, color: "var(--h-text)" }}>{cityFilter !== "All cities" ? cityFilter : c.name}</p>
-                      <p style={{ fontSize: 12, color: "var(--h-accent)" }}>{c.avgRent} · {c.language} · {c.foreignBuy}</p>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--h-text)", opacity: 0.8 }}>
-                    {cityStory || c.hero}
-                  </p>
-                </div>
-                <Link href={`/makan/country/${c.code}`}
-                  style={{ flexShrink: 0, fontSize: 13, fontWeight: 600, padding: "8px 16px", borderRadius: 10, background: "var(--h-accent)", color: "white", textDecoration: "none", alignSelf: "flex-start" }}>
-                  {c.name} guide →
-                </Link>
-              </div>
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* ── FILTERS + LISTINGS ───────────────────────────── */}
-      <section style={{ background: "var(--h-bg)", paddingBottom: 48 }}>
-        <div className="h-container">
-
-          {/* Type chips + price filter */}
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, padding: "20px 0 16px" }}>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", flex: 1 }}>
-              {["All", "Room", "Studio", "Flat", "House", "Villa", "Penthouse"].map(tp => (
-                <button key={tp} onClick={() => setTypeFilter(tp)}
-                  className={`type-btn ${typeFilter === tp ? "active" : ""}`}>
-                  {tp}
-                </button>
-              ))}
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: "auto" }}>
-              <label style={{ fontSize: 12, color: "var(--h-muted)", whiteSpace: "nowrap" }}>
-                Max: <strong style={{ color: "var(--h-text)" }}>{maxPrice >= 5000 ? "Any" : maxPrice}</strong>
-              </label>
-              <input type="range" min={100} max={5000} step={50} value={maxPrice}
-                onChange={e => setMaxPrice(+e.target.value)}
-                style={{ width: 100, accentColor: "var(--h-accent)" }} />
-              <span style={{ fontSize: 13, color: "var(--h-subtle)", whiteSpace: "nowrap" }}>
-                {filtered.length} results
-              </span>
-            </div>
-          </div>
-
-          {/* Listings grid */}
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-            gap: 18
-          }}>
-            {filtered.map((l, idx) => (
-              <RevealCard key={l.id} delay={(idx % 4) * 60}>
-                <Link href={`/makan/listing/${l.id}`} className="listing-card">
-
-                  {/* Photo */}
-                  <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", background: l.property_type === "Room" ? "#f0e6da" : l.property_type === "Flat" ? "#dae3f0" : l.property_type === "House" ? "#daf0de" : l.property_type === "Villa" ? "#f0dae8" : "#e8e5e1" }}>
-                    {l.images?.[0] ? (
-                      <img src={l.images[0]} alt={l.title} className="card-img" />
-                    ) : (
-                      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                        <div style={{ width: 56, height: 56, borderRadius: 14, background: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <svg width="28" height="28" style={{ color: "var(--h-accent)" }} viewBox="0 0 24 24" fill="currentColor">
-                            {(l.property_type === "House" || l.property_type === "Villa")
-                              ? <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                              : <path d="M17 11V3H7v4H3v14h8v-4h2v4h8V11h-4zM7 19H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V9h2v2zm4 4H9v-2h2v2zm0-4H9V9h2v2zm0-4H9V5h2v2zm4 8h-2v-2h2v2zm0-4h-2V9h2v2zm0-4h-2V5h2v2zm4 12h-2v-2h2v2zm0-4h-2v-2h2v2z" />
-                            }
-                          </svg>
-                        </div>
-                        <span style={{ fontSize: 11, fontWeight: 600, color: "var(--h-muted)" }}>{l.property_type}</span>
-                      </div>
-                    )}
-
-                    {/* Badges */}
-                    <div style={{ position: "absolute", top: 10, left: 10, display: "flex", gap: 5 }}>
-                      {l.featured && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "var(--h-accent)", color: "white" }}>Featured</span>}
-                      {l.listing_type === "sale" && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "var(--h-accent)", color: "white" }}>For Sale</span>}
-                      {l.video_url && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "rgba(0,0,0,0.65)", color: "white" }}>🎬</span>}
-                      {(l as any).verified && <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "rgba(34,197,94,0.85)", color: "white" }}>✓ Verified</span>}
-                    </div>
-
-                    <div style={{ position: "absolute", top: 10, right: 10 }}>
-                      <span style={{ fontSize: 10, fontWeight: 600, padding: "3px 8px", borderRadius: 20, background: "rgba(255,255,255,0.92)", color: "#333" }}>{l.property_type}</span>
-                    </div>
-
-                    {isAvailableNow(l.available_from) && l.listing_type !== "sale" && (
-                      <div style={{ position: "absolute", bottom: 10, left: 10 }}>
-                        <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20, background: "var(--h-green)", color: "white" }}>Available now</span>
-                      </div>
-                    )}
-
-                    {l.size_sqm && (
-                      <div style={{ position: "absolute", bottom: 10, right: 10 }}>
-                        <span style={{ fontSize: 10, fontWeight: 600, padding: "3px 8px", borderRadius: 20, background: "rgba(0,0,0,0.55)", color: "white" }}>{l.size_sqm} m²</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Body */}
-                  <div style={{ padding: "12px 14px 14px" }}>
-                    <h3 style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.35, marginBottom: 4, color: "var(--h-text)" }}
-                      className="group-hover:text-[var(--h-accent)]">
-                      {l.title}
-                    </h3>
-                    <p style={{ fontSize: 11, color: "var(--h-muted)", marginBottom: 8, display: "flex", alignItems: "center", gap: 3 }}>
-                      <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                      {l.area}, {l.city}
-                    </p>
-
-                    {/* Feature icons */}
-                    {(l.features || []).length > 0 && (
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 10 }}>
-                        {(l.features || []).slice(0, 3).map(tag => (
-                          <span key={tag} style={{ fontSize: 10, padding: "2px 7px", borderRadius: 8, background: "var(--h-warm)", color: "var(--h-muted)", display: "inline-flex", alignItems: "center", gap: 3 }}>
-                            {CARD_FEATURE_ICONS[tag] && <span>{CARD_FEATURE_ICONS[tag]}</span>}
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Price + beds */}
-                    <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", paddingTop: 10, borderTop: "1px solid var(--h-border)" }}>
-                      <div>
-                        <span style={{ fontSize: 16, fontWeight: 700, color: "var(--h-text)" }}>
-                          {formatPrice(l.price, l.country || "gb")}
-                        </span>
-                        {l.listing_type !== "sale" && (
-                          <span style={{ fontSize: 12, color: "var(--h-subtle)" }}>/mo</span>
-                        )}
-                      </div>
-                      <span style={{ fontSize: 11, color: "var(--h-muted)" }}>
-                        {l.bedrooms === 0 ? "Studio" : `${l.bedrooms} bed${l.bedrooms > 1 ? "s" : ""}`}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </RevealCard>
-            ))}
-          </div>
-
-          {filtered.length === 0 && (
-            <div style={{ textAlign: "center", padding: "64px 0" }}>
-              <p style={{ fontSize: 20, fontWeight: 700, color: "var(--h-text)", marginBottom: 8 }}>No listings match</p>
-              <p style={{ fontSize: 14, color: "var(--h-muted)" }}>Try adjusting your filters or search term</p>
             </div>
           )}
+
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-8 mb-10">
+            {[["2", "Countries at launch"], ["🇬🇧🇲🇦", "UK & Morocco"], ["عربي", "Arabic-first"], ["Free", "To list"]].map(([v, l]) => (
+              <div key={l} className="text-center">
+                <p className="text-2xl font-black text-[#c9a84c]">{v}</p>
+                <p className="text-white/50 text-xs">{l}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Waitlist */}
+          {submitted ? (
+            <div className="bg-[#c9a84c]/15 border border-[#c9a84c]/40 rounded-2xl px-8 py-6 max-w-md mx-auto">
+              <p className="text-2xl mb-2">🎉</p>
+              <p className="font-bold text-white text-lg">You&apos;re on the list!</p>
+              <p className="text-white/55 text-sm mt-1" dir="ltr">We&apos;ll notify you the moment Makan goes live.</p>
+              {lang === "ar" && <p className="text-white/55 text-sm mt-1" dir="rtl">سنُعلمك فور إطلاق منصة مكان.</p>}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder={lang === "ar" ? "بريدك الإلكتروني" : "your@email.com"}
+                dir={lang === "ar" ? "rtl" : "ltr"}
+                className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 focus:bg-white/15 transition-all" />
+              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
+                {lang === "ar" ? "انضم للقائمة" : "Notify Me →"}
+              </button>
+            </form>
+          )}
+          <p className="text-white/30 text-xs mt-3">{lang === "ar" ? "لا رسائل مزعجة. إلغاء الاشتراك في أي وقت." : "No spam. Unsubscribe any time."}</p>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ─────────────────────────────────── */}
-      <section style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)", paddingTop: 64, paddingBottom: 64 }}>
-        <div className="h-container">
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(26px, 4vw, 36px)", fontWeight: 700, textAlign: "center", marginBottom: 8, color: "var(--h-text)" }}>
-            How Makan works
-          </h2>
-          <p style={{ textAlign: "center", fontSize: 14, color: "var(--h-muted)", marginBottom: 48 }}>
-            Verified users · reviewed listings · legal in all {countries.length} countries
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 32, maxWidth: 760, margin: "0 auto" }}>
+      {/* WHAT IS MAKAN */}
+      <section className="bg-[#0f1b36] py-20 px-6">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">What is Makan?</p>
+            <h2 className="text-3xl font-black mb-5">Property Search Built for a Community That Was Ignored</h2>
+            <div className="space-y-4 text-white/70 leading-relaxed text-sm">
+              <p>There are over <strong className="text-white">600,000 Arab-speaking people</strong> living in the UK — and until now, every property platform assumed they only spoke English and only wanted properties in one country.</p>
+              <p>Makan is built for the Arab diaspora. Whether you&apos;re a family in Birmingham searching for a home, an investor comparing yields in Nottingham vs Marrakech, or a student looking for a room near your university — Makan speaks your language.</p>
+              <p>Listings are available in <strong className="text-white">Arabic and English</strong>. Landlords are <strong className="text-white">verified</strong>. And it&apos;s completely <strong className="text-white">free to list</strong>.</p>
+            </div>
+          </div>
+          {/* Bilingual comparison */}
+          <div className="space-y-3">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+              <p className="text-white/40 text-xs uppercase tracking-wider mb-3">Other platforms</p>
+              <ul className="space-y-2 text-sm text-white/60">
+                {["English only", "UK properties only", "No understanding of Arab market needs", "Expensive listing fees for landlords", "No bilingual support or messaging"].map((p) => (
+                  <li key={p} className="flex gap-2"><span className="text-red-400">✗</span>{p}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-xl p-5">
+              <p className="text-[#c9a84c] text-xs uppercase tracking-wider font-bold mb-3">مكان / Makan</p>
+              <ul className="space-y-2 text-sm text-white/75">
+                {["Arabic & English — fully bilingual", "UK, Morocco, Egypt and expanding", "Built by and for the community", "Always free to list", "Message landlords in your language"].map((p) => (
+                  <li key={p} className="flex gap-2"><span className="text-green-400">✓</span>{p}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Platform Features</p>
+            <h2 className="text-3xl font-black">Everything on Makan</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-5">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-6 hover:border-[#c9a84c]/30 transition-colors">
+                <span className="text-3xl shrink-0">{f.icon}</span>
+                <div>
+                  <h3 className="font-bold text-white mb-1">{f.title}</h3>
+                  <p className="text-white/55 text-sm leading-relaxed">{f.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MARKETS */}
+      <section className="bg-[#0f1b36] py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Where We&apos;re Launching</p>
+            <h2 className="text-3xl font-black">From the UK to North Africa and Beyond</h2>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {MARKETS.map((m) => (
+              <div key={m.country} className={`rounded-2xl p-5 border ${m.status === "Launching first" ? "border-[#c9a84c]/40 bg-[#c9a84c]/10" : "border-white/10 bg-white/5"}`}>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-3xl">{m.flag}</span>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${m.status === "Launching first" ? "bg-[#c9a84c]/20 text-[#c9a84c]" : "bg-white/10 text-white/40"}`}>{m.status}</span>
+                </div>
+                <h3 className="font-bold text-white mb-2">{m.country}</h3>
+                <div className="flex flex-wrap gap-1">
+                  {m.cities.map((c) => (
+                    <span key={c} className="text-xs text-white/50 bg-white/5 px-2 py-0.5 rounded-full">{c}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHO IT'S FOR */}
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Who Makan Is For</p>
+            <h2 className="text-3xl font-black">Built for Your Community</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
             {[
-              { emoji: "🔍", title: "Browse free", desc: "Filter by type, country, city, or budget. No account needed." },
-              { emoji: "✅", title: "Sign up & verify", desc: "Create a free account to contact landlords directly." },
-              { emoji: "💬", title: "Message direct", desc: "WhatsApp or in-app enquiry — no agents, no middlemen." },
-              { emoji: "🏠", title: "Move in", desc: "Agree terms, sign your contract, move in. Zero fees ever." },
-            ].map(s => (
-              <div key={s.title} style={{ textAlign: "center" }}>
-                <div style={{ width: 56, height: 56, borderRadius: 16, margin: "0 auto 14px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, background: "var(--h-accent-light)" }}>
-                  {s.emoji}
-                </div>
-                <h3 style={{ fontWeight: 700, marginBottom: 6, fontSize: 15, color: "var(--h-text)" }}>{s.title}</h3>
-                <p style={{ fontSize: 13, color: "var(--h-muted)", lineHeight: 1.5 }}>{s.desc}</p>
+              { icon: "🏠", who: "Renters & Buyers", desc: "Arab-speaking families and individuals looking for homes and rooms in the UK — in a platform that speaks their language and understands their needs." },
+              { icon: "💰", who: "UK-Based Investors", desc: "Arab diaspora investors comparing UK and MENA opportunities — yield analysis, bilingual listings, and a community of like-minded property investors." },
+              { icon: "📋", who: "Landlords & Agents", desc: "Property professionals who want to reach the large, underserved Arab-speaking tenant and buyer market in the UK. List for free, reach more people." },
+            ].map((c) => (
+              <div key={c.who} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:border-[#c9a84c]/30 transition-colors">
+                <span className="text-4xl block mb-4">{c.icon}</span>
+                <h3 className="font-bold text-white mb-2">{c.who}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{c.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── THE STORY ─────────────────────────────────────── */}
-      <section style={{ background: "#0b0f14", borderTop: "1px solid rgba(232,85,61,0.12)", padding: "80px 24px" }}>
-        <div className="h-container" style={{ maxWidth: 820 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 40 }}>
-
-            {/* Eyebrow */}
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(232,85,61,0.1)", border: "1px solid rgba(232,85,61,0.25)", borderRadius: 20, padding: "6px 16px", width: "fit-content" }}>
-              <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#e8553d" }} />
-              <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why Makan exists</span>
+      {/* BOTTOM CTA */}
+      <section className="bg-[#0f1b36] py-20 px-6">
+        <div className="max-w-xl mx-auto text-center">
+          <div className="text-4xl mb-4" style={{ fontFamily: "serif" }}>مكان</div>
+          <h2 className="text-3xl font-black mb-3">Be First Through the Door</h2>
+          <p className="text-white/50 mb-8">Join the waitlist and be notified the moment Makan launches. Early users get priority listing placement.</p>
+          {submitted ? (
+            <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
+              <p className="font-bold text-white text-lg">You&apos;re on the list 🎉</p>
+              <p className="text-white/50 text-sm mt-1">We&apos;ll be in touch very soon.</p>
             </div>
-
-            {/* Headline */}
-            <div>
-              <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "white", lineHeight: 1.2, marginBottom: 32, letterSpacing: "-0.02em" }}>
-                The property market was built for people who are <em style={{ fontStyle: "italic", color: "#e8553d" }}>physically there.</em><br />
-                We built Makan for everyone else.
-              </h2>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 20, fontSize: "clamp(14px, 1.8vw, 16px)", color: "rgba(255,255,255,0.6)", lineHeight: 1.8, maxWidth: 680 }}>
-                <p>
-                  The word <strong style={{ color: "white" }}>مكان</strong> means &ldquo;place&rdquo; in Arabic. Not just any address — somewhere that matters. The home you&apos;re trying to get back to. The apartment you&apos;re saving for your parents. The city you left but never really left.
-                </p>
-                <p>
-                  Makan was built for people who live between worlds. The UK-based professional whose family still lives in Cairo. The British-Moroccan investor who wants to buy in Marrakech but doesn&apos;t know who to trust from two thousand miles away. The diaspora family renting privately who shouldn&apos;t have to pay an agent 3% just to open a door.
-                </p>
-                <p>
-                  Traditional property platforms assume you&apos;re on the ground. They assume you can attend viewings, visit the agent&apos;s office, do your due diligence in person. That&apos;s not everyone&apos;s reality — and the market has been slow to acknowledge it.
-                </p>
-                <p>
-                  On Makan, landlords list directly. Tenants and buyers contact them directly via WhatsApp — the same way you&apos;d arrange it through a trusted contact in the city. No agents taking commissions. No platform fees. No listing charges. <strong style={{ color: "white" }}>Browse free, list free, forever.</strong>
-                </p>
-              </div>
-            </div>
-
-            {/* 3-stat strip */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 1, background: "rgba(232,85,61,0.1)", borderRadius: 16, overflow: "hidden", border: "1px solid rgba(232,85,61,0.15)" }}>
-              {[
-                { icon: "£0", label: "Agent fees, always", sub: "Direct landlord contact only" },
-                { icon: `${countries.length}`, label: "Countries live", sub: "UK, Egypt, Morocco & growing" },
-                { icon: "∞", label: "Free forever", sub: "Browse, list, no charges" },
-              ].map(s => (
-                <div key={s.label} style={{ padding: "28px 24px", background: "#0b0f14", textAlign: "center" }}>
-                  <div style={{ fontSize: 30, fontWeight: 900, color: "#e8553d", marginBottom: 6, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{s.icon}</div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: "white", marginBottom: 4 }}>{s.label}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{s.sub}</div>
-                </div>
-              ))}
-            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
+                className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 transition-all" />
+              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
+            </form>
+          )}
+          <div className="mt-10 pt-8 border-t border-white/10">
+            <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors">← Back to PropertyVault</Link>
           </div>
         </div>
       </section>
 
-      {/* ── EXPLORE BY COUNTRY ───────────────────────────── */}
-      <section style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)", paddingTop: 40, paddingBottom: 48 }}>
-        <div className="h-container">
-          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 22, fontWeight: 700, marginBottom: 20, color: "var(--h-text)" }}>
-            Explore by country
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: 10 }}>
-            {countries.map(c => (
-              <Link key={c.code} href={`/makan/country/${c.code}`}
-                style={{ textAlign: "center", padding: "18px 8px", borderRadius: 14, border: "1px solid var(--h-border)", background: "var(--h-bg)", textDecoration: "none", transition: "border-color 0.15s" }}>
-                <span style={{ fontSize: 26, display: "block", marginBottom: 6 }}>{c.flag}</span>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "var(--h-text)" }}>{c.name}</p>
-                <p style={{ fontSize: 11, color: "var(--h-subtle)", marginTop: 2 }}>{c.cities.length} cities</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── BOTTOM CTA ───────────────────────────────────── */}
-      <section style={{ background: "#0b0f14", padding: "56px 0" }}>
-        <div className="h-container" style={{ textAlign: "center" }}>
-          <h2 style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: "clamp(26px, 4vw, 40px)",
-            fontWeight: 700, color: "white", marginBottom: 12
-          }}>
-            Got a property?<br />
-            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.35)" }}>List it free.</em>
-          </h2>
-          <p style={{ color: "rgba(255,255,255,0.4)", marginBottom: 28, fontSize: 14, maxWidth: 360, margin: "0 auto 28px" }}>
-            Reach tenants directly. No agent fees. No commission. No catch.
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/makan/list" className="h-btn h-btn-primary" style={{ textAlign: "center" }}>
-              List your property
-            </Link>
-            <Link href="/makan/wanted" className="h-btn" style={{ border: "1px solid rgba(255,255,255,0.2)", color: "white", textAlign: "center" }}>
-              Post what you need
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
+    </main>
   );
 }

@@ -74,7 +74,7 @@ export async function GET(req: Request) {
       });
       sent++;
     } else {
-      console.log(`[COMPLIANCE ALERT] ${alert.email}:`, alert.items);
+      // no-op: RESEND_API_KEY not configured
       sent++;
     }
   }

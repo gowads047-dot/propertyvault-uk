@@ -8,7 +8,7 @@ import { ShareResults } from "@/components/calculators/ShareResults";
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "How to Start Investing in UK Property in 2025: A Beginner's Guide",
+  headline: "How to Start Investing in UK Property in 2026: A Beginner's Guide",
   description:
     "What property investing actually looks like in the UK, how much money you need to get started, which strategy suits you, and how to run the numbers before you commit a penny.",
   author: { "@type": "Person", name: "Nass" },
@@ -24,13 +24,13 @@ const articleSchema = {
 };
 
 export const metadata: Metadata = {
-  title: "How to Start Investing in UK Property in 2025: A Beginner's Guide | PropertyVault UK",
+  title: "How to Start Investing in UK Property in 2026: A Beginner's Guide | PropertyVault UK",
   description:
     "What property investing actually looks like, how much money you need, which strategy fits your situation, and how to run the numbers before you spend anything. A honest guide for beginners.",
   keywords:
-    "how to start investing in property uk, investing in property for beginners uk, uk property investing, how to invest money in property, invest in rental property uk, property investment strategies uk 2025",
+    "how to start investing in property uk, investing in property for beginners uk, uk property investing, how to invest money in property, invest in rental property uk, property investment strategies uk 2026",
   openGraph: {
-    title: "How to Start Investing in UK Property (Honest Beginner's Guide 2025)",
+    title: "How to Start Investing in UK Property (Honest Beginner's Guide 2026)",
     description:
       "Not the Instagram version. What property investing actually takes, what it costs, and how to know if a deal is worth doing.",
     type: "article",
@@ -90,7 +90,7 @@ export default function HowToStartInvestingPage() {
       />
 
       <BlogArticleHero
-        title="How to Start Investing in UK Property: A Beginner's Guide (2025)"
+        title="How to Start Investing in UK Property: A Beginner's Guide (2026)"
         excerpt="Not the highlight reel version. What property investing actually costs, which strategy makes sense for where you're starting from, and how to know whether a deal is worth doing before you spend a penny."
         category="Property Investing"
         date="26 June 2026"
@@ -139,11 +139,11 @@ export default function HowToStartInvestingPage() {
             <div className="space-y-2 text-sm">
               {[
                 ["25% deposit (BTL minimum)", "£30,000"],
-                ["Stamp duty (3% surcharge for investment property)", "£3,600"],
+                ["Stamp duty (5% surcharge for investment property)", "£6,000"],
                 ["Solicitor / conveyancing", "£1,200–£1,800"],
                 ["Survey (HomeBuyer Report)", "£400–£600"],
                 ["Mortgage arrangement fee", "£995–£1,995"],
-                ["Total to get through the door", "~£37,000–£38,000"],
+                ["Total to get through the door", "~£39,000–£40,000"],
               ].map(([item, cost]) => (
                 <div key={item} className="flex justify-between items-center py-2 border-b border-navy-100 last:border-0">
                   <span className="text-navy-600">{item}</span>
@@ -164,7 +164,7 @@ export default function HowToStartInvestingPage() {
             <Link href="/calculators/stamp-duty" className="text-gold-600 font-semibold hover:underline">
               free Stamp Duty Calculator
             </Link>{" "}
-            — the 3% investment property surcharge catches a lot of people off guard, and it&apos;s on top of the standard rates.
+            — the 5% investment property surcharge catches a lot of people off guard, and it&apos;s on top of the standard rates.
           </p>
 
           {/* SECTION 3 */}

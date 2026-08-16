@@ -4,6 +4,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
   description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/trades/" },
+  openGraph: {
+    title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
+    description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/trades/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Trades Directory" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
+    description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
+  },
 };
 
 export default function TradesPage() {

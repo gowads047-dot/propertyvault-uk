@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
   description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
   keywords: "PropertyVault FAQ, guaranteed rent questions, landlord FAQ UK, property calculator help, PropertyVault Academy FAQ",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/faq/" },
+  openGraph: {
+    title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
+    description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/faq/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK FAQ" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
+    description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
+  },
 };
 
 const sections = [
@@ -49,7 +63,7 @@ const sections = [
     heading: "Templates",
     faqs: [
       { q: "Are the legal templates free?", a: "Yes — all PropertyVault UK legal templates (AST, Section 8, Section 13, inventory checklist, and more) are free to download. They are produced for educational purposes and should be reviewed by a solicitor before use in live tenancy situations." },
-      { q: "Are your templates UK-compliant?", a: "Templates are written to reflect current UK landlord-tenant law including the Housing Act 1988, Renters Reform Act 2024, and relevant regulations. However, legislation changes frequently — always check the current legal position before use." },
+      { q: "Are your templates UK-compliant?", a: "Templates are written to reflect current UK landlord-tenant law including the Housing Act 1988, Renters' Rights Act 2025, and relevant regulations. However, legislation changes frequently — always check the current legal position before use." },
     ],
   },
 ];
@@ -93,7 +107,7 @@ export default function FaqPage() {
             <h3 className="text-xl font-bold text-white mb-3">Get a direct answer</h3>
             <p className="text-white/60 text-sm mb-5">WhatsApp Nass directly — typical response within 2 hours.</p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a href="https://wa.me/4407415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
+              <a href="https://wa.me/447415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
                 WhatsApp now →
               </a>
               <Link href="/contact" className="btn-outline !border-white/20 !text-white hover:!bg-white/10">

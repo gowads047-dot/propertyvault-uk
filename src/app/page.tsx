@@ -1,47 +1,31 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { StickyDealBtn } from "@/components/ui/StickyDealBtn";
 
 export const metadata: Metadata = {
   title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-  description: "22 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+  description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/" },
+  openGraph: {
+    title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
+    description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
+    description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+  },
 };
 
-const LOCAL_BUSINESS_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "PropertyVault UK",
-  "description": "Guaranteed rent scheme for landlords across the UK. No void periods, no management fees, 3–5 year leases.",
-  "url": "https://propertyvaultuk.co.uk",
-  "logo": "https://propertyvaultuk.co.uk/logo.png",
-  "areaServed": [
-    { "@type": "City", "name": "Birmingham" },
-    { "@type": "City", "name": "Nottingham" },
-    { "@type": "City", "name": "Derby" },
-    { "@type": "City", "name": "Leicester" },
-    { "@type": "City", "name": "Coventry" },
-    { "@type": "City", "name": "Sheffield" },
-  ],
-  "serviceType": "Guaranteed Rent Scheme",
-  "priceRange": "£0",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "08:00",
-    "closes": "20:00",
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer service",
-    "availableLanguage": "English",
-    "areaServed": "GB",
-  },
-};
 
 export default function Home() {
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }} />
       <style>{`
         @keyframes countUp {
           from { opacity: 0; transform: translateY(10px); }
@@ -115,19 +99,21 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 24 }}>
+              <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
                 <Link href="/guaranteed-rent" className="btn-gold" style={{ fontSize: 15, padding: "13px 24px" }}>
                   Get Free Rent Estimate →
                 </Link>
-                <Link href="/calculators" className="btn-primary" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.12)" }}>
-                  Explore Free Tools
+              </div>
+              <div className="hero-line" style={{ marginBottom: 20 }}>
+                <Link href="/calculators" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontWeight: 600, textDecoration: "none" }}>
+                  or explore 23 free tools ↓
                 </Link>
               </div>
 
               <div className="hero-line" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
                 {[
                   { icon: "★", text: "5-star on Google" },
-                  { icon: "🔒", text: "No obligation estimate" },
+                  { icon: "👥", text: "1,200+ landlords & investors" },
                   { icon: "⚡", text: "WhatsApp reply in 2hrs" },
                 ].map(t => (
                   <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -240,6 +226,71 @@ export default function Home() {
               See the alternative →
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* ── FEATURED TOOLS ────────────────────────────────── */}
+      <section style={{ background: "white", padding: "56px 0 40px" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>Most-used tools</p>
+            <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</p>
+          </FadeIn>
+          <FadeIn>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+              {[
+                {
+                  href: "/calculators/deal-analyser",
+                  badge: "Flagship",
+                  badgeColor: "#c9a84c",
+                  badgeText: "#0f1b36",
+                  title: "Deal Analyser",
+                  desc: "AI buy/pass verdict, 8 metrics, stress test",
+                  stat: "Is it a good deal?",
+                  icon: "📊",
+                },
+                {
+                  href: "/calculators/rental-yield",
+                  badge: "Most popular",
+                  badgeColor: "#dcfce7",
+                  badgeText: "#166534",
+                  title: "Rental Yield",
+                  desc: "Gross & net yield after all costs in 60 seconds",
+                  stat: "Will it cash flow?",
+                  icon: "📈",
+                },
+                {
+                  href: "/calculators/stamp-duty",
+                  badge: "Most popular",
+                  badgeColor: "#dcfce7",
+                  badgeText: "#166534",
+                  title: "Stamp Duty (SDLT)",
+                  desc: "Exact SDLT including 5% surcharge & FTB relief",
+                  stat: "How much tax do I owe?",
+                  icon: "📄",
+                },
+              ].map((t) => (
+                <Link key={t.href} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: "28px 24px", textDecoration: "none", display: "flex", flexDirection: "column", gap: 12 }}
+                  className="hover:border-gold-300 hover:shadow-md transition-all group">
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: 28 }}>{t.icon}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, background: t.badgeColor, color: t.badgeText, padding: "3px 10px", borderRadius: 20 }}>{t.badge}</span>
+                  </div>
+                  <div>
+                    <p style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 4 }}>{t.stat}</p>
+                    <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }} className="group-hover:text-gold-600 transition-colors">{t.title}</h3>
+                    <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>{t.desc}</p>
+                  </div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c", marginTop: "auto" }}>Try free →</span>
+                </Link>
+              ))}
+            </div>
+            <div style={{ textAlign: "center", marginTop: 20 }}>
+              <Link href="/calculators" style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, textDecoration: "none" }}>
+                All 23 free calculators →
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -377,7 +428,7 @@ export default function Home() {
             {[
               {
                 href: "/calculators",
-                tag: "22 calculators",
+                tag: "23 calculators",
                 title: "Property calculators",
                 desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, landlord tax, BTL stress test — all free.",
                 items: ["Rental yield & cash flow", "Stamp duty & CGT", "BRRR & HMO analysis"],
@@ -482,13 +533,13 @@ export default function Home() {
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                19 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
+                23 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
               </h2>
               <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
                 From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/calculators" className="btn-gold">All 22 calculators</Link>
+                <Link href="/calculators" className="btn-gold">All 23 calculators</Link>
                 <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
                   19 free templates
                 </Link>
@@ -523,7 +574,7 @@ export default function Home() {
                 {/* Background pattern */}
                 <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
                 {/* Play button */}
-                <a href="https://wa.me/4407415721628?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/447415721628?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
                   style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textDecoration: "none" }}>
                   <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(201,168,76,0.4)" }}>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
@@ -678,7 +729,7 @@ export default function Home() {
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>19 Free Calculators</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>22 Free Calculators</h3>
               <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
             </Link>
@@ -752,7 +803,7 @@ export default function Home() {
               ]},
               { title: "For Investors", links: [
                 { href: "/property-investing", label: "Investment Guides" },
-                { href: "/calculators", label: "All 17 Calculators" },
+                { href: "/calculators", label: "All 22 Calculators" },
                 { href: "/glossary", label: "Property Glossary" },
                 { href: "/blog", label: "Blog" },
               ]},
@@ -781,6 +832,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StickyDealBtn />
 
       {/* ── FINAL CTA ─────────────────────────────────────── */}
       <section className="section-dark-rich dot-grid-gold" style={{ padding: "80px 0" }}>

@@ -1,9 +1,23 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Property Case Studies UK — Illustrative Investment Examples | PropertyVault",
   description: "Illustrative UK property investment case studies. BRRR deals, buy-to-let purchases, and HMO conversions with example numbers to show how strategies work.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/case-studies/" },
+  openGraph: {
+    title: "Property Case Studies UK — Illustrative Investment Examples | PropertyVault",
+    description: "Illustrative UK property investment case studies. BRRR deals, buy-to-let purchases, and HMO conversions with example numbers to show how strategies work.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/case-studies/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Case Studies" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Case Studies UK — Illustrative Investment Examples | PropertyVault",
+    description: "Illustrative UK property investment case studies. BRRR deals, buy-to-let purchases, and HMO conversions with example numbers to show how strategies work.",
+  },
 };
 
 const caseStudies = [

@@ -18,22 +18,27 @@ const additionalSurcharge = 0.05;
 const firstTimeBuyerThreshold = 300000;
 const firstTimeBuyerCap = 500000;
 
+// Non-UK resident surcharge: additional 2% on all SDLT bands (from 1 April 2021)
+const nonResidentSurcharge = 0.02;
+
 type BuyerType = "standard" | "additional" | "first-time";
 
 export function StampDutyCalculator() {
   const [price, setPrice] = useState(300000);
   const [buyerType, setBuyerType] = useState<BuyerType>("standard");
+  const [isNonResident, setIsNonResident] = useState(false);
 
   const results = useMemo(() => {
     const bands: { from: number; to: number; rate: number; tax: number }[] = [];
     let totalTax = 0;
     let prev = 0;
+    const nrSurcharge = isNonResident ? nonResidentSurcharge : 0;
 
     if (buyerType === "first-time" && price <= firstTimeBuyerCap) {
       const ftbBands = [
-        { threshold: firstTimeBuyerThreshold, rate: 0 },
-        { threshold: firstTimeBuyerCap, rate: 0.05 },
-        { threshold: Infinity, rate: 0.05 },
+        { threshold: firstTimeBuyerThreshold, rate: 0 + nrSurcharge },
+        { threshold: firstTimeBuyerCap, rate: 0.05 + nrSurcharge },
+        { threshold: Infinity, rate: 0.05 + nrSurcharge },
       ];
       for (const band of ftbBands) {
         if (price <= prev) break;
@@ -45,7 +50,7 @@ export function StampDutyCalculator() {
         prev = band.threshold;
       }
     } else {
-      const surcharge = buyerType === "additional" ? additionalSurcharge : 0;
+      const surcharge = (buyerType === "additional" ? additionalSurcharge : 0) + nrSurcharge;
       for (const band of residentialBands) {
         if (price <= prev) break;
         const taxable = Math.min(price, band.threshold) - prev;
@@ -63,7 +68,7 @@ export function StampDutyCalculator() {
       totalTax,
       effectiveRate: price > 0 ? (totalTax / price) * 100 : 0,
     };
-  }, [price, buyerType]);
+  }, [price, buyerType, isNonResident]);
 
   const fmt = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 
@@ -105,6 +110,21 @@ export function StampDutyCalculator() {
               </button>
             ))}
           </div>
+        </div>
+
+        <div>
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isNonResident}
+              onChange={(e) => setIsNonResident(e.target.checked)}
+              className="mt-0.5 accent-gold-500 w-4 h-4 flex-shrink-0"
+            />
+            <div>
+              <p className="text-sm font-semibold text-navy-700">Non-UK Resident (+2%)</p>
+              <p className="text-xs text-navy-500 mt-0.5">Buyers who have not been UK-resident for at least 183 days in the 12 months before purchase pay an additional 2% surcharge on all bands.</p>
+            </div>
+          </label>
         </div>
       </div>
 

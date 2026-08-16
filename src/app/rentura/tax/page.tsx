@@ -711,7 +711,7 @@ export default function TaxIntelligence() {
                   ["Additional rate (45%)", "Income above £125,140"],
                   ["Section 24 restriction", "Mortgage interest gives 20% credit only — not a profit deduction"],
                   ["Property allowance", "£1,000 tax-free if total rental income below £1,000"],
-                  ["Capital gains", "28% on residential property gains; 60-day CGT report to HMRC on sale"],
+                  ["Capital gains", "18% (basic rate) / 24% (higher rate) on residential property gains; 60-day CGT report to HMRC on sale"],
                   ["MTD for Income Tax", ">£50k: April 2026; >£30k: April 2027 — quarterly digital filing required"],
                 ].map(([label, desc]) => (
                   <div key={label} style={{ padding: "11px 14px", background: "#fafaf9", borderRadius: 9 }}>

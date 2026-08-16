@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
   description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
   keywords: "Renters Rights Act 2025, Section 21 abolished, renters reform UK, landlord guide renters rights, no fault eviction ban, periodic tenancy UK",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/renters-rights-act/" },
+  openGraph: {
+    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+    description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/renters-rights-act/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK rental property legal document and Renters Rights Act guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+    description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
+  },
 };
 
 const faqs = [
@@ -17,7 +31,7 @@ const faqs = [
   },
   {
     q: "Can landlords still evict tenants after Section 21 was abolished?",
-    a: "Yes, but only through Section 8, which requires you to prove a specific legal ground. Grounds include selling the property (4 months' notice), a family member moving in (4 months' notice), two months' rent arrears (4 weeks' notice), and antisocial behaviour (immediate notice from the date served). Courts can refuse possession even on mandatory grounds if the correct procedure has not been followed.",
+    a: "Yes, but only through Section 8, which requires you to prove a specific legal ground. Grounds include selling the property (Ground 1A, 4 months' notice), a family member moving in (Ground 1B, 4 months' notice), 3+ months' rent arrears at both notice and hearing (Ground 8, mandatory), and antisocial behaviour (Ground 14, immediate notice). Courts can refuse possession even on mandatory grounds if the correct procedure has not been followed.",
   },
   {
     q: "Do existing fixed-term tenancies become periodic under the Renters' Rights Act?",
@@ -122,8 +136,8 @@ export default function RentersRightsActArticle() {
                 {[
                   ["Ground 1A", "Landlord wishes to sell the property", "4 months", "Mandatory"],
                   ["Ground 1B", "Landlord or family member to occupy", "4 months", "Mandatory"],
-                  ["Ground 8", "2+ months rent arrears at notice and hearing", "4 weeks", "Mandatory"],
-                  ["Ground 10", "Some rent arrears (less than 2 months)", "4 weeks", "Discretionary"],
+                  ["Ground 8", "3+ months rent arrears at notice and hearing", "4 weeks", "Mandatory"],
+                  ["Ground 10", "Some rent arrears (less than 3 months)", "4 weeks", "Discretionary"],
                   ["Ground 11", "Persistent late payment of rent", "4 weeks", "Discretionary"],
                   ["Ground 14", "Antisocial behaviour or nuisance", "Immediate (from date of notice)", "Discretionary"],
                   ["Ground 14A", "Domestic abuse", "2 weeks", "Mandatory"],
@@ -152,6 +166,14 @@ export default function RentersRightsActArticle() {
             <li><strong>No "above market" increases:</strong> Increases must reflect genuine open market rents</li>
           </ul>
           <p>Rent review clauses written into tenancy agreements are <strong>void</strong> — you must use the statutory Section 13 process regardless of what any agreement says.</p>
+          <div className="not-prose mt-5 border border-gold-200 bg-gold-50 rounded-xl p-5 flex items-start gap-4">
+            <div className="text-2xl">🧮</div>
+            <div>
+              <p className="font-bold text-navy-800 text-sm">Free tool: Section 13 Rent Increase Calculator</p>
+              <p className="text-navy-500 text-sm mt-1">Calculate whether a proposed rent increase is within market rates, and generate the correct notice period and wording.</p>
+              <Link href="/calculators/rent-increase" className="inline-block mt-3 btn-primary text-sm">Open calculator →</Link>
+            </div>
+          </div>
 
           {/* Bidding */}
           <h2 id="bidding" className="text-xl font-bold text-navy-800 mt-10" style={{ fontFamily: "var(--font-family-heading)" }}>5. Rental Bidding Wars Banned</h2>
@@ -254,6 +276,7 @@ export default function RentersRightsActArticle() {
             {[
               { href: "/calculators/landlord-costs", label: "Landlord Costs Calculator", icon: "💰" },
               { href: "/calculators/monthly-cashflow", label: "Monthly Cash Flow Calculator", icon: "📊" },
+              { href: "/calculators/rent-increase", label: "Section 13 Rent Increase Calculator", icon: "📈" },
               { href: "/calculators/void-period", label: "Void Period Cost Calculator", icon: "📅" },
               { href: "/templates/landlord-compliance", label: "Compliance Checklist", icon: "✅" },
               { href: "/blog/guaranteed-rent-explained", label: "Guaranteed Rent Explained", icon: "🏠" },

@@ -8,8 +8,14 @@ export const metadata: Metadata = {
   title: "Best Areas to Invest in Nottingham 2026 — Landlord Guide | PropertyVault UK",
   description: "Where to invest in Nottingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
   keywords: "best areas to invest Nottingham, Nottingham property investment 2026, buy to let Nottingham, Nottingham BTL hotspots, property investment Nottingham UK",
-  alternates: {
-    canonical: "https://propertyvaultuk.co.uk/blog/best-areas-invest-nottingham-2026/",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/best-areas-invest-nottingham-2026/" },
+  openGraph: {
+    title: "Best Areas to Invest in Nottingham 2026 — Landlord Guide | PropertyVault UK",
+    description: "Where to invest in Nottingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/best-areas-invest-nottingham-2026/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Best Areas to Invest in Nottingham 2026" }],
   },
 };
 
@@ -97,7 +103,7 @@ export default function BestAreasNottingham2026Article() {
         title="Best Areas to Invest in Nottingham 2026 — BTL Hotspot Guide"
         excerpt="Yields, average prices, tenant demand, and regeneration prospects — ranked and explained for property investors looking at Nottingham in 2026."
         category="Investing"
-        date="June 2025"
+        date="June 2026"
         readTime="9 min"
         image="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80"
       />

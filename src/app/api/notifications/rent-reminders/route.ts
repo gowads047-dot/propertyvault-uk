@@ -78,7 +78,7 @@ export async function GET(req: Request) {
         }),
       });
     } else {
-      console.log(`[RENT REMINDER] ${data.email}: £${totalDue.toFixed(2)} due`);
+      // no-op: RESEND_API_KEY not configured
     }
     sent++;
   }

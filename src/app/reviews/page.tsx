@@ -6,6 +6,20 @@ export const metadata: Metadata = {
   title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
   description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
   keywords: "PropertyVault UK reviews, guaranteed rent reviews, PropertyVault testimonials, guaranteed rent landlord reviews UK",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/reviews/" },
+  openGraph: {
+    title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
+    description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/reviews/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Reviews" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
+    description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
+  },
 };
 
 const reviews = [
@@ -130,7 +144,7 @@ export default function ReviewsPage() {
               We will connect you with an existing PropertyVault landlord in your area — ask them directly about their experience before signing anything.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a href="https://wa.me/4407415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
+              <a href="https://wa.me/447415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
                 WhatsApp Nass →
               </a>
               <Link href="/guaranteed-rent" className="btn-outline">

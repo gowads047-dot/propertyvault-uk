@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 const PROPERTY_TYPES = [
   { value: "house", label: "House", icon: "🏠" },
@@ -91,11 +92,14 @@ export default function NewProperty() {
   };
 
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex" }}>
+      <style>{`body > header, body > footer { display: none !important; }`}</style>
+      <RenturaSidebar />
 
+      <div style={{ flex: 1, overflowY: "auto" }}>
       {/* Nav */}
       <nav style={{ borderBottom: `1px solid ${BORDER}`, padding: "12px 28px", display: "flex", alignItems: "center", gap: 8, fontSize: 13, background: BG }}>
-        <Link href="/rentura/dashboard" style={{ color: INK2, textDecoration: "none", fontWeight: 500 }}>Dashboard</Link>
+        <Link href="/rentura/properties" style={{ color: INK2, textDecoration: "none", fontWeight: 500 }}>Properties</Link>
         <span style={{ color: INK2 }}>›</span>
         <span style={{ color: INK, fontWeight: 700 }}>Add Property</span>
       </nav>
@@ -220,6 +224,7 @@ export default function NewProperty() {
             You can add tenants, mortgage details, and compliance certificates after creating the passport.
           </p>
         </form>
+      </div>
       </div>
     </div>
   );

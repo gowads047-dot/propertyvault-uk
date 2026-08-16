@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
   openGraph: {
     type: "article",
     title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,13 +6,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
-  { q: "What EPC rating do rental properties need by 2030?", a: "The UK Government has proposed that all privately rented properties in England and Wales must achieve a minimum EPC rating of C by 2030. While the legislation is not yet finalised, landlords are advised to plan ahead — costs and contractor availability will worsen as the deadline approaches." },
+  { q: "What EPC rating do rental properties need by 2030?", a: "The UK Government has confirmed that all privately rented properties in England and Wales must achieve a minimum EPC rating of C by 2030. The deadline is fixed — landlords should plan improvements now as costs and contractor availability will worsen as 2030 approaches." },
   { q: "What is the cheapest way to improve an EPC rating?", a: "The most cost-effective measures are typically loft insulation (£300-£600), draught-proofing (£150-£300), LED lighting (£50-£150), and hot water cylinder insulation (£20-£30). These low-cost measures can often shift a property by one EPC band without major disruption." },
   { q: "Can I get grants to help pay for EPC improvements?", a: "Yes. The Boiler Upgrade Scheme offers up to £7,500 towards an air source heat pump. The Great British Insulation Scheme provides free or subsidised insulation for eligible homes. ECO4 targets lower-income households. Always check eligibility before paying full price — significant funding goes unclaimed annually." },
   { q: "How much does it cost to go from EPC E to EPC C?", a: "Typical costs range from £5,000-£15,000 depending on the property type and starting condition. A semi-detached house in poor condition may require cavity wall insulation, loft insulation, and a new boiler or heat pump. A property that already has good insulation may only need a boiler upgrade or solar panels." },
-  { q: "What happens if my rental property doesn't meet the EPC requirement?", a: "Under the proposed rules, landlords could face fines of up to £30,000 per property for non-compliance. An exemption register exists for properties where the maximum spend (proposed at £15,000) has been reached but EPC C is still not achievable, or where improvements would damage the building's structure." },
+  { q: "What happens if my rental property doesn't meet the EPC requirement?", a: "Under the confirmed rules, landlords could face fines of up to £30,000 per property for non-compliance. An exemption register exists for properties where the maximum spend (expected around £15,000) has been reached but EPC C is still not achievable, or where improvements would damage the building's structure — confirm the exact spend cap figure on GOV.UK." },
 ];
 
 type Measure = {
@@ -77,6 +78,7 @@ export default function EPCRetrofitPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "EPC Retrofit Cost" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">EPC Retrofit Cost Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Estimate the cost of improving your property&apos;s EPC rating. Select the measures you are considering, adjust costs to match your quotes, and see the total investment and payback period.</p>
@@ -90,7 +92,7 @@ export default function EPCRetrofitPage() {
             <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
             <div>
               <p className="text-sm text-red-800 font-semibold">EPC C Deadline for Rental Properties</p>
-              <p className="text-xs text-red-700 mt-0.5">The UK Government has proposed that all privately rented properties in England and Wales must reach EPC band C by 2030 for new tenancies. Non-compliance could result in fines of up to £30,000 per property. Check the latest government guidance for confirmed dates and requirements.</p>
+              <p className="text-xs text-red-700 mt-0.5">The UK Government has confirmed that all privately rented properties in England and Wales must reach EPC band C by 2030. Non-compliance could result in fines of up to £30,000 per property. Check GOV.UK for the latest exemption guidance.</p>
             </div>
           </div>
         </div>
@@ -285,14 +287,14 @@ export default function EPCRetrofitPage() {
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl space-y-6 text-navy-700 text-sm leading-relaxed">
           <h2 className="text-xl font-bold text-navy-800">EPC C Deadline for Landlords — What's Required and When</h2>
-          <p>The government has proposed that all new tenancies must have a minimum EPC rating of C by 2025, with all existing tenancies following by 2028. While the legislation is not yet finalised, most industry experts advise landlords to plan now — retrofitting a whole portfolio close to a deadline is expensive and qualified contractors will be scarce.</p>
+          <p>The government confirmed that all privately rented properties must achieve a minimum EPC rating of C by <strong>2030</strong>. The deadline applies to all rental properties — there is no phased timeline for new versus existing tenancies. The 2030 deadline is firm. Retrofitting a whole portfolio close to the deadline is expensive and qualified contractors will be scarce — start planning now.</p>
           <p>Currently, all rental properties must have a minimum EPC rating of E. Properties rated F or G cannot legally be let (unless an exemption applies) — landlords face fines of up to £30,000 per property.</p>
           <h3 className="font-bold text-navy-800">What Improvements Move the EPC Rating Most?</h3>
           <p>Common improvements and typical point impact: loft insulation (£300-£600, +8-12 SAP points), cavity wall insulation (£500-£1,500, +6-10 points), heat pump replacing gas boiler (£7,000-£14,000 after grant, +5-15 points), double glazing replacing single (£3,000-£8,000, +4-8 points), solar panels (+10-20 points). The most cost-effective path depends on your starting EPC and property type.</p>
           <h3 className="font-bold text-navy-800">Grants Available — Don't Pay Full Price</h3>
           <p>The Boiler Upgrade Scheme offers £7,500 towards an air source heat pump. The Great British Insulation Scheme and ECO4 provide free or subsidised insulation for lower-rated properties. Always check grant availability before paying full price — thousands of pounds in support goes unclaimed by landlords every year.</p>
           <h3 className="font-bold text-navy-800">Exemptions and Cost Cap</h3>
-          <p>Under the proposed rules, the maximum spend required to reach EPC C is £15,000. Spend up to this and still can't reach C? Register for an exemption. Exemptions also apply where improvements would damage the property's structure — common with listed buildings and older stone properties.</p>
+          <p>Under the confirmed rules, the maximum spend required to reach EPC C is expected to be around £15,000 (confirm on GOV.UK for the final figure). Spend up to this and still can't reach C? Register for an exemption. Exemptions also apply where improvements would damage the property's structure — common with listed buildings and older stone properties.</p>
           <div className="pt-4 border-t border-navy-200">
             <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">

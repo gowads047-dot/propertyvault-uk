@@ -3,14 +3,12 @@ import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import StarterPackEmail from "@/emails/StarterPackEmail";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { name, email, user_type } = await req.json();
 
   if (!name || !email) {

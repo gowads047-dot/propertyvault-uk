@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/guaranteed-rent-explained/" },
   openGraph: {
     type: "article",
     title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",

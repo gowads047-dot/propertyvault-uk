@@ -108,8 +108,7 @@ export default function FloatingChat() {
 
   const hide = !user
     || pathname?.startsWith("/rentura/auth")
-    || pathname === "/rentura" || pathname === "/rentura/"
-    || pathname === "/rentura/dashboard" || pathname === "/rentura/dashboard/";
+    || pathname === "/rentura" || pathname === "/rentura/";
 
   const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
@@ -126,6 +125,8 @@ export default function FloatingChat() {
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const [showAttachMenu, setShowAttachMenu] = useState(false);
   const [pendingActions, setPendingActions] = useState<PendingAction[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragCounter = useRef(0);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -696,7 +697,25 @@ export default function FloatingChat() {
       )}
 
       {open && (
-        <div style={{ position: "fixed", bottom: 24, right: 24, zIndex: 999, width: 395, maxHeight: "78vh", display: "flex", flexDirection: "column", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 48px rgba(0,0,0,0.45)", animation: "fcSlideUp 0.2s ease" }}>
+        <div
+          style={{ position: "fixed", bottom: 24, right: 24, zIndex: 999, width: 395, maxHeight: "78vh", display: "flex", flexDirection: "column", borderRadius: 16, overflow: "hidden", boxShadow: "0 8px 48px rgba(0,0,0,0.45)", animation: "fcSlideUp 0.2s ease" }}
+          onDragEnter={e => { e.preventDefault(); dragCounter.current += 1; if (dragCounter.current === 1) setIsDragging(true); }}
+          onDragOver={e => { e.preventDefault(); }}
+          onDragLeave={e => { e.preventDefault(); dragCounter.current -= 1; if (dragCounter.current <= 0) { dragCounter.current = 0; setIsDragging(false); } }}
+          onDrop={e => {
+            e.preventDefault(); dragCounter.current = 0; setIsDragging(false);
+            const file = e.dataTransfer.files?.[0];
+            if (file) processFile(file);
+          }}
+        >
+          {/* Drag-and-drop overlay */}
+          {isDragging && (
+            <div style={{ position: "absolute", inset: 0, zIndex: 50, background: "rgba(8,145,178,0.18)", border: "2px dashed #0891b2", borderRadius: 16, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+              <span style={{ fontSize: 36, marginBottom: 8 }}>📄</span>
+              <p style={{ color: "#0891b2", fontWeight: 800, fontSize: 15, letterSpacing: "-0.01em" }}>Drop to scan</p>
+              <p style={{ color: "rgba(8,145,178,0.7)", fontSize: 12, marginTop: 4 }}>PDF, JPG, PNG, WEBP — up to 10 MB</p>
+            </div>
+          )}
 
           {/* Header */}
           <div style={{ background: "#0f1728", padding: "13px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
@@ -924,10 +943,10 @@ export default function FloatingChat() {
             <div style={{ position: "relative", flexShrink: 0 }}>
               <button
                 onClick={e => { e.stopPropagation(); setShowAttachMenu(v => !v); }}
-                disabled={!ready || chatLoading}
+                disabled={chatLoading}
                 title="Attach a document, photo, or take a photo"
-                style={{ background: showAttachMenu ? "rgba(8,145,178,0.15)" : "none", border: showAttachMenu ? "1px solid rgba(8,145,178,0.4)" : "1px solid transparent", color: pendingFile ? "#0891b2" : showAttachMenu ? "#0891b2" : "rgba(255,255,255,0.35)", fontSize: 17, cursor: "pointer", padding: "5px 6px", borderRadius: 7, opacity: (!ready || chatLoading) ? 0.3 : 1, lineHeight: 1 }}>
-                📎
+                style={{ background: showAttachMenu ? "rgba(8,145,178,0.25)" : pendingFile ? "rgba(8,145,178,0.15)" : "rgba(255,255,255,0.08)", border: `1px solid ${showAttachMenu || pendingFile ? "rgba(8,145,178,0.6)" : "rgba(255,255,255,0.15)"}`, color: pendingFile ? "#0891b2" : showAttachMenu ? "#38bdf8" : "rgba(255,255,255,0.75)", fontSize: 18, fontWeight: 700, cursor: chatLoading ? "not-allowed" : "pointer", padding: "6px 9px", borderRadius: 8, lineHeight: 1, opacity: chatLoading ? 0.4 : 1, transition: "all 0.15s" }}>
+                +
               </button>
 
               {/* Attach popup */}

@@ -30,23 +30,35 @@ type Event = {
 type Property = { id: string; address: string; nickname: string | null };
 
 const EVENT_META: Record<string, { icon: string; color: string; label: string }> = {
-  payment:               { icon: "£",  color: "#22c55e", label: "Payment" },
+  payment:               { icon: "£",  color: "#22c55e", label: "Rent received" },
+  rent_payment:          { icon: "£",  color: "#22c55e", label: "Rent received" },
+  bulk_payment:          { icon: "£",  color: "#22c55e", label: "Bulk rent" },
   maintenance_logged:    { icon: "🔧", color: "#f59e0b", label: "Maintenance" },
+  maintenance_issue:     { icon: "🔧", color: "#f59e0b", label: "Maintenance" },
   maintenance_resolved:  { icon: "✓",  color: "#22c55e", label: "Resolved" },
   maintenance_cost:      { icon: "💸", color: "#ef4444", label: "Repair cost" },
   tenant_in:             { icon: "👤", color: "#3b82f6", label: "Tenant in" },
+  new_tenant:            { icon: "👤", color: "#3b82f6", label: "New tenant" },
   tenant_out:            { icon: "🚪", color: "#8b5cf6", label: "Tenant out" },
+  tenant_leaving:        { icon: "📦", color: "#8b5cf6", label: "Tenant leaving" },
   compliance:            { icon: "📋", color: "#c9a84c", label: "Compliance" },
+  deposit_protection:    { icon: "🔒", color: "#0891b2", label: "Deposit protected" },
   mortgage:              { icon: "🏦", color: "#3b82f6", label: "Mortgage" },
+  mortgage_renewal:      { icon: "🏦", color: "#b8962e", label: "Mortgage renewal" },
+  insurance_renewal:     { icon: "🛡", color: "#0891b2", label: "Insurance" },
   rent_review:           { icon: "📈", color: "#c9a84c", label: "Rent review" },
   arrears:               { icon: "⚠",  color: "#ef4444", label: "Arrears" },
+  void_period:           { icon: "⬜", color: "#6b7280", label: "Void period" },
   note:                  { icon: "📝", color: INK2,      label: "Note" },
   property_created:      { icon: "🏠", color: "#c9a84c", label: "Property added" },
+  new_property:          { icon: "🏠", color: "#c9a84c", label: "Property added" },
 };
 
 const EVENT_TYPES: EventType[] = [
-  "payment","maintenance_logged","maintenance_resolved","maintenance_cost",
-  "tenant_in","tenant_out","compliance","mortgage","rent_review","arrears","note","property_created",
+  "payment","rent_payment","bulk_payment",
+  "maintenance_logged","maintenance_resolved","maintenance_cost",
+  "tenant_in","tenant_out","compliance","mortgage","rent_review",
+  "arrears","void_period","deposit_protection","note","property_created",
 ];
 
 const BLANK = { property_id: "", event_type: "note" as EventType, title: "", description: "", amount: "", event_date: new Date().toISOString().slice(0,10) };
@@ -91,7 +103,7 @@ export default function EventsPage() {
         .select("*, property:rentura_properties(address, nickname)")
         .eq("user_id", user!.id)
         .order("event_date", { ascending: false })
-        .limit(200),
+        .limit(300),
       supabase.from("rentura_properties").select("id, address, nickname").eq("user_id", user!.id).order("created_at"),
     ]);
     setEvents(ev || []);

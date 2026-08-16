@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 const S = {
   bg: "#0c0f1a",
@@ -150,7 +151,9 @@ export default function ContactsPage() {
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
       `}</style>
 
-      <div style={{ background: S.bg, minHeight: "100vh", color: S.ink, fontFamily: "system-ui, sans-serif", padding: "32px 36px" }}>
+      <div style={{ background: S.bg, minHeight: "100vh", color: S.ink, fontFamily: "system-ui, sans-serif", display: "flex" }}>
+      <RenturaSidebar />
+      <div style={{ flex: 1, overflowY: "auto", padding: "32px 36px" }}>
 
         {/* Header */}
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 28 }}>
@@ -215,6 +218,7 @@ export default function ContactsPage() {
             )}
           </div>
         )}
+      </div>
       </div>
 
       {/* Add / Edit modal */}

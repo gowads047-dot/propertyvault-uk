@@ -4,6 +4,20 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "UK Sold House Prices — Free Land Registry Data | PropertyVault UK",
   description: "Search sold property prices across England and Wales using free HM Land Registry data. Check what any property sold for.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/sold-prices/" },
+  openGraph: {
+    title: "UK Sold House Prices — Free Land Registry Data | PropertyVault UK",
+    description: "Search sold property prices across England and Wales using free HM Land Registry data. Check what any property sold for.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/sold-prices/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Sold Prices" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UK Sold House Prices — Free Land Registry Data | PropertyVault UK",
+    description: "Search sold property prices across England and Wales using free HM Land Registry data. Check what any property sold for.",
+  },
 };
 
 export default function SoldPricesPage() {

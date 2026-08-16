@@ -3,11 +3,25 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
   description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
   keywords: "property investment Derby, buy to let Derby, rental yield Derby, Derby property prices, best areas to invest Derby, guaranteed rent Derby",
+  openGraph: {
+    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
+    description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/areas/derby/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Derby Property Investment Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
+    description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
+  },
 };
 
 const derbyFaqs = [
@@ -36,6 +50,7 @@ export default function DerbyPage() {
     <>
       <section className="bg-white py-16 md:py-24">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Areas", href: "/areas" }, { label: "Derby" }]} />
           <div className="max-w-3xl">
             <Link href="/areas" className="text-sm font-semibold text-navy-400 hover:text-navy-600 mb-3 inline-block">&larr; All areas</Link>
             <p className="text-xs font-semibold text-navy-400 uppercase tracking-widest mb-2">East Midlands</p>
@@ -114,7 +129,7 @@ export default function DerbyPage() {
             <p className="text-white/60 text-sm mb-6">We lease your property and pay you every month for 3-5 years. No voids, no management, no fees.</p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Link href="/guaranteed-rent/derby" className="btn-gold">Book free valuation</Link>
-              <a href="https://wa.me/4407415721628?text=Hi%2C%20I%20have%20a%20property%20in%20Derby%20and%20I%27m%20interested%20in%20guaranteed%20rent." target="_blank" rel="noopener noreferrer" className="btn-outline !border-white/20 !text-white hover:!bg-white/5 flex items-center gap-2">
+              <a href="https://wa.me/447415721628?text=Hi%2C%20I%20have%20a%20property%20in%20Derby%20and%20I%27m%20interested%20in%20guaranteed%20rent." target="_blank" rel="noopener noreferrer" className="btn-outline !border-white/20 !text-white hover:!bg-white/5 flex items-center gap-2">
                 <svg className="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 WhatsApp
               </a>

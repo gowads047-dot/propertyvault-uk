@@ -3,10 +3,7 @@ import { NextResponse } from "next/server";
 const RESEND_KEY = process.env.RESEND_API_KEY;
 
 async function sendEmail(to: string, subject: string, html: string) {
-  if (!RESEND_KEY) {
-    console.log(`[WELCOME EMAIL] to=${to} subject=${subject}`);
-    return;
-  }
+  if (!RESEND_KEY) return;
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },

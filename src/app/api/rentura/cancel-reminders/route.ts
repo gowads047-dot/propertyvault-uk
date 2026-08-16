@@ -29,7 +29,7 @@ export async function POST(req: Request) {
   let sent = 0;
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (!RESEND_API_KEY) {
-    console.log("No RESEND_API_KEY — would email:", cancelledMembers.map(m => m.email));
+    // no-op: RESEND_API_KEY not configured
     return NextResponse.json({ sent: 0, note: "No Resend key" });
   }
 

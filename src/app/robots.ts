@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/rentura/", "/academy/", "/makan/", "/tenant/", "/api/"],
+        disallow: ["/rentura/", "/academy/", "/tenant/", "/api/"],
       },
     ],
     sitemap: "https://propertyvaultuk.co.uk/sitemap.xml",

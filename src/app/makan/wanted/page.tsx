@@ -3,21 +3,10 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/lib/auth-context";
-import { useLang } from "@/lib/lang-context";
 import { countries } from "@/lib/hetta-config";
-
-const sampleWanted = [
-  { id: 1, name: "Sarah", budget: 600, city: "Birmingham", country: "gb", type: "Flat", beds: 1, moveIn: "Aug 2026", note: "Young professional, non-smoker, looking for a clean 1-bed flat near city centre. Happy with furnished or unfurnished. Can provide references.", flag: "🇬🇧" },
-  { id: 2, name: "Ahmed", budget: 3500, city: "Cairo", country: "eg", type: "Apartment", beds: 2, moveIn: "Sep 2026", note: "Returning from UK, looking for a modern apartment in New Cairo or Zamalek. Need air conditioning and parking. Family of 3.", flag: "🇪🇬" },
-  { id: 3, name: "Yasmine", budget: 450, city: "Nottingham", country: "gb", type: "Room", beds: 1, moveIn: "Jul 2026", note: "Final year student at NTU. Looking for a room with bills included, ideally near Lenton or city centre. Budget is firm.", flag: "🇬🇧" },
-  { id: 4, name: "Omar", budget: 5000, city: "Casablanca", country: "ma", type: "Villa", beds: 3, moveIn: "Oct 2026", note: "Family relocating from Dubai. Need a villa with garden in Ain Diab or Anfa. Must have security and parking for 2 cars.", flag: "🇲🇦" },
-  { id: 5, name: "Fatima", budget: 800, city: "Derby", country: "gb", type: "House", beds: 3, moveIn: "Now", note: "Family of 5. Need a 3-bed house near schools. Long-term tenant, currently renting in Normanton. Can move quickly.", flag: "🇬🇧" },
-  { id: 6, name: "Khaled", budget: 8000, city: "Dubai", country: "ae", type: "Apartment", beds: 2, moveIn: "Sep 2026", note: "Professional couple, no children. Looking for a furnished 2-bed in Marina or JLT. Need gym and pool access.", flag: "🇦🇪" },
-];
 
 export default function WantedPage() {
   const { user } = useAuth();
-  const { t } = useLang();
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -38,7 +27,7 @@ export default function WantedPage() {
       <section className="py-6" style={{ background: "var(--h-bg)", borderTop: "1px solid var(--h-border)" }}>
         <div className="h-container">
           <div className="flex items-center justify-between mb-6">
-            <p className="text-sm font-medium" style={{ color: "var(--h-muted)" }}>{sampleWanted.length} people looking</p>
+            <p className="text-sm font-medium" style={{ color: "var(--h-muted)" }}>Be the first to post</p>
             {user ? (
               <button onClick={() => setShowForm(!showForm)} className="h-btn h-btn-primary text-sm !py-2">
                 {showForm ? "Cancel" : "Post what you need"}
@@ -122,35 +111,24 @@ export default function WantedPage() {
             </div>
           )}
 
-          {/* Wanted listings */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {sampleWanted.map(w => (
-              <div key={w.id} className="h-card !rounded-2xl p-5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-                    {w.name.charAt(0)}
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm" style={{ color: "var(--h-text)" }}>{w.name}</p>
-                    <p className="text-xs" style={{ color: "var(--h-muted)" }}>{w.flag} {w.city}</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{w.type}</span>
-                  <span className="h-badge" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>{w.beds} bed</span>
-                  <span className="h-badge" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>{w.moveIn}</span>
-                </div>
-                <p className="text-sm mb-3 leading-relaxed" style={{ color: "var(--h-muted)" }}>{w.note}</p>
-                <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid var(--h-border)" }}>
-                  <span className="font-bold" style={{ color: "var(--h-text)" }}>Up to {countries.find(c => c.code === w.country)?.symbol === "£" ? "£" : ""}{w.budget}{countries.find(c => c.code === w.country)?.symbol !== "£" ? ` ${countries.find(c => c.code === w.country)?.symbol}` : ""}/mo</span>
-                  {user ? (
-                    <a href={`https://wa.me/4407415721628?text=${encodeURIComponent(`Hi, I have a property that matches what ${w.name} is looking for in ${w.city}`)}`} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold px-3 py-1.5 rounded-lg" style={{ background: "#25D366", color: "white" }}>Respond</a>
-                  ) : (
-                    <Link href="/makan/auth" className="text-xs font-semibold" style={{ color: "var(--h-accent)" }}>Log in to respond</Link>
-                  )}
-                </div>
-              </div>
-            ))}
+          {/* Empty state — no listings yet */}
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5" style={{ background: "var(--h-accent-light)" }}>
+              <svg className="w-8 h-8" style={{ color: "var(--h-accent)" }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>No listings yet</h3>
+            <p className="max-w-sm mb-6" style={{ color: "var(--h-muted)" }}>
+              Be the first to post what you&apos;re looking for. Landlords with matching properties will reach out directly.
+            </p>
+            {user ? (
+              <button onClick={() => setShowForm(true)} className="h-btn h-btn-primary">
+                Post what you need — it&apos;s free
+              </button>
+            ) : (
+              <Link href="/makan/auth" className="h-btn h-btn-primary">Sign up to post</Link>
+            )}
           </div>
         </div>
       </section>

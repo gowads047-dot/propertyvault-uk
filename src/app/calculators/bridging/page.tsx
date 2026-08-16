@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "What is a bridging loan and how does it work?", a: "A bridging loan is short-term secured finance used to bridge a gap — typically between buying a new property and selling another, or between purchasing and refinancing onto a long-term mortgage. They complete in days rather than weeks and are commonly used for auction purchases, uninhabitable properties, or chain breaks." },
@@ -45,6 +46,7 @@ export default function BridgingPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Bridging Loan" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Bridging Loan Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Calculate the total cost of bridging finance including monthly interest, arrangement fees, exit fees, and all associated costs.</p>

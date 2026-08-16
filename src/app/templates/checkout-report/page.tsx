@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
@@ -50,7 +50,7 @@ export default function CheckOutReportTemplate() {
     <>
       <style>{`        @media print {
           body * { visibility: hidden !important; }
-          #print-doc, #print-doc * { visibility: visible !important; } #print-doc { position: fixed; inset: 0; overflow: auto; background: white; } .no-print { display: none !important; } }`}</style>
+          #print-doc, #print-doc * { visibility: visible !important; } #print-doc { position: absolute; left: 0; top: 0; width: 100%; overflow: auto; background: white; } .no-print { display: none !important; } }`}</style>
 
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>

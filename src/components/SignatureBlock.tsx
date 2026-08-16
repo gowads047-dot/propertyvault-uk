@@ -123,7 +123,7 @@ export function SignatureBlock({
 
   const fmtDate = date
     ? new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
-    : new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    : "";
 
   return (
     <div style={{ marginTop: 24 }}>
@@ -156,7 +156,7 @@ export function SignatureBlock({
           </div>
         )}
       </div>
-      <p style={{ fontSize: 11, color: "#6b7280", marginTop: 12 }}>Date: {fmtDate}</p>
+      <p style={{ fontSize: 11, color: "#6b7280", marginTop: 12 }}>Date: {fmtDate || "_______________"}</p>
     </div>
   );
 }

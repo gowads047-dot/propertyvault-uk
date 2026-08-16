@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
@@ -34,8 +34,8 @@ export default function RepairReport() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; padding: 28px 36px; background: white; }
-          @page { size: A4; margin: 20mm; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; padding: 28px 36px; background: white; }
+          @page { size: A4; margin: 0; }
         }
       `}</style>
 

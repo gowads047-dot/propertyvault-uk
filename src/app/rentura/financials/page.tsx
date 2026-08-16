@@ -20,6 +20,18 @@ const EXP_CATS = ["mortgage", "insurance", "maintenance", "management", "utiliti
 
 function fmt(n: number) { return "£" + n.toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
+function getTaxYearStartFor(date: Date): number {
+  const m = date.getMonth(); // 0-indexed
+  const d = date.getDate();
+  return (m > 3 || (m === 3 && d >= 6)) ? date.getFullYear() : date.getFullYear() - 1;
+}
+
+function taxYearLabel(startYear: number) { return `${startYear}/${String(startYear + 1).slice(2)}`; }
+function taxYearRange(startYear: number) { return { start: `${startYear}-04-06`, end: `${startYear + 1}-04-05` }; }
+
+const CURRENT_TAX_YEAR_START = getTaxYearStartFor(new Date());
+const TAX_YEAR_OPTIONS = [2022, 2023, 2024, 2025, 2026].map(y => ({ value: y, label: taxYearLabel(y) }));
+
 export default function RenturaFinancials() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -28,7 +40,7 @@ export default function RenturaFinancials() {
   const [income, setIncome] = useState<Income[]>([]);
   const [properties, setProperties] = useState<Property[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
-  const [year, setYear] = useState(new Date().getFullYear().toString());
+  const [taxYearStart, setTaxYearStart] = useState(CURRENT_TAX_YEAR_START);
 
   // Add expense form
   const [expForm, setExpForm] = useState({ category: "maintenance", description: "", amount: "", date: new Date().toISOString().slice(0, 10), property_id: "" });
@@ -53,9 +65,10 @@ export default function RenturaFinancials() {
     });
   }, [user]);
 
-  const yearStr = year;
-  const filteredExp = expenses.filter(e => e.date?.startsWith(yearStr));
-  const filteredInc = income.filter(i => i.date?.startsWith(yearStr));
+  const { start: tyStart, end: tyEnd } = taxYearRange(taxYearStart);
+  const tyLabel = taxYearLabel(taxYearStart);
+  const filteredExp = expenses.filter(e => e.date >= tyStart && e.date <= tyEnd);
+  const filteredInc = income.filter(i => i.date >= tyStart && i.date <= tyEnd);
   const totalIncome = filteredInc.reduce((s, i) => s + (i.amount || 0), 0);
   const totalExpenses = filteredExp.reduce((s, e) => s + (e.amount || 0), 0);
   const netProfit = totalIncome - totalExpenses;
@@ -76,7 +89,7 @@ export default function RenturaFinancials() {
       amount: parseFloat(expForm.amount),
       date: expForm.date,
       property_id: expForm.property_id || null,
-      tax_year: expForm.date.startsWith(year) ? `${year}/${parseInt(year)+1}` : `${parseInt(year)-1}/${year}`,
+      tax_year: taxYearLabel(getTaxYearStartFor(new Date(expForm.date))),
     }).select().single();
     if (data) setExpenses(prev => [data, ...prev]);
     setExpForm(f => ({ ...f, description: "", amount: "" }));
@@ -112,8 +125,8 @@ export default function RenturaFinancials() {
             <h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>Financials</h1>
             <p style={{ fontSize: 13, color: C.ink2 }}>Income, expenses and profitability</p>
           </div>
-          <select value={year} onChange={e => setYear(e.target.value)} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 14px", fontSize: 13, color: C.ink, outline: "none" }}>
-            {[2024, 2025, 2026, 2027].map(y => <option key={y} value={y.toString()}>{y}</option>)}
+          <select value={taxYearStart} onChange={e => setTaxYearStart(parseInt(e.target.value))} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 14px", fontSize: 13, color: C.ink, outline: "none" }}>
+            {TAX_YEAR_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
           </select>
         </div>
 
@@ -150,9 +163,9 @@ export default function RenturaFinancials() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
             {/* Expense breakdown */}
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "22px 24px" }}>
-              <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 18 }}>Expense breakdown {year}</p>
+              <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 18 }}>Expense breakdown {tyLabel}</p>
               {expByCategory.length === 0 ? (
-                <p style={{ fontSize: 13, color: C.ink3 }}>No expenses recorded for {year}.</p>
+                <p style={{ fontSize: 13, color: C.ink3 }}>No expenses recorded for {tyLabel}.</p>
               ) : expByCategory.map(({ cat, total }) => (
                 <div key={cat} style={{ marginBottom: 12 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
@@ -170,14 +183,16 @@ export default function RenturaFinancials() {
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "22px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 18 }}>Monthly overview</p>
               {Array.from({ length: 12 }, (_, i) => {
-                const month = String(i + 1).padStart(2, "0");
-                const prefix = `${year}-${month}`;
+                // Tax year starts April (month index 3) — iterate Apr→Mar
+                const calMonth = (3 + i) % 12; // 0-indexed: 3=Apr,4=May…11=Dec,0=Jan,1=Feb,2=Mar
+                const calYear = calMonth < 3 ? taxYearStart + 1 : taxYearStart;
+                const prefix = `${calYear}-${String(calMonth + 1).padStart(2, "0")}`;
                 const inc = filteredInc.filter(x => x.date?.startsWith(prefix)).reduce((s, x) => s + x.amount, 0);
                 const exp = filteredExp.filter(x => x.date?.startsWith(prefix)).reduce((s, x) => s + x.amount, 0);
-                const name = new Date(parseInt(year), i, 1).toLocaleString("en-GB", { month: "short" });
+                const name = new Date(calYear, calMonth, 1).toLocaleString("en-GB", { month: "short" });
                 if (inc === 0 && exp === 0) return null;
                 return (
-                  <div key={month} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+                  <div key={prefix} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                     <span style={{ fontSize: 11, color: C.ink3, width: 28, flexShrink: 0 }}>{name}</span>
                     <div style={{ flex: 1 }}>
                       <div style={{ height: 5, background: "rgba(34,197,94,0.2)", borderRadius: 2, marginBottom: 3 }}>
@@ -226,7 +241,7 @@ export default function RenturaFinancials() {
             </div>
             <div>
               {filteredInc.length === 0 ? (
-                <p style={{ color: C.ink3, fontSize: 13 }}>No income recorded for {year}.</p>
+                <p style={{ color: C.ink3, fontSize: 13 }}>No income recorded for {tyLabel}.</p>
               ) : filteredInc.map(inc => (
                 <div key={inc.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 16px", marginBottom: 8 }}>
                   <div>
@@ -265,7 +280,7 @@ export default function RenturaFinancials() {
             </div>
             <div>
               {filteredExp.length === 0 ? (
-                <p style={{ color: C.ink3, fontSize: 13 }}>No expenses recorded for {year}.</p>
+                <p style={{ color: C.ink3, fontSize: 13 }}>No expenses recorded for {tyLabel}.</p>
               ) : filteredExp.map(exp => (
                 <div key={exp.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: "12px 16px", marginBottom: 8 }}>
                   <div>

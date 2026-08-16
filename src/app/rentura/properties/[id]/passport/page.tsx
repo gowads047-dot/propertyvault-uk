@@ -339,7 +339,7 @@ export default function PassportPage() {
                 ))}
               </div>
               <p style={{ fontSize: 10, color: INK2, marginTop: 14, lineHeight: 1.6 }}>
-                Note: The Renters Rights Bill 2025 is expected to abolish Section 21 (no-fault eviction) on commencement. &quot;?&quot; items cannot be auto-verified — confirm manually.
+                Note: Section 21 (no-fault eviction) is abolished under the Renters' Rights Act 2025 — now in force. &quot;?&quot; items cannot be auto-verified — confirm manually.
               </p>
             </div>
           </div>

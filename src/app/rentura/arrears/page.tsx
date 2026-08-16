@@ -39,7 +39,7 @@ const STAGES = [
   { n: 1, label: "Missed Payment",  short: "Missed",   days: "Day 1–7",    color: C.blue,   hint: "Attempt phone/email contact immediately" },
   { n: 2, label: "Written Warning", short: "Warning",  days: "Day 7–28",   color: C.amber,  hint: "Send formal letter by recorded post" },
   { n: 3, label: "Final Demand",    short: "Demand",   days: "Day 28–56",  color: C.orange, hint: "Last chance before legal action" },
-  { n: 4, label: "Section 8 Notice",short: "S8 Notice",days: "2+ months",  color: C.red,    hint: "Serve Form 3 — 3+ months arrears required (RRB)" },
+  { n: 4, label: "Section 8 Notice",short: "S8 Notice",days: "2+ months",  color: C.red,    hint: "Serve Form 3 — 3+ months arrears required (Renters' Rights Act 2025)" },
   { n: 5, label: "Court Claim",     short: "Court",    days: "Post-notice", color: C.purple, hint: "File N5B possession claim at county court" },
 ] as const;
 
@@ -226,7 +226,7 @@ Prepared: <strong>${fmtDate(d.todayDate)}</strong></p>
 <div class="box">
   <p><strong>Arrears summary:</strong> ${fmt(d.totalOwed)} owed / ${fmt(d.monthlyRent)} monthly rent = approximately <strong>${months} months in arrears</strong></p>
   ${g8eligible
-    ? `<p><strong>Ground 8 (Mandatory)</strong> — Tick this ground. At the date of the notice AND at the date of the court hearing the tenant must owe at least 3 months' rent (Renters Rights Bill). Court MUST grant possession if proven.</p>`
+    ? `<p><strong>Ground 8 (Mandatory)</strong> — Tick this ground. At the date of the notice AND at the date of the court hearing the tenant must owe at least 3 months' rent (Renters' Rights Act 2025). Court MUST grant possession if proven.</p>`
     : `<p><strong>Ground 8 is NOT yet available</strong> — Arrears are below 3 months. Continue escalation until 3 months is reached before serving, or use Ground 10/11 only (discretionary — court may or may not grant possession).</p>`
   }
   <p><strong>Ground 10 (Discretionary)</strong> — Tick this ground. Some rent is unpaid or in arrears at notice AND at hearing date.</p>
@@ -237,10 +237,10 @@ Prepared: <strong>${fmtDate(d.todayDate)}</strong></p>
 <h2>3. Key dates for Form 3</h2>
 <ul>
   <li>Date of notice: <strong>${fmtDate(d.todayDate)}</strong></li>
-  <li>Notice period: <strong>4 weeks minimum</strong> (Ground 8/10 under Renters Rights Bill)</li>
+  <li>Notice period: <strong>4 weeks minimum</strong> (Ground 8/10 under the Renters' Rights Act 2025)</li>
   <li>Earliest date proceedings can begin: <strong>${fmtDate(noticeExpiry)}</strong></li>
 </ul>
-<p>Note: Under the Renters Rights Bill 2025, the minimum notice period for Grounds 8 and 10 has increased to 4 weeks.</p>
+<p>Note: Under the Renters' Rights Act 2025 (now in force), the minimum notice period for Grounds 8 and 10 is 4 weeks.</p>
 
 <hr>
 <h2>4. How to serve the notice</h2>

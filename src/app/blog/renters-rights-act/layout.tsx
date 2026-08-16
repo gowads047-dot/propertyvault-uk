@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/renters-rights-act/" },
   openGraph: {
     type: "article",
     title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",

@@ -18,7 +18,7 @@ export default function RenturaJoinPage() {
     setError("");
     if (!name.trim()) { setError("Please enter your full name."); return; }
     if (!phone.trim()) { setError("Please enter your phone number."); return; }
-    if (password.length < 6) { setError("Password must be at least 6 characters."); return; }
+    if (password.length < 8) { setError("Password must be at least 8 characters."); return; }
     setLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({
@@ -129,7 +129,7 @@ export default function RenturaJoinPage() {
                 </div>
                 <div>
                   <label style={labelStyle}>Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 6 characters" style={inputStyle} />
+                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 8 characters" style={inputStyle} />
                 </div>
 
                 {error && (

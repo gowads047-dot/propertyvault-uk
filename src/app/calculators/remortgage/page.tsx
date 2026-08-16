@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "When should I remortgage my property?", a: "The best time to start the remortgage process is 3-6 months before your current fixed-rate deal expires. At expiry, you revert to the lender's Standard Variable Rate (SVR), which is typically 1-2% above the best available fixed rates — costing hundreds per month extra. Starting early gives time to compare the full market." },
@@ -60,6 +61,7 @@ export default function RemortgagePage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Remortgage Savings" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Remortgage Savings Calculator</h1>
           <p className="text-navy-200 max-w-2xl">See how much you could save by switching to a new mortgage deal. Compare your current rate with a new rate and factor in all switching costs.</p>

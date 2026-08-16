@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
@@ -61,8 +61,8 @@ export default function HmoManagementLog() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; padding: 24px 32px; background: white; font-size: 11px; }
-          @page { size: A4; margin: 15mm; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; padding: 24px 32px; background: white; font-size: 11px; }
+          @page { size: A4; margin: 0; }
         }
       `}</style>
 

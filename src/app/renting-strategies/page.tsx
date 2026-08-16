@@ -5,6 +5,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
   description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/renting-strategies/" },
+  openGraph: {
+    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
+    description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/renting-strategies/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Renting Strategies Guide" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
+    description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
+  },
 };
 
 const strategies = [
@@ -75,7 +89,7 @@ const strategies = [
   {
     title: "Serviced Accommodation / Short-Term Lets",
     desc: "Fully furnished properties let on a nightly or weekly basis through platforms like Airbnb, Booking.com, and direct bookings. Premium income potential but requires active management or a management company. Ideal in tourist areas, cities, and business locations.",
-    pros: ["2-3x income vs long-term let", "Flexibility to use property yourself", "Dynamic pricing", "No long-term tenant risk", "Tax benefits (FHL status)"],
+    pros: ["2-3x income vs long-term let", "Flexibility to use property yourself", "Dynamic pricing", "No long-term tenant risk", "Tenancy regulation does not apply"],
     cons: ["Higher running costs", "Active management required", "Seasonal demand variations", "Regulatory restrictions (90-day rule in London)", "Furnishing and setup costs"],
     idealFor: "Active investors in tourist destinations or business cities",
     yield: "10-25%",

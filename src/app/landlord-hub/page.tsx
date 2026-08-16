@@ -1,9 +1,23 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
   title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
   description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/landlord-hub/" },
+  openGraph: {
+    title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
+    description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
+    type: "website",
+    url: "https://propertyvaultuk.co.uk/landlord-hub/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Landlord Hub" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
+    description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
+  },
 };
 
 export default function LandlordHubPage() {
@@ -27,7 +41,7 @@ export default function LandlordHubPage() {
               {[
                 { item: "Gas Safety Certificate", freq: "Annual", detail: "CP12 certificate from Gas Safe registered engineer. Provide copy to tenant within 28 days." },
                 { item: "EICR (Electrical Safety)", freq: "Every 5 years", detail: "Electrical Installation Condition Report. Must be satisfactory. Remedial works within 28 days if unsatisfactory." },
-                { item: "EPC", freq: "Every 10 years", detail: "Minimum E rating required. Must be provided before marketing. C rating expected from 2028 for new tenancies." },
+                { item: "EPC", freq: "Every 10 years", detail: "Minimum E rating required. Must be provided before marketing. C rating required by 2030 — plan upgrades now." },
                 { item: "Smoke Alarms", freq: "Start of tenancy", detail: "Working smoke alarm on every floor. Carbon monoxide alarm in rooms with fixed combustion appliances." },
                 { item: "Deposit Protection", freq: "Within 30 days", detail: "Protect in DPS, MyDeposits, or TDS. Serve prescribed information within 30 days." },
                 { item: "Right to Rent", freq: "Before tenancy", detail: "Check original documents or share code for all adult occupants." },
@@ -49,9 +63,9 @@ export default function LandlordHubPage() {
           <div>
             <h2 className="text-2xl font-bold text-navy-800 mb-4">Eviction Process</h2>
             <div className="space-y-3 text-navy-600 leading-relaxed">
-              <p><strong>Section 21 (No-Fault):</strong> Allows landlords to regain possession after a fixed-term AST expires or during a periodic tenancy. Requires 2 months&apos; notice. Cannot be served in the first 4 months. All compliance documents must be in order.</p>
-              <p><strong>Section 8 (Fault-Based):</strong> Used when tenants breach the tenancy agreement — most commonly for rent arrears (Ground 8: 2+ months arrears) or anti-social behaviour. Notice periods vary by ground (2 weeks to 2 months).</p>
-              <p><strong>Renters&apos; Reform Bill:</strong> The government plans to abolish Section 21 evictions. Under the new system, all tenancies will be periodic and landlords will only be able to evict using expanded Section 8 grounds. Stay updated on this significant change.</p>
+              <p><strong>Section 21 abolished (Renters&apos; Rights Act 2025):</strong> Section 21 no-fault evictions no longer exist. Landlords cannot end a tenancy without a specific legal reason. All new tenancies are periodic (rolling monthly) — fixed-term ASTs cannot be issued.</p>
+              <p><strong>Section 8 — the only route to possession:</strong> Used when tenants breach the tenancy agreement or a specific statutory ground applies. Common grounds: rent arrears (Ground 8: 2+ months, mandatory), selling the property (Ground 1A: 4 months&apos; notice), family occupation (Ground 1: 4 months&apos; notice), antisocial behaviour (immediate in serious cases).</p>
+              <p>Courts can refuse possession even on mandatory grounds if the landlord has not followed correct procedure — ensure all prescribed documents were served at the start of the tenancy and the Section 13 rent review process has been correctly used.</p>
             </div>
           </div>
 
