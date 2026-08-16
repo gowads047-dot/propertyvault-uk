@@ -10,7 +10,7 @@ import { PrintButton } from "@/components/calculators/PrintButton";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax, calcSDLT } from "@/lib/tax";
-import { monthlyRepayment, monthlyInterestOnly } from "@/lib/finance";
+import { monthlyRepayment, monthlyInterestOnly, compoundGrowth } from "@/lib/finance";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
@@ -397,13 +397,12 @@ export default function DealAnalyserPage() {
 
   // ── 5-Year Projection ────────────────────────────────────
   const projection = useMemo(() => {
-    const growthRate = capitalGrowthPct / 100;
     const rows = [];
     let cumulativeIncome = 0;
     const loan = purchasePrice * (1 - depositPct / 100);
     for (let yr = 1; yr <= 5; yr++) {
       cumulativeIncome += calc.netIncome;
-      const capitalValue = purchasePrice * Math.pow(1 + growthRate, yr);
+      const capitalValue = compoundGrowth(purchasePrice, capitalGrowthPct, yr);
       const equity = capitalValue - loan + (afterRefurbValue - purchasePrice - refurbCost);
       const totalWealth = cumulativeIncome + equity - calc.totalCashIn;
       rows.push({ yr, capitalValue, equity, cumulativeIncome, totalWealth });
@@ -450,9 +449,9 @@ export default function DealAnalyserPage() {
     const annualUtilities = hmoUtilities * 12;
     const depositAmount = purchasePrice * (depositPct / 100);
     const loanAmount = purchasePrice - depositAmount;
-    const mr = mortgageRate / 100 / 12;
-    const n = mortgageTerm * 12;
-    const monthlyMtg = mortgageType === "interest" ? loanAmount * mr : loanAmount * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+    const monthlyMtg = mortgageType === "interest"
+      ? monthlyInterestOnly(loanAmount, mortgageRate)
+      : monthlyRepayment(loanAmount, mortgageRate, mortgageTerm);
     const annualMtg = monthlyMtg * 12;
     const mgmt = grossIncome * (managementPct / 100);
     const maint = grossIncome * (maintenancePct / 100);
@@ -505,9 +504,9 @@ export default function DealAnalyserPage() {
     const annualRunning = saRunningCosts * 12;
     const depositAmount = purchasePrice * (depositPct / 100);
     const loanAmount = purchasePrice - depositAmount;
-    const mr = mortgageRate / 100 / 12;
-    const n = mortgageTerm * 12;
-    const monthlyMtg = mortgageType === "interest" ? loanAmount * mr : loanAmount * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+    const monthlyMtg = mortgageType === "interest"
+      ? monthlyInterestOnly(loanAmount, mortgageRate)
+      : monthlyRepayment(loanAmount, mortgageRate, mortgageTerm);
     const annualMtg = monthlyMtg * 12;
     const totalExp = platformFees + cleaningCosts + annualRunning + annualMtg + insuranceMonthly * 12;
     const netIncome = grossRevenue - totalExp;
