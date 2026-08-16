@@ -6,30 +6,24 @@ import { usePathname } from "next/navigation";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 
 const mainLinks = [
-  { href: "/makan", label: "Makan", sub: "Property listings" },
+  { href: "/areas", label: "Areas", sub: "" },
   { href: "/calculators", label: "Calculators", sub: "" },
   { href: "/templates", label: "Templates", sub: "" },
   { href: "/blog", label: "Blog", sub: "" },
-  { href: "/academy", label: "Academy", sub: "£14.99/mo" },
   { href: "/rentura", label: "Rentura", sub: "Early Access", highlight: true },
 ];
 
 const mobileLinks = [
-  { heading: "Makan — Find Your Place", links: [
-    { href: "/makan", label: "Browse Listings" },
-    { href: "/makan/rooms", label: "Rooms to Rent" },
-    { href: "/makan/list", label: "List Free" },
-    { href: "/makan/how-it-works", label: "How It Works" },
-  ]},
   { heading: "Property Search", links: [
     { href: "/search", label: "Search Properties" },
     { href: "/sold-prices", label: "Sold Prices" },
     { href: "/valuation", label: "Free Valuation" },
     { href: "/areas", label: "Area Guides" },
+    { href: "/areas/postcodes", label: "Postcode Guides" },
   ]},
   { heading: "Tools & Calculators", links: [
     { href: "/calculators/deal-analyser", label: "Deal Analyser" },
-    { href: "/calculators", label: "All Calculators (17)" },
+    { href: "/calculators", label: "All Calculators (23)" },
     { href: "/tools", label: "Property Tools" },
     { href: "/templates", label: "Templates & Checklists" },
     { href: "/glossary", label: "Property Glossary" },
@@ -41,7 +35,6 @@ const mobileLinks = [
     { href: "/find-agent", label: "Find a Professional" },
   ]},
   { heading: "Learn", links: [
-    { href: "/academy", label: "🎓 Deal Sourcing Academy" },
     { href: "/rentura", label: "🏠 Rentura — Landlord OS" },
     { href: "/property-investing", label: "Property Investing" },
     { href: "/mortgages", label: "Mortgages" },
@@ -53,6 +46,7 @@ const mobileLinks = [
   { heading: "Company", links: [
     { href: "/about", label: "About PropertyVault" },
     { href: "/contact", label: "Contact Us" },
+    { href: "/makan", label: "Makan — Join the Waitlist" },
   ]},
 ];
 
@@ -232,7 +226,7 @@ export function Header() {
                 Guaranteed Rent →
               </Link>
               <Link
-                href="/academy"
+                href="/rentura"
                 onClick={() => setMobileOpen(false)}
                 className="block text-center text-sm font-bold py-2.5 px-4 rounded-full transition-colors"
                 style={{ background: "#c9a84c", color: "#0f1b36" }}

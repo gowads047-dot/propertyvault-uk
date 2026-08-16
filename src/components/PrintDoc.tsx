@@ -12,7 +12,7 @@ interface PrintHeaderProps {
 export function PrintHeader({ category, title, reference, date }: PrintHeaderProps) {
   const fmtDate = date
     ? new Date(date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
-    : new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+    : "";
 
   return (
     <div style={{ marginBottom: 28 }}>
@@ -34,7 +34,7 @@ export function PrintHeader({ category, title, reference, date }: PrintHeaderPro
         </div>
         <div style={{ textAlign: "right" }}>
           {reference && <p style={{ fontSize: 9, color: "#6b7280", margin: "0 0 2px", fontFamily: "monospace" }}>Ref: {reference}</p>}
-          <p style={{ fontSize: 9, color: "#6b7280", margin: 0, fontFamily: "Arial, sans-serif" }}>{fmtDate}</p>
+          <p style={{ fontSize: 9, color: "#6b7280", margin: 0, fontFamily: "Arial, sans-serif" }}>{fmtDate || "Date: _______________"}</p>
         </div>
       </div>
 

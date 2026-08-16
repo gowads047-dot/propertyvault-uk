@@ -235,7 +235,7 @@ export default function StarterPackEmail({ name, userType }: StarterPackEmailPro
               </Column>
               <Column style={{ paddingLeft: 8 }}>
                 <Section style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8, padding: "12px 14px" }}>
-                  <Link href={`${BASE}/templates`} style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View all 18 templates →</Link>
+                  <Link href={`${BASE}/templates`} style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View all 19 templates →</Link>
                   <Text style={{ color: MUTED, fontSize: 11, margin: "4px 0 0" }}>Deposit receipts, inventories & more</Text>
                 </Section>
               </Column>
@@ -265,7 +265,7 @@ export default function StarterPackEmail({ name, userType }: StarterPackEmailPro
           <Section style={{ padding: "28px 0 32px", textAlign: "center" as const }}>
             <Text style={{ color: MUTED, fontSize: 12, margin: "0 0 6px" }}>
               Questions? WhatsApp Nass directly:{" "}
-              <Link href="https://wa.me/4407415721628" style={{ color: GOLD, textDecoration: "none", fontWeight: 600 }}>07415 721628</Link>
+              <Link href="https://wa.me/447415721628" style={{ color: GOLD, textDecoration: "none", fontWeight: 600 }}>07415 721628</Link>
             </Text>
             <Text style={{ color: MUTED, fontSize: 12, margin: "0 0 16px" }}>
               <Link href={BASE} style={{ color: MUTED, textDecoration: "underline" }}>propertyvaultuk.co.uk</Link>

@@ -2,10 +2,7 @@ import Link from "next/link";
 
 const sections = [
   { title: "Makan", links: [
-    { href: "/makan", label: "Browse Listings" },
-    { href: "/makan/rooms", label: "Rooms" },
-    { href: "/makan/list", label: "List Free" },
-    { href: "/makan/how-it-works", label: "How It Works" },
+    { href: "/makan", label: "Makan" },
   ]},
   { title: "Platform", links: [
     { href: "/calculators", label: "Calculators" },
