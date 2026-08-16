@@ -9,7 +9,7 @@ import { ShareResults } from "@/components/calculators/ShareResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { calcCorpTax } from "@/lib/tax";
+import { calcCorpTax, calcSDLT } from "@/lib/tax";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
@@ -58,20 +58,6 @@ interface AiVerdict {
   redFlags: string[];
   negotiationTip: string | null;
   keyInsight: string;
-}
-
-// SDLT calculator (England, April 2025 rates + 5% additional property surcharge from Oct 2024)
-function calcSDLT(price: number, additionalProperty: boolean): number {
-  const bands = additionalProperty
-    ? [{ up: 125000, rate: 0.05 }, { up: 250000, rate: 0.07 }, { up: 925000, rate: 0.10 }, { up: 1500000, rate: 0.15 }, { up: Infinity, rate: 0.17 }]
-    : [{ up: 125000, rate: 0 }, { up: 250000, rate: 0.02 }, { up: 925000, rate: 0.05 }, { up: 1500000, rate: 0.10 }, { up: Infinity, rate: 0.12 }];
-  let tax = 0, prev = 0;
-  for (const band of bands) {
-    if (price <= prev) break;
-    tax += (Math.min(price, band.up) - prev) * band.rate;
-    prev = band.up;
-  }
-  return Math.round(tax);
 }
 
 // City benchmark data

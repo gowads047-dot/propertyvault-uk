@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { calcSDLT } from "@/lib/tax";
 
 const faqs = [
   { q: "How much does it cost to move house in the UK?", a: "On a £250,000 property, total moving costs typically range from £10,000-£20,000. This includes stamp duty, solicitor fees (£1,000-£2,500), searches (£250-£400), survey (£400-£1,500), mortgage arrangement fees, removal costs, and any redecoration or furniture purchases. Buyers often underestimate these costs significantly." },
@@ -30,29 +31,10 @@ export default function MovingCostsPage() {
   const [furniture, setFurniture] = useState(2000);
   const [otherCosts, setOtherCosts] = useState(0);
 
-  const stampDuty = useMemo(() => {
-    let tax = 0;
-    const surcharge = isAdditional ? 0.05 : 0;
-    if (isFirstTime && propertyPrice <= 500000) {
-      if (propertyPrice > 300000) tax = (propertyPrice - 300000) * 0.05;
-      return tax;
-    }
-    const bands = [
-      { threshold: 125000, rate: 0 },
-      { threshold: 250000, rate: 0.02 },
-      { threshold: 925000, rate: 0.05 },
-      { threshold: 1500000, rate: 0.10 },
-      { threshold: Infinity, rate: 0.12 },
-    ];
-    let prev = 0;
-    for (const band of bands) {
-      if (propertyPrice <= prev) break;
-      const taxable = Math.min(propertyPrice, band.threshold) - prev;
-      if (taxable > 0) tax += taxable * (band.rate + surcharge);
-      prev = band.threshold;
-    }
-    return tax;
-  }, [propertyPrice, isFirstTime, isAdditional]);
+  const stampDuty = useMemo(
+    () => calcSDLT(propertyPrice, isAdditional, isFirstTime),
+    [propertyPrice, isFirstTime, isAdditional],
+  );
 
   const totalCosts = useMemo(() => {
     return stampDuty + solicitorFee + searchFees + surveyFee + mortgageFee + removalCost + mailRedirect + cleaning + furniture + otherCosts;

@@ -10,6 +10,7 @@ import {
   calcSection24Credit,
   calcCGTResidential,
   calcSDLT,
+  sdltBreakdown,
 } from "./tax";
 
 describe("personalAllowance", () => {
@@ -144,6 +145,28 @@ describe("calcCGTResidential", () => {
 
 describe("calcSDLT", () => {
   it("no SDLT at £40k threshold", () => expect(calcSDLT(40_000)).toBe(0));
+  // The £40k floor gates the SURCHARGES, not SDLT itself. Higher rates apply at
+  // £40,000 or more (FA 2003 Sch 4ZA para 3) — so £39,999 is nil but £40,000 is not.
+  describe("£40k surcharge floor", () => {
+    it("additional dwelling below £40k pays nothing", () => {
+      expect(calcSDLT(25_000, true)).toBe(0);
+      expect(calcSDLT(39_999, true)).toBe(0);
+    });
+    it("additional dwelling AT £40k pays the 5% surcharge", () => {
+      expect(calcSDLT(40_000, true)).toBe(2_000);
+    });
+    it("additional dwelling just above £40k pays it too", () => {
+      expect(calcSDLT(50_000, true)).toBe(2_500);
+    });
+    it("standard purchase below £40k is nil either way", () => {
+      expect(calcSDLT(39_999)).toBe(0);
+      expect(calcSDLT(25_000)).toBe(0);
+    });
+    it("non-resident surcharge is also gated by the floor", () => {
+      expect(calcSDLT(39_999, false, false, true)).toBe(0);
+      expect(calcSDLT(40_000, false, false, true)).toBe(800); // 2% of 40k
+    });
+  });
   it("standard rate on £200k", () => {
     // 125k@0% + 75k@2% = £1,500
     expect(calcSDLT(200_000)).toBe(1_500);
@@ -178,5 +201,33 @@ describe("calcSDLT", () => {
     const add = calcSDLT(200_000, true);
     const addNr = calcSDLT(200_000, true, false, true);
     expect(addNr - add).toBe(4_000); // +2% of 200k
+  });
+});
+
+describe("sdltBreakdown", () => {
+  it("bands sum to the calcSDLT total", () => {
+    for (const [price, add, ftb, nr] of [
+      [200_000, false, false, false],
+      [500_000, false, false, false],
+      [300_000, true, false, false],
+      [400_000, false, true, false],
+      [200_000, false, false, true],
+      [750_000, true, false, true],
+      [2_000_000, false, false, false],
+    ] as [number, boolean, boolean, boolean][]) {
+      const { bands, total } = sdltBreakdown(price, add, ftb, nr);
+      const summed = Math.round(bands.reduce((s, b) => s + b.tax, 0));
+      expect(summed).toBe(total);
+      expect(total).toBe(calcSDLT(price, add, ftb, nr));
+    }
+  });
+  it("bands are contiguous and stop at the price", () => {
+    const { bands } = sdltBreakdown(400_000);
+    expect(bands[0].from).toBe(0);
+    for (let i = 1; i < bands.length; i++) expect(bands[i].from).toBe(bands[i - 1].to);
+    expect(bands[bands.length - 1].to).toBe(400_000);
+  });
+  it("returns nothing for a zero price", () => {
+    expect(sdltBreakdown(0)).toEqual({ bands: [], total: 0 });
   });
 });

@@ -166,7 +166,12 @@ export function calcCGTResidential(gain: number, otherIncome: number): number {
 }
 
 // ─── SDLT — England (April 2025 rates) ──────────────────────────────────────
-const SDLT_THRESHOLD = 40_000;
+// Higher rates for additional dwellings apply only where the chargeable
+// consideration is £40,000 OR MORE (FA 2003 Sch 4ZA para 3). Below that the
+// transaction is not a higher-rates transaction and standard bands apply —
+// which come to nothing under £125,000. The same floor gates the non-resident
+// surcharge (FA 2003 Sch 9A).
+const SDLT_SURCHARGE_FLOOR = 40_000;
 const SDLT_NON_RES_SURCHARGE = 0.02;
 const FTB_NIL_LIMIT = 300_000;
 const FTB_UPPER_LIMIT = 500_000;
@@ -187,40 +192,58 @@ const SDLT_ADDITIONAL: [number, number][] = [
   [1_500_000,   0.17],
 ];
 
-function sdltOnBands(price: number, bands: [number, number][]): number {
-  let tax = 0;
+/** One slice of a purchase price and the SDLT charged on it. */
+export type SDLTBand = { from: number; to: number; rate: number; tax: number };
+
+function bandsFor(price: number, bands: [number, number][], extraRate: number): SDLTBand[] {
+  const out: SDLTBand[] = [];
   for (let i = 0; i < bands.length; i++) {
     const [from, rate] = bands[i];
     const to = i + 1 < bands.length ? bands[i + 1][0] : Infinity;
     if (price <= from) break;
-    tax += (Math.min(price, to) - from) * rate;
+    const upper = Math.min(price, to);
+    const effective = rate + extraRate;
+    out.push({ from, to: upper, rate: effective, tax: (upper - from) * effective });
   }
-  return tax;
+  return out;
 }
 
 /**
- * SDLT on residential purchase (England).
- * isAdditional: buying an additional dwelling (5% surcharge from Oct 2024).
- * isFTB:        first-time buyer (0% to £300k, 5% £300k–£500k; relief lost above £500k).
- * isNonResident: non-UK resident (+2% surcharge on top of other rates).
+ * SDLT on a residential purchase in England, broken down band by band.
+ * calcSDLT() is the total of this; use this when you need to show the workings.
+ *
+ * isAdditional:  buying an additional dwelling (5% surcharge from Oct 2024)
+ * isFTB:         first-time buyer (0% to £300k, 5% £300k–£500k; relief lost above £500k)
+ * isNonResident: non-UK resident (+2% on every band)
  */
+export function sdltBreakdown(
+  price: number,
+  isAdditional = false,
+  isFTB = false,
+  isNonResident = false,
+): { bands: SDLTBand[]; total: number } {
+  if (price <= 0) return { bands: [], total: 0 };
+
+  // Under £40k this is not a higher-rates transaction, so neither surcharge bites
+  // and the standard bands apply (nil below £125k).
+  const surcharged = price >= SDLT_SURCHARGE_FLOOR;
+  const higherRates = isAdditional && surcharged;
+  const extraRate = isNonResident && surcharged ? SDLT_NON_RES_SURCHARGE : 0;
+
+  const bands =
+    isFTB && !higherRates && price <= FTB_UPPER_LIMIT
+      ? bandsFor(price, [[0, 0], [FTB_NIL_LIMIT, 0.05]], extraRate)
+      : bandsFor(price, higherRates ? SDLT_ADDITIONAL : SDLT_STANDARD, extraRate);
+
+  return { bands, total: Math.round(bands.reduce((sum, b) => sum + b.tax, 0)) };
+}
+
+/** Total SDLT on a residential purchase (England). See sdltBreakdown for the workings. */
 export function calcSDLT(
   price: number,
   isAdditional = false,
   isFTB = false,
   isNonResident = false,
 ): number {
-  if (price <= SDLT_THRESHOLD) return 0;
-
-  let tax: number;
-
-  if (isFTB && !isAdditional && price <= FTB_UPPER_LIMIT) {
-    tax = price <= FTB_NIL_LIMIT ? 0 : (price - FTB_NIL_LIMIT) * 0.05;
-  } else {
-    tax = sdltOnBands(price, isAdditional ? SDLT_ADDITIONAL : SDLT_STANDARD);
-  }
-
-  if (isNonResident) tax += price * SDLT_NON_RES_SURCHARGE;
-
-  return Math.round(tax);
+  return sdltBreakdown(price, isAdditional, isFTB, isNonResident).total;
 }
