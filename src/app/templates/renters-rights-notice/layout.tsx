@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Free Renters Rights Act Notice Template UK 2025 | PropertyVault",
   description: "Download a free Renters Rights Act 2025 information notice template for UK landlords. Inform tenants of their rights under the new legislation. Legally compliant.",
-  keywords: "Renters Rights Act notice template 2025, Renters Rights Bill landlord notice, RRB 2025 tenant notice, landlord notice Renters Reform UK",
+  keywords: "Renters Rights Act notice template 2025, Renters Rights Act 2025 landlord notice, RRB 2025 tenant notice, landlord notice Renters Rights Act UK",
   openGraph: {
     title: "Free Renters Rights Act Notice Template UK 2025 | PropertyVault",
     description: "Free notice template for landlords under the Renters Rights Act 2025 — inform tenants of their new rights.",

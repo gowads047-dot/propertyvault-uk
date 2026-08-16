@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { SignatureBlock } from "@/components/SignatureBlock";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -91,6 +93,9 @@ interface FormData {
 
   // Special
   specialClauses: string;
+
+  // Document
+  documentDate: string;
 }
 
 const EMPTY: FormData = {
@@ -111,6 +116,7 @@ const EMPTY: FormData = {
   tenantBreak: "no", landlordBreak: "no", mutualBreak: "no", breakConditions: "", breakDate: "",
   insideAct1954: "yes",
   specialClauses: "",
+  documentDate: "",
 };
 
 const LEASE_TYPES = [
@@ -354,13 +360,6 @@ ${(f.tenantBreak === "yes" || f.landlordBreak === "yes" || f.mutualBreak === "ye
 
 ${f.specialClauses || "None specified."}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-DISCLAIMER
-
-These Heads of Terms are strictly subject to contract and without prejudice. They do not constitute a binding agreement. No legal obligation arises until a formal lease has been executed by both parties. These Heads of Terms have been prepared for discussion purposes only and require review by qualified solicitors acting for both parties before execution. This document does not constitute legal advice.
-
-[LEGAL REVIEW REQUIRED before proceeding to formal documentation]
 `;
 }
 
@@ -1115,6 +1114,72 @@ export default function CommercialLeasePage() {
 
   const risks = phase === "risks" || phase === "output" ? generateRisks(f) : { high: [], medium: [], low: [] };
 
+  const renderLegalDoc = (text: string) => {
+    const lines = text.split("\n");
+    const els: React.ReactNode[] = [];
+    let k = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const raw = lines[i];
+      const t = raw.trim();
+      // Divider rule
+      if (t.match(/^━{5,}/)) {
+        els.push(<hr key={k++} style={{ border: "none", borderTop: "1px solid #e2e8f0", margin: "18px 0 14px" }} />);
+        continue;
+      }
+      // Empty
+      if (t === "") { els.push(<div key={k++} style={{ height: 6 }} />); continue; }
+      // Legal flag highlight
+      if (t.includes("[LEGAL REVIEW REQUIRED") || t.includes("[TO BE AGREED]") || t.includes("[TO BE CONFIRMED") || t.includes("[TO BE SPECIFIED") || t.includes("[NOT PROVIDED")) {
+        els.push(<p key={k++} style={{ fontSize: 11.5, color: "#92400e", background: "#fef3c7", borderLeft: "3px solid #f59e0b", padding: "5px 10px", borderRadius: "0 6px 6px 0", fontFamily: "Georgia,serif", lineHeight: 1.65, margin: "3px 0" }}>{t}</p>);
+        continue;
+      }
+      // Document title (first line, ALL CAPS)
+      if (i === 0) {
+        els.push(<h2 key={k++} style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", textAlign: "center", letterSpacing: "0.06em", margin: "0 0 4px", fontFamily: "Georgia,serif" }}>{t}</h2>);
+        continue;
+      }
+      // Subtitle / meta (first 4 lines, non-numeric)
+      if (i <= 3 && !t.match(/^\d/) && t.length > 5) {
+        els.push(<p key={k++} style={{ fontSize: 11, color: "#64748b", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>);
+        continue;
+      }
+      // Numbered section heading: "1. PROPERTY" style (all caps)
+      if (t.match(/^\d+\.[\s\t]+[A-Z][A-Z\s&(),\-/]+$/) && t.length < 70) {
+        els.push(
+          <div key={k++} style={{ marginTop: 22, marginBottom: 10 }}>
+            <p style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>{t}</p>
+            <div style={{ height: 2, width: 48, background: "#c9a84c", marginTop: 5 }} />
+          </div>
+        );
+        continue;
+      }
+      // Sub-clause heading: "1.1 Something that starts with capital"
+      if (t.match(/^\d+\.\d+\s+[A-Z]/)) {
+        els.push(<p key={k++} style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", margin: "10px 0 3px", fontFamily: "Georgia,serif" }}>{t}</p>);
+        continue;
+      }
+      // Checkbox items □
+      if (t.startsWith("□")) {
+        els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.7, margin: "3px 0", paddingLeft: 4 }}>{t}</p>);
+        continue;
+      }
+      // Key-value pair: "Key Label:   value" (2+ spaces after colon)
+      const kv = t.match(/^([A-Za-z][^:]{1,40}):\s{2,}(.*)/);
+      if (kv) {
+        els.push(
+          <div key={k++} style={{ display: "grid", gridTemplateColumns: "170px 1fr", gap: 10, marginBottom: 5, alignItems: "start" }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span>
+            <span style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.65 }}>{kv[2] || "—"}</span>
+          </div>
+        );
+        continue;
+      }
+      // Default: paragraph text
+      els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.75, margin: "3px 0" }}>{t}</p>);
+    }
+    return <div>{els}</div>;
+  };
+
   const DOCS = [
     { label: "Heads of Terms", fn: genHeadsOfTerms },
     { label: "Full Lease Draft", fn: genLease },
@@ -1180,6 +1245,9 @@ export default function CommercialLeasePage() {
 
     // 4 — Lease Term
     <SectionCard key="term" title="Lease Term">
+      <Field label="Document Date" hint="The date this document is prepared — will appear on the printed document">
+        <Input type="date" value={f.documentDate} onChange={set("documentDate")} />
+      </Field>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
         <Field label="Commencement Date *"><Input type="date" value={f.commencementDate} onChange={set("commencementDate")} /></Field>
         <Field label="Contractual Term *" hint="e.g. 5 years, 10 years"><Input value={f.contractualTerm} onChange={set("contractualTerm")} placeholder="e.g. 5 years" /></Field>
@@ -1334,8 +1402,17 @@ export default function CommercialLeasePage() {
         @media print {
           body * { visibility: hidden !important; }
           #print-area, #print-area * { visibility: visible !important; }
-          #print-area { position: fixed; inset: 0; padding: 24px 32px; background: white; font-size: 11px; }
-          @page { size: A4; margin: 18mm; }
+          #print-area {
+            position: absolute; left: 0; top: 0; width: 100%;
+            padding: 18mm 20mm;
+            background: white;
+            font-family: Georgia, serif;
+            font-size: 11pt;
+          }
+          @page { size: A4; margin: 0; }
+          #print-area h2 { font-size: 16pt; }
+          #print-area h3, #print-area .section-heading { font-size: 10pt; }
+          #print-area p, #print-area span { font-size: 10.5pt; }
         }
       `}</style>
 
@@ -1343,6 +1420,7 @@ export default function CommercialLeasePage() {
       <section style={{ background: "#0f1b36", padding: "64px 0 56px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
+          <Breadcrumbs items={[{ label: "Templates", href: "/templates" }, { label: "Commercial Lease" }]} />
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Commercial Templates · England & Wales</span>
           </div>
@@ -1525,24 +1603,63 @@ export default function CommercialLeasePage() {
                 ))}
               </div>
 
-              <div id="print-area" style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 16, padding: 32 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
-                  <div>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>PropertyVault · Commercial Document Assembly</p>
-                    <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36" }}>{DOCS[activeDoc].label}</h2>
-                    <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>{f.propertyAddress || "[Property Address]"} · {f.leaseType}</p>
+              <div id="print-area" style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 16, padding: "40px 48px", boxShadow: "0 4px 24px rgba(15,27,54,0.07)" }}>
+                {/* Professional document letterhead */}
+                <div style={{ marginBottom: 28 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: 14, borderBottom: "2.5px solid #0f1b36" }}>
+                    <div>
+                      <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" }}>England &amp; Wales</p>
+                      <p style={{ fontSize: 9, color: "#94a3b8", margin: 0 }}>Commercial Property — For Solicitor Review</p>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <p style={{ fontSize: 9, color: "#94a3b8", margin: 0 }}>
+                        {f.documentDate
+                          ? new Date(f.documentDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+                          : "Date: _______________"}
+                      </p>
+                    </div>
                   </div>
-                  <div style={{ textAlign: "right" }}>
-                    <p style={{ fontSize: 10, color: "#94a3b8" }}>Generated {new Date().toLocaleDateString("en-GB")}</p>
+                  <div style={{ height: 3, background: "linear-gradient(90deg, #c9a84c 0%, rgba(201,168,76,0.15) 100%)", margin: "0 0 18px" }} />
+                  <div>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 5px" }}>
+                      {f.leaseType}{f.propertyAddress ? ` · ${f.propertyAddress}` : ""}
+                    </p>
+                    <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", margin: 0, fontFamily: "Georgia, serif", letterSpacing: "-0.01em" }}>
+                      {DOCS[activeDoc].label}
+                    </h1>
                   </div>
                 </div>
-                <pre style={{ fontFamily: "Consolas, 'Courier New', monospace", fontSize: 12, lineHeight: 1.7, whiteSpace: "pre-wrap", wordBreak: "break-word", color: "#1e293b" }}>
-                  {DOCS[activeDoc].fn(f)}
-                </pre>
-                {/* Minimal print-only footer */}
-                <div style={{ marginTop: 32, paddingTop: 16, borderTop: "1px solid #e2e8f0" }}>
-                  <p style={{ fontSize: 10, color: "#94a3b8" }}>
-                    Both parties should instruct their own independent legal representation. · PropertyVault UK · propertyvaultuk.co.uk · Generated {new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+
+                {/* Formatted document body */}
+                <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 20 }}>
+                  {renderLegalDoc(DOCS[activeDoc].fn(f))}
+                </div>
+
+                {/* Signature Section */}
+                <div style={{ marginTop: 40, paddingTop: 24, borderTop: "2px solid #0f1b36" }}>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 24px" }}>Execution</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+                    <SignatureBlock
+                      signerLabel="Signed by the Landlord"
+                      signerName={f.landlordName || "Landlord"}
+                      witnessLabel="Witness (Landlord)"
+                      showWitness={true}
+                      date={f.documentDate}
+                    />
+                    <SignatureBlock
+                      signerLabel="Signed by the Tenant"
+                      signerName={f.tenantName || "Tenant"}
+                      witnessLabel="Witness (Tenant)"
+                      showWitness={true}
+                      date={f.documentDate}
+                    />
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div style={{ marginTop: 36, paddingTop: 14, borderTop: "1px solid #e2e8f0" }}>
+                  <p style={{ fontSize: 9.5, color: "#94a3b8", margin: 0, lineHeight: 1.5 }}>
+                    Strictly subject to contract and without prejudice. Both parties should instruct their own independent legal representation before execution.
                   </p>
                 </div>
               </div>

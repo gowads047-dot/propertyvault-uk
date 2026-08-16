@@ -39,7 +39,7 @@ export default function ListPropertyPage() {
   const [video, setVideo] = useState<File | null>(null);
 
   const selectedCountry = countries.find(c => c.code === form.country);
-  const update = (key: string, value: any) => setForm(prev => ({ ...prev, [key]: value }));
+  const update = (key: string, value: string | number | boolean) => setForm(prev => ({ ...prev, [key]: value }));
 
   const toggleFeature = (f: string) => {
     setForm(prev => ({

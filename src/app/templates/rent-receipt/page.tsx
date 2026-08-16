@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
@@ -38,9 +38,9 @@ export default function RentReceipt() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; background: white; display: flex; align-items: center; justify-content: center; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; background: white; display: flex; align-items: center; justify-content: center; }
           .receipt-inner { width: 148mm; margin: auto; padding: 24px; border: 2px solid #0f1b36; }
-          @page { size: A5 landscape; margin: 10mm; }
+          @page { size: A5 landscape; margin: 0; }
         }
       `}</style>
 

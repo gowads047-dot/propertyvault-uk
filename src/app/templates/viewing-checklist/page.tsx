@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
@@ -156,7 +156,7 @@ export default function ViewingChecklistTemplate() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; overflow: auto; padding: 0; background: white; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; overflow: auto; padding: 0; background: white; }
           .no-print { display: none !important; }
           .page-break { page-break-before: always; }
         }

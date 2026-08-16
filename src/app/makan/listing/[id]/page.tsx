@@ -282,7 +282,7 @@ export default function ListingPage() {
 
   const isAvailable = !listing.available_from || new Date(listing.available_from) <= new Date();
   const forSale = listing.listing_type === "sale";
-  const whatsappNum = owner?.whatsapp || "4407415721628";
+  const whatsappNum = owner?.whatsapp || "447415721628";
   const priceStr = formatPrice(listing.price, listing.country || "gb");
   const priceSuffix = forSale ? "" : "/mo";
   const photos = listing.images?.length > 0 ? listing.images : [];

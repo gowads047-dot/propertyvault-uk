@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 interface F {
   // Landlord
@@ -423,6 +424,33 @@ export default function ASTPage() {
 
   const tenants = [f.tenant1Name, f.tenant2Name, f.tenant3Name].filter(Boolean);
 
+  const renderLegalDoc = (text: string) => {
+    const lines = text.split("\n");
+    const els: React.ReactNode[] = [];
+    let k = 0;
+    for (let i = 0; i < lines.length; i++) {
+      const t = lines[i].trim();
+      if (t.match(/^━{5,}/)) { els.push(<hr key={k++} style={{ border: "none", borderTop: "1px solid #e2e8f0", margin: "18px 0 14px" }} />); continue; }
+      if (t === "") { els.push(<div key={k++} style={{ height: 6 }} />); continue; }
+      if (t.includes("[LEGAL REVIEW REQUIRED") || t.includes("[TO BE AGREED]") || t.includes("[TO BE CONFIRMED") || t.includes("[TO BE SPECIFIED") || t.includes("[NOT PROVIDED")) {
+        els.push(<p key={k++} style={{ fontSize: 11.5, color: "#92400e", background: "#fef3c7", borderLeft: "3px solid #f59e0b", padding: "5px 10px", borderRadius: "0 6px 6px 0", fontFamily: "Georgia,serif", lineHeight: 1.65, margin: "3px 0" }}>{t}</p>); continue;
+      }
+      if (i === 0) { els.push(<h2 key={k++} style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", textAlign: "center", letterSpacing: "0.06em", margin: "0 0 4px", fontFamily: "Georgia,serif" }}>{t}</h2>); continue; }
+      if (i <= 3 && !t.match(/^\d/) && t.length > 5) { els.push(<p key={k++} style={{ fontSize: 11, color: "#64748b", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>); continue; }
+      if (t.match(/^\d+\.[\s\t]+[A-Z][A-Z\s&(),\-/]+$/) && t.length < 70) {
+        els.push(<div key={k++} style={{ marginTop: 22, marginBottom: 10 }}><p style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>{t}</p><div style={{ height: 2, width: 48, background: "#c9a84c", marginTop: 5 }} /></div>); continue;
+      }
+      if (t.match(/^\d+\.\d+\s+[A-Z]/)) { els.push(<p key={k++} style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", margin: "10px 0 3px", fontFamily: "Georgia,serif" }}>{t}</p>); continue; }
+      if (t.startsWith("☐") || t.startsWith("□")) { els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.7, margin: "3px 0" }}>{t}</p>); continue; }
+      const kv = t.match(/^([A-Za-z][^:]{1,40}):\s{2,}(.*)/);
+      if (kv) {
+        els.push(<div key={k++} style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 10, marginBottom: 5, alignItems: "start" }}><span style={{ fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span><span style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.65 }}>{kv[2] || "—"}</span></div>); continue;
+      }
+      els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.75, margin: "3px 0" }}>{t}</p>);
+    }
+    return <div>{els}</div>;
+  };
+
   if (phase === "doc") {
     return (
       <>
@@ -430,8 +458,10 @@ export default function ASTPage() {
           @media print {
             body * { visibility: hidden !important; }
             #print-doc, #print-doc * { visibility: visible !important; }
-            #print-doc { position: fixed; inset: 0; padding: 28px 36px; background: white; }
-            @page { size: A4; margin: 18mm 20mm; }
+            #print-doc { position: absolute; left: 0; top: 0; width: 100%; padding: 18mm 20mm; background: white; font-family: Georgia, serif; font-size: 11pt; }
+            @page { size: A4; margin: 0; }
+            #print-doc h2 { font-size: 16pt; }
+            #print-doc p, #print-doc span { font-size: 10.5pt; }
             .no-print { display: none !important; }
           }
         `}</style>
@@ -469,14 +499,16 @@ export default function ASTPage() {
 
         <section className="section-padding bg-slate-50">
           <div className="container-max max-w-3xl">
-            <div id="print-doc" style={{ background: "white", color: "#1a1a1a", borderRadius: 16, border: "1.5px solid #e4e8f0", padding: 40, fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7 }}>
+            <div id="print-doc" style={{ background: "white", color: "#1a1a1a", borderRadius: 16, border: "1.5px solid #e4e8f0", padding: 40, fontFamily: "Georgia, serif", fontSize: 13, lineHeight: 1.7 }}>
               <PrintHeader
                 category="Residential Tenancy Agreement · England"
                 title="Assured Shorthold Tenancy Agreement"
                 date={f.startDate || new Date().toISOString().slice(0, 10)}
               />
 
-              <pre style={{ whiteSpace: "pre-wrap", fontFamily: "Arial, Helvetica, sans-serif", fontSize: 13, lineHeight: 1.7, margin: "16px 0" }}>{doc}</pre>
+              <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 20 }}>
+                {renderLegalDoc(doc)}
+              </div>
 
               <SignatureBlock
                 signerLabel="Signed (Landlord / Agent)"
@@ -544,6 +576,7 @@ export default function ASTPage() {
       {/* Header */}
       <section className="gradient-navy py-12 px-4">
         <div className="container-max">
+          <Breadcrumbs items={[{ label: "Templates", href: "/templates" }, { label: "AST" }]} />
           <p className="text-gold-400 font-semibold text-xs uppercase tracking-wider mb-2">FREE TEMPLATE · LANDLORD</p>
           <h1 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
             Assured Shorthold Tenancy

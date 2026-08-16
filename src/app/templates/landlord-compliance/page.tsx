@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
@@ -40,7 +40,7 @@ const SECTIONS: { title: string; icon: string; items: ComplianceItem[] }[] = [
     title: "Energy & Environment",
     icon: "⚡",
     items: [
-      { id: "epc", title: "Energy Performance Certificate (EPC) minimum E rating", law: "Energy Efficiency (Private Rented Property) Regs 2015", freq: "Every 10 years", critical: true, detail: "EPC rating of E or above required to legally let the property. F/G-rated properties cannot be let unless an exemption applies. Government proposals to require C by 2028 — watch this space.", dateField: "epcDate", dateLabel: "EPC date" },
+      { id: "epc", title: "Energy Performance Certificate (EPC) minimum E rating", law: "Energy Efficiency (Private Rented Property) Regs 2015", freq: "Every 10 years", critical: true, detail: "EPC rating of E or above required to legally let the property. F/G-rated properties cannot be let unless an exemption applies. EPC C required by 2030 — plan upgrades now to avoid last-minute cost spikes.", dateField: "epcDate", dateLabel: "EPC date" },
       { id: "epc_provided", title: "EPC provided to tenant before tenancy", law: "Energy Performance of Buildings Regs 2012", freq: "Per tenancy", critical: true, detail: "Provide the EPC (or email it) before or at the time a new tenancy begins.", dateField: "", dateLabel: "" },
     ],
   },
@@ -56,8 +56,8 @@ const SECTIONS: { title: string; icon: string; items: ComplianceItem[] }[] = [
     title: "Tenancy Documents",
     icon: "📄",
     items: [
-      { id: "ast", title: "Written tenancy agreement (AST) provided", law: "Deregulation Act 2015 / Landlord & Tenant Act 1985", freq: "Per tenancy", critical: true, detail: "While not legally required for all tenancies, a written AST is essential for serving valid Section 21 notices and protects both parties.", dateField: "", dateLabel: "" },
-      { id: "how_to_rent", title: "'How to Rent' guide provided", law: "Deregulation Act 2015", freq: "Per tenancy (latest version)", critical: true, detail: "Must provide the current version of the government's 'How to Rent' booklet at the start of each tenancy. Failure prevents you serving a Section 21 notice.", dateField: "htrDate", dateLabel: "Date provided" },
+      { id: "ast", title: "Written tenancy agreement (AST) provided", law: "Renters' Rights Act 2025 / Landlord & Tenant Act 1985", freq: "Per tenancy", critical: true, detail: "A written tenancy agreement is strongly recommended for all tenancies and protects both parties. Note: Section 21 'no-fault' evictions are abolished under the Renters' Rights Act 2025 — all possession claims must now cite a statutory ground under Schedule 2 of the Housing Act 1988 (as amended).", dateField: "", dateLabel: "" },
+      { id: "how_to_rent", title: "'How to Rent' guide provided", law: "Renters' Rights Act 2025 / Deregulation Act 2015", freq: "Per tenancy (latest version)", critical: true, detail: "Must provide the current version of the government's 'How to Rent' booklet at the start of each tenancy. This remains a statutory obligation under current landlord law.", dateField: "htrDate", dateLabel: "Date provided" },
       { id: "deposit_protect", title: "Deposit protected within 30 days", law: "Housing Act 2004 (as amended)", freq: "Within 30 days of receipt", critical: true, detail: "Must be protected in a government-approved scheme (DPS, MyDeposits, or TDS). Prescribed information must be given to tenants within 30 days.", dateField: "depositDate", dateLabel: "Date protected" },
       { id: "prescribed_info", title: "Prescribed deposit information provided to tenant", law: "Housing Act 2004", freq: "Within 30 days of receipt", critical: true, detail: "Tenants must receive specific prescribed information about their deposit scheme within 30 days of the deposit being received.", dateField: "", dateLabel: "" },
     ],
@@ -118,7 +118,7 @@ export default function LandlordComplianceTemplate() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; overflow: auto; padding: 0; background: white; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; overflow: auto; padding: 0; background: white; }
           .no-print { display: none !important; }
         }
       `}</style>

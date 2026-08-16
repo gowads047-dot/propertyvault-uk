@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const TEMPLATES = [
   {
@@ -232,6 +233,7 @@ export default function TemplatesPage() {
       <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "72px 0 60px" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
+          <Breadcrumbs items={[{ label: "Templates" }]} />
           <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
             {TEMPLATES.length} Free Templates · England &amp; Wales
           </p>

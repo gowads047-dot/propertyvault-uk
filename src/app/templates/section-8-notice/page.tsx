@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter, PrintSection } from "@/components/PrintDoc";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const GROUNDS = [
   { id: "g8", n: "Ground 8", type: "Mandatory", notice: "4 weeks", title: "Serious Rent Arrears", detail: "At least 2 months' rent is unpaid both at the date of service of this notice AND at the date of the court hearing. The court must grant possession if this ground is made out." },
@@ -54,14 +55,15 @@ export default function Section8Notice() {
         @media print {
           body * { visibility: hidden !important; }
           #print-doc, #print-doc * { visibility: visible !important; }
-          #print-doc { position: fixed; inset: 0; padding: 28px 36px; background: white; }
-          @page { size: A4; margin: 18mm 20mm; }
+          #print-doc { position: absolute; left: 0; top: 0; width: 100%; padding: 28px 36px; background: white; }
+          @page { size: A4; margin: 0; }
           .no-print { display: none !important; }
         }
       `}</style>
 
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Templates", href: "/templates" }, { label: "Section 8 Notice" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Template · Legal</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Section 8 Possession Notice</h1>
           <p className="text-navy-200 max-w-2xl">A Notice Seeking Possession under Section 8 of the Housing Act 1988. Select your grounds, fill in the details, and generate a court-ready notice.</p>
