@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PropertyVault UK
 
-## Getting Started
+UK property platform covering investor tools, education, listings, and landlord management. Built with Next.js and deployed on Vercel.
 
-First, run the development server:
+## Sub-brands
+
+The codebase hosts four products under one Next.js app, each routed from `src/app`:
+
+| Area | Route | What it is |
+| --- | --- | --- |
+| **PropertyVault** | `/` | Main site — calculators, guides, blog, guaranteed rent, deal sourcing |
+| **Academy** | `/academy` | Courses, lessons, certificates, playbooks, and deal reviews |
+| **Makan** | `/makan` | Property listings and enquiries, with per-country pages |
+| **Rentura** | `/rentura` | Landlord management — properties, tenancies, arrears, compliance, tax |
+
+## What's in here
+
+- **22 calculators** (`src/app/calculators`) — stamp duty, BTL mortgage, rental yield, BRRR, Section 24, capital gains, and more
+- **21 blog posts** (`src/app/blog`) — long-form UK property guides
+- **19 document templates** (`src/app/templates`) — AST, Section 8/13 notices, inventories, inspection records
+- **41 downloadable documents** (`public/downloads`) — printable checklists and letters for landlords, buyers, and commercial
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org) (App Router) with React 19 and TypeScript
+- [Tailwind CSS 4](https://tailwindcss.com) for styling
+- [Supabase](https://supabase.com) for auth and data
+- [Prisma 7](https://prisma.io) with PostgreSQL
+- [Stripe](https://stripe.com) for subscriptions and checkout
+- [Resend](https://resend.com) with React Email for transactional mail
+- [Anthropic SDK](https://docs.anthropic.com) for the Rentura assistant and document extraction
+- Chart.js, Framer Motion, and jsPDF for charts, motion, and PDF export
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` in the project root. This file is gitignored — never commit real keys.
 
-## Learn More
+```bash
+# Site
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_ADMIN_EMAIL=
 
-To learn more about Next.js, take a look at the following resources:
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Database (Prisma)
+DATABASE_URL=
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Stripe
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+STRIPE_PRICE_ID=
+RENTURA_STRIPE_PRICE_ID=
 
-## Deploy on Vercel
+# Email
+RESEND_API_KEY=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# AI
+ANTHROPIC_API_KEY=
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Scheduled jobs
+CRON_SECRET=
+```
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Production build |
+| `npm start` | Serve the production build |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run Vitest |
+
+## Project structure
+
+```
+src/
+  app/           Routes (App Router) — PropertyVault, Academy, Makan, Rentura
+    api/         Route handlers — Stripe, Rentura, tenant, notifications
+    calculators/ Investor calculators
+    blog/        Blog posts
+    templates/   Printable document templates
+  components/    Shared UI — layout, calculators, blog, Rentura
+  lib/           Supabase client, auth and language context, shared types
+  emails/        React Email templates
+prisma/          Database schema
+public/          Static assets and downloadable documents
+```
+
+## Contributing
+
+Read [AGENTS.md](AGENTS.md) before making changes. This project runs a Next.js version newer than most training data, so check the bundled docs in `node_modules/next/dist/docs/` rather than relying on remembered APIs.
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com). Pushes to `master` deploy to production; see `vercel.json` for configuration.
