@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/brrr-strategy-explained/" },
   openGraph: {
     type: "article",
     title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",

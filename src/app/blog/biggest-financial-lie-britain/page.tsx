@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
   description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
   keywords: "UK housing market, property market UK, house prices UK, property investment, housing crisis, property freeze, wealth through property",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
+  openGraph: {
+    title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+    description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK housing market price charts and data" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+    description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
+  },
 };
 
 const faqs = [
@@ -170,6 +184,18 @@ export default function BiggestLieArticle() {
             <p>Many homeowners are discovering that owning an asset and being able to realise its value are two very different things. On paper, they may appear wealthy. In reality, they&apos;re trapped.</p>
 
             <div className="border-t border-navy-200 my-10" />
+
+            <div className="not-prose my-8 rounded-2xl overflow-hidden border border-gold-200" style={{ background: "linear-gradient(135deg, #faf8f0 0%, #fef9ec 100%)" }}>
+              <div style={{ padding: "24px 28px" }}>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Free tool</p>
+                <p style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Does your deal still stack up at today&apos;s rates?</p>
+                <p style={{ fontSize: 14, color: "#64748b", marginBottom: 16, lineHeight: 1.6 }}>Run 8 metrics — gross yield, net yield, cash flow, stress test +2% — plus an AI buy/pass verdict. Free, no sign-up.</p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  <Link href="/calculators/deal-analyser" className="btn-primary text-sm !py-2.5 !px-5">Deal Analyser →</Link>
+                  <Link href="/calculators/rent-vs-buy" className="btn-outline text-sm !py-2.5 !px-5">Rent vs Buy →</Link>
+                </div>
+              </div>
+            </div>
 
             <h2 className="text-2xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>Meanwhile, A Different Group Is Preparing</h2>
 

@@ -5,16 +5,16 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Renters Reform Act Landlord Checklist 2025 — 12 Things You Must Do Now | PropertyVault UK",
+  title: "Renters' Rights Act Landlord Checklist 2025 — 12 Things You Must Do Now | PropertyVault UK",
   description: "The Renters' Rights Act 2025 is live. Here is the practical landlord checklist: what to update, what to stop doing, what to prepare — before enforcement catches you out.",
   keywords: "renters reform act landlord checklist, renters rights act 2025 landlords, landlord compliance checklist 2025, section 21 abolished what to do, periodic tenancy landlord checklist",
   openGraph: {
-    title: "Renters Reform Act Landlord Checklist 2025 | PropertyVault UK",
+    title: "Renters' Rights Act Landlord Checklist 2025 | PropertyVault UK",
     description: "12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is what replaces it.",
     type: "article",
     url: "https://propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters Reform Act Landlord Checklist 2025" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters' Rights Act Landlord Checklist 2025" }],
   },
   alternates: { canonical: "https://propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/" },
 };
@@ -141,9 +141,9 @@ export default function RentersReformChecklistPage() {
   return (
     <>
       <BlogArticleHero
-        title="Renters Reform Act 2025 — The Landlord Checklist"
+        title="Renters' Rights Act 2025 — The Landlord Checklist"
         excerpt="12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is exactly what to do instead."
-        date="25 June 2025"
+        date="25 June 2026"
         readTime="9 min"
         category="Landlords"
         image="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&q=80"

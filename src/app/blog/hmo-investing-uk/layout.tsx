@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/hmo-investing-uk/" },
   openGraph: {
     type: "article",
     title: "HMO Investing UK — Is It Still Profitable? | PropertyVault UK",

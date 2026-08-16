@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: "First-Time Buyer Guide UK — Step by Step | PropertyVault UK",
   description: "Complete first-time buyer guide. From saving a deposit to getting your keys. Mortgages, stamp duty relief, LISA, government schemes, and what to expect.",
   keywords: "first time buyer guide UK, how to buy first home, first time buyer mortgage, LISA property, first time buyer stamp duty",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/first-time-buyer-guide/" },
+  openGraph: {
+    title: "First-Time Buyer Guide UK — Step by Step | PropertyVault UK",
+    description: "Complete first-time buyer guide. From saving a deposit to getting your keys. Mortgages, stamp duty relief, LISA, government schemes, and what to expect.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/first-time-buyer-guide/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "First-time buyer collecting house keys at front door" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "First-Time Buyer Guide UK — Step by Step | PropertyVault UK",
+    description: "Complete first-time buyer guide. From saving a deposit to getting your keys. Mortgages, stamp duty relief, LISA, government schemes, and what to expect.",
+  },
 };
 
 const faqs = [

@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -6,18 +6,32 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
-  description: "The proposed EPC C deadline for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
+  description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
   keywords: "EPC C deadline 2030, EPC requirements landlords, EPC retrofit cost, EPC C rental properties, energy efficiency rental",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/" },
+  openGraph: {
+    title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
+    description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "EPC rating chart for UK rental properties" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
+    description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
+  },
 };
 
 const faqs = [
   {
-    q: "What is the proposed EPC C deadline for rental properties in England?",
-    a: "The UK Government has proposed that all privately rented properties in England must achieve a minimum EPC rating of band C by 2028 for new tenancies and 2030 for all existing tenancies. These dates have not yet been confirmed in legislation — landlords should check gov.uk for the latest position, but should begin planning improvements now.",
+    q: "What is the EPC C deadline for rental properties in England?",
+    a: "The UK Government confirmed that all privately rented properties in England must achieve a minimum EPC rating of band C by 2030. This applies to all private rental properties — both new and existing tenancies. The earlier phased 2028/2030 proposal was superseded by the confirmed 2030 single deadline. Landlords should begin planning improvements now as the deadline is fixed and there are no extensions.",
   },
   {
     q: "What is the current minimum EPC rating required for rental properties?",
-    a: "Since April 2020, all privately rented properties in England and Wales must have a minimum EPC rating of E. Landlords who let a property with an F or G rating face fines of up to £5,000 per property. The proposed uplift to band C would represent a significant increase in the standard required.",
+    a: "Since April 2020, all privately rented properties in England and Wales must have a minimum EPC rating of E. Landlords who let a property with an F or G rating face fines of up to £5,000 per property. The confirmed uplift to band C by 2030 represents a significant increase in the minimum standard — plan upgrades now.",
   },
   {
     q: "How much does it cost to improve a property's EPC rating to band C?",
@@ -29,7 +43,7 @@ const faqs = [
   },
   {
     q: "Can landlords be exempt from the EPC C requirement?",
-    a: "The government has proposed exemptions where improvements would exceed a cost cap (expected around £15,000), where the property is listed and works would alter its character, where third-party consent such as a freeholder has been refused, or where all recommended measures have been made but the property still cannot reach band C. Exemptions must be registered on the PRS Exemptions Register and do not transfer to a new owner on sale.",
+    a: "Exemptions apply where improvements would exceed the cost cap (expected around £15,000 — confirm on GOV.UK), where the property is listed and works would alter its character, where third-party consent such as a freeholder has been refused, or where all recommended measures have been made but the property still cannot reach band C. Exemptions must be registered on the PRS Exemptions Register and do not transfer to a new owner on sale.",
   },
 ];
 
@@ -38,18 +52,18 @@ export default function EPCArticle() {
     <>
       <BlogArticleHero
         title="EPC C Deadline — What Landlords Need to Know"
-        excerpt="The proposed EPC C requirement for rental properties. Improvement costs, available grants, and how to prepare your portfolio."
+        excerpt="The confirmed EPC C requirement (deadline 2030) for rental properties. Improvement costs, available grants, and how to prepare your portfolio."
         category="Landlords"
         date="June 2026"
         readTime="6 min"
         image="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=1400&q=80"
       />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
-        <p className="text-lg">The UK Government has proposed that all privately rented properties in England and Wales must achieve an Energy Performance Certificate (EPC) rating of at least band C. While the exact timeline and details are subject to confirmation, landlords should be preparing now.</p>
+        <p className="text-lg">The UK Government has confirmed that all privately rented properties in England and Wales must achieve an Energy Performance Certificate (EPC) rating of at least band C by 2030. The deadline is fixed — landlords should be planning and commissioning improvements now.</p>
 
         <div className="bg-red-50 border border-red-200 rounded-xl p-5 not-prose">
           <p className="text-sm text-red-800"><strong>Current requirement:</strong> All rental properties must have a minimum EPC rating of E. This has been in force since April 2020. Fines of up to £5,000 per property apply for non-compliance.</p>
-          <p className="text-sm text-red-800 mt-2"><strong>Proposed requirement:</strong> EPC band C by 2028 for new tenancies and 2030 for existing tenancies. Non-compliance fines could be up to £30,000 per property. Check GOV.UK for the latest confirmed dates.</p>
+          <p className="text-sm text-red-800 mt-2"><strong>Confirmed requirement:</strong> EPC band C by 2030 for all private rental properties. Non-compliance fines could be up to £30,000 per property. The 2030 deadline is confirmed — check GOV.UK for exemption guidance.</p>
         </div>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Is an EPC?</h2>
@@ -81,9 +95,9 @@ export default function EPCArticle() {
         </ul>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Exemptions — When EPC C May Not Apply</h2>
-        <p>Not every property will be required to reach EPC C. The government has proposed exemptions where:</p>
+        <p>Not every property will be required to reach EPC C. Exemptions apply where:</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li>The cost of improvements exceeds a proposed spend cap (expected around £15,000 per property)</li>
+          <li>The cost of improvements exceeds the spend cap (expected around £15,000 per property — confirm on GOV.UK)</li>
           <li>The property is a listed building where works would alter its character</li>
           <li>All recommended improvements have been made but the property still cannot reach C</li>
           <li>Third-party consent (e.g., freeholder for a leasehold flat) has been refused</li>

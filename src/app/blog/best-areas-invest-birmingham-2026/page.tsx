@@ -5,9 +5,18 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/" },
   title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
   description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
   keywords: "best areas to invest Birmingham, Birmingham property investment 2026, buy to let Birmingham, Birmingham BTL hotspots, property investment Birmingham UK",
+  openGraph: {
+    title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
+    description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Best Areas to Invest in Birmingham 2026" }],
+  },
 };
 
 const faqs = [

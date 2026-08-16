@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
   openGraph: {
     type: "article",
     title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",

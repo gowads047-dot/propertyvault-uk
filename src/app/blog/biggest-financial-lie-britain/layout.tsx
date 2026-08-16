@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
   openGraph: {
     type: "article",
     title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",

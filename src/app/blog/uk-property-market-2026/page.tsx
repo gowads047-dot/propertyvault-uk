@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -8,6 +8,20 @@ export const metadata: Metadata = {
   title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
   description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
   keywords: "UK property market 2026, house prices 2026, mortgage rates 2026, buy to let 2026, property investment outlook",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
+  openGraph: {
+    title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+    description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/uk-property-market-2026/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK property market skyline and investment outlook 2026" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+    description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
+  },
 };
 
 const faqs = [
@@ -25,7 +39,7 @@ const faqs = [
   },
   {
     q: "Is rental demand still strong in the UK in 2026?",
-    a: "Yes. The supply-demand imbalance in the private rental market has not corrected. Landlords leaving the sector — driven by Section 24 tax changes, EPC compliance costs, and the Renters Reform Act — have reduced rental supply faster than new build-to-rent completions can replace it. Average rents have risen 5–7% year-on-year in most cities, supporting the investment case for quality buy-to-let property.",
+    a: "Yes. The supply-demand imbalance in the private rental market has not corrected. Landlords leaving the sector — driven by Section 24 tax changes, EPC compliance costs, and the Renters' Rights Act — have reduced rental supply faster than new build-to-rent completions can replace it. Average rents have risen 5–7% year-on-year in most cities, supporting the investment case for quality buy-to-let property.",
   },
   {
     q: "How has the Renters' Rights Act 2025 affected the buy-to-let market?",
@@ -56,7 +70,7 @@ export default function PropertyMarket2026() {
           <p><strong>What to do:</strong> Use our <Link href="/calculators/mortgage" className="text-gold-600 font-semibold">mortgage calculator</Link> to model payments at current rates, and the <Link href="/calculators/deal-analyser" className="text-gold-600 font-semibold">deal analyser</Link> to see whether your cash flow survives them.</p>
 
           <h2>Rental demand remains strong</h2>
-          <p>The supply-demand imbalance in the rental market hasn&apos;t corrected. Landlords leaving the market (driven by Section 24, EPC requirements, and the Renters Reform Act) has reduced supply faster than new build-to-rent can replace it. Average rents have risen 5-7% year-on-year in most cities.</p>
+          <p>The supply-demand imbalance in the rental market hasn&apos;t corrected. Landlords leaving the market (driven by Section 24, EPC requirements, and the Renters' Rights Act) has reduced supply faster than new build-to-rent can replace it. Average rents have risen 5-7% year-on-year in most cities.</p>
           <p>For buy-to-let investors, this means yields are improving — particularly in the Midlands and the North, where purchase prices remain accessible and rental growth has been strongest. Use our <Link href="/calculators/rental-yield" className="text-gold-600 font-semibold">rental yield calculator</Link> to see the gross and net return on any deal.</p>
 
           <h2>Best areas for 2026</h2>
@@ -71,7 +85,7 @@ export default function PropertyMarket2026() {
           <p>Section 24 is fully embedded now, and higher-rate taxpayers continue to feel the impact. Many landlords with 3+ properties are now operating through SPVs (limited companies) to benefit from corporation tax rates and full mortgage interest deductibility.</p>
           <p>If you&apos;re unsure whether personal or company ownership suits you, use our <Link href="/calculators/personal-vs-ltd" className="text-gold-600 font-semibold">personal vs ltd calculator</Link> and <Link href="/calculators/section-24" className="text-gold-600 font-semibold">Section 24 calculator</Link> to compare the numbers for your specific situation.</p>
 
-          <h2>The Renters Reform Act</h2>
+          <h2>The Renters' Rights Act</h2>
           <p>The long-awaited reform is now in effect, removing Section 21 no-fault evictions and introducing periodic tenancies as default. Landlords can still regain possession — but only through specific grounds (such as selling the property, moving in, or persistent rent arrears).</p>
           <p>The practical impact for professional landlords is manageable. Good tenant selection, proper referencing, and well-maintained properties remain the best protection. For guaranteed rent landlords, nothing changes — we handle all tenancy management.</p>
 

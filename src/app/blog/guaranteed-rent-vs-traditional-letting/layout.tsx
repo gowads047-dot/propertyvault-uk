@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/guaranteed-rent-vs-traditional-letting/" },
   openGraph: {
     type: "article",
     title: "Guaranteed Rent vs Traditional Letting — Full Comparison | PropertyVault UK",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/section-24-explained/" },
   openGraph: {
     type: "article",
     title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",

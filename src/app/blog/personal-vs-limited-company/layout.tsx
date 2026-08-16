@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/personal-vs-limited-company/" },
   openGraph: {
     type: "article",
     title: "Personal vs Limited Company — Which Is Better for BTL? | PropertyVault UK",

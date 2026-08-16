@@ -1,4 +1,4 @@
-﻿import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
+import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import { YouTubeEmbed } from "@/components/blog/YouTubeEmbed";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -9,6 +9,20 @@ export const metadata: Metadata = {
   title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",
   description: "What is guaranteed rent? How it works, the pros and cons, and whether it's worth it for UK landlords. Complete guide with income comparison.",
   keywords: "guaranteed rent UK, guaranteed rent scheme, is guaranteed rent worth it, guaranteed rent for landlords, guaranteed rent Birmingham",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/guaranteed-rent-explained/" },
+  openGraph: {
+    title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",
+    description: "What is guaranteed rent? How it works, the pros and cons, and whether it's worth it for UK landlords. Complete guide with income comparison.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/blog/guaranteed-rent-explained/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Landlord signing guaranteed rent agreement with property company" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",
+    description: "What is guaranteed rent? How it works, the pros and cons, and whether it's worth it for UK landlords. Complete guide with income comparison.",
+  },
 };
 
 const faqs = [
