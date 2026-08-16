@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "What costs does a UK landlord have to pay?", a: "Landlords are responsible for mortgage payments, buildings insurance, landlord liability insurance, maintenance and repairs, letting agent fees (if used), Gas Safety Certificates (annual), Electrical Installation Condition Reports (every 5 years), EPC renewal (every 10 years), and any HMO licensing fees. Void periods with no rental income are also a recurring cost to budget for." },
@@ -68,6 +69,7 @@ export default function LandlordCostsPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Landlord Costs" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Landlord Cost Calculator</h1>
           <p className="text-navy-200 max-w-2xl">See the real cost of being a landlord. Enter your rental income and every expense to calculate your actual monthly cash flow and annual net profit.</p>

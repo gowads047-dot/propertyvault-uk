@@ -4,6 +4,8 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
+import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "What is a good rental yield in the UK?", a: "A gross yield above 6% is generally considered strong for UK single-let buy-to-let. Net yields above 5% (after costs) are solid. London and the South East typically yield 3-5% gross, while northern cities like Manchester, Liverpool, and Nottingham regularly achieve 7-10%+. HMOs typically yield 10-15% in the same areas." },
@@ -44,6 +46,7 @@ export default function RentalYieldPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Rental Yield" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Rental Yield Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Calculate gross and net rental yields, monthly cash flow, and annual returns. Factor in void periods, management fees, and all operating costs.</p>
@@ -53,6 +56,7 @@ export default function RentalYieldPage() {
         <div className="container-max">
           <RentalYieldCalculator />
           <div className="mt-8"><EmailResults /></div>
+          <GuaranteedRentCTA context="yield" />
           <EmbedCode slug="rental-yield" title="Rental Yield Calculator UK" />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />

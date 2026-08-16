@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
+import { calcIncomeTax, marginalRate as getMarginalRate, calcSection24Credit, personalAllowance } from "@/lib/tax";
 
 export function LandlordTaxCalculator() {
   const [rentalIncome, setRentalIncome] = useState(12000);
@@ -10,35 +11,23 @@ export function LandlordTaxCalculator() {
   const [otherIncome, setOtherIncome] = useState(30000);
 
   const results = useMemo(() => {
-    const personalAllowance = 12570;
-    const basicRateLimit = 50270;
-    const higherRateLimit = 125140;
     const netRentalProfit = rentalIncome - expenses;
-    const totalIncome = otherIncome + netRentalProfit;
 
-    function calcTax(income: number): number {
-      if (income <= personalAllowance) return 0;
-      let tax = 0;
-      const taxable = income - personalAllowance;
-      const basic = Math.min(taxable, basicRateLimit - personalAllowance);
-      tax += basic * 0.20;
-      const higher = Math.min(Math.max(taxable - (basicRateLimit - personalAllowance), 0), higherRateLimit - basicRateLimit);
-      tax += higher * 0.40;
-      const additional = Math.max(taxable - (higherRateLimit - personalAllowance), 0);
-      tax += additional * 0.45;
-      return tax;
-    }
+    // Old rules: mortgage interest was fully deductible from rental profit
+    const oldRulesIncome = otherIncome + Math.max(0, netRentalProfit - mortgageInterest);
+    const totalTaxOld = calcIncomeTax(oldRulesIncome) - calcIncomeTax(otherIncome);
 
-    const taxOnOtherIncome = calcTax(otherIncome);
-    const totalTaxOld = calcTax(totalIncome) - taxOnOtherIncome;
-    const s24Credit = mortgageInterest * 0.20;
-    const taxableIncomeS24 = otherIncome + rentalIncome - expenses;
-    const totalTaxS24gross = calcTax(taxableIncomeS24) - taxOnOtherIncome;
+    // Section 24: interest is NOT deductible; HMRC three-way capped 20% credit applies
+    const s24Income = otherIncome + netRentalProfit;
+    const pa = personalAllowance(s24Income);
+    const s24Credit = calcSection24Credit(mortgageInterest, netRentalProfit, s24Income, pa);
+    const totalTaxS24gross = calcIncomeTax(s24Income) - calcIncomeTax(otherIncome);
     const totalTaxS24 = Math.max(totalTaxS24gross - s24Credit, 0);
+
     const extraTaxS24 = totalTaxS24 - totalTaxOld;
     const netProfitOld = netRentalProfit - mortgageInterest - totalTaxOld;
     const netProfitS24 = netRentalProfit - mortgageInterest - totalTaxS24;
-    const marginalRate = totalIncome > higherRateLimit ? 45 : totalIncome > basicRateLimit ? 40 : 20;
+    const marginalRate = Math.round(getMarginalRate(s24Income) * 100);
 
     return { totalTaxOld, totalTaxS24, extraTaxS24, netProfitOld, netProfitS24, marginalRate, netRentalProfit, s24Credit };
   }, [rentalIncome, expenses, mortgageInterest, otherIncome]);

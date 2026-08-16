@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 const faqs = [
   { q: "What is a good ROI for a property flip in the UK?", a: "A successful flip in the UK typically targets 15-25% profit on total project cost. After accounting for bridging finance, stamp duty, refurbishment, and sale costs, anything under 10% leaves too little margin for cost overruns. Annualised returns of 30-60% are achievable on well-executed short-cycle flips." },
@@ -47,6 +48,7 @@ export default function FlipROIPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Flip ROI" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Flip / Refurb ROI Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Calculate the profit and return on investment for a buy-refurbish-sell (flip) project. Enter all costs and the expected sale price.</p>
@@ -122,7 +124,7 @@ export default function FlipROIPage() {
           <h3 className="font-bold text-navy-800">Flip vs BRRR — Which Is Better?</h3>
           <p>Flipping generates a lump sum profit but you pay CGT on it and lose the asset. BRRR (Buy, Refurb, Refinance, Rent) recycles your capital — same refurbishment, but then remortgage to extract capital back out and hold for rental income. For long-term wealth building, BRRR typically wins. Flipping is better for generating short-term cash.</p>
           <h3 className="font-bold text-navy-800">The True Cost of a Flip</h3>
-          <p>Beyond purchase price and refurb: stamp duty (3% surcharge if not your only property), bridging finance (0.65-1.2%/month), utilities during works, council tax, estate agent fees on sale (1-2.5%), both sides' legal fees, and CGT on the profit. This calculator captures all of these so your ROI figure reflects reality.</p>
+          <p>Beyond purchase price and refurb: stamp duty (5% surcharge if not your only property), bridging finance (0.65-1.2%/month), utilities during works, council tax, estate agent fees on sale (1-2.5%), both sides' legal fees, and CGT on the profit. This calculator captures all of these so your ROI figure reflects reality.</p>
           <h3 className="font-bold text-navy-800">Refurbishment Cost Control</h3>
           <p>Get three quotes for every trade. Build in a 20% contingency from the start — it's almost always needed. Project-managing trades yourself saves 15-20% vs a main contractor but requires significant time. For a first flip, a JV partner with experience protects you from the mistakes that wipe out margins.</p>
           <div className="pt-4 border-t border-navy-200">

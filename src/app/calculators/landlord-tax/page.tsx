@@ -8,9 +8,23 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Landlord Tax Calculator UK 2025 — Section 24 Income Tax on Rental Income | PropertyVault",
+  title: "Free Landlord Tax Calculator UK 2026 — Section 24 Income Tax on Rental Income | PropertyVault",
   description: "Calculate exactly how much income tax you pay on rental income. See the Section 24 impact vs old rules, net profit after tax, and whether a limited company saves you money.",
-  keywords: "landlord tax calculator, rental income tax UK, Section 24 calculator, income tax on rent, landlord tax 2025",
+  keywords: "landlord tax calculator, rental income tax UK, Section 24 calculator, income tax on rent, landlord tax 2026",
+  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/landlord-tax/" },
+  openGraph: {
+    title: "Free Landlord Tax Calculator UK 2026 — Section 24 Income Tax on Rental Income | PropertyVault",
+    description: "Calculate exactly how much income tax you pay on rental income. See the Section 24 impact vs old rules, net profit after tax, and whether a limited company saves you money.",
+    type: "article",
+    url: "https://propertyvaultuk.co.uk/calculators/landlord-tax/",
+    siteName: "PropertyVault UK",
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Landlord Tax Calculator UK" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Landlord Tax Calculator UK 2026 — Section 24 Income Tax on Rental Income | PropertyVault",
+    description: "Calculate exactly how much income tax you pay on rental income. See the Section 24 impact vs old rules, net profit after tax, and whether a limited company saves you money.",
+  },
 };
 
 const faqs = [

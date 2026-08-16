@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
@@ -7,6 +7,9 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
+import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { calcCorpTax } from "@/lib/tax";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
@@ -31,6 +34,32 @@ interface AreaData {
 }
 interface Sale { date: string; price: number; type: string; tenure: string; address: string; newBuild: boolean; }
 
+interface PropertyPreview {
+  portal: string;
+  propertyId: string;
+  listingUrl: string;
+  success: boolean;
+  price?: number;
+  bedrooms?: number;
+  bathrooms?: number;
+  propertyType?: string;
+  address?: string;
+  postcode?: string;
+  description?: string;
+  keyFeatures?: string[];
+  imageUrl?: string;
+  error?: string;
+}
+
+interface AiVerdict {
+  verdict: "Buy" | "Negotiate" | "Pass";
+  summary: string;
+  greenFlags: string[];
+  redFlags: string[];
+  negotiationTip: string | null;
+  keyInsight: string;
+}
+
 // SDLT calculator (England, April 2025 rates + 5% additional property surcharge from Oct 2024)
 function calcSDLT(price: number, additionalProperty: boolean): number {
   const bands = additionalProperty
@@ -54,6 +83,15 @@ const BENCHMARKS: Record<string, { gross: number; net: number; name: string }> =
   london:      { gross: 4.1, net: 2.1, name: "London" },
   leeds:       { gross: 5.7, net: 3.6, name: "Leeds" },
   sheffield:   { gross: 6.0, net: 3.9, name: "Sheffield" },
+};
+
+type Strategy = "btl" | "hmo" | "r2r" | "flip" | "sa";
+const STRATEGY_META: Record<Strategy, { label: string; icon: string; desc: string }> = {
+  btl:  { label: "Buy-to-Let",   icon: "🏠", desc: "Standard rental property" },
+  hmo:  { label: "HMO",          icon: "🏘️", desc: "House in Multiple Occupation" },
+  r2r:  { label: "Rent-to-Rent", icon: "🔄", desc: "Lease & sublet — no mortgage" },
+  flip: { label: "Flip",         icon: "🔨", desc: "Buy, refurb & sell for profit" },
+  sa:   { label: "Serv. Acc.",   icon: "🏨", desc: "Airbnb / short-let model" },
 };
 
 function ShareButton({ params }: { params: Record<string, string | number> }) {
@@ -139,11 +177,61 @@ export default function DealAnalyserPage() {
   const [capitalGrowthPct, setCapGrowth] = useState(3);
   const [activeSection, setActiveSection] = useState<"overview"|"stress"|"projection"|"tax"|"brrr">("overview");
 
+  // ── Strategy ─────────────────────────────────────────────
+  const [strategy, setStrategy] = useState<Strategy>("btl");
+  const handleStrategyChange = (s: Strategy) => { setStrategy(s); setActiveSection("overview"); };
+
+  // HMO
+  const [hmoRooms, setHmoRooms]               = useState(5);
+  const [hmoRentPerRoom, setHmoRentPerRoom]   = useState(600);
+  const [hmoCouncilTax, setHmoCouncilTax]     = useState(150);
+  const [hmoUtilities, setHmoUtilities]       = useState(200);
+  const [hmoLicenceCost, setHmoLicenceCost]   = useState(500);
+  // R2R
+  const [r2rLeaseCost, setR2rLeaseCost]       = useState(850);
+  const [r2rRooms, setR2rRooms]               = useState(4);
+  const [r2rRentPerRoom, setR2rRentPerRoom]   = useState(550);
+  const [r2rSetupCost, setR2rSetupCost]       = useState(8000);
+  const [r2rCouncilTax, setR2rCouncilTax]     = useState(150);
+  const [r2rUtilities, setR2rUtilities]       = useState(200);
+  // Flip
+  const [flipHoldingMonths, setFlipHoldingMonths] = useState(4);
+  const [flipAgentFee, setFlipAgentFee]           = useState(1.5);
+  const [flipBridgingRate, setFlipBridgingRate]   = useState(0.75);
+  const [flipBridgingLTV, setFlipBridgingLTV]     = useState(70);
+  const [flipHoldingCosts, setFlipHoldingCosts]   = useState(500);
+  // SA
+  const [saNightlyRate, setSaNightlyRate]         = useState(85);
+  const [saOccupancy, setSaOccupancy]             = useState(70);
+  const [saPlatformFee, setSaPlatformFee]         = useState(15);
+  const [saCleaningPerStay, setSaCleaningPerStay] = useState(40);
+  const [saAvgStayNights, setSaAvgStayNights]     = useState(3);
+  const [saRunningCosts, setSaRunningCosts]       = useState(400);
+  // Guaranteed Rent
+  const [guaranteedRent, setGuaranteedRent]       = useState(false);
+  const [guaranteedRentPct, setGuaranteedRentPct] = useState(87);
+  // Bridging (BRRR tab)
+  const [usesBridging, setUsesBridging]           = useState(false);
+  const [bridgingRate, setBridgingRate]           = useState(0.75);
+  const [bridgingTermMonths, setBridgingTermMonths] = useState(6);
+  const [bridgingLTV, setBridgingLTV]             = useState(70);
+
   // ── Postcode lookup ──────────────────────────────────────
   const [postcodeInput, setPostcodeInput]   = useState("");
   const [postcodeLoading, setPostcodeLoading] = useState(false);
   const [postcodeError, setPostcodeError]   = useState("");
   const [areaData, setAreaData]             = useState<AreaData | null>(null);
+
+  // ── Property URL lookup ──────────────────────────────────
+  const [urlInput, setUrlInput]               = useState("");
+  const [urlLoading, setUrlLoading]           = useState(false);
+  const [urlError, setUrlError]               = useState("");
+  const [propertyPreview, setPropertyPreview] = useState<PropertyPreview | null>(null);
+
+  // ── AI Deal Verdict ──────────────────────────────────────
+  const [aiVerdictLoading, setAiVerdictLoading] = useState(false);
+  const [aiVerdictError, setAiVerdictError]     = useState("");
+  const [aiVerdict, setAiVerdict]               = useState<AiVerdict | null>(null);
 
   const lookupPostcode = async () => {
     const pc = postcodeInput.trim().toUpperCase();
@@ -166,6 +254,87 @@ export default function DealAnalyserPage() {
       setPostcodeError("Network error — please try again.");
     } finally {
       setPostcodeLoading(false);
+    }
+  };
+
+  const lookupPropertyUrl = async () => {
+    const url = urlInput.trim();
+    if (!url) return;
+    setUrlLoading(true);
+    setUrlError("");
+    setPropertyPreview(null);
+    try {
+      const res = await fetch(`/api/property-lookup?url=${encodeURIComponent(url)}`);
+      const json: PropertyPreview = await res.json();
+      setPropertyPreview(json);
+      if (json.success) {
+        if (json.price) setPurchasePrice(json.price);
+        if (json.postcode) {
+          setPostcodeInput(json.postcode);
+          // Trigger postcode lookup automatically
+          const pc = json.postcode.trim().toUpperCase();
+          fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(pc)}`)
+            .then(r => r.json())
+            .then(data => {
+              if (data && !data.error) {
+                setAreaData(data);
+                if (data.suggestedCity) setCityBenchmark(data.suggestedCity);
+              }
+            })
+            .catch(() => {/* silent */});
+        }
+      } else {
+        setUrlError(json.error ?? "Could not read listing — enter details manually.");
+      }
+    } catch {
+      setUrlError("Network error — please try again.");
+    } finally {
+      setUrlLoading(false);
+    }
+  };
+
+  const getAiVerdict = async () => {
+    setAiVerdictLoading(true);
+    setAiVerdictError("");
+    setAiVerdict(null);
+    const bm = BENCHMARKS[cityBenchmark];
+    try {
+      const res = await fetch("/api/deal-ai-verdict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          purchasePrice,
+          monthlyRent,
+          grossYield: calc.grossYield,
+          netYield: calc.netYield,
+          monthlyCF: calc.monthlyCF,
+          cashOnCash: calc.cashOnCash,
+          dealScore: calc.dealScore,
+          stressRatePlus2: stressCalc.ratePlus2,
+          cityBenchmark: bm?.name ?? cityBenchmark,
+          benchmarkGross: bm?.gross,
+          benchmarkNet: bm?.net,
+          bedrooms: propertyPreview?.bedrooms,
+          propertyType: propertyPreview?.propertyType,
+          postcode: propertyPreview?.postcode ?? postcodeInput,
+          address: propertyPreview?.address,
+          crimeLevel: areaData?.crime?.level,
+          avgSoldPrice: areaData?.sales?.avgPrice,
+          rentalDemand: areaData?.rental?.demand,
+          strategy,
+          taxBand,
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok || json.error) {
+        setAiVerdictError(json.error ?? "AI verdict failed — please try again.");
+      } else {
+        setAiVerdict(json);
+      }
+    } catch {
+      setAiVerdictError("Network error — please try again.");
+    } finally {
+      setAiVerdictLoading(false);
     }
   };
 
@@ -261,15 +430,15 @@ export default function DealAnalyserPage() {
   const taxAnalysis = useMemo(() => {
     const grossProfit = calc.annualRent - (calc.management + calc.maintenance + calc.insurance + calc.voidCost);
     const interestCost = calc.annualMortgage;
-    // Basic rate: 20% tax on (grossProfit - full interest) + 20% credit
-    const basicTax = grossProfit * 0.20; // no mortgage restriction for basic
-    const basicNet = grossProfit - basicTax;
-    // Higher rate: 40% on gross profit, 20% credit on interest
-    const higherTax = grossProfit * 0.40 - interestCost * 0.20;
-    const higherNet = grossProfit - higherTax;
-    // Company: 19% corp tax on (grossProfit - full interest)
+    // Basic rate: S24 credit (20% of interest) cancels the extra tax — net = old-rules result
+    const basicTax = Math.max(0, grossProfit - interestCost) * 0.20;
+    const basicNet = grossProfit - basicTax - interestCost;
+    // Higher rate: 40% on gross profit, only 20% credit on interest (S24 restriction)
+    const higherTax = Math.max(0, grossProfit * 0.40 - interestCost * 0.20);
+    const higherNet = grossProfit - higherTax - interestCost;
+    // Company: full interest deductible; CT at 19%–25% via marginal relief
     const companyProfit = Math.max(0, grossProfit - interestCost);
-    const companyTax = companyProfit * 0.19;
+    const companyTax = calcCorpTax(companyProfit);
     const companyNet = companyProfit - companyTax;
     return { basicNet, higherNet, companyNet, basicTax, higherTax, companyTax };
   }, [calc]);
@@ -286,6 +455,115 @@ export default function DealAnalyserPage() {
     const newCoC = cashLeft > 0 ? (newNetIncome / cashLeft) * 100 : Infinity;
     return { refiLoan, originalLoan, moneyOut, cashLeft, newMtg, newNetIncome: newNetIncome / 12, newCoC };
   }, [purchasePrice, afterRefurbValue, depositPct, mortgageRate, mortgageTerm, mortgageType, calc]);
+
+  // ── HMO Calc ────────────────────────────────────────────
+  const hmoCalc = useMemo(() => {
+    const grossIncome = hmoRooms * hmoRentPerRoom * 12;
+    const annualLicence = hmoLicenceCost;
+    const annualCouncilTax = hmoCouncilTax * 12;
+    const annualUtilities = hmoUtilities * 12;
+    const depositAmount = purchasePrice * (depositPct / 100);
+    const loanAmount = purchasePrice - depositAmount;
+    const mr = mortgageRate / 100 / 12;
+    const n = mortgageTerm * 12;
+    const monthlyMtg = mortgageType === "interest" ? loanAmount * mr : loanAmount * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+    const annualMtg = monthlyMtg * 12;
+    const mgmt = grossIncome * (managementPct / 100);
+    const maint = grossIncome * (maintenancePct / 100);
+    const ins = insuranceMonthly * 12;
+    const voids = (grossIncome / 52) * voidWeeks;
+    const totalExp = annualMtg + mgmt + maint + ins + voids + annualLicence + annualCouncilTax + annualUtilities;
+    const netIncome = grossIncome - totalExp;
+    const grossYield = (grossIncome / purchasePrice) * 100;
+    const netYield = (netIncome / purchasePrice) * 100;
+    const totalCashIn = depositAmount + purchaseCosts + refurbCost;
+    const cashOnCash = totalCashIn > 0 ? (netIncome / totalCashIn) * 100 : 0;
+    const score = Math.round(Math.min(25, (grossYield / 12) * 25) + Math.min(25, (Math.max(0, netYield) / 6) * 25) + Math.min(25, (Math.max(0, netIncome / 12) / 400) * 25) + Math.min(25, (cashOnCash / 12) * 25));
+    return { grossIncome, netIncome, grossYield, netYield, monthlyCF: netIncome / 12, cashOnCash, totalCashIn, monthlyMtg, annualMtg, totalExp, score };
+  }, [hmoRooms, hmoRentPerRoom, hmoCouncilTax, hmoUtilities, hmoLicenceCost, purchasePrice, depositPct, mortgageRate, mortgageTerm, mortgageType, managementPct, maintenancePct, insuranceMonthly, voidWeeks, purchaseCosts, refurbCost]);
+
+  // ── R2R Calc ─────────────────────────────────────────────
+  const r2rCalc = useMemo(() => {
+    const grossIncome = r2rRooms * r2rRentPerRoom * 12;
+    const totalExpenses = r2rLeaseCost * 12 + r2rCouncilTax * 12 + r2rUtilities * 12 + grossIncome * (managementPct / 100) + grossIncome * (maintenancePct / 100);
+    const netIncome = grossIncome - totalExpenses;
+    const roi = r2rSetupCost > 0 ? (netIncome / r2rSetupCost) * 100 : 0;
+    const paybackMonths = netIncome > 0 ? (r2rSetupCost / (netIncome / 12)) : Infinity;
+    return { grossIncome, totalExpenses, netIncome, monthlyCF: netIncome / 12, roi, paybackMonths };
+  }, [r2rRooms, r2rRentPerRoom, r2rLeaseCost, r2rCouncilTax, r2rUtilities, r2rSetupCost, managementPct, maintenancePct]);
+
+  // ── Flip Calc ────────────────────────────────────────────
+  const flipCalc = useMemo(() => {
+    const bridgeAmount = purchasePrice * (flipBridgingLTV / 100);
+    const cashDown = purchasePrice - bridgeAmount;
+    const monthlyBridgeInterest = bridgeAmount * (flipBridgingRate / 100);
+    const totalBridgeCost = monthlyBridgeInterest * flipHoldingMonths;
+    const holdingCosts = flipHoldingCosts * flipHoldingMonths;
+    const agentFeeAmt = afterRefurbValue * (flipAgentFee / 100);
+    const totalCost = cashDown + refurbCost + totalBridgeCost + holdingCosts + purchaseCosts + agentFeeAmt;
+    const netProfit = afterRefurbValue - purchasePrice - refurbCost - totalBridgeCost - holdingCosts - purchaseCosts - agentFeeAmt;
+    const cashIn = cashDown + purchaseCosts + refurbCost;
+    const roi = cashIn > 0 ? (netProfit / cashIn) * 100 : 0;
+    const annualisedRoi = flipHoldingMonths > 0 ? (roi / flipHoldingMonths) * 12 : 0;
+    const margin = afterRefurbValue > 0 ? (netProfit / afterRefurbValue) * 100 : 0;
+    return { bridgeAmount, cashDown, monthlyBridgeInterest, totalBridgeCost, holdingCosts, agentFeeAmt, totalCost, netProfit, cashIn, roi, annualisedRoi, margin };
+  }, [purchasePrice, afterRefurbValue, refurbCost, flipHoldingMonths, flipAgentFee, flipBridgingRate, flipBridgingLTV, flipHoldingCosts, purchaseCosts]);
+
+  // ── SA Calc ──────────────────────────────────────────────
+  const saCalc = useMemo(() => {
+    const occupiedNights = Math.round(365 * (saOccupancy / 100));
+    const grossRevenue = saNightlyRate * occupiedNights;
+    const platformFees = grossRevenue * (saPlatformFee / 100);
+    const stays = saAvgStayNights > 0 ? occupiedNights / saAvgStayNights : 0;
+    const cleaningCosts = stays * saCleaningPerStay;
+    const annualRunning = saRunningCosts * 12;
+    const depositAmount = purchasePrice * (depositPct / 100);
+    const loanAmount = purchasePrice - depositAmount;
+    const mr = mortgageRate / 100 / 12;
+    const n = mortgageTerm * 12;
+    const monthlyMtg = mortgageType === "interest" ? loanAmount * mr : loanAmount * (mr * Math.pow(1 + mr, n)) / (Math.pow(1 + mr, n) - 1);
+    const annualMtg = monthlyMtg * 12;
+    const totalExp = platformFees + cleaningCosts + annualRunning + annualMtg + insuranceMonthly * 12;
+    const netIncome = grossRevenue - totalExp;
+    const grossYield = (grossRevenue / purchasePrice) * 100;
+    const netYield = (netIncome / purchasePrice) * 100;
+    const totalCashIn = depositAmount + purchaseCosts + refurbCost;
+    const cashOnCash = totalCashIn > 0 ? (netIncome / totalCashIn) * 100 : 0;
+    return { grossRevenue, platformFees, cleaningCosts, annualRunning, annualMtg, totalExp, netIncome, grossYield, netYield, monthlyCF: netIncome / 12, cashOnCash, occupiedNights };
+  }, [purchasePrice, depositPct, mortgageRate, mortgageTerm, mortgageType, saNightlyRate, saOccupancy, saPlatformFee, saCleaningPerStay, saAvgStayNights, saRunningCosts, insuranceMonthly, purchaseCosts, refurbCost]);
+
+  // ── ICR Calc (lender stress test) ───────────────────────
+  const icrCalc = useMemo(() => {
+    const effectiveRent = strategy === "hmo" ? hmoRooms * hmoRentPerRoom : strategy === "sa" ? saCalc.grossRevenue / 12 : monthlyRent;
+    const icr = calc.monthlyMortgage > 0 ? effectiveRent / calc.monthlyMortgage : Infinity;
+    const passes125 = icr >= 1.25;
+    const passes145 = icr >= 1.45;
+    const required125 = calc.monthlyMortgage * 1.25;
+    const required145 = calc.monthlyMortgage * 1.45;
+    return { icr, passes125, passes145, effectiveRent, required125, required145 };
+  }, [strategy, hmoRooms, hmoRentPerRoom, saCalc, monthlyRent, calc]);
+
+  // ── Guaranteed Rent Calc ─────────────────────────────────
+  const grCalc = useMemo(() => {
+    const grMonthly = monthlyRent * (guaranteedRentPct / 100);
+    const grAnnual = grMonthly * 12;
+    const grNetIncome = grAnnual - (calc.annualMortgage + calc.insurance + (calc.maintenance));
+    const grMonthlyCF = grNetIncome / 12;
+    const saving = grMonthlyCF - calc.monthlyCF;
+    return { grMonthly, grAnnual, grNetIncome, grMonthlyCF, saving };
+  }, [monthlyRent, guaranteedRentPct, calc]);
+
+  // ── Bridging Calc (BRRR tab) ─────────────────────────────
+  const bridgingCalc = useMemo(() => {
+    const bridgeAmount = purchasePrice * (bridgingLTV / 100);
+    const monthlyInterest = bridgeAmount * (bridgingRate / 100);
+    const totalInterest = monthlyInterest * bridgingTermMonths;
+    const cashRequired = purchasePrice - bridgeAmount + refurbCost + purchaseCosts;
+    const exitLoan = afterRefurbValue * 0.75;
+    const cashReleased = exitLoan - bridgeAmount;
+    const netCashLeft = cashRequired - Math.max(0, cashReleased);
+    return { bridgeAmount, monthlyInterest, totalInterest, cashRequired, exitLoan, cashReleased, netCashLeft };
+  }, [purchasePrice, bridgingLTV, bridgingRate, bridgingTermMonths, refurbCost, purchaseCosts, afterRefurbValue]);
 
   const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
   const fmt2 = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 2 }).format(n);
@@ -327,13 +605,18 @@ export default function DealAnalyserPage() {
   const cfColor = (v: number) => v >= 200 ? "text-green-600" : v >= 0 ? "text-amber-600" : "text-red-600";
   const yldColor = (v: number) => v >= 4 ? "text-green-600" : v >= 2 ? "text-amber-600" : "text-red-600";
 
-  const tabs = [
-    { id: "overview",   label: "Overview" },
-    { id: "stress",     label: "Stress Test" },
-    { id: "projection", label: "5-Yr Projection" },
-    { id: "tax",        label: "Tax Impact" },
-    { id: "brrr",       label: "BRRR Refinance" },
-  ] as const;
+  const allTabs = [
+    { id: "overview"   as const, label: "Overview" },
+    { id: "stress"     as const, label: "Stress Test" },
+    { id: "projection" as const, label: "5-Yr Projection" },
+    { id: "tax"        as const, label: "Tax Impact" },
+    { id: "brrr"       as const, label: "BRRR Refinance" },
+  ];
+  const availableTabs = strategy === "r2r" || strategy === "flip"
+    ? allTabs.slice(0, 1)
+    : strategy === "sa"
+    ? allTabs.slice(0, 3)
+    : allTabs;
 
   return (
     <>
@@ -341,6 +624,7 @@ export default function DealAnalyserPage() {
       <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "56px 0 48px" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Deal Analyser" }]} />
           <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -366,6 +650,106 @@ export default function DealAnalyserPage() {
 
             {/* ── INPUTS ─────────────────────────────────────── */}
             <div className="lg:col-span-2 space-y-4">
+
+              {/* ── URL Paste ── */}
+              <div className="bg-white rounded-2xl border border-navy-100 p-5" style={{ borderColor: "#c9a84c33" }}>
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-bold text-navy-800 text-sm">🔗 Paste a Rightmove or Zoopla URL</h3>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
+                </div>
+                <p className="text-xs text-navy-400 mb-3">Auto-fill price and area data straight from the listing.</p>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input
+                    type="url"
+                    value={urlInput}
+                    onChange={e => setUrlInput(e.target.value)}
+                    onKeyDown={e => e.key === "Enter" && lookupPropertyUrl()}
+                    placeholder="https://www.rightmove.co.uk/properties/…"
+                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 13, outline: "none", minWidth: 0 }}
+                  />
+                  <button
+                    onClick={lookupPropertyUrl}
+                    disabled={urlLoading || !urlInput.trim()}
+                    style={{ padding: "10px 16px", background: urlLoading || !urlInput.trim() ? "#94a3b8" : "#c9a84c", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: urlLoading || !urlInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
+                  >
+                    {urlLoading ? "Fetching…" : "Fetch"}
+                  </button>
+                </div>
+
+                {urlError && (
+                  <p style={{ fontSize: 12, color: "#92400e", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: "8px 12px", marginTop: 10, fontWeight: 500 }}>
+                    ⚠️ {urlError}
+                    {propertyPreview?.listingUrl && (
+                      <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: 4, color: "#c9a84c", fontWeight: 600, textDecoration: "none" }}>
+                        Open listing →
+                      </a>
+                    )}
+                  </p>
+                )}
+
+                {propertyPreview?.success && (
+                  <div style={{ marginTop: 14, borderTop: "1px solid #e2e8f0", paddingTop: 12 }}>
+                    <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                      {propertyPreview.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={propertyPreview.imageUrl} alt="Property" style={{ width: 80, height: 60, objectFit: "cover", borderRadius: 8, flexShrink: 0 }} />
+                      )}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        {propertyPreview.address && (
+                          <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {propertyPreview.address}
+                          </p>
+                        )}
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 4 }}>
+                          {propertyPreview.price && (
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#16a34a", background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "2px 8px", borderRadius: 6 }}>
+                              £{propertyPreview.price.toLocaleString()}
+                            </span>
+                          )}
+                          {propertyPreview.bedrooms && (
+                            <span style={{ fontSize: 12, fontWeight: 600, color: "#374151", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 8px", borderRadius: 6 }}>
+                              {propertyPreview.bedrooms} bed
+                            </span>
+                          )}
+                          {propertyPreview.propertyType && (
+                            <span style={{ fontSize: 12, fontWeight: 600, color: "#374151", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 8px", borderRadius: 6, textTransform: "capitalize" }}>
+                              {propertyPreview.propertyType}
+                            </span>
+                          )}
+                        </div>
+                        <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#c9a84c", fontWeight: 600, textDecoration: "none" }}>
+                          View on {propertyPreview.portal} →
+                        </a>
+                      </div>
+                    </div>
+                    {propertyPreview.keyFeatures && propertyPreview.keyFeatures.length > 0 && (
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 10 }}>
+                        {propertyPreview.keyFeatures.map((f, i) => (
+                          <span key={i} style={{ fontSize: 10, color: "#64748b", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>{f}</span>
+                        ))}
+                      </div>
+                    )}
+                    <p style={{ fontSize: 11, color: "#16a34a", fontWeight: 600, marginTop: 8 }}>
+                      ✓ Price auto-filled · postcode area data loaded
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Strategy Selector */}
+              <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                <h3 className="font-bold text-navy-800 text-sm mb-3">🎯 Investment Strategy</h3>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6 }}>
+                  {(Object.entries(STRATEGY_META) as [Strategy, typeof STRATEGY_META[Strategy]][]).map(([key, meta]) => (
+                    <button key={key} onClick={() => handleStrategyChange(key)}
+                      style={{ padding: "8px 4px", borderRadius: 10, border: strategy === key ? "2px solid #c9a84c" : "1.5px solid #e2e8f0", background: strategy === key ? "#fefce8" : "white", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
+                      <div style={{ fontSize: 18 }}>{meta.icon}</div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: strategy === key ? "#92400e" : "#64748b", marginTop: 3, lineHeight: 1.2 }}>{meta.label}</div>
+                    </button>
+                  ))}
+                </div>
+                <p style={{ fontSize: 11, color: "#64748b", marginTop: 8 }}>{STRATEGY_META[strategy].desc}</p>
+              </div>
 
               {/* Postcode lookup */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
@@ -524,12 +908,31 @@ export default function DealAnalyserPage() {
                         <input type="number" value={afterRefurbValue} onChange={e => setARV(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     </label>
                   </div>
-                  <label className="block">
-                    <span className="block text-xs text-navy-500 mb-1">Monthly Rent</span>
-                    <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                      <input type="number" value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                  </label>
+                  {(strategy === "btl" || strategy === "sa") && (
+                    <label className="block">
+                      <span className="block text-xs text-navy-500 mb-1">Monthly Rent</span>
+                      <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
+                        <input type="number" value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                    </label>
+                  )}
                 </div>
+                {strategy === "btl" && (
+                  <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #e2e8f0" }}>
+                    <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+                      <input type="checkbox" checked={guaranteedRent} onChange={e => setGuaranteedRent(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#c9a84c" }} />
+                      <span className="text-sm font-semibold text-navy-700">Guaranteed Rent (via PropertyVault)</span>
+                    </label>
+                    {guaranteedRent && (
+                      <div style={{ marginTop: 10 }}>
+                        <label className="block">
+                          <span className="block text-xs text-navy-500 mb-1">Guaranteed % of market rent: {guaranteedRentPct}%</span>
+                          <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
+                        </label>
+                        <p style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>Guaranteed: <strong style={{ color: "#c9a84c" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Auto SDLT */}
@@ -541,7 +944,7 @@ export default function DealAnalyserPage() {
                 <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
                   <input type="checkbox" checked={additionalProperty} onChange={e => setAdditionalProperty(e.target.checked)}
                     style={{ width: 16, height: 16, accentColor: "#c9a84c" }} />
-                  <span className="text-sm text-navy-600">Additional property (+3% surcharge)</span>
+                  <span className="text-sm text-navy-600">Additional property (+5% surcharge)</span>
                 </label>
                 <p className="text-xs text-navy-400 mt-2">SDLT + £2,500 legal/survey = <strong className="text-navy-800">{fmt(purchaseCosts)}</strong> purchase costs</p>
               </div>
@@ -581,6 +984,82 @@ export default function DealAnalyserPage() {
                 </div>
               </div>
 
+              {/* HMO Inputs */}
+              {strategy === "hmo" && (
+                <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                  <h3 className="font-bold text-navy-800 text-sm mb-4">🏘️ HMO Details</h3>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms</span><input type="number" value={hmoRooms} onChange={e => setHmoRooms(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rent/Room £/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={hmoRentPerRoom} onChange={e => setHmoRentPerRoom(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" value={hmoCouncilTax} onChange={e => setHmoCouncilTax(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" value={hmoUtilities} onChange={e => setHmoUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                    <p style={{ fontSize: 11, color: "#64748b" }}>Gross income: <strong style={{ color: "#c9a84c" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
+                  </div>
+                </div>
+              )}
+
+              {/* R2R Inputs */}
+              {strategy === "r2r" && (
+                <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                  <h3 className="font-bold text-navy-800 text-sm mb-4">🔄 Rent-to-Rent Details</h3>
+                  <div className="space-y-3">
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Lease Cost £/mo (you pay landlord)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={r2rLeaseCost} onChange={e => setR2rLeaseCost(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms to Sublet</span><input type="number" value={r2rRooms} onChange={e => setR2rRooms(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Sublet £/room/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={r2rRentPerRoom} onChange={e => setR2rRentPerRoom(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Setup Cost £</span><input type="number" value={r2rSetupCost} onChange={e => setR2rSetupCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" value={r2rCouncilTax} onChange={e => setR2rCouncilTax(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" value={r2rUtilities} onChange={e => setR2rUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Flip Inputs */}
+              {strategy === "flip" && (
+                <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                  <h3 className="font-bold text-navy-800 text-sm mb-4">🔨 Flip Details</h3>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Hold Period (months)</span><input type="number" value={flipHoldingMonths} onChange={e => setFlipHoldingMonths(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Agent Fee %</span><input type="number" step="0.1" value={flipAgentFee} onChange={e => setFlipAgentFee(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge Rate %/mo</span><input type="number" step="0.05" value={flipBridgingRate} onChange={e => setFlipBridgingRate(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge LTV %</span><input type="number" value={flipBridgingLTV} onChange={e => setFlipBridgingLTV(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Holding Costs £/mo</span><input type="number" value={flipHoldingCosts} onChange={e => setFlipHoldingCosts(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* SA Inputs */}
+              {strategy === "sa" && (
+                <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                  <h3 className="font-bold text-navy-800 text-sm mb-4">🏨 Serviced Accommodation Details</h3>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Nightly Rate £</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={saNightlyRate} onChange={e => setSaNightlyRate(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Occupancy %</span><input type="number" value={saOccupancy} onChange={e => setSaOccupancy(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Platform Fee %</span><input type="number" step="0.5" value={saPlatformFee} onChange={e => setSaPlatformFee(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Clean/Stay £</span><input type="number" value={saCleaningPerStay} onChange={e => setSaCleaningPerStay(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" value={saAvgStayNights} onChange={e => setSaAvgStayNights(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    </div>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={saRunningCosts} onChange={e => setSaRunningCosts(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    <p style={{ fontSize: 11, color: "#64748b" }}>Projected revenue: <strong style={{ color: "#c9a84c" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
+                  </div>
+                </div>
+              )}
+
               {/* Smart settings */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
                 <h3 className="font-bold text-navy-800 text-sm mb-4">🧠 Smart Settings</h3>
@@ -612,12 +1091,32 @@ export default function DealAnalyserPage() {
 
               {/* 4 key metrics */}
               <div className="grid grid-cols-2 gap-3">
-                {[
+                {(strategy === "hmo" ? [
+                  { label: "Gross Yield", value: `${hmoCalc.grossYield.toFixed(1)}%`, sub: `${hmoRooms} rooms × ${fmt(hmoRentPerRoom)}`, cls: "text-navy-800" },
+                  { label: "Net Yield",   value: `${hmoCalc.netYield.toFixed(1)}%`,   sub: "After all HMO costs", cls: yldColor(hmoCalc.netYield) },
+                  { label: "Monthly CF",  value: fmt(hmoCalc.monthlyCF), sub: "Net income/mo", cls: cfColor(hmoCalc.monthlyCF) },
+                  { label: "Cash-on-Cash",value: `${hmoCalc.cashOnCash.toFixed(1)}%`, sub: "Return on cash", cls: cfColor(hmoCalc.cashOnCash - 5) },
+                ] : strategy === "r2r" ? [
+                  { label: "Monthly CF",  value: fmt(r2rCalc.monthlyCF), sub: "Sublet income − lease", cls: cfColor(r2rCalc.monthlyCF) },
+                  { label: "Annual Profit",value: fmt(r2rCalc.netIncome), sub: "Net income/yr", cls: cfColor(r2rCalc.netIncome / 12) },
+                  { label: "ROI",          value: `${r2rCalc.roi.toFixed(1)}%`, sub: "On setup cost", cls: cfColor(r2rCalc.roi - 5) },
+                  { label: "Payback",      value: r2rCalc.paybackMonths === Infinity ? "N/A" : `${Math.ceil(r2rCalc.paybackMonths)}mo`, sub: "Setup cost payback", cls: "text-navy-800" },
+                ] : strategy === "flip" ? [
+                  { label: "Net Profit",   value: fmt(flipCalc.netProfit), sub: "After all costs", cls: cfColor(flipCalc.netProfit / 1000) },
+                  { label: "ROI",          value: `${flipCalc.roi.toFixed(1)}%`, sub: "Return on cash in", cls: cfColor(flipCalc.roi - 10) },
+                  { label: "Ann. ROI",     value: `${flipCalc.annualisedRoi.toFixed(1)}%`, sub: "Annualised", cls: cfColor(flipCalc.annualisedRoi - 15) },
+                  { label: "Profit Margin",value: `${flipCalc.margin.toFixed(1)}%`, sub: "% of sale price", cls: cfColor(flipCalc.margin - 10) },
+                ] : strategy === "sa" ? [
+                  { label: "Gross Revenue",value: fmt(saCalc.grossRevenue), sub: `${saCalc.occupiedNights} nights/yr`, cls: "text-navy-800" },
+                  { label: "Net Yield",    value: `${saCalc.netYield.toFixed(1)}%`, sub: "After all SA costs", cls: yldColor(saCalc.netYield) },
+                  { label: "Monthly CF",   value: fmt(saCalc.monthlyCF), sub: "Net income/mo", cls: cfColor(saCalc.monthlyCF) },
+                  { label: "Cash-on-Cash", value: `${saCalc.cashOnCash.toFixed(1)}%`, sub: "Return on cash", cls: cfColor(saCalc.cashOnCash - 5) },
+                ] : [
                   { label: "Gross Yield", value: `${calc.grossYield.toFixed(1)}%`, sub: "Rent / price", cls: "text-navy-800" },
                   { label: "Net Yield",   value: `${calc.netYield.toFixed(1)}%`,   sub: "After all costs", cls: yldColor(calc.netYield) },
-                  { label: "Monthly CF", value: fmt(calc.monthlyCF), sub: "Net income/mo", cls: cfColor(calc.monthlyCF) },
-                  { label: "Cash-on-Cash", value: `${calc.cashOnCash.toFixed(1)}%`, sub: "Return on cash", cls: cfColor(calc.cashOnCash - 5) },
-                ].map(m => (
+                  { label: "Monthly CF",  value: fmt(guaranteedRent ? grCalc.grMonthlyCF : calc.monthlyCF), sub: guaranteedRent ? "Guaranteed rent CF" : "Net income/mo", cls: cfColor(guaranteedRent ? grCalc.grMonthlyCF : calc.monthlyCF) },
+                  { label: "Cash-on-Cash",value: `${calc.cashOnCash.toFixed(1)}%`, sub: "Return on cash", cls: cfColor(calc.cashOnCash - 5) },
+                ]).map(m => (
                   <div key={m.label} className="bg-white rounded-2xl border border-navy-100 p-5">
                     <p className="text-xs text-navy-400 font-semibold mb-1">{m.label}</p>
                     <p className={`text-3xl font-extrabold ${m.cls}`}>{m.value}</p>
@@ -628,7 +1127,7 @@ export default function DealAnalyserPage() {
 
               {/* Tab navigation */}
               <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
-                {tabs.map(tab => (
+                {availableTabs.map(tab => (
                   <button key={tab.id} onClick={() => setActiveSection(tab.id)}
                     style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeSection === tab.id ? "none" : "1.5px solid #e2e8f0", background: activeSection === tab.id ? "#0f1b36" : "white", color: activeSection === tab.id ? "white" : "#64748b", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
                     {tab.label}
@@ -639,6 +1138,141 @@ export default function DealAnalyserPage() {
               {/* ── OVERVIEW TAB ──────────────────────────────── */}
               {activeSection === "overview" && (
                 <div className="space-y-4">
+
+                  {/* R2R Summary */}
+                  {strategy === "r2r" && (
+                    <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
+                      <h4 className="font-bold text-navy-800 text-sm">🔄 Rent-to-Rent P&L</h4>
+                      {[
+                        ["Sublet Income", fmt(r2rCalc.grossIncome), "green"],
+                        ["Lease Cost", `-${fmt(r2rLeaseCost * 12)}`, "red"],
+                        ["Council Tax + Utilities", `-${fmt((r2rCouncilTax + r2rUtilities) * 12)}`, "red"],
+                        ["Management + Maintenance", `-${fmt(r2rCalc.grossIncome * (managementPct + maintenancePct) / 100)}`, "red"],
+                      ].map(([l, v, c]) => (
+                        <div key={l as string} className="flex justify-between text-sm">
+                          <span className="text-navy-500">{l}</span>
+                          <span className={`font-semibold ${c === "green" ? "text-green-600" : "text-red-500"}`}>{v}</span>
+                        </div>
+                      ))}
+                      <div className="border-t border-navy-100 pt-2 flex justify-between font-bold">
+                        <span>Net Annual Profit</span>
+                        <span className={r2rCalc.netIncome >= 0 ? "text-green-600" : "text-red-600"}>{fmt(r2rCalc.netIncome)}</span>
+                      </div>
+                      <p className="text-xs text-navy-400">No mortgage required. Setup cost {fmt(r2rSetupCost)} recovers in {Math.ceil(r2rCalc.paybackMonths)} months.</p>
+                    </div>
+                  )}
+
+                  {/* Flip Summary */}
+                  {strategy === "flip" && (
+                    <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
+                      <h4 className="font-bold text-navy-800 text-sm">🔨 Flip P&L</h4>
+                      {[
+                        ["Sale Price (ARV)", fmt(afterRefurbValue), "green"],
+                        ["Purchase Price", `-${fmt(purchasePrice)}`, "red"],
+                        ["Refurb Cost", `-${fmt(refurbCost)}`, "red"],
+                        ["Bridging Finance", `-${fmt(flipCalc.totalBridgeCost)}`, "red"],
+                        ["Holding Costs", `-${fmt(flipCalc.holdingCosts)}`, "red"],
+                        ["Agent Fee", `-${fmt(flipCalc.agentFeeAmt)}`, "red"],
+                        ["SDLT + Legal", `-${fmt(purchaseCosts)}`, "red"],
+                      ].map(([l, v, c]) => (
+                        <div key={l as string} className="flex justify-between text-sm">
+                          <span className="text-navy-500">{l}</span>
+                          <span className={`font-semibold ${c === "green" ? "text-green-600" : "text-red-500"}`}>{v}</span>
+                        </div>
+                      ))}
+                      <div className="border-t border-navy-100 pt-2 flex justify-between font-bold">
+                        <span>Net Profit</span>
+                        <span className={flipCalc.netProfit >= 0 ? "text-green-600" : "text-red-600"}>{fmt(flipCalc.netProfit)}</span>
+                      </div>
+                      <p className="text-xs text-navy-400">Cash in: {fmt(flipCalc.cashIn)} · Bridge: {fmt(flipCalc.bridgeAmount)} at {flipBridgingRate}%/mo · {flipHoldingMonths}-month hold</p>
+                    </div>
+                  )}
+
+                  {/* HMO Summary */}
+                  {strategy === "hmo" && (
+                    <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
+                      <h4 className="font-bold text-navy-800 text-sm">🏘️ HMO P&L</h4>
+                      {[
+                        ["Gross HMO Income", fmt(hmoCalc.grossIncome), "green"],
+                        ["Mortgage", `-${fmt(hmoCalc.annualMtg)}`, "red"],
+                        ["Management + Maintenance", `-${fmt(hmoCalc.grossIncome * (managementPct + maintenancePct) / 100)}`, "red"],
+                        ["Council Tax + Utilities", `-${fmt((hmoCouncilTax + hmoUtilities) * 12)}`, "red"],
+                        ["HMO Licence", `-${fmt(hmoLicenceCost)}`, "red"],
+                        ["Insurance + Voids", `-${fmt(insuranceMonthly * 12 + (hmoCalc.grossIncome / 52) * voidWeeks)}`, "red"],
+                      ].map(([l, v, c]) => (
+                        <div key={l as string} className="flex justify-between text-sm">
+                          <span className="text-navy-500">{l}</span>
+                          <span className={`font-semibold ${c === "green" ? "text-green-600" : "text-red-500"}`}>{v}</span>
+                        </div>
+                      ))}
+                      <div className="border-t border-navy-100 pt-2 flex justify-between font-bold">
+                        <span>Net Annual Income</span>
+                        <span className={hmoCalc.netIncome >= 0 ? "text-green-600" : "text-red-600"}>{fmt(hmoCalc.netIncome)}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* SA Summary */}
+                  {strategy === "sa" && (
+                    <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
+                      <h4 className="font-bold text-navy-800 text-sm">🏨 SA Revenue Breakdown</h4>
+                      {[
+                        ["Gross Revenue", fmt(saCalc.grossRevenue), "green"],
+                        ["Platform Fees", `-${fmt(saCalc.platformFees)}`, "red"],
+                        ["Cleaning Costs", `-${fmt(saCalc.cleaningCosts)}`, "red"],
+                        ["Running Costs", `-${fmt(saCalc.annualRunning)}`, "red"],
+                        ["Mortgage", `-${fmt(saCalc.annualMtg)}`, "red"],
+                        ["Insurance", `-${fmt(insuranceMonthly * 12)}`, "red"],
+                      ].map(([l, v, c]) => (
+                        <div key={l as string} className="flex justify-between text-sm">
+                          <span className="text-navy-500">{l}</span>
+                          <span className={`font-semibold ${c === "green" ? "text-green-600" : "text-red-500"}`}>{v}</span>
+                        </div>
+                      ))}
+                      <div className="border-t border-navy-100 pt-2 flex justify-between font-bold">
+                        <span>Net Annual Income</span>
+                        <span className={saCalc.netIncome >= 0 ? "text-green-600" : "text-red-600"}>{fmt(saCalc.netIncome)}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Guaranteed Rent Comparison */}
+                  {strategy === "btl" && guaranteedRent && (
+                    <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                      <h4 className="font-bold text-navy-800 text-sm mb-3">🛡️ Guaranteed Rent vs Self-Managed</h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div style={{ padding: "14px", borderRadius: 12, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
+                          <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: calc.monthlyCF >= 0 ? "#0f1b36" : "#dc2626" }}>{fmt(calc.monthlyCF)}/mo</p>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "#64748b" }}>
+                            <div>Rent: {fmt(monthlyRent)}/mo</div>
+                            <div>Voids: ~{voidWeeks} wks/yr</div>
+                            <div>Mgmt: {managementPct}%</div>
+                          </div>
+                        </div>
+                        <div style={{ padding: "14px", borderRadius: 12, background: "#f0fdf4", border: "1.5px solid #bbf7d0" }}>
+                          <p style={{ fontSize: 11, color: "#16a34a", marginBottom: 6, fontWeight: 700 }}>GUARANTEED RENT</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: grCalc.grMonthlyCF >= 0 ? "#16a34a" : "#dc2626" }}>{fmt(grCalc.grMonthlyCF)}/mo</p>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "#64748b" }}>
+                            <div>Rent: {fmt(grCalc.grMonthly)}/mo ({guaranteedRentPct}%)</div>
+                            <div>Voids: <strong style={{ color: "#16a34a" }}>0 weeks</strong></div>
+                            <div>Mgmt: <strong style={{ color: "#16a34a" }}>0%</strong></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: grCalc.saving >= 0 ? "#eff6ff" : "#fffbeb", border: `1px solid ${grCalc.saving >= 0 ? "#bfdbfe" : "#fde68a"}` }}>
+                        <p style={{ fontSize: 13, fontWeight: 600, color: grCalc.saving >= 0 ? "#1d4ed8" : "#92400e" }}>
+                          {grCalc.saving >= 0
+                            ? `💡 Guaranteed rent gives you ${fmt(grCalc.saving)}/mo more certainty — no void risk, no agent hassle.`
+                            : `⚠️ Self-managing earns ${fmt(-grCalc.saving)}/mo more if fully let. Guaranteed rent trades income for peace of mind.`}
+                        </p>
+                      </div>
+                      <a href="/guaranteed-rent" style={{ display: "block", marginTop: 12, textAlign: "center", padding: "10px", borderRadius: 10, background: "#0f1b36", color: "#c9a84c", fontWeight: 700, fontSize: 13, textDecoration: "none" }}>
+                        Get a Guaranteed Rent Quote from PropertyVault →
+                      </a>
+                    </div>
+                  )}
+
                   {/* Smart Insights */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
                     <h4 className="font-bold text-navy-800 text-sm mb-3 flex items-center gap-2">
@@ -652,6 +1286,98 @@ export default function DealAnalyserPage() {
                         </div>
                       ))}
                     </div>
+                  </div>
+
+                  {/* AI Deal Verdict */}
+                  <div className="bg-white rounded-2xl border border-navy-100 p-5" style={{ borderColor: "#c9a84c33" }}>
+                    <div className="flex items-center justify-between mb-1">
+                      <h4 className="font-bold text-navy-800 text-sm flex items-center gap-2">
+                        <span>🤖</span> AI Deal Verdict
+                      </h4>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
+                    </div>
+                    <p className="text-xs text-navy-400 mb-4">Claude analyses your deal metrics and gives a buy / negotiate / pass verdict with red flags and negotiation tips.</p>
+
+                    {!aiVerdict && (
+                      <button
+                        onClick={getAiVerdict}
+                        disabled={aiVerdictLoading}
+                        style={{ width: "100%", padding: "11px", background: aiVerdictLoading ? "#94a3b8" : "#0f1b36", color: aiVerdictLoading ? "white" : "#c9a84c", border: "none", borderRadius: 12, fontSize: 14, fontWeight: 700, cursor: aiVerdictLoading ? "not-allowed" : "pointer", transition: "background 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+                      >
+                        {aiVerdictLoading ? (
+                          <>
+                            <svg style={{ animation: "spin 1s linear infinite", width: 16, height: 16 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.636-6.364-2.122 2.122M7.758 16.242l-2.122 2.122m0-12.728 2.122 2.122m8.484 8.484 2.122 2.122" /></svg>
+                            Analysing deal…
+                          </>
+                        ) : "Get AI Deal Verdict →"}
+                      </button>
+                    )}
+
+                    {aiVerdictError && (
+                      <p style={{ fontSize: 12, color: "#dc2626", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>⚠️ {aiVerdictError}</p>
+                    )}
+
+                    {aiVerdict && (
+                      <div>
+                        {/* Verdict badge */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: aiVerdict.verdict === "Buy" ? "#f0fdf4" : aiVerdict.verdict === "Negotiate" ? "#fffbeb" : "#fef2f2", border: `2px solid ${aiVerdict.verdict === "Buy" ? "#86efac" : aiVerdict.verdict === "Negotiate" ? "#fde68a" : "#fecaca"}` }}>
+                          <span style={{ fontSize: 28 }}>{aiVerdict.verdict === "Buy" ? "✅" : aiVerdict.verdict === "Negotiate" ? "🤝" : "❌"}</span>
+                          <div>
+                            <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "#16a34a" : aiVerdict.verdict === "Negotiate" ? "#92400e" : "#dc2626", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
+                            <p style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>AI Recommendation</p>
+                          </div>
+                        </div>
+
+                        {/* Summary */}
+                        <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.6, marginBottom: 14, fontStyle: "italic" }}>&ldquo;{aiVerdict.summary}&rdquo;</p>
+
+                        {/* Green flags */}
+                        {aiVerdict.greenFlags?.length > 0 && (
+                          <div style={{ marginBottom: 12 }}>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#16a34a", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>✅ Green flags</p>
+                            <div className="space-y-1.5">
+                              {aiVerdict.greenFlags.map((f, i) => (
+                                <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#f0fdf4", borderRadius: 8, border: "1px solid #bbf7d0" }}>{f}</div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Red flags */}
+                        {aiVerdict.redFlags?.length > 0 && (
+                          <div style={{ marginBottom: 12 }}>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>⚠️ Red flags</p>
+                            <div className="space-y-1.5">
+                              {aiVerdict.redFlags.map((f, i) => (
+                                <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#fef2f2", borderRadius: 8, border: "1px solid #fecaca" }}>{f}</div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Negotiation tip */}
+                        {aiVerdict.negotiationTip && (
+                          <div style={{ marginBottom: 12, padding: "10px 12px", background: "#eff6ff", borderRadius: 10, border: "1px solid #bfdbfe" }}>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#1d4ed8", marginBottom: 4 }}>💡 NEGOTIATION TIP</p>
+                            <p style={{ fontSize: 13, color: "#374151" }}>{aiVerdict.negotiationTip}</p>
+                          </div>
+                        )}
+
+                        {/* Key insight */}
+                        {aiVerdict.keyInsight && (
+                          <div style={{ padding: "10px 12px", background: "#f8f9fc", borderRadius: 10, border: "1px solid #e2e8f0" }}>
+                            <p style={{ fontSize: 13, color: "#0f1b36", fontWeight: 600, lineHeight: 1.5 }}>🔑 {aiVerdict.keyInsight}</p>
+                          </div>
+                        )}
+
+                        <button
+                          onClick={() => { setAiVerdict(null); setAiVerdictError(""); }}
+                          style={{ marginTop: 12, fontSize: 12, color: "#94a3b8", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                        >
+                          Re-analyse →
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   {/* City Benchmark */}
@@ -736,7 +1462,18 @@ export default function DealAnalyserPage() {
                       <span className="font-extrabold text-lg text-navy-800">{fmt(calc.totalCashIn)}</span>
                     </div>
                   </div>
-                  <EmailResults />
+                  <EmailResults deal={{
+                    purchasePrice,
+                    monthlyRent,
+                    grossYield: calc.grossYield,
+                    netYield: calc.netYield,
+                    monthlyCF: calc.monthlyCF,
+                    cashOnCash: calc.cashOnCash,
+                    dealScore: calc.dealScore,
+                    totalCashIn: calc.totalCashIn,
+                    netIncome: calc.netIncome,
+                    strategy: STRATEGY_META[strategy].label,
+                  }} />
                   <ShareResults title="Property Deal Analyser" summary={`Deal score ${calc.dealScore}/100: ${calc.grossYield.toFixed(1)}% gross yield, ${fmt(calc.monthlyCF)}/mo cash flow, ${calc.cashOnCash.toFixed(1)}% cash-on-cash`} />
                 </div>
               )}
@@ -774,6 +1511,38 @@ export default function DealAnalyserPage() {
                     <p className="text-xs font-bold text-navy-800 mb-1">Break-even rent</p>
                     <p className="text-2xl font-extrabold text-navy-800">{fmt((calc.totalExpenses / 12) + 1)}<span className="text-sm font-normal text-navy-400">/mo</span></p>
                     <p className="text-xs text-navy-400">Minimum rent to avoid negative cash flow</p>
+                  </div>
+
+                  {/* ICR Lender Stress Test */}
+                  <div style={{ padding: "16px", borderRadius: 14, border: "1.5px solid #e2e8f0", background: "white" }}>
+                    <h4 className="font-bold text-navy-800 text-sm mb-1">🏦 Lender ICR Stress Test</h4>
+                    <p className="text-xs text-navy-400 mb-3">Interest Coverage Ratio — lenders require rent to cover mortgage by 125% (basic rate) or 145% (higher rate / company).</p>
+                    <div className="grid grid-cols-3 gap-3 mb-3">
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: "#f8f9fc" }}>
+                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Your ICR</p>
+                        <p style={{ fontSize: 22, fontWeight: 800, color: icrCalc.passes125 ? "#16a34a" : "#dc2626" }}>{icrCalc.icr === Infinity ? "∞" : icrCalc.icr.toFixed(2)}x</p>
+                      </div>
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes125 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes125 ? "#bbf7d0" : "#fecaca"}` }}>
+                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Basic Rate 1.25x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes125 ? "#16a34a" : "#dc2626" }}>{icrCalc.passes125 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "#94a3b8" }}>Need {fmt(icrCalc.required125)}/mo</p>
+                      </div>
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes145 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes145 ? "#bbf7d0" : "#fecaca"}` }}>
+                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Higher Rate 1.45x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes145 ? "#16a34a" : "#dc2626" }}>{icrCalc.passes145 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "#94a3b8" }}>Need {fmt(icrCalc.required145)}/mo</p>
+                      </div>
+                    </div>
+                    {!icrCalc.passes125 && (
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#fef2f2", border: "1px solid #fecaca" }}>
+                        <p style={{ fontSize: 12, color: "#dc2626", fontWeight: 600 }}>⚠️ This deal fails lender ICR checks at current rent. You need {fmt(icrCalc.required125 - icrCalc.effectiveRent)}/mo more rent, or a lower mortgage.</p>
+                      </div>
+                    )}
+                    {icrCalc.passes125 && !icrCalc.passes145 && (
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#fffbeb", border: "1px solid #fde68a" }}>
+                        <p style={{ fontSize: 12, color: "#92400e", fontWeight: 600 }}>⚠️ Passes basic rate but fails higher rate / company ICR. Increase rent by {fmt(icrCalc.required145 - icrCalc.effectiveRent)}/mo to pass 1.45x.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -826,7 +1595,7 @@ export default function DealAnalyserPage() {
                       {[
                         { label: "Basic rate (20%)", net: taxAnalysis.basicNet, tax: taxAnalysis.basicTax, note: "Full mortgage interest deductible via 20% credit" },
                         { label: "Higher rate (40%)", net: taxAnalysis.higherNet, tax: taxAnalysis.higherTax, note: "S24 restricts interest relief — only 20% credit" },
-                        { label: "Ltd company (19%)", net: taxAnalysis.companyNet, tax: taxAnalysis.companyTax, note: "Full mortgage interest deductible. Best for higher-rate taxpayers" },
+                        { label: "Ltd company (CT)", net: taxAnalysis.companyNet, tax: taxAnalysis.companyTax, note: "Full mortgage interest deductible. CT 19%–25% via marginal relief" },
                       ].map((t, i) => (
                         <div key={t.label} style={{ padding: "14px 12px", borderRadius: 14, border: "1.5px solid", borderColor: i === 2 ? "#bbf7d0" : i === 1 ? "#fde68a" : "#e2e8f0", background: i === 2 ? "#f0fdf4" : "#f8f9fc", textAlign: "center" }}>
                           <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>{t.label}</p>
@@ -866,6 +1635,49 @@ export default function DealAnalyserPage() {
               {/* ── BRRR REFINANCE TAB ────────────────────────── */}
               {activeSection === "brrr" && (
                 <div className="space-y-4">
+
+                  {/* Bridging Loan Toggle */}
+                  <div className="bg-white rounded-2xl border border-navy-100 p-5">
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                      <h4 className="font-bold text-navy-800 text-sm">🌉 Bridging Finance</h4>
+                      <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+                        <input type="checkbox" checked={usesBridging} onChange={e => setUsesBridging(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#c9a84c" }} />
+                        <span className="text-sm font-semibold text-navy-700">Use bridging loan</span>
+                      </label>
+                    </div>
+                    {usesBridging && (
+                      <>
+                        <div className="grid grid-cols-3 gap-2 mb-4">
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Rate %/mo</span><input type="number" step="0.05" value={bridgingRate} onChange={e => setBridgingRate(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Term (months)</span><input type="number" value={bridgingTermMonths} onChange={e => setBridgingTermMonths(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">LTV %</span><input type="number" value={bridgingLTV} onChange={e => setBridgingLTV(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          {[
+                            { label: "Bridge Amount", value: fmt(bridgingCalc.bridgeAmount), note: `${bridgingLTV}% LTV on purchase` },
+                            { label: "Monthly Interest", value: fmt(bridgingCalc.monthlyInterest), note: `${bridgingRate}% per month` },
+                            { label: "Total Interest Cost", value: fmt(bridgingCalc.totalInterest), note: `Over ${bridgingTermMonths} months`, highlight: true },
+                            { label: "Cash Required", value: fmt(bridgingCalc.cashRequired), note: "Down payment + refurb + costs" },
+                            { label: "Exit Loan (75% ARV)", value: fmt(bridgingCalc.exitLoan), note: "Refinance amount" },
+                            { label: "Cash Released", value: fmt(Math.max(0, bridgingCalc.cashReleased)), note: "Net capital returned", highlight: bridgingCalc.cashReleased > 0 },
+                          ].map(s => (
+                            <div key={s.label} style={{ padding: "12px", borderRadius: 10, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
+                              <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 3 }}>{s.label}</p>
+                              <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "#16a34a" : "#0f1b36" }}>{s.value}</p>
+                              <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.note}</p>
+                            </div>
+                          ))}
+                        </div>
+                        {bridgingCalc.netCashLeft < 0 && (
+                          <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
+                            <p style={{ fontSize: 13, color: "#16a34a", fontWeight: 600 }}>✅ Full BRRR recycle! Cash released ({fmt(bridgingCalc.cashReleased)}) exceeds cash invested ({fmt(bridgingCalc.cashRequired)}) — <strong>infinite ROI</strong> on this deal.</p>
+                          </div>
+                        )}
+                      </>
+                    )}
+                    {!usesBridging && <p className="text-xs text-navy-400">Toggle on to model your BRRR purchase with bridging finance before refinancing onto a BTL mortgage.</p>}
+                  </div>
+
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
                     <h4 className="font-bold text-navy-800 text-sm mb-1">BRRR Refinance Analysis</h4>
                     <p className="text-xs text-navy-400 mb-4">Refinance at 75% LTV on after-refurb value</p>
@@ -920,27 +1732,6 @@ export default function DealAnalyserPage() {
         </div>
       </section>
 
-      {/* Academy upsell */}
-      <section style={{ background: "#0f1b36" }} className="section-padding">
-        <div className="container-max px-4 max-w-3xl text-center">
-          <p className="text-gold-400 font-semibold text-xs uppercase tracking-wider mb-3">Deal Sourcing Academy</p>
-          <h2 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
-            Know the numbers. Now learn the strategy.
-          </h2>
-          <p className="text-navy-200 text-sm mb-6 max-w-xl mx-auto">
-            The Deal Analyser tells you if a deal works. The Academy teaches you how to find them, pitch investors, and build a compliant deal-sourcing business — from scratch.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {["12-Module Masterclass", "Investor Scripts", "Deal Playbooks", "Legal & Compliance", "7-Day Challenge", "AI Prompt Toolkit"].map(f => (
-              <span key={f} className="px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white/80">{f}</span>
-            ))}
-          </div>
-          <a href="/academy" className="inline-block bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold px-8 py-3 rounded-2xl text-sm transition-colors">
-            Join the Academy — £14.99/month →
-          </a>
-          <p className="text-navy-400 text-xs mt-3">Educational platform · Not financial advice · Cancel anytime</p>
-        </div>
-      </section>
 
       {/* Related */}
       <section className="bg-white section-padding">
@@ -963,6 +1754,7 @@ export default function DealAnalyserPage() {
 
       <section className="bg-navy-50 section-padding">
         <div className="container-max max-w-3xl px-4">
+          <GuaranteedRentCTA context="deal" />
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
@@ -976,7 +1768,7 @@ export default function DealAnalyserPage() {
           <h3 className="font-bold text-navy-800">What Is a Good Deal?</h3>
           <p>For a standard buy-to-let, most experienced investors require a minimum 6% net yield and positive monthly cash flow after all costs. Below this, the risk-adjusted return rarely justifies tying up capital. In the Midlands and North, deals with 8-12% net yield and £200-500/month positive cash flow exist — these are the benchmarks worth targeting.</p>
           <h3 className="font-bold text-navy-800">Don't Forget Acquisition Costs</h3>
-          <p>Total investment includes: deposit, stamp duty (3% surcharge on additional properties), legal fees (£1,000-£2,500), survey (£300-£700), mortgage arrangement fee, refurbishment, and initial furnishing. Missing any of these inflates your apparent ROI — this calculator captures all of them.</p>
+          <p>Total investment includes: deposit, stamp duty (5% surcharge on additional properties), legal fees (£1,000-£2,500), survey (£300-£700), mortgage arrangement fee, refurbishment, and initial furnishing. Missing any of these inflates your apparent ROI — this calculator captures all of them.</p>
           <h3 className="font-bold text-navy-800">Model Void Periods Realistically</h3>
           <p>Assuming 100% occupancy is the most common mistake in property analysis. A 5% void allowance (about 2.5 weeks/year) is conservative and realistic for well-located properties. HMOs and short-lets can have higher voids. Baking in realistic voids shows what the deal actually returns in the real world.</p>
           <div className="pt-4 border-t border-navy-200">

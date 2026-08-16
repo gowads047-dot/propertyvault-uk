@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { calcCorpTax } from "@/lib/tax";
 
 const cgtFaqs = [
   { q: "When do I pay Capital Gains Tax on property?", a: "You pay CGT when you sell a property that is not your main home (principal private residence). This includes buy-to-let properties, second homes, inherited properties you don't live in, and commercial property. You must report and pay within 60 days of completion." },
@@ -31,13 +33,14 @@ export default function CGTCalculatorPage() {
     const taxableGain = Math.max(0, totalGain - annualExemption);
 
     if (ownership === "company") {
-      const corpTaxRate = taxableGain + annualExemption > 250000 ? 0.25 : taxableGain + annualExemption < 50000 ? 0.19 : 0.25;
-      const corpTax = totalGain * corpTaxRate;
+      // Companies pay CT on full gain (no AEA); use three-tier marginal relief
+      const corpTax = calcCorpTax(Math.max(0, totalGain));
       return { totalGain, taxableGain: totalGain, tax: corpTax, effectiveRate: totalGain > 0 ? (corpTax / totalGain * 100) : 0, netProfit: totalGain - corpTax, basicBand: 0, higherBand: 0, isCompany: true };
     }
 
     const basicRateLimit = 50270;
-    const remainingBasicBand = Math.max(0, basicRateLimit - otherIncome);
+    // Clamp otherIncome to at least PA (£12,570) so low-income users get the correct remaining band
+    const remainingBasicBand = Math.max(0, basicRateLimit - Math.max(otherIncome, 12570));
 
     let basicBand = 0;
     let higherBand = 0;
@@ -62,6 +65,7 @@ export default function CGTCalculatorPage() {
     <>
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
+          <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Capital Gains Tax" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Capital Gains Tax Calculator</h1>
           <p className="text-navy-200 max-w-2xl">Calculate your CGT liability when selling a UK property. Covers residential property rates (18%/24%), annual exempt amount, and allowable deductions.</p>
