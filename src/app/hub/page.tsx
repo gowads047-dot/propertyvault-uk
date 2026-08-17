@@ -21,11 +21,8 @@ type Stats = {
 export default function HubPage() {
   const { user, profile, loading: authLoading, signOut } = useAuth();
   const [stats, setStats] = useState<Stats | null>(null);
-  const [loadingStats, setLoadingStats] = useState(false);
-
   useEffect(() => {
     if (!user) return;
-    setLoadingStats(true);
     Promise.all([
       supabase.from("rentura_properties").select("id", { count: "exact", head: true }).eq("user_id", user.id),
       supabase.from("rentura_tenants").select("id", { count: "exact", head: true }).eq("user_id", user.id),
@@ -40,7 +37,6 @@ export default function HubPage() {
         academy: { enrolled: enrolled.count || 0, completed: progress.count || 0 },
         makan: { listings: listings.count || 0, messages: unread.count || 0 },
       });
-      setLoadingStats(false);
     });
   }, [user]);
 

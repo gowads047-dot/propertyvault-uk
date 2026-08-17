@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { countries } from "@/lib/hetta-config";
 
 const allLocations: { label: string; type: string; country: string; flag: string }[] = [];
@@ -19,16 +19,18 @@ interface Props {
 
 export function SmartSearch({ value, onChange, onSelectCity, placeholder }: Props) {
   const [focused, setFocused] = useState(false);
-  const [suggestions, setSuggestions] = useState<typeof allLocations>([]);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (value.length < 2) { setSuggestions([]); return; }
+  // Purely derived from `value` against a static list, so it is computed during
+  // render rather than mirrored into state by an effect. The effect version ran
+  // a second render on every keystroke and could paint one frame of stale
+  // suggestions before catching up.
+  const suggestions = useMemo(() => {
+    if (value.length < 2) return [];
     const q = value.toLowerCase();
-    const matches = allLocations.filter(l =>
-      l.label.toLowerCase().includes(q) || l.country.toLowerCase().includes(q)
-    ).slice(0, 8);
-    setSuggestions(matches);
+    return allLocations
+      .filter(l => l.label.toLowerCase().includes(q) || l.country.toLowerCase().includes(q))
+      .slice(0, 8);
   }, [value]);
 
   useEffect(() => {
@@ -41,7 +43,8 @@ export function SmartSearch({ value, onChange, onSelectCity, placeholder }: Prop
 
   const handleSelect = (loc: typeof allLocations[0]) => {
     onChange(loc.label);
-    setSuggestions([]);
+    // The dropdown renders on `focused && suggestions.length`, so blurring is
+    // enough to close it — suggestions are now derived and cannot be cleared.
     setFocused(false);
     if (onSelectCity) {
       const country = countries.find(c => c.name === loc.country);
