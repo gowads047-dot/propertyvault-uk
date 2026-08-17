@@ -35,12 +35,6 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!user) { router.push("/makan/auth"); return; }
-    fetchData();
-  }, [user, authLoading]);
-
   async function fetchData() {
     if (!user) return;
 
@@ -55,6 +49,12 @@ export default function DashboardPage() {
     setFavourites(favsRes.data || []);
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) { router.push("/makan/auth"); return; }
+    fetchData();
+  }, [user, authLoading]);
 
   async function deleteListing(id: string) {
     await supabase.from("listings").delete().eq("id", id);

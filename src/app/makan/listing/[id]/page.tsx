@@ -208,10 +208,6 @@ export default function ListingPage() {
   const [activeImg, setActiveImg] = useState(0);
   const [floorPlanOpen, setFloorPlanOpen] = useState(false);
 
-  useEffect(() => {
-    if (!id) return;
-    loadListing();
-  }, [id]);
 
   async function loadListing() {
     const { data } = await supabase.from("listings").select("*").eq("id", id).single();
@@ -230,6 +226,11 @@ export default function ListingPage() {
     }
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (!id) return;
+    loadListing();
+  }, [id]);
 
   async function toggleSave() {
     if (!user || !listing) return;

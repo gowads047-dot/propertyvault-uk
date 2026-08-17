@@ -39,6 +39,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Declared above the effect that calls it. It is a hoisted function declaration
+  // either way, but React Compiler will not optimise a component that reads a
+  // binding before its declaration.
+  async function fetchProfile(userId: string) {
+    const { data } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
+    setProfile(data);
+  }
+
   useEffect(() => {
     // Safety timeout — unblock UI if Supabase doesn't respond (e.g. paused project in dev)
     const timeout = setTimeout(() => setLoading(false), 7000);
@@ -59,11 +67,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, []);
-
-  async function fetchProfile(userId: string) {
-    const { data } = await supabase.from("profiles").select("*").eq("id", userId).maybeSingle();
-    setProfile(data);
-  }
 
   async function signUp(email: string, password: string, name: string, role: string) {
     const { error } = await supabase.auth.signUp({
