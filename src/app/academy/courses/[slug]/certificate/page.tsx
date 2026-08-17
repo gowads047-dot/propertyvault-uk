@@ -39,6 +39,7 @@ export default function CourseCertificate() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) { router.push("/academy/join"); return; }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- load is an async fetch; its setState calls run after the await, not during render
     load();
   }, [user, authLoading]); // eslint-disable-line
 

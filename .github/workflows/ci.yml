@@ -28,6 +28,9 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: Lint
+        run: npm run lint
+
       - name: Tests
         run: npm test
 
@@ -38,7 +41,6 @@ jobs:
 #                 The unique gap this workflow fills is that nothing was running
 #                 the vitest suite.
 #
-#   eslint      — the repo currently reports 344 errors and 86 warnings, nearly
-#                 all pre-existing (mostly react/no-unescaped-entities). Gating
-#                 on lint today would mean every PR is red on arrival. Worth
-#                 clearing separately, then adding a lint job here.
+# eslint now runs above: the backlog went from 344 errors to 0, so the rule set
+# is finally worth gating on. Warnings (87 at time of writing — unused vars,
+# <img> usage, exhaustive-deps) do not fail the build; only errors do.

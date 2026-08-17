@@ -8,6 +8,7 @@ export function CookieConsent() {
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie_consent");
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage, which is unavailable during render; reading it in an initialiser causes a hydration mismatch
     if (!consent) setVisible(true);
   }, []);
 

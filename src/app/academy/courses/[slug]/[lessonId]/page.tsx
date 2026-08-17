@@ -69,6 +69,7 @@ export default function LessonPage() {
     setLoading(false);
   }, [slug, lessonId, user, router]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- loadData is an async fetch; its setState calls run after the await, not during render
   useEffect(() => { loadData(); }, [loadData]);
 
   async function markComplete() {

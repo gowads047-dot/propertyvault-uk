@@ -45,6 +45,7 @@ export default function RenturaSettings() {
 
   useEffect(() => {
     if (profile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- seeds the editable form from the profile once it loads; the fields must stay locally editable afterwards
       setName(profile.name || "");
       setPhone(profile.phone || "");
       setCity(profile.city || "");

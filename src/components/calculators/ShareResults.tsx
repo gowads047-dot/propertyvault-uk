@@ -11,6 +11,7 @@ export function ShareResults({ title, summary, url }: ShareResultsProps) {
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- mounted flag so window.location is only read after hydration; removing it reintroduces a mismatch
   useEffect(() => setMounted(true), []);
 
   // Use empty string on SSR to avoid hydration mismatch; resolved on client after mount

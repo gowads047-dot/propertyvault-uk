@@ -72,6 +72,7 @@ export default function CoursePage() {
 
   useEffect(() => {
     if (!slug) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- loadCourse is an async fetch; its setState calls run after the await, not during render
     loadCourse();
   }, [slug, user]); // eslint-disable-line
 

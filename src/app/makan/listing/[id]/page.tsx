@@ -230,6 +230,7 @@ export default function ListingPage() {
 
   useEffect(() => {
     if (!id) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- loadListing is an async fetch; its setState calls run after the await, not during render
     loadListing();
   }, [id]);
 

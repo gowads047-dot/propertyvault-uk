@@ -8,6 +8,7 @@ export function DarkModeToggle() {
   useEffect(() => {
     const stored = localStorage.getItem("theme");
     if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage and matchMedia, neither of which exists on the server
       setDark(true);
       document.documentElement.classList.add("dark");
     }
