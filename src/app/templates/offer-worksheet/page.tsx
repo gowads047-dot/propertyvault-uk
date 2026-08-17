@@ -40,7 +40,7 @@ export default function OfferWorksheetTemplate() {
   const saving = asking - offerPrice;
 
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-OW-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-OW-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   return (
     <>

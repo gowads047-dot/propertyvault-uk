@@ -35,7 +35,7 @@ export default function InventoryChecklistTemplate() {
   const setCondition = (key: string, val: string) => setConditions(p => ({ ...p, [key]: val }));
   const setNote = (key: string, val: string) => setNotes(p => ({ ...p, [key]: val }));
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-INV-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-INV-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   return (
     <>

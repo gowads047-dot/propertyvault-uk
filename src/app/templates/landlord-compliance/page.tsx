@@ -108,7 +108,7 @@ export default function LandlordComplianceTemplate() {
 
   const toggleCheck = (id: string) => setChecked(p => ({ ...p, [id]: !p[id] }));
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-LC-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-LC-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   const fmtDate = (d: string) => d ? new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" }) : "—";
 
