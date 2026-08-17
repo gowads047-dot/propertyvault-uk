@@ -10,7 +10,9 @@ function TenantAuthInner() {
   const router = useRouter();
   const token = searchParams.get("token") || "";
 
-  const [mode, setMode] = useState<"loading" | "setup" | "login" | "invalid">("loading");
+  // With no token there is nothing to validate, so start on the login form rather
+  // than rendering a spinner and immediately setting state in an effect.
+  const [mode, setMode] = useState<"loading" | "setup" | "login" | "invalid">(token ? "loading" : "login");
   const [invite, setInvite] = useState<{ email: string; tenant_name: string | null; property_address?: string } | null>(null);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +20,7 @@ function TenantAuthInner() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!token) { setMode("login"); return; }
+    if (!token) return;
     fetch(`/api/tenant/validate?token=${token}`)
       .then(r => r.json())
       .then(d => {
