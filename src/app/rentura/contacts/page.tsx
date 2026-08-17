@@ -84,6 +84,7 @@ export default function ContactsPage() {
     setLoading(false);
   }, [user]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- load is an async fetch; its setState calls run after the await, not during render
   useEffect(() => { load(); }, [load]);
 
   function openAdd() {

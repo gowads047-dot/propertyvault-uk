@@ -321,6 +321,7 @@ export default function RRBPage() {
     if (loading || hydrated) return;
     const pm: Record<string, Record<string, CheckResult>> = {};
     for (const p of properties) pm[p.id] = loadManual(p.id);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrates saved check state from localStorage, which is unavailable during render
     setManualStates(pm);
     setPortfolioState(loadPortfolio());
     setHydrated(true);

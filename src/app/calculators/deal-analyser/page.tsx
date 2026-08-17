@@ -330,6 +330,7 @@ export default function DealAnalyserPage() {
   const purchaseCosts = sdlt + 2500; // SDLT + legal/survey
 
   // ── Core Calculations ────────────────────────────────────
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization -- hand-written memoisation kept deliberately; letting the compiler take over changes recompute behaviour on the largest calculator
   const calc = useMemo(() => {
     const annualRent = monthlyRent * 12;
     const grossYield = (annualRent / purchasePrice) * 100;
@@ -370,6 +371,7 @@ export default function DealAnalyserPage() {
   }, [purchasePrice, refurbCost, afterRefurbValue, monthlyRent, depositPct, mortgageRate, mortgageTerm, mortgageType, purchaseCosts, managementPct, maintenancePct, insuranceMonthly, voidWeeks]);
 
   // ── Stress Tests ─────────────────────────────────────────
+  // eslint-disable-next-line react-hooks/preserve-manual-memoization -- hand-written memoisation kept deliberately; see the note on calc above
   const stressCalc = useMemo(() => {
     const run = (rateAdj: number, voidAdj: number, rentAdj: number) => {
       const r = monthlyRent * (1 + rentAdj);

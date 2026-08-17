@@ -210,6 +210,7 @@ export default function FloatingChat() {
     }]);
   }, [ready, user]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- loadCtx is an async fetch, run only when the panel opens
   useEffect(() => { if (open) loadCtx(); }, [open, loadCtx]);
 
   // ── Matchers ────────────────────────────────────────────────────────────────
@@ -952,6 +953,7 @@ export default function FloatingChat() {
               {/* Attach popup */}
               {showAttachMenu && (
                 <div onClick={e => e.stopPropagation()} style={{ position: "absolute", bottom: "calc(100% + 8px)", left: 0, background: "#0f1728", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 11, padding: 6, display: "flex", flexDirection: "column", gap: 2, zIndex: 20, boxShadow: "0 6px 24px rgba(0,0,0,0.4)", minWidth: 190 }}>
+                  {/* eslint-disable-next-line react-hooks/refs -- each .current read is inside an onClick closure, so it happens on click rather than during render; the compiler cannot see that the array is only invoked later */}
                   {[
                     { icon: "📄", label: "Upload file", sub: "PDF, JPG, PNG", action: () => fileInputRef.current?.click() },
                     { icon: "🖼", label: "Choose photo", sub: "From your gallery", action: () => photoInputRef.current?.click() },

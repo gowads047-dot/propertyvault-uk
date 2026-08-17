@@ -202,6 +202,7 @@ export default function MaintenancePage() {
 
   useEffect(() => {
     if (!user) { router.push("/rentura/auth?next=/rentura/maintenance"); return; }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- load is an async fetch; its setState calls run after the await, not during render
     load();
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 

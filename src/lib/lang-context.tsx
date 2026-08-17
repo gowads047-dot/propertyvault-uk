@@ -19,6 +19,7 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("hetta-lang") as Lang | null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage, which is unavailable during render
     if (stored && translations[stored]) setLangState(stored);
   }, []);
 

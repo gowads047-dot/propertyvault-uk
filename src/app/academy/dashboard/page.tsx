@@ -89,6 +89,7 @@ export default function AcademyDashboard() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- settles the access gate once auth resolves to no user; deriving it risks breaking entry to the paid area
     if (!user) { setCheckingAccess(false); return; }
     const params = new URLSearchParams(window.location.search);
     if (params.get("success") === "1") setJustPaid(true);

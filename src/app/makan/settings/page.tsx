@@ -27,6 +27,7 @@ export default function SettingsPage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) { router.push("/makan/auth"); return; }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- seeds the editable form from the profile once it loads; the fields must stay locally editable afterwards
     setName(profile?.name || "");
     setWhatsapp(profile?.whatsapp || "");
     setNewEmail(user.email || "");
