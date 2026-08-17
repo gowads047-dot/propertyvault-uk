@@ -148,7 +148,7 @@ export default function ViewingChecklistTemplate() {
   const checked = Object.values(f.checks).filter(Boolean).length;
   const total = SECTIONS.reduce((s, sec) => s + sec.items.length, 0);
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-VC-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-VC-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   return (
     <>

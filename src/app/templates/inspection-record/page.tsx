@@ -29,7 +29,7 @@ export default function InspectionRecordTemplate() {
   const [followUpDate, setFollowUpDate] = useState("");
 
   const today  = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-INS-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-INS-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   const urgentCount  = AREAS.flatMap(a => a.checks.map(c => ratings[`${a.id}-${c}`])).filter(r => r === "Urgent").length;
   const actionCount  = AREAS.flatMap(a => a.checks.map(c => ratings[`${a.id}-${c}`])).filter(r => r === "Action needed" || r === "Urgent").length;

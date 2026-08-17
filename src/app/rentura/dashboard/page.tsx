@@ -292,6 +292,9 @@ export default function RenturaDashboard() {
   const { user, loading: authLoading, signOut } = useAuth();
   const router = useRouter();
 
+  // Stable "now" for the life of the mount. Calling Date.now() during render is
+  // impure and made day counts drift between renders.
+  const [now] = useState(() => Date.now());
   const [properties, setProperties] = useState<RenturaProperty[]>([]);
   const [tenants, setTenants] = useState<Record<string, RenturaTenant[]>>({});
   const [mortgages, setMortgages] = useState<Record<string, RenturaMortgage[]>>({});
@@ -782,7 +785,7 @@ export default function RenturaDashboard() {
                   {unrespondedIssues.slice(0, 5).map(issue => {
                     const prop = properties.find(p => p.id === issue.property_id);
                     const isUrgent = issue.priority === "urgent";
-                    const daysAgo = Math.floor((Date.now() - new Date(issue.created_at).getTime()) / 86400000);
+                    const daysAgo = Math.floor((now - new Date(issue.created_at).getTime()) / 86400000);
                     return (
                       <a key={issue.id} href={`/rentura/properties/${issue.property_id}/issues/${issue.id}`} style={{ textDecoration: "none" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 14, background: "white", border: `2px solid ${isUrgent ? "rgba(220,38,38,0.3)" : "rgba(217,119,6,0.25)"}`, borderRadius: 12, padding: "13px 18px" }}>

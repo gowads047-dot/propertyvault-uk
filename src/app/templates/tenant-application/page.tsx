@@ -69,7 +69,7 @@ export default function TenantApplicationTemplate() {
 
   const set = (k: keyof F) => (v: string) => setF(p => ({ ...p, [k]: v }));
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-TA-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-TA-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   return (
     <>

@@ -286,6 +286,9 @@ export default function RRBPage() {
   const { user } = useAuth();
   const router = useRouter();
 
+  // Stable "now" for the life of the mount. Calling Date.now() during render is
+  // impure and made the expiry countdown drift between renders.
+  const [now] = useState(() => Date.now());
   const [properties, setProperties] = useState<Property[]>([]);
   const [tenants, setTenants] = useState<Tenant[]>([]);
   const [certs, setCerts] = useState<Cert[]>([]);
@@ -429,7 +432,7 @@ export default function RRBPage() {
               // Fixed-term check: tenancy_end in the future
               const today = new Date().toISOString().split("T")[0];
               const isFixedTerm = tenant?.tenancy_end && tenant.tenancy_end > today;
-              const daysToExpiry = isFixedTerm ? Math.ceil((new Date(tenant!.tenancy_end!).getTime() - Date.now()) / 86400000) : null;
+              const daysToExpiry = isFixedTerm ? Math.ceil((new Date(tenant!.tenancy_end!).getTime() - now) / 86400000) : null;
 
               return (
                 <Card key={r.property.id} style={{ padding: "0" }}>

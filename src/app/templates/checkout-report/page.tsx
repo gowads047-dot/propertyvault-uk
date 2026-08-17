@@ -41,7 +41,7 @@ export default function CheckOutReportTemplate() {
   const totalDeductions = deductions.reduce((s, d) => s + (d.amount || 0), 0);
   const refund = Math.max(0, depositHeld - totalDeductions);
   const today  = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
-  const refNum = `PV-CO-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`;
+  const [refNum] = useState(() => `PV-CO-${new Date().getFullYear()}-${String(Date.now()).slice(-5)}`);
 
   const updateDeduction = (i: number, field: "desc" | "amount", val: string | number) =>
     setDeductions(prev => prev.map((d, j) => j === i ? { ...d, [field]: val } : d));
