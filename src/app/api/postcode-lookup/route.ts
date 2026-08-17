@@ -87,7 +87,7 @@ export async function GET(request: Request) {
 
     // ── 2. Crime data (optional, 4s timeout) ─────────────
     const crimeDate = getPreviousMonth();
-    let crimeCategories: Record<string, number> = {};
+    const crimeCategories: Record<string, number> = {};
     let crimeTotal = 0;
     try {
       const crimeRes = await fetchWithTimeout(
