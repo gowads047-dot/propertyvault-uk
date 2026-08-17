@@ -63,7 +63,7 @@ export default function ListPropertyPage() {
     setSubmitting(true);
     setError("");
 
-    let imageUrls: string[] = [];
+    const imageUrls: string[] = [];
     let videoUrl: string | null = null;
 
     for (const file of images) {
