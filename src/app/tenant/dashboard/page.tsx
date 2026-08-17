@@ -26,8 +26,10 @@ function TenantPortalInner() {
   const token = searchParams.get("token") || "";
 
   const [info, setInfo] = useState<TenantInfo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  // With no token there is nothing to fetch, so both are settled from the start
+  // rather than corrected by an effect on the first render.
+  const [loading, setLoading] = useState(!!token);
+  const [error, setError] = useState(token ? "" : "No access link found. Please use the link from your invitation email.");
   const [messages, setMessages] = useState<Message[]>([]);
   const [apiHistory, setApiHistory] = useState<ApiHistory>([]);
   const [input, setInput] = useState("");
@@ -38,11 +40,7 @@ function TenantPortalInner() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!token) {
-      setError("No access link found. Please use the link from your invitation email.");
-      setLoading(false);
-      return;
-    }
+    if (!token) return;
 
     fetch(`/api/tenant/validate?token=${token}`)
       .then(r => r.json())
