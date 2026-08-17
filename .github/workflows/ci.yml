@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+# A newer push to the same PR cancels the in-flight run.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck & tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Tests
+        run: npm test
+
+# Deliberately not here:
+#
+#   next build  — Vercel already builds every push and pull request, so running
+#                 it again would burn a couple of minutes for no extra signal.
+#                 The unique gap this workflow fills is that nothing was running
+#                 the vitest suite.
+#
+#   eslint      — the repo currently reports 344 errors and 86 warnings, nearly
+#                 all pre-existing (mostly react/no-unescaped-entities). Gating
+#                 on lint today would mean every PR is red on arrival. Worth
+#                 clearing separately, then adding a lint job here.
