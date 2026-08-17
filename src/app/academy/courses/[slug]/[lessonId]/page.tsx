@@ -19,6 +19,7 @@ type Lesson = {
 };
 type Module = { id: string; title: string; sort_order: number; lessons: Lesson[] };
 type Course = { id: string; slug: string; title: string; is_free: boolean };
+type ProgressRow = { lesson_id: string; completed: boolean };
 
 export default function LessonPage() {
   const { slug, lessonId } = useParams<{ slug: string; lessonId: string }>();
@@ -47,9 +48,11 @@ export default function LessonPage() {
       .select("*, lessons:academy_lessons(*)")
       .eq("course_id", c.id)
       .order("sort_order");
-    const sorted = (mods || []).map((m: any) => ({
-      ...m, lessons: (m.lessons || []).sort((a: any, b: any) => a.sort_order - b.sort_order),
-    })).sort((a: any, b: any) => a.sort_order - b.sort_order);
+    // Supabase has no generated types here, so the joined shape is asserted once
+    // and everything downstream is inferred.
+    const sorted = ((mods ?? []) as Module[])
+      .map(m => ({ ...m, lessons: [...(m.lessons ?? [])].sort((a, b) => a.sort_order - b.sort_order) }))
+      .sort((a, b) => a.sort_order - b.sort_order);
     setModules(sorted);
 
     if (user) {
@@ -60,7 +63,7 @@ export default function LessonPage() {
       ]);
       setEnrolled(!!enr || sub?.status === "active");
       const p: Record<string, boolean> = {};
-      (prog || []).forEach((x: any) => { p[x.lesson_id] = x.completed; });
+      ((prog ?? []) as ProgressRow[]).forEach(x => { p[x.lesson_id] = x.completed; });
       setProgress(p);
     }
     setLoading(false);

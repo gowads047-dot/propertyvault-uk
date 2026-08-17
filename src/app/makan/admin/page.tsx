@@ -22,6 +22,12 @@ type Enquiry = {
   listing: { title: string } | null;
 };
 
+// As Supabase returns it: an embedded relation can arrive as an object or a
+// single-element array, which is why the mapping below normalises it.
+type RawEnquiry = Omit<Enquiry, "listing"> & {
+  listing: { title: string } | { title: string }[] | null;
+};
+
 export default function MakanAdmin() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -46,7 +52,7 @@ export default function MakanAdmin() {
     ]).then(([{ data: l }, { data: e }]) => {
       const ls = (l || []) as Listing[];
       setListings(ls);
-      const enqs: Enquiry[] = (e || []).map((x: any) => ({
+      const enqs: Enquiry[] = ((e ?? []) as RawEnquiry[]).map(x => ({
         ...x,
         listing: Array.isArray(x.listing) ? x.listing[0] ?? null : x.listing ?? null,
       }));

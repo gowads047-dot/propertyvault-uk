@@ -4,6 +4,16 @@ import { createClient } from "@supabase/supabase-js";
 // Daily cron — sends rent due reminders to landlords
 // vercel.json: { "crons": [{ "path": "/api/notifications/rent-reminders", "schedule": "0 9 * * *" }] }
 
+// Mirrors the explicit column list in the select below.
+type TenantRow = {
+  user_id: string;
+  first_name: string | null;
+  last_name: string | null;
+  monthly_rent: number | null;
+  email: string | null;
+  tenancy_start: string | null;
+};
+
 export async function GET(req: Request) {
   const authHeader = req.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -27,14 +37,14 @@ export async function GET(req: Request) {
     .eq("status", "active")
     .not("monthly_rent", "is", null);
 
-  const due = (tenants || []).filter((t: any) => {
+  const due = ((tenants ?? []) as TenantRow[]).filter(t => {
     if (!t.tenancy_start) return todayDay === 1;
     const rentDay = new Date(t.tenancy_start).getDate();
     return todayDay === rentDay;
   });
 
   const RESEND_KEY = process.env.RESEND_API_KEY;
-  const byUser: Record<string, { email: string; tenants: any[] }> = {};
+  const byUser: Record<string, { email: string; tenants: TenantRow[] }> = {};
 
   for (const tenant of due) {
     if (!byUser[tenant.user_id]) {
@@ -47,8 +57,8 @@ export async function GET(req: Request) {
   }
 
   for (const [, data] of Object.entries(byUser)) {
-    const totalDue = data.tenants.reduce((s: number, t: any) => s + (t.monthly_rent || 0), 0);
-    const lines = data.tenants.map((t: any) =>
+    const totalDue = data.tenants.reduce((s, t) => s + (t.monthly_rent || 0), 0);
+    const lines = data.tenants.map(t =>
       `${t.first_name} ${t.last_name} — £${(t.monthly_rent || 0).toFixed(2)}`
     ).join("<br>");
 
