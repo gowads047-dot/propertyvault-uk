@@ -20,7 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
-const tools = [
+// `internal` marks a PropertyVault tool, which renders as a next/link rather than
+// an outbound anchor. Declaring it optional here means the render code can read
+// tool.internal directly instead of casting past the inferred union.
+type Tool = { name: string; desc: string; url: string; source: string; internal?: boolean };
+type ToolCategory = { category: string; items: Tool[] };
+
+const tools: ToolCategory[] = [
   { category: "Property Checks", items: [
     { name: "EPC Lookup", desc: "Check the energy performance rating of any property in England and Wales", url: "https://www.gov.uk/find-energy-certificate", source: "GOV.UK" },
     { name: "Council Tax Band Checker", desc: "Find the council tax band and estimated annual charge for any address", url: "https://www.gov.uk/council-tax-bands", source: "Valuation Office Agency" },
@@ -75,8 +81,8 @@ export default function ToolsPage() {
               <h2 className="text-xl font-bold text-navy-800 mb-4">{group.category}</h2>
               <div className="grid md:grid-cols-2 gap-3">
                 {group.items.map((tool) => {
-                  const Tag = (tool as any).internal ? Link : "a";
-                  const linkProps = (tool as any).internal
+                  const Tag = tool.internal ? Link : "a";
+                  const linkProps = tool.internal
                     ? { href: tool.url }
                     : { href: tool.url, target: "_blank", rel: "noopener noreferrer" };
                   return (
@@ -87,7 +93,7 @@ export default function ToolsPage() {
                         <p className="text-xs text-navy-500 mt-0.5">{tool.desc}</p>
                         <p className="text-xs text-navy-400 mt-1">Source: {tool.source}</p>
                       </div>
-                      {!(tool as any).internal && (
+                      {!tool.internal && (
                         <svg className="w-4 h-4 text-navy-400 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                       )}
                     </Tag>

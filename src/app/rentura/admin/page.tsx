@@ -15,13 +15,23 @@ const C = {
 
 type Tab = "users" | "subscriptions" | "waitlist" | "overview";
 
+// Row shapes for the admin tables. These are select("*") queries with no generated
+// Supabase types, so each lists the columns this page actually reads.
+type AdminUser = { id: string; email: string | null; name: string | null; created_at: string; confirmed: boolean };
+type SubRow = {
+  id: string; user_id: string; status: string; plan: string | null;
+  stripe_customer_id: string | null; stripe_subscription_id: string | null;
+  current_period_end: string | null;
+};
+type WaitlistRow = { id: string; email: string; name: string | null; phone: string | null; created_at: string };
+
 export default function RenturaAdmin() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("overview");
-  const [users, setUsers] = useState<any[]>([]);
-  const [subs, setSubs] = useState<any[]>([]);
-  const [waitlist, setWaitlist] = useState<any[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
+  const [subs, setSubs] = useState<SubRow[]>([]);
+  const [waitlist, setWaitlist] = useState<WaitlistRow[]>([]);
   const [stats, setStats] = useState({ users: 0, active: 0, waitlist: 0, mrr: 0 });
   const [dataLoading, setDataLoading] = useState(true);
 
@@ -40,7 +50,7 @@ export default function RenturaAdmin() {
       setUsers(u.data || []);
       setSubs(s.data || []);
       setWaitlist(w.data || []);
-      const activeSubs = (s.data || []).filter((x: any) => x.status === "active");
+      const activeSubs = ((s.data ?? []) as SubRow[]).filter(x => x.status === "active");
       setStats({
         users: (u.data || []).length,
         active: activeSubs.length,
@@ -105,7 +115,7 @@ export default function RenturaAdmin() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 16 }}>Recent signups</p>
-              {waitlist.slice(0, 8).map((w: any) => (
+              {waitlist.slice(0, 8).map(w => (
                 <div key={w.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
                   <span style={{ fontSize: 13, color: C.ink }}>{w.email}</span>
                   <span style={{ fontSize: 11, color: C.ink3 }}>{new Date(w.created_at).toLocaleDateString("en-GB")}</span>
@@ -114,13 +124,13 @@ export default function RenturaAdmin() {
             </div>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 16 }}>Active subscriptions</p>
-              {subs.filter((s: any) => s.status === "active").slice(0, 8).map((s: any) => (
+              {subs.filter(s => s.status === "active").slice(0, 8).map(s => (
                 <div key={s.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
                   <span style={{ fontSize: 12, color: C.ink, fontFamily: "monospace" }}>{s.stripe_customer_id?.slice(0, 18)}…</span>
                   <span style={{ fontSize: 11, color: C.green }}>Active</span>
                 </div>
               ))}
-              {subs.filter((s: any) => s.status === "active").length === 0 && (
+              {subs.filter(s => s.status === "active").length === 0 && (
                 <p style={{ fontSize: 13, color: C.ink3 }}>No active subscriptions yet.</p>
               )}
             </div>
@@ -139,7 +149,7 @@ export default function RenturaAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((u: any) => (
+                {users.map(u => (
                   <tr key={u.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "12px 18px", fontSize: 13, color: C.ink }}>{u.email || "—"}</td>
                     <td style={{ padding: "12px 18px", fontSize: 12, color: C.ink2 }}>{u.name || "—"}</td>
@@ -150,7 +160,7 @@ export default function RenturaAdmin() {
                       </span>
                     </td>
                     <td style={{ padding: "12px 18px" }}>
-                      {subs.find((s: any) => s.user_id === u.id) ? (
+                      {subs.find(s => s.user_id === u.id) ? (
                         <span style={{ fontSize: 10, fontWeight: 700, color: C.green, background: "rgba(34,197,94,0.1)", padding: "2px 8px", borderRadius: 10 }}>Subscriber</span>
                       ) : (
                         <span style={{ fontSize: 10, fontWeight: 700, color: C.ink3, background: "rgba(255,255,255,0.05)", padding: "2px 8px", borderRadius: 10 }}>Free</span>
@@ -176,7 +186,7 @@ export default function RenturaAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {subs.map((s: any) => (
+                {subs.map(s => (
                   <tr key={s.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "12px 18px", fontSize: 11, color: C.ink, fontFamily: "monospace" }}>{s.stripe_customer_id || "—"}</td>
                     <td style={{ padding: "12px 18px", fontSize: 11, color: C.ink2, fontFamily: "monospace" }}>{s.stripe_subscription_id?.slice(0, 20) || "—"}</td>
@@ -204,7 +214,7 @@ export default function RenturaAdmin() {
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink }}>{waitlist.length} signups</p>
               <button
                 onClick={() => {
-                  const csv = ["email,name,phone,created_at", ...waitlist.map((w: any) => `${w.email},${w.name || ""},${w.phone || ""},${w.created_at}`)].join("\n");
+                  const csv = ["email,name,phone,created_at", ...waitlist.map(w => `${w.email},${w.name || ""},${w.phone || ""},${w.created_at}`)].join("\n");
                   const blob = new Blob([csv], { type: "text/csv" });
                   const url = URL.createObjectURL(blob);
                   const a = document.createElement("a");
@@ -224,7 +234,7 @@ export default function RenturaAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {waitlist.map((w: any) => (
+                {waitlist.map(w => (
                   <tr key={w.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink }}>{w.email}</td>
                     <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink2 }}>{w.name || "—"}</td>

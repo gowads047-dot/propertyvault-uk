@@ -33,6 +33,7 @@ interface Listing {
   company_name?: string;
   facebook_url?: string;
   instagram_url?: string;
+  verified?: boolean;
 }
 
 interface Profile {
@@ -230,7 +231,7 @@ export default function ListingPage() {
   useEffect(() => {
     if (!id) return;
     loadListing();
-  }, [id]);
+  }, [id]);
 
   async function toggleSave() {
     if (!user || !listing) return;
@@ -357,7 +358,7 @@ export default function ListingPage() {
                   🎬 Video tour
                 </span>
               )}
-              {(listing as any).verified && (
+              {listing.verified && (
                 <span className="text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1" style={{ background: "rgba(34,197,94,0.85)", color: "white" }}>
                   ✓ Verified
                 </span>

@@ -16,13 +16,28 @@ const C = {
 
 type Tab = "overview" | "members" | "courses" | "enrollments";
 
+// Row shapes for the admin tables. select("*") with no generated Supabase types,
+// so each lists the columns this page actually reads.
+type MemberRow = {
+  id: string; user_id: string; status: string; created_at: string;
+  stripe_customer_id: string | null; current_period_end: string | null;
+};
+type CourseRow = {
+  id: string; title: string; category: string | null; difficulty: string | null;
+  lesson_count: number | null; is_free: boolean; is_published: boolean;
+};
+type EnrollmentRow = {
+  id: string; enrolled_at: string; completed_at: string | null;
+  course: { title: string } | null;
+};
+
 export default function AcademyAdmin() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("overview");
-  const [members, setMembers] = useState<any[]>([]);
-  const [courses, setCourses] = useState<any[]>([]);
-  const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [members, setMembers] = useState<MemberRow[]>([]);
+  const [courses, setCourses] = useState<CourseRow[]>([]);
+  const [enrollments, setEnrollments] = useState<EnrollmentRow[]>([]);
   const [stats, setStats] = useState({ members: 0, active: 0, courses: 0, mrr: 0 });
   const [dataLoading, setDataLoading] = useState(true);
 
@@ -41,7 +56,7 @@ export default function AcademyAdmin() {
       setMembers(m.data || []);
       setCourses(c.data || []);
       setEnrollments(e.data || []);
-      const active = (m.data || []).filter((x: any) => x.status === "active");
+      const active = ((m.data ?? []) as MemberRow[]).filter(x => x.status === "active");
       setStats({ members: (m.data || []).length, active: active.length, courses: (c.data || []).length, mrr: active.length * 14.99 });
       setDataLoading(false);
     });
@@ -98,7 +113,7 @@ export default function AcademyAdmin() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 16 }}>Recent members</p>
-              {members.slice(0, 8).map((m: any) => (
+              {members.slice(0, 8).map(m => (
                 <div key={m.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
                   <span style={{ fontSize: 12, color: C.ink, fontFamily: "monospace" }}>{m.user_id?.slice(0, 20)}…</span>
                   <span style={{ fontSize: 10, fontWeight: 700, color: m.status === "active" ? C.green : C.red, background: m.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", padding: "2px 8px", borderRadius: 10, textTransform: "capitalize" }}>{m.status}</span>
@@ -107,7 +122,7 @@ export default function AcademyAdmin() {
             </div>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 16 }}>Recent enrollments</p>
-              {enrollments.slice(0, 8).map((e: any) => (
+              {enrollments.slice(0, 8).map(e => (
                 <div key={e.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
                   <span style={{ fontSize: 12, color: C.ink2 }}>{e.course?.title || "Unknown"}</span>
                   <span style={{ fontSize: 11, color: C.ink3 }}>{new Date(e.enrolled_at).toLocaleDateString("en-GB")}</span>
@@ -123,7 +138,7 @@ export default function AcademyAdmin() {
             <div style={{ padding: "14px 20px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between" }}>
               <p style={{ fontSize: 13, fontWeight: 700 }}>{members.length} members</p>
               <button onClick={() => {
-                const csv = ["user_id,status,stripe_customer_id,created_at", ...members.map((m: any) => `${m.user_id},${m.status},${m.stripe_customer_id || ""},${m.created_at}`)].join("\n");
+                const csv = ["user_id,status,stripe_customer_id,created_at", ...members.map(m => `${m.user_id},${m.status},${m.stripe_customer_id || ""},${m.created_at}`)].join("\n");
                 const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = "academy-members.csv"; a.click();
               }} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 12, padding: "5px 14px", borderRadius: 7, border: "none", cursor: "pointer" }}>Export CSV</button>
             </div>
@@ -136,7 +151,7 @@ export default function AcademyAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {members.map((m: any) => (
+                {members.map(m => (
                   <tr key={m.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink, fontFamily: "monospace" }}>{m.user_id?.slice(0, 20)}…</td>
                     <td style={{ padding: "11px 18px" }}><span style={{ fontSize: 10, fontWeight: 700, color: m.status === "active" ? C.green : C.red, background: m.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", padding: "2px 8px", borderRadius: 10, textTransform: "capitalize" }}>{m.status}</span></td>
@@ -153,7 +168,7 @@ export default function AcademyAdmin() {
         {/* Courses */}
         {tab === "courses" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            {courses.map((c: any) => (
+            {courses.map(c => (
               <div key={c.id} style={{ display: "flex", alignItems: "center", gap: 16, background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: "16px 20px" }}>
                 <div style={{ flex: 1 }}>
                   <p style={{ fontSize: 14, fontWeight: 700, color: C.ink }}>{c.title}</p>
@@ -182,7 +197,7 @@ export default function AcademyAdmin() {
                 </tr>
               </thead>
               <tbody>
-                {enrollments.map((e: any) => (
+                {enrollments.map(e => (
                   <tr key={e.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink }}>{e.course?.title || "—"}</td>
                     <td style={{ padding: "11px 18px", fontSize: 12, color: C.ink2 }}>{new Date(e.enrolled_at).toLocaleDateString("en-GB")}</td>

@@ -17,6 +17,12 @@ interface Listing {
   created_at: string;
 }
 
+// favourites is selected as "*, listing:listings(*)"
+interface Favourite {
+  id: string;
+  listing: Listing | null;
+}
+
 interface Enquiry {
   id: string;
   message: string;
@@ -31,7 +37,7 @@ export default function DashboardPage() {
   const { user, profile, loading: authLoading, signOut } = useAuth();
   const [listings, setListings] = useState<Listing[]>([]);
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
-  const [favourites, setFavourites] = useState<any[]>([]);
+  const [favourites, setFavourites] = useState<Favourite[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -173,7 +179,7 @@ export default function DashboardPage() {
           <div>
             <h2 className="font-bold mb-4" style={{ color: "var(--h-text)" }}>Saved listings</h2>
             <div className="grid sm:grid-cols-2 gap-3">
-              {favourites.map((f: any) => (
+              {favourites.map(f => (
                 <Link key={f.id} href={`/makan/listing/${f.listing?.id}`} className="h-card !rounded-xl p-4">
                   <p className="font-semibold text-sm" style={{ color: "var(--h-text)" }}>{f.listing?.title}</p>
                   <p className="text-xs" style={{ color: "var(--h-muted)" }}>{f.listing?.area}, {f.listing?.city} · £{f.listing?.price}/mo</p>

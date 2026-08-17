@@ -37,6 +37,15 @@ const ROAD_STAGES = [
   "Create Sustainable Business",
 ];
 
+// Shapes returned by the two Supabase queries below, before completed_lessons
+// is derived and merged in. An embedded relation can arrive as an object or a
+// single-element array, so `course` is normalised when the rows are mapped.
+type ProgressRow = { course_id: string; completed: boolean };
+type CourseRef = { title: string; slug: string; lesson_count: number; duration_hrs: number };
+type EnrollmentRow = Omit<Enrollment, "completed_lessons" | "course"> & {
+  course: CourseRef | CourseRef[] | null;
+};
+
 type Enrollment = {
   id: string;
   course_id: string;
@@ -69,8 +78,12 @@ export default function AcademyDashboard() {
     ]);
     setMemberData(member);
     const progressByCourse: Record<string, number> = {};
-    (prog || []).forEach((p: any) => { progressByCourse[p.course_id] = (progressByCourse[p.course_id] || 0) + 1; });
-    setEnrollments((enr || []).map((e: any) => ({ ...e, completed_lessons: progressByCourse[e.course_id] || 0 })));
+    ((prog ?? []) as ProgressRow[]).forEach(p => { progressByCourse[p.course_id] = (progressByCourse[p.course_id] || 0) + 1; });
+    setEnrollments(((enr ?? []) as unknown as EnrollmentRow[]).map(e => ({
+      ...e,
+      course: Array.isArray(e.course) ? e.course[0] ?? null : e.course,
+      completed_lessons: progressByCourse[e.course_id] || 0,
+    })));
     setCheckingAccess(false);
     return member;
   }, []);
