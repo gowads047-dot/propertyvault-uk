@@ -410,6 +410,20 @@ export default function RenturaDashboard() {
     ) ?? null;
   }
 
+  // Declared above `send`, which reads them when building the assistant's context.
+  // They previously sat ~160 lines below it: fine at runtime, since send only runs
+  // on a user action, but the compiler cannot see that ordering as safe.
+  const totalIncome = Object.values(tenants)
+    .flat()
+    .filter(t => t.is_current)
+    .reduce((sum, t) => sum + (t.monthly_rent ?? 0), 0);
+
+  const totalMortgage = Object.values(mortgages)
+    .flat()
+    .reduce((sum, m) => sum + (m.monthly_payment ?? 0), 0);
+
+  const netCashflow = totalIncome - totalMortgage;
+
   const send = useCallback(async (text: string) => {
     if (!text.trim() || chatLoading || !user) return;
     setMessages(m => [...m, { role: "user", text: text.trim(), ts: "just now" }]);
@@ -590,16 +604,6 @@ export default function RenturaDashboard() {
     setChatLoading(false);
   }, [chatLoading, apiHistory, user, properties]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const totalIncome = Object.values(tenants)
-    .flat()
-    .filter(t => t.is_current)
-    .reduce((sum, t) => sum + (t.monthly_rent ?? 0), 0);
-
-  const totalMortgage = Object.values(mortgages)
-    .flat()
-    .reduce((sum, m) => sum + (m.monthly_payment ?? 0), 0);
-
-  const netCashflow = totalIncome - totalMortgage;
 
   const urgentCount = alerts.filter(a => a.urgency === "urgent").length;
 

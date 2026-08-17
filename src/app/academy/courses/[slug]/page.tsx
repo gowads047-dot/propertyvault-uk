@@ -32,11 +32,6 @@ export default function CoursePage() {
   const [loading, setLoading] = useState(true);
   const [enrolling, setEnrolling] = useState(false);
 
-  useEffect(() => {
-    if (!slug) return;
-    loadCourse();
-  }, [slug, user]); // eslint-disable-line
-
   async function loadCourse() {
     const { data: c } = await supabase
       .from("academy_courses")
@@ -72,6 +67,11 @@ export default function CoursePage() {
     }
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (!slug) return;
+    loadCourse();
+  }, [slug, user]); // eslint-disable-line
 
   async function enroll() {
     if (!user || !course) return;

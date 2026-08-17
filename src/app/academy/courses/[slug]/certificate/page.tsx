@@ -20,12 +20,6 @@ export default function CourseCertificate() {
   const [eligible, setEligible] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!user) { router.push("/academy/join"); return; }
-    load();
-  }, [user, authLoading]); // eslint-disable-line
-
   async function load() {
     const { data: c } = await supabase.from("academy_courses").select("id, title, slug, lesson_count, duration_hrs").eq("slug", slug).single();
     if (!c) { setLoading(false); return; }
@@ -41,6 +35,12 @@ export default function CourseCertificate() {
     setEligible(d >= t && t > 0);
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) { router.push("/academy/join"); return; }
+    load();
+  }, [user, authLoading]); // eslint-disable-line
 
   function printCert() {
     window.print();

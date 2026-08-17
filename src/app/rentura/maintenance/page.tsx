@@ -189,11 +189,6 @@ export default function MaintenancePage() {
   const [form, setForm] = useState<IssueForm>(BLANK_FORM);
   const setF = (k: keyof IssueForm, v: string | boolean) => setForm(f => ({ ...f, [k]: v }));
 
-  useEffect(() => {
-    if (!user) { router.push("/rentura/auth?next=/rentura/maintenance"); return; }
-    load();
-  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
-
   async function load() {
     setLoading(true);
     const [propRes, issueRes] = await Promise.all([
@@ -204,6 +199,11 @@ export default function MaintenancePage() {
     setIssues((issueRes.data ?? []) as RenturaMaintenance[]);
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (!user) { router.push("/rentura/auth?next=/rentura/maintenance"); return; }
+    load();
+  }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function saveIssue() {
     if (!user || !form.title.trim() || !form.property_id) return;

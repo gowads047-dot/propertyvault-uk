@@ -40,12 +40,6 @@ export default function MessagesPage() {
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!user) { router.push("/makan/auth"); return; }
-    loadMessages();
-  }, [user, authLoading]); // eslint-disable-line
-
   async function loadMessages() {
     if (!user) return;
     const { data } = await supabase
@@ -80,6 +74,12 @@ export default function MessagesPage() {
     setThreads(sorted);
     setLoading(false);
   }
+
+  useEffect(() => {
+    if (authLoading) return;
+    if (!user) { router.push("/makan/auth"); return; }
+    loadMessages();
+  }, [user, authLoading]); // eslint-disable-line
 
   async function markRead(thread: Thread) {
     if (!user) return;
