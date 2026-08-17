@@ -11,6 +11,40 @@ function pct(n: number) {
   return n.toFixed(2) + "%";
 }
 
+// Defined at module scope so React keeps the same component type across renders.
+// Nested inside the page they were re-created every render, remounting their
+// subtree — which for a range input means losing focus mid-drag.
+function Row({ label, value, note }: { label: string; value: string; note?: string }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div>
+        <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{label}</span>
+        {note && <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginLeft: 6 }}>{note}</span>}
+      </div>
+      <span style={{ fontSize: 14, fontWeight: 700, color: "#d4af37" }}>{value}</span>
+    </div>
+  );
+}
+
+function Slider({ label, value, min, max, step = 1000, onChange, prefix = "£", suffix = "" }: {
+  label: string; value: number; min: number; max: number; step?: number; onChange: (v: number) => void; prefix?: string; suffix?: string;
+}) {
+  return (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+        <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>{label}</label>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "#d4af37" }}>{prefix}{value.toLocaleString("en-GB")}{suffix}</span>
+      </div>
+      <input type="range" min={min} max={max} step={step} value={value}
+        onChange={e => onChange(Number(e.target.value))}
+        style={{ width: "100%", accentColor: "#d4af37" }} />
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
+        <span>{prefix}{min.toLocaleString()}</span><span>{prefix}{max.toLocaleString()}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function AcademyCalculatorPage() {
   const [purchasePrice, setPurchasePrice] = useState(180000);
   const [refurbCost, setRefurbCost] = useState(25000);
@@ -47,37 +81,6 @@ export default function AcademyCalculatorPage() {
     { label: "Cash Left In (BRRR)", ok: cashLeft < 20000, val: cashLeft < 0 ? "None left in! 🎯" : fmt(cashLeft) },
   ];
   const score = scoreItems.filter(s => s.ok).length;
-
-  function Row({ label, value, note }: { label: string; value: string; note?: string }) {
-    return (
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div>
-          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{label}</span>
-          {note && <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginLeft: 6 }}>{note}</span>}
-        </div>
-        <span style={{ fontSize: 14, fontWeight: 700, color: "#d4af37" }}>{value}</span>
-      </div>
-    );
-  }
-
-  function Slider({ label, value, min, max, step = 1000, onChange, prefix = "£", suffix = "" }: {
-    label: string; value: number; min: number; max: number; step?: number; onChange: (v: number) => void; prefix?: string; suffix?: string;
-  }) {
-    return (
-      <div style={{ marginBottom: 16 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-          <label style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", fontWeight: 600 }}>{label}</label>
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#d4af37" }}>{prefix}{value.toLocaleString("en-GB")}{suffix}</span>
-        </div>
-        <input type="range" min={min} max={max} step={step} value={value}
-          onChange={e => onChange(Number(e.target.value))}
-          style={{ width: "100%", accentColor: "#d4af37" }} />
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
-          <span>{prefix}{min.toLocaleString()}</span><span>{prefix}{max.toLocaleString()}</span>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div style={{ background: "#0a0f1e", minHeight: "100vh", color: "white" }}>

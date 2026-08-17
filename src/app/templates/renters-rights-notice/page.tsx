@@ -5,6 +5,43 @@ import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
 import Link from "next/link";
 
+// Defined at module scope so React keeps the same component type across renders.
+// Nested inside the page they were re-created on every keystroke, remounting
+// their subtree each time.
+function DocSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 10 }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ display: "flex", gap: 8, marginBottom: 6, fontSize: 13 }}>
+      <span style={{ color: "#6b7280", minWidth: 180, flexShrink: 0 }}>{label}</span>
+      <span style={{ fontWeight: 600, color: "#0f1b36", borderBottom: "1px solid #e5e7eb", flex: 1 }}>{value || "—"}</span>
+    </div>
+  );
+}
+
+function Right({ n, title, body }: { n: string; title: string; body: string }) {
+  return (
+    <div style={{ display: "flex", gap: 12, marginBottom: 14, pageBreakInside: "avoid" }}>
+      <div style={{ width: 24, height: 24, background: "#c9a84c", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+        <span style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36" }}>{n}</span>
+      </div>
+      <div>
+        <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 2 }}>{title}</p>
+        <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.6 }}>{body}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function RentersRightsNotice() {
   const [landlordName, setLandlordName] = useState("");
   const [propertyAddress, setPropertyAddress] = useState("");
@@ -18,34 +55,6 @@ export default function RentersRightsNotice() {
   const [mode, setMode] = useState<"form" | "preview">("form");
 
   const fmt = (d: string) => d ? new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "_______________";
-
-  const DocSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <div style={{ marginBottom: 24 }}>
-      <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10, marginBottom: 10 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{title}</p>
-      </div>
-      {children}
-    </div>
-  );
-
-  const Row = ({ label, value }: { label: string; value: string }) => (
-    <div style={{ display: "flex", gap: 8, marginBottom: 6, fontSize: 13 }}>
-      <span style={{ color: "#6b7280", minWidth: 180, flexShrink: 0 }}>{label}</span>
-      <span style={{ fontWeight: 600, color: "#0f1b36", borderBottom: "1px solid #e5e7eb", flex: 1 }}>{value || "—"}</span>
-    </div>
-  );
-
-  const Right = ({ n, title, body }: { n: string; title: string; body: string }) => (
-    <div style={{ display: "flex", gap: 12, marginBottom: 14, pageBreakInside: "avoid" }}>
-      <div style={{ width: 24, height: 24, background: "#c9a84c", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-        <span style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36" }}>{n}</span>
-      </div>
-      <div>
-        <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 2 }}>{title}</p>
-        <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.6 }}>{body}</p>
-      </div>
-    </div>
-  );
 
   return (
     <>
