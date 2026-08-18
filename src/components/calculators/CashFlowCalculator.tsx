@@ -90,6 +90,16 @@ export function CashFlowCalculator() {
             <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(+e.target.value)} className="w-full accent-gold-500" />
             <p className="text-center text-sm font-bold text-navy-800">{fmt(councilTax)}/mo</p>
           </div>
+          <div>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Utilities (landlord-paid)</label>
+            <input type="range" min={0} max={400} step={10} value={utilities} onChange={e => setUtilities(+e.target.value)} className="w-full accent-gold-500" />
+            <p className="text-center text-sm font-bold text-navy-800">{fmt(utilities)}/mo</p>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-navy-700 mb-1">Ground Rent / Service Charge</label>
+            <input type="range" min={0} max={4000} step={50} value={groundRent} onChange={e => setGroundRent(+e.target.value)} className="w-full accent-gold-500" />
+            <p className="text-center text-sm font-bold text-navy-800">{fmt(groundRent)}/yr</p>
+          </div>
         </div>
 
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Investment Details</h3>
@@ -142,6 +152,12 @@ export function CashFlowCalculator() {
           <div className="flex justify-between"><span className="text-navy-600">Agent fee</span><span className="font-semibold text-red-600">−{fmt(results.managementCost)}</span></div>
           <div className="flex justify-between"><span className="text-navy-600">Maintenance reserve</span><span className="font-semibold text-red-600">−{fmt(results.maintenanceCost)}</span></div>
           <div className="flex justify-between"><span className="text-navy-600">Insurance + council tax</span><span className="font-semibold text-red-600">−{fmt(insurance + councilTax)}</span></div>
+          {utilities > 0 && (
+            <div className="flex justify-between"><span className="text-navy-600">Utilities</span><span className="font-semibold text-red-600">−{fmt(utilities)}</span></div>
+          )}
+          {groundRent > 0 && (
+            <div className="flex justify-between"><span className="text-navy-600">Ground rent / service charge</span><span className="font-semibold text-red-600">−{fmt(groundRent / 12)}</span></div>
+          )}
           <div className="flex justify-between border-t border-navy-100 pt-2 font-bold"><span>Monthly cash flow</span><span className={positive ? "text-green-700" : "text-red-700"}>{positive ? "+" : ""}{fmt(results.monthlyCashFlow)}</span></div>
         </div>
 
