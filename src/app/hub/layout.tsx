@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
   title: "Your Hub — PropertyVault",
@@ -6,6 +7,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Pages below call useAuth(), so the provider must sit above them. Without it
+// useAuth() falls back to the default context, whose loading is hard-coded true
+// and never changes, leaving every page stuck on its loading state.
 export default function HubLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return <AuthProvider>{children}</AuthProvider>;
 }
