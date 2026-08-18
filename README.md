@@ -25,7 +25,6 @@ The codebase hosts four products under one Next.js app, each routed from `src/ap
 - [Next.js 16](https://nextjs.org) (App Router) with React 19 and TypeScript
 - [Tailwind CSS 4](https://tailwindcss.com) for styling
 - [Supabase](https://supabase.com) for auth and data
-- [Prisma 7](https://prisma.io) with PostgreSQL
 - [Stripe](https://stripe.com) for subscriptions and checkout
 - [Resend](https://resend.com) with React Email for transactional mail
 - [Anthropic SDK](https://docs.anthropic.com) for the Rentura assistant and document extraction
@@ -54,8 +53,6 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 
-# Database (Prisma)
-DATABASE_URL=
 
 # Stripe
 STRIPE_SECRET_KEY=
@@ -95,7 +92,6 @@ src/
   components/    Shared UI — layout, calculators, blog, Rentura
   lib/           Supabase client, auth and language context, shared types
   emails/        React Email templates
-prisma/          Database schema
 public/          Static assets and downloadable documents
 ```
 
