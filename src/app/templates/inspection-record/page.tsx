@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import { SignatureBlock } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const AREAS = [
@@ -33,8 +33,6 @@ export default function InspectionRecordTemplate() {
 
   const urgentCount  = AREAS.flatMap(a => a.checks.map(c => ratings[`${a.id}-${c}`])).filter(r => r === "Urgent").length;
   const actionCount  = AREAS.flatMap(a => a.checks.map(c => ratings[`${a.id}-${c}`])).filter(r => r === "Action needed" || r === "Urgent").length;
-  const overallStatus = urgentCount > 0 ? "Urgent issues found" : actionCount > 0 ? "Actions required" : "Satisfactory";
-  const overallColor  = urgentCount > 0 ? "#dc2626" : actionCount > 0 ? "#d97706" : "#16a34a";
 
   return (
     <>

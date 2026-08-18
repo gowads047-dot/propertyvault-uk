@@ -48,7 +48,6 @@ export default function HMOYieldPage() {
     const annualRent = totalMonthlyRent * 12;
     const monthlyExpenses = billsPerMonth + insurance + maintenance + management + licensing;
     const annualExpenses = monthlyExpenses * 12;
-    const annualMortgage = mortgagePayment * 12;
     const grossYield = calcGrossYield(maxMonthlyRent * 12, purchasePrice);
     const netIncome = annualRent - annualExpenses;
     const netYield = calcNetYield(netIncome, 0, purchasePrice);

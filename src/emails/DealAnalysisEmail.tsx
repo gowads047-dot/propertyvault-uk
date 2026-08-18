@@ -36,7 +36,6 @@ const BASE = "https://propertyvaultuk.co.uk";
 const GOLD = "#c9a84c";
 const NAVY = "#0f1b36";
 const GREY_BG = "#f4f6f9";
-const TEXT = "#374151";
 const MUTED = "#6b7280";
 
 const scoreColor = (s: number) => (s >= 70 ? "#16a34a" : s >= 45 ? "#c9a84c" : "#dc2626");

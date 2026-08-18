@@ -23,7 +23,6 @@ interface StarterPackEmailProps {
 const BASE = "https://propertyvaultuk.co.uk";
 const GOLD = "#c9a84c";
 const NAVY = "#0f1b36";
-const LIGHT_NAVY = "#1a2d5a";
 const GREY_BG = "#f4f6f9";
 const TEXT = "#374151";
 const MUTED = "#6b7280";

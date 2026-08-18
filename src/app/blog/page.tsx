@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { BlogList } from "@/components/blog/BlogList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";

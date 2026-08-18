@@ -391,7 +391,7 @@ export default function SouthamptonPage() {
               </p>
             </Link>
             <Link
-              href="/calculators/hmo-roi"
+              href="/calculators/hmo-yield"
               className="bg-white rounded-xl p-5 border border-navy-100 hover:border-gold-400 transition-colors text-center group"
             >
               <p className="font-bold text-navy-900 group-hover:text-gold-600 transition-colors">

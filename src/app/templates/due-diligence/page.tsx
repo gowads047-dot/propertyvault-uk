@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import {ShareToolbar } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 
 const SECTIONS = [
   {
