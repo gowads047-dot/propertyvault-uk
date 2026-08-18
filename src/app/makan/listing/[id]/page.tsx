@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
 import { ShareButtons } from "@/components/hetta/ShareButtons";
@@ -210,7 +211,7 @@ export default function ListingPage() {
   const [floorPlanOpen, setFloorPlanOpen] = useState(false);
 
 
-  async function loadListing() {
+  const loadListing = useCallback(async () => {
     const { data } = await supabase.from("listings").select("*").eq("id", id).single();
     if (data) {
       setListing(data);
@@ -226,13 +227,13 @@ export default function ListingPage() {
       setSimilar(sim || []);
     }
     setLoading(false);
-  }
+  }, [id, user]);
 
   useEffect(() => {
     if (!id) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- loadListing is an async fetch; its setState calls run after the await, not during render
     loadListing();
-  }, [id]);
+  }, [id, loadListing]);
 
   async function toggleSave() {
     if (!user || !listing) return;
@@ -326,10 +327,13 @@ export default function ListingPage() {
           {/* Main image */}
           <div className="relative overflow-hidden md:rounded-xl" style={{ height: "clamp(240px, 48vw, 520px)", maxHeight: 520 }}>
             {photos.length > 0 ? (
-              <img
+              <Image
                 src={photos[activeImg]}
                 alt={listing.title}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                priority
+                className="object-cover"
               />
             ) : listing.video_url ? (
               <video src={listing.video_url} controls className="w-full h-full object-cover" style={{ background: "#0a0a0a" }} />
@@ -400,8 +404,8 @@ export default function ListingPage() {
                 <button key={i} onClick={() => setActiveImg(i)}
                   className="flex-shrink-0 rounded-lg overflow-hidden transition-all flex flex-col gap-1 items-center"
                   style={{ width: 72 }}>
-                  <div className="w-full rounded-lg overflow-hidden" style={{ height: 52, outline: i === activeImg ? "2px solid var(--h-accent)" : "2px solid transparent", outlineOffset: 2 }}>
-                    <img src={ph} alt="" className="w-full h-full object-cover" />
+                  <div className="w-full rounded-lg overflow-hidden relative" style={{ height: 52, outline: i === activeImg ? "2px solid var(--h-accent)" : "2px solid transparent", outlineOffset: 2 }}>
+                    <Image src={ph} alt="" fill sizes="72px" className="object-cover" />
                   </div>
                   <span className="text-[9px] leading-tight text-center truncate w-full" style={{ color: i === activeImg ? "var(--h-accent)" : "rgba(255,255,255,0.35)" }}>
                     {PHOTO_LABELS[i] ?? `Photo ${i + 1}`}
@@ -598,7 +602,7 @@ export default function ListingPage() {
                   className="w-full rounded-2xl overflow-hidden relative group"
                   style={{ border: "1px solid var(--h-border)", aspectRatio: "4/3" }}
                 >
-                  <img src={listing.floor_plan_url} alt="Floor plan" className="w-full h-full object-contain" />
+                  <Image src={listing.floor_plan_url} alt="Floor plan" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: "rgba(0,0,0,0.3)" }}>
                     <span className="text-white text-sm font-semibold px-4 py-2 rounded-xl" style={{ background: "rgba(0,0,0,0.6)" }}>View full size</span>
                   </div>
@@ -610,6 +614,7 @@ export default function ListingPage() {
             {floorPlanOpen && listing.floor_plan_url && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }}
                 onClick={() => setFloorPlanOpen(false)}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- lightbox sizes to the image's own aspect ratio via max-w/max-h; next/image needs fixed dimensions or a sized parent, neither of which fits here */}
                 <img src={listing.floor_plan_url} alt="Floor plan" className="max-w-full max-h-full rounded-2xl" />
               </div>
             )}
@@ -806,7 +811,7 @@ export default function ListingPage() {
                   <Link href={`/makan/listing/${s.id}`} key={s.id} className="h-card group">
                     <div className="aspect-[4/3] overflow-hidden relative" style={{ background: "#e8e5e1" }}>
                       {s.images?.[0] ? (
-                        <img src={s.images[0]} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                        <Image src={s.images[0]} alt={s.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <svg className="w-10 h-10 opacity-20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>

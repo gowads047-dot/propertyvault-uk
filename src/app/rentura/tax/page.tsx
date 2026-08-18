@@ -300,8 +300,6 @@ export default function TaxIntelligence() {
 
   // Payments on account dates
   const poaYear = parseInt(taxYear.label.split("/")[0]) + 1;
-  const poa1 = `31 January ${poaYear + 1}`;
-  const poa2 = `31 July ${poaYear + 1}`;
 
   // MTD threshold check
   const totalIncomeMTD = result?.totalIncome ?? 0;

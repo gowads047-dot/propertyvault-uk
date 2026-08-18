@@ -31,7 +31,7 @@ export default function SettingsPage() {
     setName(profile?.name || "");
     setWhatsapp(profile?.whatsapp || "");
     setNewEmail(user.email || "");
-  }, [user, profile, authLoading]);
+  }, [user, profile, authLoading, router]);
 
   async function saveProfile() {
     if (!user) return;

@@ -313,7 +313,6 @@ export default function FloatingChat() {
     // Lazy file upload — reuse URL across multiple actions
     const getUrl = async (): Promise<string | null> => {
       if (pendingScan.fileUrl) return pendingScan.fileUrl;
-      const ext = pendingScan.file.name.split(".").pop() ?? "bin";
       const path = `${user.id}/${Date.now()}-${pendingScan.file.name.replace(/[^a-z0-9._-]/gi, "_").toLowerCase()}`;
       const url = await uploadToStorage("rentura-docs", path, pendingScan.base64, pendingScan.mediaType);
       if (url) setPendingScan(s => s ? { ...s, fileUrl: url } : s);

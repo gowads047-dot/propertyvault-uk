@@ -31,7 +31,6 @@ export async function GET(req: Request) {
       .eq("expiry_date", dateStr);
 
     for (const cert of certs || []) {
-      const { data: profile } = await supabase.from("profiles").select("name").eq("id", cert.user_id).single();
       const { data: authUser } = await supabase.auth.admin.getUserById(cert.user_id);
       const email = authUser?.user?.email;
       if (!email) continue;

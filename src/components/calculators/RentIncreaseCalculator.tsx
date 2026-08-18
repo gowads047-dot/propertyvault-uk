@@ -23,7 +23,7 @@ export function RentIncreaseCalculator() {
     const cpiBased = currentRent * 0.039; // approx CPI reference 3.9%
     const marketBased = currentRent * 0.05;
     return { newRent, increase, annualExtra, yieldIncrease5yr, validS13, noticeDays, cpiBased, marketBased };
-  }, [currentRent, increaseType, increasePercent, increaseFixed, monthsUntilIncrease, noticeWeeks]);
+  }, [currentRent, increaseType, increasePercent, increaseFixed, noticeWeeks]);
 
   const fmt = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 

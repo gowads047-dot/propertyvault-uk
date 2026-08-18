@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
@@ -157,10 +158,12 @@ export default function RoomsPage() {
                     {/* Photo */}
                     <div className="relative aspect-[16/10] overflow-hidden" style={{ background: "#e8e0d6" }}>
                       {hasPhoto ? (
-                        <img
+                        <Image
                           src={r.images[0]}
                           alt={r.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                           onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
                         />
                       ) : (

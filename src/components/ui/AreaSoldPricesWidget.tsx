@@ -12,7 +12,6 @@ interface AreaData {
 const fmt = (n: number) => "£" + Math.round(n).toLocaleString("en-GB");
 
 export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode?: string }) {
-  const [postcode, setPostcode] = useState(defaultPostcode);
   const [input,    setInput]    = useState(defaultPostcode);
   const [loading,  setLoading]  = useState(false);
   const [data,     setData]     = useState<AreaData | null>(null);
@@ -21,7 +20,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
   async function lookup(pc: string = input) {
     const q = pc.trim();
     if (!q) return;
-    setLoading(true); setError(""); setData(null); setPostcode(q);
+    setLoading(true); setError(""); setData(null);
     try {
       const res  = await fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(q)}`);
       const json = await res.json();

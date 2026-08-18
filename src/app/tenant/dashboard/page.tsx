@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 type Message = {
@@ -23,6 +23,7 @@ const STATUS_COLOR: Record<string, string> = {
 
 function TenantPortalInner() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const token = searchParams.get("token") || "";
 
   const [info, setInfo] = useState<TenantInfo | null>(null);
@@ -142,7 +143,7 @@ function TenantPortalInner() {
 
   async function handleSignOut() {
     await supabase.auth.signOut();
-    window.location.href = `/tenant?token=${token}`;
+    router.push(`/tenant?token=${token}`);
   }
 
   if (loading) {

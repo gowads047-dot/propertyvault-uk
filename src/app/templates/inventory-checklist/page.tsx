@@ -183,7 +183,6 @@ export default function InventoryChecklistTemplate() {
               </div>
 
               {ROOMS.map(room => {
-                const roomItems = room.items.filter(item => conditions[`${room.id}-${item}`]);
                 return (
                   <div key={room.id} style={{ marginBottom: 16 }}>
                     <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}>
