@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
+import { SignatureBlock } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 

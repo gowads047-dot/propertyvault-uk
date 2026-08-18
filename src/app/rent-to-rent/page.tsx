@@ -225,7 +225,6 @@ export default function RentToRentPage() {
   const saMonthlyRevenue = sa ? (sa.nightly * (sa.occupancy / 100) * 30) - (sa.nightly * (sa.occupancy / 100) * 30 * sa.platformFee / 100) - (30 / sa.avgStay * sa.cleaningPerStay) : 0;
   const saProfit = sa ? saMonthlyRevenue - sa.rent : 0;
   const slProfit = sl ? sl.sublet - sl.rent - sl.costs : 0;
-  const profit = hmo ? hmoProfit : sa ? saProfit : slProfit;
 
   return (
     <main className="min-h-screen bg-[#0a1628] text-white">

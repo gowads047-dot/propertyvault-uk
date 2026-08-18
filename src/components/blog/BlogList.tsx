@@ -28,23 +28,6 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
   Academy:    { bg: "#e0e7ff", text: "#3730a3" },
 };
 
-function CategoryBadge({ cat, small = false }: { cat: string; small?: boolean }) {
-  const c = CATEGORY_COLORS[cat] ?? { bg: "#f1f5f9", text: "#475569" };
-  return (
-    <span style={{
-      display: "inline-block",
-      padding: small ? "2px 8px" : "3px 10px",
-      borderRadius: 20,
-      fontSize: small ? 10 : 11,
-      fontWeight: 700,
-      background: c.bg,
-      color: c.text,
-      letterSpacing: "0.02em",
-    }}>
-      {cat}
-    </span>
-  );
-}
 
 function NewsletterBlock() {
   const [email, setEmail] = useState("");

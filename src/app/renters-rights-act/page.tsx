@@ -360,7 +360,7 @@ export default function RentersRightsActPage() {
               <p className="text-xs text-navy-500 mt-1 leading-relaxed">Recalculate your yields accounting for higher expected void rates post-Act</p>
               <span className="text-xs font-semibold text-gold-600 mt-3 block">Calculate →</span>
             </Link>
-            <Link href="/calculators/cash-flow" className="group bg-navy-50 rounded-2xl border border-navy-100 p-5 hover:border-gold-400 transition-colors">
+            <Link href="/calculators/monthly-cashflow" className="group bg-navy-50 rounded-2xl border border-navy-100 p-5 hover:border-gold-400 transition-colors">
               <p className="font-bold text-navy-900 group-hover:text-gold-600 transition-colors text-sm">Monthly Cash Flow Calculator</p>
               <p className="text-xs text-navy-500 mt-1 leading-relaxed">Model the impact of higher vacancy rates and compliance costs on net income</p>
               <span className="text-xs font-semibold text-gold-600 mt-3 block">Model your cashflow →</span>

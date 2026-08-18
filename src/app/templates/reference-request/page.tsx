@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 
 export default function ReferenceRequest() {
   const [mode, setMode] = useState<"form" | "preview">("form");

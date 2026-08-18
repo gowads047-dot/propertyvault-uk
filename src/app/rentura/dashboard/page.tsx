@@ -129,15 +129,6 @@ function computeHealthScore(
 
 // ── TrustBadge ────────────────────────────────────────────────────────────────
 
-function TrustBadge({ level }: { level: string }) {
-  const cfg: Record<string, { label: string; color: string; bg: string }> = {
-    verified:  { label: "✓ Verified",  color: "#16a34a", bg: "rgba(22,163,74,0.08)" },
-    confirmed: { label: "◎ Confirmed", color: "#2563eb", bg: "rgba(37,99,235,0.08)" },
-    suggested: { label: "~ Suggested", color: "#d97706", bg: "rgba(217,119,6,0.08)" },
-  };
-  const c = cfg[level] ?? cfg.suggested;
-  return <span style={{ fontSize: 10, fontWeight: 700, color: c.color, background: c.bg, padding: "2px 7px", borderRadius: 6, letterSpacing: "0.04em", flexShrink: 0 }}>{c.label}</span>;
-}
 
 // ── Property Card ─────────────────────────────────────────────────────────────
 

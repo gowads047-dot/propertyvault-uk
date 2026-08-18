@@ -1,7 +1,7 @@
 "use client";
-import { useState, useMemo } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import { useState } from "react";
+import { SignatureBlock } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const fmt = (n: number) => "£" + Math.round(n).toLocaleString("en-GB");

@@ -66,7 +66,7 @@ export default function HubPage() {
               <button onClick={signOut} style={{ fontSize: 12, color: INK3, background: "none", border: `1px solid ${BORDER}`, borderRadius: 7, padding: "5px 12px", cursor: "pointer", fontFamily: "inherit" }}>Sign out</button>
             </div>
           ) : (
-            <Link href="/auth/login" style={{ fontSize: 13, color: GOLD, fontWeight: 700, textDecoration: "none" }}>Sign in</Link>
+            <Link href="/rentura/auth?next=/hub" style={{ fontSize: 13, color: GOLD, fontWeight: 700, textDecoration: "none" }}>Sign in</Link>
           )}
         </div>
       </header>

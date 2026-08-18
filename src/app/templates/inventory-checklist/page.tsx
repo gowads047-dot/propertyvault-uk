@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import { SignatureBlock } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const ROOMS = [

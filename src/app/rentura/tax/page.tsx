@@ -21,7 +21,6 @@ function getTaxYear(offset = 0): TaxYear {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function fmt(n: number, prefix = "£") { return prefix + Math.round(n).toLocaleString("en-GB"); }
 function fmtDate(d: string | null) { if (!d) return "—"; return new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }); }
-function parseAmt(v: unknown): number { return v ? parseFloat(String(v).replace(/[^0-9.-]/g, "")) || 0 : 0; }
 function monthsBetween(a: Date, b: Date): number {
   return Math.max(0, (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth());
 }
@@ -208,15 +207,6 @@ function TRow({ label, value, sub, color, large, indent }: { label: string; valu
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: `1px solid ${BORDER}`, paddingLeft: indent ? 12 : 0 }}>
       <div><p style={{ fontSize: large ? 15 : 13, fontWeight: large ? 800 : 600, color: INK }}>{label}</p>{sub && <p style={{ fontSize: 11, color: INK2, marginTop: 2 }}>{sub}</p>}</div>
       <p style={{ fontSize: large ? 17 : 14, fontWeight: large ? 900 : 700, color: color ?? INK }}>{value}</p>
-    </div>
-  );
-}
-function NumInput({ value, onChange, prefix = "£" }: { value: number; onChange: (n: number) => void; prefix?: string }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-      <span style={{ fontSize: 12, color: INK2 }}>{prefix}</span>
-      <input type="number" value={value || ""} min={0} onChange={e => onChange(parseFloat(e.target.value) || 0)}
-        style={{ width: 80, border: `1px solid ${BORDER}`, borderRadius: 6, padding: "4px 8px", fontSize: 12, fontFamily: "inherit", background: "white", color: INK, textAlign: "right" }} />
     </div>
   );
 }

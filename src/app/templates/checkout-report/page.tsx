@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import { PrintHeader, PrintFooter, PrintSection, PrintRow } from "@/components/PrintDoc";
+import { SignatureBlock } from "@/components/SignatureBlock";
+import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
 import Link from "next/link";
 
 const fmt = (n: number) => "£" + n.toFixed(2);
@@ -36,7 +36,6 @@ export default function CheckOutReportTemplate() {
     { desc: "", amount: 0 }, { desc: "", amount: 0 }, { desc: "", amount: 0 }
   ]);
   const [generalNotes, setGeneralNotes] = useState("");
-  const [agreed, setAgreed] = useState(false);
 
   const totalDeductions = deductions.reduce((s, d) => s + (d.amount || 0), 0);
   const refund = Math.max(0, depositHeld - totalDeductions);
