@@ -245,7 +245,7 @@ export default function DueDiligenceTemplate() {
                     <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.08em" }}>{section.title}</p>
                   </div>
                   <div style={{ border: "1px solid #e5e7eb", borderTop: "none" }}>
-                    {section.items.map((item, ii) => (
+                    {section.items.map((item) => (
                       <div key={item.id} style={{ display: "flex", gap: 10, padding: "7px 12px", borderBottom: "1px solid #f1f5f9", background: checked[item.id] ? "#f0fdf4" : "white" }}>
                         <div style={{ width: 13, height: 13, border: `1.5px solid ${item.critical && !checked[item.id] ? "#ef4444" : "#0f1b36"}`, flexShrink: 0, marginTop: 2, background: checked[item.id] ? "#22c55e" : "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
                           {checked[item.id] && <span style={{ fontSize: 8, color: "white", fontWeight: 800 }}>✓</span>}

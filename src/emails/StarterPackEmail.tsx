@@ -7,7 +7,6 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Link,
   Preview,
   Row,
@@ -53,7 +52,7 @@ const CHECKLIST = [
   { n: "7", text: "Create a pet policy — you must respond to pet requests in writing within 28 days." },
 ];
 
-export default function StarterPackEmail({ name, userType }: StarterPackEmailProps) {
+export default function StarterPackEmail({ name }: StarterPackEmailProps) {
   const firstName = name.split(" ")[0];
 
   return (

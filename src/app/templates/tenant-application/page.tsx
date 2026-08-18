@@ -15,7 +15,6 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
     </div>
   );
 }
-const inp = "width:100%;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:10px;fontSize:14px;outline:none;boxSizing:border-box;background:white;";
 function Input({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
   return <input type={type} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 14, outline: "none", boxSizing: "border-box", background: "white", fontFamily: "inherit" }} />;
 }

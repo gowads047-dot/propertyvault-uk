@@ -85,6 +85,7 @@ export default function RentVsBuyPage() {
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Deposit ({depositPct}%)</label><input type="range" min={5} max={40} step={1} value={depositPct} onChange={(e) => setDepositPct(Number(e.target.value))} className="w-full accent-gold-500" /></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Rate ({mortgageRate}%)</label><input type="range" min={2} max={8} step={0.1} value={mortgageRate} onChange={(e) => setMortgageRate(Number(e.target.value))} className="w-full accent-gold-500" /></div>
               </div>
+              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Term ({term} years)</label><input type="range" min={5} max={40} step={1} value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full accent-gold-500" /></div>
               <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Property Growth ({annualGrowth}%)</label><input type="range" min={0} max={8} step={0.5} value={annualGrowth} onChange={(e) => setAnnualGrowth(Number(e.target.value))} className="w-full accent-gold-500" /></div>
 
               <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Renting Scenario</h3>

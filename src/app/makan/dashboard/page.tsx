@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
@@ -41,7 +41,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     if (!user) return;
 
     const [listingsRes, enquiriesRes, favsRes] = await Promise.all([
@@ -54,14 +54,14 @@ export default function DashboardPage() {
     setEnquiries(enquiriesRes.data || []);
     setFavourites(favsRes.data || []);
     setLoading(false);
-  }
+  }, [user]);
 
   useEffect(() => {
     if (authLoading) return;
     if (!user) { router.push("/makan/auth"); return; }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- fetchData is an async fetch; its setState calls run after the await, not during render
     fetchData();
-  }, [user, authLoading]);
+  }, [user, authLoading, router, fetchData]);
 
   async function deleteListing(id: string) {
     await supabase.from("listings").delete().eq("id", id);

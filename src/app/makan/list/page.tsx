@@ -296,6 +296,7 @@ export default function ListPropertyPage() {
                 <div className="flex gap-2 flex-wrap">
                   {images.map((img, i) => (
                     <div key={i} className="w-20 h-20 rounded-lg overflow-hidden border" style={{ borderColor: "var(--h-border)" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element -- local blob: URL for a pre-upload preview; next/image cannot optimise blobs and would reject the host */}
                       <img src={URL.createObjectURL(img)} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
                     </div>
                   ))}

@@ -10,7 +10,7 @@ export function generateStaticParams() {
   return SUPPORTED.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+export function generateMetadata(): Metadata {
   return {
     title: `PropertyVault UK — Calculator`,
     robots: { index: false, follow: false },

@@ -289,7 +289,7 @@ export default function RenturaSettings() {
                 <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 4 }}>Active sessions</p>
                 <p style={{ fontSize: 12, color: C.ink2, marginBottom: 12 }}>You are currently signed in on this device.</p>
                 <button
-                  onClick={async () => { await supabase.auth.signOut(); window.location.href = "/rentura"; }}
+                  onClick={async () => { await supabase.auth.signOut(); router.push("/rentura"); }}
                   style={{ background: "transparent", color: C.red, fontWeight: 700, fontSize: 12, padding: "7px 14px", borderRadius: 7, border: `1px solid rgba(239,68,68,0.3)`, cursor: "pointer" }}
                 >
                   Sign out of all devices
