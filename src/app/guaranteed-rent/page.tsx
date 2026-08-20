@@ -54,7 +54,7 @@ const guaranteedRentFaqs = [
   { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
   { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
   { q: "What types of property qualify for guaranteed rent?", a: "Most residential properties qualify — houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability and safety standards." },
-  { q: "Who are the tenants in a guaranteed rent scheme?", a: "We work with local councils and registered social housing providers across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield to house families and individuals. All tenants are managed by our team." },
+  { q: "Who are the tenants in a guaranteed rent scheme?", a: "Tenants are sourced, referenced and managed entirely by our team. You have no direct contact with them — we handle referencing, day-to-day management, maintenance and any issues that arise for the length of the lease." },
   { q: "What about repairs and maintenance with guaranteed rent?", a: "We handle all day-to-day maintenance at our cost during the lease. Major structural issues (roof, subsidence) remain the property owner's responsibility, but we coordinate everything." },
   { q: "How long is a guaranteed rent lease?", a: "Typically 3-5 years. Longer leases provide greater income security and may attract a higher guaranteed rent amount." },
   { q: "How quickly can guaranteed rent start?", a: "Once you accept our offer, we can typically complete the lease within 7-14 days. Your first guaranteed rent payment follows shortly after." },
@@ -150,7 +150,7 @@ export default function GuaranteedRentPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               { title: "Guaranteed Monthly Rent", desc: "Same amount. Same date. Every single month. Whether the property is occupied or not." },
-              { title: "Zero Void Periods", desc: "No gaps between tenants. No empty months. No lost income. Ever." },
+              { title: "No Void Periods For You", desc: "Your rent is paid on the same date each month for the length of the lease, whether or not the property is occupied." },
               { title: "We Handle Everything", desc: "Tenant sourcing, management, maintenance, compliance, inspections — all us." },
               { title: "No Agent Fees", desc: "No tenant-find fees. No management percentage. No renewal charges. No hidden costs." },
               { title: "3-5 Year Lease", desc: "Long-term security. One agreement. Guaranteed income for years, not months." },
@@ -162,41 +162,6 @@ export default function GuaranteedRentPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="section-padding gradient-navy">
-        <div className="container-max">
-          <div className="text-center mb-10">
-            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-2">Landlord Experiences</p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white" style={{ fontFamily: "var(--font-family-heading)" }}>What Landlords Say</h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { quote: "I had a property empty for 3 months, losing £900 each month. Now I get £780 guaranteed every month without lifting a finger. I wish I'd done this years ago.", who: "Landlord with 2-bed in Erdington, Birmingham", tag: "Was losing £2,700 in voids", initials: "JR", city: "Birmingham" },
-              { quote: "Managing tenants was taking over my life — phone calls at midnight, chasing rent, arranging repairs. With guaranteed rent, I just check my bank balance. That's it.", who: "Portfolio landlord, 4 properties in Nottingham", tag: "Went from stressed to stress-free", initials: "SK", city: "Nottingham" },
-              { quote: "My agent was charging 12% plus fees on top. The guaranteed rent is actually more than what I was netting after agent fees and void periods. And I do absolutely nothing.", who: "Landlord with 3-bed in Normanton, Derby", tag: "Now earns more, does less", initials: "MA", city: "Derby" },
-            ].map((t) => (
-              <div key={t.who} className="glass rounded-2xl p-6">
-                <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-4">{t.tag}</span>
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <p className="text-white/90 text-sm leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-3 mt-4">
-                  <div className="w-9 h-9 rounded-full bg-gold-400/20 flex items-center justify-center text-gold-400 font-bold text-xs">{t.initials}</div>
-                  <div>
-                    <p className="text-white/80 text-xs font-semibold">{t.who}</p>
-                    <p className="text-navy-400 text-xs">{t.city}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-navy-400 text-center mt-6">Testimonials are illustrative examples based on typical landlord experiences in these areas.</p>
         </div>
       </section>
 

@@ -54,7 +54,7 @@ const faqs = [
 
 const rows = [
   { label: "Monthly income on £1,000 market rent", gr: "£820–£900", la: "£880–£920 (gross)" },
-  { label: "Void periods", gr: "Zero — guaranteed", la: "3–5 weeks/year avg (−£750–£1,250)" },
+  { label: "Void periods", gr: "Paid whether or not it is let", la: "3–5 weeks/year avg (−£750–£1,250)" },
   { label: "Management fee", gr: "None", la: "8–12% monthly (−£80–£120/mo)" },
   { label: "Tenant-find fee", gr: "None", la: "50–100% of one month's rent" },
   { label: "Renewal fees", gr: "None", la: "£100–£200 per renewal" },

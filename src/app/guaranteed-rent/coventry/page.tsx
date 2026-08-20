@@ -70,7 +70,7 @@ export default function CoventryPage() {
         <div className="container-max max-w-3xl">
           <h2 className="text-2xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent Across Coventry</h2>
           <p className="text-navy-600 leading-relaxed mb-4">We are actively leasing properties across all Coventry postcodes. Whether you own a 1-bed flat near the city centre or a 4-bed house in Foleshill, we can offer you a guaranteed monthly rent with a 3-5 year lease.</p>
-          <p className="text-navy-600 leading-relaxed mb-6">We work with Coventry City Council and registered social housing providers to house families and individuals in well-managed, compliant accommodation.</p>
+          <p className="text-navy-600 leading-relaxed mb-6">Every property we lease is managed to the same standard for the length of the term — rent paid monthly whether or not it is occupied, gas, electrical and EPC certification kept current, and regular inspections throughout.</p>
 
           <h3 className="font-bold text-navy-800 mb-3">Areas We Cover in Coventry</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-8">
@@ -128,55 +128,6 @@ export default function CoventryPage() {
               </table>
             </div>
             <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Coventry. Agent fee assumed at 10% + 1 month average void per year.</p>
-          </div>
-
-          {/* Case Study */}
-          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
-            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
-            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Liam F. — 3-bed terraced house, Foleshill</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
-                <p className="font-bold text-white">£825/mo</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
-                <p className="font-bold text-white">£675/mo</p>
-              </div>
-              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
-                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
-                <p className="font-bold text-gold-400">£730/mo</p>
-              </div>
-              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
-                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
-                <p className="font-bold text-green-400">+£660/yr</p>
-              </div>
-            </div>
-            <p className="text-navy-200 text-sm leading-relaxed">"My Foleshill property was sitting empty for six weeks after my last tenant left. By the time I'd paid the agent's reletting fee and covered the void, I was netting about £675. PropertyVault signed a lease within ten days and now I get £730 without fail every month. That £660 annual difference is just the icing on the cake."</p>
-            <p className="text-navy-400 text-xs mt-2">— Liam F., landlord in Foleshill, Coventry (3-year lease signed 2024)</p>
-          </div>
-
-          {/* Testimonials */}
-          <div className="mb-10">
-            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Coventry Landlords Say</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
-                <div className="flex gap-0.5 mb-3">
-                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I've had my Bell Green property for eight years and it's been a constant headache. Since PropertyVault took it on I haven't had a single call. Rent on the 1st, no fuss, no drama. It genuinely feels like passive income for the first time."</p>
-                <p className="font-bold text-navy-800 text-sm">Denise C.</p>
-                <p className="text-navy-400 text-xs">Bell Green, Coventry — 3-bed terraced house</p>
-              </div>
-              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
-                <div className="flex gap-0.5 mb-3">
-                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I'd been trying to sell my Wyken property for months with no luck. A friend suggested guaranteed rent and I'm so glad I looked into it. PropertyVault made it simple — now I earn a reliable income from the property while the market stabilises. Brilliant solution."</p>
-                <p className="font-bold text-navy-800 text-sm">Paul R.</p>
-                <p className="text-navy-400 text-xs">Wyken, Coventry — 2-bed semi-detached</p>
-              </div>
-            </div>
           </div>
 
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">

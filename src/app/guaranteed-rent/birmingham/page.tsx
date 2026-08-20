@@ -70,7 +70,7 @@ export default function BirminghamPage() {
         <div className="container-max max-w-3xl">
           <h2 className="text-2xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Guaranteed Rent Across Birmingham</h2>
           <p className="text-navy-600 leading-relaxed mb-4">We are actively leasing properties across all Birmingham postcodes. Whether you own a 1-bed flat in the Jewellery Quarter or a 4-bed house in Erdington, we can offer you a guaranteed monthly rent with a 3-5 year lease.</p>
-          <p className="text-navy-600 leading-relaxed mb-6">We work with Birmingham City Council and registered social housing providers to house families and individuals in well-managed, compliant accommodation.</p>
+          <p className="text-navy-600 leading-relaxed mb-6">Every property we lease is managed to the same standard for the length of the term — rent paid monthly whether or not it is occupied, gas, electrical and EPC certification kept current, and regular inspections throughout.</p>
 
           <h3 className="font-bold text-navy-800 mb-3">Areas We Cover in Birmingham</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-8">
@@ -128,55 +128,6 @@ export default function BirminghamPage() {
               </table>
             </div>
             <p className="text-xs text-navy-400 mt-2">Figures based on typical 3-bed terraced house in Birmingham. Agent fee assumed at 10% + 1 month average void per year.</p>
-          </div>
-
-          {/* Case Study */}
-          <div className="bg-gradient-to-br from-navy-900 to-navy-800 rounded-2xl p-6 mb-10 text-white">
-            <p className="text-gold-400 font-bold text-xs uppercase tracking-widest mb-3">Landlord Case Study</p>
-            <h3 className="text-lg font-extrabold mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>David T. — 3-bed terraced house, Erdington</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-navy-300 mb-1">Market Rent</p>
-                <p className="font-bold text-white">£950/mo</p>
-              </div>
-              <div className="bg-white/10 rounded-xl p-3 text-center">
-                <p className="text-xs text-navy-300 mb-1">Was Netting</p>
-                <p className="font-bold text-white">£780/mo</p>
-              </div>
-              <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-3 text-center">
-                <p className="text-xs text-gold-300 mb-1">Now Guaranteed</p>
-                <p className="font-bold text-gold-400">£840/mo</p>
-              </div>
-              <div className="bg-green-500/20 border border-green-500/40 rounded-xl p-3 text-center">
-                <p className="text-xs text-green-300 mb-1">Annual Uplift</p>
-                <p className="font-bold text-green-400">+£720/yr</p>
-              </div>
-            </div>
-            <p className="text-navy-200 text-sm leading-relaxed">"After two difficult tenancies and a 6-week void in Erdington, I was getting roughly £780 a month after my agent took their cut. PropertyVault gave me £840 guaranteed from day one — no more chasing rent or worrying about empty months. The annual difference of £720 more than covered my boiler service and new carpets."</p>
-            <p className="text-navy-400 text-xs mt-2">— David T., landlord in Erdington, Birmingham (3-year lease signed 2024)</p>
-          </div>
-
-          {/* Testimonials */}
-          <div className="mb-10">
-            <h3 className="font-bold text-navy-800 mb-4 text-lg" style={{ fontFamily: "var(--font-family-heading)" }}>What Birmingham Landlords Say</h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
-                <div className="flex gap-0.5 mb-3">
-                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I handed over my Sparkhill property in January and haven't had to deal with a single tenant call since. The rent lands in my account on the 1st every month like clockwork. Honestly the best decision I've made as a landlord."</p>
-                <p className="font-bold text-navy-800 text-sm">Marcus O.</p>
-                <p className="text-navy-400 text-xs">Sparkhill, Birmingham — 2-bed mid-terrace</p>
-              </div>
-              <div className="bg-white border border-navy-100 rounded-2xl p-5 shadow-sm">
-                <div className="flex gap-0.5 mb-3">
-                  {[1,2,3,4,5].map((s) => <svg key={s} className="w-4 h-4 text-gold-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>)}
-                </div>
-                <p className="text-navy-600 text-sm leading-relaxed mb-3">"I was skeptical at first — guaranteed rent sounded too good. But my Handsworth property has been leased for 18 months now with zero issues. No void, no agent hassle, just income. I wish I'd done this years ago with my other properties."</p>
-                <p className="font-bold text-navy-800 text-sm">Priya S.</p>
-                <p className="text-navy-400 text-xs">Handsworth, Birmingham — 3-bed semi-detached</p>
-              </div>
-            </div>
           </div>
 
           <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 text-white text-center">

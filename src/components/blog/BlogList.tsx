@@ -122,7 +122,7 @@ function NewsletterBlock() {
           </>
         )}
         <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>
-          Join 1,200+ landlords, investors and deal sourcers.
+          For landlords, investors and deal sourcers. Unsubscribe any time.
         </p>
       </div>
     </div>
