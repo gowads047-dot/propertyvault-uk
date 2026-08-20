@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
 
 export const metadata: Metadata = {
   title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
@@ -43,6 +44,13 @@ const steps = [
 export default function PRSOmbudsmanGuideArticle() {
   return (
     <>
+      <ArticleSchema
+        headline="PRS Ombudsman Registration — What Every Landlord Must Do Now"
+        description="All private landlords in England must register with the PRS Ombudsman under the Renters' Rights Act 2025. Failure is a criminal offence with fines up to £5,000 per property."
+        slug="prs-ombudsman-landlord-registration"
+        datePublished="2026-08-01"
+        section="Landlords"
+      />
       <BlogArticleHero
         title="PRS Ombudsman Registration — What Every Landlord Must Do Now"
         excerpt="All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare."

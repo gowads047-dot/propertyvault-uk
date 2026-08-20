@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/is-guaranteed-rent-a-scam/" },
@@ -35,6 +36,13 @@ const faqs = [
 export default function IsGuaranteedRentAScamArticle() {
   return (
     <>
+      <ArticleSchema
+        headline="Is Guaranteed Rent a Scam? An Honest Answer for Landlords"
+        description="Landlords ask this question constantly. Here is an honest breakdown of how legitimate guaranteed rent works, what fraud looks like, and exactly what to check before signing."
+        slug="is-guaranteed-rent-a-scam"
+        datePublished="2026-06-25"
+        section="Landlords"
+      />
       <BlogArticleHero
         title="Is Guaranteed Rent a Scam? An Honest Answer for Landlords"
         excerpt="Landlords ask this question constantly. Here is an honest breakdown of how legitimate guaranteed rent works, what fraud looks like, and exactly what to check before signing."

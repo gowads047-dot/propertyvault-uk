@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Best Areas to Invest in Nottingham 2026 — Landlord Guide | PropertyVault UK",
@@ -99,6 +101,13 @@ const areas = [
 export default function BestAreasNottingham2026Article() {
   return (
     <>
+      <ArticleSchema
+        headline="Best Areas to Invest in Nottingham 2026 — BTL Hotspot Guide"
+        description="Yields, average prices, tenant demand, and regeneration prospects — ranked and explained for property investors looking at Nottingham in 2026."
+        slug="best-areas-invest-nottingham-2026"
+        datePublished="2026-06-25"
+        section="Investing"
+      />
       <BlogArticleHero
         title="Best Areas to Invest in Nottingham 2026 — BTL Hotspot Guide"
         excerpt="Yields, average prices, tenant demand, and regeneration prospects — ranked and explained for property investors looking at Nottingham in 2026."
@@ -204,6 +213,9 @@ export default function BestAreasNottingham2026Article() {
           <Disclaimer type="financial" />
         </div>
       </article>
+      <RelatedArticles
+        slug="best-areas-invest-nottingham-2026"
+      />
     </>
   );
 }

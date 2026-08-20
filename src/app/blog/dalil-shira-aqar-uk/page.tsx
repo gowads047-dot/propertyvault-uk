@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Buying Property in the UK — Arabic Guide | PropertyVault UK",
@@ -57,6 +59,14 @@ const faqs = [
 export default function DalilShiraAqarUK() {
   return (
     <>
+      <ArticleSchema
+        headline="دليل شراء العقارات في المملكة المتحدة"
+        description="كل ما تحتاج معرفته قبل شراء عقار في بريطانيا — من الرهن العقاري والضرائب إلى المحامي والتفاوض على السعر. دليل شامل للمشترين العرب."
+        slug="dalil-shira-aqar-uk"
+        datePublished="2026-08-02"
+        section="Arabic"
+        inLanguage="ar"
+      />
       <BlogArticleHero
         title="دليل شراء العقارات في المملكة المتحدة"
         excerpt="كل ما تحتاج معرفته قبل شراء عقار في بريطانيا — من الرهن العقاري والضرائب إلى المحامي والتفاوض على السعر."
@@ -504,6 +514,11 @@ export default function DalilShiraAqarUK() {
 
       <FAQSchema faqs={faqs} />
       <Disclaimer />
+      <RelatedArticles
+        slug="dalil-shira-aqar-uk"
+        heading="اقرأ أيضًا"
+        dir="rtl"
+      />
     </>
   );
 }

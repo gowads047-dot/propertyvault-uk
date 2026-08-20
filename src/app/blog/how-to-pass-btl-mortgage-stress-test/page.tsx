@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -221,6 +222,9 @@ export default function BtlStressTestPage() {
       <FAQSchema faqs={faqs} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <RelatedArticles
+        slug="how-to-pass-btl-mortgage-stress-test"
+      />
     </>
   );
 }

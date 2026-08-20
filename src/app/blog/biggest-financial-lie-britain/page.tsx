@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
@@ -313,6 +314,9 @@ export default function BiggestLieArticle() {
           </div>
         </div>
       </article>
+      <RelatedArticles
+        slug="biggest-financial-lie-britain"
+      />
     </>
   );
 }

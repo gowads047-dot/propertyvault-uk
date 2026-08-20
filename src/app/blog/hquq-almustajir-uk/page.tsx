@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "UK Tenant Rights 2025 — Arabic Guide | PropertyVault UK",
@@ -57,6 +59,14 @@ const faqs = [
 export default function HquqAlmustajirUK() {
   return (
     <>
+      <ArticleSchema
+        headline="حقوق المستأجر في المملكة المتحدة 2025"
+        description="كل ما يحتاج معرفته المستأجر العربي — إلغاء Section 21، قواعد رفع الإيجار، الوديعة، ومتى وكيف تشتكي."
+        slug="hquq-almustajir-uk"
+        datePublished="2026-08-02"
+        section="Arabic"
+        inLanguage="ar"
+      />
       <BlogArticleHero
         title="حقوق المستأجر في المملكة المتحدة 2025"
         excerpt="كل ما يحتاج معرفته المستأجر العربي في بريطانيا — من إلغاء Section 21 إلى قواعد الإيجار والوديعة والإخلاء في ظل القانون الجديد."
@@ -359,6 +369,11 @@ export default function HquqAlmustajirUK() {
 
       <FAQSchema faqs={faqs} />
       <Disclaimer />
+      <RelatedArticles
+        slug="hquq-almustajir-uk"
+        heading="اقرأ أيضًا"
+        dir="rtl"
+      />
     </>
   );
 }

@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/" },
@@ -35,6 +37,13 @@ const faqs = [
 export default function DealSourcingGuideArticle() {
   return (
     <>
+      <ArticleSchema
+        headline="Deal Sourcing UK — Complete Beginner Guide 2026"
+        description="What deal sourcing actually is, how much you can earn, what's legal, and how to get started — even with no money and no experience."
+        slug="deal-sourcing-uk-guide"
+        datePublished="2026-06-25"
+        section="Academy"
+      />
       <BlogArticleHero
         title="Deal Sourcing UK — Complete Beginner Guide 2026"
         excerpt="What deal sourcing actually is, how much you can earn, what's legal, and how to get started — even with no money and no experience."
@@ -148,6 +157,9 @@ export default function DealSourcingGuideArticle() {
           <Disclaimer type="general" />
         </div>
       </article>
+      <RelatedArticles
+        slug="deal-sourcing-uk-guide"
+      />
     </>
   );
 }

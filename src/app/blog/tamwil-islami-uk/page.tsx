@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Islamic Finance & Halal Mortgages UK — Arabic Guide | PropertyVault UK",
@@ -52,6 +54,14 @@ const faqs = [
 export default function TamwilIslamiUKPage() {
   return (
     <>
+      <ArticleSchema
+        headline="التمويل الإسلامي والرهن العقاري الحلال في المملكة المتحدة"
+        description="مقارنة كاملة بين منتجات التمويل الإسلامي (المرابحة، الإجارة، المشاركة المتناقصة) والرهن التقليدي — وأفضل بنوك الرهن الحلال في بريطانيا."
+        slug="tamwil-islami-uk"
+        datePublished="2026-08-02"
+        section="Arabic"
+        inLanguage="ar"
+      />
       <BlogArticleHero
         title="التمويل الإسلامي والرهن العقاري الحلال في المملكة المتحدة"
         excerpt="دليل شامل لخيارات التمويل الإسلامي المتاحة في بريطانيا — المرابحة، الإجارة، المشاركة المتناقصة، وأبرز البنوك الإسلامية."
@@ -304,6 +314,11 @@ export default function TamwilIslamiUKPage() {
           <Disclaimer type="financial" />
         </div>
       </article>
+      <RelatedArticles
+        slug="tamwil-islami-uk"
+        heading="اقرأ أيضًا"
+        dir="rtl"
+      />
     </>
   );
 }

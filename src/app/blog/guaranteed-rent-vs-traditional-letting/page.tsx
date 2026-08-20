@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent vs Traditional Letting — Full Comparison | PropertyVault UK",
@@ -138,6 +139,9 @@ export default function GuaranteedRentComparison() {
           </div>
         </div>
       </article>
+      <RelatedArticles
+        slug="guaranteed-rent-vs-traditional-letting"
+      />
     </>
   );
 }

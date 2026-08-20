@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Investing in UK Property from Abroad — Arabic Guide | PropertyVault UK",
@@ -57,6 +59,14 @@ const faqs = [
 export default function IstihtmarAqariUKPage() {
   return (
     <>
+      <ArticleSchema
+        headline="الاستثمار العقاري في بريطانيا من خارج المملكة المتحدة"
+        description="دليل المستثمر العربي غير المقيم — الضرائب، فتح حساب بنكي، أفضل المدن للعائد، والإدارة عن بُعد عبر الإيجار المضمون."
+        slug="istihtmar-aqari-uk-min-kharij"
+        datePublished="2026-08-02"
+        section="Arabic"
+        inLanguage="ar"
+      />
       <BlogArticleHero
         title="الاستثمار العقاري في المملكة المتحدة من خارج بريطانيا"
         excerpt="دليل عملي للمستثمر العربي الذي يريد الاستثمار في سوق العقارات البريطانية عن بُعد — التمويل، الضرائب، الإدارة، والفخاخ التي يجب تجنبها."
@@ -355,6 +365,11 @@ export default function IstihtmarAqariUKPage() {
           </div>
         </div>
       </section>
+      <RelatedArticles
+        slug="istihtmar-aqari-uk-min-kharij"
+        heading="اقرأ أيضًا"
+        dir="rtl"
+      />
     </>
   );
 }

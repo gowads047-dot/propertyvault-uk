@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
@@ -148,6 +149,9 @@ export default function StampDutyArticle() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
       </div></article>
+      <RelatedArticles
+        slug="stamp-duty-guide"
+      />
     </>
   );
 }

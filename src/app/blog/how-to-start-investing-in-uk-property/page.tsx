@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ShareResults } from "@/components/calculators/ShareResults";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -425,6 +426,9 @@ export default function HowToStartInvestingPage() {
           <FAQSchema faqs={faqs} />
         </div>
       </section>
+      <RelatedArticles
+        slug="how-to-start-investing-in-uk-property"
+      />
     </>
   );
 }
