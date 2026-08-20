@@ -2,7 +2,9 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
-import { calcIncomeTax, marginalRate as getMarginalRate, calcSection24Credit, personalAllowance } from "@/lib/tax";
+import { marginalRate as getMarginalRate, calcSection24Credit, personalAllowance,
+  propertyIncomeTaxCost,
+} from "@/lib/tax";
 
 export function LandlordTaxCalculator() {
   const [rentalIncome, setRentalIncome] = useState(12000);
@@ -14,14 +16,13 @@ export function LandlordTaxCalculator() {
     const netRentalProfit = rentalIncome - expenses;
 
     // Old rules: mortgage interest was fully deductible from rental profit
-    const oldRulesIncome = otherIncome + Math.max(0, netRentalProfit - mortgageInterest);
-    const totalTaxOld = calcIncomeTax(oldRulesIncome) - calcIncomeTax(otherIncome);
+    const totalTaxOld = propertyIncomeTaxCost(otherIncome, Math.max(0, netRentalProfit - mortgageInterest));
 
     // Section 24: interest is NOT deductible; HMRC three-way capped 20% credit applies
     const s24Income = otherIncome + netRentalProfit;
     const pa = personalAllowance(s24Income);
     const s24Credit = calcSection24Credit(mortgageInterest, netRentalProfit, s24Income, pa);
-    const totalTaxS24gross = calcIncomeTax(s24Income) - calcIncomeTax(otherIncome);
+    const totalTaxS24gross = propertyIncomeTaxCost(otherIncome, netRentalProfit);
     const totalTaxS24 = Math.max(totalTaxS24gross - s24Credit, 0);
 
     const extraTaxS24 = totalTaxS24 - totalTaxOld;

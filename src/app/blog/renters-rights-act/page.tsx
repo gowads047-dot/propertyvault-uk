@@ -35,7 +35,7 @@ const faqs = [
   },
   {
     q: "Do existing fixed-term tenancies become periodic under the Renters' Rights Act?",
-    a: "Yes. All existing fixed-term ASTs were automatically converted to periodic (rolling monthly) tenancies when the Act came into force in 2025. New tenancies cannot be granted on a fixed-term basis. Tenants can give 2 months' written notice to leave at any time; landlords must use a Section 8 ground to regain possession.",
+    a: "Yes. All existing fixed-term ASTs were automatically converted to periodic (rolling monthly) tenancies on 1 May 2026. New tenancies cannot be granted on a fixed-term basis. Tenants can give 2 months' written notice to leave at any time; landlords must use a Section 8 ground to regain possession.",
   },
   {
     q: "How can landlords raise rents under the Renters' Rights Act?",
@@ -64,10 +64,10 @@ export default function RentersRightsActArticle() {
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 not-prose">
             <p className="text-sm font-semibold text-amber-800">⚠️ Important for landlords</p>
-            <p className="text-sm text-amber-700 mt-1">The Renters' Rights Act received Royal Assent in March 2025. Most provisions came into force from June 2025. Non-compliance can result in financial penalties, rent repayment orders, and restrictions on future possession. This article covers the key changes — always check gov.uk for the latest implementation dates.</p>
+            <p className="text-sm text-amber-700 mt-1">The Renters' Rights Act received Royal Assent on 27 October 2025. A first wave of measures commenced on 27 December 2025, and the main tenancy reforms — including the abolition of Section 21 — took effect on 1 May 2026. Non-compliance can result in financial penalties, rent repayment orders, and restrictions on future possession. This article covers the key changes — always check gov.uk for the latest implementation dates.</p>
           </div>
 
-          <p className="text-lg">The <strong>Renters' Rights Act 2025</strong> is the most significant change to the private rented sector in England for 30 years. Introduced by the Labour government in 2024 and enacted in early 2025, it fundamentally changes the landlord-tenant relationship — abolishing no-fault evictions, ending fixed-term tenancies, capping rent increases, and giving tenants new rights on pets, deposits, and repairs.</p>
+          <p className="text-lg">The <strong>Renters' Rights Act 2025</strong> is the most significant change to the private rented sector in England for 30 years. Introduced by the Labour government in 2024, given Royal Assent in October 2025 and in force since 1 May 2026, it fundamentally changes the landlord-tenant relationship — abolishing no-fault evictions, ending fixed-term tenancies, capping rent increases, and giving tenants new rights on pets, deposits, and repairs.</p>
 
           <p>If you own a buy-to-let property in England, you are affected. This guide covers every major change and what you need to do.</p>
 
@@ -109,7 +109,7 @@ export default function RentersRightsActArticle() {
           {/* Periodic */}
           <h2 id="periodic" className="text-xl font-bold text-navy-800 mt-10" style={{ fontFamily: "var(--font-family-heading)" }}>2. All Tenancies Are Now Periodic — No More Fixed Terms</h2>
           <p>Fixed-term Assured Shorthold Tenancies (ASTs) no longer exist for new tenancies. Every private tenancy is now a <strong>rolling periodic tenancy</strong> from day one — typically month-to-month.</p>
-          <p><strong>For existing tenancies:</strong> All existing fixed-term ASTs were automatically converted to periodic tenancies when the Act came into force.</p>
+          <p><strong>For existing tenancies:</strong> All existing fixed-term ASTs were automatically converted to periodic tenancies on 1 May 2026.</p>
           <p><strong>What changes for landlords:</strong></p>
           <ul className="list-disc pl-6 space-y-1">
             <li>No more 6-month or 12-month initial fixed periods</li>
