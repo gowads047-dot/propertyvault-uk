@@ -5,13 +5,13 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "PRS Ombudsman Registration — Complete Landlord Guide 2026 | PropertyVault UK",
-  description: "All private landlords in England must now register with the PRS Ombudsman under the Renters' Rights Act 2025. Here is exactly what to do, the deadline, and the penalties for non-compliance.",
+  title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+  description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
   keywords: "PRS ombudsman registration landlord, private rented sector ombudsman UK, landlord ombudsman registration 2025, Renters Rights Act ombudsman, landlord registration England 2026",
   alternates: { canonical: "https://propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/" },
   openGraph: {
-    title: "PRS Ombudsman Registration — Complete Landlord Guide 2026 | PropertyVault UK",
-    description: "All private landlords in England must now register with the PRS Ombudsman under the Renters' Rights Act 2025. Here is exactly what to do, the deadline, and the penalties for non-compliance.",
+    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
     type: "article",
     url: "https://propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/",
     siteName: "PropertyVault UK",
@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PRS Ombudsman Registration — Complete Landlord Guide 2026 | PropertyVault UK",
-    description: "All private landlords in England must now register with the PRS Ombudsman under the Renters' Rights Act 2025. Here is exactly what to do, the deadline, and the penalties for non-compliance.",
+    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
   },
 };
 
 const faqs = [
   { q: "Do all landlords have to register with the PRS Ombudsman?", a: "Yes. Under the Renters' Rights Act 2025, all private landlords letting residential property in England are legally required to register with the new Private Rented Sector (PRS) Ombudsman. This is mandatory — there is no opt-out. Self-managing landlords must register directly. Landlords using a letting agent are covered by the agent's membership, but the landlord themselves must also be registered." },
-  { q: "What happens if I don't register with the PRS Ombudsman?", a: "Failure to register is a criminal offence under the Renters' Rights Act 2025. The penalty can be a fine of up to £5,000 per property. Local housing authorities have enforcement powers and can serve compliance notices. Continued non-compliance after a notice can result in a rent repayment order — tenants can reclaim up to 12 months of rent paid during the period of non-compliance." },
+  { q: "What happens if I don't register with the PRS Ombudsman?", a: "Nothing yet — the scheme is not live and there is no register to join. Once membership becomes mandatory (currently expected in 2028), failing to join will be an offence under the Renters' Rights Act 2025, with a fine of up to £5,000 per property. Landlords will need to be on the PRS Database first, which rolls out regionally from late 2026." },
   { q: "How much does PRS Ombudsman registration cost?", a: "The PRS Ombudsman is expected to charge a membership fee to landlords, similar to the existing property agent redress schemes. The government has indicated the fee will be set at a level proportionate to portfolio size — likely a small annual fee per property. Specific fee schedules will be published by the PRS Ombudsman body once fully operational." },
   { q: "What does the PRS Ombudsman actually do?", a: "The PRS Ombudsman resolves disputes between private landlords and tenants without the need for court proceedings. Tenants can bring complaints about maintenance failures, deposit disputes, communication failures, and other breaches of their tenancy agreement. The Ombudsman's decisions are binding on landlords — they can require compensation payments, repairs, or apologies." },
   { q: "Do I need to register if my letting agent is already a member of a redress scheme?", a: "Even if your letting agent is already a member of The Property Ombudsman (TPOS) or the Property Redress Scheme (PRS), you as the landlord must also be individually registered with the PRS Ombudsman. Agent membership and landlord membership are separate requirements under the Renters' Rights Act 2025." },
@@ -45,7 +45,7 @@ export default function PRSOmbudsmanGuideArticle() {
     <>
       <BlogArticleHero
         title="PRS Ombudsman Registration — What Every Landlord Must Do Now"
-        excerpt="All private landlords in England must register with the PRS Ombudsman under the Renters' Rights Act 2025. Failure is a criminal offence. Here is exactly what to do."
+        excerpt="All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare."
         category="Landlords"
         date="July 2026"
         readTime="7 min"
@@ -54,9 +54,9 @@ export default function PRSOmbudsmanGuideArticle() {
       <article className="section-padding bg-white">
         <div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
 
-          <div className="not-prose bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-900">
-            <p className="font-bold mb-1">Action required — this is a legal obligation</p>
-            <p>PRS Ombudsman registration is mandatory for all private landlords in England under the Renters&apos; Rights Act 2025. Failure to register is a criminal offence carrying a fine of up to £5,000 per property.</p>
+          <div className="not-prose bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-900">
+            <p className="font-bold mb-1">Registration is not open yet — here is the timeline</p>
+            <p>The PRS Ombudsman was created by the Renters&apos; Rights Act 2025, but the scheme is not live and you cannot register today. The PRS Database rolls out regionally from late 2026 into 2027, and mandatory Ombudsman membership is currently expected in 2028. As of mid-2026 no scheme administrator has been appointed, so treat 2028 as a planning assumption rather than a fixed date. Once membership is mandatory, failing to join will carry a fine of up to £5,000 per property. Be wary of any site offering to register you now.</p>
           </div>
 
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Is the PRS Ombudsman?</h2>
@@ -66,8 +66,8 @@ export default function PRSOmbudsmanGuideArticle() {
           <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Who Must Register?</h2>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>All private landlords</strong> letting residential property in England — regardless of portfolio size. A landlord with one property and a landlord with 100 properties both have the same obligation.</li>
-            <li><strong>Self-managing landlords</strong> must register directly with the PRS Ombudsman.</li>
-            <li><strong>Landlords using a letting agent</strong> — your agent&apos;s membership in a redress scheme (TPOS or PRS) does not cover you. You must also register individually.</li>
+            <li><strong>Self-managing landlords</strong> will register directly with the PRS Ombudsman once the scheme opens.</li>
+            <li><strong>Landlords using a letting agent</strong> — your agent&apos;s membership in a redress scheme (TPOS or PRS) does not cover you. You will also need to join individually.</li>
             <li><strong>Portfolio landlords</strong> — register once but list all properties. Each property must be covered.</li>
           </ul>
           <p>Landlords renting through a social housing provider or who have only commercial tenants are exempt. Holiday lets and short-term accommodation (Airbnb-style) are a grey area — take legal advice if your situation is unclear.</p>

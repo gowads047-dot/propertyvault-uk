@@ -11,6 +11,9 @@ import {
   calcCGTResidential,
   calcSDLT,
   sdltBreakdown,
+  calcTaxSplit,
+  propertyRatesApply,
+  propertyIncomeTaxCost,
 } from "./tax";
 
 describe("personalAllowance", () => {
@@ -229,5 +232,83 @@ describe("sdltBreakdown", () => {
   });
   it("returns nothing for a zero price", () => {
     expect(sdltBreakdown(0)).toEqual({ bands: [], total: 0 });
+  });
+});
+
+// ─── Property income rates from 6 April 2027 (Finance Act 2026) ──────────────
+// Validated against HMRC's own worked example in the technical note:
+// employment £30,000, property £3,000, £1,000 finance costs -> £3,926 total.
+describe("calcTaxSplit — April 2027 property rates", () => {
+  const BEFORE = new Date(Date.UTC(2027, 3, 5)); // 5 Apr 2027 — old rules
+  const AFTER = new Date(Date.UTC(2027, 3, 6));  // 6 Apr 2027 — new rules
+
+  it("switches on exactly 6 April 2027", () => {
+    expect(propertyRatesApply(BEFORE)).toBe(false);
+    expect(propertyRatesApply(AFTER)).toBe(true);
+  });
+
+  it("reproduces HMRC's worked example", () => {
+    const { otherTax, propertyTax, total } = calcTaxSplit(30_000, 3_000, AFTER);
+    expect(otherTax).toBe(3_486);        // (30,000 - 12,570) @ 20%
+    expect(propertyTax).toBe(660);       // 3,000 @ 22% property basic
+    expect(total).toBe(4_146);
+    // HMRC's figure is after £1,000 of finance costs relieved at 22%
+    const credit = calcSection24Credit(1_000, 3_000, 33_000, personalAllowance(33_000), AFTER);
+    expect(credit).toBe(220);
+    expect(total - credit).toBe(3_926);
+  });
+
+  it("matches the old rates the day before", () => {
+    const before = calcTaxSplit(30_000, 3_000, BEFORE);
+    expect(before.propertyTax).toBe(600); // 3,000 @ 20%
+    expect(before.total).toBe(4_086);
+    expect(calcSection24Credit(1_000, 3_000, 33_000, personalAllowance(33_000), BEFORE)).toBe(200);
+  });
+
+  it("agrees with calcIncomeTax on the combined figure under the old rules", () => {
+    for (const [other, prop] of [[30_000, 3_000], [60_000, 12_000], [90_000, 40_000]]) {
+      expect(calcTaxSplit(other, prop, BEFORE).total).toBe(calcIncomeTax(other + prop));
+    }
+  });
+
+  it("stacks property income into the higher band", () => {
+    // other 45,000 -> taxable 32,430, leaving 5,270 of basic band
+    const { propertyTax } = calcTaxSplit(45_000, 20_000, AFTER);
+    expect(propertyTax).toBe(Math.round(5_270 * 0.22 + 14_730 * 0.42));
+  });
+
+  it("spends leftover personal allowance on property income", () => {
+    // other 5,000 uses only 5,000 of the PA; 7,570 remains for property
+    const { otherTax, propertyTax } = calcTaxSplit(5_000, 10_000, AFTER);
+    expect(otherTax).toBe(0);
+    expect(propertyTax).toBe(Math.round((10_000 - 7_570) * 0.22));
+  });
+
+  it("costs a landlord 2pp more on property profit", () => {
+    const before = calcTaxSplit(50_000, 15_000, BEFORE).total;
+    const after = calcTaxSplit(50_000, 15_000, AFTER).total;
+    expect(after - before).toBe(Math.round(15_000 * 0.02));
+  });
+});
+
+describe("propertyIncomeTaxCost", () => {
+  const BEFORE = new Date(Date.UTC(2027, 3, 5));
+  const AFTER = new Date(Date.UTC(2027, 3, 6));
+
+  it("reproduces the old marginal calculation exactly, taper zone included", () => {
+    for (const other of [0, 20_000, 45_000, 95_000, 110_000, 130_000])
+      for (const prop of [3_000, 12_000, 40_000])
+        expect(propertyIncomeTaxCost(other, prop, BEFORE))
+          .toBe(calcIncomeTax(other + prop) - calcIncomeTax(other));
+  });
+
+  it("captures the personal-allowance taper the property income triggers", () => {
+    // £3k of rental profit on top of £110k costs 40% plus 40% of the £1,500 PA lost
+    expect(propertyIncomeTaxCost(110_000, 3_000, BEFORE)).toBe(1_800);
+  });
+
+  it("costs 2pp more from April 2027", () => {
+    expect(propertyIncomeTaxCost(50_000, 15_000, AFTER) - propertyIncomeTaxCost(50_000, 15_000, BEFORE))
+      .toBe(Math.round(15_000 * 0.02));
   });
 });

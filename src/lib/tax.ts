@@ -12,6 +12,23 @@ const BASIC_RATE = 0.20;
 const HIGHER_RATE = 0.40;
 const ADDITIONAL_RATE = 0.45;
 
+// ─── Property income rates (from 6 April 2027, England/Wales/NI) ─────────────
+// Finance Act 2026 taxes property income 2pp above the main rates. The band
+// thresholds are unchanged; property income stacks on top of other income, and
+// the personal allowance is set against employment/trading/pension income first.
+// Section 24 finance-cost relief moves to the property basic rate at the same time.
+// Scotland is not covered — Holyrood may set its own property rates.
+const PROPERTY_RATES_START = Date.UTC(2027, 3, 6); // 6 April 2027
+const PROPERTY_BASIC_RATE = 0.22;
+const PROPERTY_HIGHER_RATE = 0.42;
+const PROPERTY_ADDITIONAL_RATE = 0.47;
+
+/** True once the Finance Act 2026 property rates are in force. `on` defaults to today. */
+export function propertyRatesApply(on: Date = new Date()): boolean {
+  return on.getTime() >= PROPERTY_RATES_START;
+}
+
+
 /** Personal allowance, accounting for £100k–£125,140 taper */
 export function personalAllowance(income: number): number {
   if (income <= PA_TAPER_START) return PA_FULL;
@@ -38,6 +55,90 @@ export function marginalRate(grossIncome: number): number {
   if (grossIncome < PA_TAPER_END) return HIGHER_RATE * 1.5; // 60% effective (taper zone)
   if (grossIncome <= HIGHER_LIMIT) return HIGHER_RATE;
   return ADDITIONAL_RATE;
+}
+
+/**
+ * Income tax split between other income and property income.
+ *
+ * Before 6 April 2027 both are taxed at the main rates, so this is just
+ * calcIncomeTax() on the combined figure, apportioned.
+ *
+ * From 6 April 2027 (Finance Act 2026, England/Wales/NI):
+ *   - the personal allowance is set against other income first, and only the
+ *     unused remainder reduces property income
+ *   - property income stacks on top of other income for band purposes
+ *   - the property slice is taxed at 22% / 42% / 47%
+ *
+ * Note on attribution: `propertyTax` is the tax charged on the property slice at
+ * its own band rates. Where property income pushes total income into the £100k–
+ * £125,140 personal-allowance taper, the extra tax caused by losing the allowance
+ * falls on other income and so lands in `otherTax`. For "what does this rental
+ * profit actually cost me", use propertyIncomeTaxCost() below, which captures both.
+ *
+ * otherIncome:    employment, self-employment or pension income
+ * propertyIncome: rental profit BEFORE any Section 24 finance-cost credit
+ * on:             date to evaluate against; defaults to today
+ */
+export function calcTaxSplit(
+  otherIncome: number,
+  propertyIncome: number,
+  on: Date = new Date(),
+): { otherTax: number; propertyTax: number; total: number } {
+  const other = Math.max(0, otherIncome);
+  const property = Math.max(0, propertyIncome);
+  const pa = personalAllowance(other + property);
+
+  // Allowance is used against other income first; anything left reduces property income.
+  const paAgainstOther = Math.min(pa, other);
+  const paAgainstProperty = Math.max(0, pa - paAgainstOther);
+
+  const taxableOther = Math.max(0, other - paAgainstOther);
+  const taxableProperty = Math.max(0, property - paAgainstProperty);
+
+  const bandRates = propertyRatesApply(on)
+    ? [PROPERTY_BASIC_RATE, PROPERTY_HIGHER_RATE, PROPERTY_ADDITIONAL_RATE]
+    : [BASIC_RATE, HIGHER_RATE, ADDITIONAL_RATE];
+
+  // Other income fills the bands first.
+  const otherInBasic = Math.min(taxableOther, BASIC_BAND);
+  const otherInHigher = Math.max(0, Math.min(taxableOther, HIGHER_LIMIT) - BASIC_BAND);
+  const otherInAdditional = Math.max(0, taxableOther - HIGHER_LIMIT);
+  const otherTax =
+    otherInBasic * BASIC_RATE + otherInHigher * HIGHER_RATE + otherInAdditional * ADDITIONAL_RATE;
+
+  // Property income stacks on whatever band room is left.
+  const roomInBasic = Math.max(0, BASIC_BAND - taxableOther);
+  const roomInHigher = Math.max(0, HIGHER_LIMIT - BASIC_BAND - otherInHigher);
+  const propInBasic = Math.min(taxableProperty, roomInBasic);
+  const propInHigher = Math.min(Math.max(0, taxableProperty - roomInBasic), roomInHigher);
+  const propInAdditional = Math.max(0, taxableProperty - roomInBasic - roomInHigher);
+  const propertyTax =
+    propInBasic * bandRates[0] + propInHigher * bandRates[1] + propInAdditional * bandRates[2];
+
+  return {
+    otherTax: Math.round(otherTax),
+    propertyTax: Math.round(propertyTax),
+    total: Math.round(otherTax + propertyTax),
+  };
+}
+
+/**
+ * The true marginal cost of a landlord's property income: total tax with it,
+ * less total tax without it. This includes any personal-allowance taper the
+ * property income triggers, which is what a landlord asking "what does my
+ * rental profit cost me?" wants to see.
+ *
+ * Before 6 April 2027 this equals calcIncomeTax(other + property) - calcIncomeTax(other).
+ * From 6 April 2027 the property slice is charged at 22% / 42% / 47%.
+ */
+export function propertyIncomeTaxCost(
+  otherIncome: number,
+  propertyIncome: number,
+  on: Date = new Date(),
+): number {
+  const withProperty = calcTaxSplit(otherIncome, propertyIncome, on).total;
+  const withoutProperty = calcTaxSplit(otherIncome, 0, on).total;
+  return Math.max(0, withProperty - withoutProperty);
 }
 
 // ─── Corporation Tax (2024/25) ───────────────────────────────────────────────
@@ -119,7 +220,8 @@ export function calcDividendTax(dividends: number, otherIncome: number): number 
 
 /**
  * Section 24 basic-rate tax credit (s274A ITTOIA 2005).
- * The credit is 20% × min(financeCosts, propertyProfit, excessOverPA).
+ * The credit is min(financeCosts, propertyProfit, excessOverPA) at the basic rate —
+ * 20% now, and the property basic rate of 22% from 6 April 2027.
  *
  * financeCosts:    qualifying mortgage interest
  * propertyProfit:  net rental income BEFORE deducting mortgage interest
@@ -131,6 +233,7 @@ export function calcSection24Credit(
   propertyProfit: number,
   adjustedIncome: number,
   paAmount: number,
+  on: Date = new Date(),
 ): number {
   if (financeCosts <= 0 || propertyProfit <= 0) return 0;
   const restricted = Math.min(
@@ -138,7 +241,9 @@ export function calcSection24Credit(
     Math.max(0, propertyProfit),
     Math.max(0, adjustedIncome - paAmount),
   );
-  return Math.round(restricted * BASIC_RATE);
+  // Relief tracks the property basic rate from 2027-28 (22%), 20% before that.
+  const reliefRate = propertyRatesApply(on) ? PROPERTY_BASIC_RATE : BASIC_RATE;
+  return Math.round(restricted * reliefRate);
 }
 
 // ─── CGT — Residential Property (from October 2024) ─────────────────────────

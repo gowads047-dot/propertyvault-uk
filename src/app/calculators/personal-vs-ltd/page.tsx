@@ -8,11 +8,11 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import {
-  calcIncomeTax,
   personalAllowance,
   calcCorpTax,
   calcDividendTax,
   calcSection24Credit,
+  calcTaxSplit,
 } from "@/lib/tax";
 
 const faqs = [
@@ -39,8 +39,8 @@ export default function PersonalVsLtdPage() {
     // Tax on total income with property (other income + full rental profit, no interest deduction)
     const totalIncome = otherIncome + rentalProfit;
     const pa = personalAllowance(totalIncome);
-    const totalTax = calcIncomeTax(totalIncome);
-    const baseTax = calcIncomeTax(otherIncome); // tax on other income alone
+    const totalTax = calcTaxSplit(otherIncome, rentalProfit).total;
+    const baseTax = calcTaxSplit(otherIncome, 0).total; // tax on other income alone
     const s24Credit = calcSection24Credit(mortgageInterest, rentalProfit, totalIncome, pa);
     // Marginal tax attributable to property income (after S24 credit)
     const personalTax = Math.max(0, totalTax - baseTax - s24Credit);
