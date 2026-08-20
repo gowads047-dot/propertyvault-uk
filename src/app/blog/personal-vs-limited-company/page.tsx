@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "Personal vs Limited Company — Which Is Better for BTL? | PropertyVault UK",
   description: "Should you hold buy-to-let property personally or through a limited company (SPV)? Tax comparison, pros, cons, and which structure suits you.",
   keywords: "personal vs limited company property, SPV property, limited company buy to let, Section 24 SPV, corporation tax rental income",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/personal-vs-limited-company/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/" },
   openGraph: {
     title: "Personal vs Limited Company — Which Is Better for BTL? | PropertyVault UK",
     description: "Should you hold buy-to-let property personally or through a limited company (SPV)? Tax comparison, pros, cons, and which structure suits you.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/personal-vs-limited-company/",
+    url: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Tax comparison personal vs limited company property ownership" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Tax comparison personal vs limited company property ownership" }],
   },
   twitter: {
     card: "summary_large_image",

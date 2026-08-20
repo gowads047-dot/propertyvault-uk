@@ -623,7 +623,7 @@ export default function DealAnalyserPage() {
                   <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: "white", lineHeight: 1 }}>Deal Analyser</h1>
                 </div>
               </div>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 500 }}>8 perspectives. Stress tests. Tax impact. 5-year projection. The most complete property deal tool in the UK.</p>
+              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 500 }}>8 perspectives. Stress tests. Tax impact. 5-year projection. The comprehensive UK property deal analysis tool.</p>
               <div style={{ display: "flex", gap: 16, marginTop: 16 }}><PrintButton /><ShareButton params={shareParams} /></div>
             </div>
             <DealScoreGauge score={calc.dealScore} />

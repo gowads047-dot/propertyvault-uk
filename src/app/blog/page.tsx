@@ -5,14 +5,14 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 export const metadata: Metadata = {
   title: "Property Investment Blog | PropertyVault UK",
   description: "Expert property investment articles. BRRR strategy, guaranteed rent, Section 24, HMO investing, stamp duty, leasehold, rent-to-rent, deal sourcing, and more.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/" },
   openGraph: {
     title: "Property Investment Blog | PropertyVault UK",
     description: "Expert property investment articles. BRRR strategy, guaranteed rent, Section 24, HMO investing, stamp duty, leasehold, rent-to-rent, deal sourcing, and more.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/blog/",
+    url: "https://www.propertyvaultuk.co.uk/blog/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Property Blog" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Property Blog" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
   description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
   keywords: "PropertyVault FAQ, guaranteed rent questions, landlord FAQ UK, property calculator help, PropertyVault Academy FAQ",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/faq/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/faq/" },
   openGraph: {
     title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
     description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/faq/",
+    url: "https://www.propertyvaultuk.co.uk/faq/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK FAQ" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK FAQ" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Leasehold Calculator UK 2026 | PropertyVault",
     description: "Extension premium, annual depreciation, ground rent projections, and a plain-English verdict on whether to buy the leasehold property.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/leasehold/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/leasehold/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leasehold Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leasehold Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Leasehold Calculator UK 2026 | PropertyVault", description: "Free tool — extension premium, ground rent, depreciation and mortgage eligibility in one place." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/leasehold/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/leasehold/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

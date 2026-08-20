@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
   description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
   keywords: "EPC C deadline 2030, EPC requirements landlords, EPC retrofit cost, EPC C rental properties, energy efficiency rental",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/" },
   openGraph: {
     title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
     description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/",
+    url: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "EPC rating chart for UK rental properties" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "EPC rating chart for UK rental properties" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",
   description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
   keywords: "Section 24 UK, Section 24 explained, mortgage interest relief landlords, Section 24 tax calculator, SPV property",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/section-24-explained/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/" },
   openGraph: {
     title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",
     description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/section-24-explained/",
+    url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 mortgage interest restriction impact on landlord tax bills" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 mortgage interest restriction impact on landlord tax bills" }],
   },
   twitter: {
     card: "summary_large_image",

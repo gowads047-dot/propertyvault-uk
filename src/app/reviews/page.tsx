@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
   description: DESC,
   keywords: "PropertyVault UK references, guaranteed rent landlord reference, speak to a landlord",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/reviews/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/reviews/" },
   openGraph: {
     title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
     description: DESC,
     type: "website",
-    url: "https://propertyvaultuk.co.uk/reviews/",
+    url: "https://www.propertyvaultuk.co.uk/reviews/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -53,7 +53,7 @@ export function EmbedCalculator({ slug }: { slug: string }) {
         {renderCalc()}
       </div>
       <div style={{ padding: "10px 20px", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "flex-end" }}>
-        <a href="https://propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#94a3b8", textDecoration: "none", fontWeight: 600 }}>
+        <a href="https://www.propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#94a3b8", textDecoration: "none", fontWeight: 600 }}>
           Powered by PropertyVault UK →
         </a>
       </div>

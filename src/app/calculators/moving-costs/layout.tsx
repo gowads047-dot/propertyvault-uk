@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Moving Costs Calculator UK 2026 | PropertyVault",
     description: "Calculate the total cost of moving house in the UK including stamp duty, legal fees, and removal costs.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/moving-costs/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/moving-costs/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Moving Costs Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Moving Costs Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Moving Costs Calculator UK 2026 | PropertyVault", description: "Free tool — see every cost you'll face when moving house." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/moving-costs/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/moving-costs/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

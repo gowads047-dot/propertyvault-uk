@@ -408,9 +408,28 @@ export function getCities(countryCode: string) {
   return getCountry(countryCode)?.cities || [];
 }
 
-export function formatPrice(amount: number, countryCode: string) {
+/**
+ * Format a listing price for display.
+ *
+ * Listing data comes from user submissions and the database, so `amount` can
+ * legitimately arrive as null, undefined or NaN. The previous implementation
+ * called .toLocaleString() on it unguarded, which threw on null/undefined, and
+ * fell back to an unformatted bare number for unknown country codes. An
+ * unknown currency symbol also rendered the literal string "undefined"
+ * alongside the number.
+ *
+ * Returns "—" for a missing price so the UI shows an honest placeholder rather
+ * than "£undefined" or a crash.
+ */
+export function formatPrice(amount: number | null | undefined, countryCode: string) {
+  if (amount === null || amount === undefined || !Number.isFinite(Number(amount))) return "—";
+  const n = Number(amount).toLocaleString("en-GB");
+
   const country = getCountry(countryCode);
-  if (!country) return `${amount}`;
-  if (country.currency === "GBP") return `£${amount.toLocaleString()}`;
-  return `${amount.toLocaleString()} ${country.symbol}`;
+  // Unknown country: show the number without inventing a currency.
+  if (!country) return n;
+  if (country.currency === "GBP") return `£${n}`;
+  // Fall back to the ISO currency code if no display symbol is configured,
+  // so a missing symbol can never render as "undefined".
+  return `${n} ${country.symbol || country.currency}`.trim();
 }

@@ -5,14 +5,14 @@ export const metadata: Metadata = {
   title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
   description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
   keywords: "property glossary, property terms explained, buy to let glossary, property investment terminology, UK property definitions",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/glossary/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/glossary/" },
   openGraph: {
     title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
     description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/glossary/",
+    url: "https://www.propertyvaultuk.co.uk/glossary/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Glossary" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Glossary" }],
   },
   twitter: {
     card: "summary_large_image",

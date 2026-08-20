@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     title: "Guaranteed Rent Birmingham | PropertyVault UK",
     description: "Lease your Birmingham property for 3-5 years — guaranteed rent every month, no voids, no management.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Birmingham — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Birmingham — PropertyVault UK" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/birmingham/" },
 };
 
 const jsonLd = {
@@ -22,11 +22,11 @@ const jsonLd = {
   "@type": "Service",
   name: "Guaranteed Rent Birmingham",
   description: "Guaranteed rent for landlords in Birmingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees.",
-  url: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+  url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
   provider: {
     "@type": "Organization",
     name: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
+    url: "https://www.propertyvaultuk.co.uk",
     telephone: "+447415721628",
     email: "gowads047@gmail.com",
     areaServed: { "@type": "City", name: "Birmingham", sameAs: "https://en.wikipedia.org/wiki/Birmingham" },
@@ -35,7 +35,7 @@ const jsonLd = {
   areaServed: { "@type": "City", name: "Birmingham" },
   availableChannel: {
     "@type": "ServiceChannel",
-    serviceUrl: "https://propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
+    serviceUrl: "https://www.propertyvaultuk.co.uk/guaranteed-rent/birmingham/",
   },
 };
 
@@ -168,7 +168,7 @@ export default function BirminghamPage() {
             },
             {
               q: "Who handles maintenance and repairs at my Birmingham property?",
-              a: "PropertyVault UK manages all day-to-day maintenance and tenant-reported repairs. We have a network of trusted local contractors across Birmingham. Minor maintenance is covered by us — for structural or major works we'll notify you in advance as per your lease agreement.",
+              a: "We handle the day-to-day: tenant-reported repairs, general wear and tear, and routine maintenance through our local Birmingham contractor network — at our cost, for the length of the lease. As the owner you remain responsible for the building structure, buildings insurance, the boiler, and any major electrical work. We arrange and coordinate those too, and always notify you in advance, but the cost sits with you as it would under any lease.",
             },
             {
               q: "Can I sell my Birmingham property during the guaranteed rent lease?",

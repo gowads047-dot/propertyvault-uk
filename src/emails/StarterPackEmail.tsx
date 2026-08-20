@@ -19,7 +19,7 @@ interface StarterPackEmailProps {
   userType?: string | null;
 }
 
-const BASE = "https://propertyvaultuk.co.uk";
+const BASE = "https://www.propertyvaultuk.co.uk";
 const GOLD = "#c9a84c";
 const NAVY = "#0f1b36";
 const GREY_BG = "#f4f6f9";

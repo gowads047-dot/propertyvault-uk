@@ -167,7 +167,7 @@ export async function POST(req: Request) {
         if (process.env.RESEND_API_KEY) {
           const shortAddr = ctx.propertyAddress.split(",")[0];
           const isUrgent = d.priority === "urgent";
-          const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertyvaultuk.co.uk";
+          const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
           const landlordUrl = `${baseUrl}/rentura/properties/${invite.property_id}?tab=maintenance`;
 
           await fetch("https://api.resend.com/emails", {

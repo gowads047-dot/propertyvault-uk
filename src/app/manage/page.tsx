@@ -4,14 +4,14 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Property Management Dashboard — Tenants, Rent & Compliance | PropertyVault UK",
   description: "Manage your rental properties in one place. Tenant referencing, digital contracts, rent collection, maintenance tracking, deposit protection, and compliance reminders.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/manage/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/manage/" },
   openGraph: {
     title: "Property Management Dashboard — Tenants, Rent & Compliance | PropertyVault UK",
     description: "Manage your rental properties in one place. Tenant referencing, digital contracts, rent collection, maintenance tracking, deposit protection, and compliance reminders.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/manage/",
+    url: "https://www.propertyvaultuk.co.uk/manage/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Property Management" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Property Management" }],
   },
   twitter: {
     card: "summary_large_image",

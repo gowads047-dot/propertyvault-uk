@@ -4,14 +4,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Serviced Accommodation UK — Airbnb & Short-Let Guide | PropertyVault",
   description: "Complete guide to serviced accommodation investing. Airbnb strategy, pricing, compliance, 90-day rule, furnishing, and management for short-term lets.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/serviced-accommodation/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/serviced-accommodation/" },
   openGraph: {
     title: "Serviced Accommodation UK — Airbnb & Short-Let Guide | PropertyVault",
     description: "Complete guide to serviced accommodation investing. Airbnb strategy, pricing, compliance, 90-day rule, furnishing, and management for short-term lets.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/serviced-accommodation/",
+    url: "https://www.propertyvaultuk.co.uk/serviced-accommodation/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Serviced Accommodation UK Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Serviced Accommodation UK Guide" }],
   },
   twitter: {
     card: "summary_large_image",

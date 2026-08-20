@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { formatPrice } from "@/lib/hetta-config";
 
 interface Listing {
   id: string;
@@ -188,7 +189,7 @@ export default function RoomsPage() {
 
                       {/* Price overlay bottom right */}
                       <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl font-extrabold text-sm" style={{ background: "rgba(0,0,0,0.7)", color: "white" }}>
-                        £{r.price}<span className="text-xs font-normal opacity-70">/mo</span>
+                        {formatPrice(r.price, r.country || "gb")}<span className="text-xs font-normal opacity-70">/mo</span>
                       </div>
                     </div>
 

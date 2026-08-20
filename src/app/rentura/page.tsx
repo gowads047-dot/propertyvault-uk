@@ -29,10 +29,10 @@ const REVIEWS = [
 const COMPARE = [
   { feature: "All properties in one view", spreadsheet: "Manual, error-prone", other: "Partial", rentura: "Live portfolio dashboard" },
   { feature: "Compliance alerts", spreadsheet: "None", other: "Basic", rentura: "60-day advance alerts" },
-  { feature: "Property Passport", spreadsheet: "None", other: "None", rentura: "Digital ID per property" },
+  { feature: "Property Passport", spreadsheet: "None", other: "Not standard", rentura: "Digital ID per property" },
   { feature: "Maintenance tracking", spreadsheet: "None", other: "Varies", rentura: "With photos & costs" },
   { feature: "Accountant-ready exports", spreadsheet: "Manual formatting", other: "Basic CSV", rentura: "P&L per property" },
-  { feature: "AI property assistant", spreadsheet: "None", other: "None", rentura: "Answers any question 24/7" },
+  { feature: "AI property assistant", spreadsheet: "None", other: "Varies by provider", rentura: "Answers any question 24/7" },
   { feature: "Monthly cost", spreadsheet: "Free (+ your time)", other: "£20–£80/mo", rentura: "£9.99/mo, cancel anytime" },
 ];
 
@@ -112,8 +112,8 @@ export default function RenturaPage() {
             {[
               { icon: "🔒", label: "SSL Encrypted", sub: "All data in transit" },
               { icon: "🇬🇧", label: "UK Data Storage", sub: "GDPR compliant" },
-              { icon: "🏦", label: "Payments via Stripe", sub: "PCI DSS Level 1" },
-              { icon: "📋", label: "ICO Registered", sub: "Data protection certified" },
+              { icon: "🏦", label: "Payments processed by Stripe", sub: "Stripe is PCI DSS Level 1 certified" },
+              { icon: "📋", label: "ICO Registered", sub: "On the public ICO register" },
               { icon: "🗑️", label: "Right to erasure", sub: "Delete your data anytime" },
             ].map((b) => (
               <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 10, background: "white", border: "1px solid rgba(15,27,45,0.08)", borderRadius: 12, padding: "10px 16px" }}>

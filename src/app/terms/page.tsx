@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Use — PropertyVault UK",
   description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/terms/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/terms/" },
   openGraph: {
     title: "Terms of Use — PropertyVault UK",
     description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/terms/",
+    url: "https://www.propertyvaultuk.co.uk/terms/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Terms of Use — PropertyVault UK", description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services." },
 };
@@ -29,7 +29,7 @@ export default function TermsPage() {
         <div className="container-max max-w-4xl prose-sm text-navy-600 leading-relaxed space-y-8">
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">1. Acceptance of Terms</h2>
-            <p>By accessing or using the PropertyVault UK website at propertyvault.uk (the &ldquo;Site&rdquo;), you agree to be bound by these Terms of Use (&ldquo;Terms&rdquo;). If you do not agree to these Terms, you must not use the Site. These Terms constitute a legally binding agreement between you and PropertyVault UK.</p>
+            <p>By accessing or using the PropertyVault UK website at propertyvaultuk.co.uk (the &ldquo;Site&rdquo;), you agree to be bound by these Terms of Use (&ldquo;Terms&rdquo;). If you do not agree to these Terms, you must not use the Site. These Terms constitute a legally binding agreement between you and PropertyVault UK.</p>
           </div>
 
           <div>

@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Free Property Offer Worksheet UK | PropertyVault",
     description: "Free offer worksheet — calculate the right price to offer on any UK investment property.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/templates/offer-worksheet/",
+    url: "https://www.propertyvaultuk.co.uk/templates/offer-worksheet/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Offer Worksheet — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Offer Worksheet — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Property Offer Worksheet UK | PropertyVault", description: "Free template — calculate exactly what to offer on your next deal." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/templates/offer-worksheet/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/offer-worksheet/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

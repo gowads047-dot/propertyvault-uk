@@ -63,10 +63,10 @@ export async function GET(req: Request) {
               <ul style="padding-left:20px;margin-bottom:24px;">
                 ${alert.items.map(i => `<li style="margin-bottom:8px;font-size:14px;">${i}</li>`).join("")}
               </ul>
-              <a href="https://propertyvaultuk.co.uk/rentura/dashboard" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;">
+              <a href="https://www.propertyvaultuk.co.uk/rentura/dashboard" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;">
                 View dashboard →
               </a>
-              <p style="font-size:11px;color:#555;margin-top:28px;">You're receiving this because you have compliance alerts set up in Rentura. <a href="https://propertyvaultuk.co.uk/rentura/settings" style="color:#888;">Manage alerts</a></p>
+              <p style="font-size:11px;color:#555;margin-top:28px;">You're receiving this because you have compliance alerts set up in Rentura. <a href="https://www.propertyvaultuk.co.uk/rentura/settings" style="color:#888;">Manage alerts</a></p>
             </div>
           `,
         }),

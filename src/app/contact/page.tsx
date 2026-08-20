@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact PropertyVault UK — Get in Touch",
   description: "Contact the PropertyVault team. Questions, partnerships, advertising, press enquiries, and content contributions.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/contact/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/contact/" },
   openGraph: {
     title: "Contact PropertyVault UK — Get in Touch",
     description: "Contact the PropertyVault team. Questions, partnerships, advertising, press enquiries, and content contributions.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/contact/",
+    url: "https://www.propertyvaultuk.co.uk/contact/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Contact PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Contact PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -37,7 +37,7 @@ export default function ContactPage() {
               <h2 className="text-xl font-bold text-navy-800 mb-6">Send Us a Message</h2>
               <form className="space-y-4" action="https://formsubmit.co/gowads047@gmail.com" method="POST">
                 <input type="hidden" name="_subject" value="New enquiry from PropertyVault" />
-                <input type="hidden" name="_next" value="https://propertyvaultuk.co.uk/contact/?sent=true" />
+                <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/contact/?sent=true" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="text" name="_honey" style={{ display: "none" }} />
                 <div>

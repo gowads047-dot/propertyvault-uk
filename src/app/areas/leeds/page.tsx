@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     title: "Leeds Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Leeds property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/leeds/",
+    url: "https://www.propertyvaultuk.co.uk/areas/leeds/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leeds Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leeds Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",

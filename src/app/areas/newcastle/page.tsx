@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     title: "Newcastle Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Newcastle property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/newcastle/",
+    url: "https://www.propertyvaultuk.co.uk/areas/newcastle/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Newcastle Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Newcastle Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",

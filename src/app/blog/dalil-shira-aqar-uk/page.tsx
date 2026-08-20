@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     "A complete Arabic guide to buying property in the UK. Mortgages, stamp duty, solicitors, and the full process explained for Arab buyers and expats.",
   keywords:
     "buying property UK Arabic, شراء عقار في المملكة المتحدة, UK property guide Arabic, Arab expat property UK",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/" },
   openGraph: {
     title: "Buying Property in the UK — Arabic Guide | PropertyVault UK",
     description: "A complete Arabic guide to buying property in the UK. Mortgages, stamp duty, solicitors, and the full process explained for Arab buyers and expats.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/",
+    url: "https://www.propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buying Property in the UK — Arabic Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buying Property in the UK — Arabic Guide" }],
   },
   twitter: {
     card: "summary_large_image",

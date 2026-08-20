@@ -4,14 +4,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Commercial Property Investment UK Guide | PropertyVault",
   description: "Complete guide to UK commercial property investing. Offices, retail, industrial, mixed-use. Yields, leases, finance, and risk assessment.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/commercial-property/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/commercial-property/" },
   openGraph: {
     title: "Commercial Property Investment UK Guide | PropertyVault",
     description: "Complete guide to UK commercial property investing. Offices, retail, industrial, mixed-use. Yields, leases, finance, and risk assessment.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/commercial-property/",
+    url: "https://www.propertyvaultuk.co.uk/commercial-property/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Commercial Property UK Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Commercial Property UK Guide" }],
   },
   twitter: {
     card: "summary_large_image",

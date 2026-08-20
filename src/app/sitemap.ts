@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://propertyvaultuk.co.uk";
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

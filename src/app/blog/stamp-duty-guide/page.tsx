@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
   description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
   keywords: "stamp duty UK, SDLT rates, stamp duty calculator, first time buyer stamp duty, additional property surcharge, stamp duty 2025",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
   openGraph: {
     title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
     description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/stamp-duty-guide/",
+    url: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Stamp Duty UK Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Stamp Duty UK Guide" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -12,7 +12,7 @@ const serviceSchema = {
   provider: {
     "@type": "LocalBusiness",
     name: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
+    url: "https://www.propertyvaultuk.co.uk",
   },
   description: "Fixed monthly rental income for landlords for 3–5 years with no voids, no management, and no arrears. PropertyVault UK pays you whether the property is occupied or not.",
   serviceType: "Guaranteed Rent",
@@ -29,7 +29,7 @@ const serviceSchema = {
     description: "Free rent estimate — no obligation. Get a guaranteed rent figure for your property within 24 hours.",
     price: "0",
     priceCurrency: "GBP",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent",
   },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -45,8 +45,8 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://propertyvaultuk.co.uk" },
-    { "@type": "ListItem", position: 2, name: "Guaranteed Rent", item: "https://propertyvaultuk.co.uk/guaranteed-rent" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.propertyvaultuk.co.uk" },
+    { "@type": "ListItem", position: 2, name: "Guaranteed Rent", item: "https://www.propertyvaultuk.co.uk/guaranteed-rent" },
   ],
 };
 
@@ -55,7 +55,7 @@ const guaranteedRentFaqs = [
   { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
   { q: "What types of property qualify for guaranteed rent?", a: "Most residential properties qualify — houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability and safety standards." },
   { q: "Who are the tenants in a guaranteed rent scheme?", a: "Tenants are sourced, referenced and managed entirely by our team. You have no direct contact with them — we handle referencing, day-to-day management, maintenance and any issues that arise for the length of the lease." },
-  { q: "What about repairs and maintenance with guaranteed rent?", a: "We handle all day-to-day maintenance at our cost during the lease. Major structural issues (roof, subsidence) remain the property owner's responsibility, but we coordinate everything." },
+  { q: "What about repairs and maintenance with guaranteed rent?", a: "We handle the day-to-day at our cost for the length of the lease — tenant-reported repairs, general wear and tear and routine maintenance. As the owner you remain responsible for the building structure, buildings insurance, the boiler and any major electrical work. We arrange and coordinate that work and notify you in advance, but the cost sits with you." },
   { q: "How long is a guaranteed rent lease?", a: "Typically 3-5 years. Longer leases provide greater income security and may attract a higher guaranteed rent amount." },
   { q: "How quickly can guaranteed rent start?", a: "Once you accept our offer, we can typically complete the lease within 7-14 days. Your first guaranteed rent payment follows shortly after." },
   { q: "What areas do you cover for guaranteed rent?", a: "We currently operate across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield — and the surrounding areas within approximately 30 minutes of each city centre." },
@@ -66,14 +66,14 @@ const guaranteedRentFaqs = [
 export const metadata: Metadata = {
   title: "Guaranteed Rent for Landlords | PropertyVault UK",
   description: "Guaranteed rent for landlords across the Midlands. No voids, no management, guaranteed income for 3-5 years. Covering Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/" },
   openGraph: {
     title: "Guaranteed Rent for Landlords | PropertyVault UK",
     description: "No voids, no management, guaranteed income for 3–5 years. We pay you every month whether the property is occupied or not.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent/",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent for Landlords" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent for Landlords" }],
   },
   twitter: {
     card: "summary_large_image",

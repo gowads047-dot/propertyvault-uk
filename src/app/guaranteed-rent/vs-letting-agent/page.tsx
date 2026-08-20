@@ -7,11 +7,11 @@ export const metadata: Metadata = {
   title: "Guaranteed Rent vs Letting Agent — Which Pays More? | PropertyVault UK",
   description: "Guaranteed rent vs letting agent — a full cost comparison. We break down agent fees, void periods, maintenance and compliance costs vs guaranteed rent. See which makes you more money.",
   keywords: "guaranteed rent vs letting agent, guaranteed rent vs traditional let, is guaranteed rent worth it, letting agent fees vs guaranteed rent, guaranteed rent comparison UK",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent" },
   openGraph: {
     title: "Guaranteed Rent vs Letting Agent — Which Pays More?",
     description: "A full cost breakdown: agent fees, void periods, maintenance and compliance vs guaranteed rent. See which puts more money in your pocket.",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent",
   },
 };
 
@@ -19,9 +19,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://propertyvaultuk.co.uk" },
-    { "@type": "ListItem", position: 2, name: "Guaranteed Rent", item: "https://propertyvaultuk.co.uk/guaranteed-rent" },
-    { "@type": "ListItem", position: 3, name: "vs Letting Agent", item: "https://propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://www.propertyvaultuk.co.uk" },
+    { "@type": "ListItem", position: 2, name: "Guaranteed Rent", item: "https://www.propertyvaultuk.co.uk/guaranteed-rent" },
+    { "@type": "ListItem", position: 3, name: "vs Letting Agent", item: "https://www.propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent" },
   ],
 };
 

@@ -42,17 +42,17 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
     headline: title,
     description: excerpt,
     image: image,
-    author: { "@type": "Person", name: "Nass", url: "https://propertyvaultuk.co.uk/about" },
+    author: { "@type": "Person", name: "Nass", url: "https://www.propertyvaultuk.co.uk/about" },
     publisher: {
       "@type": "Organization",
       name: "PropertyVault UK",
-      logo: { "@type": "ImageObject", url: "https://propertyvaultuk.co.uk/favicon.ico" },
+      logo: { "@type": "ImageObject", url: "https://www.propertyvaultuk.co.uk/favicon.ico" },
     },
     datePublished: toISODate(date),
     dateModified: toISODate(date),
     inLanguage: "en-GB",
     articleSection: category,
-    mainEntityOfPage: { "@type": "WebPage", "@id": "https://propertyvaultuk.co.uk/blog" },
+    mainEntityOfPage: { "@type": "WebPage", "@id": "https://www.propertyvaultuk.co.uk/blog" },
   };
 
   return (

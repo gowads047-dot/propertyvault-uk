@@ -19,7 +19,7 @@ export default function AcademyJoinPage() {
     if (password.length < 6) { setError("Password must be at least 6 characters."); return; }
     setLoading(true);
 
-    const origin = typeof window !== "undefined" ? window.location.origin : "https://propertyvaultuk.co.uk";
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://www.propertyvaultuk.co.uk";
 
     const { data, error: signUpError } = await supabase.auth.signUp({
       email: email.trim(),

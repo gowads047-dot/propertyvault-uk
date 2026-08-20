@@ -4,14 +4,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
   description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/list-property/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/list-property/" },
   openGraph: {
     title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
     description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/list-property/",
+    url: "https://www.propertyvaultuk.co.uk/list-property/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "List Your Property on PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "List Your Property on PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -62,7 +62,7 @@ export default function ListPropertyPage() {
           <h2 className="text-2xl font-bold text-navy-800 mb-6">Create Your Listing</h2>
           <form className="space-y-6 bg-white rounded-2xl p-6 md:p-8 shadow-md border border-navy-100" action="https://formsubmit.co/gowads047@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="New Property Listing — PropertyVault" />
-            <input type="hidden" name="_next" value="https://propertyvaultuk.co.uk/list-property/?sent=true" />
+            <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/list-property/?sent=true" />
             <input type="hidden" name="_captcha" value="false" />
             <input type="text" name="_honey" style={{ display: "none" }} />
             <div>
