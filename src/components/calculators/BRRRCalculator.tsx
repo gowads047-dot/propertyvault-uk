@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { ShareResults } from "./ShareResults";
+import { pctOf } from "@/lib/finance";
 
 export function BRRRCalculator() {
   const [purchasePrice, setPurchasePrice] = useState(120000);
@@ -18,7 +19,7 @@ export function BRRRCalculator() {
     const refinanceAmount = afterRepairValue * (refinanceLTV / 100);
     const moneyLeftIn = totalInvested - refinanceAmount;
     const capitalRecycled = Math.min(refinanceAmount, totalInvested);
-    const recyclePercent = (capitalRecycled / totalInvested) * 100;
+    const recyclePercent = pctOf(capitalRecycled, totalInvested);
 
     const monthlyMortgage = (refinanceAmount * (refinanceRate / 100)) / 12;
     const monthlyCashFlow = monthlyRent - monthlyExpenses - monthlyMortgage;
@@ -26,7 +27,7 @@ export function BRRRCalculator() {
 
     const equityCreated = afterRepairValue - refinanceAmount;
     const roiOnCash = moneyLeftIn > 0 ? (annualCashFlow / moneyLeftIn) * 100 : Infinity;
-    const grossYield = (monthlyRent * 12 / afterRepairValue) * 100;
+    const grossYield = pctOf(monthlyRent * 12, afterRepairValue);
 
     return {
       totalInvested,

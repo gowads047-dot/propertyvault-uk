@@ -10,7 +10,7 @@ import { PrintButton } from "@/components/calculators/PrintButton";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax, calcSDLT } from "@/lib/tax";
-import { monthlyRepayment, monthlyInterestOnly, compoundGrowth } from "@/lib/finance";
+import { monthlyRepayment, monthlyInterestOnly, compoundGrowth, pctOf } from "@/lib/finance";
 
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
@@ -333,7 +333,7 @@ export default function DealAnalyserPage() {
   // eslint-disable-next-line react-hooks/preserve-manual-memoization -- hand-written memoisation kept deliberately; letting the compiler take over changes recompute behaviour on the largest calculator
   const calc = useMemo(() => {
     const annualRent = monthlyRent * 12;
-    const grossYield = (annualRent / purchasePrice) * 100;
+    const grossYield = pctOf(annualRent, purchasePrice);
     const depositAmount = purchasePrice * (depositPct / 100);
     const loanAmount = purchasePrice - depositAmount;
     const monthlyMortgage = mortgageType === "interest"
@@ -346,7 +346,7 @@ export default function DealAnalyserPage() {
     const voidCost    = (annualRent / 52) * voidWeeks;
     const totalExpenses = annualMortgage + management + maintenance + insurance + voidCost;
     const netIncome   = annualRent - totalExpenses;
-    const netYield    = (netIncome / purchasePrice) * 100;
+    const netYield    = pctOf(netIncome, purchasePrice);
     const monthlyCF   = netIncome / 12;
     const totalCashIn = depositAmount + purchaseCosts + refurbCost;
     const cashOnCash  = totalCashIn > 0 ? (netIncome / totalCashIn) * 100 : 0;
@@ -359,7 +359,7 @@ export default function DealAnalyserPage() {
     const scoreNetYield    = Math.min(25, (netYield / 5) * 25);
     const scoreCF          = Math.min(25, (Math.max(0, monthlyCF) / 300) * 25);
     const scoreCoC         = Math.min(20, (cashOnCash / 10) * 20);
-    const scoreEquity      = Math.min(10, (Math.max(0, equityGain) / (purchasePrice * 0.1)) * 10);
+    const scoreEquity      = Math.min(10, pctOf(Math.max(0, equityGain), purchasePrice * 0.1) / 10);
     const dealScore = Math.round(scoreGrossYield + scoreNetYield + scoreCF + scoreCoC + scoreEquity);
 
     return {
@@ -461,8 +461,8 @@ export default function DealAnalyserPage() {
     const voids = (grossIncome / 52) * voidWeeks;
     const totalExp = annualMtg + mgmt + maint + ins + voids + annualLicence + annualCouncilTax + annualUtilities;
     const netIncome = grossIncome - totalExp;
-    const grossYield = (grossIncome / purchasePrice) * 100;
-    const netYield = (netIncome / purchasePrice) * 100;
+    const grossYield = pctOf(grossIncome, purchasePrice);
+    const netYield = pctOf(netIncome, purchasePrice);
     const totalCashIn = depositAmount + purchaseCosts + refurbCost;
     const cashOnCash = totalCashIn > 0 ? (netIncome / totalCashIn) * 100 : 0;
     const score = Math.round(Math.min(25, (grossYield / 12) * 25) + Math.min(25, (Math.max(0, netYield) / 6) * 25) + Math.min(25, (Math.max(0, netIncome / 12) / 400) * 25) + Math.min(25, (cashOnCash / 12) * 25));
@@ -512,8 +512,8 @@ export default function DealAnalyserPage() {
     const annualMtg = monthlyMtg * 12;
     const totalExp = platformFees + cleaningCosts + annualRunning + annualMtg + insuranceMonthly * 12;
     const netIncome = grossRevenue - totalExp;
-    const grossYield = (grossRevenue / purchasePrice) * 100;
-    const netYield = (netIncome / purchasePrice) * 100;
+    const grossYield = pctOf(grossRevenue, purchasePrice);
+    const netYield = pctOf(netIncome, purchasePrice);
     const totalCashIn = depositAmount + purchaseCosts + refurbCost;
     const cashOnCash = totalCashIn > 0 ? (netIncome / totalCashIn) * 100 : 0;
     return { grossRevenue, platformFees, cleaningCosts, annualRunning, annualMtg, totalExp, netIncome, grossYield, netYield, monthlyCF: netIncome / 12, cashOnCash, occupiedNights };
@@ -564,7 +564,7 @@ export default function DealAnalyserPage() {
       const targetPrice = Math.round((calc.annualRent / (bench.gross / 100)) / 1000) * 1000;
       tips.push({ type: "warn", text: `Gross yield ${calc.grossYield.toFixed(1)}% is below the ${bench.name} average of ${bench.gross}%. To hit ${bench.gross}% gross, negotiate purchase price to £${targetPrice.toLocaleString()}.` });
     }
-    if (calc.netYield < 3) tips.push({ type: "error", text: `Net yield of ${calc.netYield.toFixed(1)}% is very low. Running costs are eating ${((calc.totalExpenses / calc.annualRent) * 100).toFixed(0)}% of rental income.` });
+    if (calc.netYield < 3) tips.push({ type: "error", text: `Net yield of ${calc.netYield.toFixed(1)}% is very low. Running costs are eating ${pctOf(calc.totalExpenses, calc.annualRent).toFixed(0)}% of rental income.` });
     if (calc.monthlyCF < 0) tips.push({ type: "error", text: `Negative cash flow of ${fmt(calc.monthlyCF)}/mo means this deal costs you money every month even before tax.` });
     else if (calc.monthlyCF < 100) tips.push({ type: "warn", text: `Thin cash flow of ${fmt(calc.monthlyCF)}/mo leaves little buffer. A single repair bill could push you into the red.` });
     if (taxBand === "higher" && taxAnalysis.higherNet < taxAnalysis.companyNet * 0.85) tips.push({ type: "info", text: `As a higher-rate taxpayer, a limited company could increase your after-tax income by ~${fmt(taxAnalysis.companyNet - taxAnalysis.higherNet)}/yr due to full mortgage interest deductibility.` });
@@ -1311,9 +1311,15 @@ export default function DealAnalyserPage() {
                           <span style={{ fontSize: 28 }}>{aiVerdict.verdict === "Buy" ? "✅" : aiVerdict.verdict === "Negotiate" ? "🤝" : "❌"}</span>
                           <div>
                             <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "#16a34a" : aiVerdict.verdict === "Negotiate" ? "#92400e" : "#dc2626", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
-                            <p style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>AI Recommendation</p>
+                            <p style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>AI-assisted analysis · not financial advice</p>
                           </div>
                         </div>
+
+                        <p style={{ fontSize: 11, lineHeight: 1.5, color: "#64748b", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 11px", marginBottom: 14 }}>
+                          This is an automated reading of the figures you entered, not a personal recommendation.
+                          PropertyVault UK is not authorised or regulated by the FCA. Check the numbers yourself and
+                          speak to a qualified professional before committing to a purchase.
+                        </p>
 
                         {/* Summary */}
                         <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.6, marginBottom: 14, fontStyle: "italic" }}>&ldquo;{aiVerdict.summary}&rdquo;</p>

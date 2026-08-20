@@ -16,6 +16,7 @@ import {
   netYield,
   cashOnCash,
   roi,
+  pctOf,
 } from "./finance";
 
 const p2 = (n: number) => Math.round(n * 100) / 100;
@@ -149,5 +150,32 @@ describe("discountFactor / pvLumpSum", () => {
     const deferred = pvAnnuity(250, 5, 10) * discountFactor(5, 15);
     const closedForm = (250 * (1 - Math.pow(1.05, -10))) / 0.05 / Math.pow(1.05, 15);
     expect(deferred).toBeCloseTo(closedForm, 9);
+  });
+});
+
+describe("pctOf", () => {
+  it("computes a plain percentage", () => {
+    expect(pctOf(11400, 180000)).toBeCloseTo(6.3333, 3);
+    expect(pctOf(50, 200)).toBe(25);
+  });
+
+  // Clearing a number input yields 0, which used to render "Infinity%".
+  it("returns 0 rather than Infinity when the denominator is zero", () => {
+    expect(pctOf(11400, 0)).toBe(0);
+    expect(Number.isFinite(pctOf(11400, 0))).toBe(true);
+  });
+
+  it("returns 0 for a negative denominator", () => {
+    expect(pctOf(100, -5)).toBe(0);
+  });
+
+  it("never returns NaN or Infinity for any input", () => {
+    const values = [0, -0, 1, -1, 1e9, NaN, Infinity, -Infinity];
+    for (const a of values) {
+      for (const b of values) {
+        const out = pctOf(a, b);
+        expect(Number.isFinite(out)).toBe(true);
+      }
+    }
   });
 });
