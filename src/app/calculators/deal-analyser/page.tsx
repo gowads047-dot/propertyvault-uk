@@ -12,6 +12,25 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax, calcSDLT } from "@/lib/tax";
 import { monthlyRepayment, monthlyInterestOnly, compoundGrowth, pctOf } from "@/lib/finance";
 
+/**
+ * Read a number input, floored at zero.
+ *
+ * Every field here is a price, a rent, a cost, a percentage, a count or a
+ * term, and none of those can be negative. Without this the analyser happily
+ * accepted a purchase price of -250,000 and a rent of -900, then presented the
+ * resulting figures as analysis. The divide-by-zero guards added earlier stop
+ * it crashing; they do not stop it being nonsense.
+ */
+const nonNegative = (v: string) => Math.max(0, Number(v) || 0);
+
+/**
+ * Read a number input that may legitimately be negative.
+ *
+ * Capital growth is the one such field — modelling a falling market is a
+ * reasonable thing to want, and arguably the prudent case.
+ */
+const signed = (v: string) => Number(v) || 0;
+
 const faqs = [
   { q: "What is a property deal analyser?", a: "A deal analyser evaluates a potential property investment from multiple perspectives — gross yield, net yield, monthly cash flow, and cash-on-cash return. This gives you a complete picture of whether a deal is worth pursuing." },
   { q: "What is a good rental yield in the UK?", a: "A gross yield of 6-8% is considered good for most UK buy-to-let investments. Net yield of 4-5%+ and positive monthly cash flow are better indicators. Always analyse all metrics together." },
@@ -881,25 +900,25 @@ export default function DealAnalyserPage() {
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Purchase Price</span>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                      <input type="number" value={purchasePrice} onChange={e => setPurchasePrice(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <input type="number" min="0" value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     <label className="block">
                       <span className="block text-xs text-navy-500 mb-1">Refurb Cost</span>
                       <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                        <input type="number" value={refurbCost} onChange={e => setRefurbCost(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                        <input type="number" min="0" value={refurbCost} onChange={e => setRefurbCost(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     </label>
                     <label className="block">
                       <span className="block text-xs text-navy-500 mb-1">After Refurb Value</span>
                       <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                        <input type="number" value={afterRefurbValue} onChange={e => setARV(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                        <input type="number" min="0" value={afterRefurbValue} onChange={e => setARV(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     </label>
                   </div>
                   {(strategy === "btl" || strategy === "sa") && (
                     <label className="block">
                       <span className="block text-xs text-navy-500 mb-1">Monthly Rent</span>
                       <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                        <input type="number" value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                        <input type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     </label>
                   )}
                 </div>
@@ -913,7 +932,7 @@ export default function DealAnalyserPage() {
                       <div style={{ marginTop: 10 }}>
                         <label className="block">
                           <span className="block text-xs text-navy-500 mb-1">Guaranteed % of market rent: {guaranteedRentPct}%</span>
-                          <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
+                          <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                         </label>
                         <p style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
                       </div>
@@ -941,11 +960,11 @@ export default function DealAnalyserPage() {
                 <h3 className="font-bold text-navy-800 text-sm mb-4">🏦 Mortgage</h3>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-2">
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Deposit %</span><input type="number" value={depositPct} onChange={e => setDepositPct(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Rate %</span><input type="number" step="0.1" value={mortgageRate} onChange={e => setMortgageRate(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Deposit %</span><input type="number" min="0" value={depositPct} onChange={e => setDepositPct(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Rate %</span><input type="number" min="0" step="0.1" value={mortgageRate} onChange={e => setMortgageRate(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Term (yrs)</span><input type="number" value={mortgageTerm} onChange={e => setMortgageTerm(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Term (yrs)</span><input type="number" min="0" value={mortgageTerm} onChange={e => setMortgageTerm(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Type</span>
                       <select value={mortgageType} onChange={e => setMortgageType(e.target.value as "interest"|"repayment")} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400 bg-white">
                         <option value="interest">Interest only</option>
@@ -961,12 +980,12 @@ export default function DealAnalyserPage() {
                 <h3 className="font-bold text-navy-800 text-sm mb-4">⚙️ Running Costs</h3>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-2">
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Management %</span><input type="number" value={managementPct} onChange={e => setManagementPct(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Maintenance %</span><input type="number" value={maintenancePct} onChange={e => setMaintPct(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Management %</span><input type="number" min="0" value={managementPct} onChange={e => setManagementPct(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Maintenance %</span><input type="number" min="0" value={maintenancePct} onChange={e => setMaintPct(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Insurance £/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={insuranceMonthly} onChange={e => setInsurance(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Void wks/yr</span><input type="number" value={voidWeeks} onChange={e => setVoidWeeks(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Insurance £/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={insuranceMonthly} onChange={e => setInsurance(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Void wks/yr</span><input type="number" min="0" value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                   </div>
                 </div>
               </div>
@@ -977,13 +996,13 @@ export default function DealAnalyserPage() {
                   <h3 className="font-bold text-navy-800 text-sm mb-4">🏘️ HMO Details</h3>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms</span><input type="number" value={hmoRooms} onChange={e => setHmoRooms(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rent/Room £/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={hmoRentPerRoom} onChange={e => setHmoRentPerRoom(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms</span><input type="number" min="0" value={hmoRooms} onChange={e => setHmoRooms(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rent/Room £/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={hmoRentPerRoom} onChange={e => setHmoRentPerRoom(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" value={hmoCouncilTax} onChange={e => setHmoCouncilTax(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" value={hmoUtilities} onChange={e => setHmoUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" min="0" value={hmoCouncilTax} onChange={e => setHmoCouncilTax(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" min="0" value={hmoUtilities} onChange={e => setHmoUtilities(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" min="0" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <p style={{ fontSize: 11, color: "#64748b" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
                   </div>
@@ -995,15 +1014,15 @@ export default function DealAnalyserPage() {
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
                   <h3 className="font-bold text-navy-800 text-sm mb-4">🔄 Rent-to-Rent Details</h3>
                   <div className="space-y-3">
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Lease Cost £/mo (you pay landlord)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={r2rLeaseCost} onChange={e => setR2rLeaseCost(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Lease Cost £/mo (you pay landlord)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={r2rLeaseCost} onChange={e => setR2rLeaseCost(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
                     <div className="grid grid-cols-2 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms to Sublet</span><input type="number" value={r2rRooms} onChange={e => setR2rRooms(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Sublet £/room/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={r2rRentPerRoom} onChange={e => setR2rRentPerRoom(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms to Sublet</span><input type="number" min="0" value={r2rRooms} onChange={e => setR2rRooms(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Sublet £/room/mo</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={r2rRentPerRoom} onChange={e => setR2rRentPerRoom(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Setup Cost £</span><input type="number" value={r2rSetupCost} onChange={e => setR2rSetupCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" value={r2rCouncilTax} onChange={e => setR2rCouncilTax(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" value={r2rUtilities} onChange={e => setR2rUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Setup Cost £</span><input type="number" min="0" value={r2rSetupCost} onChange={e => setR2rSetupCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Council Tax £/mo</span><input type="number" min="0" value={r2rCouncilTax} onChange={e => setR2rCouncilTax(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" min="0" value={r2rUtilities} onChange={e => setR2rUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                   </div>
                 </div>
@@ -1015,13 +1034,13 @@ export default function DealAnalyserPage() {
                   <h3 className="font-bold text-navy-800 text-sm mb-4">🔨 Flip Details</h3>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Hold Period (months)</span><input type="number" value={flipHoldingMonths} onChange={e => setFlipHoldingMonths(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Agent Fee %</span><input type="number" step="0.1" value={flipAgentFee} onChange={e => setFlipAgentFee(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Hold Period (months)</span><input type="number" min="0" value={flipHoldingMonths} onChange={e => setFlipHoldingMonths(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Agent Fee %</span><input type="number" min="0" step="0.1" value={flipAgentFee} onChange={e => setFlipAgentFee(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge Rate %/mo</span><input type="number" step="0.05" value={flipBridgingRate} onChange={e => setFlipBridgingRate(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge LTV %</span><input type="number" value={flipBridgingLTV} onChange={e => setFlipBridgingLTV(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Holding Costs £/mo</span><input type="number" value={flipHoldingCosts} onChange={e => setFlipHoldingCosts(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge Rate %/mo</span><input type="number" min="0" step="0.05" value={flipBridgingRate} onChange={e => setFlipBridgingRate(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Bridge LTV %</span><input type="number" min="0" value={flipBridgingLTV} onChange={e => setFlipBridgingLTV(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Holding Costs £/mo</span><input type="number" min="0" value={flipHoldingCosts} onChange={e => setFlipHoldingCosts(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                   </div>
                 </div>
@@ -1033,15 +1052,15 @@ export default function DealAnalyserPage() {
                   <h3 className="font-bold text-navy-800 text-sm mb-4">🏨 Serviced Accommodation Details</h3>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Nightly Rate £</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={saNightlyRate} onChange={e => setSaNightlyRate(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Occupancy %</span><input type="number" value={saOccupancy} onChange={e => setSaOccupancy(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Nightly Rate £</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={saNightlyRate} onChange={e => setSaNightlyRate(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Occupancy %</span><input type="number" min="0" value={saOccupancy} onChange={e => setSaOccupancy(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Platform Fee %</span><input type="number" step="0.5" value={saPlatformFee} onChange={e => setSaPlatformFee(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Clean/Stay £</span><input type="number" value={saCleaningPerStay} onChange={e => setSaCleaningPerStay(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" value={saAvgStayNights} onChange={e => setSaAvgStayNights(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Platform Fee %</span><input type="number" min="0" step="0.5" value={saPlatformFee} onChange={e => setSaPlatformFee(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Clean/Stay £</span><input type="number" min="0" value={saCleaningPerStay} onChange={e => setSaCleaningPerStay(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                      <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" min="0" value={saAvgStayNights} onChange={e => setSaAvgStayNights(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
-                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={saRunningCosts} onChange={e => setSaRunningCosts(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
+                    <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={saRunningCosts} onChange={e => setSaRunningCosts(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
                     <p style={{ fontSize: 11, color: "#64748b" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
                   </div>
                 </div>
@@ -1067,7 +1086,7 @@ export default function DealAnalyserPage() {
                   </label>
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Capital growth assumption: {capitalGrowthPct}%/yr</span>
-                    <input type="range" min={0} max={8} step={0.5} value={capitalGrowthPct} onChange={e => setCapGrowth(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
+                    <input type="range" min={0} max={8} step={0.5} value={capitalGrowthPct} onChange={e => setCapGrowth(signed(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                   </label>
                 </div>
               </div>
@@ -1547,7 +1566,7 @@ export default function DealAnalyserPage() {
                     <h4 className="font-bold text-navy-800 text-sm">5-Year Projection</h4>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span className="text-xs text-navy-500">Growth:</span>
-                      <select value={capitalGrowthPct} onChange={e => setCapGrowth(+e.target.value)} className="text-xs font-semibold border border-navy-200 rounded-lg px-2 py-1 bg-white focus:outline-none">
+                      <select value={capitalGrowthPct} onChange={e => setCapGrowth(signed(e.target.value))} className="text-xs font-semibold border border-navy-200 rounded-lg px-2 py-1 bg-white focus:outline-none">
                         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(v => <option key={v} value={v}>{v}%/yr</option>)}
                       </select>
                     </div>
@@ -1641,9 +1660,9 @@ export default function DealAnalyserPage() {
                     {usesBridging && (
                       <>
                         <div className="grid grid-cols-3 gap-2 mb-4">
-                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Rate %/mo</span><input type="number" step="0.05" value={bridgingRate} onChange={e => setBridgingRate(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Term (months)</span><input type="number" value={bridgingTermMonths} onChange={e => setBridgingTermMonths(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
-                          <label className="block"><span className="block text-xs text-navy-500 mb-1">LTV %</span><input type="number" value={bridgingLTV} onChange={e => setBridgingLTV(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Rate %/mo</span><input type="number" min="0" step="0.05" value={bridgingRate} onChange={e => setBridgingRate(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">Term (months)</span><input type="number" min="0" value={bridgingTermMonths} onChange={e => setBridgingTermMonths(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
+                          <label className="block"><span className="block text-xs text-navy-500 mb-1">LTV %</span><input type="number" min="0" value={bridgingLTV} onChange={e => setBridgingLTV(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                           {[
