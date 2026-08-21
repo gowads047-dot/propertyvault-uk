@@ -18,12 +18,6 @@ const INCLUDED = [
   "Mobile-friendly dashboard", "CSV exports", "Cancel anytime",
 ];
 
-const REVIEWS = [
-  { name: "David P.", area: "Leeds", props: 6, text: "I was managing 6 properties across 3 spreadsheets and losing track constantly. Rentura consolidated everything in a weekend. My accountant loves the export format.", result: "6 props → 1 dashboard" },
-  { name: "Sandra O.", area: "Birmingham", props: 3, text: "The compliance calendar alone made it worth it. I'd missed two EPC renewals with my old system. Now I get alerts 60 days out. £9.99 a month to avoid a £5,000 fine is a no-brainer.", result: "Zero missed renewals" },
-  { name: "James K.", area: "Manchester", props: 11, text: "I tried two other landlord apps. Both were clunky and missing features. Rentura's Property Passport is genuinely brilliant — I can share it directly with my mortgage broker for remortgages.", result: "11 props, zero spreadsheets" },
-];
-
 const COMPARE = [
   { feature: "All properties in one view", spreadsheet: "Manual, error-prone", other: "Partial", rentura: "Live portfolio dashboard" },
   { feature: "Compliance alerts", spreadsheet: "None", other: "Basic", rentura: "60-day advance alerts" },
@@ -110,31 +104,6 @@ export default function RenturaPage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section style={{ background: "white", padding: "72px 24px" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>What landlords say</p>
-          <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Real landlords. Real results.</h2>
-          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.5)", textAlign: "center", marginBottom: 44 }}>Not cherry-picked highlights. What they told us when we asked.</p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 20 }}>
-            {REVIEWS.map((r) => (
-              <div key={r.name} style={{ background: "#f5f3ef", borderRadius: 18, padding: "26px 24px", border: "1px solid rgba(15,27,45,0.06)", position: "relative" }}>
-                <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>
-                  {[...Array(5)].map((_, i) => <span key={i} style={{ color: "var(--gold-ink)", fontSize: 14 }}>★</span>)}
-                </div>
-                <p style={{ fontSize: 14, color: "rgba(15,27,45,0.75)", lineHeight: 1.75, marginBottom: 20, fontStyle: "italic" }}>&ldquo;{r.text}&rdquo;</p>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 800, color: "#0f1b2d" }}>{r.name}</div>
-                    <div style={{ fontSize: 12, color: "rgba(15,27,45,0.4)", marginTop: 2 }}>{r.area} · {r.props} properties</div>
-                  </div>
-                  <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 10px", borderRadius: 20, background: "rgba(201,168,76,0.12)", color: "#a07c30", border: "1px solid rgba(201,168,76,0.2)", whiteSpace: "nowrap" }}>{r.result}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* COMPARISON TABLE */}
       <section style={{ background: "#f5f3ef", padding: "72px 24px" }}>

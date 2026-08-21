@@ -780,6 +780,50 @@ input::placeholder, textarea::placeholder {
   --gold-ink: var(--gold-ink-dark);
 }
 
+/* Dark surfaces set with an inline hex rather than a class — Rentura and the
+   Makan pages build their sections this way, so the class list above never
+   reaches them and gold text inside them was resolving to the light-surface
+   ink (3.02 against #0f1b2d). These are the dark backgrounds actually in use
+   across the codebase. */
+[style*="background:#0f1b36"],
+[style*="background-color:#0f1b36"],
+[style*="background: #0f1b36"],
+[style*="background-color: #0f1b36"],
+[style*="background:#0f1b2d"],
+[style*="background-color:#0f1b2d"],
+[style*="background: #0f1b2d"],
+[style*="background-color: #0f1b2d"],
+[style*="background:#0a0f1e"],
+[style*="background-color:#0a0f1e"],
+[style*="background: #0a0f1e"],
+[style*="background-color: #0a0f1e"],
+[style*="background:#0c0f1a"],
+[style*="background-color:#0c0f1a"],
+[style*="background: #0c0f1a"],
+[style*="background-color: #0c0f1a"],
+[style*="background:#0f1728"],
+[style*="background-color:#0f1728"],
+[style*="background: #0f1728"],
+[style*="background-color: #0f1728"],
+[style*="background:#111827"],
+[style*="background-color:#111827"],
+[style*="background: #111827"],
+[style*="background-color: #111827"],
+[style*="background:#1e293b"],
+[style*="background-color:#1e293b"],
+[style*="background: #1e293b"],
+[style*="background-color: #1e293b"],
+[style*="background:#0a0d1a"],
+[style*="background-color:#0a0d1a"],
+[style*="background: #0a0d1a"],
+[style*="background-color: #0a0d1a"],
+[style*="background:#0a1628"],
+[style*="background-color:#0a1628"],
+[style*="background: #0a1628"],
+[style*="background-color: #0a1628"] {
+  --gold-ink: var(--gold-ink-dark);
+}
+
 [style*="#c9a84c"],
 .bg-gold-400,
 .bg-gold-500 {
