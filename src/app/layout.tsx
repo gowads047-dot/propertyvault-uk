@@ -5,7 +5,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CookieConsent } from "@/components/legal/CookieConsent";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { ContactButtons } from "@/components/layout/ContactButtons";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
@@ -174,7 +174,7 @@ export default function RootLayout({
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <CookieConsent />
-        <WhatsAppButton />
+        <ContactButtons />
         <NewsletterPopup />
         <Analytics />
       </body>

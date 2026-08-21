@@ -48,7 +48,7 @@ function renturaWelcomeHtml(name: string) {
         Open Rentura →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:32px;">
-        Questions? Reply to this email or WhatsApp us: <a href="https://wa.me/447415721628" style="color:#c9a84c;">07415 721628</a>
+        Questions? Reply to this email or Message us: <a href="/contact" style="color:#c9a84c;"></a>
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);">

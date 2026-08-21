@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const WA = "https://wa.me/447415721628";
+const WA = "/contact";
 
 const SDLT_BANDS = [
   { from: 0, to: 125000, rate: 0 },
@@ -418,7 +418,7 @@ export default function GCCBuyersPage() {
               </div>
               <a href={WA} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-7 py-3.5 rounded-xl transition-colors">
-                {ar ? "تحدث معنا عبر واتساب" : "WhatsApp Us"} →
+                {ar ? "تحدث معنا عبر واتساب" : "Message Us"} →
               </a>
             </div>
             <div className="space-y-4">

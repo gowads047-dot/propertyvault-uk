@@ -132,7 +132,7 @@ function TenantAuthInner() {
 
         <p style={{ textAlign: "center", fontSize: 12, color: S.ink2, marginTop: 20 }}>
           Have an invite link? Check your email from PropertyVault UK.<br />
-          Need help? <Link href="https://wa.me/447415721628" style={{ color: S.accent, fontWeight: 600 }}>WhatsApp us</Link>
+          Need help? <Link href="/contact" style={{ color: S.accent, fontWeight: 600 }}>Message us</Link>
         </p>
       </div>
     </div>

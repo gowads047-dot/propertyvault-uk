@@ -64,7 +64,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
   return (
     <Html lang="en">
       <Head />
-      <Preview>Your free property starter pack from PropertyVault UK — calculators, guides, and your 2025 compliance checklist.</Preview>
+      <Preview>Your free property starter pack from PropertyVault UK — calculators, guides, and your landlord compliance checklist.</Preview>
       <Body style={{ backgroundColor: GREY_BG, fontFamily: "Georgia, 'Times New Roman', serif", margin: 0, padding: 0 }}>
 
         {/* ── HEADER ── */}
@@ -106,7 +106,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
           {/* ── INTRO NOTE ── */}
           <Section style={{ padding: "32px 0 8px" }}>
             <Text style={{ color: TEXT, fontSize: 15, lineHeight: 1.7, margin: 0 }}>
-              I put this together because most landlord resources online are either too vague or trying to sell you something. These tools are genuinely free, no upsell. Use the calculators before every deal, and read the compliance guide before your next tenancy starts — the rules changed significantly in 2025.
+              I put this together because most landlord resources online are either too vague or trying to sell you something. These tools are genuinely free, no upsell. Use the calculators before every deal, and read the compliance guide before your next tenancy starts — the rules changed significantly under the Renters' Rights Act.
             </Text>
             <Text style={{ color: MUTED, fontSize: 13, margin: "12px 0 0", fontStyle: "italic" }}>
               — Nass, PropertyVault UK
@@ -180,7 +180,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
               Section 3
             </Text>
             <Heading as="h2" style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 20, fontWeight: 800, margin: "0 0 4px" }}>
-              ✅ 2025 Compliance Checklist
+              ✅ Landlord Compliance Checklist
             </Heading>
             <Text style={{ color: TEXT, fontSize: 13, margin: "0 0 20px", lineHeight: 1.6 }}>
               The Renters' Rights Act is live. These are the 7 things that carry the biggest fines if you ignore them. Tick them off now.
@@ -226,7 +226,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
               <Column style={{ paddingRight: 8 }}>
                 <Section style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8, padding: "12px 14px" }}>
                   <Link href={`${BASE}/templates/ast`} style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>Assured Shorthold Tenancy</Link>
-                  <Text style={{ color: MUTED, fontSize: 11, margin: "4px 0 0" }}>Updated for 2025 periodic tenancies</Text>
+                  <Text style={{ color: MUTED, fontSize: 11, margin: "4px 0 0" }}>Drafted for periodic tenancies</Text>
                 </Section>
               </Column>
               <Column style={{ paddingLeft: 8 }}>
@@ -263,7 +263,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
               Want your rent guaranteed every month?
             </Heading>
             <Text style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.65, margin: "0 0 24px" }}>
-              No voids. No tenant management. No arrears chasing. We pay you a fixed amount every month for 3–5 years — whether the property is occupied or not.
+              No void periods for you, no tenant management, no arrears chasing. We pay you a fixed amount every month for 3–5 years, whether the property is occupied or not. Day-to-day maintenance is ours; structure, buildings insurance, the boiler and major electrical work stay with you.
             </Text>
             <Button href={`${BASE}/guaranteed-rent`}
               style={{ backgroundColor: GOLD, color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 14, fontWeight: 800, padding: "14px 28px", borderRadius: 10, textDecoration: "none", display: "inline-block" }}>
@@ -274,8 +274,8 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
           {/* ── FOOTER ── */}
           <Section style={{ padding: "28px 0 32px", textAlign: "center" as const }}>
             <Text style={{ color: MUTED, fontSize: 12, margin: "0 0 6px" }}>
-              Questions? WhatsApp Nass directly:{" "}
-              <Link href="https://wa.me/447415721628" style={{ color: GOLD, textDecoration: "none", fontWeight: 600 }}>07415 721628</Link>
+              Questions? Message Nass directly:{" "}
+              <Link href="/contact" style={{ color: GOLD, textDecoration: "none", fontWeight: 600 }}></Link>
             </Text>
             <Text style={{ color: MUTED, fontSize: 12, margin: "0 0 16px" }}>
               <Link href={BASE} style={{ color: MUTED, textDecoration: "underline" }}>propertyvaultuk.co.uk</Link>

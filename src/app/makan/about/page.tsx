@@ -93,7 +93,7 @@ export default function AboutMakanPage() {
               { title: "No agents required", desc: "Bayut and Rightmove force you through agents. On Makan, you list directly and talk directly.", icon: "🤝" },
               { title: "Built for the diaspora", desc: "Living in London but investing in Cairo? In Dubai but renting in Casablanca? Makan bridges the gap.", icon: "🌍" },
               { title: "Three languages, natively", desc: "English, Arabic, and French — not as a Google Translate afterthought, but built in from day one.", icon: "🗣️" },
-              { title: "WhatsApp-first", desc: "This is how the Middle East and North Africa actually communicates. One tap, you're talking to the landlord.", icon: "📱" },
+              { title: "Message-first", desc: "This is how the Middle East and North Africa actually communicates. One tap, you're talking to the landlord.", icon: "📱" },
               { title: "Quality enforced", desc: "Every listing needs real photos, a proper description, and goes through review. No blurry screenshots.", icon: "✅" },
             ].map(item => (
               <div key={item.title} className="rounded-2xl p-6" style={{ background: "var(--h-bg)", border: "1px solid var(--h-border)" }}>
