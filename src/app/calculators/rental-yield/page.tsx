@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     title: "Rental Yield Calculator UK | PropertyVault",
     description: "Calculate gross and net rental yield on any UK property — factor in voids, management, and all costs.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/rental-yield/",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rental Yield Calculator — PropertyVault UK" }],
+    url: "https://www.propertyvaultuk.co.uk/calculators/rental-yield/",
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rental Yield Calculator — PropertyVault UK" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/rental-yield/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/rental-yield/" },
 };
 
 const jsonLd = {
@@ -33,11 +33,11 @@ const jsonLd = {
   "@type": "WebApplication",
   name: "Rental Yield Calculator UK",
   description: "Calculate gross yield, net yield, and monthly cash flow on any UK buy-to-let property.",
-  url: "https://propertyvaultuk.co.uk/calculators/rental-yield/",
+  url: "https://www.propertyvaultuk.co.uk/calculators/rental-yield/",
   applicationCategory: "FinanceApplication",
   operatingSystem: "Web",
   offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
-  provider: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
+  provider: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
 };
 
 export default function RentalYieldPage() {

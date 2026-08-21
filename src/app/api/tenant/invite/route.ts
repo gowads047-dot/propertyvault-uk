@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   if (!tenantEmail || !landlordUserId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   const token = randomUUID();
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertyvaultuk.co.uk";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
   const portalUrl = `${baseUrl}/tenant?token=${token}`;
 
   await supabase.from("tenant_invites").upsert({

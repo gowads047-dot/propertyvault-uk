@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy — PropertyVault UK",
   description: "PropertyVault UK privacy policy. How we collect, use, store, and protect your personal data under UK GDPR and the Data Protection Act 2018.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/privacy/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/privacy/" },
   openGraph: {
     title: "Privacy Policy — PropertyVault UK",
     description: "PropertyVault UK privacy policy. How we collect, use, store, and protect your personal data under UK GDPR and the Data Protection Act 2018.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/privacy/",
+    url: "https://www.propertyvaultuk.co.uk/privacy/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Privacy Policy — PropertyVault UK", description: "PropertyVault UK privacy policy. How we collect, use, store, and protect your personal data under UK GDPR and the Data Protection Act 2018." },
 };
@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         <div className="container-max max-w-4xl prose-sm text-navy-600 leading-relaxed space-y-8">
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">1. Introduction</h2>
-            <p>PropertyVault UK (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, store, and share your personal information when you use our website at propertyvault.uk (the &ldquo;Site&rdquo;) and our services.</p>
+            <p>PropertyVault UK (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, store, and share your personal information when you use our website at propertyvaultuk.co.uk (the &ldquo;Site&rdquo;) and our services.</p>
             <p className="mt-2">We are the data controller for the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. If you have questions about this policy or your personal data, contact us at privacy@propertyvault.uk.</p>
           </div>
 

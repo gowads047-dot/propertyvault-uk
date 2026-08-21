@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
 import { calcSDLT } from "@/lib/tax";
-import { monthlyRepayment, monthlyInterestOnly } from "@/lib/finance";
+import { monthlyRepayment, monthlyInterestOnly, pctOf } from "@/lib/finance";
 
 const fmt  = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 const fmtD = (n: number) => new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
@@ -48,9 +48,9 @@ export function MortgageCalculator() {
 
     const totalRepaid  = repayType === "repayment" ? monthlyPmt * n : monthlyPmt * n + loan;
     const totalInterest = totalRepaid - loan;
-    const ltv           = (loan / price) * 100;
+    const ltv           = pctOf(loan, price);
     const sdlt          = calcSDLT(price, isBTL);
-    const grossYield    = ((monthlyRent * 12) / price) * 100;
+    const grossYield    = pctOf(monthlyRent * 12, price);
 
     // BTL stress test: 125% ICR at 5.5%
     const stressMonthly  = loan * (0.055 / 12);

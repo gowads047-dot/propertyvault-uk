@@ -3,9 +3,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/" },
   title: "Deal Sourcing UK — Complete Beginner Guide 2026 | PropertyVault Academy",
   description: "What is property deal sourcing in the UK? How it works, how much you can earn, what's legal, and how to source your first deal. Complete beginner guide from PropertyVault Academy.",
   keywords: "deal sourcing UK guide, property deal sourcing beginners, how to become a deal sourcer UK, deal sourcing income UK, property deal sourcing legal UK",
@@ -13,9 +15,9 @@ export const metadata: Metadata = {
     title: "Deal Sourcing UK — Complete Beginner Guide 2026 | PropertyVault Academy",
     description: "What is property deal sourcing in the UK? How it works, how much you can earn, what's legal, and how to source your first deal. Complete beginner guide from PropertyVault Academy.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/",
+    url: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Deal Sourcing UK Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Deal Sourcing UK Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -35,6 +37,13 @@ const faqs = [
 export default function DealSourcingGuideArticle() {
   return (
     <>
+      <ArticleSchema
+        headline="Deal Sourcing UK — Complete Beginner Guide 2026"
+        description="What deal sourcing actually is, how much you can earn, what's legal, and how to get started — even with no money and no experience."
+        slug="deal-sourcing-uk-guide"
+        datePublished="2026-06-25"
+        section="Academy"
+      />
       <BlogArticleHero
         title="Deal Sourcing UK — Complete Beginner Guide 2026"
         excerpt="What deal sourcing actually is, how much you can earn, what's legal, and how to get started — even with no money and no experience."
@@ -148,6 +157,9 @@ export default function DealSourcingGuideArticle() {
           <Disclaimer type="general" />
         </div>
       </article>
+      <RelatedArticles
+        slug="deal-sourcing-uk-guide"
+      />
     </>
   );
 }

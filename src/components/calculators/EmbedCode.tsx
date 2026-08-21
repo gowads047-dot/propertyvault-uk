@@ -8,8 +8,8 @@ interface EmbedCodeProps {
 
 export function EmbedCode({ slug, title }: EmbedCodeProps) {
   const [copied, setCopied] = useState(false);
-  const url = `https://propertyvaultuk.co.uk/embed/${slug}/`;
-  const code = `<iframe src="${url}" width="100%" height="620" frameborder="0" style="border-radius:12px;border:1px solid #e8eaf0;" title="${title} — PropertyVault UK" loading="lazy"></iframe>\n<p style="font-size:11px;color:#888;margin-top:6px;">Powered by <a href="https://propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener">PropertyVault UK</a></p>`;
+  const url = `https://www.propertyvaultuk.co.uk/embed/${slug}/`;
+  const code = `<iframe src="${url}" width="100%" height="620" frameborder="0" style="border-radius:12px;border:1px solid #e8eaf0;" title="${title} — PropertyVault UK" loading="lazy"></iframe>\n<p style="font-size:11px;color:#888;margin-top:6px;">Powered by <a href="https://www.propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener">PropertyVault UK</a></p>`;
 
   function copy() {
     navigator.clipboard.writeText(code).then(() => {

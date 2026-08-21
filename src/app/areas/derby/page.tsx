@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
@@ -13,9 +14,9 @@ export const metadata: Metadata = {
     title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
     description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/derby/",
+    url: "https://www.propertyvaultuk.co.uk/areas/derby/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Derby Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Derby Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -173,6 +174,7 @@ export default function DerbyPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <FAQSchema faqs={derbyFaqs} />
+          <DataProvenance area="Derby" />
           <Disclaimer type="financial" />
         </div>
       </section>

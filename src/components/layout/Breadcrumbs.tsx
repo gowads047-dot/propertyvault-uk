@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const BASE = "https://propertyvaultuk.co.uk";
+const BASE = "https://www.propertyvaultuk.co.uk";
 
 interface Crumb {
   label: string;

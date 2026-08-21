@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk/rentura",
+    url: "https://www.propertyvaultuk.co.uk/rentura",
   },
   twitter: {
     card: "summary_large_image",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
       "No forms. No dashboards. Just say what happened — Rentura handles everything else.",
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/rentura" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/rentura" },
 };
 
 export default function RenturaLayout({ children }: { children: React.ReactNode }) {

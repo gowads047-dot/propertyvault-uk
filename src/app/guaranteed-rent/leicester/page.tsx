@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     title: "Guaranteed Rent Leicester | PropertyVault UK",
     description: "Lease your Leicester property for 3-5 years — guaranteed rent every month, no voids, no management.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent/leicester/",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/leicester/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Leicester — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Leicester — PropertyVault UK" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/leicester/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/leicester/" },
 };
 
 const jsonLd = {
@@ -22,11 +22,11 @@ const jsonLd = {
   "@type": "Service",
   name: "Guaranteed Rent Leicester",
   description: "Guaranteed rent for landlords in Leicester. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees.",
-  url: "https://propertyvaultuk.co.uk/guaranteed-rent/leicester/",
+  url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/leicester/",
   provider: {
     "@type": "Organization",
     name: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
+    url: "https://www.propertyvaultuk.co.uk",
     telephone: "+447415721628",
     email: "gowads047@gmail.com",
     areaServed: { "@type": "City", name: "Leicester" },
@@ -35,7 +35,7 @@ const jsonLd = {
   areaServed: { "@type": "City", name: "Leicester" },
   availableChannel: {
     "@type": "ServiceChannel",
-    serviceUrl: "https://propertyvaultuk.co.uk/guaranteed-rent/leicester/",
+    serviceUrl: "https://www.propertyvaultuk.co.uk/guaranteed-rent/leicester/",
   },
 };
 
@@ -168,7 +168,7 @@ export default function LeicesterPage() {
             },
             {
               q: "Who handles maintenance and repairs at my Leicester property?",
-              a: "We handle all routine maintenance and day-to-day repairs through our local Leicester contractor network. Minor works are covered by PropertyVault UK at no cost to you. For any major repairs we'll always consult you beforehand as stipulated in your lease.",
+              a: "We handle the day-to-day: tenant-reported repairs, general wear and tear, and routine maintenance through our local Leicester contractor network — at our cost, for the length of the lease. As the owner you remain responsible for the building structure, buildings insurance, the boiler, and any major electrical work. We arrange and coordinate those too, and always notify you in advance, but the cost sits with you as it would under any lease.",
             },
             {
               q: "Can I sell my Leicester property during the guaranteed rent lease?",

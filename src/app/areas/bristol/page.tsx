@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Bristol Buy-to-Let Investment Guide | PropertyVault UK",
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
     title: "Bristol Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Bristol property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/bristol/",
+    url: "https://www.propertyvaultuk.co.uk/areas/bristol/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Bristol Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Bristol Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -421,6 +422,7 @@ export default function BristolPage() {
           </div>
           <FAQSchema faqs={cityFaqs} />
           <div className="mt-12">
+            <DataProvenance area="Bristol" />
             <Disclaimer />
           </div>
         </div>

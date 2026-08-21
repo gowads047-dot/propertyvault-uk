@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Free Landlord Compliance Checklist UK 2026 | PropertyVault",
     description: "Free compliance checklist — gas, electric, EPC, deposit, right to rent. Know every legal requirement for UK landlords.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/templates/landlord-compliance/",
+    url: "https://www.propertyvaultuk.co.uk/templates/landlord-compliance/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Landlord Compliance Checklist — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Landlord Compliance Checklist — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Landlord Compliance Checklist UK 2026 | PropertyVault", description: "Free compliance checklist — every landlord legal requirement in one place." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/templates/landlord-compliance/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/landlord-compliance/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

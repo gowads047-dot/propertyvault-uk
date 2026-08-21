@@ -141,7 +141,7 @@ export async function POST(req: Request) {
     const cs = event.data.object as Stripe.Checkout.Session;
     const emailAddr = cs.customer_details?.email || cs.customer_email;
     if (emailAddr) {
-      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://propertyvaultuk.co.uk";
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
       fetch(`${baseUrl}/api/notifications/welcome`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

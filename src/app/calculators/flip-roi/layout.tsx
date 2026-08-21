@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Property Flip ROI Calculator UK | PropertyVault",
     description: "Model your buy-refurb-sell deal end to end. Calculate profit, ROI, and annualised return.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/flip-roi/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/flip-roi/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Flip ROI Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Flip ROI Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Property Flip ROI Calculator UK | PropertyVault", description: "Free tool — model your flip deal profit before you buy." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/flip-roi/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/flip-roi/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

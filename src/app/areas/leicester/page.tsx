@@ -4,19 +4,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
   description: "Complete Leicester property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Leicester, buy to let Leicester, rental yield Leicester, Leicester property prices, best areas to invest Leicester, guaranteed rent Leicester",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/areas/leicester/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/leicester/" },
   openGraph: {
     title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
     description: "Complete Leicester property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/leicester/",
+    url: "https://www.propertyvaultuk.co.uk/areas/leicester/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leicester Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leicester Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -170,6 +171,7 @@ export default function LeicesterPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <FAQSchema faqs={leicesterFaqs} />
+          <DataProvenance area="Leicester" />
           <Disclaimer type="financial" />
         </div>
       </section>

@@ -3,19 +3,20 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
   description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
   keywords: "UK housing market, property market UK, house prices UK, property investment, housing crisis, property freeze, wealth through property",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
   openGraph: {
     title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
     description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
+    url: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK housing market price charts and data" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK housing market price charts and data" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -313,6 +314,9 @@ export default function BiggestLieArticle() {
           </div>
         </div>
       </article>
+      <RelatedArticles
+        slug="biggest-financial-lie-britain"
+      />
     </>
   );
 }

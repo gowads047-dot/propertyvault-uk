@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "HMO Investing UK — Is It Still Profitable? | PropertyVault UK",
   description: "HMO investing explained. Licensing, room sizes, fire safety, yields, and whether Houses in Multiple Occupation are still worth it for UK landlords.",
   keywords: "HMO investing UK, HMO yield, HMO licensing, houses in multiple occupation, HMO calculator",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/hmo-investing-uk/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/" },
   openGraph: {
     title: "HMO Investing UK — Is It Still Profitable? | PropertyVault UK",
     description: "HMO investing explained. Licensing, room sizes, fire safety, yields, and whether Houses in Multiple Occupation are still worth it for UK landlords.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/hmo-investing-uk/",
+    url: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "HMO house in multiple occupation exterior UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "HMO house in multiple occupation exterior UK" }],
   },
   twitter: {
     card: "summary_large_image",

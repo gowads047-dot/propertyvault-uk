@@ -9,12 +9,12 @@ export const metadata: Metadata = {
     title: "Free AST Template UK 2026 | PropertyVault",
     description: "Free Assured Shorthold Tenancy agreement template — updated for 2026 with Renters Rights Act 2025 provisions. Download instantly, no sign-up.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/templates/ast/",
+    url: "https://www.propertyvaultuk.co.uk/templates/ast/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free AST Template — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free AST Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free AST Template UK 2026 | PropertyVault", description: "Free AST template for England — updated for 2026 legislation." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/templates/ast/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/ast/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

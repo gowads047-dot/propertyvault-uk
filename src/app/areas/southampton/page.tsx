@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Southampton Buy-to-Let Investment Guide | PropertyVault UK",
@@ -15,9 +16,9 @@ export const metadata: Metadata = {
     title: "Southampton Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Southampton property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/southampton/",
+    url: "https://www.propertyvaultuk.co.uk/areas/southampton/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Southampton Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Southampton Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -436,6 +437,7 @@ export default function SouthamptonPage() {
             ))}
           </div>
           <div className="mt-10">
+            <DataProvenance area="Southampton" />
             <Disclaimer />
           </div>
         </div>

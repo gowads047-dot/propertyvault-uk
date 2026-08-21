@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   title: "Free Void Period Cost Calculator UK — How Much Are Empty Weeks Costing You? | PropertyVault",
   description: "Calculate the true cost of void periods on your rental property. See lost rent, ongoing costs, annual impact, and how guaranteed rent compares.",
   keywords: "void period calculator, cost of void period UK, empty rental property cost, void period landlord, rental void calculator",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/void-period/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/void-period/" },
   openGraph: {
     title: "Free Void Period Cost Calculator UK — How Much Are Empty Weeks Costing You? | PropertyVault",
     description: "Calculate the true cost of void periods on your rental property. See lost rent, ongoing costs, annual impact, and how guaranteed rent compares.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/calculators/void-period/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/void-period/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Void Period Cost Calculator UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Void Period Cost Calculator UK" }],
   },
   twitter: {
     card: "summary_large_image",

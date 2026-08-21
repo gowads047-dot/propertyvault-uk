@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Renters' Rights Act Landlord Checklist 2025 — 12 Things You Must Do Now | PropertyVault UK",
@@ -12,11 +14,11 @@ export const metadata: Metadata = {
     title: "Renters' Rights Act Landlord Checklist 2025 | PropertyVault UK",
     description: "12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is what replaces it.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/",
+    url: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters' Rights Act Landlord Checklist 2025" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters' Rights Act Landlord Checklist 2025" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/" },
 };
 
 const faqs = [
@@ -140,6 +142,13 @@ const CHECKLIST = [
 export default function RentersReformChecklistPage() {
   return (
     <>
+      <ArticleSchema
+        headline="Renters' Rights Act 2025 — The Landlord Checklist"
+        description="12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is exactly what to do instead."
+        slug="renters-reform-act-landlord-checklist"
+        datePublished="2026-06-25"
+        section="Landlords"
+      />
       <BlogArticleHero
         title="Renters' Rights Act 2025 — The Landlord Checklist"
         excerpt="12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is exactly what to do instead."
@@ -206,6 +215,9 @@ export default function RentersReformChecklistPage() {
       </article>
 
       <FAQSchema faqs={faqs} />
+      <RelatedArticles
+        slug="renters-reform-act-landlord-checklist"
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://propertyvaultuk.co.uk";
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -14,6 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/resources/`,                lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/glossary/`,                 lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/tools/`,                    lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+
+    // Rentura marketing page only. The app beneath it stays out of the
+    // sitemap and blocked in robots.txt.
+    { url: `${BASE}/rentura/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
 
     // Calculators
     { url: `${BASE}/calculators/`,              lastModified: now, changeFrequency: "monthly", priority: 0.9 },

@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Rent vs Buy Calculator UK 2026 | PropertyVault",
     description: "Is it better to rent or buy in the UK right now? Compare 10-year costs and see which makes financial sense.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/rent-vs-buy/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/rent-vs-buy/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rent vs Buy Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rent vs Buy Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Rent vs Buy Calculator UK 2026 | PropertyVault", description: "Free tool — compare the real long-term cost of renting vs buying." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/rent-vs-buy/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/rent-vs-buy/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

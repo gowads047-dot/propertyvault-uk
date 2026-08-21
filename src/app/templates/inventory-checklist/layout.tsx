@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Free Inventory Checklist Template UK | PropertyVault",
     description: "Free room-by-room inventory template for landlords. Protect your deposit and avoid disputes at check-out.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/templates/inventory-checklist/",
+    url: "https://www.propertyvaultuk.co.uk/templates/inventory-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Inventory Checklist — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Inventory Checklist — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Inventory Checklist Template UK | PropertyVault", description: "Free landlord inventory checklist — protect your deposit with a proper record." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/templates/inventory-checklist/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/inventory-checklist/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

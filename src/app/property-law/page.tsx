@@ -4,14 +4,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
   description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/property-law/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-law/" },
   openGraph: {
     title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
     description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/property-law/",
+    url: "https://www.propertyvaultuk.co.uk/property-law/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Law Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Law Guide" }],
   },
   twitter: {
     card: "summary_large_image",

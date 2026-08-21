@@ -117,3 +117,19 @@ export function roi(profit: number, invested: number): number {
   if (invested <= 0) return 0;
   return (profit / invested) * 100;
 }
+
+/**
+ * `part` as a percentage of `whole`, returning 0 when `whole` is zero or
+ * negative.
+ *
+ * Calculator inputs are `<input type="number">`, and clearing one yields 0
+ * rather than a blank. Dividing by it produced "Infinity%" on screen — the
+ * Deal Analyser rendered "Your gross yield of Infinity% beats the Nottingham
+ * average" with an empty purchase price. Use this anywhere a user-supplied
+ * value is the denominator.
+ */
+export function pctOf(part: number, whole: number): number {
+  if (!Number.isFinite(whole) || whole <= 0) return 0;
+  if (!Number.isFinite(part)) return 0;
+  return (part / whole) * 100;
+}

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -17,7 +18,7 @@ const howToSchema = {
     { "@type": "HowToStep", position: 5, name: "Move to interest-only", text: "BTL stress tests use the interest-only payment. A repayment mortgage has a higher monthly payment, making it harder to pass the ICR test." },
     { "@type": "HowToStep", position: 6, name: "Use a specialist or portfolio lender", text: "Portfolio landlords with 4+ properties should use specialist BTL lenders (Paragon, Precise, Foundation) instead of high-street banks." },
   ],
-  tool: [{ "@type": "HowToTool", name: "BTL Mortgage Stress Test Calculator", url: "https://propertyvaultuk.co.uk/calculators/btl-mortgage" }],
+  tool: [{ "@type": "HowToTool", name: "BTL Mortgage Stress Test Calculator", url: "https://www.propertyvaultuk.co.uk/calculators/btl-mortgage" }],
 };
 
 const articleSchema = {
@@ -26,10 +27,10 @@ const articleSchema = {
   headline: "How to Pass the BTL Mortgage Stress Test",
   description: "BTL mortgage stress tests failing? Learn how lenders calculate ICR, what 145% means in practice, and 6 ways to fix a failing deal.",
   author: { "@type": "Person", name: "Nass" },
-  publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
+  publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
   datePublished: "2025-06-25",
   dateModified: "2025-06-25",
-  url: "https://propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test",
+  url: "https://www.propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test",
   image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400&q=80",
 };
 
@@ -41,11 +42,11 @@ export const metadata: Metadata = {
     title: "How to Pass the BTL Mortgage Stress Test 2026 | PropertyVault UK",
     description: "Learn exactly how the BTL stress test works, why deals fail, and 6 strategies to pass — including limited company lending, higher deposits, and rent optimisation.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/",
+    url: "https://www.propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BTL Mortgage Stress Test Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BTL Mortgage Stress Test Guide" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/" },
 };
 
 const faqs = [
@@ -221,6 +222,9 @@ export default function BtlStressTestPage() {
       <FAQSchema faqs={faqs} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      <RelatedArticles
+        slug="how-to-pass-btl-mortgage-stress-test"
+      />
     </>
   );
 }

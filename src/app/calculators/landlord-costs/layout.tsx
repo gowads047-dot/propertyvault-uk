@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Landlord Costs Calculator UK | PropertyVault",
     description: "Calculate the true annual cost of your rental property — insurance, maintenance, management, and more.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/landlord-costs/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/landlord-costs/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Landlord Costs Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Landlord Costs Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Landlord Costs Calculator UK | PropertyVault", description: "Free tool — see the real annual cost of your rental property." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/landlord-costs/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/landlord-costs/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

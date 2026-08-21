@@ -4,51 +4,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
+import { navGroups, companyLinks } from "./nav";
+import { NavDropdown } from "./NavDropdown";
 
-const mainLinks = [
-  { href: "/areas", label: "Areas", sub: "" },
-  { href: "/calculators", label: "Calculators", sub: "" },
-  { href: "/templates", label: "Templates", sub: "" },
-  { href: "/blog", label: "Blog", sub: "" },
-  { href: "/rentura", label: "Rentura", sub: "Early Access", highlight: true },
-];
-
-const mobileLinks = [
-  { heading: "Property Search", links: [
-    { href: "/search", label: "Search Properties" },
-    { href: "/sold-prices", label: "Sold Prices" },
-    { href: "/valuation", label: "Free Valuation" },
-    { href: "/areas", label: "Area Guides" },
-    { href: "/areas/postcodes", label: "Postcode Guides" },
-  ]},
-  { heading: "Tools & Calculators", links: [
-    { href: "/calculators/deal-analyser", label: "Deal Analyser" },
-    { href: "/calculators", label: "All Calculators (23)" },
-    { href: "/tools", label: "Property Tools" },
-    { href: "/templates", label: "Templates & Checklists" },
-    { href: "/glossary", label: "Property Glossary" },
-  ]},
-  { heading: "Landlord Tools", links: [
-    { href: "/guaranteed-rent", label: "Guaranteed Rent" },
-    { href: "/list-property", label: "List Your Property" },
-    { href: "/manage", label: "Manage Tenancies" },
-    { href: "/find-agent", label: "Find a Professional" },
-  ]},
-  { heading: "Learn", links: [
-    { href: "/rentura", label: "🏠 Rentura — Landlord OS" },
-    { href: "/property-investing", label: "Property Investing" },
-    { href: "/mortgages", label: "Mortgages" },
-    { href: "/property-tax", label: "Property Tax" },
-    { href: "/property-law", label: "Property Law" },
-    { href: "/renting-strategies", label: "Renting Strategies" },
-    { href: "/blog", label: "Blog" },
-  ]},
-  { heading: "Company", links: [
-    { href: "/about", label: "About PropertyVault" },
-    { href: "/contact", label: "Contact Us" },
-    { href: "/makan", label: "Makan — Join the Waitlist" },
-  ]},
-];
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -119,56 +77,17 @@ export function Header() {
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-0.5">
-              {mainLinks.map((link) =>
-                link.highlight ? (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="ml-1 px-3.5 py-2 text-[13px] font-bold rounded-lg transition-all flex flex-col items-center leading-none"
-                    style={{ background: "#c9a84c", color: "#0f1b36" }}
-                  >
-                    <span>Rentura</span>
-                    <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>Early Access</span>
-                  </Link>
-                ) : (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="px-3.5 py-2 text-[13px] font-semibold rounded-lg transition-all flex flex-col items-center leading-none relative hover:bg-navy-50 hover:text-navy-900"
-                    style={{
-                      color: isActive(link.href) ? "#0f1b36" : undefined,
-                      background: isActive(link.href) ? "rgba(201,168,76,0.09)" : undefined,
-                    }}
-                  >
-                    <span className={isActive(link.href) ? "text-navy-900 font-bold" : "text-navy-600"}>
-                      {link.label}
-                    </span>
-                    {link.sub && (
-                      <span
-                        className="text-[9px] font-normal mt-0.5"
-                        style={{ color: isActive(link.href) ? "#c9a84c" : "#97a5c5" }}
-                      >
-                        {link.sub}
-                      </span>
-                    )}
-                    {/* Animated gold underline */}
-                    <span
-                      aria-hidden="true"
-                      style={{
-                        position: "absolute",
-                        bottom: 2,
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        height: 2,
-                        borderRadius: 2,
-                        background: "#c9a84c",
-                        width: isActive(link.href) ? "60%" : "0%",
-                        transition: "width 0.25s cubic-bezier(0.22,1,0.36,1)",
-                      }}
-                    />
-                  </Link>
-                )
-              )}
+              {navGroups.map((group) => (
+                <NavDropdown key={group.label} group={group} isActive={isActive} />
+              ))}
+              <Link
+                href="/rentura"
+                className="ml-1 px-3.5 py-2 text-[13px] font-bold rounded-lg transition-all flex flex-col items-center leading-none"
+                style={{ background: "#c9a84c", color: "#0f1b36" }}
+              >
+                <span>Rentura</span>
+                <span style={{ fontSize: 9, fontWeight: 600, marginTop: 2, color: "#0f1b36", opacity: 0.7 }}>Early Access</span>
+              </Link>
             </nav>
 
             {/* Right actions */}
@@ -235,10 +154,10 @@ export function Header() {
                 Rentura — Early Access →
               </Link>
 
-              {mobileLinks.map((group) => (
-                <div key={group.heading}>
+              {navGroups.map((group) => (
+                <div key={group.label}>
                   <p className="text-[10px] font-bold text-navy-400 uppercase tracking-widest mb-2">
-                    {group.heading}
+                    {group.label}
                   </p>
                   {group.links.map((link) => (
                     <Link
@@ -260,6 +179,30 @@ export function Header() {
                   ))}
                 </div>
               ))}
+
+              <div>
+                <p className="text-[10px] font-bold text-navy-400 uppercase tracking-widest mb-2">
+                  Company
+                </p>
+                {companyLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between py-2 px-3 text-sm rounded-lg font-medium transition-colors"
+                    style={{
+                      color: isActive(link.href) ? "#0f1b36" : "#374151",
+                      background: isActive(link.href) ? "rgba(201,168,76,0.09)" : undefined,
+                      fontWeight: isActive(link.href) ? 700 : undefined,
+                    }}
+                  >
+                    <span>{link.label}</span>
+                    {isActive(link.href) && (
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", flexShrink: 0 }} />
+                    )}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>

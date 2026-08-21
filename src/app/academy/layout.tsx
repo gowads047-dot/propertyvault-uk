@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "Academy — Deal Sourcing Programme | PropertyVault UK",
   description:
     "Learn UK property deal sourcing end to end: strategy, lead generation, running the numbers, packaging deals, compliance and scaling.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/academy/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/academy/" },
 };
 
 // Academy pages call useAuth(), so they need the provider above them. Without it

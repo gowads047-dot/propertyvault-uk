@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DISTRICTS } from "./[district]/page";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Midlands Postcode Investment Guides — Sold Prices & Yields | PropertyVault UK",
@@ -71,6 +72,7 @@ export default function PostcodesIndexPage() {
           <Link href="/guaranteed-rent" className="btn-gold">Check your property qualifies →</Link>
         </div>
       </section>
+      <DataProvenance />
     </>
   );
 }

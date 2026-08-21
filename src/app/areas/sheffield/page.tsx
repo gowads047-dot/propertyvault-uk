@@ -4,19 +4,20 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
   description: "Complete Sheffield property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Sheffield, buy to let Sheffield, rental yield Sheffield, Sheffield property prices, best areas to invest Sheffield, guaranteed rent Sheffield",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/areas/sheffield/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/sheffield/" },
   openGraph: {
     title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
     description: "Complete Sheffield property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/sheffield/",
+    url: "https://www.propertyvaultuk.co.uk/areas/sheffield/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Sheffield Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Sheffield Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -170,6 +171,7 @@ export default function SheffieldPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <FAQSchema faqs={sheffieldFaqs} />
+          <DataProvenance area="Sheffield" />
           <Disclaimer type="financial" />
         </div>
       </section>

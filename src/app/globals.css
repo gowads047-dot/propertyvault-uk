@@ -659,3 +659,92 @@ input::placeholder, textarea::placeholder {
     padding-bottom: 56px !important;
   }
 }
+
+/* ── Accessibility ─────────────────────────────────────────────────────────
+   A keyboard focus indicator that cannot be removed by accident.
+
+   `focus:outline-none` is used in 241 places. Almost all of them pair it with
+   a replacement ring or border colour, but a handful do not, leaving a
+   keyboard user with no idea where they are. This guarantees a visible ring on
+   anything focused via the keyboard, regardless of what a utility class did to
+   the outline.
+
+   :focus-visible rather than :focus, so it does not fire on mouse clicks.
+   Declared last so it wins on specificity ties with the utility layer. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid #c9a84c;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Dark surfaces: the gold ring can sit against a dark navy panel, so pair it
+   with a light halo to keep it visible against either background. */
+.gradient-navy :where(a, button, input, select, textarea, [tabindex]):focus-visible,
+.bg-navy-800 :where(a, button, input, select, textarea, [tabindex]):focus-visible,
+.bg-navy-900 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline-color: #ffffff;
+  box-shadow: 0 0 0 5px rgba(201, 168, 76, 0.45);
+}
+
+/* Skip link — visually hidden until focused, then pinned to the top-left.
+   WCAG 2.4.1: without it a keyboard user tabs through the whole header,
+   including four navigation groups, on every single page. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+  width: auto;
+  height: auto;
+  padding: 12px 20px;
+  background: #0f1b36;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(15, 27, 54, 0.35);
+}
+
+/* Respect a reduced-motion preference across the whole site. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Platform cards on the homepage — lift on hover, matching the tool cards. */
+.platform-card:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+  box-shadow: 0 10px 28px rgba(15, 27, 54, 0.09);
+}
+
+/* Platform grid: five items, so auto-fit strands one card on its own row at
+   common desktop widths. Explicit steps keep it to 5, 3+2, 2 or 1 - never
+   4+1. */
+.platform-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .platform-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .platform-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1180px) {
+  .platform-grid { grid-template-columns: repeat(5, 1fr); }
+}

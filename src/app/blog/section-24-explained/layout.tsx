@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/section-24-explained/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/" },
   openGraph: {
     type: "article",
     title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",
     description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
-    url: "https://propertyvaultuk.co.uk/blog/section-24-explained/",
+    url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 Explained — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 Explained — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -19,12 +19,12 @@ const jsonLd = {
   "@type": "Article",
   headline: "Section 24 Explained — How It Affects UK Landlords' Tax Bills",
   description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
-  url: "https://propertyvaultuk.co.uk/blog/section-24-explained/",
+  url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/",
   datePublished: "2025-09-01",
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
-  publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://propertyvaultuk.co.uk" },
-  image: "https://propertyvaultuk.co.uk/opengraph-image",
+  publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
+  image: "https://www.propertyvaultuk.co.uk/opengraph-image",
   articleSection: "Tax",
   keywords: ["Section 24", "mortgage interest relief", "landlord tax", "SPV property"],
 };

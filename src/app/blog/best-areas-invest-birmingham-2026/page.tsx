@@ -3,9 +3,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/" },
   title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
   description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
   keywords: "best areas to invest Birmingham, Birmingham property investment 2026, buy to let Birmingham, Birmingham BTL hotspots, property investment Birmingham UK",
@@ -13,9 +15,9 @@ export const metadata: Metadata = {
     title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
     description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/",
+    url: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Best Areas to Invest in Birmingham 2026" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Best Areas to Invest in Birmingham 2026" }],
   },
 };
 
@@ -99,6 +101,13 @@ const areas = [
 export default function BestAreasBirmingham2026Article() {
   return (
     <>
+      <ArticleSchema
+        headline="Best Areas to Invest in Birmingham 2026 — BTL Hotspot Guide"
+        description="Yields, average prices, tenant demand, and regeneration prospects — ranked and explained for property investors looking at Birmingham in 2026."
+        slug="best-areas-invest-birmingham-2026"
+        datePublished="2026-06-25"
+        section="Investing"
+      />
       <BlogArticleHero
         title="Best Areas to Invest in Birmingham 2026 — BTL Hotspot Guide"
         excerpt="Yields, average prices, tenant demand, and regeneration prospects — ranked and explained for property investors looking at Birmingham in 2026."
@@ -200,6 +209,9 @@ export default function BestAreasBirmingham2026Article() {
           <Disclaimer type="financial" />
         </div>
       </article>
+      <RelatedArticles
+        slug="best-areas-invest-birmingham-2026"
+      />
     </>
   );
 }

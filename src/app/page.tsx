@@ -2,23 +2,24 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { StickyDealBtn } from "@/components/ui/StickyDealBtn";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-  description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/" },
+  description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/" },
   openGraph: {
     title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-    description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
     type: "website",
-    url: "https://propertyvaultuk.co.uk/",
+    url: "https://www.propertyvaultuk.co.uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-    description: "23 free property calculators, 19 legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.",
+    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
   },
 };
 
@@ -106,7 +107,7 @@ export default function Home() {
               </div>
               <div className="hero-line" style={{ marginBottom: 20 }}>
                 <Link href="/calculators" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontWeight: 600, textDecoration: "none" }}>
-                  or explore 23 free tools ↓
+                  or explore {siteMetrics.calculators} free tools ↓
                 </Link>
               </div>
 
@@ -283,8 +284,115 @@ export default function Home() {
             </div>
             <div style={{ textAlign: "center", marginTop: 20 }}>
               <Link href="/calculators" style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, textDecoration: "none" }}>
-                All 23 free calculators →
+                All {siteMetrics.calculators} free calculators →
               </Link>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── THE PLATFORM ─────────────────────────────────────────────
+           Rentura and the Academy were not mentioned anywhere on this page,
+           and Makan and the Deal Analyser only in passing, so a first-time
+           visitor had no way to see that PropertyVault is more than
+           guaranteed rent. Grouped by what someone is trying to do. */}
+      <section style={{ background: "#f8f9fc", padding: "72px 0", borderTop: "1px solid #e8eaf0", borderBottom: "1px solid #e8eaf0" }}>
+        <div className="container-max px-4">
+          <FadeIn>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>
+              The platform
+            </p>
+            <h2 style={{ fontSize: "clamp(24px,3.4vw,34px)", fontWeight: 900, color: "#0f1b36", textAlign: "center", letterSpacing: "-0.02em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
+              Tools to analyse, manage and grow a portfolio
+            </h2>
+            <p style={{ fontSize: 15, color: "#5b6478", textAlign: "center", maxWidth: 560, margin: "0 auto 36px", lineHeight: 1.6 }}>
+              Guaranteed rent is one part of it. Here is everything else, grouped by
+              what you are actually trying to do.
+            </p>
+          </FadeIn>
+
+          <FadeIn>
+            <div className="platform-grid">
+              {[
+                {
+                  kicker: "Analyse",
+                  title: "Deal Analyser & calculators",
+                  desc: `Run a deal end to end, or reach for one of ${siteMetrics.calculators} calculators covering yield, tax, SDLT and cash flow.`,
+                  href: "/calculators/deal-analyser",
+                  cta: "Analyse a deal",
+                  icon: "📊",
+                },
+                {
+                  kicker: "Manage",
+                  title: "Rentura",
+                  desc: "The operating system for UK landlords — compliance alerts, maintenance tracking and a digital passport per property.",
+                  href: "/rentura",
+                  cta: "See Rentura",
+                  icon: "🗂️",
+                  badge: "Early access",
+                },
+                {
+                  kicker: "Earn",
+                  title: "Guaranteed Rent",
+                  desc: "Let us take the property on a 3–5 year lease and pay you a fixed amount each month, occupied or not.",
+                  href: "/guaranteed-rent",
+                  cta: "Get a rent estimate",
+                  icon: "🔑",
+                },
+                {
+                  kicker: "Find",
+                  title: "Search & Makan",
+                  desc: "Launch a search across the major UK portals, or browse Makan, our bilingual marketplace for international buyers.",
+                  href: "/search",
+                  cta: "Start searching",
+                  icon: "🔍",
+                },
+                {
+                  kicker: "Learn",
+                  title: "Guides & area research",
+                  desc: `${siteMetrics.blogPosts} articles and ${siteMetrics.areaGuides} area guides on the UK market, plus ${siteMetrics.templates} landlord templates.`,
+                  href: "/blog",
+                  cta: "Start reading",
+                  icon: "📚",
+                },
+              ].map(item => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    background: "white",
+                    border: "1.5px solid #e8eaf0",
+                    borderRadius: 16,
+                    padding: "22px 20px",
+                    textDecoration: "none",
+                    transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+                  }}
+                  className="platform-card"
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+                    <span aria-hidden="true" style={{ fontSize: 24 }}>{item.icon}</span>
+                    {item.badge && (
+                      <span style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", background: "rgba(201,168,76,0.16)", color: "#8a6d20", padding: "4px 8px", borderRadius: 999 }}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
+                    {item.kicker}
+                  </p>
+                  <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+                    {item.title}
+                  </p>
+                  <p style={{ fontSize: 13, color: "#5b6478", lineHeight: 1.55, marginBottom: 16, flex: 1 }}>
+                    {item.desc}
+                  </p>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>
+                    {item.cta} →
+                  </span>
+                </Link>
+              ))}
             </div>
           </FadeIn>
         </div>
@@ -325,8 +433,8 @@ export default function Home() {
                   </svg>
                 ),
                 title: "Stay protected",
-                desc: "Full management included. Legal compliance, property inspections, and maintenance coordination.",
-                stat: "100% covered",
+                desc: "Day-to-day management included — legal compliance, property inspections and maintenance coordination.",
+                stat: "Day-to-day handled",
                 href: "/landlord-hub",
                 cta: "Compliance guide",
               },
@@ -375,7 +483,7 @@ export default function Home() {
                 We pay your rent.<br />Every month.<br /><em style={{ fontStyle: "italic", fontWeight: 600, color: "#64748b" }}>Whether tenanted or not.</em>
               </h2>
               <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
-                We take on your property on a 3–5 year lease and pay you a guaranteed monthly amount. No management fees, no void periods, no tenant hassle. We handle everything.
+                We take on your property on a 3–5 year lease and pay you a fixed monthly amount, whether or not it is occupied. No management fees, no tenant hassle — we handle the day-to-day management, tenants and routine repairs.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/guaranteed-rent" className="btn-gold">Get a free rent estimate</Link>
@@ -392,8 +500,8 @@ export default function Home() {
               {[
                 { n: "3–5", l: "Year leases", sub: "long-term security" },
                 { n: "£0", l: "Management fees", sub: "ever" },
-                { n: "Zero", l: "Void periods", sub: "guaranteed" },
-                { n: "100%", l: "Hands-off", sub: "we handle everything" },
+                { n: "Zero", l: "Void periods for you", sub: "paid even when empty" },
+                { n: "Zero", l: "Tenant contact", sub: "we manage day to day" },
               ].map(s => (
                 <div key={s.l} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
                   <p style={{ fontSize: 26, fontWeight: 800, color: "#0f1b36", lineHeight: 1 }}>{s.n}</p>
@@ -424,7 +532,7 @@ export default function Home() {
             {[
               {
                 href: "/calculators",
-                tag: "23 calculators",
+                tag: `${siteMetrics.calculators} calculators`,
                 title: "Property calculators",
                 desc: "Deal analyser, rental yield, stamp duty, mortgage, CGT, BRRR, HMO yield, landlord tax, BTL stress test — all free.",
                 items: ["Rental yield & cash flow", "Stamp duty & CGT", "BRRR & HMO analysis"],
@@ -529,13 +637,13 @@ export default function Home() {
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                23 calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
+                {siteMetrics.calculators} calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
               </h2>
               <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
                 From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/calculators" className="btn-gold">All 23 calculators</Link>
+                <Link href="/calculators" className="btn-gold">All {siteMetrics.calculators} calculators</Link>
                 <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
                   19 free templates
                 </Link>

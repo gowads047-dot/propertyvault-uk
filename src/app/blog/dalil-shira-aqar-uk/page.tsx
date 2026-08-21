@@ -3,6 +3,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   title: "Buying Property in the UK — Arabic Guide | PropertyVault UK",
@@ -10,14 +12,14 @@ export const metadata: Metadata = {
     "A complete Arabic guide to buying property in the UK. Mortgages, stamp duty, solicitors, and the full process explained for Arab buyers and expats.",
   keywords:
     "buying property UK Arabic, شراء عقار في المملكة المتحدة, UK property guide Arabic, Arab expat property UK",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/" },
   openGraph: {
     title: "Buying Property in the UK — Arabic Guide | PropertyVault UK",
     description: "A complete Arabic guide to buying property in the UK. Mortgages, stamp duty, solicitors, and the full process explained for Arab buyers and expats.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/",
+    url: "https://www.propertyvaultuk.co.uk/blog/dalil-shira-aqar-uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buying Property in the UK — Arabic Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buying Property in the UK — Arabic Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -57,6 +59,14 @@ const faqs = [
 export default function DalilShiraAqarUK() {
   return (
     <>
+      <ArticleSchema
+        headline="دليل شراء العقارات في المملكة المتحدة"
+        description="كل ما تحتاج معرفته قبل شراء عقار في بريطانيا — من الرهن العقاري والضرائب إلى المحامي والتفاوض على السعر. دليل شامل للمشترين العرب."
+        slug="dalil-shira-aqar-uk"
+        datePublished="2026-08-02"
+        section="Arabic"
+        inLanguage="ar"
+      />
       <BlogArticleHero
         title="دليل شراء العقارات في المملكة المتحدة"
         excerpt="كل ما تحتاج معرفته قبل شراء عقار في بريطانيا — من الرهن العقاري والضرائب إلى المحامي والتفاوض على السعر."
@@ -504,6 +514,11 @@ export default function DalilShiraAqarUK() {
 
       <FAQSchema faqs={faqs} />
       <Disclaimer />
+      <RelatedArticles
+        slug="dalil-shira-aqar-uk"
+        heading="اقرأ أيضًا"
+        dir="rtl"
+      />
     </>
   );
 }

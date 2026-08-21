@@ -5,14 +5,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Deal Sourcing Marketplace — Coming Soon | PropertyVault UK",
   description: "The UK's property deal sourcing marketplace. Find below market value deals from verified sourcers, or list your sourced deals to reach investors. Coming soon.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/deal-sourcing/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/deal-sourcing/" },
   openGraph: {
     title: "Deal Sourcing Marketplace — Coming Soon | PropertyVault UK",
     description: "The UK's property deal sourcing marketplace. Find below market value deals from verified sourcers, or list your sourced deals to reach investors. Coming soon.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/deal-sourcing/",
+    url: "https://www.propertyvaultuk.co.uk/deal-sourcing/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Deal Sourcing UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Deal Sourcing UK" }],
   },
   twitter: {
     card: "summary_large_image",

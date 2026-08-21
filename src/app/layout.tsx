@@ -8,6 +8,7 @@ import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,7 +16,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://propertyvaultuk.co.uk"),
+  metadataBase: new URL(SITE_URL),
   title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
   description:
     "The UK's most comprehensive free property platform. 23 free calculators, 19 legal templates, guaranteed rent, and expert guides for UK investors, landlords, and buyers.",
@@ -31,14 +32,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK — Free Property Tools, Calculators & Guides" }],
+    url: "https://www.propertyvaultuk.co.uk",
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK — Free Property Tools, Calculators & Guides" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PropertyVault UK",
     description: "23 free property calculators, 19 legal templates, and expert UK property guides.",
-    images: ["https://propertyvaultuk.co.uk/opengraph-image"],
+    images: ["https://www.propertyvaultuk.co.uk/opengraph-image"],
   },
   robots: { index: true, follow: true },
 };
@@ -47,11 +48,11 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "PropertyVault UK",
-  url: "https://propertyvaultuk.co.uk",
+  url: "https://www.propertyvaultuk.co.uk",
   description: "The UK's most comprehensive free property investment platform. Calculators, templates, guides, and tools for investors, landlords, and buyers.",
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://propertyvaultuk.co.uk/search/?q={search_term_string}",
+    target: "https://www.propertyvaultuk.co.uk/search/?q={search_term_string}",
     "query-input": "required name=search_term_string",
   },
 };
@@ -60,8 +61,8 @@ const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "PropertyVault UK",
-  url: "https://propertyvaultuk.co.uk",
-  logo: "https://propertyvaultuk.co.uk/favicon.ico",
+  url: "https://www.propertyvaultuk.co.uk",
+  logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
   contactPoint: {
     "@type": "ContactPoint",
     email: "gowads047@gmail.com",
@@ -77,9 +78,9 @@ const localBusinessJsonLd = {
   "@type": ["RealEstateAgent", "LocalBusiness"],
   name: "PropertyVault UK",
   description: "Guaranteed rent scheme for landlords across the Midlands. We pay a fixed monthly income for 3–5 years — no voids, no management, no arrears. Serving Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
-  url: "https://propertyvaultuk.co.uk",
-  logo: "https://propertyvaultuk.co.uk/favicon.ico",
-  image: "https://propertyvaultuk.co.uk/opengraph-image",
+  url: "https://www.propertyvaultuk.co.uk",
+  logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
+  image: "https://www.propertyvaultuk.co.uk/opengraph-image",
   email: "gowads047@gmail.com",
   priceRange: "££",
   address: {
@@ -114,8 +115,8 @@ const localBusinessJsonLd = {
         itemOffered: {
           "@type": "Service",
           name: "Guaranteed Rent Scheme",
-          description: "Fixed monthly rental income for landlords for 3–5 years. No voids, no tenant management, no arrears. We handle everything.",
-          url: "https://propertyvaultuk.co.uk/guaranteed-rent",
+          description: "Fixed monthly rental income for landlords for 3–5 years. Paid whether or not the property is occupied, with day-to-day management, tenants and routine repairs handled for you.",
+          url: "https://www.propertyvaultuk.co.uk/guaranteed-rent",
           areaServed: ["Birmingham", "Nottingham", "Derby", "Leicester", "Coventry", "Sheffield"],
         },
       },
@@ -125,7 +126,7 @@ const localBusinessJsonLd = {
           "@type": "Service",
           name: "Free Property Calculators",
           description: "23 free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.",
-          url: "https://propertyvaultuk.co.uk/calculators",
+          url: "https://www.propertyvaultuk.co.uk/calculators",
         },
       },
       {
@@ -134,7 +135,7 @@ const localBusinessJsonLd = {
           "@type": "Service",
           name: "Free Legal Templates",
           description: "19 free landlord legal document templates including AST, Section 8, Section 13 and more — compliant with 2026 legislation.",
-          url: "https://propertyvaultuk.co.uk/templates",
+          url: "https://www.propertyvaultuk.co.uk/templates",
         },
       },
     ],
@@ -168,8 +169,9 @@ export default function RootLayout({
         {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MG7FKKCKWQ');`}
       </Script>
       <body className="min-h-full flex flex-col">
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <Header />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <CookieConsent />
         <WhatsAppButton />

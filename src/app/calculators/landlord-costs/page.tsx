@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { pctOf } from "@/lib/finance";
 
 const faqs = [
   { q: "What costs does a UK landlord have to pay?", a: "Landlords are responsible for mortgage payments, buildings insurance, landlord liability insurance, maintenance and repairs, letting agent fees (if used), Gas Safety Certificates (annual), Electrical Installation Condition Reports (every 5 years), EPC renewal (every 10 years), and any HMO licensing fees. Void periods with no rental income are also a recurring cost to budget for." },
@@ -46,7 +47,7 @@ export default function LandlordCostsPage() {
     return {
       annualRent, effectiveRent, totalMonthlyExpenses, annualExpenses,
       grossProfit, taxBill, netProfit, monthlyCashFlow,
-      expenseRatio: (annualExpenses / effectiveRent * 100),
+      expenseRatio: pctOf(annualExpenses, effectiveRent),
     };
   }, [monthlyRent, mortgagePayment, insurance, maintenance, managementFee, gasSafety, eicr, epc, licensing, accountant, rentGuarantee, voidWeeks, taxRate]);
 

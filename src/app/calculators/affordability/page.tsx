@@ -7,7 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { monthlyRepayment } from "@/lib/finance";
+import { monthlyRepayment, pctOf } from "@/lib/finance";
 
 const faqs = [
   { q: "How much can I borrow for a mortgage in the UK?", a: "Most UK lenders cap borrowing at 4-4.5 times your gross annual income. Some lenders go up to 5.5x for high earners or certain professions. The actual amount also depends on a stress test: you must be able to afford repayments if interest rates rose by 3%." },
@@ -32,7 +32,7 @@ export default function AffordabilityPage() {
     const maxProperty = maxBorrowing + deposit;
     const monthlyPayment = monthlyRepayment(maxBorrowing, rate, term);
     const monthlyIncome = totalIncome / 12;
-    const affordabilityRatio = (monthlyPayment / monthlyIncome) * 100;
+    const affordabilityRatio = pctOf(monthlyPayment, monthlyIncome);
     const disposableAfterMortgage = monthlyIncome - monthlyPayment - monthlyDebts;
     const ltv = maxProperty > 0 ? ((maxBorrowing / maxProperty) * 100) : 0;
 
