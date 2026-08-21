@@ -68,7 +68,7 @@ export default function MortgageCalculatorPage() {
             <h3 className="text-xl font-bold text-navy-800 mt-8">Understanding LTV</h3>
             <p>Loan-to-Value (LTV) is the percentage of the property price that you borrow. A lower LTV typically means better interest rates. Most residential lenders offer their best rates at 60% LTV, while buy-to-let mortgages commonly require a minimum 25% deposit (75% LTV).</p>
             <h3 className="text-xl font-bold text-navy-800 mt-8">Current UK Mortgage Rates</h3>
-            <p>UK mortgage rates vary based on the Bank of England base rate, your LTV, credit score, and whether you choose a fixed or variable rate. As of 2024-2025, typical fixed rates range from 4% to 6% depending on term length and LTV. Always compare rates from multiple lenders or use a whole-of-market mortgage broker.</p>
+            <p>UK mortgage rates vary based on the Bank of England base rate, your LTV, credit score, and whether you choose a fixed or variable rate. Rates move with the base rate and repricing across the market, so any figure quoted here would date quickly. Compare current rates from multiple lenders, or use a whole-of-market mortgage broker.</p>
           </div>
         </div>
       </section>

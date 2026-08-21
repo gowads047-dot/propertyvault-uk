@@ -59,7 +59,7 @@ const CHECKLIST = [
     urgent: true,
     detail: "Fixed-term ASTs cannot be used for new tenancies. All new tenancies are periodic from day one — rolling monthly by default. Remove any fixed-term end dates, break clauses, or fixed-term renewal terms from your templates. Rent review clauses (e.g. 'rent increases by 3% per year') are also void — delete them.",
     action: "Replace your AST template with a periodic tenancy agreement.",
-    link: { text: "Download free AST template (updated for 2025) →", href: "/templates/ast" },
+    link: { text: "Download free AST template →", href: "/templates/ast" },
   },
   {
     n: "03",
@@ -206,7 +206,7 @@ export default function RentersReformChecklistPage() {
             <li><Link href="/blog/renters-rights-act">Full Renters&apos; Rights Act 2025 guide — every change explained</Link></li>
             <li><Link href="/templates/section-8-notice">Section 8 Notice template — free download</Link></li>
             <li><Link href="/templates/section-13-notice">Section 13 Rent Increase Notice template</Link></li>
-            <li><Link href="/templates/ast">Assured Shorthold Tenancy template (updated for 2025)</Link></li>
+            <li><Link href="/templates/ast">Assured Shorthold Tenancy template</Link></li>
             <li><Link href="/calculators/void-period">Void period cost calculator — what empty months are costing you</Link></li>
           </ul>
 
