@@ -15,11 +15,11 @@ const articleSchema = {
   publisher: {
     "@type": "Organization",
     name: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
+    url: "https://www.propertyvaultuk.co.uk",
   },
   datePublished: "2026-06-26",
   dateModified: "2026-06-26",
-  url: "https://propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property",
+  url: "https://www.propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property",
   image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1400&q=80",
 };
 
@@ -34,11 +34,11 @@ export const metadata: Metadata = {
     description:
       "Not the Instagram version. What property investing actually takes, what it costs, and how to know if a deal is worth doing.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/",
+    url: "https://www.propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/",
     siteName: "PropertyVault UK",
     images: [
       {
-        url: "https://propertyvaultuk.co.uk/opengraph-image",
+        url: "https://www.propertyvaultuk.co.uk/opengraph-image",
         width: 1200,
         height: 630,
         alt: "How to Start Investing in UK Property",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/",
+    canonical: "https://www.propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/",
   },
 };
 
@@ -413,7 +413,7 @@ export default function HowToStartInvestingPage() {
             <ShareResults
               title="How to Start Investing in UK Property"
               summary="A straight-talking beginner&apos;s guide to UK property investing — strategies, costs, calculators and a realistic timeline."
-              url="https://propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/"
+              url="https://www.propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/"
             />
           </div>
         </div>

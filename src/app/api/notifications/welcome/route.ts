@@ -41,7 +41,7 @@ function renturaWelcomeHtml(name: string) {
           </div>
         `).join("")}
       </div>
-      <a href="https://propertyvaultuk.co.uk/rentura/dashboard" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
+      <a href="https://www.propertyvaultuk.co.uk/rentura/dashboard" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
         Open Rentura →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:32px;">
@@ -49,7 +49,7 @@ function renturaWelcomeHtml(name: string) {
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);">
-      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://propertyvaultuk.co.uk/rentura/settings" style="color:rgba(255,255,255,0.3);">Manage notifications</a></p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/rentura/settings" style="color:rgba(255,255,255,0.3);">Manage notifications</a></p>
     </div>
   </div>`;
 }
@@ -83,7 +83,7 @@ function academyWelcomeHtml(name: string) {
           </div>
         `).join("")}
       </div>
-      <a href="https://propertyvaultuk.co.uk/academy/courses" style="display:inline-block;background:linear-gradient(135deg,#d4af37,#f0d060);color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
+      <a href="https://www.propertyvaultuk.co.uk/academy/courses" style="display:inline-block;background:linear-gradient(135deg,#d4af37,#f0d060);color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
         Browse all courses →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:32px;">
@@ -91,7 +91,7 @@ function academyWelcomeHtml(name: string) {
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);">
-      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://propertyvaultuk.co.uk/academy/dashboard" style="color:rgba(255,255,255,0.3);">Your dashboard</a></p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/academy/dashboard" style="color:rgba(255,255,255,0.3);">Your dashboard</a></p>
     </div>
   </div>`;
 }
@@ -116,11 +116,11 @@ function subscriptionConfirmHtml(name: string, platform: string, amount: string)
         <p style="font-size:14px;font-weight:700;color:#22c55e;margin:0 0 4px;">✓ Payment confirmed</p>
         <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0;">Full access is now unlocked.</p>
       </div>
-      <a href="https://propertyvaultuk.co.uk${dashUrl}" style="display:inline-block;background:${brandColor};color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
+      <a href="https://www.propertyvaultuk.co.uk${dashUrl}" style="display:inline-block;background:${brandColor};color:#0f1b36;font-weight:800;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;">
         Go to your dashboard →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:28px;">
-        To manage or cancel your subscription: <a href="https://propertyvaultuk.co.uk${dashUrl}" style="color:${brandColor};">billing settings</a>
+        To manage or cancel your subscription: <a href="https://www.propertyvaultuk.co.uk${dashUrl}" style="color:${brandColor};">billing settings</a>
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);">

@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "UK Property News — Latest Market Updates | PropertyVault",
   description: "Latest UK property news. Market updates, policy changes, interest rate decisions, and developments affecting property investors and homeowners.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/property-news/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-news/" },
   openGraph: {
     title: "UK Property News — Latest Market Updates | PropertyVault",
     description: "Latest UK property news. Market updates, policy changes, interest rate decisions, and developments affecting property investors and homeowners.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/property-news/",
+    url: "https://www.propertyvaultuk.co.uk/property-news/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property News" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property News" }],
   },
   twitter: {
     card: "summary_large_image",

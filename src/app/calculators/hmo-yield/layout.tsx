@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "HMO Yield Calculator UK | PropertyVault",
     description: "Model your HMO investment room by room. Calculate gross and net yields with bills, licensing, and all operating costs included.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/hmo-yield/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/hmo-yield/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "HMO Yield Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "HMO Yield Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "HMO Yield Calculator UK | PropertyVault", description: "Free HMO investment calculator — gross yield, net yield, room-by-room cash flow." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/hmo-yield/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/hmo-yield/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

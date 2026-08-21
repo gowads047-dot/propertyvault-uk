@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
   description:
     "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/about/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/about/" },
   openGraph: {
     title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
     description: "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/about/",
+    url: "https://www.propertyvaultuk.co.uk/about/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "About PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "About PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -105,7 +106,7 @@ export default function AboutPage() {
                 The hub. Free calculators, legal templates, expert guides, and a guaranteed rent service for UK landlords. Everything a property investor, landlord, or buyer needs — without a paywall in sight.
               </p>
               <div className="flex flex-wrap gap-2 mb-5">
-                {["23 calculators", "19 templates", "Guaranteed rent", "Expert guides"].map((t) => (
+                {[`${siteMetrics.calculators} calculators`, `${siteMetrics.templates} templates`, "Guaranteed rent", "Expert guides"].map((t) => (
                   <span key={t} className="text-xs font-semibold px-3 py-1 rounded-full bg-navy-50 text-navy-600 border border-navy-100">
                     {t}
                   </span>

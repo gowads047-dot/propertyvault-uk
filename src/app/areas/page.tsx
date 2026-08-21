@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   title: "UK Property Investment Area Guides — 20 Cities | PropertyVault UK",
   description: "In-depth buy-to-let investment guides for 20 UK cities. Rental yields, area breakdowns, regeneration analysis, and free deal tools for property investors.",
   keywords: "property investment UK, buy to let city guides, rental yield by city, Birmingham property investment, Manchester buy to let, Leeds property, Liverpool investment, Bristol buy to let",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/areas/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/" },
   openGraph: {
     title: "UK Property Investment Area Guides — 20 Cities | PropertyVault UK",
     description: "In-depth buy-to-let investment guides for 20 UK cities. Rental yields, area breakdowns, regeneration analysis, and free deal tools for property investors.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/areas/",
+    url: "https://www.propertyvaultuk.co.uk/areas/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Investment Areas" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Property Investment Areas" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -5,14 +5,14 @@ export const metadata: Metadata = {
   title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
   description:
     "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/leasehold-explained/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/" },
   openGraph: {
     title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
     description: "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/leasehold-explained/",
+    url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leasehold flat building exterior in the UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Leasehold flat building exterior in the UK" }],
   },
   twitter: {
     card: "summary_large_image",

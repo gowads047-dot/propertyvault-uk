@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Personal vs Limited Company Property Calculator UK | PropertyVault",
     description: "Compare personal ownership vs SPV limited company for your buy-to-let. See the real tax difference.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/personal-vs-ltd/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/personal-vs-ltd/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Personal vs Limited Company Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Personal vs Limited Company Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Personal vs Limited Company Property Calculator UK | PropertyVault", description: "Free tool — find the most tax-efficient ownership structure." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/personal-vs-ltd/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/personal-vs-ltd/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

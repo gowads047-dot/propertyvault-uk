@@ -4,14 +4,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
   description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/landlord-hub/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/landlord-hub/" },
   openGraph: {
     title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
     description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/landlord-hub/",
+    url: "https://www.propertyvaultuk.co.uk/landlord-hub/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Landlord Hub" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Landlord Hub" }],
   },
   twitter: {
     card: "summary_large_image",

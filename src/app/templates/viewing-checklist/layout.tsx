@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Free Property Viewing Checklist UK | PropertyVault",
     description: "Free viewing checklist — know exactly what to look for at every property viewing. Download instantly.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/templates/viewing-checklist/",
+    url: "https://www.propertyvaultuk.co.uk/templates/viewing-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Viewing Checklist — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Viewing Checklist — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Property Viewing Checklist UK | PropertyVault", description: "Free checklist — never miss a red flag at a property viewing again." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/templates/viewing-checklist/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/viewing-checklist/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

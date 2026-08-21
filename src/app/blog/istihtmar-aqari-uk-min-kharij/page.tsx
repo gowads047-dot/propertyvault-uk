@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     description:
       "How to invest in UK buy-to-let property from outside the UK. Mortgages, taxes, management, and the full process in Arabic for Arab investors.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/istihtmar-aqari-uk-min-kharij/",
+    url: "https://www.propertyvaultuk.co.uk/blog/istihtmar-aqari-uk-min-kharij/",
     siteName: "PropertyVault UK",
     images: [
       {
-        url: "https://propertyvaultuk.co.uk/opengraph-image",
+        url: "https://www.propertyvaultuk.co.uk/opengraph-image",
         width: 1200,
         height: 630,
         alt: "الاستثمار العقاري في المملكة المتحدة من خارج بريطانيا",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: "https://propertyvaultuk.co.uk/blog/istihtmar-aqari-uk-min-kharij/",
+    canonical: "https://www.propertyvaultuk.co.uk/blog/istihtmar-aqari-uk-min-kharij/",
   },
 };
 

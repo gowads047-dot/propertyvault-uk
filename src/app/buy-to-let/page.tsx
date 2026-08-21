@@ -5,14 +5,14 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 export const metadata: Metadata = {
   title: "Buy-to-Let Guide UK — Complete BTL Investment Guide | PropertyVault",
   description: "Everything about buy-to-let investing in the UK. Mortgages, yields, tax, legal requirements, portfolio building, and expert strategies for BTL landlords.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/buy-to-let/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/buy-to-let/" },
   openGraph: {
     title: "Buy-to-Let Guide UK — Complete BTL Investment Guide | PropertyVault",
     description: "Everything about buy-to-let investing in the UK. Mortgages, yields, tax, legal requirements, portfolio building, and expert strategies for BTL landlords.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/buy-to-let/",
+    url: "https://www.propertyvaultuk.co.uk/buy-to-let/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buy-to-Let Guide UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Buy-to-Let Guide UK" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     "حقوق المستأجر الكاملة في المملكة المتحدة 2025 — إلغاء Section 21، قيود رفع الإيجار، الوديعة، وقانون حقوق المستأجرين الجديد.",
   keywords:
     "حقوق المستأجر في بريطانيا, tenant rights UK Arabic, UK renters rights act 2025 Arabic, حقوق المستأجر 2025",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/hquq-almustajir-uk/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/hquq-almustajir-uk/" },
   openGraph: {
     title: "UK Tenant Rights 2025 — Arabic Guide | PropertyVault UK",
     description: "حقوق المستأجر الكاملة في المملكة المتحدة 2025 — إلغاء Section 21، قيود رفع الإيجار، الوديعة، وقانون حقوق المستأجرين الجديد.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/hquq-almustajir-uk/",
+    url: "https://www.propertyvaultuk.co.uk/blog/hquq-almustajir-uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Tenant Rights 2025 — Arabic Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Tenant Rights 2025 — Arabic Guide" }],
   },
   twitter: {
     card: "summary_large_image",

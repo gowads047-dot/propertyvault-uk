@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     title: "Guaranteed Rent Nottingham | PropertyVault UK",
     description: "Lease your Nottingham property for 3-5 years — guaranteed rent every month, no voids, no management.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/guaranteed-rent/nottingham/",
+    url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Nottingham — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent Nottingham — PropertyVault UK" }],
   },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/guaranteed-rent/nottingham/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/" },
 };
 
 const jsonLd = {
@@ -22,11 +22,11 @@ const jsonLd = {
   "@type": "Service",
   name: "Guaranteed Rent Nottingham",
   description: "Guaranteed rent for landlords in Nottingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees.",
-  url: "https://propertyvaultuk.co.uk/guaranteed-rent/nottingham/",
+  url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/",
   provider: {
     "@type": "Organization",
     name: "PropertyVault UK",
-    url: "https://propertyvaultuk.co.uk",
+    url: "https://www.propertyvaultuk.co.uk",
     telephone: "+447415721628",
     email: "gowads047@gmail.com",
     areaServed: { "@type": "City", name: "Nottingham" },
@@ -164,7 +164,7 @@ export default function NottinghamPage() {
             },
             {
               q: "Who handles maintenance and repairs at my Nottingham property?",
-              a: "We manage all routine maintenance and tenant repairs through our local Nottingham contractor network. Day-to-day issues are handled by us at no extra cost to you. For major structural works we'll always notify you in advance, in line with your lease agreement.",
+              a: "We handle the day-to-day: tenant-reported repairs, general wear and tear, and routine maintenance through our local Nottingham contractor network — at our cost, for the length of the lease. As the owner you remain responsible for the building structure, buildings insurance, the boiler, and any major electrical work. We arrange and coordinate those too, and always notify you in advance, but the cost sits with you as it would under any lease.",
             },
             {
               q: "Can I sell my Nottingham property during the guaranteed rent lease?",

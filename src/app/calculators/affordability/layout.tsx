@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Mortgage Affordability Calculator UK 2026 | PropertyVault",
     description: "Calculate how much you can borrow based on income and deposit. Includes buy-to-let stress testing.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/affordability/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/affordability/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Mortgage Affordability Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Mortgage Affordability Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Mortgage Affordability Calculator UK 2026 | PropertyVault", description: "Free tool — find out how much you can borrow in 60 seconds." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/affordability/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/affordability/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

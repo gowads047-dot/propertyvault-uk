@@ -26,7 +26,7 @@ export default function SearchPage() {
         <div className="container-max px-4">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">Search UK Properties</h1>
-            <p className="text-navy-200 mb-8">Search every major UK property portal from one place. Enter a location and we&apos;ll open results across Rightmove, Zoopla, OnTheMarket, and more.</p>
+            <p className="text-navy-200 mb-8">Launch your search across the major UK property portals from one place. Enter a location and we&apos;ll open results across Rightmove, Zoopla, OnTheMarket, and more.</p>
 
             {/* Tabs */}
             <div className="flex gap-1 justify-center mb-4">

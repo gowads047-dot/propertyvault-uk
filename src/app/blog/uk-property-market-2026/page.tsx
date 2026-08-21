@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
   description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
   keywords: "UK property market 2026, house prices 2026, mortgage rates 2026, buy to let 2026, property investment outlook",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
   openGraph: {
     title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
     description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/blog/uk-property-market-2026/",
+    url: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK property market skyline and investment outlook 2026" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK property market skyline and investment outlook 2026" }],
   },
   twitter: {
     card: "summary_large_image",

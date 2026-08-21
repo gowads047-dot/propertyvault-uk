@@ -80,7 +80,7 @@ export async function GET(req: Request) {
               <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:14px 18px;margin-bottom:24px;">
                 <p style="font-size:18px;font-weight:800;color:#c9a84c;margin:0;">Total: £${totalDue.toFixed(2)}</p>
               </div>
-              <a href="https://propertyvaultuk.co.uk/rentura/financials" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;">
+              <a href="https://www.propertyvaultuk.co.uk/rentura/financials" style="display:inline-block;background:#c9a84c;color:#0f1b36;font-weight:800;padding:12px 24px;border-radius:8px;text-decoration:none;font-size:14px;">
                 Log income →
               </a>
             </div>

@@ -8,12 +8,12 @@ export const metadata: Metadata = {
     title: "Bridging Loan Calculator UK | PropertyVault",
     description: "Calculate total bridging loan costs including interest, arrangement fees, and exit charges.",
     type: "website",
-    url: "https://propertyvaultuk.co.uk/calculators/bridging/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/bridging/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Bridging Loan Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Bridging Loan Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Bridging Loan Calculator UK | PropertyVault", description: "Free tool — calculate bridging finance costs before you commit." },
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/bridging/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/bridging/" },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
     description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/areas/birmingham/",
+    url: "https://www.propertyvaultuk.co.uk/areas/birmingham/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Birmingham Property Investment Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Birmingham Property Investment Guide" }],
   },
   twitter: {
     card: "summary_large_image",

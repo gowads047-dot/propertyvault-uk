@@ -10,14 +10,14 @@ export const metadata: Metadata = {
     "Everything landlords and tenants need to know about the Renters' Rights Act 2025. Section 21 abolition, fixed-term tenancies, rent increases, pets, PRS Ombudsman, and what to do now.",
   keywords:
     "Renters Rights Act 2025, Section 21 abolished, fixed term tenancy abolished, rent increase rules 2025, PRS Ombudsman registration, landlord Renters Rights Act checklist, periodic tenancy UK",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/renters-rights-act/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/renters-rights-act/" },
   openGraph: {
     title: "Renters' Rights Act 2025 — Complete Landlord & Tenant Guide | PropertyVault UK",
     description: "Everything landlords and tenants need to know about the Renters' Rights Act 2025. Section 21 abolition, fixed-term tenancies, rent increases, pets, PRS Ombudsman, and what to do now.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/renters-rights-act/",
+    url: "https://www.propertyvaultuk.co.uk/renters-rights-act/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters' Rights Act 2025 Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Renters' Rights Act 2025 Guide" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -367,7 +367,7 @@ export default function RentersRightsActPage() {
             </Link>
             <Link href="/guaranteed-rent" className="group bg-gold-50 rounded-2xl border border-gold-200 p-5 hover:border-gold-400 transition-colors">
               <p className="font-bold text-navy-900 group-hover:text-gold-600 transition-colors text-sm">Guaranteed Rent — eliminate all risk</p>
-              <p className="text-xs text-navy-500 mt-1 leading-relaxed">We lease your property for 3–5 years and handle everything. No Section 8, no Ombudsman, no compliance headaches.</p>
+              <p className="text-xs text-navy-500 mt-1 leading-relaxed">We lease your property for 3–5 years and take on the day-to-day management. No Section 8, no Ombudsman, no compliance headaches.</p>
               <span className="text-xs font-semibold text-gold-600 mt-3 block">Learn more →</span>
             </Link>
           </div>

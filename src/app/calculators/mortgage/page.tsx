@@ -18,14 +18,14 @@ const mortgageFaqs = [
 export const metadata: Metadata = {
   title: "Free Mortgage Calculator UK — Monthly Payments & Interest | PropertyVault",
   description: "Calculate your UK mortgage monthly payments, total interest, and compare repayment vs interest-only. Free, accurate, and mobile-friendly mortgage calculator.",
-  alternates: { canonical: "https://propertyvaultuk.co.uk/calculators/mortgage/" },
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/mortgage/" },
   openGraph: {
     title: "Free Mortgage Calculator UK — Monthly Payments & Interest | PropertyVault",
     description: "Calculate your UK mortgage monthly payments, total interest, and compare repayment vs interest-only. Free, accurate, and mobile-friendly mortgage calculator.",
     type: "article",
-    url: "https://propertyvaultuk.co.uk/calculators/mortgage/",
+    url: "https://www.propertyvaultuk.co.uk/calculators/mortgage/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Mortgage Calculator" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK Mortgage Calculator" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { formatPrice } from "@/lib/hetta-config";
 
 interface Listing {
   id: string;
@@ -15,6 +16,8 @@ interface Listing {
   area: string;
   status: string;
   created_at: string;
+  /** Optional: rows predate the multi-market columns, so may be absent. */
+  country?: string | null;
 }
 
 // favourites is selected as "*, listing:listings(*)"
@@ -138,7 +141,7 @@ export default function DashboardPage() {
                       <span className="text-xs" style={{ color: "var(--h-subtle)" }}>{l.property_type}</span>
                     </div>
                     <p className="font-semibold text-sm truncate" style={{ color: "var(--h-text)" }}>{l.title}</p>
-                    <p className="text-xs" style={{ color: "var(--h-muted)" }}>{l.area}, {l.city} · £{l.price}/mo</p>
+                    <p className="text-xs" style={{ color: "var(--h-muted)" }}>{l.area}, {l.city} · {formatPrice(l.price, l.country || "gb")}/mo</p>
                   </div>
                   <div className="flex gap-2 flex-shrink-0">
                     <button onClick={() => toggleStatus(l.id, l.status)} className="text-xs font-medium px-3 py-1.5 rounded-lg" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
