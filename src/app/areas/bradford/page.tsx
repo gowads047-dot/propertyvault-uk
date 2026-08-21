@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Bradford property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Bradford, buy to let Bradford, rental yield Bradford, Bradford property prices, best areas to invest Bradford",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/bradford/" },
   openGraph: {
     title: "Bradford Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Bradford property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

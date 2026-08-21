@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Property Investing in Nottingham — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
   description: "Complete Nottingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, student market, and guaranteed rent options.",
   keywords: "property investment Nottingham, buy to let Nottingham, rental yield Nottingham, Nottingham property prices, best areas to invest Nottingham, guaranteed rent Nottingham",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/nottingham/" },
   openGraph: {
     title: "Property Investing in Nottingham — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
     description: "Complete Nottingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, student market, and guaranteed rent options.",

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Wolverhampton property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Wolverhampton, buy to let Wolverhampton, rental yield Wolverhampton, Wolverhampton property prices, best areas to invest Wolverhampton",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/wolverhampton/" },
   openGraph: {
     title: "Wolverhampton Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Wolverhampton property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Legal & Compliance — Makan",
   description: "How Makan keeps landlords and tenants safe, legal, and protected across all 10 countries. Per-country compliance guides.",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/makan/compliance/" },
 };
 
 const countries = [

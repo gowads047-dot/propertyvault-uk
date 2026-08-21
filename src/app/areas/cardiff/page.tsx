@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Cardiff property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Cardiff, buy to let Cardiff, rental yield Cardiff, Cardiff property prices, best areas to invest Cardiff",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/cardiff/" },
   openGraph: {
     title: "Cardiff Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Cardiff property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

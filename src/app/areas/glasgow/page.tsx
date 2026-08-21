@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Glasgow property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Glasgow, buy to let Glasgow, rental yield Glasgow, Glasgow property prices, best areas to invest Glasgow",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/glasgow/" },
   openGraph: {
     title: "Glasgow Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Glasgow property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

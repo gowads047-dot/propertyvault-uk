@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Hull Buy-to-Let Investment Guide | PropertyVault UK",
   description: "Complete Hull property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords: "property investment Hull, buy to let Hull, rental yield Hull, Hull property prices, best areas to invest Hull",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/hull/" },
   openGraph: {
     title: "Hull Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Hull property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

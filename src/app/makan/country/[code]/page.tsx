@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const country = countries.find(c => c.code === code);
   if (!country) return {};
   return {
+    alternates: { canonical: `https://www.propertyvaultuk.co.uk/makan/country/${code}/` },
     title: `Property in ${country.name} — Makan`,
     description: country.hero,
   };

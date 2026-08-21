@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Portsmouth property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Portsmouth, buy to let Portsmouth, rental yield Portsmouth, Portsmouth property prices, best areas to invest Portsmouth",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/portsmouth/" },
   openGraph: {
     title: "Portsmouth Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Portsmouth property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

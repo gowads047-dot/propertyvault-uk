@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Liverpool Buy-to-Let Investment Guide | PropertyVault UK",
   description: "Complete Liverpool property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords: "property investment Liverpool, buy to let Liverpool, rental yield Liverpool, Liverpool property prices, best areas to invest Liverpool",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/liverpool/" },
   openGraph: {
     title: "Liverpool Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Liverpool property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

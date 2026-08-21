@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/hub/" },
   title: "Your Hub — PropertyVault",
   description: "Manage your PropertyVault account, Rentura properties, Makan listings, and Academy progress from one place.",
   robots: { index: false, follow: false },

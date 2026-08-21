@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Southampton property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Southampton, buy to let Southampton, rental yield Southampton, Southampton property prices, best areas to invest Southampton",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/southampton/" },
   openGraph: {
     title: "Southampton Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Southampton property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

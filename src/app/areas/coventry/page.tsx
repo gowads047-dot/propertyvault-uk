@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Coventry Buy-to-Let Investment Guide | PropertyVault UK",
   description: "Complete Coventry property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords: "property investment Coventry, buy to let Coventry, rental yield Coventry, Coventry property prices, best areas to invest Coventry",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/coventry/" },
   openGraph: {
     title: "Coventry Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Coventry property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

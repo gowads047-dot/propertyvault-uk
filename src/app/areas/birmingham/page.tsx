@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
   description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Birmingham, buy to let Birmingham, rental yield Birmingham, Birmingham property prices, best areas to invest Birmingham, guaranteed rent Birmingham",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/birmingham/" },
   openGraph: {
     title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
     description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",

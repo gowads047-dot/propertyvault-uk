@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Bristol property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Bristol, buy to let Bristol, rental yield Bristol, Bristol property prices, best areas to invest Bristol",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/bristol/" },
   openGraph: {
     title: "Bristol Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Bristol property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

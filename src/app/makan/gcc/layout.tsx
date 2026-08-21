@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/makan/gcc/" },
   title: "GCC Buyers — Investing in UK Property | Makan by PropertyVault",
   description: "Complete guide for GCC nationals buying UK property. Non-resident SDLT calculator, step-by-step purchase guide, halal finance options, and guaranteed rent for overseas landlords. Arabic and English.",
   keywords: "GCC property investment UK, Saudi Arabia UK property, UAE UK property, non-resident stamp duty UK, SDLT calculator non-resident, buy UK property from Gulf, halal mortgage UK, guaranteed rent overseas landlord",

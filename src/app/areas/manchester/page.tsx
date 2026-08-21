@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Manchester Buy-to-Let Investment Guide | PropertyVault UK",
   description: "Complete Manchester property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords: "property investment Manchester, buy to let Manchester, rental yield Manchester, Manchester property prices, best areas to invest Manchester",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/manchester/" },
   openGraph: {
     title: "Manchester Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Manchester property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Complete Newcastle property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Newcastle, buy to let Newcastle, rental yield Newcastle, Newcastle property prices, best areas to invest Newcastle",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/newcastle/" },
   openGraph: {
     title: "Newcastle Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Newcastle property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

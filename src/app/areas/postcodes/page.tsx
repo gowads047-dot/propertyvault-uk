@@ -7,6 +7,7 @@ import { DataProvenance } from "@/components/ui/DataProvenance";
 export const metadata: Metadata = {
   title: "Midlands Postcode Investment Guides — Sold Prices & Yields | PropertyVault UK",
   description: "Sold prices, rental yields, and buy-to-let investment guides for 40+ Midlands postcode districts. Birmingham, Coventry, Nottingham, Derby, Leicester, and Sheffield.",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/postcodes/" },
   keywords: "Midlands postcode investment, Birmingham postcodes buy to let, Nottingham postcode yields, Derby LE DE postcode investment, Sheffield S postcode guide",
 };
 

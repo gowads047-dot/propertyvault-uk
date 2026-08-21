@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "How Makan Works — Safe, Legal, Free Property Listings",
   description: "How Makan connects landlords and tenants safely across 10 countries. Verified users, reviewed listings, legal compliance in every market.",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/makan/how-it-works/" },
 };
 
 export default function HowItWorksPage() {

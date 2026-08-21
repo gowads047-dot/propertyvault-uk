@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Leeds Buy-to-Let Investment Guide | PropertyVault UK",
   description: "Complete Leeds property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords: "property investment Leeds, buy to let Leeds, rental yield Leeds, Leeds property prices, best areas to invest Leeds",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/leeds/" },
   openGraph: {
     title: "Leeds Buy-to-Let Investment Guide | PropertyVault UK",
     description: "Complete Leeds property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",

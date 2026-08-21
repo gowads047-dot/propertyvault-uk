@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Makan — Our Story",
   description: "Makan means place in Arabic. We connect people to places — directly. No agents, no commission, no barriers. Free property listings across UK, Middle East, and North Africa.",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/makan/about/" },
 };
 
 export default function AboutMakanPage() {

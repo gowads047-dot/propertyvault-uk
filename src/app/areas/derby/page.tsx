@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
   description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
   keywords: "property investment Derby, buy to let Derby, rental yield Derby, Derby property prices, best areas to invest Derby, guaranteed rent Derby",
+  alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/derby/" },
   openGraph: {
     title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
     description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
