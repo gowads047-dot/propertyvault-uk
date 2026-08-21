@@ -721,3 +721,30 @@ input::placeholder, textarea::placeholder {
     scroll-behavior: auto !important;
   }
 }
+
+/* Platform cards on the homepage — lift on hover, matching the tool cards. */
+.platform-card:hover {
+  border-color: rgba(201, 168, 76, 0.55);
+  box-shadow: 0 10px 28px rgba(15, 27, 54, 0.09);
+}
+
+/* Platform grid: five items, so auto-fit strands one card on its own row at
+   common desktop widths. Explicit steps keep it to 5, 3+2, 2 or 1 - never
+   4+1. */
+.platform-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 560px) {
+  .platform-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .platform-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1180px) {
+  .platform-grid { grid-template-columns: repeat(5, 1fr); }
+}
