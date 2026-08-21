@@ -7,6 +7,7 @@ import {
   netYield as calcNetYield,
   cashOnCash as calcCashOnCash,
 } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 export function CashFlowCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(950);
@@ -54,50 +55,50 @@ export function CashFlowCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Income</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Gross Monthly Rent</label>
-          <input type="range" min={400} max={5000} step={25} value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={400} max={5000} step={25} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Void weeks per year</label>
-          <input type="range" min={0} max={12} step={1} value={voidWeeksPerYear} onChange={e => setVoidWeeksPerYear(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={12} step={1} value={voidWeeksPerYear} onChange={e => setVoidWeeksPerYear(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{voidWeeksPerYear} week{voidWeeksPerYear !== 1 ? "s" : ""}</p>
         </div>
 
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Monthly Costs</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Mortgage / Finance Payment</label>
-          <input type="range" min={0} max={3000} step={25} value={mortgagePayment} onChange={e => setMortgagePayment(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={3000} step={25} value={mortgagePayment} onChange={e => setMortgagePayment(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(mortgagePayment)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Letting Agent Fee</label>
-          <input type="range" min={0} max={20} step={1} value={managementFee} onChange={e => setManagementFee(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={20} step={1} value={managementFee} onChange={e => setManagementFee(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{managementFee}% = {fmt(results.managementCost)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Maintenance Reserve</label>
-          <input type="range" min={0} max={15} step={1} value={maintenancePct} onChange={e => setMaintenancePct(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={15} step={1} value={maintenancePct} onChange={e => setMaintenancePct(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{maintenancePct}% = {fmt(results.maintenanceCost)}/month</p>
         </div>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-navy-700 mb-1">Insurance</label>
-            <input type="range" min={0} max={200} step={5} value={insurance} onChange={e => setInsurance(+e.target.value)} className="w-full accent-gold-500" />
+            <input type="range" min={0} max={200} step={5} value={insurance} onChange={e => setInsurance(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center text-sm font-bold text-navy-800">{fmt(insurance)}/mo</p>
           </div>
           <div>
             <label className="block text-xs font-semibold text-navy-700 mb-1">Council Tax (landlord)</label>
-            <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(+e.target.value)} className="w-full accent-gold-500" />
+            <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center text-sm font-bold text-navy-800">{fmt(councilTax)}/mo</p>
           </div>
           <div>
             <label className="block text-xs font-semibold text-navy-700 mb-1">Utilities (landlord-paid)</label>
-            <input type="range" min={0} max={400} step={10} value={utilities} onChange={e => setUtilities(+e.target.value)} className="w-full accent-gold-500" />
+            <input type="range" min={0} max={400} step={10} value={utilities} onChange={e => setUtilities(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center text-sm font-bold text-navy-800">{fmt(utilities)}/mo</p>
           </div>
           <div>
             <label className="block text-xs font-semibold text-navy-700 mb-1">Ground Rent / Service Charge</label>
-            <input type="range" min={0} max={4000} step={50} value={groundRent} onChange={e => setGroundRent(+e.target.value)} className="w-full accent-gold-500" />
+            <input type="range" min={0} max={4000} step={50} value={groundRent} onChange={e => setGroundRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center text-sm font-bold text-navy-800">{fmt(groundRent)}/yr</p>
           </div>
         </div>
@@ -105,12 +106,12 @@ export function CashFlowCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Investment Details</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Purchase Price</label>
-          <input type="range" min={50000} max={1000000} step={5000} value={purchasePrice} onChange={e => setPurchasePrice(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={50000} max={1000000} step={5000} value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(purchasePrice)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Deposit Percentage</label>
-          <input type="range" min={15} max={100} step={5} value={depositPct} onChange={e => setDepositPct(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={15} max={100} step={5} value={depositPct} onChange={e => setDepositPct(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{depositPct}% = {fmt(results.deposit)}</p>
         </div>
       </div>

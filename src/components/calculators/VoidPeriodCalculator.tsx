@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
+import { nonNegative } from "@/lib/inputs";
 
 export function VoidPeriodCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(900);
@@ -35,41 +36,41 @@ export function VoidPeriodCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent</label>
-          <input type="range" min={400} max={3000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={400} max={3000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month</p>
         </div>
 
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Monthly Costs (still paid during void)</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Mortgage / Finance Payment</label>
-          <input type="range" min={0} max={2500} step={25} value={monthlyMortgage} onChange={e => setMonthlyMortgage(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={2500} step={25} value={monthlyMortgage} onChange={e => setMonthlyMortgage(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyMortgage)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Council Tax (while empty)</label>
-          <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={300} step={10} value={councilTax} onChange={e => setCouncilTax(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(councilTax)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Buildings Insurance</label>
-          <input type="range" min={10} max={200} step={5} value={monthlyInsurance} onChange={e => setMonthlyInsurance(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={10} max={200} step={5} value={monthlyInsurance} onChange={e => setMonthlyInsurance(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyInsurance)}/month</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Utilities / Other Fixed Costs</label>
-          <input type="range" min={0} max={300} step={10} value={utilities} onChange={e => setUtilities(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={300} step={10} value={utilities} onChange={e => setUtilities(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(utilities)}/month</p>
         </div>
 
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Void Pattern</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Duration per Void Period</label>
-          <input type="range" min={1} max={26} step={1} value={voidWeeks} onChange={e => setVoidWeeks(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={1} max={26} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{voidWeeks} week{voidWeeks !== 1 ? "s" : ""}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Void Periods per Year</label>
-          <input type="range" min={1} max={6} step={1} value={voidsPerYear} onChange={e => setVoidsPerYear(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={1} max={6} step={1} value={voidsPerYear} onChange={e => setVoidsPerYear(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{voidsPerYear} per year</p>
         </div>
       </div>

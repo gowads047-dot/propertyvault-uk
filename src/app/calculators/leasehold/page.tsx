@@ -9,6 +9,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { pvAnnuity, pvLumpSum, discountFactor } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 const leaseholdFaqs = [
   { q: "What happens when a lease drops below 80 years?", a: "Below 80 years, 'marriage value' kicks in — the freeholder is entitled to 50% of the value created by the extension. This significantly increases the premium. As a rule of thumb, extend before the lease drops below 85 years to avoid this cost." },
@@ -214,11 +215,11 @@ export default function LeaseholdCalculatorPage() {
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Property Value (current, with lease)</span>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                      <input type="number" value={propertyValue} onChange={e => setPropertyValue(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <input type="number" min="0" value={propertyValue} onChange={e => setPropertyValue(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                   </label>
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Years remaining on lease: <strong>{yearsLeft} years</strong></span>
-                    <input type="range" min={10} max={999} step={1} value={yearsLeft} onChange={e => setYearsLeft(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
+                    <input type="range" min={10} max={999} step={1} value={yearsLeft} onChange={e => setYearsLeft(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#94a3b8", marginTop: 2 }}>
                       <span>10 yrs</span><span>80 yrs</span><span>120+ yrs</span><span>999 yrs</span>
                     </div>
@@ -233,12 +234,12 @@ export default function LeaseholdCalculatorPage() {
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Annual ground rent</span>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                      <input type="number" value={groundRentAnnual} onChange={e => setGroundRentAnnual(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <input type="number" min="0" value={groundRentAnnual} onChange={e => setGroundRentAnnual(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     <p className="text-xs text-navy-400 mt-1">Enter 0 for a peppercorn (£0) ground rent</p>
                   </label>
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Ground rent doubles every (years)</span>
-                    <select value={groundRentDoubles} onChange={e => setGroundRentDoubles(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400 bg-white">
+                    <select value={groundRentDoubles} onChange={e => setGroundRentDoubles(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400 bg-white">
                       <option value={10}>Every 10 years</option>
                       <option value={15}>Every 15 years</option>
                       <option value={20}>Every 20 years</option>
@@ -257,11 +258,11 @@ export default function LeaseholdCalculatorPage() {
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Service charge £/month</span>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                      <input type="number" value={serviceCharge} onChange={e => setServiceCharge(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <input type="number" min="0" value={serviceCharge} onChange={e => setServiceCharge(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                   </label>
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Deferment / cap rate: {capRate}%</span>
-                    <input type="range" min={3} max={8} step={0.25} value={capRate} onChange={e => setCapRate(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
+                    <input type="range" min={3} max={8} step={0.25} value={capRate} onChange={e => setCapRate(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                     <p className="text-xs text-navy-400 mt-1">Industry standard is 4.75–5.5%. Higher = lower premium.</p>
                   </label>
                 </div>

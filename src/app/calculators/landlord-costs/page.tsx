@@ -8,6 +8,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { pctOf } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "What costs does a UK landlord have to pay?", a: "Landlords are responsible for mortgage payments, buildings insurance, landlord liability insurance, maintenance and repairs, letting agent fees (if used), Gas Safety Certificates (annual), Electrical Installation Condition Reports (every 5 years), EPC renewal (every 10 years), and any HMO licensing fees. Void periods with no rental income are also a recurring cost to budget for." },
@@ -83,12 +84,12 @@ export default function LandlordCostsPage() {
             <div className="space-y-5">
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent (£)</label>
-                <input type="number" value={monthlyRent} onChange={(e) => setMonthlyRent(Number(e.target.value))} className="w-full px-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                <input type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full px-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Void Weeks/Year ({voidWeeks})</label><input type="range" min={0} max={8} step={1} value={voidWeeks} onChange={(e) => setVoidWeeks(Number(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Void Weeks/Year ({voidWeeks})</label><input type="range" min={0} max={8} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Tax Rate ({taxRate}%)</label>
-                  <select value={taxRate} onChange={(e) => setTaxRate(Number(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg bg-white text-sm">
+                  <select value={taxRate} onChange={e => setTaxRate(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg bg-white text-sm">
                     <option value={0}>0% (non-taxpayer)</option><option value={20}>20% (basic rate)</option><option value={40}>40% (higher rate)</option><option value={45}>45% (additional rate)</option>
                   </select>
                 </div>
@@ -99,7 +100,7 @@ export default function LandlordCostsPage() {
                   <div key={c.label} className="flex items-center justify-between">
                     <span className="text-sm text-navy-700">{c.label}</span>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                    <input type="number" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-24 pl-7 pr-2 py-1.5 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                    <input type="number" min="0" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-24 pl-7 pr-2 py-1.5 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                   </div>
                 ))}
               </div>

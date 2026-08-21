@@ -8,6 +8,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { grossYield as calcGrossYield, netYield as calcNetYield } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "What is an HMO property?", a: "A House in Multiple Occupation (HMO) is a property rented by three or more people from two or more separate households who share facilities such as kitchens or bathrooms. HMOs with five or more people from two or more households require a mandatory HMO licence from the local council." },
@@ -79,7 +80,7 @@ export default function HMOYieldPage() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Purchase Price / Property Value</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={purchasePrice} onChange={(e) => setPurchasePrice(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
 
               <div className="flex items-center justify-between">
@@ -95,7 +96,7 @@ export default function HMOYieldPage() {
                     <input type="checkbox" checked={room.occupied} onChange={(e) => updateRoom(i, "occupied", e.target.checked)} className="rounded" />
                     <input type="text" value={room.name} onChange={(e) => updateRoom(i, "name", e.target.value)} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm" />
                     <span className="text-sm text-navy-500">£</span>
-                    <input type="number" value={room.rent} onChange={(e) => updateRoom(i, "rent", Number(e.target.value))} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm font-semibold" />
+                    <input type="number" min="0" value={room.rent} onChange={(e) => updateRoom(i, "rent", Number(e.target.value))} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm font-semibold" />
                     <span className="text-xs text-navy-400">/month</span>
                   </div>
                 ))}
@@ -113,7 +114,7 @@ export default function HMOYieldPage() {
                 ].map((c) => (
                   <div key={c.label}><label className="block text-xs text-navy-600 mb-0.5">{c.label}</label>
                   <div className="relative"><span className="absolute left-2 top-1/2 -translate-y-1/2 text-navy-400 text-xs">£</span>
-                  <input type="number" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-full pl-6 pr-2 py-1.5 border border-navy-200 rounded text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                  <input type="number" min="0" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-full pl-6 pr-2 py-1.5 border border-navy-200 rounded text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 ))}
               </div>
             </div>

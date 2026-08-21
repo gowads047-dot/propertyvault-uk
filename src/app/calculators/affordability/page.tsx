@@ -8,6 +8,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { monthlyRepayment, pctOf } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "How much can I borrow for a mortgage in the UK?", a: "Most UK lenders cap borrowing at 4-4.5 times your gross annual income. Some lenders go up to 5.5x for high earners or certain professions. The actual amount also depends on a stress test: you must be able to afford repayments if interest rates rose by 3%." },
@@ -59,36 +60,36 @@ export default function AffordabilityPage() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Your Annual Income (gross)</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={income1} onChange={(e) => setIncome1(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={income1} onChange={(e) => setIncome1(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Second Applicant Income (if joint, otherwise £0)</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={income2} onChange={(e) => setIncome2(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={income2} onChange={(e) => setIncome2(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Deposit Available</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={deposit} onChange={(e) => setDeposit(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={deposit} onChange={e => setDeposit(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Debt Commitments (loans, credit cards, car finance)</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={monthlyDebts} onChange={(e) => setMonthlyDebts(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={monthlyDebts} onChange={e => setMonthlyDebts(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Income Multiplier ({multiplier}x)</label>
-                <input type="range" min={3} max={5.5} step={0.25} value={multiplier} onChange={(e) => setMultiplier(Number(e.target.value))} className="w-full accent-gold-500" />
+                <input type="range" min={3} max={5.5} step={0.25} value={multiplier} onChange={e => setMultiplier(nonNegative(e.target.value))} className="w-full accent-gold-500" />
                 <div className="flex justify-between text-xs text-navy-500"><span>3x (conservative)</span><span>4.5x (typical)</span><span>5.5x (maximum)</span></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Interest Rate ({rate}%)</label>
-                  <input type="range" min={2} max={8} step={0.1} value={rate} onChange={(e) => setRate(Number(e.target.value))} className="w-full accent-gold-500" />
+                  <input type="range" min={2} max={8} step={0.1} value={rate} onChange={e => setRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Term ({term} years)</label>
-                  <input type="range" min={5} max={40} step={1} value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full accent-gold-500" />
+                  <input type="range" min={5} max={40} step={1} value={term} onChange={e => setTerm(nonNegative(e.target.value))} className="w-full accent-gold-500" />
                 </div>
               </div>
             </div>

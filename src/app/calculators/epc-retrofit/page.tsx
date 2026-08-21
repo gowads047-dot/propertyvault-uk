@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "What EPC rating do rental properties need by 2030?", a: "The UK Government has confirmed that all privately rented properties in England and Wales must achieve a minimum EPC rating of C by 2030. The deadline is fixed — landlords should plan improvements now as costs and contractor availability will worsen as 2030 approaches." },
@@ -148,7 +149,7 @@ export default function EPCRetrofitPage() {
                           {m.enabled && (
                             <div className="mt-2">
                               <label className="text-xs text-navy-600 font-medium">Cost (£)</label>
-                              <input type="number" value={m.cost} onChange={(e) => updateCost(m.id, Number(e.target.value))}
+                              <input type="number" min="0" value={m.cost} onChange={(e) => updateCost(m.id, Number(e.target.value))}
                                 className="w-32 px-3 py-1.5 border border-navy-200 rounded-lg text-sm ml-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
                             </div>
                           )}
@@ -164,13 +165,13 @@ export default function EPCRetrofitPage() {
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Grant Funding Available (£)</label>
                   <p className="text-xs text-navy-400 mb-2">e.g. ECO4, Great British Insulation Scheme, Boiler Upgrade Scheme, local authority grants</p>
-                  <input type="number" value={grantAmount} onChange={(e) => setGrantAmount(Number(e.target.value))}
+                  <input type="number" min="0" value={grantAmount} onChange={e => setGrantAmount(nonNegative(e.target.value))}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Estimated Annual Energy Savings (£)</label>
                   <p className="text-xs text-navy-400 mb-2">How much you expect to save per year on energy bills after improvements</p>
-                  <input type="number" value={annualSavings} onChange={(e) => setAnnualSavings(Number(e.target.value))}
+                  <input type="number" min="0" value={annualSavings} onChange={e => setAnnualSavings(nonNegative(e.target.value))}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
               </div>

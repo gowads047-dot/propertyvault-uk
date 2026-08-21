@@ -7,6 +7,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "What is a bridging loan and how does it work?", a: "A bridging loan is short-term secured finance used to bridge a gap — typically between buying a new property and selling another, or between purchasing and refinancing onto a long-term mortgage. They complete in days rather than weeks and are commonly used for auction purchases, uninhabitable properties, or chain breaks." },
@@ -57,10 +58,10 @@ export default function BridgingPage() {
         <div className="container-max">
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Loan Amount</label><div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span><input type="number" value={loanAmount} onChange={(e) => setLoanAmount(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Loan Amount</label><div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span><input type="number" min="0" value={loanAmount} onChange={e => setLoanAmount(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rate ({monthlyRate}%)</label><input type="range" min={0.4} max={2} step={0.05} value={monthlyRate} onChange={(e) => setMonthlyRate(Number(e.target.value))} className="w-full accent-gold-500" /><p className="text-xs text-navy-500 text-center">{results.annualRate.toFixed(1)}% annual equivalent</p></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Term ({termMonths} months)</label><input type="range" min={1} max={24} step={1} value={termMonths} onChange={(e) => setTermMonths(Number(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rate ({monthlyRate}%)</label><input type="range" min={0.4} max={2} step={0.05} value={monthlyRate} onChange={e => setMonthlyRate(nonNegative(e.target.value))} className="w-full accent-gold-500" /><p className="text-xs text-navy-500 text-center">{results.annualRate.toFixed(1)}% annual equivalent</p></div>
+                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Term ({termMonths} months)</label><input type="range" min={1} max={24} step={1} value={termMonths} onChange={e => setTermMonths(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
               </div>
               <div><label className="block text-sm font-semibold text-navy-700 mb-1">Interest Type</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -70,10 +71,10 @@ export default function BridgingPage() {
               </div>
               <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Fees</h3>
               <div className="grid grid-cols-2 gap-3">
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Arrangement Fee (%)</label><input type="number" step={0.5} value={arrangementFee} onChange={(e) => setArrangementFee(Number(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Exit Fee (%)</label><input type="number" step={0.5} value={exitFee} onChange={(e) => setExitFee(Number(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Valuation Fee (£)</label><input type="number" value={valuationFee} onChange={(e) => setValuationFee(Number(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Legal Fees (£)</label><input type="number" value={legalFees} onChange={(e) => setLegalFees(Number(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Arrangement Fee (%)</label><input type="number" min="0" step={0.5} value={arrangementFee} onChange={e => setArrangementFee(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Exit Fee (%)</label><input type="number" min="0" step={0.5} value={exitFee} onChange={e => setExitFee(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Valuation Fee (£)</label><input type="number" min="0" value={valuationFee} onChange={e => setValuationFee(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Legal Fees (£)</label><input type="number" min="0" value={legalFees} onChange={e => setLegalFees(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
             </div>
 

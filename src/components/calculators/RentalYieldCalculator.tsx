@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { ShareResults } from "./ShareResults";
 import { grossYield, netYield, roi } from "@/lib/finance";
+import { nonNegative } from "@/lib/inputs";
 
 export function RentalYieldCalculator() {
   const [propertyPrice, setPropertyPrice] = useState(200000);
@@ -46,7 +47,7 @@ export function RentalYieldCalculator() {
           <label className="block text-sm font-semibold text-navy-700 mb-1">Property Purchase Price</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" min={0} step={5000} value={propertyPrice} onChange={(e) => setPropertyPrice(Number(e.target.value))}
+            <input type="number" min={0} step={5000} value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))}
               className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg text-navy-800 font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>
@@ -54,7 +55,7 @@ export function RentalYieldCalculator() {
           <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" min={0} step={25} value={monthlyRent} onChange={(e) => setMonthlyRent(Number(e.target.value))}
+            <input type="number" min={0} step={25} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))}
               className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg text-navy-800 font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>
@@ -62,23 +63,23 @@ export function RentalYieldCalculator() {
           <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Running Costs (insurance, maintenance, etc.)</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" min={0} step={100} value={annualCosts} onChange={(e) => setAnnualCosts(Number(e.target.value))}
+            <input type="number" min={0} step={100} value={annualCosts} onChange={e => setAnnualCosts(nonNegative(e.target.value))}
               className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg text-navy-800 font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Management Fee ({managementFee}%)</label>
-          <input type="range" min={0} max={20} step={1} value={managementFee} onChange={(e) => setManagementFee(Number(e.target.value))} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={20} step={1} value={managementFee} onChange={e => setManagementFee(nonNegative(e.target.value))} className="w-full accent-gold-500" />
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Void Weeks Per Year ({voidWeeks})</label>
-          <input type="range" min={0} max={8} step={1} value={voidWeeks} onChange={(e) => setVoidWeeks(Number(e.target.value))} className="w-full accent-gold-500" />
+          <input type="range" min={0} max={8} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Mortgage Payment</label>
           <div className="relative">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" min={0} step={25} value={mortgagePayment} onChange={(e) => setMortgagePayment(Number(e.target.value))}
+            <input type="number" min={0} step={25} value={mortgagePayment} onChange={e => setMortgagePayment(nonNegative(e.target.value))}
               className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg text-navy-800 font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>

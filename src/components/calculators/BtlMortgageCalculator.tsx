@@ -2,6 +2,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
+import { nonNegative } from "@/lib/inputs";
 
 export function BtlMortgageCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(1000);
@@ -40,33 +41,33 @@ export function BtlMortgageCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Property & Rental Income</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Property Value</label>
-          <input type="range" min={50000} max={1000000} step={5000} value={propertyValue} onChange={e => setPropertyValue(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={50000} max={1000000} step={5000} value={propertyValue} onChange={e => setPropertyValue(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(propertyValue)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Loan-to-Value (LTV)</label>
-          <input type="range" min={50} max={85} step={5} value={ltv} onChange={e => setLtv(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={50} max={85} step={5} value={ltv} onChange={e => setLtv(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{ltv}% — Deposit: {fmt(results.deposit)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rental Income</label>
-          <input type="range" min={400} max={5000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={400} max={5000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month · {fmt(results.annualRent)}/year</p>
         </div>
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Lender Stress Test Criteria</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Actual Mortgage Rate</label>
-          <input type="range" min={2} max={9} step={0.25} value={actualRate} onChange={e => setActualRate(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={2} max={9} step={0.25} value={actualRate} onChange={e => setActualRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmtPct(actualRate)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Stress Test Rate (lenders typically use 5.0–5.5%)</label>
-          <input type="range" min={4} max={9} step={0.25} value={stressRate} onChange={e => setStressRate(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={4} max={9} step={0.25} value={stressRate} onChange={e => setStressRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmtPct(stressRate)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">ICR — 125% basic rate / 145% higher rate</label>
-          <input type="range" min={100} max={170} step={5} value={icr} onChange={e => setIcr(+e.target.value)} className="w-full accent-gold-500" />
+          <input type="range" min={100} max={170} step={5} value={icr} onChange={e => setIcr(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{icr}%</p>
         </div>
       </div>

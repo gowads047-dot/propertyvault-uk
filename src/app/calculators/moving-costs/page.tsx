@@ -8,6 +8,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcSDLT } from "@/lib/tax";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "How much does it cost to move house in the UK?", a: "On a £250,000 property, total moving costs typically range from £10,000-£20,000. This includes stamp duty, solicitor fees (£1,000-£2,500), searches (£250-£400), survey (£400-£1,500), mortgage arrangement fees, removal costs, and any redecoration or furniture purchases. Buyers often underestimate these costs significantly." },
@@ -71,7 +72,7 @@ export default function MovingCostsPage() {
           <div className="mb-6">
             <label className="block text-sm font-semibold text-navy-700 mb-1">Property Purchase Price</label>
             <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" value={propertyPrice} onChange={(e) => setPropertyPrice(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+            <input type="number" min="0" value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             <div className="flex gap-4 mt-2">
               <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" checked={isFirstTime} onChange={(e) => { setIsFirstTime(e.target.checked); if (e.target.checked) setIsAdditional(false); }} className="rounded" /> First-time buyer</label>
               <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" checked={isAdditional} onChange={(e) => { setIsAdditional(e.target.checked); if (e.target.checked) setIsFirstTime(false); }} className="rounded" /> Additional property (+5%)</label>
@@ -85,7 +86,7 @@ export default function MovingCostsPage() {
                 <span className="text-sm text-navy-700 font-medium">{item.label}</span>
                 {item.set ? (
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                  <input type="number" value={item.value} onChange={(e) => item.set!(Number(e.target.value))} className="w-28 pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                  <input type="number" min="0" value={item.value} onChange={(e) => item.set!(Number(e.target.value))} className="w-28 pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 ) : (
                   <span className="font-bold text-navy-800">{fmt(item.value)}</span>
                 )}

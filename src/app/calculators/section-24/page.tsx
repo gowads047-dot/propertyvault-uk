@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { personalAllowance, calcSection24Credit,
   propertyIncomeTaxCost,
 } from "@/lib/tax";
+import { nonNegative } from "@/lib/inputs";
 
 const faqs = [
   { q: "What is Section 24 of the Finance Act 2015?", a: "Section 24 removed the right for individual buy-to-let landlords to deduct mortgage interest from rental income before calculating tax. It was phased in from 2017 and fully in force since April 2020. Instead of a deduction, landlords now receive a 20% basic rate tax credit on their mortgage interest costs." },
@@ -88,24 +89,24 @@ export default function Section24Page() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Rental Income</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={rentalIncome} onChange={(e) => setRentalIncome(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Mortgage Interest</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={mortgageInterest} onChange={(e) => setMortgageInterest(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Other Allowable Expenses (insurance, repairs, agent fees)</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={allowableExpenses} onChange={(e) => setAllowableExpenses(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={allowableExpenses} onChange={e => setAllowableExpenses(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">
                   Other Annual Income <span className="font-normal text-navy-400">(salary, pension, other)</span>
                 </label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" value={otherIncome} onChange={(e) => setOtherIncome(Number(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input type="number" min="0" value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 <p className="text-xs text-navy-400 mt-1">Your tax band is computed automatically — <strong className="text-navy-600">{results.taxBand}</strong></p>
               </div>
             </div>
