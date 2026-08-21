@@ -789,3 +789,21 @@ input::placeholder, textarea::placeholder {
 html.dark {
   --gold-ink: var(--gold-ink-dark);
 }
+
+/* ── Gold text utilities ───────────────────────────────────────────────────
+   Measured on /guaranteed-rent/: text-gold-400 appears 22 times, every one on
+   a dark surface, none failing — that shade is the dark-background gold and is
+   left alone. text-gold-500, -600 and -700 appeared 17 times between them,
+   every one on a light surface, and every one below the 4.5 AA threshold
+   (2.21, 2.92 and 4.05 against white respectively).
+
+   Routing them through --gold-ink gives the same context-aware behaviour the
+   inline gold text already uses: dark enough to read on light, and the bright
+   gold on dark surfaces. This also supersedes the older
+   `html.dark .text-gold-600` override, which only handled the dark-mode case
+   and left light mode failing. */
+.text-gold-500,
+.text-gold-600,
+.text-gold-700 {
+  color: var(--gold-ink);
+}
