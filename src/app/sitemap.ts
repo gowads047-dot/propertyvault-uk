@@ -16,6 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/glossary/`,                 lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/tools/`,                    lastModified: now, changeFrequency: "monthly", priority: 0.6 },
 
+    // Rentura marketing page only. The app beneath it stays out of the
+    // sitemap and blocked in robots.txt.
+    { url: `${BASE}/rentura/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+
     // Calculators
     { url: `${BASE}/calculators/`,              lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/calculators/stamp-duty/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },
