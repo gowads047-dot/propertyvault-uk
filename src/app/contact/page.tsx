@@ -35,7 +35,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-2 gap-10">
             <div>
               <h2 className="text-xl font-bold text-navy-800 mb-6">Send Us a Message</h2>
-              <form className="space-y-4" action="https://formsubmit.co/gowads047@gmail.com" method="POST">
+              <form className="space-y-4" action="https://formsubmit.co/info@propertyvaultuk.co.uk" method="POST">
                 <input type="hidden" name="_subject" value="New enquiry from PropertyVault" />
                 <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/contact/?sent=true" />
                 <input type="hidden" name="_captcha" value="false" />
@@ -71,7 +71,7 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="bg-navy-50 rounded-xl p-5">
                   <h3 className="font-bold text-navy-800 mb-1">General Enquiries</h3>
-                  <p className="text-sm text-navy-600">gowads047@gmail.com</p>
+                  <p className="text-sm text-navy-600">info@propertyvaultuk.co.uk</p>
                   
                 </div>
                 <div className="bg-navy-50 rounded-xl p-5">

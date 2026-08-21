@@ -65,7 +65,7 @@ const orgJsonLd = {
   logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
   contactPoint: {
     "@type": "ContactPoint",
-    email: "gowads047@gmail.com",
+    email: "info@propertyvaultuk.co.uk",
     contactType: "customer service",
     areaServed: "GB",
     availableLanguage: "English",
@@ -81,7 +81,7 @@ const localBusinessJsonLd = {
   url: "https://www.propertyvaultuk.co.uk",
   logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
   image: "https://www.propertyvaultuk.co.uk/opengraph-image",
-  email: "gowads047@gmail.com",
+  email: "info@propertyvaultuk.co.uk",
   priceRange: "££",
   address: {
     "@type": "PostalAddress",

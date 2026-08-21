@@ -40,7 +40,7 @@ export default function WantedPage() {
           {/* Post form */}
           {showForm && !submitted && (
             <form
-              action="https://formsubmit.co/gowads047@gmail.com"
+              action="https://formsubmit.co/info@propertyvaultuk.co.uk"
               method="POST"
               onSubmit={() => setSubmitted(true)}
               className="h-card !rounded-2xl p-6 mb-8"

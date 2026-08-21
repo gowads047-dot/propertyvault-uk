@@ -46,7 +46,7 @@ export default function AcademyQAPage() {
       date: new Date().toISOString().slice(0, 10), answered: false,
     }, ...prev]);
     // Also send to email
-    window.location.href = `mailto:gowads047@gmail.com?subject=Academy Q%26A: New Question&body=${encodeURIComponent(`From: ${name || "Anonymous"}\n\nQuestion: ${question}`)}`;
+    window.location.href = `mailto:info@propertyvaultuk.co.uk?subject=Academy Q%26A: New Question&body=${encodeURIComponent(`From: ${name || "Anonymous"}\n\nQuestion: ${question}`)}`;
     setQuestion(""); setName(""); setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
   }

@@ -27,7 +27,7 @@ const jsonLd = {
     "@type": "Organization",
     name: "PropertyVault UK",
     url: "https://www.propertyvaultuk.co.uk",
-    email: "gowads047@gmail.com",
+    email: "info@propertyvaultuk.co.uk",
     areaServed: { "@type": "City", name: "Sheffield" },
   },
   serviceType: "Guaranteed Rent Property Leasing",

@@ -79,4 +79,4 @@ export const siteMetrics = {
  * propertyvault.uk — the domain that does have MX, via Tutanota — point this
  * at that instead; it is the only place it needs changing.
  */
-export const REPLY_TO = "gowads047@gmail.com";
+export const REPLY_TO = "info@propertyvaultuk.co.uk";

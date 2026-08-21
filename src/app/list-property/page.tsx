@@ -60,7 +60,7 @@ export default function ListPropertyPage() {
       <section className="section-padding bg-navy-50/50">
         <div className="container-max max-w-3xl">
           <h2 className="text-2xl font-bold text-navy-800 mb-6">Create Your Listing</h2>
-          <form className="space-y-6 bg-white rounded-2xl p-6 md:p-8 shadow-md border border-navy-100" action="https://formsubmit.co/gowads047@gmail.com" method="POST">
+          <form className="space-y-6 bg-white rounded-2xl p-6 md:p-8 shadow-md border border-navy-100" action="https://formsubmit.co/info@propertyvaultuk.co.uk" method="POST">
             <input type="hidden" name="_subject" value="New Property Listing — PropertyVault" />
             <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/list-property/?sent=true" />
             <input type="hidden" name="_captcha" value="false" />

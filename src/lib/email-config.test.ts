@@ -35,10 +35,28 @@ describe("transactional email reply-to", () => {
     expect(REPLY_TO).toMatch(/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i);
   });
 
-  it("is not on the website-only domain, which cannot receive mail", () => {
-    // propertyvaultuk.co.uk has no MX record. Pointing replies there is the
-    // exact bug this constant exists to prevent.
-    expect(REPLY_TO.endsWith("@propertyvaultuk.co.uk")).toBe(false);
+  it("is on a domain that can actually receive mail", () => {
+    // This assertion has changed once already, and the reason matters.
+    //
+    // Originally it required REPLY_TO *not* to be on propertyvaultuk.co.uk,
+    // because that domain served the website only and had no MX record, so
+    // replies bounced. Hostinger Mail has since been set up on it, so the
+    // domain now receives and info@ is a real mailbox - verified by sending
+    // to it and seeing Resend report "delivered".
+    //
+    // The rule being enforced is unchanged: replies must go somewhere a human
+    // reads. Only the list of domains that satisfy it has grown.
+    const receivingDomains = [
+      "@propertyvaultuk.co.uk", // Hostinger Mail
+      "@propertyvault.uk",      // Tutanota
+      "@propertyvault.co.uk",   // Microsoft 365
+      "@gmail.com",
+    ];
+    expect(receivingDomains.some(d => REPLY_TO.endsWith(d))).toBe(true);
+  });
+
+  it("is a branded address rather than a personal inbox", () => {
+    expect(REPLY_TO.endsWith("@gmail.com")).toBe(false);
   });
 
   it("finds every route that sends email", () => {

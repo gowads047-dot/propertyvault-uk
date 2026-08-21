@@ -177,7 +177,7 @@ export async function POST(req: Request) {
             body: JSON.stringify({
               from: "PropertyVault UK <noreply@propertyvaultuk.co.uk>",
               replyTo: REPLY_TO,
-              to: "gowads047@gmail.com",
+              to: "info@propertyvaultuk.co.uk",
               subject: `${isUrgent ? "🚨 URGENT" : "🔧 New issue"}: "${d.title}" — ${shortAddr}`,
               html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a2942;">
                 <div style="background:#1a2942;padding:20px 28px;border-radius:12px 12px 0 0;">

@@ -37,7 +37,7 @@ export function EnquiryForm() {
     e.preventDefault();
     setStatus("submitting");
     try {
-      await fetch("https://formsubmit.co/ajax/gowads047@gmail.com", {
+      await fetch("https://formsubmit.co/ajax/info@propertyvaultuk.co.uk", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({

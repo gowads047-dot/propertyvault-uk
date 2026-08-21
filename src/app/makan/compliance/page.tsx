@@ -353,7 +353,7 @@ export default function CompliancePage() {
           <div className="p-5 rounded-2xl text-sm leading-relaxed" style={{ background: "var(--h-bg)", border: "1px solid var(--h-border)", color: "var(--h-muted)" }}>
             <strong style={{ color: "var(--h-text)" }}>Legal disclaimer:</strong> This guide is for informational purposes only and does not constitute legal advice. Laws change frequently and vary by jurisdiction, city, and specific circumstances. Makan is not a law firm. Always consult a qualified local solicitor or legal professional before signing any property contract, particularly for cross-border transactions. If you believe a listing on Makan violates local law, please report it and we will review it promptly.
           </div>
-          <p className="text-xs text-center mt-4" style={{ color: "var(--h-subtle)" }}>Last reviewed: June 2026 · <a href="mailto:gowads047@gmail.com" className="underline" style={{ color: "var(--h-accent)" }}>Report a legal concern</a></p>
+          <p className="text-xs text-center mt-4" style={{ color: "var(--h-subtle)" }}>Last reviewed: June 2026 · <a href="mailto:info@propertyvaultuk.co.uk" className="underline" style={{ color: "var(--h-accent)" }}>Report a legal concern</a></p>
         </div>
       </section>
 
@@ -363,7 +363,7 @@ export default function CompliancePage() {
           <p className="text-white font-bold text-xl mb-2">Questions about compliance?</p>
           <p className="mb-6" style={{ color: "rgba(255,255,255,0.6)" }}>We take legal compliance seriously in every market. Contact us if you have concerns.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="mailto:gowads047@gmail.com" className="h-btn h-btn-primary">Contact us</a>
+            <a href="mailto:info@propertyvaultuk.co.uk" className="h-btn h-btn-primary">Contact us</a>
             <Link href="/makan" className="h-btn" style={{ background: "rgba(255,255,255,0.1)", color: "white", border: "1px solid rgba(255,255,255,0.2)" }}>Back to Makan</Link>
           </div>
         </div>
