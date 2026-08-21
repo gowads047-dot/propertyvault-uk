@@ -89,7 +89,6 @@ export default function RenturaPage() {
               { icon: "🔒", label: "SSL Encrypted", sub: "All data in transit" },
               { icon: "🇬🇧", label: "UK Data Storage", sub: "Hosted in London (eu-west-2)" },
               { icon: "🏦", label: "Payments processed by Stripe", sub: "Stripe is PCI DSS Level 1 certified" },
-              { icon: "📋", label: "ICO Registered", sub: "On the public ICO register" },
               { icon: "🗑️", label: "Right to erasure", sub: "Delete your data anytime" },
             ].map((b) => (
               <div key={b.label} style={{ display: "flex", alignItems: "center", gap: 10, background: "white", border: "1px solid rgba(15,27,45,0.08)", borderRadius: 12, padding: "10px 16px" }}>
