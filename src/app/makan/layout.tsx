@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
+import { LangProvider } from "@/lib/lang-context";
 
 export const metadata: Metadata = {
   title: "Makan — Bilingual UK & International Property Platform | PropertyVault",
@@ -16,6 +17,15 @@ export const metadata: Metadata = {
 // Pages below call useAuth(), so the provider must sit above them. Without it
 // useAuth() falls back to the default context, whose loading is hard-coded true
 // and never changes, leaving every page stuck on its loading state.
+//
+// LangProvider is here for exactly the same reason, and was missing. Without
+// it useLang() fell back to a default whose t() returns the key it was given,
+// so /makan/list rendered the literal strings "list.signinRequired" and
+// "nav.signup" to users, and dir never became "rtl" for Arabic.
 export default function MakanLayout({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <LangProvider>
+      <AuthProvider>{children}</AuthProvider>
+    </LangProvider>
+  );
 }
