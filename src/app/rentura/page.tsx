@@ -90,22 +90,6 @@ export default function RenturaPage() {
       {/* SOCIAL PROOF — LANDLORD COUNTER + TRUST BADGES */}
       <section style={{ background: "#f5f3ef", padding: "52px 24px", borderBottom: "1px solid rgba(15,27,45,0.07)" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 32, alignItems: "center", marginBottom: 36 }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>120+</div>
-              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Landlords active</div>
-            </div>
-            <div style={{ width: 1, height: 48, background: "rgba(15,27,45,0.1)" }} />
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>340+</div>
-              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>Properties managed</div>
-            </div>
-            <div style={{ width: 1, height: 48, background: "rgba(15,27,45,0.1)" }} />
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: 48, fontWeight: 900, color: "#0f1b2d", letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", lineHeight: 1 }}>4.9★</div>
-              <div style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", marginTop: 6, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>User satisfaction</div>
-            </div>
-          </div>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16 }}>
             {[
               { icon: "🔒", label: "SSL Encrypted", sub: "All data in transit" },

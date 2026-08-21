@@ -64,3 +64,19 @@ export const siteMetrics = {
   /** Cities with a dedicated guaranteed-rent landing page. */
   guaranteedRentCities: guaranteedRentCities.length,
 } as const;
+
+/**
+ * Where replies to our transactional email should go.
+ *
+ * Outbound mail is sent from nass@propertyvaultuk.co.uk, but that domain has
+ * no MX record — it serves the website only. Mail *from* a domain needs no MX,
+ * so sending works, but a recipient pressing Reply would have their message
+ * bounce. Nothing in the app set a reply-to, so every reply to a starter pack
+ * or a deal analysis was going nowhere.
+ *
+ * This address is already published on the contact page, so it is a mailbox
+ * that demonstrably receives. Once a branded mailbox exists on
+ * propertyvault.uk — the domain that does have MX, via Tutanota — point this
+ * at that instead; it is the only place it needs changing.
+ */
+export const REPLY_TO = "gowads047@gmail.com";

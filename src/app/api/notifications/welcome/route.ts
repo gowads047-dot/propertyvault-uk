@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { REPLY_TO } from "@/lib/site";
 
 const RESEND_KEY = process.env.RESEND_API_KEY;
 
@@ -7,7 +8,9 @@ async function sendEmail(to: string, subject: string, html: string) {
   await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },
-    body: JSON.stringify({ from: "PropertyVault <hello@propertyvaultuk.co.uk>", to, subject, html }),
+    // reply_to (snake_case) because this calls the Resend REST API directly
+    // rather than going through the SDK.
+    body: JSON.stringify({ from: "PropertyVault <hello@propertyvaultuk.co.uk>", to, subject, html, reply_to: REPLY_TO }),
   });
 }
 

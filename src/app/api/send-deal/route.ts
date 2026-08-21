@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import DealAnalysisEmail from "@/emails/DealAnalysisEmail";
+import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -31,6 +32,7 @@ export async function POST(req: NextRequest) {
 
   const { error } = await resend.emails.send({
     from: "Nass at PropertyVault <nass@propertyvaultuk.co.uk>",
+    replyTo: REPLY_TO,
     to: email.trim().toLowerCase(),
     subject: `Your deal analysis — ${deal.address ?? fmt(deal.purchasePrice)} · Score ${deal.dealScore}/100`,
     react: DealAnalysisEmail({ deal, fmt }),

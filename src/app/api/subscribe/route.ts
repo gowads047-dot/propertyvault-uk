@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import StarterPackEmail from "@/emails/StarterPackEmail";
+import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
   const supabase = createClient(
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
   // 2. Send starter pack email via Resend
   const { error: emailError } = await resend.emails.send({
     from: "Nass at PropertyVault <nass@propertyvaultuk.co.uk>",
+    replyTo: REPLY_TO,
     to: email.trim().toLowerCase(),
     subject: "Your Free Property Starter Pack 🏠",
     react: StarterPackEmail({ name: name.trim(), userType: user_type ?? null }),
