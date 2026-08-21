@@ -74,7 +74,7 @@ export default function RenturaJoinPage() {
         <div style={{ textAlign: "center", marginBottom: 36 }}>
           <Link href="/rentura" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
             <div style={{ width: 36, height: 36, background: "#0f1b2d", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ color: "#c9a84c", fontWeight: 900, fontSize: 17 }}>R</span>
+              <span style={{ color: "var(--gold-ink)", fontWeight: 900, fontSize: 17 }}>R</span>
             </div>
             <span style={{ fontWeight: 900, fontSize: 18, color: "#0f1b2d", letterSpacing: "-0.02em" }}>Rentura</span>
           </Link>
@@ -98,7 +98,7 @@ export default function RenturaJoinPage() {
                   ["3", "Add your card — no charge for 30 days, then £9.99/mo"],
                 ].map(([n, s]) => (
                   <div key={n} style={{ display: "flex", gap: 12, marginBottom: 10, alignItems: "flex-start" }}>
-                    <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(201,168,76,0.15)", color: "#c9a84c", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
+                    <span style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(201,168,76,0.15)", color: "var(--gold-ink)", fontSize: 11, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{n}</span>
                     <span style={{ fontSize: 13, color: "rgba(15,27,45,0.6)", lineHeight: 1.6 }}>{s}</span>
                   </div>
                 ))}
@@ -155,7 +155,7 @@ export default function RenturaJoinPage() {
 
         <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(15,27,45,0.4)" }}>
           Already have an account?{" "}
-          <Link href="/rentura/auth" style={{ color: "#c9a84c", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
+          <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
         </p>
       </div>
     </div>

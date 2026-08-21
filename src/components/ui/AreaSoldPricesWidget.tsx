@@ -37,7 +37,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
     <div style={{ background: "white", border: "1.5px solid #e2e8f0", borderRadius: 20, overflow: "hidden" }}>
       {/* Header */}
       <div style={{ background: "#0f1b36", padding: "20px 24px" }}>
-        <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
+        <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
           Live data · Land Registry
         </p>
         <h3 style={{ fontSize: 17, fontWeight: 800, color: "white", marginBottom: 3 }}>Sold Prices & Crime Data</h3>
@@ -85,7 +85,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
                   {data.sales.avgPrice > 0 && (
                     <div style={{ padding: "10px 14px", background: "#0f1b36", borderRadius: 10, marginBottom: 10 }}>
                       <p style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Average</p>
-                      <p style={{ fontSize: 20, fontWeight: 800, color: "#c9a84c" }}>{fmt(data.sales.avgPrice)}</p>
+                      <p style={{ fontSize: 20, fontWeight: 800, color: "var(--gold-ink)" }}>{fmt(data.sales.avgPrice)}</p>
                     </div>
                   )}
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>

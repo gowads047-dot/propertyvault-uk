@@ -27,7 +27,7 @@ export function PrintHeader({ category, title, reference, date }: PrintHeaderPro
           </div>
           <div>
             <p style={{ fontSize: 14, fontWeight: 800, color: "#0f1b36", letterSpacing: "-0.02em", margin: 0, fontFamily: "Arial, Helvetica, sans-serif" }}>
-              PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span>
+              PropertyVault<span style={{ color: "var(--gold-ink)" }}>.co.uk</span>
             </p>
             <p style={{ fontSize: 8.5, color: "#9ca3af", margin: 0, fontFamily: "Arial, sans-serif" }}>Free Property Tools · UK Landlords & Tenants</p>
           </div>
@@ -43,7 +43,7 @@ export function PrintHeader({ category, title, reference, date }: PrintHeaderPro
 
       {/* Document type + title */}
       <div>
-        <p style={{ fontSize: 9, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 5px", fontFamily: "Arial, sans-serif" }}>{category}</p>
+        <p style={{ fontSize: 9, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.12em", margin: "0 0 5px", fontFamily: "Arial, sans-serif" }}>{category}</p>
         <h1 style={{ fontSize: 21, fontWeight: 800, color: "#0f1b36", margin: 0, letterSpacing: "-0.02em", fontFamily: "Arial, Helvetica, sans-serif", lineHeight: 1.15 }}>{title}</h1>
       </div>
 

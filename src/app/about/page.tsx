@@ -126,7 +126,7 @@ export default function AboutPage() {
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: "#0f1b2d" }}
                 >
-                  <span className="font-black text-sm" style={{ color: "#c9a84c" }}>R</span>
+                  <span className="font-black text-sm" style={{ color: "var(--gold-ink)" }}>R</span>
                 </div>
                 <div>
                   <p className="font-black text-navy-800 text-lg leading-tight">Rentura</p>

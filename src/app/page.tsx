@@ -78,12 +78,12 @@ export default function Home() {
             <div>
               <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", boxShadow: "0 0 0 3px rgba(201,168,76,0.25)", animation: "pulse 2s infinite" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#c9a84c", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Leicester · Coventry · Sheffield</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--gold-ink)", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Leicester · Coventry · Sheffield</span>
               </div>
 
               <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
                 Your rent,{" "}
-                <span style={{ color: "#c9a84c" }}>guaranteed</span>
+                <span style={{ color: "var(--gold-ink)" }}>guaranteed</span>
                 <br />every month —<br />
                 <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.35)" }}>no voids, ever.</em>
               </h1>
@@ -134,7 +134,7 @@ export default function Home() {
                     <p style={{ fontSize: 12, color: "rgba(201,168,76,0.8)", marginTop: 2 }}>▲ rent received this month</p>
                   </div>
                   <div style={{ background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 10, padding: "6px 12px" }}>
-                    <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c" }}>3 properties</p>
+                    <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)" }}>3 properties</p>
                   </div>
                 </div>
 
@@ -230,7 +230,7 @@ export default function Home() {
       <section style={{ background: "white", padding: "56px 0 40px" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>Most-used tools</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>Most-used tools</p>
             <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</p>
           </FadeIn>
           <FadeIn>
@@ -278,7 +278,7 @@ export default function Home() {
                     <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }} className="group-hover:text-gold-600 transition-colors">{t.title}</h3>
                     <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>{t.desc}</p>
                   </div>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c", marginTop: "auto" }}>Try free →</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)", marginTop: "auto" }}>Try free →</span>
                 </Link>
               ))}
             </div>
@@ -299,7 +299,7 @@ export default function Home() {
       <section style={{ background: "#f8f9fc", padding: "72px 0", borderTop: "1px solid #e8eaf0", borderBottom: "1px solid #e8eaf0" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>
               The platform
             </p>
             <h2 style={{ fontSize: "clamp(24px,3.4vw,34px)", fontWeight: 900, color: "#0f1b36", textAlign: "center", letterSpacing: "-0.02em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
@@ -379,7 +379,7 @@ export default function Home() {
                       </span>
                     )}
                   </div>
-                  <p style={{ fontSize: 11, fontWeight: 800, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
+                  <p style={{ fontSize: 11, fontWeight: 800, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
                     {item.kicker}
                   </p>
                   <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
@@ -402,7 +402,7 @@ export default function Home() {
       <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Why PropertyVault</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Why PropertyVault</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 52, letterSpacing: "-0.01em" }}>
               No agents. No voids.<br />No calls at midnight.
             </h2>
@@ -458,11 +458,11 @@ export default function Home() {
                   <div style={{ width: 56, height: 56, borderRadius: 16, background: "#f8f9fc", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                     {p.icon}
                   </div>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
                   <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
                   <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
                   <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                    {p.cta} <span style={{ color: "#c9a84c" }}>→</span>
+                    {p.cta} <span style={{ color: "var(--gold-ink)" }}>→</span>
                   </Link>
                 </div>
               </FadeIn>
@@ -478,7 +478,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
             {/* Left: copy */}
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>For landlords</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>For landlords</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
                 We pay your rent.<br />Every month.<br /><em style={{ fontStyle: "italic", fontWeight: 600, color: "#64748b" }}>Whether tenanted or not.</em>
               </h2>
@@ -519,7 +519,7 @@ export default function Home() {
       <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 12, letterSpacing: "-0.01em" }}>
               Everything a landlord needs — free, forever
             </h2>
@@ -554,7 +554,7 @@ export default function Home() {
             ].map(card => (
               <Link key={card.href} href={card.href} style={{ textDecoration: "none", display: "flex", flexDirection: "column", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, transition: "border-color 0.2s, box-shadow 0.2s" }}
                 className="pillar-card">
-                <span style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{card.tag}</span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{card.tag}</span>
                 <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{card.title}</h3>
                 <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6, marginBottom: 20, flex: 1 }}>{card.desc}</p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 6, marginBottom: 20 }}>
@@ -565,7 +565,7 @@ export default function Home() {
                   ))}
                 </ul>
                 <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  Explore free <span style={{ color: "#c9a84c" }}>→</span>
+                  Explore free <span style={{ color: "var(--gold-ink)" }}>→</span>
                 </span>
               </Link>
             ))}
@@ -578,7 +578,7 @@ export default function Home() {
       <section className="section-dark-rich dot-grid-gold" style={{ padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Simple process</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Simple process</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "white", marginBottom: 52 }}>
               Guaranteed rent in 3 steps
             </h2>
@@ -627,7 +627,7 @@ export default function Home() {
               ].map(t => (
                 <Link key={t.label} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "16px 14px", textDecoration: "none", display: "block" }}
                   className="hover:border-gold-300 transition-colors">
-                  <p style={{ fontSize: 10, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 4 }}>{t.tag}</p>
+                  <p style={{ fontSize: 10, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 4 }}>{t.tag}</p>
                   <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>{t.label}</p>
                 </Link>
               ))}
@@ -635,7 +635,7 @@ export default function Home() {
 
             {/* Right: copy */}
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
                 {siteMetrics.calculators} calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
               </h2>
@@ -661,7 +661,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
             {/* Left: copy */}
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Landlord success</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Landlord success</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
                 "Not a single void month in two years"
               </h2>
@@ -690,7 +690,7 @@ export default function Home() {
                 </a>
                 {/* Corner badge */}
                 <div style={{ position: "absolute", top: 16, right: 16, background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 8, padding: "6px 12px" }}>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c" }}>Free consultation</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)" }}>Free consultation</p>
                 </div>
               </div>
 
@@ -756,7 +756,7 @@ export default function Home() {
       <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 48 }}>Everything in one place</h2>
           </FadeIn>
           <FadeIn>
@@ -767,7 +767,7 @@ export default function Home() {
               </div>
               <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>22 Free Calculators</h3>
               <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
             <Link href="/templates" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
@@ -775,7 +775,7 @@ export default function Home() {
               </div>
               <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>19 Free Templates</h3>
               <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
-              <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c" }}>Explore →</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 12 }}>
@@ -807,18 +807,18 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
             <Link href="/blog/uk-property-market-2026" style={{ background: "#0f1b36", borderRadius: 20, padding: "36px 32px", textDecoration: "none", display: "block", gridColumn: "span 2" }}
               className="blog-hero-card">
-              <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, color: "#c9a84c", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", padding: "4px 12px", borderRadius: 20, marginBottom: 20 }}>New · June 2026</span>
+              <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", padding: "4px 12px", borderRadius: 20, marginBottom: 20 }}>New · June 2026</span>
               <h3 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 800, color: "white", marginBottom: 10, lineHeight: 1.25 }}>UK Property Market 2026 — What Investors Need to Know</h3>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
             </Link>
             <Link href="/blog/brrr-strategy-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
               className="hover:border-gold-300 transition-colors">
-              <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Investing</p>
+              <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Investing</p>
               <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>What Is the BRRR Strategy?</h3>
             </Link>
             <Link href="/blog/guaranteed-rent-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
               className="hover:border-gold-300 transition-colors">
-              <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Landlords</p>
+              <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Landlords</p>
               <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>Guaranteed Rent — Is It Worth It?</h3>
             </Link>
           </div>
@@ -875,7 +875,7 @@ export default function Home() {
       <section className="section-dark-rich dot-grid-gold" style={{ padding: "80px 0" }}>
         <div className="container-max px-4" style={{ textAlign: "center" }}>
           <FadeIn>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "white", marginBottom: 16, letterSpacing: "-0.01em" }}>
               Less hassle. More return.<br />
               <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Starting now.</em>

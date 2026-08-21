@@ -234,7 +234,7 @@ export default function TemplatesPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1, maxWidth: 900 }}>
           <Breadcrumbs items={[{ label: "Templates" }]} />
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>
             {TEMPLATES.length} Free Templates · England &amp; Wales
           </p>
           <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 5vw, 56px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
@@ -315,7 +315,7 @@ export default function TemplatesPage() {
                     <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
                       <span style={{ fontSize: 11, color: "#94a3b8" }}>⏱ {t.time}</span>
                       <span style={{ fontSize: 11, color: "#94a3b8" }}>📄 {t.pages}</span>
-                      {isInteractive && <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c" }}>✦ Interactive</span>}
+                      {isInteractive && <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)" }}>✦ Interactive</span>}
                     </div>
                   </div>
 
@@ -356,7 +356,7 @@ export default function TemplatesPage() {
               { step: "04", title: "Print or save as PDF", desc: "One click. Print to PDF from your browser — no account needed." },
             ].map(s => (
               <div key={s.step} style={{ textAlign: "center" }}>
-                <p style={{ fontSize: 11, fontWeight: 800, color: "#c9a84c", letterSpacing: "0.08em", marginBottom: 8 }}>{s.step}</p>
+                <p style={{ fontSize: 11, fontWeight: 800, color: "var(--gold-ink)", letterSpacing: "0.08em", marginBottom: 8 }}>{s.step}</p>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 6 }}>{s.title}</h3>
                 <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>{s.desc}</p>
               </div>

@@ -183,7 +183,7 @@ export default function LeaseholdCalculatorPage() {
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
                 <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26 }}>📜</div>
                 <div>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em" }}>Property Tools</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Property Tools</p>
                   <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "white", lineHeight: 1 }}>Leasehold Calculator</h1>
                 </div>
               </div>
@@ -333,7 +333,7 @@ export default function LeaseholdCalculatorPage() {
                       {[
                         { label: "Current value (with lease)", value: calc.valueWithLease, bar: 100, color: "#0f1b36" },
                         { label: `After extension (+90 yrs = ${Math.min(yearsLeft + 90, 999)} yrs)`, value: calc.valueAfterExt, bar: (calc.valueAfterExt / calc.freeholdValue) * 100, color: "#16a34a" },
-                        { label: "Freehold equivalent (999 yrs)", value: calc.freeholdValue, bar: 100, color: "#c9a84c" },
+                        { label: "Freehold equivalent (999 yrs)", value: calc.freeholdValue, bar: 100, color: "var(--gold-ink)" },
                       ].map(r => (
                         <div key={r.label}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>

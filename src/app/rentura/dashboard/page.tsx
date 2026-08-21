@@ -252,7 +252,7 @@ function RenturaTrialBanner({ userId }: { userId: string }) {
   const chargeDate = new Date(trialEnd).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
   return (
     <div style={{ background: "rgba(201,168,76,0.08)", borderBottom: "1px solid rgba(201,168,76,0.2)", padding: "10px 24px", display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
-      <span style={{ fontSize: 14, color: "#c9a84c" }}>
+      <span style={{ fontSize: 14, color: "var(--gold-ink)" }}>
         🎁 Free trial active — your first payment of <strong>£9.99</strong> will be taken on <strong>{chargeDate}</strong>.
       </span>
     </div>

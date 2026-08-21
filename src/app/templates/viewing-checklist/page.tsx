@@ -168,7 +168,7 @@ export default function ViewingChecklistTemplate() {
           <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
-              <p style={{ fontSize: 11, color: "#c9a84c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>🔍 Buyer / Investor Template</p>
+              <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>🔍 Buyer / Investor Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Property Viewing Checklist</h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{checked} of {total} items checked</p>
             </div>
@@ -286,7 +286,7 @@ export default function ViewingChecklistTemplate() {
               {SECTIONS.map((sec, si) => (
                 <div key={si} style={{ marginBottom: 20 }}>
                   <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.05em" }}>{sec.title}</p>
-                    <p style={{ fontSize: 10, color: "#c9a84c" }}>{sec.items.filter(i => f.checks[i]).length}/{sec.items.length}</p>
+                    <p style={{ fontSize: 10, color: "var(--gold-ink)" }}>{sec.items.filter(i => f.checks[i]).length}/{sec.items.length}</p>
                   </div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                     {sec.items.map((item, ii) => (

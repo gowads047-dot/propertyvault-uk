@@ -582,7 +582,7 @@ export default function DealAnalyserPage() {
 
   const expenseItems = [
     { label: "Mortgage",    value: calc.annualMortgage, color: "#0f1b36" },
-    { label: "Management",  value: calc.management,     color: "#c9a84c" },
+    { label: "Management",  value: calc.management,     color: "var(--gold-ink)" },
     { label: "Maintenance", value: calc.maintenance,    color: "#6b7280" },
     { label: "Insurance",   value: calc.insurance,      color: "#3b82f6" },
     { label: "Voids",       value: calc.voidCost,       color: "#ef4444" },
@@ -619,7 +619,7 @@ export default function DealAnalyserPage() {
                   <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
                 </div>
                 <div>
-                  <p style={{ fontSize: 11, fontWeight: 600, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em" }}>Flagship tool</p>
+                  <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Flagship tool</p>
                   <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: "white", lineHeight: 1 }}>Deal Analyser</h1>
                 </div>
               </div>
@@ -667,7 +667,7 @@ export default function DealAnalyserPage() {
                   <p style={{ fontSize: 12, color: "#92400e", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: "8px 12px", marginTop: 10, fontWeight: 500 }}>
                     ⚠️ {urlError}
                     {propertyPreview?.listingUrl && (
-                      <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: 4, color: "#c9a84c", fontWeight: 600, textDecoration: "none" }}>
+                      <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: 4, color: "var(--gold-ink)", fontWeight: 600, textDecoration: "none" }}>
                         Open listing →
                       </a>
                     )}
@@ -704,7 +704,7 @@ export default function DealAnalyserPage() {
                             </span>
                           )}
                         </div>
-                        <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#c9a84c", fontWeight: 600, textDecoration: "none" }}>
+                        <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 600, textDecoration: "none" }}>
                           View on {propertyPreview.portal} →
                         </a>
                       </div>
@@ -778,7 +778,7 @@ export default function DealAnalyserPage() {
                         href={`https://www.google.com/maps?q=${areaData.lat},${areaData.lng}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ fontSize: 11, color: "#c9a84c", fontWeight: 600, textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}
+                        style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 600, textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}
                       >
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
                         Map
@@ -809,7 +809,7 @@ export default function DealAnalyserPage() {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏠 Recent Sold Prices</span>
                           {areaData.sales.avgPrice > 0 && (
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>Avg: <strong style={{ color: "#c9a84c" }}>£{areaData.sales.avgPrice.toLocaleString()}</strong></span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>Avg: <strong style={{ color: "var(--gold-ink)" }}>£{areaData.sales.avgPrice.toLocaleString()}</strong></span>
                           )}
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
@@ -858,7 +858,7 @@ export default function DealAnalyserPage() {
                         </div>
                         {areaData.rental.yieldRangeLow && areaData.rental.yieldRangeHigh && (
                           <p style={{ fontSize: 10, color: "#64748b" }}>
-                            Estimated gross yield: <strong style={{ color: "#c9a84c" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> based on area sold prices
+                            Estimated gross yield: <strong style={{ color: "var(--gold-ink)" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> based on area sold prices
                           </p>
                         )}
                         <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
@@ -915,7 +915,7 @@ export default function DealAnalyserPage() {
                           <span className="block text-xs text-navy-500 mb-1">Guaranteed % of market rent: {guaranteedRentPct}%</span>
                           <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(+e.target.value)} style={{ width: "100%", accentColor: "#c9a84c" }} />
                         </label>
-                        <p style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>Guaranteed: <strong style={{ color: "#c9a84c" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
+                        <p style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
                       </div>
                     )}
                   </div>
@@ -985,7 +985,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" value={hmoUtilities} onChange={e => setHmoUtilities(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
-                    <p style={{ fontSize: 11, color: "#64748b" }}>Gross income: <strong style={{ color: "#c9a84c" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
+                    <p style={{ fontSize: 11, color: "#64748b" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
                   </div>
                 </div>
               )}
@@ -1042,7 +1042,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" value={saAvgStayNights} onChange={e => setSaAvgStayNights(+e.target.value)} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" value={saRunningCosts} onChange={e => setSaRunningCosts(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
-                    <p style={{ fontSize: 11, color: "#64748b" }}>Projected revenue: <strong style={{ color: "#c9a84c" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
+                    <p style={{ fontSize: 11, color: "#64748b" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
                   </div>
                 </div>
               )}
@@ -1254,7 +1254,7 @@ export default function DealAnalyserPage() {
                             : `⚠️ Self-managing earns ${fmt(-grCalc.saving)}/mo more if fully let. Guaranteed rent trades income for peace of mind.`}
                         </p>
                       </div>
-                      <a href="/guaranteed-rent" style={{ display: "block", marginTop: 12, textAlign: "center", padding: "10px", borderRadius: 10, background: "#0f1b36", color: "#c9a84c", fontWeight: 700, fontSize: 13, textDecoration: "none" }}>
+                      <a href="/guaranteed-rent" style={{ display: "block", marginTop: 12, textAlign: "center", padding: "10px", borderRadius: 10, background: "#0f1b36", color: "var(--gold-ink)", fontWeight: 700, fontSize: 13, textDecoration: "none" }}>
                         Get a Guaranteed Rent Quote from PropertyVault →
                       </a>
                     </div>

@@ -748,3 +748,44 @@ input::placeholder, textarea::placeholder {
 @media (min-width: 1180px) {
   .platform-grid { grid-template-columns: repeat(5, 1fr); }
 }
+
+/* ── Accessible gold text ──────────────────────────────────────────────────
+   The brand gold #c9a84c scores 7.47 against navy but only 2.29 against
+   white, where WCAG AA wants 4.5 for normal text. It was used as an inline
+   text colour in both places, so a single value cannot satisfy both.
+
+   --gold-ink resolves per context: dark enough to read on light backgrounds,
+   and swapped for the bright gold inside dark sections, where the dark value
+   would fail just as badly in the other direction (2.99 on navy).
+
+   Custom properties inherit, so any gold text nested in a dark section picks
+   the right value up automatically. Backgrounds, borders, icon fills and
+   large display type keep the literal brand gold — none of them are bound by
+   the 4.5 threshold. */
+:root {
+  --gold-ink: #7d631d;   /* 5.72 on white  */
+  --gold-ink-dark: #f4d35e; /* 11.3 on navy */
+}
+
+.hero-section,
+.gradient-navy,
+.section-dark-rich,
+.section-navy,
+.bg-navy-800,
+.bg-navy-900,
+[class*="gradient-navy"],
+[class*="bg-navy-8"],
+[class*="bg-navy-9"],
+[data-surface="dark"] {
+  --gold-ink: var(--gold-ink-dark);
+}
+
+[style*="#c9a84c"],
+.bg-gold-400,
+.bg-gold-500 {
+  --gold-ink: #0f1b36;
+}
+
+html.dark {
+  --gold-ink: var(--gold-ink-dark);
+}

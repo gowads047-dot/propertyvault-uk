@@ -59,7 +59,7 @@ export default function CourseCertificate() {
   if (!course) return (
     <div style={{ minHeight: "100vh", background: "#0c0f1a", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 16 }}>
       <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 16 }}>Course not found.</p>
-      <Link href="/academy/dashboard" style={{ color: "#c9a84c", fontSize: 14 }}>← Back to dashboard</Link>
+      <Link href="/academy/dashboard" style={{ color: "var(--gold-ink)", fontSize: 14 }}>← Back to dashboard</Link>
     </div>
   );
 
@@ -129,7 +129,7 @@ export default function CourseCertificate() {
 
           {/* Logo / Brand */}
           <div style={{ marginBottom: 28 }}>
-            <p style={{ fontSize: 11, letterSpacing: "0.25em", fontFamily: "var(--font-family-body, sans-serif)", color: "#c9a84c", fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>PropertyVault Academy</p>
+            <p style={{ fontSize: 11, letterSpacing: "0.25em", fontFamily: "var(--font-family-body, sans-serif)", color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>PropertyVault Academy</p>
             <div style={{ width: 48, height: 1, background: "rgba(201,168,76,0.4)", margin: "0 auto" }} />
           </div>
 
@@ -156,7 +156,7 @@ export default function CourseCertificate() {
           {/* Decorative divider */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "28px 0", justifyContent: "center" }}>
             <div style={{ flex: 1, height: 0.5, background: "rgba(201,168,76,0.3)" }} />
-            <span style={{ color: "#c9a84c", fontSize: 18 }}>✦</span>
+            <span style={{ color: "var(--gold-ink)", fontSize: 18 }}>✦</span>
             <div style={{ flex: 1, height: 0.5, background: "rgba(201,168,76,0.3)" }} />
           </div>
 
@@ -167,7 +167,7 @@ export default function CourseCertificate() {
               <p style={{ fontSize: 14, fontWeight: 600, color: "#1a1a2e", fontFamily: "Georgia, serif" }}>{completionDate}</p>
             </div>
             <div style={{ textAlign: "center" }}>
-              <p style={{ fontSize: 28, color: "#c9a84c", marginBottom: 2 }}>🏆</p>
+              <p style={{ fontSize: 28, color: "var(--gold-ink)", marginBottom: 2 }}>🏆</p>
             </div>
             <div style={{ textAlign: "right" }}>
               <p style={{ fontSize: 22, fontFamily: "'Brush Script MT', cursive, Georgia", color: "#1a1a2e", marginBottom: 2 }}>Nass</p>

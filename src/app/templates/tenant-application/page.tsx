@@ -89,7 +89,7 @@ export default function TenantApplicationTemplate() {
           </Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
-              <p style={{ fontSize: 11, color: "#c9a84c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>👤 Landlord Template</p>
+              <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>👤 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Tenant Application Form</h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Fill in the form · Preview the document · Print to PDF</p>
             </div>

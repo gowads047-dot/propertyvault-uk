@@ -691,7 +691,7 @@ export default function FloatingChat() {
       {/* FAB */}
       {!open && (
         <button onClick={() => setOpen(true)}
-          style={{ position: "fixed", bottom: 28, right: 28, zIndex: 999, width: 52, height: 52, borderRadius: "50%", background: "#0f1728", color: "#c9a84c", border: "2px solid rgba(201,168,76,0.4)", fontSize: 19, fontWeight: 900, cursor: "pointer", boxShadow: "0 4px 20px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}
+          style={{ position: "fixed", bottom: 28, right: 28, zIndex: 999, width: 52, height: 52, borderRadius: "50%", background: "#0f1728", color: "var(--gold-ink)", border: "2px solid rgba(201,168,76,0.4)", fontSize: 19, fontWeight: 900, cursor: "pointer", boxShadow: "0 4px 20px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}
           title="Rentura AI">R
         </button>
       )}

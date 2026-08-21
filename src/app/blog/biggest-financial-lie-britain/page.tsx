@@ -188,7 +188,7 @@ export default function BiggestLieArticle() {
 
             <div className="not-prose my-8 rounded-2xl overflow-hidden border border-gold-200" style={{ background: "linear-gradient(135deg, #faf8f0 0%, #fef9ec 100%)" }}>
               <div style={{ padding: "24px 28px" }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Free tool</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Free tool</p>
                 <p style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Does your deal still stack up at today&apos;s rates?</p>
                 <p style={{ fontSize: 14, color: "#64748b", marginBottom: 16, lineHeight: 1.6 }}>Run 8 metrics — gross yield, net yield, cash flow, stress test +2% — plus an AI buy/pass verdict. Free, no sign-up.</p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>

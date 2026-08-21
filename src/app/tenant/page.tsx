@@ -82,7 +82,7 @@ function TenantAuthInner() {
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
             <div style={{ width: 36, height: 36, background: S.accent, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ color: "#c9a84c", fontWeight: 900, fontSize: 16 }}>PV</span>
+              <span style={{ color: "var(--gold-ink)", fontWeight: 900, fontSize: 16 }}>PV</span>
             </div>
             <span style={{ fontWeight: 900, fontSize: 17, color: S.ink }}>Tenant Portal</span>
           </div>

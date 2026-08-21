@@ -290,7 +290,7 @@ export default function AreasPage() {
           <div className="flex flex-wrap gap-4 justify-center mb-8">
             {[
               { label: "High yield (7%+)", color: "#16a34a", bg: "#f0fdf4" },
-              { label: "Solid (5–7%)", color: "#c9a84c", bg: "#faf8f0" },
+              { label: "Solid (5–7%)", color: "var(--gold-ink)", bg: "#faf8f0" },
               { label: "Capital growth (<5%)", color: "#64748b", bg: "#f8fafc" },
             ].map(b => (
               <span key={b.label} className="flex items-center gap-2 text-xs font-semibold" style={{ color: b.color }}>

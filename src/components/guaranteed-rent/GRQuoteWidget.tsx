@@ -48,7 +48,7 @@ export function GRQuoteWidget() {
       <div style={{ background: "#0f1b36", padding: "20px 24px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#c9a84c", animation: "pulse 2s infinite" }} />
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Instant estimate</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Instant estimate</p>
         </div>
         <h3 style={{ fontSize: 20, fontWeight: 800, color: "white", marginTop: 4 }}>What would we pay you?</h3>
         <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 3 }}>Answer 2 questions — see your estimated guaranteed rent in seconds.</p>
@@ -73,7 +73,7 @@ export function GRQuoteWidget() {
                     color: city === c.id ? "white" : "#374151",
                     border: city === c.id ? "none" : "1.5px solid #e2e8f0",
                     transition: "all 0.15s" }}>
-                  {city === c.id && <span style={{ color: "#c9a84c", marginRight: 6 }}>✓</span>}
+                  {city === c.id && <span style={{ color: "var(--gold-ink)", marginRight: 6 }}>✓</span>}
                   {c.label}
                 </button>
               ))}
@@ -125,7 +125,7 @@ export function GRQuoteWidget() {
                 {bedrooms}-bedroom in {city.charAt(0).toUpperCase() + city.slice(1)}
               </p>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 8, margin: "12px 0" }}>
-                <span style={{ fontSize: 42, fontWeight: 900, color: "#c9a84c", letterSpacing: "-0.02em" }}>{fmt(grLow)}–{fmt(grHigh)}</span>
+                <span style={{ fontSize: 42, fontWeight: 900, color: "var(--gold-ink)", letterSpacing: "-0.02em" }}>{fmt(grLow)}–{fmt(grHigh)}</span>
               </div>
               <p style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>per month · guaranteed · every month</p>
 

@@ -136,7 +136,7 @@ export default function RentReceipt() {
                   <div style={{ width: 28, height: 28, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z" fill="white"/></svg>
                   </div>
-                  <p style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", margin: 0 }}>PropertyVault<span style={{ color: "#c9a84c" }}>.co.uk</span></p>
+                  <p style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", margin: 0 }}>PropertyVault<span style={{ color: "var(--gold-ink)" }}>.co.uk</span></p>
                 </div>
                 <div style={{ textAlign: "right" }}>
                   <p style={{ fontSize: 9, color: "#6b7280", margin: 0 }}>Receipt No. {receiptNumber}</p>
@@ -145,7 +145,7 @@ export default function RentReceipt() {
               </div>
               <div style={{ height: 3, background: "#c9a84c", marginBottom: 20 }} />
 
-              <p style={{ fontSize: 9, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>Official Rent Receipt</p>
+              <p style={{ fontSize: 9, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>Official Rent Receipt</p>
 
               {/* Amount box */}
               <div style={{ border: "2px solid #0f1b36", padding: "16px 20px", textAlign: "center", marginBottom: 20 }}>

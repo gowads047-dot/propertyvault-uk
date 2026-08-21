@@ -1422,17 +1422,17 @@ export default function CommercialLeasePage() {
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
           <Breadcrumbs items={[{ label: "Templates", href: "/templates" }, { label: "Commercial Lease" }]} />
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Commercial Templates · England & Wales</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Commercial Templates · England & Wales</span>
           </div>
           <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(30px, 4.5vw, 52px)", fontWeight: 800, color: "white", lineHeight: 1.05, marginBottom: 16, letterSpacing: "-0.02em" }}>
-            Commercial Lease<br /><em style={{ fontStyle: "normal", color: "#c9a84c" }}>Document Assembly</em>
+            Commercial Lease<br /><em style={{ fontStyle: "normal", color: "var(--gold-ink)" }}>Document Assembly</em>
           </h1>
           <p style={{ fontSize: 16, color: "rgba(255,255,255,0.5)", maxWidth: 560, lineHeight: 1.65, marginBottom: 24 }}>
             Generate solicitor-review-ready commercial lease documents — Heads of Terms, full lease, SDLT analysis, Land Registry guidance, risk reports, and negotiation matrix — from a structured questionnaire.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {["Heads of Terms", "Full FRI/IRI Lease", "SDLT Analysis", "Land Registry", "Risk Reports", "Negotiation Matrix"].map(t => (
-              <span key={t} style={{ fontSize: 11, fontWeight: 600, padding: "5px 12px", borderRadius: 20, background: "rgba(201,168,76,0.12)", color: "#c9a84c", border: "1px solid rgba(201,168,76,0.2)" }}>{t}</span>
+              <span key={t} style={{ fontSize: 11, fontWeight: 600, padding: "5px 12px", borderRadius: 20, background: "rgba(201,168,76,0.12)", color: "var(--gold-ink)", border: "1px solid rgba(201,168,76,0.2)" }}>{t}</span>
             ))}
           </div>
           <div style={{ marginTop: 20, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 10, padding: "10px 16px", maxWidth: 640 }}>
@@ -1483,7 +1483,7 @@ export default function CommercialLeasePage() {
           </div>
           <section style={{ background: "#f8f9fc", padding: "40px 0 80px" }}>
             <div className="container-max px-4" style={{ maxWidth: 720 }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Phase 2 — Questionnaire</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Phase 2 — Questionnaire</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: 22, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>
                 {SECTION_STEPS[step]}
               </h2>
@@ -1518,7 +1518,7 @@ export default function CommercialLeasePage() {
         <section style={{ background: "#f8f9fc", padding: "48px 0 80px" }}>
           <div className="container-max px-4" style={{ maxWidth: 800 }}>
             <button onClick={() => setPhase("questionnaire")} style={{ fontSize: 12, color: "#64748b", background: "none", border: "none", cursor: "pointer", marginBottom: 20 }}>← Back to questionnaire</button>
-            <p style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Phase 3 — Legal Risk Identification</p>
+            <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Phase 3 — Legal Risk Identification</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: 24, fontWeight: 800, color: "#0f1b36", marginBottom: 24 }}>Pre-Drafting Risk Assessment</h2>
 
             {risks.high.length > 0 && (
@@ -1621,7 +1621,7 @@ export default function CommercialLeasePage() {
                   </div>
                   <div style={{ height: 3, background: "linear-gradient(90deg, #c9a84c 0%, rgba(201,168,76,0.15) 100%)", margin: "0 0 18px" }} />
                   <div>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 5px" }}>
+                    <p style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 5px" }}>
                       {f.leaseType}{f.propertyAddress ? ` · ${f.propertyAddress}` : ""}
                     </p>
                     <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", margin: 0, fontFamily: "Georgia, serif", letterSpacing: "-0.01em" }}>

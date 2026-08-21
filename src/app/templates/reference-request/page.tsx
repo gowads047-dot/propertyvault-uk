@@ -159,7 +159,7 @@ export default function ReferenceRequest() {
                       "Whether you would re-employ this person if the opportunity arose",
                     ].map((q, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, marginBottom: 6 }}>
-                        <span style={{ color: "#c9a84c", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
+                        <span style={{ color: "var(--gold-ink)", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
                         <span>{q}</span>
                       </div>
                     ))}
@@ -180,7 +180,7 @@ export default function ReferenceRequest() {
                       "Whether you would rent to this person again",
                     ].map((q, i) => (
                       <div key={i} style={{ display: "flex", gap: 8, marginBottom: 6 }}>
-                        <span style={{ color: "#c9a84c", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
+                        <span style={{ color: "var(--gold-ink)", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
                         <span>{q}</span>
                       </div>
                     ))}

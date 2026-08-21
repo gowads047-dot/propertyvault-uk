@@ -69,7 +69,7 @@ function NewsletterBlock() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
           <span style={{ fontSize: 20 }}>✉️</span>
-          <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em" }}>Free weekly insights</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Free weekly insights</span>
         </div>
         <h3 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 8, lineHeight: 1.2 }}>
           Get the best property articles<br />straight to your inbox
@@ -78,7 +78,7 @@ function NewsletterBlock() {
           No spam. One email per week. Unsubscribe anytime.
         </p>
         {sent ? (
-          <div style={{ background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 12, padding: "14px 20px", color: "#c9a84c", fontSize: 14, fontWeight: 600 }}>
+          <div style={{ background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 12, padding: "14px 20px", color: "var(--gold-ink)", fontSize: 14, fontWeight: 600 }}>
             ✓ Thanks! We&apos;ll be in touch shortly.
           </div>
         ) : (
@@ -168,7 +168,7 @@ function FeaturedCard({ article, onCategoryClick }: { article: Article; onCatego
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: 560, marginBottom: 20 }}>
               {article.excerpt}
             </p>
-            <span style={{ fontSize: 13, fontWeight: 700, color: "#c9a84c", display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)", display: "inline-flex", alignItems: "center", gap: 6 }}>
               Read article
               <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
             </span>
@@ -241,7 +241,7 @@ function ArticleCard({ post, onCategoryClick }: { post: Article; onCategoryClick
 function ToolsCTABanner() {
   return (
     <div style={{ background: "#f8faff", border: "1.5px solid #e2e8f0", borderRadius: 20, padding: "28px 28px", margin: "16px 0 32px" }}>
-      <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Free tools</p>
+      <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Free tools</p>
       <h3 style={{ fontSize: 17, fontWeight: 800, color: "#0f1b36", marginBottom: 6, lineHeight: 1.3 }}>Put the numbers behind the strategy</h3>
       <p style={{ fontSize: 13, color: "#64748b", marginBottom: 18, lineHeight: 1.55 }}>Every article links to a free calculator. Run the numbers on your next deal.</p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -412,7 +412,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
       <div style={{ marginTop: 56, background: "linear-gradient(135deg, #0f1b36 0%, #1a2f5e 100%)", borderRadius: 24, padding: "40px 32px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
         <div style={{ position: "relative", zIndex: 1 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Deal Sourcing Academy</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Deal Sourcing Academy</p>
           <h3 style={{ fontSize: 24, fontWeight: 800, color: "white", marginBottom: 10, lineHeight: 1.2 }}>
             Ready to go beyond reading?
           </h3>

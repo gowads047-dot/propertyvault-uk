@@ -333,7 +333,7 @@ function ContactCard({ c, onEdit, onDelete, deleting }: { c: Contact; onEdit: (c
     <div className="contact-card"
       style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "16px 18px", transition: "background 0.15s", position: "relative" }}>
       {c.preferred && (
-        <span style={{ position: "absolute", top: 12, right: 14, fontSize: 11, color: "#c9a84c", fontWeight: 700 }}>⭐</span>
+        <span style={{ position: "absolute", top: 12, right: 14, fontSize: 11, color: "var(--gold-ink)", fontWeight: 700 }}>⭐</span>
       )}
 
       {/* Name + specialty */}

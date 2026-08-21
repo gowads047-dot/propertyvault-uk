@@ -90,7 +90,7 @@ export default function MakanPage() {
           {/* Logo */}
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-[#c9a84c]/30 to-blue-500/20 border border-[#c9a84c]/30 mb-4">
-              <span className="text-4xl font-black" style={{ fontFamily: "serif", color: "#c9a84c" }}>م</span>
+              <span className="text-4xl font-black" style={{ fontFamily: "serif", color: "var(--gold-ink)" }}>م</span>
             </div>
             <div className="flex items-baseline justify-center gap-3">
               <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: "serif" }}>مكان</h1>

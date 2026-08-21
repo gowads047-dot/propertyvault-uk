@@ -192,7 +192,7 @@ export default function HmoManagementLog() {
             <div id="print-doc" className="rounded-2xl border border-navy-100 p-8" style={{ background: "white", color: "#1a1a1a", fontFamily: "system-ui, sans-serif" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, paddingBottom: 16, borderBottom: "2px solid #0f1b36" }}>
                 <div>
-                  <p style={{ fontSize: 10, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>HMO Management Log</p>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>HMO Management Log</p>
                   <h1 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", margin: 0 }}>{propertyAddress || "Property Address"}</h1>
                   {licenceNumber && <p style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>Licence: {licenceNumber}{licenceExpiry ? ` (expires ${fmt(licenceExpiry)})` : ""}</p>}
                 </div>
@@ -204,7 +204,7 @@ export default function HmoManagementLog() {
 
               {/* Rooms */}
               <div style={{ marginBottom: 20 }}>
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Rooms & Occupancy</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Rooms & Occupancy</p>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11 }}>
                   <thead>
                     <tr style={{ background: "#0f1b36", color: "white" }}>
@@ -233,7 +233,7 @@ export default function HmoManagementLog() {
               {/* Compliance */}
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compliance Checklist</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compliance Checklist</p>
                   <span style={{ fontSize: 11, fontWeight: 700, background: passCount === COMPLIANCE_ITEMS.length ? "#dcfce7" : "#fef9c3", color: passCount === COMPLIANCE_ITEMS.length ? "#16a34a" : "#ca8a04", padding: "2px 10px", borderRadius: 10 }}>{passCount}/{COMPLIANCE_ITEMS.length} ✓</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
@@ -252,14 +252,14 @@ export default function HmoManagementLog() {
               {/* Maintenance */}
               {maintenanceItems.trim() && (
                 <div style={{ marginBottom: 16 }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Maintenance Actions</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Maintenance Actions</p>
                   <div style={{ background: "#f5f2ec", borderRadius: 8, padding: "8px 12px", fontSize: 11, color: "#374151", whiteSpace: "pre-line" }}>{maintenanceItems}</div>
                 </div>
               )}
 
               {overallNotes && (
                 <div style={{ marginBottom: 16 }}>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Overall Notes</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Overall Notes</p>
                   <p style={{ fontSize: 11, color: "#374151" }}>{overallNotes}</p>
                 </div>
               )}

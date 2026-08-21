@@ -56,7 +56,7 @@ export default function CheckOutReportTemplate() {
           <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
-              <p style={{ fontSize: 11, color: "#c9a84c", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>📋 Landlord Template</p>
+              <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>📋 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Check-Out Inspection Report</h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>End-of-tenancy condition report with deposit deduction schedule</p>
             </div>
@@ -142,7 +142,7 @@ export default function CheckOutReportTemplate() {
                 </div>
               ))}
               <button onClick={() => setDeductions(p => [...p, { desc: "", amount: 0 }])}
-                style={{ fontSize: 13, color: "#c9a84c", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>+ Add another deduction</button>
+                style={{ fontSize: 13, color: "var(--gold-ink)", background: "none", border: "none", cursor: "pointer", fontWeight: 600 }}>+ Add another deduction</button>
 
               {depositHeld > 0 && (
                 <div style={{ marginTop: 16, padding: "14px", background: "#f8f9fc", borderRadius: 12 }}>

@@ -194,7 +194,7 @@ function TenantPortalInner() {
       {/* NAV */}
       <div style={{ background: "#111827", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0 20px", height: 52, display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ color: "#c9a84c", fontWeight: 900, fontSize: 13 }}>PropertyVault</span>
+          <span style={{ color: "var(--gold-ink)", fontWeight: 900, fontSize: 13 }}>PropertyVault</span>
           <span style={{ color: "rgba(255,255,255,0.12)", fontSize: 16 }}>·</span>
           <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortAddr}</span>
         </div>

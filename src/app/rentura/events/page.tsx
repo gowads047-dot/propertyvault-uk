@@ -41,17 +41,17 @@ const EVENT_META: Record<string, { icon: string; color: string; label: string }>
   new_tenant:            { icon: "👤", color: "#3b82f6", label: "New tenant" },
   tenant_out:            { icon: "🚪", color: "#8b5cf6", label: "Tenant out" },
   tenant_leaving:        { icon: "📦", color: "#8b5cf6", label: "Tenant leaving" },
-  compliance:            { icon: "📋", color: "#c9a84c", label: "Compliance" },
+  compliance:            { icon: "📋", color: "var(--gold-ink)", label: "Compliance" },
   deposit_protection:    { icon: "🔒", color: "#0891b2", label: "Deposit protected" },
   mortgage:              { icon: "🏦", color: "#3b82f6", label: "Mortgage" },
   mortgage_renewal:      { icon: "🏦", color: "#b8962e", label: "Mortgage renewal" },
   insurance_renewal:     { icon: "🛡", color: "#0891b2", label: "Insurance" },
-  rent_review:           { icon: "📈", color: "#c9a84c", label: "Rent review" },
+  rent_review:           { icon: "📈", color: "var(--gold-ink)", label: "Rent review" },
   arrears:               { icon: "⚠",  color: "#ef4444", label: "Arrears" },
   void_period:           { icon: "⬜", color: "#6b7280", label: "Void period" },
   note:                  { icon: "📝", color: INK2,      label: "Note" },
-  property_created:      { icon: "🏠", color: "#c9a84c", label: "Property added" },
-  new_property:          { icon: "🏠", color: "#c9a84c", label: "Property added" },
+  property_created:      { icon: "🏠", color: "var(--gold-ink)", label: "Property added" },
+  new_property:          { icon: "🏠", color: "var(--gold-ink)", label: "Property added" },
 };
 
 const EVENT_TYPES: EventType[] = [

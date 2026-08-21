@@ -192,7 +192,7 @@ export default function RentersRightsNotice() {
               {/* Header */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28, paddingBottom: 20, borderBottom: "2px solid #0f1b36" }}>
                 <div>
-                  <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Official Notice</p>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Official Notice</p>
                   <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, margin: 0, fontFamily: "Georgia, serif" }}>
                     Tenant Rights Notice
                   </h1>

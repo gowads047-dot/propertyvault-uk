@@ -42,7 +42,7 @@ export default function RenturaPage() {
       <nav style={{ background: "rgba(245,243,239,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(15,27,45,0.08)", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64, position: "sticky", top: 0, zIndex: 50 }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
           <div style={{ width: 32, height: 32, background: "#0f1b2d", borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ color: "#c9a84c", fontWeight: 900, fontSize: 14 }}>R</span>
+            <span style={{ color: "var(--gold-ink)", fontWeight: 900, fontSize: 14 }}>R</span>
           </div>
           <span style={{ fontWeight: 900, fontSize: 16, color: "#0f1b2d", letterSpacing: "-0.02em" }}>Rentura</span>
         </Link>
@@ -56,7 +56,7 @@ export default function RenturaPage() {
       <section style={{ maxWidth: 900, margin: "0 auto", padding: "88px 24px 72px", textAlign: "center" }}>
         <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: 20, padding: "5px 16px", marginBottom: 28 }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase" }}>Now open — Early Access</span>
+          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Now open — Early Access</span>
         </div>
         <h1 style={{ fontSize: "clamp(34px,6vw,62px)", fontWeight: 900, lineHeight: 1.07, letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", marginBottom: 20, color: "#0f1b2d" }}>
           The operating system<br />for UK landlords.
@@ -80,7 +80,7 @@ export default function RenturaPage() {
         <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", justifyContent: "center", gap: 0, flexWrap: "wrap" }}>
           {[["8", "Core modules"], ["∞", "Properties"], ["1", "Dashboard"], ["£9.99", "Per month"]].map(([v, l], i, arr) => (
             <div key={l} style={{ textAlign: "center", padding: "0 40px", borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
-              <div style={{ fontSize: 30, fontWeight: 900, color: "#c9a84c", fontFamily: "var(--font-family-heading)" }}>{v}</div>
+              <div style={{ fontSize: 30, fontWeight: 900, color: "var(--gold-ink)", fontFamily: "var(--font-family-heading)" }}>{v}</div>
               <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{l}</div>
             </div>
           ))}
@@ -113,14 +113,14 @@ export default function RenturaPage() {
       {/* TESTIMONIALS */}
       <section style={{ background: "white", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>What landlords say</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>What landlords say</p>
           <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>Real landlords. Real results.</h2>
           <p style={{ fontSize: 14, color: "rgba(15,27,45,0.5)", textAlign: "center", marginBottom: 44 }}>Not cherry-picked highlights. What they told us when we asked.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 20 }}>
             {REVIEWS.map((r) => (
               <div key={r.name} style={{ background: "#f5f3ef", borderRadius: 18, padding: "26px 24px", border: "1px solid rgba(15,27,45,0.06)", position: "relative" }}>
                 <div style={{ display: "flex", gap: 2, marginBottom: 14 }}>
-                  {[...Array(5)].map((_, i) => <span key={i} style={{ color: "#c9a84c", fontSize: 14 }}>★</span>)}
+                  {[...Array(5)].map((_, i) => <span key={i} style={{ color: "var(--gold-ink)", fontSize: 14 }}>★</span>)}
                 </div>
                 <p style={{ fontSize: 14, color: "rgba(15,27,45,0.75)", lineHeight: 1.75, marginBottom: 20, fontStyle: "italic" }}>&ldquo;{r.text}&rdquo;</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -139,7 +139,7 @@ export default function RenturaPage() {
       {/* COMPARISON TABLE */}
       <section style={{ background: "#f5f3ef", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>How we compare</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>How we compare</p>
           <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 44, fontFamily: "var(--font-family-heading)" }}>Rentura vs the alternatives</h2>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
@@ -148,7 +148,7 @@ export default function RenturaPage() {
                   <th style={{ padding: "14px 16px", textAlign: "left", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Feature</th>
                   <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Spreadsheets</th>
                   <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Other apps</th>
-                  <th style={{ padding: "14px 16px", textAlign: "center", color: "#c9a84c", fontWeight: 800, fontSize: 12 }}>Rentura</th>
+                  <th style={{ padding: "14px 16px", textAlign: "center", color: "var(--gold-ink)", fontWeight: 800, fontSize: 12 }}>Rentura</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,7 +176,7 @@ export default function RenturaPage() {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
             <div>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Flagship Feature</p>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Flagship Feature</p>
               <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, letterSpacing: "-0.02em", fontFamily: "var(--font-family-heading)", lineHeight: 1.15, marginBottom: 16 }}>
                 The Property Passport
               </h2>
@@ -212,7 +212,7 @@ export default function RenturaPage() {
       {/* FEATURES GRID */}
       <section style={{ padding: "72px 24px", background: "#f5f3ef" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>Everything included</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>Everything included</p>
           <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>One platform. Every tool you need.</h2>
           <p style={{ fontSize: 14, color: "rgba(15,27,45,0.5)", textAlign: "center", marginBottom: 48 }}>No add-ons. No tiers. Everything in the list below is included from day one.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
@@ -230,7 +230,7 @@ export default function RenturaPage() {
       {/* PRICING */}
       <section style={{ background: "#0f1b2d", padding: "72px 24px" }}>
         <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Simple pricing</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Simple pricing</p>
           <h2 style={{ fontSize: "clamp(26px,4vw,42px)", fontWeight: 900, color: "white", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>One price. Everything included.</h2>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 44 }}>No property limits. No feature tiers. No surprises.</p>
 
@@ -254,7 +254,7 @@ export default function RenturaPage() {
             <Link href="/rentura/join" style={{ display: "block", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, textDecoration: "none", textAlign: "center" }}>
               Start free 30-day trial →
             </Link>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 14 }}>Already a member? <Link href="/rentura/auth" style={{ color: "#c9a84c", textDecoration: "none" }}>Log in here →</Link></p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 14 }}>Already a member? <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", textDecoration: "none" }}>Log in here →</Link></p>
           </div>
         </div>
       </section>
@@ -276,7 +276,7 @@ export default function RenturaPage() {
           {/* Eyebrow */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 20, padding: "6px 16px", marginBottom: 32 }}>
             <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c" }} />
-            <span style={{ fontSize: 11, fontWeight: 700, color: "#c9a84c", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why we built Rentura</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Why we built Rentura</span>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 56, alignItems: "start" }}>
