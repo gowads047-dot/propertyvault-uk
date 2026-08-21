@@ -105,10 +105,10 @@ export default function FaqPage() {
           <div className="mt-12 bg-navy-800 rounded-2xl p-8 text-center">
             <p className="text-gold-400 text-xs font-bold uppercase tracking-wider mb-3">Still have questions?</p>
             <h3 className="text-xl font-bold text-white mb-3">Get a direct answer</h3>
-            <p className="text-white/60 text-sm mb-5">Message Nass directly — typical response within 2 hours.</p>
+            <p className="text-white/60 text-sm mb-5">WhatsApp Nass directly — typical response within 2 hours.</p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a href="/contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
-                Message us →
+              <a href="https://wa.me/447415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
+                WhatsApp now →
               </a>
               <Link href="/contact" className="btn-outline !border-white/20 !text-white hover:!bg-white/10">
                 Contact form

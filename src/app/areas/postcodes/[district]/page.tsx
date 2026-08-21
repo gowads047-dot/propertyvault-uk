@@ -228,12 +228,12 @@ export default async function PostcodePage({ params }: Props) {
                   Book free valuation
                 </Link>
                 <a
-                  href={`/contact)}%20${encodeURIComponent(d.city)}%20and%20I%27m%20interested%20in%20guaranteed%20rent.`}
+                  href={`https://wa.me/447415721628?text=Hi%2C%20I%20have%20a%20property%20in%20${encodeURIComponent(d.code)}%20${encodeURIComponent(d.city)}%20and%20I%27m%20interested%20in%20guaranteed%20rent.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-outline !border-white/20 !text-white hover:!bg-white/5"
                 >
-                  Message us
+                  WhatsApp
                 </a>
               </div>
             </div>

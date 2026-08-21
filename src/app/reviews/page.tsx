@@ -107,8 +107,8 @@ export default function ReviewsPage() {
               Message us and we will arrange an introduction before you commit to anything.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a href="/contact" target="_blank" rel="noopener noreferrer" className="btn-gold">
-                Message Nass →
+              <a href="https://wa.me/447415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">
+                WhatsApp Nass →
               </a>
               <Link href="/guaranteed-rent" className="btn-outline">
                 How guaranteed rent works

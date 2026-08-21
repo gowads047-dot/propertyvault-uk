@@ -273,7 +273,7 @@ export default function ListPropertyPage() {
                 <label className="block text-sm font-semibold text-navy-700 mb-2">How should tenants contact you?</label>
                 <div className="flex flex-wrap gap-3">
                   <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_email" defaultChecked className="rounded border-navy-300 text-gold-500" /> Email</label>
-                  <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_whatsapp" className="rounded border-navy-300 text-gold-500" />Message us</label>
+                  <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_whatsapp" className="rounded border-navy-300 text-gold-500" /> WhatsApp</label>
                   <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_phone" className="rounded border-navy-300 text-gold-500" /> Phone Call</label>
                 </div>
               </div>

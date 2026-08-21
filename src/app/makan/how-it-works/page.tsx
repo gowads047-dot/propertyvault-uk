@@ -188,7 +188,7 @@ export default function HowItWorksPage() {
                   { label: "Listing fee for landlords", m: "Free forever", b: "Paid plans", r: "Agent only" },
                   { label: "Tenant fees", m: "Free", b: "Free", r: "N/A" },
                   { label: "Direct landlord contact", m: "✓ Yes", b: "Partial", r: "✗ No" },
-                  { label: "Direct contact", m: "✓ Yes", b: "Partial", r: "✗ No" },
+                  { label: "WhatsApp contact", m: "✓ Yes", b: "Partial", r: "✗ No" },
                   { label: "International (10 countries)", m: "✓ Yes", b: "GCC only", r: "UK only" },
                   { label: "Arabic + French language", m: "✓ Built-in", b: "Arabic only", r: "✗ No" },
                   { label: "Listing quality review", m: "✓ All listings", b: "Partial", r: "✗ No" },

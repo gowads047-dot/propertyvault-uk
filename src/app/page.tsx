@@ -113,7 +113,7 @@ export default function Home() {
 
               <div className="hero-line" style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
                 {[
-                  { icon: "⚡", text: "Reply in 2hrs" },
+                  { icon: "⚡", text: "WhatsApp reply in 2hrs" },
                 ].map(t => (
                   <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <span style={{ fontSize: 13 }}>{t.icon}</span>
@@ -199,7 +199,7 @@ export default function Home() {
         <div className="container-max px-4" style={{ padding: "16px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "24px 40px" }}>
             {[
-              { icon: "⚡", text: "Reply within 2 hrs" },
+              { icon: "⚡", text: "WhatsApp reply within 2 hrs" },
               { icon: "🔒", text: "No obligation — free estimate" },
               { icon: "✅", text: "Rent paid even when empty" },
             ].map(t => (
@@ -549,7 +549,7 @@ export default function Home() {
                 tag: "UK · Egypt · Morocco",
                 title: "Makan property listings",
                 desc: "Find and list property across the UK and Middle East — direct landlord contact, no agent fees, forever free.",
-                items: ["No agent fees", "Direct contact", "Multi-country search"],
+                items: ["No agent fees", "WhatsApp direct contact", "Multi-country search"],
               },
             ].map(card => (
               <Link key={card.href} href={card.href} style={{ textDecoration: "none", display: "flex", flexDirection: "column", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, transition: "border-color 0.2s, box-shadow 0.2s" }}
@@ -678,7 +678,7 @@ export default function Home() {
                 {/* Background pattern */}
                 <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
                 {/* Play button */}
-                <a href="/contact" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/447415721628?text=Hi%2C%20I%27d%20like%20to%20learn%20more%20about%20guaranteed%20rent." target="_blank" rel="noopener noreferrer"
                   style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textDecoration: "none" }}>
                   <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 32px rgba(201,168,76,0.4)" }}>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
