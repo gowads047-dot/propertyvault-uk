@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import Anthropic from "@anthropic-ai/sdk";
+import { REPLY_TO } from "@/lib/site";
 
 const BASE_SYSTEM = `You are Rentura — a warm, concise AI assistant for UK residential tenants. You help tenants communicate with their landlord and report maintenance issues through natural conversation.
 
@@ -175,6 +176,7 @@ export async function POST(req: Request) {
             headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
             body: JSON.stringify({
               from: "PropertyVault UK <noreply@propertyvaultuk.co.uk>",
+              replyTo: REPLY_TO,
               to: "gowads047@gmail.com",
               subject: `${isUrgent ? "🚨 URGENT" : "🔧 New issue"}: "${d.title}" — ${shortAddr}`,
               html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a2942;">

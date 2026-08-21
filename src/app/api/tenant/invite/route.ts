@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
+import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
   const supabase = createClient(
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
       headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "PropertyVault UK <noreply@propertyvaultuk.co.uk>",
+        replyTo: REPLY_TO,
         to: tenantEmail,
         subject: `${firstName}, your tenant portal is ready — ${shortAddress}`,
         html,

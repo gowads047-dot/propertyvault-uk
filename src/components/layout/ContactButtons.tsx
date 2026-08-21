@@ -53,7 +53,7 @@ export function ContactButtons() {
         aria-label="Send us an enquiry"
         className="group flex items-center gap-2"
       >
-        <span className="hidden sm:block bg-white text-gold-700 text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-gold-200 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="hidden sm:block bg-white text-gold-800 text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-gold-200 opacity-0 group-hover:opacity-100 transition-opacity">
           Send an enquiry
         </span>
         <span className="w-10 h-10 sm:w-14 sm:h-14 bg-gold-500 hover:bg-gold-600 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all text-white">

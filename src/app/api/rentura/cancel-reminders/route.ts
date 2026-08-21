@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
   // Verify cron secret
@@ -75,6 +76,7 @@ export async function POST(req: Request) {
       headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "Rentura <noreply@propertyvaultuk.co.uk>",
+        replyTo: REPLY_TO,
         to: member.email,
         subject: `⚠️ Your Rentura access expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"} — download your data`,
         html: emailHtml,

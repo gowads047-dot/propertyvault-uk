@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { REPLY_TO } from "@/lib/site";
 
 // Called by a cron job or manually — sends compliance expiry alerts via email
 // Set up a Vercel cron in vercel.json: { "crons": [{ "path": "/api/notifications/compliance", "schedule": "0 8 * * *" }] }
@@ -53,6 +54,7 @@ export async function GET(req: Request) {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },
         body: JSON.stringify({
           from: "Rentura <alerts@propertyvaultuk.co.uk>",
+          replyTo: REPLY_TO,
           to: alert.email,
           subject: `Action required: ${alert.items.length} compliance alert${alert.items.length > 1 ? "s" : ""}`,
           html: `

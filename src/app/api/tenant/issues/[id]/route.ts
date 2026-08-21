@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { REPLY_TO } from "@/lib/site";
 
 const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
@@ -86,6 +87,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
           headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
           body: JSON.stringify({
             from: "Rentura <noreply@propertyvaultuk.co.uk>",
+            replyTo: REPLY_TO,
             to: toEmail,
             subject: `💬 ${name} replied on "${issue.title}"`,
             html: `<div style="font-family:sans-serif;max-width:520px;"><div style="background:#0f1b2d;padding:18px 24px;border-radius:10px 10px 0 0;"><span style="color:#c9a84c;font-weight:900;">Rentura</span></div><div style="background:#f5f3ef;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e8e4dd;"><p style="font-size:14px;font-weight:700;margin:0 0 10px;">${name} replied on: ${issue.title}</p><p style="font-size:13px;background:white;padding:12px;border-radius:8px;border:1px solid #e8e4dd;color:rgba(15,27,45,0.7);">${message}</p><a href="${url}" style="display:inline-block;margin-top:14px;background:#0f1b2d;color:white;padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;">View thread →</a></div></div>`,
@@ -100,6 +102,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify({
           from: "PropertyVault UK <noreply@propertyvaultuk.co.uk>",
+          replyTo: REPLY_TO,
           to: issue.tenant_email,
           subject: `Your landlord replied on "${issue.title}"`,
           html: `<div style="font-family:sans-serif;max-width:520px;"><div style="background:#1a2942;padding:18px 24px;border-radius:10px 10px 0 0;"><span style="color:#c9a84c;font-weight:900;">PropertyVault UK</span></div><div style="background:#f8f7f5;padding:24px;border-radius:0 0 10px 10px;border:1px solid #e8e4dd;"><p style="font-size:14px;font-weight:700;margin:0 0 10px;">Update on: ${issue.title}${statusChange ? ` — status changed to ${statusChange.replace(/_/g, " ")}` : ""}</p><p style="font-size:13px;background:white;padding:12px;border-radius:8px;border:1px solid #e8e4dd;color:rgba(26,41,66,0.7);">${message}</p><a href="${tenantUrl}" style="display:inline-block;margin-top:14px;background:#1a2942;color:white;padding:11px 20px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px;">View full thread →</a></div></div>`,

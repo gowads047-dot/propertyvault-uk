@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { track, events } from "@/lib/analytics";
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
@@ -13,11 +14,15 @@ export function NewsletterPopup() {
   useEffect(() => {
     const dismissed = localStorage.getItem("newsletter_dismissed");
     if (dismissed) return;
-    const timer = setTimeout(() => setVisible(true), 60000);
+    const timer = setTimeout(() => {
+      setVisible(true);
+      track(events.signupShown, { placement: "popup" });
+    }, 60000);
     return () => clearTimeout(timer);
   }, []);
 
   function dismiss() {
+    track(events.signupDismissed, { placement: "popup" });
     setVisible(false);
     localStorage.setItem("newsletter_dismissed", "true");
   }
@@ -26,6 +31,7 @@ export function NewsletterPopup() {
     e.preventDefault();
     setStatus("loading");
     setErrorMsg("");
+    track(events.signupSubmitted, { placement: "popup" });
 
     try {
       const res = await fetch("/api/subscribe", {
@@ -38,14 +44,17 @@ export function NewsletterPopup() {
       if (!res.ok) {
         setErrorMsg(data.error ?? "Something went wrong. Please try again.");
         setStatus("error");
+        track(events.signupFailed, { placement: "popup", reason: "server" });
         return;
       }
 
       setStatus("success");
+      track(events.signupSucceeded, { placement: "popup" });
       localStorage.setItem("newsletter_dismissed", "true");
     } catch {
       setErrorMsg("Network error. Please try again.");
       setStatus("error");
+      track(events.signupFailed, { placement: "popup", reason: "network" });
     }
   }
 

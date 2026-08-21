@@ -164,7 +164,7 @@ export default function DealAnalysisEmail({ deal, fmt }: Props) {
           {/* Footer */}
           <Section style={{ padding: "24px 0 32px", textAlign: "center" as const }}>
             <Text style={{ color: MUTED, fontSize: 12, margin: "0 0 12px" }}>
-              Want guaranteed rent on a Midlands property? No voids, no management, fixed monthly income.
+              Want guaranteed rent on a Midlands property? A fixed monthly income for 3–5 years, paid whether or not the property is occupied, with day-to-day management handled.
             </Text>
             <Button href={`${BASE}/guaranteed-rent`}
               style={{ backgroundColor: "#ffffff", color: NAVY, border: `1px solid #e5e7eb`, fontSize: 13, fontWeight: 600, padding: "10px 20px", borderRadius: 8, textDecoration: "none" }}>

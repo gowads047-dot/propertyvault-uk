@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { REPLY_TO } from "@/lib/site";
 
 const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
         headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify({
           from: "Rentura <noreply@propertyvaultuk.co.uk>",
+          replyTo: REPLY_TO,
           to: landlordEmail,
           subject: `🔧 New issue reported by ${invite.tenant_name || "your tenant"} — ${title}`,
           html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;"><div style="background:#0f1b2d;padding:20px 28px;border-radius:12px 12px 0 0;"><span style="color:#c9a84c;font-weight:900;">Rentura</span></div><div style="background:#f5f3ef;padding:28px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;"><h3 style="margin:0 0 8px;font-size:18px;">New maintenance issue reported</h3><p style="font-size:14px;color:rgba(15,27,45,0.6);margin:0 0 16px;"><strong>${invite.tenant_name || "Your tenant"}</strong> reported: <strong>${title}</strong></p>${description ? `<p style="font-size:13px;color:rgba(15,27,45,0.5);background:white;padding:12px;border-radius:8px;border:1px solid #e8e4dd;">${description}</p>` : ""}<a href="${dashUrl}" style="display:inline-block;margin-top:16px;background:#0f1b2d;color:white;padding:12px 22px;border-radius:9px;text-decoration:none;font-weight:700;font-size:14px;">View & respond →</a></div></div>`,

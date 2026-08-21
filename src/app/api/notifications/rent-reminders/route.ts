@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { REPLY_TO } from "@/lib/site";
 
 // Daily cron — sends rent due reminders to landlords
 // vercel.json: { "crons": [{ "path": "/api/notifications/rent-reminders", "schedule": "0 9 * * *" }] }
@@ -68,6 +69,7 @@ export async function GET(req: Request) {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },
         body: JSON.stringify({
           from: "Rentura <alerts@propertyvaultuk.co.uk>",
+          replyTo: REPLY_TO,
           to: data.email,
           subject: `Rent due today — £${totalDue.toFixed(2)}`,
           html: `
