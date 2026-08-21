@@ -17,6 +17,12 @@ import {
 interface StarterPackEmailProps {
   name: string;
   userType?: string | null;
+  /**
+   * Shows an apology line above the greeting. Used only by the one-off
+   * backfill for people who signed up while the sending domain was
+   * unverified and never received their pack. Off for normal sends.
+   */
+  delayed?: boolean;
 }
 
 const BASE = "https://www.propertyvaultuk.co.uk";
@@ -52,7 +58,7 @@ const CHECKLIST = [
   { n: "7", text: "Create a pet policy — you must respond to pet requests in writing within 28 days." },
 ];
 
-export default function StarterPackEmail({ name }: StarterPackEmailProps) {
+export default function StarterPackEmail({ name, delayed = false }: StarterPackEmailProps) {
   const firstName = name.split(" ")[0];
 
   return (
@@ -79,6 +85,12 @@ export default function StarterPackEmail({ name }: StarterPackEmailProps) {
               <Heading as="h1" style={{ color: "#ffffff", fontFamily: "Arial, sans-serif", fontSize: 28, fontWeight: 800, lineHeight: 1.15, margin: "0 0 16px", letterSpacing: "-0.5px" }}>
                 Everything you need to make smarter property decisions.
               </Heading>
+              {delayed && (
+                <Text style={{ color: GOLD, fontSize: 14, lineHeight: 1.6, margin: "0 0 16px", padding: "12px 14px", backgroundColor: "rgba(201,168,76,0.10)", borderRadius: 8 }}>
+                  Apologies — you asked for this a while ago and a fault on our side
+                  meant it never sent. That is fixed. Here it is, in full.
+                </Text>
+              )}
               <Text style={{ color: "rgba(255,255,255,0.55)", fontSize: 15, lineHeight: 1.6, margin: "0 0 24px" }}>
                 Hi {firstName} — here is your starter pack. Bookmark it, share it with your accountant, come back to it whenever you need it. Everything below is free.
               </Text>

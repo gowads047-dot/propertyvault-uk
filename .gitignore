@@ -41,3 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# One-off backfill ledger — contains subscriber email addresses
+scripts/.backfill-sent.json
