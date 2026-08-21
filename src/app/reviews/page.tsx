@@ -2,89 +2,48 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
+const DESC =
+  "Ask to speak to a current PropertyVault UK landlord before you sign. We will put you in touch directly so you can hear about the service first-hand.";
+
 export const metadata: Metadata = {
-  title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
-  description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
-  keywords: "PropertyVault UK reviews, guaranteed rent reviews, PropertyVault testimonials, guaranteed rent landlord reviews UK",
+  title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+  description: DESC,
+  keywords: "PropertyVault UK references, guaranteed rent landlord reference, speak to a landlord",
   alternates: { canonical: "https://propertyvaultuk.co.uk/reviews/" },
   openGraph: {
-    title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
-    description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
+    title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+    description: DESC,
     type: "website",
     url: "https://propertyvaultuk.co.uk/reviews/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK Reviews" }],
+    images: [{ url: "https://propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "PropertyVault UK Reviews — Landlord Testimonials | Guaranteed Rent Birmingham & UK",
-    description: "Real reviews from landlords using PropertyVault UK guaranteed rent. See what landlords across Birmingham, Nottingham, Derby, and the UK say about our service.",
+    title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+    description: DESC,
   },
 };
 
-const reviews = [
-  {
-    name: "David T.",
-    location: "Birmingham, Erdington",
-    stars: 5,
-    text: "I had a property sitting empty for 6 weeks costing me money. PropertyVault took it on, sorted it out, and I've received my guaranteed payment every single month for 18 months now. Can't ask for more than that.",
-    type: "Landlord",
-    date: "March 2026",
-  },
-  {
-    name: "Priya S.",
-    location: "Nottingham",
-    stars: 5,
-    text: "Was sceptical at first — it all sounded too good. But Nass explained everything clearly, the contract was simple, and they've been completely professional. My only regret is not doing this sooner.",
-    type: "Portfolio Landlord",
-    date: "January 2026",
-  },
-  {
-    name: "Marcus J.",
-    location: "Derby",
-    stars: 5,
-    text: "Three properties on guaranteed rent now. The difference to my stress levels is unbelievable. No tenant issues, no chasing agents, no late-night maintenance calls. Just the payment hitting my account.",
-    type: "Portfolio Landlord",
-    date: "February 2026",
-  },
-  {
-    name: "Sarah K.",
-    location: "Leicester",
-    stars: 5,
-    text: "I live abroad so managing a UK property was always a nightmare. PropertyVault handles absolutely everything. I've not had a single problem in 14 months.",
-    type: "Overseas Landlord",
-    date: "November 2025",
-  },
-  {
-    name: "Ahmed R.",
-    location: "Coventry",
-    stars: 5,
-    text: "The calculators on the website are genuinely useful — I used the landlord tax calculator to understand Section 24, then decided the guaranteed rent route made more sense given my tax position. The numbers worked out exactly as projected.",
-    type: "Landlord",
-    date: "April 2026",
-  },
-  {
-    name: "Janet P.",
-    location: "Birmingham, Handsworth",
-    stars: 5,
-    text: "My previous letting agent caused more problems than they solved. PropertyVault has been the complete opposite — responsive, clear, and they actually manage the property. Not just collect a fee.",
-    type: "Landlord",
-    date: "December 2025",
-  },
-];
-
-const stats = [
-  { value: "£0", label: "Landlord voids in 2025" },
-  { value: "100%", label: "On-time payments" },
-  { value: "6", label: "Cities covered" },
-  { value: "5★", label: "Average landlord rating" },
-];
+const cities = ["Birmingham", "Nottingham", "Derby", "Leicester", "Coventry", "Sheffield"];
 
 const faqs = [
-  { q: "Can I read PropertyVault UK reviews online?", a: "Yes — you can find PropertyVault UK reviews on Google Business Profile, Trustpilot, and directly from existing landlords. We are happy to connect you with current landlords who use our service for a direct reference before you commit." },
-  { q: "How many landlords does PropertyVault UK work with?", a: "PropertyVault UK manages properties across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield on guaranteed rent agreements. Our portfolio has grown consistently since 2022." },
-  { q: "How long has PropertyVault UK been operating?", a: "PropertyVault UK has been managing guaranteed rent agreements since 2022. You can verify our company history at Companies House." },
-  { q: "Can I speak to an existing PropertyVault UK landlord?", a: "Yes — we actively encourage prospective landlords to speak with existing clients before committing. Contact us via WhatsApp or our contact form and we will connect you with a current landlord in your area." },
+  {
+    q: "Can I speak to an existing PropertyVault UK landlord?",
+    a: "Yes. We encourage prospective landlords to speak to a current client before committing. Contact us on WhatsApp or through the contact form and we will arrange an introduction so you can ask your questions directly, without us in the middle.",
+  },
+  {
+    q: "Why aren't there testimonials on this page?",
+    a: "We would rather you spoke to a real landlord than read a quote on our own website. We only publish feedback that a landlord has given us permission to attribute to them, so this page will stay as it is until we have that.",
+  },
+  {
+    q: "What should I ask a reference?",
+    a: "Whether payments arrived on the agreed date every month, how maintenance and tenant issues were handled, how quickly we responded when something went wrong, and what the property was like at the end of the term. Those four answers tell you most of what you need to know.",
+  },
+  {
+    q: "What can I check independently?",
+    a: "Ask us for our company registration number and look it up on the Companies House register, and ask to see the lease terms in full before you sign. Any guaranteed rent offer should be readable and specific about the payment date, the term, and what happens at the end of it.",
+  },
 ];
 
 export default function ReviewsPage() {
@@ -92,56 +51,60 @@ export default function ReviewsPage() {
     <>
       <section className="gradient-navy py-16 md:py-24">
         <div className="container-max px-4 text-center">
-          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">What landlords say</p>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">References</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>
-            PropertyVault UK Reviews
+            Speak to a landlord, not a testimonial
           </h1>
-          <p className="text-navy-200 max-w-lg mx-auto">Real feedback from landlords across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield.</p>
-          <div className="flex items-center justify-center gap-1 mt-5">
-            {"★★★★★".split("").map((s, i) => <span key={i} className="text-gold-400 text-2xl">{s}</span>)}
-            <span className="text-white/70 ml-2">5.0 · Landlord reviews</span>
-          </div>
+          <p className="text-navy-200 max-w-xl mx-auto">
+            We would rather introduce you to someone who already lets to us than show you a quote we wrote ourselves.
+            Ask for a reference and we will arrange it.
+          </p>
         </div>
       </section>
 
       <section className="bg-navy-50 section-padding">
-        <div className="container-max px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            {stats.map(s => (
-              <div key={s.label} className="bg-white rounded-2xl p-5 text-center shadow-sm">
-                <p className="text-3xl font-bold text-gold-500 mb-1">{s.value}</p>
-                <p className="text-xs text-navy-500 font-medium">{s.label}</p>
-              </div>
-            ))}
+        <div className="container-max px-4 max-w-3xl">
+          <div className="bg-white rounded-2xl border border-navy-100 p-8 md:p-10 mb-8">
+            <h2 className="text-2xl font-bold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>
+              How a reference works
+            </h2>
+            <ol className="space-y-4 text-navy-600 text-sm leading-relaxed">
+              <li className="flex gap-3">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gold-400/20 text-gold-600 font-bold text-xs flex items-center justify-center">1</span>
+                <span>Tell us which area your property is in and roughly what you are considering.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gold-400/20 text-gold-600 font-bold text-xs flex items-center justify-center">2</span>
+                <span>We ask a landlord we already work with whether they are happy to take a call, and pass on their details only if they agree.</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gold-400/20 text-gold-600 font-bold text-xs flex items-center justify-center">3</span>
+                <span>You speak to them directly. We are not on the call and we do not brief them on what to say.</span>
+              </li>
+            </ol>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-            {reviews.map((r, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-navy-100 p-6 hover:shadow-md transition-all">
-                <div className="flex gap-0.5 mb-3">
-                  {"★★★★★".split("").map((s, j) => <span key={j} className="text-gold-400 text-sm">{s}</span>)}
-                </div>
-                <blockquote className="text-navy-600 text-sm leading-relaxed mb-4">
-                  &ldquo;{r.text}&rdquo;
-                </blockquote>
-                <div className="flex items-center justify-between border-t border-navy-50 pt-3">
-                  <div>
-                    <p className="font-bold text-navy-800 text-sm">{r.name}</p>
-                    <p className="text-xs text-navy-400">{r.location} · {r.type}</p>
-                  </div>
-                  <p className="text-xs text-navy-300">{r.date}</p>
-                </div>
-              </div>
-            ))}
+          <div className="bg-white rounded-2xl border border-navy-100 p-8 md:p-10 mb-8">
+            <h2 className="text-xl font-bold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
+              Areas we cover
+            </h2>
+            <p className="text-navy-500 text-sm mb-4">Guaranteed rent enquiries are open in:</p>
+            <div className="flex flex-wrap gap-2">
+              {cities.map(c => (
+                <span key={c} className="px-3 py-1.5 bg-navy-50 border border-navy-100 rounded-full text-navy-700 text-sm font-medium">
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="bg-white rounded-2xl border border-navy-100 p-8 md:p-10 text-center">
-            <p className="text-gold-500 font-bold text-sm uppercase tracking-wider mb-3">Speak to a current landlord</p>
+            <p className="text-gold-500 font-bold text-sm uppercase tracking-wider mb-3">Ask for a reference</p>
             <h2 className="text-2xl font-bold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>
-              Want a direct reference before committing?
+              Want to hear it from a landlord first?
             </h2>
             <p className="text-navy-500 text-sm max-w-xl mx-auto mb-6">
-              We will connect you with an existing PropertyVault landlord in your area — ask them directly about their experience before signing anything.
+              Message us and we will arrange an introduction before you commit to anything.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
               <a href="https://wa.me/447415721628" target="_blank" rel="noopener noreferrer" className="btn-gold">

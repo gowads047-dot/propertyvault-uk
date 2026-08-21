@@ -56,9 +56,9 @@ export default function GuaranteedRentComparison() {
               <tbody className="divide-y divide-navy-100">
                 {[
                   { label: "Monthly income", gr: "Fixed — paid every month", tl: "Variable — depends on tenants" },
-                  { label: "Void periods", gr: "Zero — you're always paid", tl: "2-4 weeks/year typical" },
-                  { label: "Rent arrears risk", gr: "None — company pays you", tl: "You bear the risk" },
-                  { label: "Management", gr: "100% included", tl: "Self-manage or 8-12% agent fee" },
+                  { label: "Void periods", gr: "Paid whether or not it is let", tl: "2-4 weeks/year typical" },
+                  { label: "Rent arrears risk", gr: "Company pays you, not the tenant", tl: "You bear the risk" },
+                  { label: "Management", gr: "Included in the lease", tl: "Self-manage or 8-12% agent fee" },
                   { label: "Maintenance", gr: "Handled by company", tl: "Your responsibility" },
                   { label: "Tenant finding", gr: "Not needed", tl: "Agent fee or your time" },
                   { label: "Contract length", gr: "3-5 years", tl: "6-12 month ASTs" },
