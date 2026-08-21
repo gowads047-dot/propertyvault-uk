@@ -1,187 +1,40 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
+import { staticRoutes, isIndexable, rankOf } from "@/lib/routes";
+import { blogPosts, slugOf } from "@/lib/blog-posts";
+import { countries } from "@/lib/hetta-config";
+import { DISTRICTS } from "@/app/areas/postcodes/[district]/page";
 
-const BASE = SITE_URL;
-
+/**
+ * The sitemap, derived rather than maintained.
+ *
+ * This was a hand-written list of 148 URLs against a build that produces 211
+ * public pages — every postcode district page was missing, among others. It
+ * now enumerates static routes from the filesystem and dynamic ones from the
+ * same data their generateStaticParams uses, so the two cannot disagree.
+ *
+ * src/lib/routes.test.ts asserts the result against the routes the build
+ * actually emits.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  const staticPages: MetadataRoute.Sitemap = [
-    // Core
-    { url: `${BASE}/`,                          lastModified: now, changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${BASE}/about/`,                    lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/contact/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/blog/`,                     lastModified: now, changeFrequency: "weekly",  priority: 0.8 },
-    { url: `${BASE}/resources/`,                lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/glossary/`,                 lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/tools/`,                    lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+  const routes = new Set(staticRoutes().filter(isIndexable));
 
-    // Rentura marketing page only. The app beneath it stays out of the
-    // sitemap and blocked in robots.txt.
-    { url: `${BASE}/rentura/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+  // Dynamic segments, from the same sources their pages generate from.
+  for (const post of blogPosts) routes.add(`/blog/${slugOf(post)}`);
+  for (const c of countries) routes.add(`/makan/country/${c.code}`);
+  for (const d of DISTRICTS) routes.add(`/areas/postcodes/${d.code.toLowerCase()}`);
 
-    // Calculators
-    { url: `${BASE}/calculators/`,              lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/stamp-duty/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/rental-yield/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/brrr/`,         lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/section-24/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/hmo-yield/`,    lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/mortgage/`,     lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/affordability/`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/capital-gains-tax/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/deal-analyser/`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/bridging/`,     lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/flip-roi/`,     lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/remortgage/`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/landlord-costs/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/personal-vs-ltd/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/rent-vs-buy/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/calculators/moving-costs/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/calculators/epc-retrofit/`,     lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/calculators/landlord-tax/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/btl-mortgage/`,     lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/void-period/`,       lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/rent-increase/`,    lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/monthly-cashflow/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/calculators/leasehold/`,        lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-
-    // Templates
-    { url: `${BASE}/templates/`,                lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/templates/ast/`,            lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/templates/section-8-notice/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/templates/section-13-notice/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/templates/inventory-checklist/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/templates/inspection-record/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/templates/checkout-report/`,    lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/templates/landlord-compliance/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/templates/rent-receipt/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/reference-request/`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/repair-report/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/viewing-checklist/`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/due-diligence/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/offer-worksheet/`,    lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/hmo-management-log/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/pet-permission/`,     lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/templates/renters-rights-notice/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/templates/commercial-lease/`,   lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/templates/sale-prep-checklist/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-
-    // Blog posts
-    { url: `${BASE}/blog/brrr-strategy-explained/`,            lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/section-24-explained/`,               lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/hmo-investing-uk/`,                   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/stamp-duty-guide/`,                   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/renters-rights-act/`,                 lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/guaranteed-rent-explained/`,          lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/guaranteed-rent-vs-traditional-letting/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/uk-property-market-2026/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/biggest-financial-lie-britain/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/epc-c-deadline-landlords/`,           lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/first-time-buyer-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/personal-vs-limited-company/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/is-guaranteed-rent-a-scam/`,           lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/deal-sourcing-uk-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/best-areas-invest-birmingham-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/best-areas-invest-nottingham-2026/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/best-areas-invest-derby-2026/`,      lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/best-areas-invest-sheffield-2026/`,  lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/how-to-pass-btl-mortgage-stress-test/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/renters-reform-act-landlord-checklist/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/how-to-start-investing-in-uk-property/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/best-areas-invest-leicester-2026/`,      lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/leasehold-explained/`,                   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/rent-to-rent-explained/`,                lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/prs-ombudsman-landlord-registration/`,   lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/blog/dalil-shira-aqar-uk/`,                   lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/hquq-almustajir-uk/`,                    lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/istihtmar-aqari-uk-min-kharij/`,         lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/blog/tamwil-islami-uk/`,                      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-
-    // New pages
-    { url: `${BASE}/reviews/`,    lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/faq/`,        lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-
-    // Guaranteed rent
-    { url: `${BASE}/guaranteed-rent/`,            lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/birmingham/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/nottingham/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/derby/`,      lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/leicester/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/coventry/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/guaranteed-rent/sheffield/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-
-    // Guaranteed rent — extra landing pages
-    { url: `${BASE}/guaranteed-rent/vs-letting-agent/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-
-    // Area guides — full UK coverage
-    { url: `${BASE}/area-guide/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/birmingham/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/bradford/`,         lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/bristol/`,          lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/cardiff/`,          lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/coventry/`,         lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/derby/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/edinburgh/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/glasgow/`,          lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/hull/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/leeds/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/leicester/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/liverpool/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/manchester/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/newcastle/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/nottingham/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/portsmouth/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/sheffield/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/southampton/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/stoke-on-trent/`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/areas/wolverhampton/`,    lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-
-    // Hub pages
-    { url: `${BASE}/buy-to-let/`,              lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/first-time-buyer/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/hmo-hub/`,                 lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/landlord-hub/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-investing/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-tax/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-law/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-development/`,    lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-finance/`,        lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/property-news/`,           lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/mortgages/`,               lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/serviced-accommodation/`,  lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/deal-sourcing/`,           lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/rent-to-rent/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/renting-strategies/`,      lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/commercial-property/`,     lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/renters-rights-act/`,      lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-
-    // Tools & listings
-    { url: `${BASE}/find-agent/`,              lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/list-property/`,           lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/membership/`,              lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/market-insights/`,         lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/sold-prices/`,             lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/valuation/`,               lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/properties/`,              lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/trades/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/manage/`,                  lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/community/`,               lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/case-studies/`,            lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE}/resources/top-20-btl-postcodes/`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-
-    // Templates — additional
-    { url: `${BASE}/templates/tenant-application/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-
-    // Legal
-    { url: `${BASE}/privacy/`,       lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/terms/`,         lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/cookies/`,       lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/complaints/`,    lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/disclaimer/`,    lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-    { url: `${BASE}/accessibility/`, lastModified: now, changeFrequency: "yearly", priority: 0.3 },
-  ];
-
-  return staticPages;
+  return [...routes]
+    .sort()
+    .map(route => {
+      const { priority, changeFrequency } = rankOf(route);
+      return {
+        url: `${SITE_URL}${route === "/" ? "/" : route + "/"}`,
+        lastModified: now,
+        changeFrequency,
+        priority,
+      };
+    });
 }
