@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
@@ -179,6 +180,7 @@ export default function BirminghamPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <FAQSchema faqs={birminghamFaqs} />
+          <DataProvenance area="Birmingham" />
           <Disclaimer type="financial" />
         </div>
       </section>

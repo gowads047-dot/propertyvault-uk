@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
@@ -170,6 +171,7 @@ export default function LeicesterPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <FAQSchema faqs={leicesterFaqs} />
+          <DataProvenance area="Leicester" />
           <Disclaimer type="financial" />
         </div>
       </section>

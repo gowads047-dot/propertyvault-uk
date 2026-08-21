@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Portsmouth Buy-to-Let Investment Guide | PropertyVault UK",
@@ -453,6 +454,7 @@ export default function PortsmouthPage() {
           </div>
 
           <div className="mt-12">
+            <DataProvenance area="Portsmouth" />
             <Disclaimer />
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Glasgow Buy-to-Let Investment Guide | PropertyVault UK",
@@ -427,6 +428,7 @@ export default function GlasgowPage() {
           </div>
           <FAQSchema faqs={cityFaqs} />
           <div className="mt-12">
+            <DataProvenance area="Glasgow" />
             <Disclaimer />
           </div>
         </div>

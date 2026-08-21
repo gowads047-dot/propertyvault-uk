@@ -4,6 +4,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
   title: "Bradford Buy-to-Let Investment Guide | PropertyVault UK",
@@ -441,6 +442,7 @@ export default function BradfordPage() {
           </div>
           <FAQSchema faqs={cityFaqs} />
           <div className="mt-10">
+            <DataProvenance area="Bradford" />
             <Disclaimer />
           </div>
         </div>
