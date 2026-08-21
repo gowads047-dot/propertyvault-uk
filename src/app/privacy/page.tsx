@@ -140,8 +140,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-navy-800 mb-3">11. Contact</h2>
             <p>For privacy-related enquiries or to exercise your rights:</p>
             <p className="mt-2"><strong>Data Controller:</strong> PropertyVault UK<br />
-            <strong>Email:</strong> privacy@propertyvault.uk<br />
-            <strong>ICO Registration:</strong> [Registration number to be added]</p>
+            <strong>Email:</strong> privacy@propertyvault.uk</p>
           </div>
         </div>
       </section>
