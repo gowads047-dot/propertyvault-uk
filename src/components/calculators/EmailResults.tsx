@@ -63,6 +63,11 @@ export function EmailResults({ deal }: Props) {
           value={email}
           onChange={e => setEmail(e.target.value)}
           placeholder="Your email address"
+          // The placeholder is not an accessible name: support is inconsistent
+          // and it disappears the moment anything is typed. This component is
+          // rendered on around twenty calculators, so it was the single
+          // unnamed field left on most of them.
+          aria-label="Your email address"
           required
           className="flex-1 px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400"
         />
