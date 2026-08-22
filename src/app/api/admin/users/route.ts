@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import { isAdmin } from "@/lib/site";
+import { isAdmin } from "@/lib/admin";
 
 
 export async function GET() {

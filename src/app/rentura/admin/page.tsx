@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import { isAdmin } from "@/lib/site";
+import { useIsAdmin } from "@/lib/useIsAdmin";
 
 
 const C = {
@@ -27,6 +27,8 @@ type WaitlistRow = { id: string; email: string; name: string | null; phone: stri
 
 export default function RenturaAdmin() {
   const { user, loading } = useAuth();
+  // Server decides; the admin address never reaches the browser.
+  const admin = useIsAdmin(!!user);
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("overview");
   const [users, setUsers] = useState<AdminUser[]>([]);
@@ -37,11 +39,11 @@ export default function RenturaAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/rentura/auth");
-    if (!loading && user && !isAdmin(user.email)) router.push("/rentura/dashboard");
-  }, [user, loading, router]);
+    if (!loading && user && admin === false) router.push("/rentura/dashboard");
+  }, [user, loading, admin, router]);
 
   useEffect(() => {
-    if (!user || !isAdmin(user.email)) return;
+    if (!user || !admin) return;
     Promise.all([
       fetch("/api/admin/users").then(r => r.json()).then(d => ({ data: d.users || [] })),
       supabase.from("rentura_subscriptions").select("*").order("created_at", { ascending: false }),
@@ -59,10 +61,10 @@ export default function RenturaAdmin() {
       });
       setDataLoading(false);
     });
-  }, [user]);
+  }, [user, admin]);
 
   if (loading || dataLoading) return <div style={{ background: C.bg, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ color: C.ink3 }}>Loading admin…</p></div>;
-  if (!user || !isAdmin(user.email)) return null;
+  if (!user || !admin) return null;
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "var(--font-family-body)", color: C.ink }}>

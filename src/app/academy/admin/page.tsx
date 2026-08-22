@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import { isAdmin } from "@/lib/site";
+import { useIsAdmin } from "@/lib/useIsAdmin";
 
 
 const C = {
@@ -33,6 +33,8 @@ type EnrollmentRow = {
 
 export default function AcademyAdmin() {
   const { user, loading } = useAuth();
+  // Server decides; the admin address never reaches the browser.
+  const admin = useIsAdmin(!!user);
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("overview");
   const [members, setMembers] = useState<MemberRow[]>([]);
@@ -43,11 +45,11 @@ export default function AcademyAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/academy/join");
-    if (!loading && user && !isAdmin(user.email)) router.push("/academy/dashboard");
-  }, [user, loading, router]);
+    if (!loading && user && admin === false) router.push("/academy/dashboard");
+  }, [user, loading, admin, router]);
 
   useEffect(() => {
-    if (!user || !isAdmin(user.email)) return;
+    if (!user || !admin) return;
     Promise.all([
       supabase.from("academy_members").select("*").order("created_at", { ascending: false }),
       supabase.from("academy_courses").select("*").order("sort_order"),
@@ -60,7 +62,7 @@ export default function AcademyAdmin() {
       setStats({ members: (m.data || []).length, active: active.length, courses: (c.data || []).length, mrr: active.length * 14.99 });
       setDataLoading(false);
     });
-  }, [user]);
+  }, [user, admin]);
 
   async function togglePublish(id: string, current: boolean) {
     await supabase.from("academy_courses").update({ is_published: !current }).eq("id", id);
@@ -68,7 +70,7 @@ export default function AcademyAdmin() {
   }
 
   if (loading || dataLoading) return <div style={{ background: C.bg, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ color: C.ink3 }}>Loading…</p></div>;
-  if (!user || !isAdmin(user.email)) return null;
+  if (!user || !admin) return null;
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "var(--font-family-body)", color: C.ink }}>

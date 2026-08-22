@@ -93,22 +93,7 @@ export const REPLY_TO = CONTACT_EMAIL;
  */
 export const MAIL_FROM = `PropertyVault UK <${CONTACT_EMAIL}>`;
 
-/**
- * The account allowed into the admin pages.
- *
- * This was the owner's personal Gmail, written out in four files, in a public
- * repository — which told anyone reading it exactly which account to go after,
- * and leaked a private address that has no business on the site.
- *
- * Read from the environment, with no fallback on purpose. An admin gate that
- * defaults to a value hardcoded in public source is worse than one that refuses
- * to open: if NEXT_PUBLIC_ADMIN_EMAIL is unset, isAdmin() denies everyone.
- * Set it in Vercel → Settings → Environment Variables → Production.
- */
-export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "";
-
-/** Is this signed-in address the admin? Denies everyone when unconfigured. */
-export function isAdmin(email: string | null | undefined): boolean {
-  if (!ADMIN_EMAIL) return false;
-  return (email ?? "").trim().toLowerCase() === ADMIN_EMAIL.trim().toLowerCase();
-}
+// The admin gate lives in src/lib/admin.ts, not here. This module is imported
+// by client components, and anything it reads from a NEXT_PUBLIC_ variable is
+// inlined into the browser bundle — which is exactly how the owner's personal
+// address used to end up in the shipped JavaScript.

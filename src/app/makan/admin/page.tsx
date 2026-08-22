@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import { isAdmin } from "@/lib/site";
+import { useIsAdmin } from "@/lib/useIsAdmin";
 
 
 type Tab = "listings" | "enquiries" | "verifications";
@@ -30,6 +30,8 @@ type RawEnquiry = Omit<Enquiry, "listing"> & {
 
 export default function MakanAdmin() {
   const { user, loading } = useAuth();
+  // Server decides; the admin address never reaches the browser.
+  const admin = useIsAdmin(!!user);
   const router = useRouter();
   const [tab, setTab] = useState<Tab>("listings");
   const [listings, setListings] = useState<Listing[]>([]);
@@ -41,11 +43,11 @@ export default function MakanAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/makan/auth");
-    if (!loading && user && !isAdmin(user.email)) router.push("/makan");
-  }, [user, loading, router]);
+    if (!loading && user && admin === false) router.push("/makan");
+  }, [user, loading, admin, router]);
 
   useEffect(() => {
-    if (!user || !isAdmin(user.email)) return;
+    if (!user || !admin) return;
     Promise.all([
       supabase.from("listings").select("*").order("created_at", { ascending: false }),
       supabase.from("enquiries").select("id, message, created_at, read, listing:listings(title)").order("created_at", { ascending: false }).limit(200),
@@ -65,7 +67,7 @@ export default function MakanAdmin() {
       });
       setDataLoading(false);
     });
-  }, [user]);
+  }, [user, admin]);
 
   async function toggleStatus(id: string, current: string) {
     const next = current === "active" ? "inactive" : "active";
@@ -96,7 +98,7 @@ export default function MakanAdmin() {
       <p style={{ color: "var(--h-muted)" }}>Loading…</p>
     </div>
   );
-  if (!user || !isAdmin(user.email)) return null;
+  if (!user || !admin) return null;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--h-bg)", fontFamily: "var(--font-family-body)", color: "var(--h-text)" }}>
