@@ -87,7 +87,7 @@ export default function LandlordCostsPage() {
                 <input aria-label="Monthly Rent (£)" type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full px-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Void Weeks/Year ({voidWeeks})</label><input type="range" min={0} max={8} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Void Weeks/Year ({voidWeeks})</label><input aria-label="Void Weeks/Year" type="range" min={0} max={8} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Tax Rate ({taxRate}%)</label>
                   <select aria-label="Tax Rate" value={taxRate} onChange={e => setTaxRate(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg bg-white text-sm">
                     <option value={0}>0% (non-taxpayer)</option><option value={20}>20% (basic rate)</option><option value={40}>40% (higher rate)</option><option value={45}>45% (additional rate)</option>

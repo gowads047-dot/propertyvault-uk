@@ -83,11 +83,11 @@ export default function RentVsBuyPage() {
                 <p className="text-center font-bold text-navy-800">{fmt(propertyPrice)}</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Deposit ({depositPct}%)</label><input type="range" min={5} max={40} step={1} value={depositPct} onChange={e => setDepositPct(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
-                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Rate ({mortgageRate}%)</label><input type="range" min={2} max={8} step={0.1} value={mortgageRate} onChange={e => setMortgageRate(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Deposit ({depositPct}%)</label><input aria-label="Deposit" type="range" min={5} max={40} step={1} value={depositPct} onChange={e => setDepositPct(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+                <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Rate ({mortgageRate}%)</label><input aria-label="Mortgage Rate" type="range" min={2} max={8} step={0.1} value={mortgageRate} onChange={e => setMortgageRate(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
               </div>
-              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Term ({term} years)</label><input type="range" min={5} max={40} step={1} value={term} onChange={e => setTerm(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
-              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Property Growth ({annualGrowth}%)</label><input type="range" min={0} max={8} step={0.5} value={annualGrowth} onChange={e => setAnnualGrowth(signed(e.target.value))} className="w-full accent-gold-500" /></div>
+              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Term ({term} years)</label><input aria-label="Mortgage Term ( years)" type="range" min={5} max={40} step={1} value={term} onChange={e => setTerm(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Property Growth ({annualGrowth}%)</label><input aria-label="Annual Property Growth" type="range" min={0} max={8} step={0.5} value={annualGrowth} onChange={e => setAnnualGrowth(signed(e.target.value))} className="w-full accent-gold-500" /></div>
 
               <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Renting Scenario</h3>
               <div>
@@ -95,10 +95,10 @@ export default function RentVsBuyPage() {
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
                 <input aria-label="Current Monthly Rent" type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
-              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Rent Increase ({annualRentIncrease}%)</label><input type="range" min={0} max={10} step={0.5} value={annualRentIncrease} onChange={e => setAnnualRentIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+              <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Rent Increase ({annualRentIncrease}%)</label><input aria-label="Annual Rent Increase" type="range" min={0} max={10} step={0.5} value={annualRentIncrease} onChange={e => setAnnualRentIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
 
               <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Comparison Period</h3>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Compare over {years} years</label><input type="range" min={1} max={30} step={1} value={years} onChange={e => setYears(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
+              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Compare over {years} years</label><input aria-label="Compare over years" type="range" min={1} max={30} step={1} value={years} onChange={e => setYears(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
             </div>
 
             <div>
