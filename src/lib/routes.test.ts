@@ -3,7 +3,7 @@ import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import sitemap from "../app/sitemap";
 import robots from "../app/robots";
-import { staticRoutes, isIndexable, CRAWL_EXCLUDED } from "./routes";
+import { staticRoutes, isIndexable, CRAWL_EXCLUDED, CRAWL_ALLOWED_EXCEPTIONS } from "./routes";
 import { blogPosts, slugOf } from "./blog-posts";
 import { SITE_URL } from "./site";
 
@@ -52,13 +52,29 @@ describe("sitemap covers the site", () => {
 });
 
 describe("sitemap excludes what it should", () => {
-  it("lists nothing robots.txt disallows, except the Rentura landing page", () => {
+  it("lists nothing robots.txt disallows, except the allowed landing pages", () => {
     for (const p of paths) {
-      if (p === "/rentura") continue; // explicitly allowed in robots.txt
+      // Derived, not hardcoded: this used to name /rentura literally, which
+      // would have gone quietly stale when /academy joined it.
+      if ((CRAWL_ALLOWED_EXCEPTIONS as readonly string[]).includes(p)) continue;
       for (const blocked of CRAWL_EXCLUDED) {
         expect(p.startsWith(blocked), `${p} is under ${blocked}`).toBe(false);
       }
     }
+  });
+
+  it("gives every allowed landing page an explicit robots.txt Allow", () => {
+    const rule = (robots().rules as { allow?: string | string[] }[])[0];
+    const allow = Array.isArray(rule.allow) ? rule.allow : [rule.allow ?? ""];
+    // Without the "$"-anchored Allow, the Disallow on the subtree also blocks
+    // the landing page, so it can never be indexed however the page is marked.
+    for (const p of CRAWL_ALLOWED_EXCEPTIONS) {
+      expect(allow, `${p} is in the sitemap but robots.txt does not allow it`).toContain(`${p}/$`);
+    }
+  });
+
+  it("keeps every allowed landing page in the sitemap", () => {
+    for (const p of CRAWL_ALLOWED_EXCEPTIONS) expect(paths).toContain(p);
   });
 
   it("agrees with the disallow list in robots.ts", () => {
@@ -74,9 +90,6 @@ describe("sitemap excludes what it should", () => {
     expect(paths).not.toContain("/hub");
   });
 
-  it("still includes the Rentura landing page", () => {
-    expect(paths).toContain("/rentura");
-  });
 });
 
 describe("sitemap entries are well formed", () => {
@@ -106,11 +119,16 @@ describe("route enumeration", () => {
     expect(routes.some(r => r.includes("["))).toBe(false);
   });
 
-  it("treats gated areas as non-indexable", () => {
+  it("treats the gated apps as non-indexable but their landing pages as public", () => {
     expect(isIndexable("/rentura/dashboard")).toBe(false);
     expect(isIndexable("/academy/courses")).toBe(false);
     expect(isIndexable("/tenant/dashboard")).toBe(false);
+
     expect(isIndexable("/rentura")).toBe(true);
+    expect(isIndexable("/academy")).toBe(true);
     expect(isIndexable("/calculators/brrr")).toBe(true);
+
+    // /tenant is a login form, not marketing — it stays out.
+    expect(isIndexable("/tenant")).toBe(false);
   });
 });

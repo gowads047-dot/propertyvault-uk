@@ -8,12 +8,16 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: [
           "/",
-          // The Rentura marketing page. /rentura/ below blocks the logged-in
-          // app beneath it, which swept up the public landing page with it —
-          // the page's own layout asks to be indexed, so the block was never
-          // intended. "$" anchors this to the exact URL, and crawlers apply
-          // the most specific matching rule, so the app stays blocked.
+          // The Rentura and Academy marketing pages. The Disallow rules below
+          // block the logged-in apps beneath them, which swept up the public
+          // landing pages with them — both carry their own canonical and ask to
+          // be indexed, so the block was never intended. "$" anchors these to
+          // the exact URLs, and crawlers apply the longest matching rule, so
+          // the apps stay blocked.
+          //
+          // /tenant/ has no exception on purpose: it is a login form.
           "/rentura/$",
+          "/academy/$",
         ],
         disallow: [
           // Everything under /rentura/ except the landing page allowed above:

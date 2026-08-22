@@ -57,8 +57,8 @@ export const siteMetrics = {
   calculators: 23,
   /** Directories under src/app/templates. */
   templates: 19,
-  /** Directories under src/app/areas. */
-  areaGuides: 21,
+  /** City guides under src/app/areas, excluding the postcodes hub. */
+  areaGuides: 20,
   /** Directories under src/app/blog. */
   blogPosts: 29,
   /** Cities with a dedicated guaranteed-rent landing page. */

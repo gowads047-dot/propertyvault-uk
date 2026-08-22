@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+/* Inter is deliberately absent here: layout.tsx already loads it through
+   next/font/google, which self-hosts it, preloads it and avoids a round trip to
+   fonts.gstatic.com. Requesting it here as well downloaded the same typeface
+   twice on every page — 48KB from /_next and another 48KB from Google — because
+   this file asked for the family by name ('Inter'), which matched the Google
+   copy, while next/font only exposes its own under var(--font-inter). The
+   self-hosted one was fetched on every page and never rendered. */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 @import "tailwindcss";
 
 @theme inline {
@@ -24,7 +31,7 @@
   --color-gold-800: #7d631d;
   --color-gold-900: #604c16;
   --font-family-heading: 'Playfair Display', Georgia, serif;
-  --font-family-body: 'Inter', system-ui, sans-serif;
+  --font-family-body: var(--font-inter), 'Inter', system-ui, sans-serif;
 }
 
 :root {
@@ -421,7 +428,7 @@ input::placeholder, textarea::placeholder {
   --h-slate: #1e1e1e;
   --h-green: #16a34a;
   --h-green-light: #f0fdf4;
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', var(--font-inter), system-ui, sans-serif;
   background: var(--h-bg);
   color: var(--h-text);
   -webkit-font-smoothing: antialiased;
@@ -430,7 +437,7 @@ input::placeholder, textarea::placeholder {
 }
 
 .hetta h1, .hetta h2, .hetta h3 {
-  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  font-family: 'Plus Jakarta Sans', var(--font-inter), system-ui, sans-serif;
   font-weight: 800;
   color: var(--h-text);
   letter-spacing: -0.03em;

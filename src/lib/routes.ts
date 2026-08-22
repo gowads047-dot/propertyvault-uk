@@ -24,10 +24,19 @@ import { join } from "node:path";
 export const CRAWL_EXCLUDED = ["/rentura/", "/academy/", "/tenant/", "/api/"] as const;
 
 /**
- * The Rentura marketing page is the one exception: robots.txt allows it
- * explicitly, so it belongs in the sitemap even though its subtree does not.
+ * Landing pages that are public marketing even though the app beneath them is
+ * private. robots.txt allows each of these explicitly, so they belong in the
+ * sitemap even though their subtrees do not.
+ *
+ * /academy was missed when /rentura was fixed: it is a public page for the deal
+ * sourcing programme, carries its own title, description and self-canonical,
+ * asks to be indexed, and is linked from /about — yet Disallow: /academy/ blocked
+ * the exact canonical URL, so it could never be indexed. Same bug, same shape,
+ * one page later.
+ *
+ * /tenant is deliberately not here. It is a login form, not marketing.
  */
-export const CRAWL_ALLOWED_EXCEPTIONS = ["/rentura"] as const;
+export const CRAWL_ALLOWED_EXCEPTIONS = ["/rentura", "/academy"] as const;
 
 /** Routes that render but should never be advertised to a crawler. */
 const NEVER_INDEX = ["/embed", "/hub", "/_not-found", "/_global-error"];

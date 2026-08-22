@@ -6,9 +6,10 @@ import { SITE_URL, SITE_HOST, canonical, siteMetrics, guaranteedRentCities } fro
 const appDir = join(process.cwd(), "src", "app");
 
 /** Count route directories directly under src/app/<section>. */
-function countRoutes(section: string): number {
+function countRoutes(section: string, exclude: string[] = []): number {
   return readdirSync(join(appDir, section), { withFileTypes: true })
     .filter(e => e.isDirectory())
+    .filter(e => !exclude.includes(e.name))
     .length;
 }
 
@@ -42,8 +43,12 @@ describe("siteMetrics matches what is actually in the repo", () => {
     expect(siteMetrics.templates).toBe(countRoutes("templates"));
   });
 
+  // "postcodes" is a hub for the 40 district pages, not a city guide. Counting
+  // it made the homepage and nav advertise 21 while /areas itself said
+  // "20 Cities" and rendered 20 cards — the same self-contradiction this test
+  // exists to prevent, enshrined by the test because it counted the wrong thing.
   it("area guides", () => {
-    expect(siteMetrics.areaGuides).toBe(countRoutes("areas"));
+    expect(siteMetrics.areaGuides).toBe(countRoutes("areas", ["postcodes"]));
   });
 
   it("blog posts", () => {
