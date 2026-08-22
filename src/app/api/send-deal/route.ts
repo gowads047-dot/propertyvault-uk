@@ -4,6 +4,16 @@ import DealAnalysisEmail from "@/emails/DealAnalysisEmail";
 import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: NextRequest) {
+  // new Resend() throws when RESEND_API_KEY is unset, which surfaced as an
+  // opaque 500 with an empty body. Fail with something the caller can show.
+  if (!process.env.RESEND_API_KEY) {
+    console.error("RESEND_API_KEY is not set — cannot send deal analysis.");
+    return NextResponse.json(
+      { error: "Email is temporarily unavailable. Please try again later." },
+      { status: 503 }
+    );
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
   const body = await req.json();
   const { email, deal } = body as {
