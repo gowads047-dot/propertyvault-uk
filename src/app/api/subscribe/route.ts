@@ -44,6 +44,7 @@ export async function POST(req: Request) {
   // a missing key into an opaque 500 that lost the subscriber entirely — the
   // exact outcome the "still return ok" below was written to prevent. Wrapped
   // too, so a Resend outage costs us the email and never the lead.
+  let emailed = false;
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const { error: emailError } = await resend.emails.send({
@@ -54,10 +55,13 @@ export async function POST(req: Request) {
       react: StarterPackEmail({ name: name.trim(), userType: user_type ?? null }),
     });
     if (emailError) console.error("Email error:", emailError);
+    else emailed = true;
   } catch (err) {
     console.error("Resend unavailable:", err);
     // Still return ok — subscriber is saved even if email fails
   }
 
-  return NextResponse.json({ ok: true });
+  // `emailed` so the caller can tell the truth. Saying "check your inbox" when
+  // nothing was sent is the kind of promise this site is trying not to make.
+  return NextResponse.json({ ok: true, emailed });
 }

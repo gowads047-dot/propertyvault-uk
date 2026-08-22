@@ -10,6 +10,8 @@ export function NewsletterPopup() {
   const [userType, setUserType] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  // Whether the starter pack actually sent, so the success copy stays honest.
+  const [emailed, setEmailed] = useState(false);
 
   useEffect(() => {
     const dismissed = localStorage.getItem("newsletter_dismissed");
@@ -48,8 +50,9 @@ export function NewsletterPopup() {
         return;
       }
 
+      setEmailed(Boolean(data.emailed));
       setStatus("success");
-      track(events.signupSucceeded, { placement: "popup" });
+      track(events.signupSucceeded, { placement: "popup", emailed: Boolean(data.emailed) });
       localStorage.setItem("newsletter_dismissed", "true");
     } catch {
       setErrorMsg("Network error. Please try again.");
@@ -87,8 +90,13 @@ export function NewsletterPopup() {
             <h3 className="text-xl font-extrabold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
               You&apos;re in!
             </h3>
+            {/* Only promise an inbox delivery when one actually happened. The
+                subscriber is saved either way, but "check your inbox" when
+                nothing was sent is a promise we would not keep. */}
             <p className="text-navy-300 text-sm mb-6">
-              Check your inbox — your free property starter pack is on its way.
+              {emailed
+                ? "Check your inbox — your free property starter pack is on its way."
+                : "We have your details and will send your starter pack shortly."}
             </p>
             <button
               onClick={dismiss}

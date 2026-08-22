@@ -64,7 +64,9 @@ describe("a missing RESEND_API_KEY must not cost us the subscriber", () => {
     const res = await post(valid);
 
     expect(res.status).toBe(200);
-    await expect(res.json()).resolves.toEqual({ ok: true });
+    // Saved, but honest that nothing was sent — the UI must not say
+    // "check your inbox" when no email left the building.
+    await expect(res.json()).resolves.toEqual({ ok: true, emailed: false });
     expect(insert).toHaveBeenCalledTimes(1);
     expect(insert.mock.calls[0][0]).toMatchObject({
       name: "Test Person",
@@ -104,6 +106,25 @@ describe("a Resend outage must not cost us the subscriber either", () => {
 
     expect(res.status).toBe(200);
     expect(insert).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("the response says whether the pack actually sent", () => {
+  it("reports emailed:true when the send succeeds", async () => {
+    const res = await post(valid);
+    await expect(res.json()).resolves.toEqual({ ok: true, emailed: true });
+  });
+
+  it("reports emailed:false when Resend returns an error", async () => {
+    send.mockResolvedValue({ error: { message: "rate limited" } });
+    const res = await post(valid);
+    await expect(res.json()).resolves.toEqual({ ok: true, emailed: false });
+  });
+
+  it("reports emailed:false when the send throws", async () => {
+    send.mockRejectedValue(new Error("network down"));
+    const res = await post(valid);
+    await expect(res.json()).resolves.toEqual({ ok: true, emailed: false });
   });
 });
 
