@@ -86,7 +86,7 @@ export default function MovingCostsPage() {
                 <span className="text-sm text-navy-700 font-medium">{item.label}</span>
                 {item.set ? (
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                  <input type="number" min="0" value={item.value} onChange={(e) => item.set!(Number(e.target.value))} className="w-28 pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                  <input aria-label={item.label} type="number" min="0" value={item.value} onChange={(e) => item.set!(Number(e.target.value))} className="w-28 pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm font-semibold text-right focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 ) : (
                   <span className="font-bold text-navy-800">{fmt(item.value)}</span>
                 )}
