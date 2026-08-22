@@ -36,17 +36,18 @@ export function EnquiryForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("submitting");
+    // This used to post to formsubmit.co and call itself a success regardless
+    // of the outcome — the response was never checked, and FormSubmit was
+    // silently discarding every enquiry because the destination address had
+    // never been activated there. The page promises a reply within 2 hours, so
+    // a false success here is the most expensive bug on the site.
     try {
-      await fetch("https://formsubmit.co/ajax/info@propertyvaultuk.co.uk", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          _subject: "Guaranteed Rent Enquiry — PropertyVault",
-          _captcha: "false",
-          ...fields,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ source: "guaranteed-rent", ...fields }),
       });
-      setStatus("success");
+      setStatus(res.ok ? "success" : "error");
     } catch {
       setStatus("error");
     }

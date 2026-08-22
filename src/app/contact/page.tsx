@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContactForm from "@/components/contact/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact PropertyVault UK — Get in Touch",
@@ -35,35 +36,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-2 gap-10">
             <div>
               <h2 className="text-xl font-bold text-navy-800 mb-6">Send Us a Message</h2>
-              <form className="space-y-4" action="https://formsubmit.co/info@propertyvaultuk.co.uk" method="POST">
-                <input type="hidden" name="_subject" value="New enquiry from PropertyVault" />
-                <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/contact/?sent=true" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="text" name="_honey" style={{ display: "none" }} />
-                <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Your Name</label>
-                  <input type="text" name="name" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Email Address</label>
-                  <input type="email" name="email" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Subject</label>
-                  <select name="subject" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 bg-white">
-                    <option>General Enquiry</option>
-                    <option>Guaranteed Rent Enquiry</option>
-                    <option>Property Listing</option>
-                    <option>Advertising &amp; Partnerships</option>
-                    <option>Feedback</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Message</label>
-                  <textarea rows={5} name="message" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
-                </div>
-                <button type="submit" className="btn-primary w-full">Send Message</button>
-              </form>
+              <ContactForm />
             </div>
 
             <div>

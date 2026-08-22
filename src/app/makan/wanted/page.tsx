@@ -9,6 +9,28 @@ export default function WantedPage() {
   const { user } = useAuth();
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  // This used to post straight to formsubmit.co and flip `submitted` in the
+  // same breath, so the "Posted!" panel appeared whether or not anything was
+  // delivered — and nothing was, because that address was never activated
+  // there. Now the panel only appears once the enquiry is actually recorded.
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setFailed(false);
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, source: "makan-wanted" }),
+      });
+      if (res.ok) setSubmitted(true);
+      else setFailed(true);
+    } catch {
+      setFailed(true);
+    }
+  }
 
   return (
     <>
@@ -39,15 +61,16 @@ export default function WantedPage() {
 
           {/* Post form */}
           {showForm && !submitted && (
-            <form
-              action="https://formsubmit.co/info@propertyvaultuk.co.uk"
-              method="POST"
-              onSubmit={() => setSubmitted(true)}
-              className="h-card !rounded-2xl p-6 mb-8"
-            >
-              <input type="hidden" name="_subject" value="New Makan 'Property Wanted' post" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="text" name="_honey" style={{ display: "none" }} />
+            <form onSubmit={handleSubmit} className="h-card !rounded-2xl p-6 mb-8">
+              {/* Honeypot: off-screen so people never see it, but bots fill it. */}
+              <input
+                type="text"
+                name="_honey"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                style={{ position: "absolute", left: "-9999px", width: 1, height: 1 }}
+              />
               <h3 className="font-bold mb-4" style={{ color: "var(--h-text)" }}>What are you looking for?</h3>
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
@@ -97,6 +120,11 @@ export default function WantedPage() {
                   <input type="email" name="email" required className="h-input" />
                 </div>
               </div>
+              {failed && (
+                <p role="alert" className="text-sm mb-3 rounded-lg px-4 py-3" style={{ color: "#b91c1c", background: "#fef2f2", border: "1px solid #fecaca" }}>
+                  We could not post that just now. Please try again, or email info@propertyvaultuk.co.uk.
+                </p>
+              )}
               <button type="submit" className="h-btn h-btn-primary w-full">Post — it&apos;s free</button>
             </form>
           )}

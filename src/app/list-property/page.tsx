@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import ApiForm from "@/components/forms/ApiForm";
 
 export const metadata: Metadata = {
   title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
@@ -60,11 +61,13 @@ export default function ListPropertyPage() {
       <section className="section-padding bg-navy-50/50">
         <div className="container-max max-w-3xl">
           <h2 className="text-2xl font-bold text-navy-800 mb-6">Create Your Listing</h2>
-          <form className="space-y-6 bg-white rounded-2xl p-6 md:p-8 shadow-md border border-navy-100" action="https://formsubmit.co/info@propertyvaultuk.co.uk" method="POST">
-            <input type="hidden" name="_subject" value="New Property Listing — PropertyVault" />
-            <input type="hidden" name="_next" value="https://www.propertyvaultuk.co.uk/list-property/?sent=true" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="text" name="_honey" style={{ display: "none" }} />
+          <ApiForm
+            source="list-property"
+            className="space-y-6 bg-white rounded-2xl p-6 md:p-8 shadow-md border border-navy-100"
+            submitLabel="Publish Listing"
+            successTitle="Thanks — we have your listing."
+            successBody="We will review the details and come back to you to confirm publication."
+          >
             <div>
               <h3 className="font-bold text-navy-800 text-lg mb-4 border-b border-navy-100 pb-2">Property Details</h3>
               <div className="grid md:grid-cols-2 gap-4">
@@ -279,10 +282,7 @@ export default function ListPropertyPage() {
               </div>
             </div>
 
-            <button type="submit" className="btn-primary w-full text-lg !py-4">
-              Publish Listing
-            </button>
-          </form>
+          </ApiForm>
 
           <Disclaimer type="general" />
         </div>
