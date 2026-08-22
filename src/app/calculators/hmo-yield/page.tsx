@@ -93,10 +93,13 @@ export default function HMOYieldPage() {
               <div className="space-y-2">
                 {rooms.map((room, i) => (
                   <div key={i} className={`flex items-center gap-3 p-3 rounded-lg border ${room.occupied ? "border-green-200 bg-green-50/30" : "border-navy-100 bg-navy-50/30"}`}>
-                    <input type="checkbox" checked={room.occupied} onChange={(e) => updateRoom(i, "occupied", e.target.checked)} className="rounded" />
-                    <input type="text" value={room.name} onChange={(e) => updateRoom(i, "name", e.target.value)} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm" />
+                    {/* These sit in a row with no label of their own — the only
+                        visual cue is column position, which a screen reader
+                        cannot convey. Named per row so each one is unambiguous. */}
+                    <input aria-label={`${room.name || `Room ${i + 1}`} occupied`} type="checkbox" checked={room.occupied} onChange={(e) => updateRoom(i, "occupied", e.target.checked)} className="rounded" />
+                    <input aria-label={`Room ${i + 1} name`} type="text" value={room.name} onChange={(e) => updateRoom(i, "name", e.target.value)} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm" />
                     <span className="text-sm text-navy-500">£</span>
-                    <input type="number" min="0" value={room.rent} onChange={(e) => updateRoom(i, "rent", Number(e.target.value))} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm font-semibold" />
+                    <input aria-label={`${room.name || `Room ${i + 1}`} monthly rent`} type="number" min="0" value={room.rent} onChange={(e) => updateRoom(i, "rent", Number(e.target.value))} className="w-20 px-2 py-1 border border-navy-200 rounded text-sm font-semibold" />
                     <span className="text-xs text-navy-400">/month</span>
                   </div>
                 ))}
