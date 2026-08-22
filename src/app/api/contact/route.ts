@@ -113,7 +113,7 @@ export async function POST(req: Request) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const { error: emailError } = await resend.emails.send({
-      from: "PropertyVault Enquiries <nass@propertyvaultuk.co.uk>",
+      from: "PropertyVault Enquiries <info@propertyvaultuk.co.uk>",
       to: REPLY_TO,
       replyTo: email,
       subject: `New ${SOURCE_LABEL[source]}: ${name}`,

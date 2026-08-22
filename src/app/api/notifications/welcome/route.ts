@@ -10,7 +10,7 @@ async function sendEmail(to: string, subject: string, html: string) {
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },
     // reply_to (snake_case) because this calls the Resend REST API directly
     // rather than going through the SDK.
-    body: JSON.stringify({ from: "PropertyVault <hello@propertyvaultuk.co.uk>", to, subject, html, reply_to: REPLY_TO }),
+    body: JSON.stringify({ from: "PropertyVault <info@propertyvaultuk.co.uk>", to, subject, html, reply_to: REPLY_TO }),
   });
 }
 

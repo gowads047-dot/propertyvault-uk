@@ -30,7 +30,7 @@ export default function PrivacyPage() {
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">1. Introduction</h2>
             <p>PropertyVault UK (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, store, and share your personal information when you use our website at propertyvaultuk.co.uk (the &ldquo;Site&rdquo;) and our services.</p>
-            <p className="mt-2">We are the data controller for the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. If you have questions about this policy or your personal data, contact us at privacy@propertyvault.uk.</p>
+            <p className="mt-2">We are the data controller for the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. If you have questions about this policy or your personal data, contact us at info@propertyvaultuk.co.uk.</p>
           </div>
 
           <div>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
               <li><strong>Right to withdraw consent:</strong> where processing is based on consent, you can withdraw it at any time</li>
               <li><strong>Rights related to automated decision-making:</strong> we do not make solely automated decisions that significantly affect you</li>
             </ul>
-            <p className="mt-2">To exercise any of these rights, contact us at privacy@propertyvault.uk. We will respond within one month. If you are not satisfied with our response, you have the right to lodge a complaint with the Information Commissioner&apos;s Office (ICO) at ico.org.uk.</p>
+            <p className="mt-2">To exercise any of these rights, contact us at info@propertyvaultuk.co.uk. We will respond within one month. If you are not satisfied with our response, you have the right to lodge a complaint with the Information Commissioner&apos;s Office (ICO) at ico.org.uk.</p>
           </div>
 
           <div>
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">8. Children&apos;s Privacy</h2>
-            <p>Our Site is not intended for individuals under the age of 18. We do not knowingly collect personal data from children. If you believe we have collected data from a child, please contact us immediately at privacy@propertyvault.uk.</p>
+            <p>Our Site is not intended for individuals under the age of 18. We do not knowingly collect personal data from children. If you believe we have collected data from a child, please contact us immediately at info@propertyvaultuk.co.uk.</p>
           </div>
 
           <div>
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-bold text-navy-800 mb-3">11. Contact</h2>
             <p>For privacy-related enquiries or to exercise your rights:</p>
             <p className="mt-2"><strong>Data Controller:</strong> PropertyVault UK<br />
-            <strong>Email:</strong> privacy@propertyvault.uk</p>
+            <strong>Email:</strong> info@propertyvaultuk.co.uk</p>
           </div>
         </div>
       </section>

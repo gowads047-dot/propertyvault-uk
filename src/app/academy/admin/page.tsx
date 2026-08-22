@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { isAdmin } from "@/lib/site";
 
-const ADMIN_EMAIL = "gowads047@gmail.com";
 
 const C = {
   bg: "#0a0f1e", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
@@ -43,11 +43,11 @@ export default function AcademyAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/academy/join");
-    if (!loading && user && user.email !== ADMIN_EMAIL) router.push("/academy/dashboard");
+    if (!loading && user && !isAdmin(user.email)) router.push("/academy/dashboard");
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (!user || user.email !== ADMIN_EMAIL) return;
+    if (!user || !isAdmin(user.email)) return;
     Promise.all([
       supabase.from("academy_members").select("*").order("created_at", { ascending: false }),
       supabase.from("academy_courses").select("*").order("sort_order"),
@@ -68,7 +68,7 @@ export default function AcademyAdmin() {
   }
 
   if (loading || dataLoading) return <div style={{ background: C.bg, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ color: C.ink3 }}>Loading…</p></div>;
-  if (!user || user.email !== ADMIN_EMAIL) return null;
+  if (!user || !isAdmin(user.email)) return null;
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "var(--font-family-body)", color: C.ink }}>

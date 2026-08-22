@@ -93,7 +93,7 @@ export default function CookiesPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">Contact</h2>
-            <p>For questions about our cookie usage, contact privacy@propertyvault.uk.</p>
+            <p>For questions about our cookie usage, contact info@propertyvaultuk.co.uk.</p>
           </div>
         </div>
       </section>

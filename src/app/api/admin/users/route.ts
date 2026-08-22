@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { isAdmin } from "@/lib/site";
 
-const ADMIN_EMAIL = "gowads047@gmail.com";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -14,7 +14,7 @@ export async function GET() {
   );
 
   const { data: { session } } = await supabaseAuth.auth.getSession();
-  if (!session?.user || session.user.email !== ADMIN_EMAIL) {
+  if (!session?.user || !isAdmin(session.user.email)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

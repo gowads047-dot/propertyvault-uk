@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 0 }).format(n);
 
   const { error } = await resend.emails.send({
-    from: "Nass at PropertyVault <nass@propertyvaultuk.co.uk>",
+    from: "Nass at PropertyVault <info@propertyvaultuk.co.uk>",
     replyTo: REPLY_TO,
     to: email.trim().toLowerCase(),
     subject: `Your deal analysis — ${deal.address ?? fmt(deal.purchasePrice)} · Score ${deal.dealScore}/100`,

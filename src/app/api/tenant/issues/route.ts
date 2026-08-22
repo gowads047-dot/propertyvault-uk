@@ -52,7 +52,7 @@ export async function POST(req: Request) {
         method: "POST",
         headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          from: "Rentura <noreply@propertyvaultuk.co.uk>",
+          from: "Rentura <info@propertyvaultuk.co.uk>",
           replyTo: REPLY_TO,
           to: landlordEmail,
           subject: `🔧 New issue reported by ${invite.tenant_name || "your tenant"} — ${title}`,

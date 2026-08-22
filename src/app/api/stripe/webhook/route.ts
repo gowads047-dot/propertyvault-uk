@@ -170,7 +170,7 @@ export async function POST(req: Request) {
           method: "POST",
           headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
           body: JSON.stringify({
-            from: "PropertyVault UK <noreply@propertyvaultuk.co.uk>",
+            from: "PropertyVault UK <info@propertyvaultuk.co.uk>",
             replyTo: REPLY_TO,
             to: toEmail,
             subject: `Your free trial ends on ${trialEndDate} — ${price} will be charged`,

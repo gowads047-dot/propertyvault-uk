@@ -47,7 +47,7 @@ export async function POST(req: Request) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const { error: emailError } = await resend.emails.send({
-      from: "Nass at PropertyVault <nass@propertyvaultuk.co.uk>",
+      from: "Nass at PropertyVault <info@propertyvaultuk.co.uk>",
       replyTo: REPLY_TO,
       to: email.trim().toLowerCase(),
       subject: "Your Free Property Starter Pack 🏠",

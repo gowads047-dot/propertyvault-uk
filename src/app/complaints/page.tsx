@@ -35,7 +35,7 @@ export default function ComplaintsPage() {
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">How to Complain</h2>
             <p>If you are unhappy with any aspect of our service, please contact us:</p>
-            <p className="mt-2"><strong>Email:</strong> complaints@propertyvault.uk<br />
+            <p className="mt-2"><strong>Email:</strong> info@propertyvaultuk.co.uk<br />
             <strong>Subject line:</strong> Please include &ldquo;Complaint&rdquo; in the subject line</p>
             <p className="mt-2">Please include:</p>
             <ul className="list-disc pl-6 space-y-1 mt-1">
@@ -58,14 +58,14 @@ export default function ComplaintsPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">If You Are Not Satisfied</h2>
-            <p>If you are not satisfied with our response, you can escalate your complaint by writing to our senior management at escalations@propertyvault.uk. We will review the complaint again independently and respond within 10 working days.</p>
+            <p>If you are not satisfied with our response, you can escalate your complaint by writing to our senior management at info@propertyvaultuk.co.uk. We will review the complaint again independently and respond within 10 working days.</p>
             <p className="mt-2">For complaints about data protection, you can contact the Information Commissioner&apos;s Office (ICO) at ico.org.uk.</p>
             <p className="mt-2">For complaints about content accuracy, you may also contact the Advertising Standards Authority (ASA) at asa.org.uk if you believe any content constitutes misleading advertising.</p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">Content Corrections</h2>
-            <p>If you believe any information on our website is inaccurate, outdated, or misleading, please report it to editorial@propertyvault.uk. We take accuracy seriously and will review and correct any confirmed errors promptly.</p>
+            <p>If you believe any information on our website is inaccurate, outdated, or misleading, please report it to info@propertyvaultuk.co.uk. We take accuracy seriously and will review and correct any confirmed errors promptly.</p>
           </div>
         </div>
       </section>

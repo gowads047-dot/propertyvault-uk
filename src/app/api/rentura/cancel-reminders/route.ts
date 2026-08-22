@@ -75,7 +75,7 @@ export async function POST(req: Request) {
       method: "POST",
       headers: { "Authorization": `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: "Rentura <noreply@propertyvaultuk.co.uk>",
+        from: "Rentura <info@propertyvaultuk.co.uk>",
         replyTo: REPLY_TO,
         to: member.email,
         subject: `⚠️ Your Rentura access expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"} — download your data`,

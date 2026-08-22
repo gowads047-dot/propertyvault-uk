@@ -67,7 +67,7 @@ export default function AccessibilityPage() {
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">Feedback</h2>
             <p>We welcome your feedback on the accessibility of PropertyVault UK. If you encounter accessibility barriers or have suggestions for improvement, please contact us:</p>
-            <p className="mt-2"><strong>Email:</strong> accessibility@propertyvault.uk<br />
+            <p className="mt-2"><strong>Email:</strong> info@propertyvaultuk.co.uk<br />
             We aim to respond to accessibility feedback within 5 working days.</p>
           </div>
 

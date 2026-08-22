@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact PropertyVault UK — Get in Touch",
@@ -41,23 +42,29 @@ export default function ContactPage() {
 
             <div>
               <h2 className="text-xl font-bold text-navy-800 mb-6">Other Ways to Reach Us</h2>
+              {/* One mailbox, so one box. This was four cards each naming a
+                  different address on a domain with no mailbox behind it —
+                  repeating the same address four times would read as a bug. */}
               <div className="space-y-6">
                 <div className="bg-navy-50 rounded-xl p-5">
-                  <h3 className="font-bold text-navy-800 mb-1">General Enquiries</h3>
-                  <p className="text-sm text-navy-600">info@propertyvaultuk.co.uk</p>
-                  
+                  <h3 className="font-bold text-navy-800 mb-1">Email us</h3>
+                  <p className="text-sm text-navy-600">
+                    <a href={`mailto:${CONTACT_EMAIL}`} className="underline">
+                      {CONTACT_EMAIL}
+                    </a>
+                  </p>
+                  <p className="text-sm text-navy-600 mt-2">
+                    One address for everything — general questions, guaranteed rent, listing a
+                    property, advertising and partnerships, press, and privacy or complaints. We aim
+                    to reply within one working day.
+                  </p>
                 </div>
                 <div className="bg-navy-50 rounded-xl p-5">
-                  <h3 className="font-bold text-navy-800 mb-1">Advertising & Partnerships</h3>
-                  <p className="text-sm text-navy-600">partnerships@propertyvault.uk</p>
-                </div>
-                <div className="bg-navy-50 rounded-xl p-5">
-                  <h3 className="font-bold text-navy-800 mb-1">Press & Media</h3>
-                  <p className="text-sm text-navy-600">press@propertyvault.uk</p>
-                </div>
-                <div className="bg-navy-50 rounded-xl p-5">
-                  <h3 className="font-bold text-navy-800 mb-1">Content Contributions</h3>
-                  <p className="text-sm text-navy-600">If you are a qualified professional and would like to contribute expert content, contact editorial@propertyvault.uk</p>
+                  <h3 className="font-bold text-navy-800 mb-1">Writing for us</h3>
+                  <p className="text-sm text-navy-600">
+                    If you are a qualified professional and would like to contribute expert content,
+                    email us with a short outline and your credentials.
+                  </p>
                 </div>
               </div>
             </div>

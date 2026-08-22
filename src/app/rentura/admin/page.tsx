@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { isAdmin } from "@/lib/site";
 
-const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "gowads047@gmail.com";
 
 const C = {
   bg: "#0c0f1a", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
@@ -37,11 +37,11 @@ export default function RenturaAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/rentura/auth");
-    if (!loading && user && user.email !== ADMIN_EMAIL) router.push("/rentura/dashboard");
+    if (!loading && user && !isAdmin(user.email)) router.push("/rentura/dashboard");
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (!user || user.email !== ADMIN_EMAIL) return;
+    if (!user || !isAdmin(user.email)) return;
     Promise.all([
       fetch("/api/admin/users").then(r => r.json()).then(d => ({ data: d.users || [] })),
       supabase.from("rentura_subscriptions").select("*").order("created_at", { ascending: false }),
@@ -62,7 +62,7 @@ export default function RenturaAdmin() {
   }, [user]);
 
   if (loading || dataLoading) return <div style={{ background: C.bg, minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><p style={{ color: C.ink3 }}>Loading admin…</p></div>;
-  if (!user || user.email !== ADMIN_EMAIL) return null;
+  if (!user || !isAdmin(user.email)) return null;
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "var(--font-family-body)", color: C.ink }}>

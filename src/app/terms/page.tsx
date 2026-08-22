@@ -153,7 +153,7 @@ export default function TermsPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">15. Contact</h2>
-            <p>For questions about these Terms, contact us at legal@propertyvault.uk.</p>
+            <p>For questions about these Terms, contact us at info@propertyvaultuk.co.uk.</p>
           </div>
         </div>
       </section>

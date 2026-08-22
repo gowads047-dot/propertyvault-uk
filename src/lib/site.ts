@@ -66,17 +66,49 @@ export const siteMetrics = {
 } as const;
 
 /**
- * Where replies to our transactional email should go.
+ * The one address, for everything.
  *
- * Outbound mail is sent from nass@propertyvaultuk.co.uk, but that domain has
- * no MX record — it serves the website only. Mail *from* a domain needs no MX,
- * so sending works, but a recipient pressing Reply would have their message
- * bounce. Nothing in the app set a reply-to, so every reply to a starter pack
- * or a deal analysis was going nowhere.
+ * The site used to publish ten: privacy@, legal@, press@, editorial@,
+ * partnerships@, complaints@, escalations@ and accessibility@ on
+ * propertyvault.uk, plus hello@ here — and it sent mail from nass@, noreply@
+ * and alerts@ on top. Exactly one mailbox exists (the Hostinger plan allows a
+ * single one), so every other address was a dead end: send-only at best, and a
+ * bounce for anyone who pressed Reply on a starter pack or a rent reminder.
  *
- * This address is already published on the contact page, so it is a mailbox
- * that demonstrably receives. Once a branded mailbox exists on
- * propertyvault.uk — the domain that does have MX, via Tutanota — point this
- * at that instead; it is the only place it needs changing.
+ * Publishing an address nobody reads is worse than publishing none. One
+ * address, one inbox, forwarded to Gmail.
+ *
+ * Everything routes here — the published contact points, the From on outbound
+ * mail, and the Reply-To. Import it rather than writing the string out, so a
+ * future change is one edit and cannot go stale in a corner of the site.
  */
-export const REPLY_TO = "info@propertyvaultuk.co.uk";
+export const CONTACT_EMAIL = "info@propertyvaultuk.co.uk";
+
+/** Where replies to transactional email go. */
+export const REPLY_TO = CONTACT_EMAIL;
+
+/**
+ * The From on outbound mail. Same mailbox, so a reply reaches a human.
+ * Display name kept friendly; automated mail should still feel answerable.
+ */
+export const MAIL_FROM = `PropertyVault UK <${CONTACT_EMAIL}>`;
+
+/**
+ * The account allowed into the admin pages.
+ *
+ * This was the owner's personal Gmail, written out in four files, in a public
+ * repository — which told anyone reading it exactly which account to go after,
+ * and leaked a private address that has no business on the site.
+ *
+ * Read from the environment, with no fallback on purpose. An admin gate that
+ * defaults to a value hardcoded in public source is worse than one that refuses
+ * to open: if NEXT_PUBLIC_ADMIN_EMAIL is unset, isAdmin() denies everyone.
+ * Set it in Vercel → Settings → Environment Variables → Production.
+ */
+export const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL ?? "";
+
+/** Is this signed-in address the admin? Denies everyone when unconfigured. */
+export function isAdmin(email: string | null | undefined): boolean {
+  if (!ADMIN_EMAIL) return false;
+  return (email ?? "").trim().toLowerCase() === ADMIN_EMAIL.trim().toLowerCase();
+}

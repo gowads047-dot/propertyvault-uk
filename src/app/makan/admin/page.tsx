@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { isAdmin } from "@/lib/site";
 
-const ADMIN_EMAIL = "gowads047@gmail.com";
 
 type Tab = "listings" | "enquiries" | "verifications";
 
@@ -41,11 +41,11 @@ export default function MakanAdmin() {
 
   useEffect(() => {
     if (!loading && !user) router.push("/makan/auth");
-    if (!loading && user && user.email !== ADMIN_EMAIL) router.push("/makan");
+    if (!loading && user && !isAdmin(user.email)) router.push("/makan");
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (!user || user.email !== ADMIN_EMAIL) return;
+    if (!user || !isAdmin(user.email)) return;
     Promise.all([
       supabase.from("listings").select("*").order("created_at", { ascending: false }),
       supabase.from("enquiries").select("id, message, created_at, read, listing:listings(title)").order("created_at", { ascending: false }).limit(200),
@@ -96,7 +96,7 @@ export default function MakanAdmin() {
       <p style={{ color: "var(--h-muted)" }}>Loading…</p>
     </div>
   );
-  if (!user || user.email !== ADMIN_EMAIL) return null;
+  if (!user || !isAdmin(user.email)) return null;
 
   return (
     <div style={{ minHeight: "100vh", background: "var(--h-bg)", fontFamily: "var(--font-family-body)", color: "var(--h-text)" }}>

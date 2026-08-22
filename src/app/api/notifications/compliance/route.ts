@@ -53,7 +53,7 @@ export async function GET(req: Request) {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${RESEND_KEY}` },
         body: JSON.stringify({
-          from: "Rentura <alerts@propertyvaultuk.co.uk>",
+          from: "Rentura <info@propertyvaultuk.co.uk>",
           replyTo: REPLY_TO,
           to: alert.email,
           subject: `Action required: ${alert.items.length} compliance alert${alert.items.length > 1 ? "s" : ""}`,
