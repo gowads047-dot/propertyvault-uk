@@ -108,14 +108,14 @@ export default function EPCRetrofitPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Current EPC Rating</label>
-                  <select value={currentEPC} onChange={(e) => setCurrentEPC(e.target.value)}
+                  <select aria-label="Current EPC Rating" value={currentEPC} onChange={(e) => setCurrentEPC(e.target.value)}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>Unknown</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Property Type</label>
-                  <select value={propertyType} onChange={(e) => setPropertyType(e.target.value)}
+                  <select aria-label="Property Type" value={propertyType} onChange={(e) => setPropertyType(e.target.value)}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option value="detached">Detached House</option>
                     <option value="semi-detached">Semi-Detached House</option>
@@ -149,7 +149,7 @@ export default function EPCRetrofitPage() {
                           {m.enabled && (
                             <div className="mt-2">
                               <label className="text-xs text-navy-600 font-medium">Cost (£)</label>
-                              <input type="number" min="0" value={m.cost} onChange={(e) => updateCost(m.id, Number(e.target.value))}
+                              <input aria-label="Cost (£)" type="number" min="0" value={m.cost} onChange={(e) => updateCost(m.id, Number(e.target.value))}
                                 className="w-32 px-3 py-1.5 border border-navy-200 rounded-lg text-sm ml-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
                             </div>
                           )}
@@ -165,13 +165,13 @@ export default function EPCRetrofitPage() {
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Grant Funding Available (£)</label>
                   <p className="text-xs text-navy-400 mb-2">e.g. ECO4, Great British Insulation Scheme, Boiler Upgrade Scheme, local authority grants</p>
-                  <input type="number" min="0" value={grantAmount} onChange={e => setGrantAmount(nonNegative(e.target.value))}
+                  <input aria-label="Grant Funding Available (£)" type="number" min="0" value={grantAmount} onChange={e => setGrantAmount(nonNegative(e.target.value))}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Estimated Annual Energy Savings (£)</label>
                   <p className="text-xs text-navy-400 mb-2">How much you expect to save per year on energy bills after improvements</p>
-                  <input type="number" min="0" value={annualSavings} onChange={e => setAnnualSavings(nonNegative(e.target.value))}
+                  <input aria-label="Estimated Annual Energy Savings (£)" type="number" min="0" value={annualSavings} onChange={e => setAnnualSavings(nonNegative(e.target.value))}
                     className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
               </div>

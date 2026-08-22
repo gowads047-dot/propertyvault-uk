@@ -80,7 +80,7 @@ export default function HMOYieldPage() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Purchase Price / Property Value</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Purchase Price / Property Value" type="number" min="0" value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
 
               <div className="flex items-center justify-between">

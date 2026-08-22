@@ -89,17 +89,17 @@ export default function Section24Page() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Rental Income</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Annual Rental Income" type="number" min="0" value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Mortgage Interest</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Annual Mortgage Interest" type="number" min="0" value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Other Allowable Expenses (insurance, repairs, agent fees)</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={allowableExpenses} onChange={e => setAllowableExpenses(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Other Allowable Expenses (insurance, repairs, agent fees)" type="number" min="0" value={allowableExpenses} onChange={e => setAllowableExpenses(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">

@@ -72,7 +72,7 @@ export default function MovingCostsPage() {
           <div className="mb-6">
             <label className="block text-sm font-semibold text-navy-700 mb-1">Property Purchase Price</label>
             <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-            <input type="number" min="0" value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+            <input aria-label="Property Purchase Price" type="number" min="0" value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold text-lg focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             <div className="flex gap-4 mt-2">
               <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" checked={isFirstTime} onChange={(e) => { setIsFirstTime(e.target.checked); if (e.target.checked) setIsAdditional(false); }} className="rounded" /> First-time buyer</label>
               <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" checked={isAdditional} onChange={(e) => { setIsAdditional(e.target.checked); if (e.target.checked) setIsFirstTime(false); }} className="rounded" /> Additional property (+5%)</label>

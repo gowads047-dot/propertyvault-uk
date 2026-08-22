@@ -72,7 +72,7 @@ export default function RemortgagePage() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Outstanding Mortgage Balance</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={outstandingBalance} onChange={e => setOutstandingBalance(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Outstanding Mortgage Balance" type="number" min="0" value={outstandingBalance} onChange={e => setOutstandingBalance(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="block text-sm font-semibold text-navy-700 mb-1">Current Rate ({currentRate}%)</label><input type="range" min={1} max={10} step={0.1} value={currentRate} onChange={e => setCurrentRate(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>

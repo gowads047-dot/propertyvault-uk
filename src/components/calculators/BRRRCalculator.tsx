@@ -60,7 +60,7 @@ export function BRRRCalculator() {
             <label className="block text-xs font-semibold text-navy-600 mb-1">Purchase Price</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-              <input type="number" min="0" step={1000} value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))}
+              <input aria-label="Purchase Price" type="number" min="0" step={1000} value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))}
                 className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
             </div>
           </div>
@@ -68,7 +68,7 @@ export function BRRRCalculator() {
             <label className="block text-xs font-semibold text-navy-600 mb-1">Purchase Costs</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-              <input type="number" min="0" step={500} value={purchaseCosts} onChange={e => setPurchaseCosts(nonNegative(e.target.value))}
+              <input aria-label="Purchase Costs" type="number" min="0" step={500} value={purchaseCosts} onChange={e => setPurchaseCosts(nonNegative(e.target.value))}
                 className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
             </div>
           </div>
@@ -79,7 +79,7 @@ export function BRRRCalculator() {
           <label className="block text-xs font-semibold text-navy-600 mb-1">Refurbishment Cost</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-            <input type="number" min="0" step={1000} value={refurbCost} onChange={e => setRefurbCost(nonNegative(e.target.value))}
+            <input aria-label="Refurbishment Cost" type="number" min="0" step={1000} value={refurbCost} onChange={e => setRefurbCost(nonNegative(e.target.value))}
               className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>
@@ -87,7 +87,7 @@ export function BRRRCalculator() {
           <label className="block text-xs font-semibold text-navy-600 mb-1">After Repair Value (ARV)</label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-            <input type="number" min="0" step={5000} value={afterRepairValue} onChange={e => setAfterRepairValue(nonNegative(e.target.value))}
+            <input aria-label="After Repair Value (ARV)" type="number" min="0" step={5000} value={afterRepairValue} onChange={e => setAfterRepairValue(nonNegative(e.target.value))}
               className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
           </div>
         </div>
@@ -98,7 +98,7 @@ export function BRRRCalculator() {
             <label className="block text-xs font-semibold text-navy-600 mb-1">Monthly Rent</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-              <input type="number" min="0" step={25} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))}
+              <input aria-label="Monthly Rent" type="number" min="0" step={25} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))}
                 className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
             </div>
           </div>
@@ -106,7 +106,7 @@ export function BRRRCalculator() {
             <label className="block text-xs font-semibold text-navy-600 mb-1">Monthly Expenses</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-              <input type="number" min="0" step={25} value={monthlyExpenses} onChange={e => setMonthlyExpenses(nonNegative(e.target.value))}
+              <input aria-label="Monthly Expenses" type="number" min="0" step={25} value={monthlyExpenses} onChange={e => setMonthlyExpenses(nonNegative(e.target.value))}
                 className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-lg text-navy-800 font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
             </div>
           </div>
@@ -116,11 +116,11 @@ export function BRRRCalculator() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-navy-600 mb-1">LTV ({refinanceLTV}%)</label>
-            <input type="range" min={50} max={85} step={1} value={refinanceLTV} onChange={e => setRefinanceLTV(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+            <input aria-label="LTV" type="range" min={50} max={85} step={1} value={refinanceLTV} onChange={e => setRefinanceLTV(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           </div>
           <div>
             <label className="block text-xs font-semibold text-navy-600 mb-1">Rate ({refinanceRate}%)</label>
-            <input type="range" min={2} max={10} step={0.1} value={refinanceRate} onChange={e => setRefinanceRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+            <input aria-label="Rate" type="range" min={2} max={10} step={0.1} value={refinanceRate} onChange={e => setRefinanceRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           </div>
         </div>
       </div>

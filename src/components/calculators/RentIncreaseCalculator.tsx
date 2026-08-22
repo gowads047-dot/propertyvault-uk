@@ -34,7 +34,7 @@ export function RentIncreaseCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Current Tenancy</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Current Monthly Rent</label>
-          <input type="range" min={400} max={3000} step={25} value={currentRent} onChange={e => setCurrentRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Current Monthly Rent" type="range" min={400} max={3000} step={25} value={currentRent} onChange={e => setCurrentRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(currentRent)}/month</p>
         </div>
 
@@ -46,27 +46,27 @@ export function RentIncreaseCalculator() {
         {increaseType === "percent" ? (
           <div>
             <label className="block text-sm font-semibold text-navy-700 mb-1">Increase Percentage</label>
-            <input type="range" min={1} max={20} step={0.5} value={increasePercent} onChange={e => setIncreasePercent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+            <input aria-label="Increase Percentage" type="range" min={1} max={20} step={0.5} value={increasePercent} onChange={e => setIncreasePercent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center font-bold text-navy-800">{increasePercent}%</p>
           </div>
         ) : (
           <div>
             <label className="block text-sm font-semibold text-navy-700 mb-1">Fixed Monthly Increase</label>
-            <input type="range" min={10} max={500} step={5} value={increaseFixed} onChange={e => setIncreaseFixed(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+            <input aria-label="Fixed Monthly Increase" type="range" min={10} max={500} step={5} value={increaseFixed} onChange={e => setIncreaseFixed(nonNegative(e.target.value))} className="w-full accent-gold-500" />
             <p className="text-center font-bold text-navy-800">+{fmt(increaseFixed)}/month</p>
           </div>
         )}
 
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Months before increase takes effect</label>
-          <input type="range" min={0} max={24} step={1} value={monthsUntilIncrease} onChange={e => setMonthsUntilIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Months before increase takes effect" type="range" min={0} max={24} step={1} value={monthsUntilIncrease} onChange={e => setMonthsUntilIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{monthsUntilIncrease === 0 ? "Immediate" : `${monthsUntilIncrease} month${monthsUntilIncrease !== 1 ? "s" : ""}`}</p>
         </div>
 
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Section 13 Notice</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Notice period you plan to give</label>
-          <input type="range" min={1} max={8} step={1} value={noticeWeeks} onChange={e => setNoticeWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Notice period you plan to give" type="range" min={1} max={8} step={1} value={noticeWeeks} onChange={e => setNoticeWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{noticeWeeks} week{noticeWeeks !== 1 ? "s" : ""} ({results.noticeDays} days)</p>
         </div>
         <div className={`rounded-xl px-4 py-3 text-sm font-semibold ${results.validS13 ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"}`}>

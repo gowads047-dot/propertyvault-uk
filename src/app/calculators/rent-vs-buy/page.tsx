@@ -79,7 +79,7 @@ export default function RentVsBuyPage() {
               <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Buying Scenario</h3>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Property Price</label>
-                <input type="range" min={100000} max={1000000} step={5000} value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+                <input aria-label="Property Price" type="range" min={100000} max={1000000} step={5000} value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full accent-gold-500" />
                 <p className="text-center font-bold text-navy-800">{fmt(propertyPrice)}</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -93,7 +93,7 @@ export default function RentVsBuyPage() {
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Current Monthly Rent</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Current Monthly Rent" type="number" min="0" value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Rent Increase ({annualRentIncrease}%)</label><input type="range" min={0} max={10} step={0.5} value={annualRentIncrease} onChange={e => setAnnualRentIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
 

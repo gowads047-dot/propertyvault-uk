@@ -42,23 +42,23 @@ export function LandlordTaxCalculator() {
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Rental Income</label>
-          <input type="range" min={3000} max={60000} step={500} value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Annual Rental Income" type="range" min={3000} max={60000} step={500} value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(rentalIncome)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Allowable Expenses (repairs, insurance, agent fees etc.)</label>
-          <input type="range" min={0} max={15000} step={250} value={expenses} onChange={e => setExpenses(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Allowable Expenses (repairs, insurance, agent fees etc.)" type="range" min={0} max={15000} step={250} value={expenses} onChange={e => setExpenses(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(expenses)}</p>
         </div>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Mortgage Interest</label>
-          <input type="range" min={0} max={30000} step={250} value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Annual Mortgage Interest" type="range" min={0} max={30000} step={250} value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(mortgageInterest)}</p>
         </div>
         <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Your Other Income</h3>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Employment / Self-Employment Income</label>
-          <input type="range" min={0} max={150000} step={1000} value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />
+          <input aria-label="Employment / Self-Employment Income" type="range" min={0} max={150000} step={1000} value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(otherIncome)}</p>
         </div>
         <div className="bg-navy-50 rounded-xl p-4 text-xs text-navy-600">
