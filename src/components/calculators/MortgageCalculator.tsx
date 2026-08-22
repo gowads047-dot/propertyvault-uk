@@ -19,7 +19,7 @@ function Slider({ label, value, onChange, min, max, step, display }: {
         <label className="text-sm font-semibold text-navy-700">{label}</label>
         <span className="text-sm font-bold text-navy-800 bg-navy-50 px-3 py-1 rounded-lg">{display}</span>
       </div>
-      <input type="range" min={min} max={max} step={step} value={value}
+      <input aria-label={label} type="range" min={min} max={max} step={step} value={value}
         onChange={e => onChange(Number(e.target.value))}
         className="w-full accent-gold-500 cursor-pointer" />
     </div>

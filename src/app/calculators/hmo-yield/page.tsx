@@ -114,7 +114,7 @@ export default function HMOYieldPage() {
                 ].map((c) => (
                   <div key={c.label}><label className="block text-xs text-navy-600 mb-0.5">{c.label}</label>
                   <div className="relative"><span className="absolute left-2 top-1/2 -translate-y-1/2 text-navy-400 text-xs">£</span>
-                  <input type="number" min="0" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-full pl-6 pr-2 py-1.5 border border-navy-200 rounded text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                  <input aria-label={c.label} type="number" min="0" value={c.value} onChange={(e) => c.set(Number(e.target.value))} className="w-full pl-6 pr-2 py-1.5 border border-navy-200 rounded text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 ))}
               </div>
             </div>
