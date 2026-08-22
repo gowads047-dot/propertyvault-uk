@@ -44,3 +44,8 @@ next-env.d.ts
 
 # One-off backfill ledger — contains subscriber email addresses
 scripts/.backfill-sent.json
+
+# Belt and braces on a public repo: .env.local holds every credential the
+# site has, and one mis-typed `git add` would publish them. `.vercel` is
+# already covered above; this catches every .env variant.
+.env*
