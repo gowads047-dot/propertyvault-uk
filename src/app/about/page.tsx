@@ -50,6 +50,14 @@ export default function AboutPage() {
           <h2 className="text-3xl font-bold text-navy-800 mb-8">Where it started</h2>
           <div className="space-y-5 text-navy-600 text-lg leading-relaxed">
             <p>
+              I&apos;m an ordinary guy with a passion for property. No fund behind me, no course to sell, no overnight
+              story. I started out around 2013, and more than a decade later I am still at it.
+            </p>
+            <p>
+              That is the whole of my credential, and I would rather say it plainly than dress it up. Everything on
+              this site was built by someone still doing the thing, not someone who did it once and now teaches it.
+            </p>
+            <p>
               When I started looking seriously at property investment — BTL, BRRR, Section 24, HMOs — I quickly realised the information landscape was broken. Mortgage guides were written by banks whose goal was to get you to apply. Tax explanations were buried in HMRC jargon. The calculators that actually modelled real scenarios were all behind expensive course paywalls.
             </p>
             <p>
@@ -64,7 +72,7 @@ export default function AboutPage() {
             <p>
               Then the gaps became obvious. Landlords needed operational infrastructure, not just one-off guides — so we built{" "}
               <strong className="text-navy-800">Rentura</strong>, a proper portfolio management platform. Aspiring deal sourcers were wasting thousands on theory-heavy courses and getting no results — so we built the{" "}
-              <strong className="text-navy-800">Academy</strong>, with real tools and Nass answering personally on the Q&amp;A board. And diaspora communities — UK families wanting to invest back home in Egypt, Morocco, and across North Africa — had nowhere to find verified property without paying an agent 3% to open a door — so we built{" "}
+              <strong className="text-navy-800">Academy</strong>, with real tools and me answering personally on the Q&amp;A board. And diaspora communities — UK families wanting to invest back home in Egypt, Morocco, and across North Africa — had nowhere to find verified property without paying an agent 3% to open a door — so we built{" "}
               <strong className="text-navy-800">Makan</strong>.
             </p>
             <p>
