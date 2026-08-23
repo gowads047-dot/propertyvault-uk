@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display, Plus_Jakarta_Sans, Noto_Sans_Arabic } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -10,9 +10,43 @@ import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 
+/**
+ * Fonts are self-hosted through next/font rather than pulled from Google.
+ *
+ * globals.css used to @import all of these from fonts.googleapis.com, which put
+ * them on a three-hop serial critical path: the browser had to fetch the app's
+ * CSS chunk (~106ms), parse it to discover the @import, fetch Google's CSS
+ * (~127ms), parse that to discover the files, then fetch the woff2 (~114ms) —
+ * roughly 350ms before a heading could paint in the right face, with a fresh
+ * DNS and TLS handshake to two Google hosts along the way and no preconnect.
+ *
+ * next/font emits the files from our own origin and injects a <link rel=preload>
+ * at HTML parse time, so the chain collapses to a single parallel fetch.
+ */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+/** Every heading on the site. Worth preloading. */
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+});
+
+/** Makan only — declared but not preloaded, so the rest of the site pays nothing. */
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  preload: false,
+});
+
+/** Only rendered when Makan is switched to Arabic. Same reasoning. */
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-noto-arabic",
+  subsets: ["arabic"],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -148,7 +182,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="en-GB"
+      className={`${inter.variable} ${playfair.variable} ${jakarta.variable} ${notoArabic.variable} h-full antialiased`}
+    >
       <head>
         <script
           type="application/ld+json"

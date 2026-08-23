@@ -300,7 +300,7 @@ export default function ListingPage() {
 
   // Detect Arabic/RTL content
   const isRTL = /[؀-ۿ]/.test(listing.description || listing.title);
-  const arabicFont = "'Noto Sans Arabic', 'Plus Jakarta Sans', system-ui, sans-serif";
+  const arabicFont = "var(--font-noto-arabic), var(--font-jakarta), system-ui, sans-serif";
 
   // WhatsApp message — tailored per listing type
   const waMessage = forSale

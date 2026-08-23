@@ -33,7 +33,7 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <LangContext.Provider value={{ lang, setLang, t, dir }}>
-      <div dir={dir} style={{ fontFamily: lang === "ar" ? "'Noto Sans Arabic', 'Inter', system-ui, sans-serif" : undefined }}>
+      <div dir={dir} style={{ fontFamily: lang === "ar" ? "var(--font-noto-arabic), var(--font-inter), system-ui, sans-serif" : undefined }}>
         {children}
       </div>
     </LangContext.Provider>
