@@ -12,7 +12,7 @@ const FEATURES = [
   {
     icon: "🇲🇦",
     title: "Morocco Listings",
-    desc: "Marrakech, Casablanca, Agadir, Rabat — buy or invest in Moroccan property with listings verified by local partners. Pricing in both GBP and MAD.",
+    desc: "Marrakech, Casablanca, Agadir, Rabat — buy or invest in Moroccan property, with pricing shown in both GBP and MAD.",
   },
   {
     icon: "🌍",
@@ -27,12 +27,12 @@ const FEATURES = [
   {
     icon: "🔍",
     title: "Smart Bilingual Search",
-    desc: "Search in Arabic or English and get the same results. Our search understands both languages natively — no clunky auto-translation.",
+    desc: "Search in Arabic or English and get the same results. Makan's search will read both languages natively — no clunky auto-translation.",
   },
   {
     icon: "✅",
-    title: "Verified Listings Only",
-    desc: "Every landlord and agent is verified before listing. No ghost properties, no fake photos, no bait-and-switch. What you see is what exists.",
+    title: "Verified Landlords",
+    desc: "Landlords and agents will be identity-checked before they can list, so a listing means a real property with a real person behind it.",
   },
   {
     icon: "💬",
@@ -42,7 +42,7 @@ const FEATURES = [
   {
     icon: "🆓",
     title: "Free to List",
-    desc: "Landlords and agents list for free. Always. Makan makes its money on premium placements and featured listings — never by charging the people listing their properties.",
+    desc: "Landlords and agents will list for free. Always. Makan will make its money on premium placements and featured listings — never by charging the people listing their properties.",
   },
 ];
 
@@ -198,8 +198,8 @@ export default function MakanPage() {
       <section className="py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Platform Features</p>
-            <h2 className="text-3xl font-black">Everything on Makan</h2>
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Planned At Launch</p>
+            <h2 className="text-3xl font-black">What Makan Will Do</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {FEATURES.map((f) => (

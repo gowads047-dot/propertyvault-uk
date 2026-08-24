@@ -21,7 +21,20 @@ import { join } from "node:path";
  * has no business being advertised in the sitemap. Kept here so the two files
  * agree by construction rather than by somebody remembering.
  */
-export const CRAWL_EXCLUDED = ["/rentura/", "/academy/", "/tenant/", "/api/"] as const;
+export const CRAWL_EXCLUDED = [
+  "/rentura/",
+  "/academy/",
+  "/tenant/",
+  "/api/",
+  // Makan's signed-in surfaces. Unlike Rentura and Academy these are not a
+  // whole subtree — /makan, /makan/rooms, /makan/gcc and the rest are public
+  // marketing — so the app pages are listed individually rather than by prefix.
+  "/makan/admin/",
+  "/makan/dashboard/",
+  "/makan/settings/",
+  "/makan/messages/",
+  "/makan/auth/",
+] as const;
 
 /**
  * Landing pages that are public marketing even though the app beneath them is

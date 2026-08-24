@@ -1,3 +1,21 @@
+-- ############################################################
+-- ##  DEMO DATA — LOCAL USE ONLY. DO NOT RUN IN PRODUCTION. ##
+-- ############################################################
+--
+-- Every row below is invented. The properties do not exist, and the copy
+-- carries fabricated financial claims: "90%+ occupancy in high season on
+-- Airbnb", "12-15% rental yield projected", "6.1% gross yield", "motivated
+-- seller", "Currently generating 60-80k MAD/mo as a guesthouse".
+--
+-- Published to a real user those would be a misleading commercial practice
+-- under the Consumer Protection from Unfair Trading Regulations, and the
+-- liability sits with the publisher.
+--
+-- Production is clean as of 24 Aug 2026 (/makan/rooms/ returns 0 rooms).
+-- Keep it that way. If you need data for screenshots, run this against a
+-- local Supabase instance and label every row visibly as a sample.
+--
+
 -- ============================================================
 -- MAKAN: 50 Realistic Listings Across 10 Countries
 -- Run in: Supabase Dashboard → SQL Editor → New Query

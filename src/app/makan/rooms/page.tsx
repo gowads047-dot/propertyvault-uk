@@ -228,6 +228,13 @@ export default function RoomsPage() {
                 );
               })}
             </div>
+          ) : rooms.length === 0 ? (
+            <div className="text-center py-20 rounded-2xl" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+              <p className="text-4xl mb-4">🛏</p>
+              <p className="text-lg font-bold mb-1" style={{ color: "var(--h-text)" }}>No rooms listed yet</p>
+              <p className="text-sm mb-6" style={{ color: "var(--h-muted)" }}>Makan is just getting started. Be the first to list a room here.</p>
+              <Link href="/makan/list" className="h-btn h-btn-primary">List a room free →</Link>
+            </div>
           ) : (
             <div className="text-center py-20 rounded-2xl" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
               <p className="text-4xl mb-4">🛏</p>
@@ -252,7 +259,7 @@ export default function RoomsPage() {
           {/* Safety note */}
           <div className="mt-6 flex flex-col sm:flex-row gap-4 text-xs" style={{ color: "var(--h-subtle)" }}>
             <p>🛡 Never pay a deposit before viewing in person.</p>
-            <p>🔐 All landlords are verified at account creation.</p>
+            <p>🔐 Makan does not verify landlord identity yet — always check ID in person.</p>
             <p>📄 Always get a written tenancy agreement.</p>
           </div>
         </div>

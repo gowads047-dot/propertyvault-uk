@@ -26,6 +26,14 @@ export default function robots(): MetadataRoute.Robots {
           "/academy/",
           "/tenant/",
           "/api/",
+          // Makan's signed-in surfaces. The public Makan pages above them
+          // (/makan, /makan/rooms, /makan/gcc, /makan/compliance and the rest)
+          // stay crawlable — only these five are blocked.
+          "/makan/admin/",
+          "/makan/dashboard/",
+          "/makan/settings/",
+          "/makan/messages/",
+          "/makan/auth/",
         ],
       },
     ],

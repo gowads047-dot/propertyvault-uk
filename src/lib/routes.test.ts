@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { join, sep } from "node:path";
 import sitemap from "../app/sitemap";
 import robots from "../app/robots";
 import { staticRoutes, isIndexable, CRAWL_EXCLUDED, CRAWL_ALLOWED_EXCEPTIONS } from "./routes";
@@ -130,5 +130,54 @@ describe("route enumeration", () => {
 
     // /tenant is a login form, not marketing — it stays out.
     expect(isIndexable("/tenant")).toBe(false);
+  });
+});
+
+/**
+ * Makan's indexing rules.
+ *
+ * Two bugs lived here at once. The five signed-in pages were being advertised
+ * in the sitemap, and src/app/makan/layout.tsx set a single canonical of
+ * /makan/ that every page below it inherited — so /makan/rooms/,
+ * /makan/wanted/, /makan/list/ and every /makan/listing/<id>/ told Google they
+ * were duplicates of the Makan homepage and could never be indexed on their
+ * own. The homepage now lives in a (home) route group so it can own its
+ * canonical without passing it down.
+ */
+describe("makan indexing", () => {
+  const APP_PAGES = ["/makan/admin", "/makan/dashboard", "/makan/settings", "/makan/messages", "/makan/auth"];
+  const PUBLIC_PAGES = ["/makan", "/makan/rooms", "/makan/wanted", "/makan/list", "/makan/gcc", "/makan/compliance"];
+
+  it.each(APP_PAGES)("keeps %s out of the sitemap", route => {
+    expect(isIndexable(route)).toBe(false);
+    expect(paths).not.toContain(route);
+  });
+
+  it.each(APP_PAGES)("disallows %s in robots.txt", route => {
+    const disallow = robots().rules;
+    const list = (Array.isArray(disallow) ? disallow : [disallow]).flatMap(r =>
+      Array.isArray(r.disallow) ? r.disallow : r.disallow ? [r.disallow] : []);
+    expect(list).toContain(route + "/");
+  });
+
+  it.each(PUBLIC_PAGES)("keeps %s in the sitemap", route => {
+    expect(paths).toContain(route);
+  });
+
+  it("has no canonical on the shared makan layout", () => {
+    const layout = readFileSync(join(appDir, "makan", "layout.tsx"), "utf8");
+    expect(layout).not.toMatch(/alternates/);
+  });
+
+  it("gives every indexed makan page its own canonical", () => {
+    for (const route of PUBLIC_PAGES) {
+      const seg = route === "/makan" ? join("makan", "(home)") : route.slice(1).split("/").join(sep);
+      const own = ["layout.tsx", "page.tsx"]
+        .map(n => join(appDir, seg, n))
+        .filter(p => existsSync(p))
+        .map(p => readFileSync(p, "utf8"))
+        .join("");
+      expect(own, route).toMatch(new RegExp("canonical"));
+    }
   });
 });
