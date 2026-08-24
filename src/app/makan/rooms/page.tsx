@@ -73,7 +73,7 @@ export default function RoomsPage() {
       <section className="py-14" style={{ background: "var(--h-slate)" }}>
         <div className="h-container">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4" style={{ background: "rgba(232,85,61,0.15)", color: "var(--h-accent)" }}>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4" style={{ background: "rgba(232,85,61,0.15)", color: "#f08a76" }}>
               🛏 Room rentals
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold mb-3 text-white leading-tight">

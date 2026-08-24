@@ -43,9 +43,21 @@ html.dark {
 
 html.dark .bg-cream { background-color: #111827 !important; }
 
-/* Makan is ALWAYS light mode — reset everything */
-html.dark .hetta,
-html.dark .hetta * {
+/* Makan is ALWAYS light mode — reset everything.
+ *
+ * The universal selector used to be included here, as `html.dark .hetta *`.
+ * That is a blunter instrument than it looks: `color: inherit` on every
+ * descendant, at specificity (0,2,1), beats the component rules further down
+ * this file — `.hetta .h-btn-primary { color: #ffffff }` among them — so in
+ * dark mode every Makan button kept its coral background but took its text
+ * colour from whatever happened to surround it. A primary button inside a
+ * light card rendered dark ink on coral at 4.14:1, while the same button in a
+ * dark panel rendered white. Same class, two different colours, decided by
+ * the parent.
+ *
+ * Setting the colour on `.hetta` alone is enough: descendants inherit from it
+ * normally, and components that declare their own colour keep it. */
+html.dark .hetta {
   color: inherit;
 }
 .hetta {
@@ -240,11 +252,23 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3 {
-  font-family: var(--font-family-heading);
-  font-weight: 700;
-  color: #0f1b36;
-  line-height: 1.15;
+/* In @layer base so Tailwind utilities can override it.
+ *
+ * Tailwind 4 puts every utility in @layer utilities, and unlayered CSS beats
+ * every layer no matter how weak its selector. Written bare, this rule --
+ * specificity (0,0,1) -- silently won against .text-white on every heading on
+ * the site, so a white heading on a dark section rendered navy-on-navy. It is
+ * the reason the Makan homepage headings measure ~1.05:1 against a 3:1 floor.
+ *
+ * Layered, an unstyled heading still gets this colour, and text-white wins
+ * where somebody asked for it. */
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    color: #0f1b36;
+    line-height: 1.15;
+  }
 }
 
 h4, h5, h6 {
@@ -416,10 +440,20 @@ input::placeholder, textarea::placeholder {
   --h-surface: #ffffff;
   --h-text: #111111;
   --h-muted: #555555;
-  --h-subtle: #999999;
+  /* Was #999999, which is 2.85:1 on white and 2.66:1 on --h-bg -- below the
+     4.5:1 AA floor for body text. It went unnoticed while .hetta was never
+     applied and the token resolved to nothing. #6b6b6b clears AA on both
+     surfaces (5.33 and 4.98) and still reads as de-emphasised. */
+  --h-subtle: #6b6b6b;
   --h-border: #e5e2de;
-  --h-accent: #e8553d;
-  --h-accent-hover: #d14530;
+  /* Was #e8553d, which gives 3.62:1 both as text on white and as a button
+     background under white text -- short of the 4.5:1 AA floor for the small
+     text it is actually used for. #d14530 was already the palette's hover
+     shade, so this is the design system's own colour rather than a new one,
+     and it clears AA at 4.56:1. Hover steps down one further.
+     Revert both lines to go back to the original coral. */
+  --h-accent: #d14530;
+  --h-accent-hover: #bd3a24;
   --h-accent-light: #fef0ed;
   --h-warm: #f4efe9;
   --h-slate: #1e1e1e;
@@ -433,12 +467,17 @@ input::placeholder, textarea::placeholder {
   letter-spacing: -0.01em;
 }
 
-.hetta h1, .hetta h2, .hetta h3 {
-  font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
-  font-weight: 800;
-  color: var(--h-text);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+/* Layered for the same reason as the site-wide h1/h2/h3 rule above: unlayered,
+ * this beat .text-white on every Makan heading, which put dark ink on the dark
+ * hero and CTA panels. */
+@layer base {
+  .hetta h1, .hetta h2, .hetta h3 {
+    font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+    font-weight: 800;
+    color: var(--h-text);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
 }
 
 .hetta .h-container {

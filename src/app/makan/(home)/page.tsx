@@ -165,7 +165,7 @@ export default function MakanPage() {
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">What is Makan?</p>
-            <h2 className="text-3xl font-black mb-5">Property Search Built for a Community That Was Ignored</h2>
+            <h2 className="text-3xl font-black text-white mb-5">Property Search Built for a Community That Was Ignored</h2>
             <div className="space-y-4 text-white/70 leading-relaxed text-sm">
               <p>There are over <strong className="text-white">600,000 Arab-speaking people</strong> living in the UK — and until now, every property platform assumed they only spoke English and only wanted properties in one country.</p>
               <p>Makan is built for the Arab diaspora. Whether you&apos;re a family in Birmingham searching for a home, an investor comparing yields in Nottingham vs Marrakech, or a student looking for a room near your university — Makan speaks your language.</p>
@@ -199,7 +199,7 @@ export default function MakanPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Planned At Launch</p>
-            <h2 className="text-3xl font-black">What Makan Will Do</h2>
+            <h2 className="text-3xl font-black text-white">What Makan Will Do</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {FEATURES.map((f) => (
@@ -220,7 +220,7 @@ export default function MakanPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Where We&apos;re Launching</p>
-            <h2 className="text-3xl font-black">From the UK to North Africa and Beyond</h2>
+            <h2 className="text-3xl font-black text-white">From the UK to North Africa and Beyond</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {MARKETS.map((m) => (
@@ -246,7 +246,7 @@ export default function MakanPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Who Makan Is For</p>
-            <h2 className="text-3xl font-black">Built for Your Community</h2>
+            <h2 className="text-3xl font-black text-white">Built for Your Community</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -268,7 +268,7 @@ export default function MakanPage() {
       <section className="bg-[#0f1b36] py-20 px-6">
         <div className="max-w-xl mx-auto text-center">
           <div className="text-4xl mb-4" style={{ fontFamily: "serif" }}>مكان</div>
-          <h2 className="text-3xl font-black mb-3">Be First Through the Door</h2>
+          <h2 className="text-3xl font-black text-white mb-3">Be First Through the Door</h2>
           <p className="text-white/50 mb-8">Join the waitlist and be notified the moment Makan launches. Early users get priority listing placement.</p>
           {submitted ? (
             <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">

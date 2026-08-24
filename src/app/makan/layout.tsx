@@ -28,10 +28,27 @@ export const metadata: Metadata = {
 // it useLang() fell back to a default whose t() returns the key it was given,
 // so /makan/list rendered the literal strings "list.signinRequired" and
 // "nav.signup" to users, and dir never became "rtl" for Arabic.
+//
+// The "hetta" class carries Makan's entire design system. globals.css defines
+// --h-bg, --h-accent, --h-slate and the rest on ".hetta", along with every
+// .h-btn, .h-card, .h-input and .h-container rule scoped beneath it.
+//
+// Nothing in the app ever applied that class, so all of it was dead. Every
+// var(--h-slate) resolved to nothing, .h-btn rendered as unstyled block text
+// with no radius or background, and .h-container had no max-width. The worst
+// of it was the hero copy, which sets its colour inline as
+// rgba(255,255,255,0.6) against a section background that never went dark:
+// white on cream, measured on the live site at 1.03:1 against the 4.5:1 AA
+// floor. The sentence explaining what /makan/rooms is was invisible.
+//
+// Scoped here rather than on <body> so the palette cannot leak into the rest
+// of PropertyVault, which is why it was written as .hetta in the first place.
 export default function MakanLayout({ children }: { children: React.ReactNode }) {
   return (
-    <LangProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </LangProvider>
+    <div className="hetta">
+      <LangProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </LangProvider>
+    </div>
   );
 }
