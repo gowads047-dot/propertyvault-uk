@@ -34,6 +34,9 @@ export const CRAWL_EXCLUDED = [
   "/makan/settings/",
   "/makan/messages/",
   "/makan/auth/",
+  // Everything under /makan/app is signed-in by definition, so it goes in as a
+  // single prefix rather than one entry per page.
+  "/makan/app/",
 ] as const;
 
 /**

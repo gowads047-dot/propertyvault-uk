@@ -218,7 +218,7 @@ export interface SpaceQueryRow {
   makan_unit: {
     id: string;
     label: string;
-    makan_building: { id: string; address_line1: string; postcode: string } | null;
+    makan_building: { id: string; address_line1: string; postcode: string; org_id?: string } | null;
   } | null;
   makan_listing: { channel: string; published_at: string | null }[] | null;
 }
@@ -252,4 +252,18 @@ export function toRows(data: SpaceQueryRow[]): InventoryRow[] {
     });
   }
   return out;
+}
+
+/**
+ * Does this Supabase error mean the room tables have not been created yet?
+ *
+ * There are two codes because there are two layers. PostgREST answers from its
+ * own schema cache and returns PGRST205 without the query ever reaching
+ * Postgres; 42P01 is Postgres's own undefined_table, which is what comes back
+ * if the cache is warm but the table has since gone. Checking only for 42P01
+ * silently misses the common case -- verified against the live project, which
+ * returns PGRST205 for a table that has never existed.
+ */
+export function isMissingTable(code: string | undefined | null): boolean {
+  return code === "PGRST205" || code === "42P01";
 }

@@ -34,6 +34,7 @@ export default function robots(): MetadataRoute.Robots {
           "/makan/settings/",
           "/makan/messages/",
           "/makan/auth/",
+          "/makan/app/",
         ],
       },
     ],

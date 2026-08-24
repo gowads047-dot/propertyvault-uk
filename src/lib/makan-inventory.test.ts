@@ -13,6 +13,7 @@ import {
   shouldOfferPublish,
   visibilityLabel,
   toRows,
+  isMissingTable,
   STALE_AFTER_DAYS,
   type InventoryRow,
   type SpaceStatus,
@@ -287,5 +288,21 @@ describe("toRows", () => {
 
   it("tolerates a null listing array", () => {
     expect(toRows([{ ...base, makan_listing: null }])).toHaveLength(1);
+  });
+});
+
+describe("isMissingTable", () => {
+  it("recognises the PostgREST schema-cache code the live project returns", () => {
+    expect(isMissingTable("PGRST205")).toBe(true);
+  });
+
+  it("recognises Postgres's own undefined_table", () => {
+    expect(isMissingTable("42P01")).toBe(true);
+  });
+
+  it("does not swallow other failures", () => {
+    for (const code of ["42501", "PGRST116", "23505", undefined, null, ""]) {
+      expect(isMissingTable(code), String(code)).toBe(false);
+    }
   });
 });

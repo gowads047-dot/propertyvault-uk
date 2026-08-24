@@ -146,6 +146,9 @@ describe("route enumeration", () => {
  */
 describe("makan indexing", () => {
   const APP_PAGES = ["/makan/admin", "/makan/dashboard", "/makan/settings", "/makan/messages", "/makan/auth"];
+  // Everything below /makan/app is covered by a single prefix, so a new page
+  // added there is private without anyone remembering to list it.
+  const APP_SUBTREE = ["/makan/app/inventory"];
   const PUBLIC_PAGES = ["/makan", "/makan/rooms", "/makan/wanted", "/makan/list", "/makan/gcc", "/makan/compliance"];
 
   it.each(APP_PAGES)("keeps %s out of the sitemap", route => {
@@ -162,6 +165,11 @@ describe("makan indexing", () => {
 
   it.each(PUBLIC_PAGES)("keeps %s in the sitemap", route => {
     expect(paths).toContain(route);
+  });
+
+  it.each(APP_SUBTREE)("keeps %s out of the sitemap via the /makan/app/ prefix", route => {
+    expect(isIndexable(route)).toBe(false);
+    expect(paths).not.toContain(route);
   });
 
   it("has no canonical on the shared makan layout", () => {
