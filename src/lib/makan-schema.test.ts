@@ -105,7 +105,11 @@ beforeAll(async () => {
     grant select, insert, update, delete on all tables in schema public to app_user;
     grant execute on all functions in schema public to app_user;
   `);
-}, 60_000);
+  // PGlite boots a whole WASM Postgres per test file, and how long that takes
+  // depends on what else the machine is doing. One CI-style run alongside a
+  // production build failed here; it has not reproduced since, so this is
+  // headroom rather than a diagnosis.
+}, 120_000);
 
 describe("makan schema", () => {
   it("creates every table with RLS enabled", async () => {
