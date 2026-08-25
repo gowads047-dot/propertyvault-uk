@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { freshnessLabel, isMissingTable, STATUS_LABEL, type SpaceStatus } from "@/lib/makan-inventory";
 import { publicLocation } from "@/lib/makan-search";
+import { EnquiryForm } from "@/components/makan/EnquiryForm";
 
 /**
  * Room detail.
@@ -41,6 +42,7 @@ interface SpaceDetail {
     garden: boolean;
     makan_building: {
       id: string;
+      org_id: string;
       address_line1: string;
       city: string;
       postcode: string;
@@ -76,7 +78,7 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
       .select(
         `id,label,ensuite,furnished,bills_included,rent_pcm,deposit,status,available_from,status_confirmed_at,
          makan_unit!inner(id,label,bedrooms,bathrooms,shared_kitchen,shared_bathrooms,shared_living_room,garden,
-           makan_building!inner(id,address_line1,city,postcode,hmo_licence_number))`
+           makan_building!inner(id,org_id,address_line1,city,postcode,hmo_licence_number))`
       )
       .eq("id", id)
       .maybeSingle();
@@ -191,16 +193,7 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
         </div>
 
         <aside>
-          <div className="rounded-2xl p-5 mb-5"
-               style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-            <h2 className="font-bold mb-1" style={{ color: "var(--h-text)" }}>Interested?</h2>
-            <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>
-              Message the landlord directly. No agent, no fee.
-            </p>
-            <Link href={`/makan/auth?next=/makan/space/${space.id}`} className="h-btn h-btn-primary w-full">
-              Enquire about this room
-            </Link>
-          </div>
+          <EnquiryForm spaceId={space.id} orgId={building.org_id} />
 
           {/* Nobody else can show this, because nobody else models a property
               as a thing with rooms in it. */}
