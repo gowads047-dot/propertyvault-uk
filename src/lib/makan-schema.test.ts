@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "vitest";
+import { describe, it, expect, beforeAll, vi } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -26,6 +26,11 @@ import { join } from "node:path";
  *      and still "passed" the owner case. The tests below act as a plain role,
  *      which is what Supabase's anon and authenticated roles are.
  */
+
+// Each assertion runs real queries against WASM Postgres, which under load can
+// blow past vitest's 5s default. Two full-suite runs on a busy machine failed
+// here and neither reproduced; this is headroom for that, not a diagnosis.
+vi.setConfig({ testTimeout: 30_000 });
 
 const SQL = join(process.cwd(), "supabase", "makan-rooms-schema.sql");
 

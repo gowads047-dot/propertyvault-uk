@@ -1,263 +1,271 @@
 "use client";
 
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { formatPrice } from "@/lib/hetta-config";
+import { freshnessLabel, isMissingTable } from "@/lib/makan-inventory";
+import {
+  EMPTY_FILTERS,
+  SEARCH_CITIES,
+  activeCount,
+  fromParams,
+  publicLocation,
+  resultsLabel,
+  textFilter,
+  toQueryString,
+  toResults,
+  type Filters,
+  type SearchQueryRow,
+  type SearchResult,
+} from "@/lib/makan-search";
 
-interface Listing {
-  id: string;
-  title: string;
-  price: number;
-  city: string;
-  area: string;
-  features: string[];
-  available_from: string;
-  images: string[];
-  furnished?: string;
-  bedrooms?: number;
-  country?: string;
-  listing_type?: string;
-}
+/**
+ * Room search.
+ *
+ * Filtering happens in Postgres, not in the browser. The previous version did
+ * `.select("*")` and filtered the whole table in JavaScript, which meant the
+ * page waited for every room in the country before it could show you the three
+ * in Selly Oak — fine at nine rows, useless at a few hundred, and the reason
+ * nothing built on top of it could ever feel quick.
+ *
+ * It also read the flat `listings` table, which cannot represent a room inside
+ * a house. This reads `makan_space` through a published public listing, which
+ * is the only path RLS exposes to an anonymous visitor: an unpublished room, a
+ * commissioner-only vacancy or anything mid-assessment simply is not in the
+ * result set, rather than being filtered out here and hoping.
+ *
+ * Filters live in the URL so a search is shareable and survives a refresh.
+ */
 
+type Load =
+  | { state: "loading" }
+  | { state: "no-schema" }
+  | { state: "error"; message: string }
+  | { state: "ready"; results: SearchResult[] };
 
-// Feature icons
-const FEATURE_ICONS: Record<string, string> = {
-  "Bills included": "💡",
-  "Wifi": "📶",
-  "En-suite": "🚿",
-  "Garden": "🌿",
-  "Parking": "🚗",
-  "Furnished": "🛋️",
-  "Students welcome": "🎓",
-  "Professionals only": "💼",
-  "Near transport": "🚇",
-  "Pet friendly": "🐾",
-};
-
-const CITIES = ["All cities", "Birmingham", "Nottingham", "Derby", "Manchester", "London", "Leeds"];
+const PAGE_SIZE = 60;
 
 export default function RoomsPage() {
-  const [rooms, setRooms] = useState<Listing[]>([]);
-  const [cityFilter, setCityFilter] = useState("All cities");
-  const [maxPrice, setMaxPrice] = useState(1000);
-  const [billsOnly, setBillsOnly] = useState(false);
-  const [loading, setLoading] = useState(true);
+  return (
+    <Suspense fallback={<Hero />}>
+      <RoomsSearch />
+    </Suspense>
+  );
+}
 
+function RoomsSearch() {
+  const router = useRouter();
+  const params = useSearchParams();
+
+  const filters = useMemo<Filters>(
+    () => fromParams(new URLSearchParams(params.toString())),
+    [params]
+  );
+
+  const [load, setLoad] = useState<Load>({ state: "loading" });
+  const [now, setNow] = useState<Date | null>(null);
+  const [draftQ, setDraftQ] = useState(filters.q);
+
+  useEffect(() => setDraftQ(filters.q), [filters.q]);
+
+  const apply = useCallback(
+    (next: Filters) => router.replace(`/makan/rooms${toQueryString(next)}`, { scroll: false }),
+    [router]
+  );
+
+  const search = useCallback(async () => {
+    let q = supabase
+      .from("makan_space")
+      .select(
+        `id,label,ensuite,bills_included,rent_pcm,status,available_from,status_confirmed_at,
+         makan_unit!inner(label,shared_bathrooms,makan_building!inner(address_line1,city,postcode)),
+         makan_listing!inner(channel,published_at)`
+      )
+      .eq("kind", "room")
+      // Only a published public listing reaches an anonymous visitor. Stated
+      // here as well as in RLS so the query uses the partial index.
+      .eq("makan_listing.channel", "public")
+      .not("makan_listing.published_at", "is", null)
+      .in("status", filters.availableNow ? ["available_now"] : ["available_now", "available_from"])
+      // Freshest first. This is the whole differentiator: every portal is full
+      // of rooms that went weeks ago, and ours can prove otherwise.
+      .order("status_confirmed_at", { ascending: false })
+      .limit(PAGE_SIZE);
+
+    if (filters.city) q = q.eq("makan_unit.makan_building.city", filters.city);
+    if (filters.maxPcm !== null) q = q.lte("rent_pcm", filters.maxPcm);
+    if (filters.billsIncluded) q = q.eq("bills_included", true);
+    if (filters.ensuite) q = q.eq("ensuite", true);
+
+    const text = textFilter(filters.q);
+    if (text) q = q.or(text, { referencedTable: "makan_unit.makan_building" });
+
+    const { data, error } = await q;
+    if (error) {
+      setLoad(isMissingTable(error.code)
+        ? { state: "no-schema" }
+        : { state: "error", message: error.message });
+      return;
+    }
+    setNow(new Date());
+    setLoad({ state: "ready", results: toResults((data ?? []) as unknown as SearchQueryRow[]) });
+  }, [filters]);
+
+  // No "loading" flip on refetch on purpose: the previous results stay on
+  // screen until the new ones arrive, so changing a filter does not blank the
+  // page and then repaint it. Only the very first load shows a spinner, which
+  // is the initial state.
   useEffect(() => {
-    supabase
-      .from("listings")
-      .select("*")
-      .eq("status", "active")
-      .eq("property_type", "Room")
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        setRooms(data || []);
-        setLoading(false);
-      });
-  }, []);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch; setState runs after the await, not during render
+    search();
+  }, [search]);
 
-  const isNow = (d: string) => !d || new Date(d) <= new Date();
-
-  const filtered = rooms.filter(r => {
-    if (cityFilter !== "All cities" && r.city !== cityFilter) return false;
-    if (r.price > maxPrice) return false;
-    if (billsOnly && !r.features?.some(f => f.toLowerCase().includes("bills"))) return false;
-    return true;
-  });
+  const results = load.state === "ready" ? load.results : [];
 
   return (
     <>
-      {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="py-14" style={{ background: "var(--h-slate)" }}>
-        <div className="h-container">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4" style={{ background: "rgba(232,85,61,0.15)", color: "#f08a76" }}>
-              🛏 Room rentals
-            </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
-              Find your next room.<br />No fees, no agents.
-            </h1>
-            <p className="text-base mb-0" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Rooms in house shares and managed properties. Bills-included options available. Contact landlords directly on WhatsApp.
-            </p>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
-      {/* ── Stats strip ──────────────────────────────────── */}
       <section className="border-b" style={{ background: "var(--h-surface)", borderColor: "var(--h-border)" }}>
         <div className="h-container py-3">
-          <div className="flex flex-wrap items-center gap-6 text-sm" style={{ color: "var(--h-muted)" }}>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full" style={{ background: "var(--h-green)" }} />
-              <span><strong style={{ color: "var(--h-text)" }}>{rooms.length}</strong> rooms listed</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-3 text-sm" style={{ color: "var(--h-muted)" }}>
             <span><strong style={{ color: "var(--h-text)" }}>£0</strong> agent fees</span>
             <span>Direct landlord contact</span>
-            <Link href="/makan/list" className="ml-auto h-btn h-btn-primary !py-2 !text-sm">List a room free →</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Filters + Grid ───────────────────────────────── */}
-      <section className="py-10" style={{ background: "var(--h-bg)" }}>
-        <div className="h-container">
-
-          {/* Filter bar */}
-          <div className="flex flex-wrap items-center gap-3 mb-8 p-4 rounded-2xl" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-            <select
-              value={cityFilter}
-              onChange={e => setCityFilter(e.target.value)}
-              className="h-input !w-auto !py-2 !text-sm"
-            >
-              {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-
-            <div className="flex items-center gap-2">
-              <label className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--h-muted)" }}>
-                Max: <strong style={{ color: "var(--h-text)" }}>£{maxPrice >= 1000 ? "Any" : maxPrice}/mo</strong>
-              </label>
-              <input
-                type="range" min={200} max={1000} step={25} value={maxPrice}
-                onChange={e => setMaxPrice(+e.target.value)}
-                className="w-28 accent-[var(--h-accent)]"
-              />
-            </div>
-
-            <label className="flex items-center gap-2 cursor-pointer text-sm" style={{ color: "var(--h-muted)" }}>
-              <input
-                type="checkbox"
-                checked={billsOnly}
-                onChange={e => setBillsOnly(e.target.checked)}
-                className="accent-[var(--h-accent)]"
-              />
-              Bills included only
-            </label>
-
-            <span className="ml-auto text-sm font-semibold" style={{ color: "var(--h-muted)" }}>
-              {filtered.length} room{filtered.length !== 1 ? "s" : ""}
-            </span>
-          </div>
-
-          {/* Room cards */}
-          {loading ? (
-            <div className="py-20 text-center">
-              <div className="w-8 h-8 border-2 rounded-full animate-spin mx-auto mb-3" style={{ borderColor: "var(--h-border)", borderTopColor: "var(--h-accent)" }} />
-              <p className="text-sm" style={{ color: "var(--h-muted)" }}>Loading rooms...</p>
-            </div>
-          ) : filtered.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filtered.map(r => {
-                const hasPhoto = r.images?.[0];
-                const available = isNow(r.available_from);
-                const hasBills = r.features?.some(f => f.toLowerCase().includes("bills"));
-
-                return (
-                  <Link href={`/makan/listing/${r.id}`} key={r.id} className="group rounded-2xl overflow-hidden transition-shadow hover:shadow-lg" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-                    {/* Photo */}
-                    <div className="relative aspect-[16/10] overflow-hidden" style={{ background: "#e8e0d6" }}>
-                      {hasPhoto ? (
-                        <Image
-                          src={r.images[0]}
-                          alt={r.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          onError={e => { (e.target as HTMLImageElement).style.display = "none"; }}
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <svg className="w-14 h-14 opacity-20" fill="currentColor" viewBox="0 0 24 24"><path d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm12-7h-8v8H3V5H1v15h2v-3h18v3h2V10c0-2.21-1.79-4-4-4z"/></svg>
-                        </div>
-                      )}
-
-                      {/* Top badges */}
-                      <div className="absolute top-3 left-3 flex gap-1.5">
-                        {available && (
-                          <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--h-green)", color: "white" }}>
-                            Available now
-                          </span>
-                        )}
-                        {hasBills && (
-                          <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--h-slate)", color: "white" }}>
-                            Bills inc.
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Price overlay bottom right */}
-                      <div className="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl font-extrabold text-sm" style={{ background: "rgba(0,0,0,0.7)", color: "white" }}>
-                        {formatPrice(r.price, r.country || "gb")}<span className="text-xs font-normal opacity-70">/mo</span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-4">
-                      <h3 className="font-bold text-sm leading-snug mb-1 group-hover:text-[var(--h-accent)] transition-colors" style={{ color: "var(--h-text)" }}>
-                        {r.title}
-                      </h3>
-                      <p className="flex items-center gap-1 text-xs mb-3" style={{ color: "var(--h-muted)" }}>
-                        <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
-                        {r.area}, {r.city}
-                      </p>
-
-                      {/* Feature pills */}
-                      <div className="flex flex-wrap gap-1.5 mb-4">
-                        {(r.features || []).slice(0, 4).map(f => (
-                          <span key={f} className="text-xs px-2 py-0.5 rounded-md" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
-                            {FEATURE_ICONS[f] ?? "·"} {f}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Footer row */}
-                      <div className="flex items-center justify-between pt-3" style={{ borderTop: "1px solid var(--h-border)" }}>
-                        {!available && r.available_from && (
-                          <p className="text-xs" style={{ color: "var(--h-muted)" }}>
-                            From {new Date(r.available_from).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
-                          </p>
-                        )}
-                        <span className="ml-auto text-xs font-semibold px-3 py-1 rounded-lg" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-                          View room →
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : rooms.length === 0 ? (
-            <div className="text-center py-20 rounded-2xl" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-              <p className="text-4xl mb-4">🛏</p>
-              <p className="text-lg font-bold mb-1" style={{ color: "var(--h-text)" }}>No rooms listed yet</p>
-              <p className="text-sm mb-6" style={{ color: "var(--h-muted)" }}>Makan is just getting started. Be the first to list a room here.</p>
-              <Link href="/makan/list" className="h-btn h-btn-primary">List a room free →</Link>
-            </div>
-          ) : (
-            <div className="text-center py-20 rounded-2xl" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
-              <p className="text-4xl mb-4">🛏</p>
-              <p className="text-lg font-bold mb-1" style={{ color: "var(--h-text)" }}>No rooms match your filters</p>
-              <p className="text-sm mb-6" style={{ color: "var(--h-muted)" }}>Try adjusting your city or price range</p>
-              <button onClick={() => { setCityFilter("All cities"); setMaxPrice(1000); setBillsOnly(false); }}
-                className="h-btn h-btn-secondary">Clear filters</button>
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="mt-12 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6" style={{ background: "var(--h-slate)" }}>
-            <div>
-              <h2 className="text-xl font-bold text-white mb-1">Got a room to let?</h2>
-              <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>List it free on Makan. Your next housemate is looking right now.</p>
-            </div>
-            <Link href="/makan/list" className="h-btn h-btn-primary whitespace-nowrap flex-shrink-0">
+            <Link href="/makan/list" className="ml-auto h-btn h-btn-primary !py-2 !text-sm">
               List a room free →
             </Link>
           </div>
+        </div>
+      </section>
 
-          {/* Safety note */}
-          <div className="mt-6 flex flex-col sm:flex-row gap-4 text-xs" style={{ color: "var(--h-subtle)" }}>
+      <section className="py-8" style={{ background: "var(--h-bg)", minHeight: "50vh" }}>
+        <div className="h-container">
+
+          <form
+            className="flex flex-wrap items-end gap-3 mb-6"
+            onSubmit={e => { e.preventDefault(); apply({ ...filters, q: draftQ }); }}
+          >
+            <div className="flex-1 min-w-[220px]">
+              <label htmlFor="r-q" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--h-muted)" }}>
+                Area or postcode
+              </label>
+              <input id="r-q" className="h-input" value={draftQ} onChange={e => setDraftQ(e.target.value)}
+                     placeholder="Selly Oak, B29…" />
+            </div>
+
+            <div>
+              <label htmlFor="r-city" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--h-muted)" }}>
+                City
+              </label>
+              <select id="r-city" className="h-input !w-auto" value={filters.city ?? ""}
+                      onChange={e => apply({ ...filters, city: e.target.value || null })}>
+                <option value="">All cities</option>
+                {SEARCH_CITIES.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="r-max" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--h-muted)" }}>
+                Max per month
+              </label>
+              <select id="r-max" className="h-input !w-auto" value={filters.maxPcm ?? ""}
+                      onChange={e => apply({ ...filters, maxPcm: e.target.value ? Number(e.target.value) : null })}>
+                <option value="">Any</option>
+                {[400, 500, 600, 700, 800, 1000, 1500].map(v => (
+                  <option key={v} value={v}>£{v}</option>
+                ))}
+              </select>
+            </div>
+
+            <button type="submit" className="h-btn h-btn-secondary !py-2 !text-sm">Search</button>
+
+            <div className="flex flex-wrap gap-2 basis-full sm:basis-auto">
+              <Toggle label="Bills included" on={filters.billsIncluded}
+                      onClick={() => apply({ ...filters, billsIncluded: !filters.billsIncluded })} />
+              <Toggle label="Ensuite" on={filters.ensuite}
+                      onClick={() => apply({ ...filters, ensuite: !filters.ensuite })} />
+              <Toggle label="Available now" on={filters.availableNow}
+                      onClick={() => apply({ ...filters, availableNow: !filters.availableNow })} />
+              {activeCount(filters) > 0 && (
+                <button type="button" onClick={() => apply(EMPTY_FILTERS)}
+                        className="px-3 py-1.5 rounded-full text-sm font-semibold underline"
+                        style={{ color: "var(--h-muted)", background: "none", border: "none" }}>
+                  Clear all
+                </button>
+              )}
+            </div>
+          </form>
+
+          {load.state === "loading" && <p style={{ color: "var(--h-muted)" }}>Searching…</p>}
+
+          {load.state === "no-schema" && (
+            <Panel title="Room search is not set up yet">
+              Run <code>supabase/makan-rooms-schema.sql</code> in the Supabase SQL editor, then
+              reload this page.
+            </Panel>
+          )}
+
+          {load.state === "error" && <Panel title="Could not search">{load.message}</Panel>}
+
+          {load.state === "ready" && now && (
+            <>
+              <p className="text-sm font-semibold mb-4" style={{ color: "var(--h-text)" }}>
+                {resultsLabel(results.length, filters)}
+              </p>
+
+              {results.length === 0 ? (
+                <Panel title={activeCount(filters) > 0 ? "Nothing matches yet" : "No rooms listed yet"}>
+                  {activeCount(filters) > 0 ? (
+                    <>Try widening the budget or clearing a filter. You can also{" "}
+                      <Link href="/makan/wanted" style={{ color: "var(--h-accent)" }}>post what you need</Link>{" "}
+                      and let landlords come to you.</>
+                  ) : (
+                    <>Makan is just getting started. If you have a room,{" "}
+                      <Link href="/makan/list" style={{ color: "var(--h-accent)" }}>list it free</Link>.</>
+                  )}
+                </Panel>
+              ) : (
+                <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
+                  {results.map(r => (
+                    <li key={r.spaceId}>
+                      <Link href={`/makan/space/${r.spaceId}`}
+                            className="block rounded-2xl p-5 h-full transition-shadow hover:shadow-lg"
+                            style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+                        <div className="flex items-baseline justify-between gap-2 mb-1">
+                          <p className="font-bold text-lg" style={{ color: "var(--h-text)" }}>
+                            {r.rentPcm !== null ? `£${r.rentPcm.toLocaleString("en-GB")}` : "Price on request"}
+                            {r.rentPcm !== null && <span className="text-sm font-normal" style={{ color: "var(--h-muted)" }}>/mo</span>}
+                          </p>
+                          {r.billsIncluded && (
+                            <span className="text-xs font-semibold px-2 py-1 rounded-full"
+                                  style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>
+                              Bills inc.
+                            </span>
+                          )}
+                        </div>
+
+                        <p className="text-sm mb-1" style={{ color: "var(--h-text)" }}>
+                          {r.label}{r.ensuite && " · ensuite"}
+                        </p>
+                        <p className="text-sm mb-3" style={{ color: "var(--h-muted)" }}>
+                          {publicLocation(r)}
+                        </p>
+
+                        {/* The reason to trust this over the same room on a
+                            portal. Nothing else on the card matters as much. */}
+                        <p className="text-xs" style={{ color: "var(--h-subtle)" }}>
+                          Availability confirmed {freshnessLabel(r.statusConfirmedAt, now)}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 text-xs" style={{ color: "var(--h-subtle)" }}>
             <p>🛡 Never pay a deposit before viewing in person.</p>
             <p>🔐 Makan does not verify landlord identity yet — always check ID in person.</p>
             <p>📄 Always get a written tenancy agreement.</p>
@@ -265,5 +273,51 @@ export default function RoomsPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function Hero() {
+  return (
+    <section className="py-14" style={{ background: "var(--h-slate)" }}>
+      <div className="h-container">
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
+               style={{ background: "rgba(232,85,61,0.15)", color: "#f08a76" }}>
+            🛏 Room rentals
+          </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
+            Find your next room.<br />No fees, no agents.
+          </h1>
+          <p className="text-base mb-0" style={{ color: "rgba(255,255,255,0.75)" }}>
+            Rooms in house shares and managed properties, with the date each one was last confirmed
+            available.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Toggle({ label, on, onClick }: { label: string; on: boolean; onClick: () => void }) {
+  return (
+    <button type="button" onClick={onClick} aria-pressed={on}
+            className="px-3 py-1.5 rounded-full text-sm font-semibold border transition-colors"
+            style={{
+              background: on ? "var(--h-text)" : "var(--h-surface)",
+              color: on ? "#ffffff" : "var(--h-muted)",
+              borderColor: on ? "var(--h-text)" : "var(--h-border)",
+            }}>
+      {label}
+    </button>
+  );
+}
+
+function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl p-8 max-w-xl"
+         style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+      <h2 className="text-lg font-bold mb-2" style={{ color: "var(--h-text)" }}>{title}</h2>
+      <p className="text-sm" style={{ color: "var(--h-muted)" }}>{children}</p>
+    </div>
   );
 }
