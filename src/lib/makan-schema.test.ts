@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, vi } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { PGlite } from "@electric-sql/pglite";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -27,11 +27,6 @@ import { join } from "node:path";
  *      which is what Supabase's anon and authenticated roles are.
  */
 
-// Each assertion runs real queries against WASM Postgres, which under load can
-// blow past vitest's 5s default. Two full-suite runs on a busy machine failed
-// here and neither reproduced; this is headroom for that, not a diagnosis.
-vi.setConfig({ testTimeout: 30_000 });
-
 const SQL = join(process.cwd(), "supabase", "makan-rooms-schema.sql");
 
 const LANDLORD = "11111111-1111-1111-1111-111111111111";
@@ -42,9 +37,29 @@ const ORG_LANDLORD = "aaaaaaaa-0000-0000-0000-000000000001";
 const ORG_COMMISSIONER = "aaaaaaaa-0000-0000-0000-000000000002";
 
 let db: PGlite;
+/** Set at the very end of beforeAll. Anything else means setup did not finish. */
+let ready = false;
+
+/**
+ * Every test depends on the whole of beforeAll having completed. If it is
+ * interrupted part way — a slow machine hitting a timeout is the realistic
+ * case — the shared database is left half-built and each test then fails on
+ * its own confusing symptom instead of on the actual cause.
+ *
+ * One assertion in one place turns that into a single legible failure.
+ */
+function requireSetup() {
+  if (!ready) {
+    throw new Error(
+      "PGlite setup did not complete — the failures below are a consequence, not the cause. " +
+      "Look at the beforeAll hook."
+    );
+  }
+}
 
 /** Run the next queries as `uid`, or as an anonymous visitor when null. */
 async function actAs(uid: string | null) {
+  requireSetup();
   await db.exec("reset role");
   await db.exec(`select set_config('test.uid', ${uid ? `'${uid}'` : "''"}, false)`);
   await db.exec("set role app_user");
@@ -110,14 +125,31 @@ beforeAll(async () => {
     grant select, insert, update, delete on all tables in schema public to app_user;
     grant execute on all functions in schema public to app_user;
   `);
-  // PGlite boots a whole WASM Postgres per test file, and how long that takes
-  // depends on what else the machine is doing. One CI-style run alongside a
-  // production build failed here; it has not reproduced since, so this is
-  // headroom rather than a diagnosis.
+
+  // Prove the pieces every test relies on actually landed, rather than finding
+  // out one confusing assertion at a time.
+  const check = await db.query<{ tables: number; policies: number; role: number }>(`
+    select
+      (select count(*) from pg_class
+        where relnamespace='public'::regnamespace and relname like 'makan%' and relkind='r')::int as tables,
+      (select count(*) from pg_policies where schemaname='public' and tablename like 'makan%')::int as policies,
+      (select count(*) from pg_roles where rolname='app_user')::int as role
+  `);
+  const got = check.rows[0];
+  if (got.tables !== 10 || got.policies !== 18 || got.role !== 1) {
+    throw new Error(`PGlite setup incomplete: ${JSON.stringify(got)} (want 10 tables, 18 policies, 1 role)`);
+  }
+  ready = true;
+  // 120s because booting a WASM Postgres and running the whole migration is
+  // genuinely variable on a cold or loaded machine -- not as a fix for the
+  // intermittent failure seen twice in this repo. That was measured as tests
+  // *failing*, and a beforeAll that overruns reports its tests as skipped, so
+  // this hook was never the cause.
 }, 120_000);
 
 describe("makan schema", () => {
   it("creates every table with RLS enabled", async () => {
+    requireSetup();
     await db.exec("reset role");
     const r = await db.query<{ relname: string; relrowsecurity: boolean }>(
       `select relname, relrowsecurity from pg_class
@@ -187,6 +219,7 @@ describe("freshness and audit", () => {
   });
 
   it("grants nobody update or delete on the audit trail", async () => {
+    requireSetup();
     await db.exec("reset role");
     const r = await db.query<{ cmd: string }>(
       "select cmd from pg_policies where tablename = 'makan_audit'"

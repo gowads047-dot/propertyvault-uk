@@ -49,3 +49,7 @@ scripts/.backfill-sent.json
 # site has, and one mis-typed `git add` would publish them. `.vercel` is
 # already covered above; this catches every .env variant.
 .env*
+
+# Full test report, written by `npm run test:trace` when chasing an
+# intermittent failure. Never commit it.
+.vitest-report.json
