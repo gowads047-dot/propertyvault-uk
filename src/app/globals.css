@@ -73,9 +73,14 @@ html.dark h1, html.dark h2, html.dark h3,
 html.dark h4, html.dark h5, html.dark h6 {
   color: #f5f7fa;
 }
+/* Inherit, for the same reason as the .hetta heading rule further down — and
+ * this is the copy that actually bit. It is unlayered, so it beat the layered
+ * `.hetta h1,h2,h3 { color: inherit }` fix and kept pinning Makan headings to
+ * dark ink. Because it is behind html.dark it only showed in dark mode, which
+ * is exactly how it survived a localhost check that happened to be in light. */
 html.dark .hetta h1, html.dark .hetta h2, html.dark .hetta h3,
 html.dark .hetta h4, html.dark .hetta h5, html.dark .hetta h6 {
-  color: var(--h-text);
+  color: inherit;
 }
 
 /* Dark mode — main site only */
