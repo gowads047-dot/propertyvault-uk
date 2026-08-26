@@ -38,7 +38,8 @@ type Load =
 const SELECT =
   `id,space_id,sender_id,move_in,phone,status,read_at,replied_at,created_at,
    profiles!makan_enquiry_sender_id_fkey(name),
-   makan_enquiry_message(id,author_id,body,created_at)`;
+   makan_enquiry_message(id,author_id,body,created_at),
+   makan_space(let_types)`;
 
 export default function EnquiriesPage() {
   const { user, loading: authLoading } = useAuth();
@@ -204,6 +205,22 @@ export default function EnquiriesPage() {
                       );
                     })}
                   </ul>
+
+                  {/* The consent notes started life in the listing form, where
+                      they read as a warning to a landlord who had not asked for
+                      one. Here they are addressed to someone about to answer a
+                      real company, which is when they are worth reading. */}
+                  {e.spaceAcceptsCompanies && (
+                    <p className="text-sm mb-3 p-3 rounded-xl"
+                       style={{ background: "var(--h-warm)", border: "1px solid var(--h-border)", color: "var(--h-muted)" }}>
+                      This listing is open to company lets. Worth confirming your lender, insurer
+                      and freeholder permit one before you agree terms, and asking for the company
+                      number and landlord references —{" "}
+                      <Link href="/makan/company-lets" className="underline" style={{ color: "var(--h-accent-hover)" }}>
+                        what to check
+                      </Link>.
+                    </p>
+                  )}
 
                   <label htmlFor={`reply-${e.id}`} className="sr-only">Reply to {e.senderName ?? "this enquiry"}</label>
                   <textarea id={`reply-${e.id}`} className="h-input mb-2" rows={3} value={reply}

@@ -33,6 +33,8 @@ export interface Enquiry {
   repliedAt: string | null;
   createdAt: string;
   messages: EnquiryMessage[];
+  /** Whether the listing this thread is about is open to a company let. */
+  spaceAcceptsCompanies: boolean;
 }
 
 export interface EnquiryMessage {
@@ -162,6 +164,7 @@ export interface EnquiryQueryRow {
   created_at: string;
   profiles?: { name: string } | null;
   makan_enquiry_message?: { id: string; author_id: string; body: string; created_at: string }[] | null;
+  makan_space?: { let_types: string[] | null } | null;
 }
 
 export function toEnquiries(rows: EnquiryQueryRow[]): Enquiry[] {
@@ -179,5 +182,7 @@ export function toEnquiries(rows: EnquiryQueryRow[]): Enquiry[] {
     messages: (r.makan_enquiry_message ?? [])
       .map(m => ({ id: m.id, authorId: m.author_id, body: m.body, createdAt: m.created_at }))
       .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()),
+    // Absent join or pre-migration row means tenant-only, matching the default.
+    spaceAcceptsCompanies: (r.makan_space?.let_types ?? []).includes("company"),
   }));
 }

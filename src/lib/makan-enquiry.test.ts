@@ -27,6 +27,7 @@ function enq(over: Partial<Enquiry> = {}): Enquiry {
     spaceId: "s1",
     senderId: "u1",
     senderName: "Renter",
+    spaceAcceptsCompanies: false,
     moveIn: null,
     phone: null,
     status: "new",
@@ -223,5 +224,28 @@ describe("toEnquiries", () => {
 
   it("copes with a missing sender profile", () => {
     expect(toEnquiries([{ ...row, profiles: null }])[0].senderName).toBeNull();
+  });
+});
+
+describe("company-let threads", () => {
+  it("reads the audience off the joined listing", () => {
+    const [e] = toEnquiries([{
+      id: "e1", space_id: "s1", sender_id: "u1", move_in: null, phone: null,
+      status: "new", read_at: null, replied_at: null, created_at: agoHrs(1),
+      makan_space: { let_types: ["tenant", "company"] },
+    }]);
+    expect(e.spaceAcceptsCompanies).toBe(true);
+  });
+
+  // The join can be absent (an older row, or a select that did not ask for it).
+  // Defaulting to true would put consent warnings on ordinary tenant threads.
+  it("treats a missing join as tenant-only", () => {
+    const base = {
+      id: "e1", space_id: "s1", sender_id: "u1", move_in: null, phone: null,
+      status: "new" as const, read_at: null, replied_at: null, created_at: agoHrs(1),
+    };
+    expect(toEnquiries([base])[0].spaceAcceptsCompanies).toBe(false);
+    expect(toEnquiries([{ ...base, makan_space: { let_types: null } }])[0].spaceAcceptsCompanies).toBe(false);
+    expect(toEnquiries([{ ...base, makan_space: null }])[0].spaceAcceptsCompanies).toBe(false);
   });
 });

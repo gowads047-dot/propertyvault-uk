@@ -32,11 +32,19 @@ import {
 interface Props {
   spaceId: string;
   orgId: string;
+  /**
+   * Whether this listing is open to a company let. The consent notes used to
+   * live in the listing form, where they read as a warning to a landlord who
+   * had not asked for one and who mostly already knows the process. They
+   * belong here instead: at the point two parties are actually about to talk,
+   * addressed to whoever needs them.
+   */
+  acceptsCompanies?: boolean;
 }
 
 type Existing = { id: string; status: EnquiryStatus; readAt: string | null; repliedAt: string | null };
 
-export function EnquiryForm({ spaceId, orgId }: Props) {
+export function EnquiryForm({ spaceId, orgId, acceptsCompanies = false }: Props) {
   const { user, loading: authLoading } = useAuth();
 
   const [existing, setExisting] = useState<Existing | null>(null);
@@ -173,6 +181,27 @@ export function EnquiryForm({ spaceId, orgId }: Props) {
       </p>
       {responsiveness && (
         <p className="text-sm mb-3" style={{ color: "var(--h-green)" }}>✓ {responsiveness}</p>
+      )}
+
+      {acceptsCompanies && (
+        <div className="mb-4 p-4 rounded-xl text-sm"
+             style={{ background: "var(--h-warm)", border: "1px solid var(--h-border)" }}>
+          <p className="font-bold mb-1.5" style={{ color: "var(--h-text)" }}>
+            Enquiring as a company?
+          </p>
+          <p className="leading-relaxed mb-2" style={{ color: "var(--h-muted)" }}>
+            Say so in your first message, with what the property is for, the lease length you are
+            offering and your company number. A landlord can answer that in one reply instead of
+            three.
+          </p>
+          <p className="leading-relaxed" style={{ color: "var(--h-muted)" }}>
+            Both of you will want to confirm the lender, insurer and freeholder permit a company
+            let before anything is signed —{" "}
+            <Link href="/makan/company-lets" className="underline" style={{ color: "var(--h-accent-hover)" }}>
+              what to check
+            </Link>.
+          </p>
+        </div>
       )}
 
       <form onSubmit={send}>

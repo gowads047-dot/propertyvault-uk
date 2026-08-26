@@ -243,7 +243,11 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
         </div>
 
         <aside>
-          <EnquiryForm spaceId={space.id} orgId={building.org_id} />
+          <EnquiryForm
+            spaceId={space.id}
+            orgId={building.org_id}
+            acceptsCompanies={(space.let_types ?? ["tenant"]).includes("company")}
+          />
 
           {/* Nobody else can show this, because nobody else models a property
               as a thing with rooms in it. */}
