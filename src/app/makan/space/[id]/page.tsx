@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { freshnessLabel, isMissingTable, STATUS_LABEL, type SpaceStatus } from "@/lib/makan-inventory";
 import { publicLocation } from "@/lib/makan-search";
+import { PERMITTED_USES } from "@/lib/makan-listing";
 import { EnquiryForm } from "@/components/makan/EnquiryForm";
 
 /**
@@ -22,8 +23,13 @@ import { EnquiryForm } from "@/components/makan/EnquiryForm";
 
 interface SpaceDetail {
   id: string;
+  kind: string;
   label: string;
   ensuite: boolean;
+  let_types: string[] | null;
+  permitted_uses: string[] | null;
+  min_lease_months: number | null;
+  guaranteed_rent_considered: boolean | null;
   furnished: string | null;
   bills_included: boolean;
   rent_pcm: number | null;
@@ -76,7 +82,8 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
     const { data, error } = await supabase
       .from("makan_space")
       .select(
-        `id,label,ensuite,furnished,bills_included,rent_pcm,deposit,status,available_from,status_confirmed_at,
+        `id,kind,label,ensuite,furnished,bills_included,rent_pcm,deposit,status,available_from,status_confirmed_at,
+         let_types,permitted_uses,min_lease_months,guaranteed_rent_considered,
          makan_unit!inner(id,label,bedrooms,bathrooms,shared_kitchen,shared_bathrooms,shared_living_room,garden,
            makan_building!inner(id,org_id,address_line1,city,postcode,hmo_licence_number))`
       )
@@ -180,6 +187,49 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
             <Row label="Deposit" value={space.deposit !== null ? `£${space.deposit.toLocaleString("en-GB")}` : "Ask the landlord"} />
             <Row label="Bills" value={space.bills_included ? "Included in the rent" : "Not included"} />
           </dl>
+
+          {/* An operator arriving from a company-let search has to be able to
+              see the terms here. Without this the search finds the property and
+              then the page says nothing about the one thing they filtered for,
+              and they have to open an enquiry to ask what is already recorded. */}
+          {(space.let_types ?? ["tenant"]).includes("company") && (
+            <div className="mb-8 rounded-2xl p-5"
+                 style={{ background: "var(--h-warm)", border: "1px solid var(--h-border)" }}>
+              <h2 className="text-lg font-bold mb-1" style={{ color: "var(--h-text)" }}>
+                Open to a company let
+              </h2>
+              <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>
+                The landlord has said they would consider letting to a limited company —{" "}
+                <Link href="/makan/company-lets" className="underline" style={{ color: "var(--h-accent-hover)" }}>
+                  what that means
+                </Link>.
+              </p>
+              <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+                <Row
+                  label="Uses considered"
+                  value={
+                    (space.permitted_uses ?? []).length > 0
+                      ? (space.permitted_uses ?? [])
+                          .map(u => PERMITTED_USES.find(p => p.value === u)?.label ?? u.replace(/_/g, " "))
+                          .join(", ")
+                      : "Not stated — ask the landlord"
+                  }
+                />
+                <Row
+                  label="Minimum lease"
+                  value={space.min_lease_months !== null
+                    ? `${space.min_lease_months} months`
+                    : "Not stated — ask the landlord"}
+                />
+                <Row
+                  label="Guaranteed rent"
+                  value={space.guaranteed_rent_considered ? "Would consider it" : "Not stated — ask the landlord"}
+                />
+                <Row label="Also open to tenants"
+                     value={(space.let_types ?? []).includes("tenant") ? "Yes" : "Company lets only"} />
+              </dl>
+            </div>
+          )}
 
           <h2 className="text-lg font-bold mb-3" style={{ color: "var(--h-text)" }}>Shared with the house</h2>
           <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-2 mb-8 text-sm">

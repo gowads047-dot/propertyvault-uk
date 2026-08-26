@@ -18,9 +18,13 @@ import {
   toPosts,
   validate,
   type MatchableSpace,
+  companyTermsSummary,
+  WANTED_USES,
   type WantedKind,
+  type WantedLetType,
   type WantedPost,
   type WantedQueryRow,
+  type WantedUse,
 } from "@/lib/makan-wanted";
 
 /**
@@ -60,6 +64,9 @@ export default function WantedPage() {
   const [budget, setBudget] = useState("");
   const [neededFrom, setNeededFrom] = useState("");
   const [detail, setDetail] = useState("");
+  const [letType, setLetType] = useState<WantedLetType>("tenant");
+  const [intendedUse, setIntendedUse] = useState<WantedUse | "">("");
+  const [leaseMonths, setLeaseMonths] = useState("");
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 60_000);
@@ -69,7 +76,7 @@ export default function WantedPage() {
   const fetchBoard = useCallback(async () => {
     const { data, error } = await supabase
       .from("makan_wanted")
-      .select("id,kind,area_text,budget_max_pcm,needed_from,detail,channel,status,expires_at,created_at,created_by")
+      .select("id,kind,area_text,budget_max_pcm,needed_from,detail,channel,status,expires_at,created_at,created_by,let_type,intended_use,lease_months")
       .order("created_at", { ascending: false })
       .limit(100);
 
@@ -100,7 +107,7 @@ export default function WantedPage() {
     e.preventDefault();
     setFormError(null);
 
-    const check = validate({ kind, areaText, budgetMaxPcm: budget });
+    const check = validate({ kind, areaText, budgetMaxPcm: budget, letType, leaseMonths });
     if (!check.ok) {
       setFormError(check.message);
       return;
@@ -119,6 +126,11 @@ export default function WantedPage() {
         needed_from: neededFrom || null,
         detail: detail.trim() || null,
         channel,
+        let_type: letType,
+        // Cleared rather than carried: a tenant post holding company terms
+        // would be answered by landlords offering something else entirely.
+        intended_use: letType === "company" ? (intendedUse || null) : null,
+        lease_months: letType === "company" && leaseMonths ? Number(leaseMonths) : null,
       })
       .select("id")
       .single();
@@ -159,6 +171,7 @@ export default function WantedPage() {
     setJustPosted(matchSummary(found.length, channel));
     setShowForm(false);
     setAreaText(""); setBudget(""); setNeededFrom(""); setDetail(""); setKind("room");
+    setLetType("tenant"); setIntendedUse(""); setLeaseMonths("");
     await fetchBoard();
   }
 
@@ -262,6 +275,55 @@ export default function WantedPage() {
                 </div>
 
                 <div className="sm:col-span-2">
+                  <p className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>
+                    Who is this for?
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {([["tenant", "Me, to live in"], ["company", "A company I run"]] as const).map(([v, label]) => (
+                      <button key={v} type="button" aria-pressed={letType === v}
+                              onClick={() => setLetType(v as WantedLetType)}
+                              className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors"
+                              style={{
+                                background: letType === v ? "var(--h-accent)" : "var(--h-surface)",
+                                color: letType === v ? "#ffffff" : "var(--h-muted)",
+                                borderColor: letType === v ? "var(--h-accent)" : "var(--h-border)",
+                              }}>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs mt-1.5" style={{ color: "var(--h-muted)" }}>
+                    Saying it is a company let up front is the whole point — a landlord can answer
+                    it directly instead of an agent deciding for them.
+                  </p>
+                </div>
+
+                {letType === "company" && (
+                  <>
+                    <div>
+                      <label htmlFor="w-use" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>
+                        What is it for?
+                      </label>
+                      <select id="w-use" className="h-input" value={intendedUse}
+                              onChange={e => setIntendedUse(e.target.value as WantedUse | "")}>
+                        <option value="">Prefer not to say yet</option>
+                        {WANTED_USES.map(u => <option key={u.value} value={u.value}>{u.label}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="w-lease" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>
+                        Lease you are offering
+                      </label>
+                      <select id="w-lease" className="h-input" value={leaseMonths}
+                              onChange={e => setLeaseMonths(e.target.value)}>
+                        <option value="">Open to discussion</option>
+                        {[12, 24, 36, 60].map(m => <option key={m} value={m}>{m} months</option>)}
+                      </select>
+                    </div>
+                  </>
+                )}
+
+                <div className="sm:col-span-2">
                   <label htmlFor="w-detail" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>
                     Anything else
                   </label>
@@ -334,6 +396,15 @@ export default function WantedPage() {
                     </div>
 
                     <p className="font-bold text-lg mb-1" style={{ color: "var(--h-text)" }}>{p.areaText}</p>
+
+                    {/* The line a landlord judges a company post from. Without
+                        it they have to open a conversation to learn the one
+                        thing that decides whether they want one. */}
+                    {companyTermsSummary(p) && (
+                      <p className="text-sm font-semibold mb-1" style={{ color: "var(--h-accent-hover)" }}>
+                        {companyTermsSummary(p)}
+                      </p>
+                    )}
 
                     <p className="text-sm mb-3" style={{ color: "var(--h-muted)" }}>
                       {p.budgetMaxPcm !== null ? `Up to £${p.budgetMaxPcm.toLocaleString("en-GB")}/mo` : "No budget given"}

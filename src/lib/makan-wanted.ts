@@ -17,6 +17,21 @@ export const KIND_LABEL: Record<WantedKind, string> = {
 };
 
 export type WantedChannel = "public" | "landlords_only";
+
+/**
+ * Who is asking. This is the Wanted-board half of the thesis: an operator
+ * looking for a four-bed to run as serviced accommodation cannot get that
+ * question past an agent, so they post it here and landlords answer directly.
+ */
+export type WantedLetType = "tenant" | "company";
+
+export const WANTED_USES = [
+  { value: "serviced_accommodation", label: "Serviced accommodation / short stays" },
+  { value: "supported_living", label: "Supported living" },
+  { value: "hmo", label: "HMO / room-by-room" },
+  { value: "social_housing", label: "Social housing" },
+] as const;
+export type WantedUse = (typeof WANTED_USES)[number]["value"];
 export type WantedStatus = "open" | "fulfilled" | "closed";
 
 export interface WantedPost {
@@ -31,6 +46,24 @@ export interface WantedPost {
   expiresAt: string;
   createdAt: string;
   isMine: boolean;
+  letType: WantedLetType;
+  intendedUse: WantedUse | null;
+  leaseMonths: number | null;
+}
+
+/**
+ * A company post with no stated use is the one a landlord cannot evaluate, so
+ * it reads as an explicit gap rather than being left blank.
+ */
+export function useLabel(use: WantedUse | null): string {
+  return WANTED_USES.find(u => u.value === use)?.label ?? "Use not stated";
+}
+
+/** One line a landlord can judge a company post from without opening it. */
+export function companyTermsSummary(p: Pick<WantedPost, "letType" | "intendedUse" | "leaseMonths">): string | null {
+  if (p.letType !== "company") return null;
+  const lease = p.leaseMonths ? `${p.leaseMonths}-month lease` : "lease length open";
+  return `Company let · ${useLabel(p.intendedUse)} · ${lease}`;
 }
 
 /**
@@ -84,6 +117,8 @@ export function validate(input: {
   kind: string;
   areaText: string;
   budgetMaxPcm: string | number | null;
+  letType?: string;
+  leaseMonths?: string | number | null;
 }): { ok: true } | { ok: false; field: string; message: string } {
   if (!WANTED_KINDS.includes(input.kind as WantedKind)) {
     return { ok: false, field: "kind", message: "Choose what you are looking for." };
@@ -95,6 +130,15 @@ export function validate(input: {
     const n = Number(input.budgetMaxPcm);
     if (!Number.isFinite(n) || n < 0) {
       return { ok: false, field: "budgetMaxPcm", message: "Budget must be a number, or leave it blank." };
+    }
+  }
+  if (input.letType !== undefined && !["tenant", "company"].includes(input.letType)) {
+    return { ok: false, field: "letType", message: "Say whether this is for you or for a company." };
+  }
+  if (input.leaseMonths !== undefined && input.leaseMonths !== null && input.leaseMonths !== "") {
+    const m = Number(input.leaseMonths);
+    if (!Number.isInteger(m) || m < 1 || m > 120) {
+      return { ok: false, field: "leaseMonths", message: "Lease length in months, between 1 and 120." };
     }
   }
   return { ok: true };
@@ -168,6 +212,9 @@ export interface WantedQueryRow {
   expires_at: string;
   created_at: string;
   created_by: string;
+  let_type: WantedLetType | null;
+  intended_use: WantedUse | null;
+  lease_months: number | null;
 }
 
 export function toPosts(rows: WantedQueryRow[], currentUserId: string | null): WantedPost[] {
@@ -183,6 +230,11 @@ export function toPosts(rows: WantedQueryRow[], currentUserId: string | null): W
     expiresAt: r.expires_at,
     createdAt: r.created_at,
     isMine: currentUserId !== null && r.created_by === currentUserId,
+    // Posts written before the company columns existed come back null, and the
+    // column default says the same thing: an unstated audience is a tenant.
+    letType: r.let_type ?? "tenant",
+    intendedUse: r.intended_use,
+    leaseMonths: r.lease_months,
   }));
 }
 

@@ -16,6 +16,9 @@ import {
   type WantedPost,
   type MatchableSpace,
   type WantedQueryRow,
+  WANTED_USES,
+  useLabel,
+  companyTermsSummary,
 } from "./makan-wanted";
 
 const NOW = new Date("2026-08-24T12:00:00Z");
@@ -30,6 +33,9 @@ function post(over: Partial<WantedPost> = {}): WantedPost {
     budgetMaxPcm: 700,
     neededFrom: null,
     detail: null,
+    letType: "tenant",
+    intendedUse: null,
+    leaseMonths: null,
     channel: "public",
     status: "open",
     expiresAt: inDays(60),
@@ -193,6 +199,9 @@ describe("toPosts", () => {
     kind: "room",
     area_text: "Selly Oak",
     budget_max_pcm: 700,
+    let_type: "tenant",
+    intended_use: null,
+    lease_months: null,
     needed_from: null,
     detail: null,
     channel: "public",
@@ -226,5 +235,54 @@ describe("sortPosts", () => {
     const posts = [post({ id: "1", status: "closed" }), post({ id: "2" })];
     sortPosts(posts, NOW);
     expect(posts.map(p => p.id)).toEqual(["1", "2"]);
+  });
+});
+
+const row = {
+  id: "w1", kind: "room" as const, area_text: "Selly Oak", budget_max_pcm: 700,
+  needed_from: null, detail: null, channel: "public" as const, status: "open" as const,
+  expires_at: inDays(20), created_at: agoDays(1), created_by: "u1",
+  let_type: "tenant" as const, intended_use: null, lease_months: null,
+};
+
+describe("company wanted posts", () => {
+  it("summarises a company post in one line a landlord can judge", () => {
+    expect(companyTermsSummary(post({
+      letType: "company", intendedUse: "supported_living", leaseMonths: 36,
+    }))).toBe("Company let · Supported living · 36-month lease");
+  });
+
+  // A company post with no stated use is the one a landlord cannot evaluate,
+  // so it has to read as a gap rather than as an ordinary post.
+  it("says so when a company has not stated the use", () => {
+    const line = companyTermsSummary(post({ letType: "company", intendedUse: null, leaseMonths: null }));
+    expect(line).toContain("Use not stated");
+    expect(line).toContain("lease length open");
+  });
+
+  it("stays out of the way on a tenant post", () => {
+    expect(companyTermsSummary(post({ letType: "tenant" }))).toBeNull();
+  });
+
+  it("reads a post written before the company columns as a tenant post", () => {
+    const [p] = toPosts([{ ...row, let_type: null, intended_use: null, lease_months: null }], null);
+    expect(p.letType).toBe("tenant");
+  });
+
+  it("rejects a nonsense lease length but allows a blank one", () => {
+    const base = { kind: "whole_property", areaText: "Selly Oak", budgetMaxPcm: null };
+    expect(validate({ ...base, leaseMonths: "0" })).toMatchObject({ ok: false, field: "leaseMonths" });
+    expect(validate({ ...base, leaseMonths: "999" })).toMatchObject({ ok: false, field: "leaseMonths" });
+    expect(validate({ ...base, leaseMonths: "" })).toEqual({ ok: true });
+    expect(validate({ ...base, leaseMonths: "36" })).toEqual({ ok: true });
+  });
+
+  it("rejects an audience it does not recognise", () => {
+    expect(validate({ kind: "room", areaText: "Selly Oak", budgetMaxPcm: null, letType: "squatter" }))
+      .toMatchObject({ ok: false, field: "letType" });
+  });
+
+  it("labels every use the schema allows", () => {
+    for (const u of WANTED_USES) expect(useLabel(u.value), u.value).toBe(u.label);
   });
 });
