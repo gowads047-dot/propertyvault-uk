@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { freshnessLabel, isMissingTable } from "@/lib/makan-inventory";
+import { PERMITTED_USES } from "@/lib/makan-listing";
 import {
   EMPTY_FILTERS,
   SEARCH_CITIES,
   activeCount,
+  clearCompanyFiltersIfUnused,
   fromParams,
   publicLocation,
   resultsLabel,
@@ -16,9 +18,17 @@ import {
   toQueryString,
   toResults,
   type Filters,
+  type LetTypeFilter,
   type SearchQueryRow,
   type SearchResult,
 } from "@/lib/makan-search";
+
+const KIND_OPTIONS = [
+  { value: "", label: "Anything" },
+  { value: "room", label: "Rooms" },
+  { value: "studio", label: "Studios" },
+  { value: "whole_property", label: "Whole properties" },
+] as const;
 
 /**
  * Room search.
@@ -78,11 +88,17 @@ function RoomsSearch() {
     let q = supabase
       .from("makan_space")
       .select(
-        `id,label,ensuite,bills_included,rent_pcm,status,available_from,status_confirmed_at,
+        `id,kind,label,ensuite,bills_included,rent_pcm,status,available_from,status_confirmed_at,
+         let_types,permitted_uses,min_lease_months,guaranteed_rent_considered,
          makan_unit!inner(label,shared_bathrooms,makan_building!inner(address_line1,city,postcode)),
          makan_listing!inner(channel,published_at)`
       )
-      .eq("kind", "room")
+      // No kind filter by default. This was hard-pinned to "room", so a
+      // landlord could publish a studio or a whole property through /makan/list
+      // and it could never appear in search — the listing flow and the search
+      // disagreed about what Makan is for, and the listing flow was right.
+      // Company lets are whole properties almost by definition, so pinning to
+      // rooms also hid every listing the product exists to surface.
       // Only a published public listing reaches an anonymous visitor. Stated
       // here as well as in RLS so the query uses the partial index.
       .eq("makan_listing.channel", "public")
@@ -93,10 +109,19 @@ function RoomsSearch() {
       .order("status_confirmed_at", { ascending: false })
       .limit(PAGE_SIZE);
 
+    if (filters.kind) q = q.eq("kind", filters.kind);
     if (filters.city) q = q.eq("makan_unit.makan_building.city", filters.city);
     if (filters.maxPcm !== null) q = q.lte("rent_pcm", filters.maxPcm);
     if (filters.billsIncluded) q = q.eq("bills_included", true);
     if (filters.ensuite) q = q.eq("ensuite", true);
+
+    // contains, not overlaps: asking for company lets must not also return
+    // tenant-only listings just because the arrays share the "tenant" entry.
+    if (filters.letType) q = q.contains("let_types", [filters.letType]);
+    // overlaps here, because a landlord who accepts two uses should answer a
+    // search for either one. Both columns are GIN-indexed.
+    if (filters.permittedUses.length > 0) q = q.overlaps("permitted_uses", filters.permittedUses);
+    if (filters.guaranteedRent) q = q.eq("guaranteed_rent_considered", true);
 
     const text = textFilter(filters.q);
     if (text) q = q.or(text, { referencedTable: "makan_unit.makan_building" });
@@ -133,7 +158,7 @@ function RoomsSearch() {
             <span><strong style={{ color: "var(--h-text)" }}>£0</strong> agent fees</span>
             <span>Direct landlord contact</span>
             <Link href="/makan/list" className="ml-auto h-btn h-btn-primary !py-2 !text-sm">
-              List a room free →
+              List a property free →
             </Link>
           </div>
         </div>
@@ -141,6 +166,41 @@ function RoomsSearch() {
 
       <section className="py-8" style={{ background: "var(--h-bg)", minHeight: "50vh" }}>
         <div className="h-container">
+
+          {/* The one filter the whole site exists for. An operator searching a
+              portal has no way to ask this question, because the answer is
+              decided for them by an agent who never asked the landlord. */}
+          <div className="mb-5">
+            <p className="text-xs font-semibold mb-2" style={{ color: "var(--h-muted)" }}>
+              Who is renting?
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {([null, "tenant", "company"] as LetTypeFilter[]).map(v => (
+                <button
+                  key={String(v)}
+                  type="button"
+                  aria-pressed={filters.letType === v}
+                  onClick={() => apply(clearCompanyFiltersIfUnused({ ...filters, letType: v }))}
+                  className="px-4 py-2 rounded-xl text-sm font-semibold border transition-colors"
+                  style={{
+                    background: filters.letType === v ? "var(--h-accent)" : "var(--h-surface)",
+                    color: filters.letType === v ? "#ffffff" : "var(--h-muted)",
+                    borderColor: filters.letType === v ? "var(--h-accent)" : "var(--h-border)",
+                  }}
+                >
+                  {v === null ? "Show everything" : v === "tenant" ? "Me, to live in" : "A company"}
+                </button>
+              ))}
+            </div>
+            {filters.letType === "company" && (
+              <p className="text-sm mt-2" style={{ color: "var(--h-muted)" }}>
+                Landlords who have said they will let to a limited company —{" "}
+                <Link href="/makan/company-lets" className="underline" style={{ color: "var(--h-accent-hover)" }}>
+                  what that means
+                </Link>.
+              </p>
+            )}
+          </div>
 
           <form
             className="flex flex-wrap items-end gap-3 mb-6"
@@ -152,6 +212,16 @@ function RoomsSearch() {
               </label>
               <input id="r-q" className="h-input" value={draftQ} onChange={e => setDraftQ(e.target.value)}
                      placeholder="Selly Oak, B29…" />
+            </div>
+
+            <div>
+              <label htmlFor="r-kind" className="block text-xs font-semibold mb-1.5" style={{ color: "var(--h-muted)" }}>
+                Type
+              </label>
+              <select id="r-kind" className="h-input !w-auto" value={filters.kind ?? ""}
+                      onChange={e => apply({ ...filters, kind: (e.target.value || null) as Filters["kind"] })}>
+                {KIND_OPTIONS.map(k => <option key={k.value} value={k.value}>{k.label}</option>)}
+              </select>
             </div>
 
             <div>
@@ -187,6 +257,25 @@ function RoomsSearch() {
                       onClick={() => apply({ ...filters, ensuite: !filters.ensuite })} />
               <Toggle label="Available now" on={filters.availableNow}
                       onClick={() => apply({ ...filters, availableNow: !filters.availableNow })} />
+              {filters.letType === "company" && (
+                <>
+                  {PERMITTED_USES.map(u => (
+                    <Toggle
+                      key={u.value}
+                      label={u.label}
+                      on={filters.permittedUses.includes(u.value)}
+                      onClick={() => apply({
+                        ...filters,
+                        permittedUses: filters.permittedUses.includes(u.value)
+                          ? filters.permittedUses.filter(x => x !== u.value)
+                          : [...filters.permittedUses, u.value],
+                      })}
+                    />
+                  ))}
+                  <Toggle label="Open to guaranteed rent" on={filters.guaranteedRent}
+                          onClick={() => apply({ ...filters, guaranteedRent: !filters.guaranteedRent })} />
+                </>
+              )}
               {activeCount(filters) > 0 && (
                 <button type="button" onClick={() => apply(EMPTY_FILTERS)}
                         className="px-3 py-1.5 rounded-full text-sm font-semibold underline"
@@ -283,13 +372,14 @@ function Hero() {
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
                style={{ background: "rgba(232,85,61,0.15)", color: "#f08a76" }}>
-            🛏 Room rentals
+            🛏 Rooms, studios &amp; whole properties
           </div>
           <h1 className="text-3xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
-            Find your next room.<br />No fees, no agents.
+            Find it direct.<br />No fees, no agents.
           </h1>
           <p className="text-base mb-0" style={{ color: "rgba(255,255,255,0.75)" }}>
-            Rooms in house shares and managed properties, with the date each one was last confirmed
+            Rooms, studios and whole properties — including the company lets an agent would have
+            turned down on the landlord’s behalf. Each one shows the date it was last confirmed
             available.
           </p>
         </div>

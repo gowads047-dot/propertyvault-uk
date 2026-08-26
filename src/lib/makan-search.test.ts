@@ -6,6 +6,9 @@ import {
   isDefault,
   publicLocation,
   resultsLabel,
+  resultNoun,
+  acceptsCompanies,
+  clearCompanyFiltersIfUnused,
   sanitiseForIlike,
   textFilter,
   toParams,
@@ -20,13 +23,20 @@ const f = (over: Partial<Filters> = {}): Filters => ({ ...EMPTY_FILTERS, ...over
 
 describe("fromParams", () => {
   it("reads a full query string", () => {
-    expect(fromParams(p("q=selly&city=Birmingham&max=700&bills=1&ensuite=1&now=1"))).toEqual({
+    expect(fromParams(p(
+      "q=selly&city=Birmingham&max=700&bills=1&ensuite=1&now=1" +
+      "&kind=whole_property&let=company&use=supported_living&use=hmo&gr=1"
+    ))).toEqual({
       q: "selly",
       city: "Birmingham",
       maxPcm: 700,
       billsIncluded: true,
       ensuite: true,
       availableNow: true,
+      kind: "whole_property",
+      letType: "company",
+      permittedUses: ["supported_living", "hmo"],
+      guaranteedRent: true,
     });
   });
 
@@ -131,28 +141,47 @@ describe("textFilter", () => {
 
 describe("resultsLabel", () => {
   it("distinguishes an empty catalogue from an empty result", () => {
-    expect(resultsLabel(0, EMPTY_FILTERS)).toBe("No rooms listed yet");
-    expect(resultsLabel(0, f({ city: "Derby" }))).toBe("No rooms in Derby match those filters");
+    expect(resultsLabel(0, EMPTY_FILTERS)).toBe("No places listed yet");
+    expect(resultsLabel(0, f({ city: "Derby" }))).toBe("No places in Derby match those filters");
   });
 
   it("counts in the singular", () => {
-    expect(resultsLabel(1, EMPTY_FILTERS)).toBe("1 room");
-    expect(resultsLabel(4, EMPTY_FILTERS)).toBe("4 rooms");
+    expect(resultsLabel(1, EMPTY_FILTERS)).toBe("1 place");
+    expect(resultsLabel(4, EMPTY_FILTERS)).toBe("4 places");
   });
 
   it("names the place when there is one", () => {
-    expect(resultsLabel(3, f({ city: "Birmingham" }))).toBe("3 rooms in Birmingham");
+    expect(resultsLabel(3, f({ city: "Birmingham" }))).toBe("3 places in Birmingham");
   });
 
   it("falls back to the search text", () => {
-    expect(resultsLabel(2, f({ q: "selly" }))).toBe("2 rooms matching “selly”");
+    expect(resultsLabel(2, f({ q: "selly" }))).toBe("2 places matching “selly”");
+  });
+
+  // Search covers studios and whole properties now, and calling a four-bed
+  // house a room is the small wrongness that says the site is not for you.
+  it("uses the noun for what is actually being searched", () => {
+    expect(resultsLabel(1, f({ kind: "room" }))).toBe("1 room");
+    expect(resultsLabel(2, f({ kind: "studio" }))).toBe("2 studios");
+    expect(resultsLabel(1, f({ kind: "whole_property" }))).toBe("1 property");
+    expect(resultsLabel(3, f({ kind: "whole_property" }))).toBe("3 properties");
+  });
+
+  it("says so when the search is for company lets", () => {
+    expect(resultsLabel(2, f({ kind: "whole_property", letType: "company" })))
+      .toBe("2 properties open to companies");
   });
 });
 
 describe("toResults", () => {
   const row: SearchQueryRow = {
     id: "s1",
+    kind: "room",
     label: "Room 1",
+    let_types: ["tenant"],
+    permitted_uses: [],
+    min_lease_months: null,
+    guaranteed_rent_considered: false,
     ensuite: true,
     bills_included: true,
     rent_pcm: 650,
@@ -198,5 +227,91 @@ describe("publicLocation", () => {
   it("falls back to the city when the street cannot be separated", () => {
     expect(publicLocation({ addressLine1: "42", city: "Derby", postcode: "DE1 2AB" }))
       .toBe("Derby, DE1");
+  });
+});
+
+describe("company lets", () => {
+  it("round-trips the company filters through a URL", () => {
+    const original = f({
+      letType: "company",
+      kind: "whole_property",
+      permittedUses: ["hmo", "supported_living"],
+      guaranteedRent: true,
+    });
+    const back = fromParams(p(toParams(original).toString()));
+    expect(back.letType).toBe("company");
+    expect(back.guaranteedRent).toBe(true);
+    expect([...back.permittedUses].sort()).toEqual(["hmo", "supported_living"]);
+  });
+
+  // Two people ticking the same boxes in a different order should be able to
+  // send each other the same link.
+  it("orders the uses so the same search makes the same link", () => {
+    const a = toParams(f({ permittedUses: ["hmo", "serviced_accommodation"] })).toString();
+    const b = toParams(f({ permittedUses: ["serviced_accommodation", "hmo"] })).toString();
+    expect(a).toBe(b);
+  });
+
+  it("drops values it does not recognise rather than erroring", () => {
+    const got = fromParams(p("kind=castle&let=squatter&use=nonsense&use=hmo"));
+    expect(got.kind).toBeNull();
+    expect(got.letType).toBeNull();
+    expect(got.permittedUses).toEqual(["hmo"]);
+  });
+
+  it("does not repeat a use that appears twice", () => {
+    expect(fromParams(p("use=hmo&use=hmo")).permittedUses).toEqual(["hmo"]);
+  });
+
+  it("keeps an unset company search out of the URL", () => {
+    expect(toParams(EMPTY_FILTERS).toString()).toBe("");
+  });
+
+  // Left set on a tenant search these silently exclude almost everything,
+  // with no filter on screen to explain why.
+  it("clears company terms when the search is not for company lets", () => {
+    const cleared = clearCompanyFiltersIfUnused(
+      f({ letType: "tenant", permittedUses: ["hmo"], guaranteedRent: true })
+    );
+    expect(cleared.permittedUses).toEqual([]);
+    expect(cleared.guaranteedRent).toBe(false);
+  });
+
+  it("leaves them alone on a company search", () => {
+    const kept = f({ letType: "company", permittedUses: ["hmo"], guaranteedRent: true });
+    expect(clearCompanyFiltersIfUnused(kept)).toEqual(kept);
+  });
+
+  it("counts each company filter as active", () => {
+    expect(activeCount(f({ letType: "company" }))).toBe(1);
+    expect(activeCount(f({ letType: "company", permittedUses: ["hmo"], guaranteedRent: true }))).toBe(3);
+  });
+
+  it("reads a listing that predates the company columns as tenant-only", () => {
+    const [r] = toResults([{
+      id: "s1", kind: "room", label: "Room 1", ensuite: false, bills_included: true,
+      rent_pcm: 650, status: "available_now", available_from: null,
+      status_confirmed_at: "2026-08-01T00:00:00Z",
+      let_types: null, permitted_uses: null, min_lease_months: null,
+      guaranteed_rent_considered: null,
+      makan_unit: {
+        label: "Whole house", shared_bathrooms: 1,
+        makan_building: { address_line1: "12 Chapel St", city: "Birmingham", postcode: "B29 6AA" },
+      },
+    }]);
+    expect(r.letTypes).toEqual(["tenant"]);
+    expect(acceptsCompanies(r)).toBe(false);
+    expect(r.guaranteedRentConsidered).toBe(false);
+  });
+
+  it("recognises a listing open to companies", () => {
+    expect(acceptsCompanies({ letTypes: ["tenant", "company"] })).toBe(true);
+  });
+
+  it("names every kind it can search", () => {
+    for (const k of ["room", "studio", "whole_property", null] as const) {
+      expect(resultNoun(k, 1), String(k)).toBeTruthy();
+      expect(resultNoun(k, 2), String(k)).toBeTruthy();
+    }
   });
 });
