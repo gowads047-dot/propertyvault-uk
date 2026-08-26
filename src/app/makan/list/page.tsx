@@ -1,329 +1,461 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
-import { useLang } from "@/lib/lang-context";
 import { supabase } from "@/lib/supabase";
-import { countries, propertyTypes, features as allFeatures } from "@/lib/hetta-config";
+import { isMissingTable } from "@/lib/makan-inventory";
+import {
+  EMPTY_DRAFT,
+  PERMITTED_USES,
+  PROPERTY_TYPES,
+  UNIT_TYPES,
+  acceptsCompanies,
+  companyLetExplainer,
+  draftSummary,
+  isValidPostcode,
+  normalisePostcode,
+  toInsertPlan,
+  validateDraft,
+  type LetType,
+  type ListingDraft,
+  type PermittedUse,
+  type PropertyType,
+  type UnitType,
+} from "@/lib/makan-listing";
 
-export default function ListPropertyPage() {
-  const { user, loading: authLoading } = useAuth();
-  const { t } = useLang();
+/**
+ * List a property.
+ *
+ * The whole thesis lives on this screen. A landlord who has been let down by an
+ * agent gives Makan about three minutes before going back to the agent, so
+ * anything that can be asked later is asked later — bedrooms, description and
+ * lease length are all optional, and there is no wizard.
+ *
+ * The question that matters is "who would you let to". Ticking companies is
+ * what puts a property in front of serviced-accommodation and supported-living
+ * operators — the offer an agent declines on the landlord's behalf, because a
+ * company let costs them their management fee.
+ *
+ * No organisation setup either. If a landlord has no org, publishing creates
+ * one. Being asked to "create an organisation" before listing a spare room is
+ * exactly the kind of friction this page exists to remove.
+ */
+
+type Stage =
+  | { at: "editing" }
+  | { at: "publishing" }
+  | { at: "published"; spaceId: string }
+  | { at: "no-schema" };
+
+interface Lookup {
+  state: "idle" | "looking" | "found" | "not-found";
+  city?: string;
+  lat?: number;
+  lng?: number;
+}
+
+export default function ListPage() {
+  const { user, profile, loading: authLoading } = useAuth();
   const router = useRouter();
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
 
-  const [form, setForm] = useState({
-    property_type: "",
-    listing_type: "rent",
-    title: "",
-    address: "",
-    area: "",
-    country: "gb",
-    city: "",
-    bedrooms: 1,
-    price: 0,
-    size_sqm: 0,
-    available_from: "",
-    furnished: "Furnished",
-    description: "",
-    features: [] as string[],
-    company_name: "",
-    facebook_url: "",
-    instagram_url: "",
-  });
+  const [d, setD] = useState<ListingDraft>(EMPTY_DRAFT);
+  const [stage, setStage] = useState<Stage>({ at: "editing" });
+  const [error, setError] = useState<string | null>(null);
+  const [errorField, setErrorField] = useState<keyof ListingDraft | null>(null);
+  const [lookup, setLookup] = useState<Lookup>({ state: "idle" });
 
-  const [images, setImages] = useState<File[]>([]);
-  const [video, setVideo] = useState<File | null>(null);
+  const set = <K extends keyof ListingDraft>(k: K, v: ListingDraft[K]) =>
+    setD(prev => ({ ...prev, [k]: v }));
 
-  const selectedCountry = countries.find(c => c.code === form.country);
-  const update = (key: string, value: string | number | boolean) => setForm(prev => ({ ...prev, [key]: value }));
+  /**
+   * postcodes.io fills in the town and the coordinates so nobody types their
+   * own city. Free, no key, and if it is down the landlord can still publish —
+   * the city field just stays editable and the map pin is null.
+   */
+  const lookupPostcode = useCallback(async (raw: string) => {
+    if (!isValidPostcode(raw)) { setLookup({ state: "idle" }); return; }
+    setLookup({ state: "looking" });
+    try {
+      const res = await fetch(
+        `https://api.postcodes.io/postcodes/${encodeURIComponent(normalisePostcode(raw))}`
+      );
+      if (!res.ok) { setLookup({ state: "not-found" }); return; }
+      const json = await res.json();
+      const r = json?.result;
+      if (!r) { setLookup({ state: "not-found" }); return; }
+      const city: string = r.post_town || r.admin_district || "";
+      setLookup({ state: "found", city, lat: r.latitude, lng: r.longitude });
+      setD(prev => (prev.city.trim() ? prev : { ...prev, city }));
+    } catch {
+      setLookup({ state: "not-found" });
+    }
+  }, []);
 
-  const toggleFeature = (f: string) => {
-    setForm(prev => ({
-      ...prev,
-      features: prev.features.includes(f) ? prev.features.filter(x => x !== f) : [...prev.features, f],
-    }));
-  };
+  useEffect(() => {
+    const t = setTimeout(() => { lookupPostcode(d.postcode); }, 500);
+    return () => clearTimeout(t);
+  }, [d.postcode, lookupPostcode]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /** The landlord's org, created on first publish rather than asked for. */
+  async function ensureOrg(userId: string): Promise<string | null> {
+    const mine = await supabase.from("makan_org_member").select("org_id").eq("user_id", userId).limit(1);
+    if (mine.error) throw mine.error;
+    if (mine.data?.[0]) return mine.data[0].org_id as string;
+
+    const name = profile?.name?.trim() || "My properties";
+    const slug = `${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "landlord"}-${userId.slice(0, 8)}`;
+    const org = await supabase
+      .from("makan_org")
+      .insert({ name, slug, kind: "landlord" })
+      .select("id")
+      .single();
+    if (org.error || !org.data) throw org.error ?? new Error("Could not create your account");
+
+    const member = await supabase
+      .from("makan_org_member")
+      .insert({ org_id: org.data.id, user_id: userId, role: "owner" });
+    if (member.error) throw member.error;
+    return org.data.id as string;
+  }
+
+  async function publish(e: React.FormEvent) {
     e.preventDefault();
-    if (!user) { router.push("/makan/auth"); return; }
+    setError(null); setErrorField(null);
 
-    if (images.length === 0 && !video) { setError("Please upload at least one photo or a video."); return; }
-    if (!form.property_type) { setError("Please select a property type."); return; }
-    if (!form.title.trim()) { setError("Please add a title."); return; }
-    if (!form.city) { setError("Please select a city."); return; }
-    if (!form.area.trim()) { setError("Please enter the area/neighbourhood."); return; }
-    if (!form.price) { setError("Please enter the monthly rent."); return; }
-    if (!form.description || form.description.length < 50) { setError("Please write a description (at least 50 characters)."); return; }
+    const check = validateDraft(d);
+    if (!check.ok) { setError(check.message); setErrorField(check.field); return; }
+    if (!user) return;
 
-    setSubmitting(true);
-    setError("");
+    setStage({ at: "publishing" });
+    try {
+      const orgId = await ensureOrg(user.id);
+      if (!orgId) throw new Error("Could not find your account");
 
-    const imageUrls: string[] = [];
-    let videoUrl: string | null = null;
+      const coords = lookup.state === "found" && lookup.lat != null && lookup.lng != null
+        ? { lat: lookup.lat, lng: lookup.lng }
+        : null;
+      const plan = toInsertPlan(d, orgId, coords);
 
-    for (const file of images) {
-      const ext = file.name.split(".").pop();
-      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: uploadErr } = await supabase.storage.from("listing-images").upload(path, file);
-      if (!uploadErr) {
-        const { data } = supabase.storage.from("listing-images").getPublicUrl(path);
-        imageUrls.push(data.publicUrl);
-      }
+      const b = await supabase.from("makan_building").insert(plan.building).select("id").single();
+      if (b.error || !b.data) throw b.error ?? new Error("Could not save the address");
+
+      const u = await supabase
+        .from("makan_unit")
+        .insert({ ...plan.unit, building_id: b.data.id })
+        .select("id").single();
+      if (u.error || !u.data) throw u.error ?? new Error("Could not save the property");
+
+      const s = await supabase
+        .from("makan_space")
+        .insert({ ...plan.space, unit_id: u.data.id })
+        .select("id").single();
+      if (s.error || !s.data) throw s.error ?? new Error("Could not save the listing");
+
+      const l = await supabase.from("makan_listing").insert({
+        ...plan.listing,
+        space_id: s.data.id,
+        published_at: new Date().toISOString(),
+      });
+      if (l.error) throw l.error;
+
+      setStage({ at: "published", spaceId: s.data.id });
+    } catch (err) {
+      const e2 = err as { code?: string; message?: string };
+      if (isMissingTable(e2.code)) { setStage({ at: "no-schema" }); return; }
+      setStage({ at: "editing" });
+      setError(e2.message ?? "Something went wrong. Try again.");
     }
+  }
 
-    if (video) {
-      const ext = video.name.split(".").pop();
-      const path = `${user.id}/video-${Date.now()}.${ext}`;
-      const { error: uploadErr } = await supabase.storage.from("listing-images").upload(path, video);
-      if (!uploadErr) {
-        const { data } = supabase.storage.from("listing-images").getPublicUrl(path);
-        videoUrl = data.publicUrl;
-      }
-    }
+  function toggleLetType(t: LetType) {
+    const has = d.letTypes.includes(t);
+    // Never let both come off — a listing nobody may answer is not a listing.
+    if (has && d.letTypes.length === 1) return;
+    set("letTypes", has ? d.letTypes.filter(x => x !== t) : [...d.letTypes, t]);
+  }
 
-    const { error: insertErr } = await supabase.from("listings").insert({
-      user_id: user.id,
-      title: form.title,
-      description: form.description,
-      property_type: form.property_type,
-      listing_type: form.listing_type,
-      bedrooms: form.bedrooms,
-      price: form.price,
-      size_sqm: form.size_sqm || null,
-      city: form.city,
-      area: form.area,
-      address: form.address,
-      available_from: form.available_from || new Date().toISOString().split("T")[0],
-      furnished: form.furnished,
-      features: form.features,
-      images: imageUrls,
-      video_url: videoUrl,
-      company_name: form.company_name || null,
-      facebook_url: form.facebook_url || null,
-      instagram_url: form.instagram_url || null,
-      status: "pending",
-    });
+  function toggleUse(u: PermittedUse) {
+    set("permittedUses", d.permittedUses.includes(u)
+      ? d.permittedUses.filter(x => x !== u)
+      : [...d.permittedUses, u]);
+  }
 
-    if (insertErr) {
-      setError(insertErr.message);
-      setSubmitting(false);
-    } else {
-      router.push("/makan/dashboard");
-    }
-  };
+  if (authLoading) return <Shell><p style={{ color: "var(--h-muted)" }}>Loading…</p></Shell>;
 
-  if (authLoading) return <div className="py-20 text-center" style={{ color: "var(--h-muted)" }}>Loading...</div>;
+  if (stage.at === "no-schema") {
+    return <Shell><Panel title="Listings are not set up yet">
+      Run <code>supabase/makan-rooms-schema.sql</code> and{" "}
+      <code>supabase/makan-lettype-schema.sql</code> in the Supabase SQL editor, then reload.
+    </Panel></Shell>;
+  }
 
-  if (!user) {
+  if (stage.at === "published") {
     return (
-      <div className="py-20 text-center">
-        <div className="h-container max-w-md">
-          <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-            <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
-          </div>
-          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--h-text)" }}>{t("list.signinRequired")}</h1>
-          <p className="mb-6" style={{ color: "var(--h-muted)" }}>Create a free account to list your property. Takes 30 seconds.</p>
-          <Link href="/makan/auth" className="h-btn h-btn-primary inline-flex">{t("nav.signup")}</Link>
-        </div>
-      </div>
+      <Shell>
+        <Panel title="It's live.">
+          Your property is on Makan and can be found by tenants
+          {acceptsCompanies(d) && " and by serviced-accommodation and supported-living companies"}.
+          No agent involved.
+          <span className="block mt-5 flex flex-wrap gap-3">
+            <Link href={`/makan/space/${stage.spaceId}`} className="h-btn h-btn-primary">See your listing</Link>
+            <Link href="/makan/app/inventory" className="h-btn h-btn-secondary">Manage your properties</Link>
+          </span>
+        </Panel>
+      </Shell>
     );
   }
 
+  if (!user) {
+    return (
+      <Shell>
+        <Panel title="Sign in to list — it's free">
+          No listing fee, no agent, no commission. Sign in and your first property takes about
+          three minutes.
+          <span className="block mt-5">
+            <Link href="/makan/auth?next=/makan/list" className="h-btn h-btn-primary">Sign in or create an account</Link>
+          </span>
+        </Panel>
+      </Shell>
+    );
+  }
+
+  const err = (field: keyof ListingDraft) =>
+    errorField === field ? <p className="text-sm mt-1.5" role="alert" style={{ color: "var(--h-accent)" }}>{error}</p> : null;
+
   return (
-    <section className="py-12" style={{ background: "var(--h-surface)" }}>
-      <div className="h-container max-w-2xl">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3" style={{ color: "var(--h-text)" }}>{t("list.title")}</h1>
-          <p style={{ color: "var(--h-muted)" }}>{t("list.subtitle")}</p>
-        </div>
+    <Shell>
+      <form onSubmit={publish} className="max-w-2xl">
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Property type */}
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>{t("list.whatListing")}</label>
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-              {propertyTypes.map(type => (
-                <button key={type} type="button" onClick={() => update("property_type", type)}
-                  className="h-card !rounded-xl p-3 text-center transition-all text-sm"
-                  style={{ borderColor: form.property_type === type ? "var(--h-accent)" : undefined, background: form.property_type === type ? "var(--h-accent-light)" : undefined, color: "var(--h-text)" }}>
-                  {type}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Rent or Sale */}
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>For rent or sale? *</label>
-            <div className="flex gap-2">
-              {[{ v: "rent", label: "For Rent" }, { v: "sale", label: "For Sale" }].map(({ v, label }) => (
-                <button key={v} type="button" onClick={() => update("listing_type", v)}
-                  className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all border"
-                  style={{ borderColor: form.listing_type === v ? "var(--h-accent)" : "var(--h-border)", background: form.listing_type === v ? "var(--h-accent-light)" : "transparent", color: "var(--h-text)" }}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Listing title *</label>
-            <input type="text" value={form.title} onChange={e => update("title", e.target.value)} required className="h-input" placeholder="e.g. Spacious 2-bed flat near city centre" />
-          </div>
-
-          {/* Country + City */}
-          <div className="grid grid-cols-2 gap-4">
+        {/* ── Where ─────────────────────────────────────── */}
+        <Section n={1} title="Where is it?">
+          <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Country *</label>
-              <select value={form.country} onChange={e => { update("country", e.target.value); update("city", ""); }} className="h-input">
-                {countries.map(c => <option key={c.code} value={c.code}>{c.flag} {c.name}</option>)}
-              </select>
+              <Label htmlFor="pc">Postcode</Label>
+              <input id="pc" className="h-input" value={d.postcode} autoComplete="postal-code"
+                     onChange={e => set("postcode", e.target.value)} placeholder="B29 6AA" />
+              {lookup.state === "looking" && <Hint>Looking that up…</Hint>}
+              {lookup.state === "found" && lookup.city && <Hint>✓ {lookup.city}</Hint>}
+              {lookup.state === "not-found" && <Hint>Couldn&apos;t find that one — carry on and fill in the town.</Hint>}
+              {err("postcode")}
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>City *</label>
-              <select value={form.city} onChange={e => update("city", e.target.value)} required className="h-input">
-                <option value="">Select city</option>
-                {selectedCountry?.cities.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <Label htmlFor="city">Town or city</Label>
+              <input id="city" className="h-input" value={d.city}
+                     onChange={e => set("city", e.target.value)} placeholder="Birmingham" />
+              {err("city")}
+            </div>
+            <div className="sm:col-span-2">
+              <Label htmlFor="addr">Street address</Label>
+              <input id="addr" className="h-input" value={d.addressLine1} autoComplete="street-address"
+                     onChange={e => set("addressLine1", e.target.value)} placeholder="12 Chapel Street" />
+              <Hint>Only the street and outward code are shown publicly — never the house number.</Hint>
+              {err("addressLine1")}
             </div>
           </div>
+        </Section>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Area / Neighbourhood *</label>
-              <input type="text" value={form.area} onChange={e => update("area", e.target.value)} required className="h-input" placeholder="e.g. Erdington" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Full address (private)</label>
-              <input type="text" value={form.address} onChange={e => update("address", e.target.value)} className="h-input" placeholder="Not shown publicly" />
-            </div>
+        {/* ── What ──────────────────────────────────────── */}
+        <Section n={2} title="What are you letting?">
+          <div className="flex flex-wrap gap-2 mb-4">
+            {PROPERTY_TYPES.map(t => (
+              <Choice key={t.value} on={d.propertyType === t.value}
+                      onClick={() => set("propertyType", t.value as PropertyType)}>{t.label}</Choice>
+            ))}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Bedrooms *</label>
-              <select value={form.bedrooms} onChange={e => update("bedrooms", +e.target.value)} className="h-input">
-                <option value={0}>Studio</option>
-                {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Price ({selectedCountry?.symbol}) *</label>
-              <input type="number" value={form.price || ""} onChange={e => update("price", +e.target.value)} required className="h-input" placeholder={form.listing_type === "sale" ? "Asking price" : "Monthly"} />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Size (m²)</label>
-              <input type="number" value={form.size_sqm || ""} onChange={e => update("size_sqm", +e.target.value)} className="h-input" placeholder="Optional" />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>{form.listing_type === "sale" ? "Handover date" : "Available from"} *</label>
-              <input type="date" value={form.available_from} onChange={e => update("available_from", e.target.value)} required className="h-input" />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Furnished?</label>
-            <div className="flex gap-2">
-              {["Furnished", "Part furnished", "Unfurnished"].map(f => (
-                <button key={f} type="button" onClick={() => update("furnished", f)}
-                  className="flex-1 py-2.5 rounded-lg text-sm font-medium transition-all border"
-                  style={{ borderColor: form.furnished === f ? "var(--h-accent)" : "var(--h-border)", background: form.furnished === f ? "var(--h-accent-light)" : "transparent", color: "var(--h-text)" }}>
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Description * <span className="font-normal" style={{ color: "var(--h-subtle)" }}>(min 50 characters)</span></label>
-            <textarea value={form.description} onChange={e => update("description", e.target.value)} required rows={5} className="h-input" placeholder="Describe the property in detail — rooms, condition, nearby amenities, transport links, what makes it special..." />
-            <p className="text-xs mt-1" style={{ color: form.description.length >= 50 ? "var(--h-green)" : "var(--h-subtle)" }}>{form.description.length}/50 characters minimum</p>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold mb-2" style={{ color: "var(--h-text)" }}>Features</label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {allFeatures.map(f => (
-                <button key={f} type="button" onClick={() => toggleFeature(f)}
-                  className="flex items-center gap-2 text-sm py-2 px-3 rounded-lg border transition-all text-left"
-                  style={{
-                    borderColor: form.features.includes(f) ? "var(--h-accent)" : "var(--h-border)",
-                    background: form.features.includes(f) ? "var(--h-accent-light)" : "transparent",
-                    color: form.features.includes(f) ? "var(--h-accent)" : "var(--h-muted)",
-                  }}>
-                  {form.features.includes(f) ? "✓" : "+"} {f}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Company & Social links — optional */}
-          <div className="border-t pt-6" style={{ borderColor: "var(--h-border)" }}>
-            <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Company / agency name <span className="font-normal" style={{ color: "var(--h-subtle)" }}>(optional)</span></label>
-            <input type="text" value={form.company_name} onChange={e => update("company_name", e.target.value)} className="h-input mb-4" placeholder="e.g. United Real Estate" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid sm:grid-cols-3 gap-4">
+            {d.propertyType === "whole_property" && (
               <div>
-                <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Facebook page URL</label>
-                <input type="url" value={form.facebook_url} onChange={e => update("facebook_url", e.target.value)} className="h-input" placeholder="https://facebook.com/..." />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>Instagram profile URL</label>
-                <input type="url" value={form.instagram_url} onChange={e => update("instagram_url", e.target.value)} className="h-input" placeholder="https://instagram.com/..." />
-              </div>
-            </div>
-            <p className="text-xs mt-2" style={{ color: "var(--h-subtle)" }}>These appear on your listing so buyers/tenants can follow your brand.</p>
-          </div>
-
-          {/* Photos — optional if video provided */}
-          <div className="border-t pt-6" style={{ borderColor: "var(--h-border)" }}>
-            <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>{t("list.photos")} *</label>
-            <p className="text-xs mb-3" style={{ color: "var(--h-subtle)" }}>{t("list.photosHint")}</p>
-            <input
-              type="file" accept="image/*" multiple
-              onChange={e => setImages(Array.from(e.target.files || []))}
-              className="h-input"
-            />
-            {images.length > 0 && (
-              <div className="mt-3">
-                <p className="text-xs mb-2" style={{ color: "var(--h-green)" }}>
-                  {images.length} photo{images.length > 1 ? "s" : ""} selected
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  {images.map((img, i) => (
-                    <div key={i} className="w-20 h-20 rounded-lg overflow-hidden border" style={{ borderColor: "var(--h-border)" }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element -- local blob: URL for a pre-upload preview; next/image cannot optimise blobs and would reject the host */}
-                      <img src={URL.createObjectURL(img)} alt={`Preview ${i + 1}`} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
+                <Label htmlFor="ut">Property type</Label>
+                <select id="ut" className="h-input" value={d.unitType}
+                        onChange={e => set("unitType", e.target.value as UnitType)}>
+                  {UNIT_TYPES.map(t => <option key={t} value={t}>{t[0].toUpperCase() + t.slice(1)}</option>)}
+                </select>
               </div>
             )}
+            <div>
+              <Label htmlFor="beds">Bedrooms <Opt /></Label>
+              <input id="beds" className="h-input" inputMode="numeric" value={d.bedrooms}
+                     onChange={e => set("bedrooms", e.target.value)} placeholder="4" />
+              {err("bedrooms")}
+            </div>
+            <div>
+              <Label htmlFor="rent">Rent per month</Label>
+              <input id="rent" className="h-input" inputMode="numeric" value={d.rentPcm}
+                     onChange={e => set("rentPcm", e.target.value)} placeholder="£650" />
+              {err("rentPcm")}
+            </div>
           </div>
 
-          {/* Video — OPTIONAL */}
-          <div>
-            <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-text)" }}>{t("list.video")}</label>
-            <input
-              type="file" accept="video/*"
-              onChange={e => setVideo(e.target.files?.[0] || null)}
-              className="h-input"
-            />
-            {video && <p className="text-xs mt-1" style={{ color: "var(--h-green)" }}>Video selected: {video.name}</p>}
+          <label className="flex items-center gap-2 mt-4 text-sm" style={{ color: "var(--h-text)" }}>
+            <input type="checkbox" checked={d.billsIncluded}
+                   onChange={e => set("billsIncluded", e.target.checked)} />
+            Bills included
+          </label>
+        </Section>
+
+        {/* ── Who. The whole product. ───────────────────── */}
+        <Section n={3} title="Who would you let to?">
+          <p className="text-sm mb-4" style={{ color: "var(--h-muted)" }}>
+            Pick both if you don&apos;t mind either. This is the bit an agent usually decides for you.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Choice on={d.letTypes.includes("tenant")} onClick={() => toggleLetType("tenant")}>
+              Tenants
+            </Choice>
+            <Choice on={d.letTypes.includes("company")} onClick={() => toggleLetType("company")}>
+              Companies
+            </Choice>
           </div>
+          {err("letTypes")}
 
-          {error && <div className="p-4 rounded-xl text-sm font-medium" style={{ background: "#fef2f2", color: "#dc2626", border: "1px solid #fecaca" }}>{error}</div>}
+          {acceptsCompanies(d) && (
+            <div className="mt-5 rounded-xl p-5" style={{ background: "var(--h-warm)" }}>
+              <h3 className="font-bold mb-2" style={{ color: "var(--h-text)" }}>What a company let means</h3>
+              <ul className="text-sm m-0 pl-5" style={{ color: "var(--h-muted)" }}>
+                {companyLetExplainer().map((line, i) => (
+                  <li key={i} className="mb-1.5">{line}</li>
+                ))}
+              </ul>
 
-          <button type="submit" disabled={submitting || !form.property_type || (images.length === 0 && !video)} className="h-btn h-btn-primary w-full !py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed">
-            {submitting ? "Uploading & submitting..." : t("list.publish")}
+              <div className="mt-5">
+                <Label>What would you allow it to be used for? <Opt /></Label>
+                <div className="flex flex-wrap gap-2 mt-1.5">
+                  {PERMITTED_USES.map(u => (
+                    <Choice key={u.value} small on={d.permittedUses.includes(u.value)}
+                            onClick={() => toggleUse(u.value)}>{u.label}</Choice>
+                  ))}
+                </div>
+                <Hint>Leave blank and companies will ask. Ticking these gets you found faster.</Hint>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <Label htmlFor="lease">Minimum lease, months <Opt /></Label>
+                  <input id="lease" className="h-input" inputMode="numeric" value={d.minLeaseMonths}
+                         onChange={e => set("minLeaseMonths", e.target.value)} placeholder="36" />
+                  {err("minLeaseMonths")}
+                </div>
+                <label className="flex items-center gap-2 text-sm self-end pb-3" style={{ color: "var(--h-text)" }}>
+                  <input type="checkbox" checked={d.guaranteedRentConsidered}
+                         onChange={e => set("guaranteedRentConsidered", e.target.checked)} />
+                  Open to guaranteed rent
+                </label>
+              </div>
+            </div>
+          )}
+        </Section>
+
+        {/* ── Anything else ─────────────────────────────── */}
+        <Section n={4} title="Anything else? (optional)">
+          <Label htmlFor="desc">Description</Label>
+          <textarea id="desc" className="h-input" rows={4} value={d.description}
+                    onChange={e => set("description", e.target.value)}
+                    placeholder="Recently refurbished, walking distance to the QE, off-street parking…" />
+          <Hint>Photos come next, once it&apos;s live — you don&apos;t need them to publish.</Hint>
+        </Section>
+
+        <div className="rounded-xl p-4 mb-5" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+          <p className="text-xs font-semibold mb-1" style={{ color: "var(--h-muted)" }}>ABOUT TO PUBLISH</p>
+          <p className="m-0 font-semibold" style={{ color: "var(--h-text)" }}>{draftSummary(d)}</p>
+        </div>
+
+        {error && !errorField && (
+          <p className="text-sm mb-3" role="alert" style={{ color: "var(--h-accent)" }}>{error}</p>
+        )}
+
+        <div className="flex flex-wrap items-center gap-3">
+          <button type="submit" className="h-btn h-btn-primary" disabled={stage.at === "publishing"}>
+            {stage.at === "publishing" ? "Publishing…" : "Publish — free"}
           </button>
-          <p className="text-xs text-center" style={{ color: "var(--h-subtle)" }}>Your listing will be reviewed within 24 hours. Listings without quality photos or complete details won&apos;t be approved.</p>
-        </form>
-      </div>
+          <p className="text-sm m-0" style={{ color: "var(--h-muted)" }}>
+            No fee, no commission. Edit or take it down whenever you like.
+          </p>
+        </div>
+      </form>
+    </Shell>
+  );
+}
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <section className="py-12" style={{ background: "var(--h-slate)" }}>
+        <div className="h-container">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
+                 style={{ background: "rgba(232,85,61,0.15)", color: "#f08a76" }}>
+              Free to list
+            </div>
+            <h1 className="text-3xl md:text-4xl font-extrabold mb-3 text-white leading-tight">
+              List your property.<br />Reach tenants and companies.
+            </h1>
+            <p className="text-base mb-0" style={{ color: "rgba(255,255,255,0.75)" }}>
+              Including the serviced-accommodation and supported-living companies an agent would
+              have turned down on your behalf.
+            </p>
+          </div>
+        </div>
+      </section>
+      <main className="py-10" style={{ background: "var(--h-bg)", minHeight: "50vh" }}>
+        <div className="h-container">{children}</div>
+      </main>
+    </>
+  );
+}
+
+function Section({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl p-6 mb-5"
+             style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+      <h2 className="text-lg font-bold mb-4 flex items-baseline gap-2.5" style={{ color: "var(--h-text)" }}>
+        <span className="text-sm font-mono" style={{ color: "var(--h-subtle)" }}>{n}</span>
+        {title}
+      </h2>
+      {children}
     </section>
+  );
+}
+
+function Label({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) {
+  return (
+    <label htmlFor={htmlFor} className="block text-xs font-semibold mb-1.5" style={{ color: "var(--h-muted)" }}>
+      {children}
+    </label>
+  );
+}
+
+function Opt() {
+  return <span style={{ fontWeight: 400, color: "var(--h-subtle)" }}>optional</span>;
+}
+
+function Hint({ children }: { children: React.ReactNode }) {
+  return <p className="text-xs mt-1.5 mb-0" style={{ color: "var(--h-subtle)" }}>{children}</p>;
+}
+
+function Choice({ on, onClick, small, children }:
+  { on: boolean; onClick: () => void; small?: boolean; children: React.ReactNode }) {
+  return (
+    <button type="button" onClick={onClick} aria-pressed={on}
+            className={`rounded-full font-semibold border transition-colors ${small ? "px-3 py-1.5 text-sm" : "px-4 py-2"}`}
+            style={{
+              background: on ? "var(--h-text)" : "var(--h-surface)",
+              color: on ? "#ffffff" : "var(--h-muted)",
+              borderColor: on ? "var(--h-text)" : "var(--h-border)",
+            }}>
+      {children}
+    </button>
+  );
+}
+
+function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-2xl p-8 max-w-xl"
+         style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+      <h2 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>{title}</h2>
+      <div className="text-sm" style={{ color: "var(--h-muted)" }}>{children}</div>
+    </div>
   );
 }
