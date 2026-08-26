@@ -1,293 +1,279 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
-const FEATURES = [
-  {
-    icon: "🇬🇧",
-    title: "UK Property Listings",
-    desc: "Buy, rent, and find rooms across the UK. From Birmingham to London, Manchester to Nottingham — properties listed in English and Arabic for the Arab diaspora community.",
-  },
-  {
-    icon: "🇲🇦",
-    title: "Morocco Listings",
-    desc: "Marrakech, Casablanca, Agadir, Rabat — buy or invest in Moroccan property, with pricing shown in both GBP and MAD.",
-  },
-  {
-    icon: "🌍",
-    title: "North Africa & Middle East",
-    desc: "Egypt, UAE, and beyond. Makan is building the first bilingual property platform connecting the Arab world diaspora in the UK to investment opportunities back home.",
-  },
-  {
-    icon: "🌐",
-    title: "Fully Bilingual",
-    desc: "Every listing, every search, every message — available in Arabic and English. Right-to-left layout fully supported. No more translating your own home search.",
-  },
-  {
-    icon: "🔍",
-    title: "Smart Bilingual Search",
-    desc: "Search in Arabic or English and get the same results. Makan's search will read both languages natively — no clunky auto-translation.",
-  },
-  {
-    icon: "✅",
-    title: "Verified Landlords",
-    desc: "Landlords and agents will be identity-checked before they can list, so a listing means a real property with a real person behind it.",
-  },
-  {
-    icon: "💬",
-    title: "Message in Your Language",
-    desc: "Contact landlords and agents directly in Arabic or English via in-app messaging. No awkward Google Translate conversations.",
-  },
-  {
-    icon: "🆓",
-    title: "Free to List",
-    desc: "Landlords and agents will list for free. Always. Makan will make its money on premium placements and featured listings — never by charging the people listing their properties.",
-  },
+/**
+ * The Makan front door.
+ *
+ * This page used to be a coming-soon waitlist for a bilingual diaspora
+ * platform, sitting in front of a working product at other URLs — the only way
+ * to find search or the Wanted board was to know the address.
+ *
+ * The proposition is now the one an estate agent creates by accident. Ring an
+ * agent about a four-bed for supported living and they say no on the spot,
+ * without asking the landlord, because a company let replaces their ongoing
+ * management fee with a one-off tenant-find fee at best. The landlord never
+ * hears the offer existed, even when the property has been empty for weeks.
+ *
+ * Two rules for the copy here:
+ *   - Only claim what is built. Search, the Wanted board, listing and
+ *     enquiries are live; photos-as-reels, verification and alerts are not, and
+ *     nothing on this page implies otherwise.
+ *   - No unsourced numbers. The previous version asserted "over 600,000
+ *     Arab-speaking people living in the UK" with no citation.
+ */
+
+const OPERATOR_TYPES = [
+  { icon: "🏨", title: "Serviced accommodation", body: "Companies running short stays who need whole properties on multi-year leases." },
+  { icon: "🤝", title: "Supported living", body: "Providers housing people who need support, usually on long leases with guaranteed rent." },
+  { icon: "🛏", title: "HMO operators", body: "Room-by-room operators looking for houses they can manage end to end." },
+  { icon: "👥", title: "Tenants", body: "People looking for a room, a studio or a whole place — direct, no agency fee." },
 ];
 
-const MARKETS = [
-  { flag: "🇬🇧", country: "United Kingdom", cities: ["London", "Birmingham", "Manchester", "Nottingham", "Derby", "Leicester", "Sheffield", "Leeds", "Bradford"], status: "Launching first" },
-  { flag: "🇲🇦", country: "Morocco", cities: ["Marrakech", "Casablanca", "Agadir", "Rabat", "Fez", "Tangier"], status: "Phase 2" },
-  { flag: "🇪🇬", country: "Egypt", cities: ["Cairo", "Alexandria", "El Gouna", "New Cairo"], status: "Phase 3" },
-  { flag: "🇦🇪", country: "UAE", cities: ["Dubai", "Abu Dhabi", "Sharjah"], status: "Future" },
+const STEPS = [
+  { n: "1", title: "Post it in about three minutes", body: "Postcode, type, rent. Photos and the rest can wait — you can publish first and fill in the detail after." },
+  { n: "2", title: "Say who you'd let to", body: "Tenants, companies, or both. One tick is what puts your property in front of operators an agent would have turned away." },
+  { n: "3", title: "They message you directly", body: "No agent in the middle taking a cut or deciding on your behalf. You can see when your message has been read." },
 ];
 
 export default function MakanPage() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [lang, setLang] = useState<"en" | "ar">("en");
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.trim()) return;
-    fetch("/api/subscribe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "Makan Waitlist", email: email.trim(), user_type: "makan_waitlist" }),
-    }).catch(() => {});
-    setSubmitted(true);
-  }
-
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main style={{ background: "var(--h-bg)" }}>
 
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-24 overflow-hidden">
-        {/* Grid bg */}
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
-        {/* Dual glow — left blue for UK, right gold for MENA */}
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 65%)" }} />
-        <div className="absolute top-1/2 right-1/4 translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(201,168,76,0.1) 0%,transparent 65%)" }} />
+      {/* ── Hero ──────────────────────────────────────── */}
+      <section className="relative overflow-hidden py-20 md:py-28 px-6" style={{ background: "#0a1628" }}>
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)",
+          backgroundSize: "60px 60px",
+        }} />
 
-        <div className="relative max-w-3xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-4 py-2 mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse" />
-            <span className="text-[#c9a84c] text-sm font-semibold tracking-wide">COMING SOON — JOIN THE WAITLIST</span>
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div className="flex items-baseline justify-center gap-3 mb-6">
+            <span className="text-3xl font-black text-white" style={{ fontFamily: "serif" }}>مكان</span>
+            <span className="text-white/55 text-xl">·</span>
+            <span className="text-3xl font-black text-white tracking-tight">MAKAN</span>
           </div>
 
-          {/* Logo */}
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-[#c9a84c]/30 to-blue-500/20 border border-[#c9a84c]/30 mb-4">
-              <span className="text-4xl font-black" style={{ fontFamily: "serif", color: "var(--gold-ink)" }}>م</span>
-            </div>
-            <div className="flex items-baseline justify-center gap-3">
-              <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: "serif" }}>مكان</h1>
-              <span className="text-white/55 text-2xl">·</span>
-              <h1 className="text-4xl font-black text-white tracking-tight">MAKAN</h1>
-            </div>
-          </div>
-
-          {/* Language toggle */}
-          <div className="flex justify-center gap-2 mb-6">
-            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${lang === "en" ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60"}`}>English</button>
-            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${lang === "ar" ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60"}`}>العربية</button>
+          <div className="flex justify-center gap-2 mb-8">
+            {(["en", "ar"] as const).map(l => (
+              <button key={l} onClick={() => setLang(l)}
+                      className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all"
+                      style={{
+                        background: lang === l ? "#c9a84c" : "rgba(255,255,255,0.1)",
+                        color: lang === l ? "#0a1628" : "rgba(255,255,255,0.75)",
+                      }}>
+                {l === "en" ? "English" : "العربية"}
+              </button>
+            ))}
           </div>
 
           {lang === "en" ? (
             <>
-              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-5">
-                The First Bilingual Property<br />
-                Platform for the <span className="text-[#c9a84c]">Arab Diaspora</span>
-              </h2>
-              <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-                Search for homes, rooms, and investment properties in the UK, Morocco, Egypt and beyond — in Arabic or English. One platform. Two languages. Your community.
+              <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 text-white">
+                List once.<br />
+                Tenants <span style={{ color: "#e8c877" }}>and companies</span> both see it.
+              </h1>
+              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.78)" }}>
+                Rooms, studios and whole properties. Long lets and company lets — including the
+                serviced-accommodation and supported-living companies an estate agent would have
+                turned down on your behalf.
               </p>
             </>
           ) : (
             <div dir="rtl">
-              <h2 className="text-4xl md:text-5xl font-black leading-tight mb-5" style={{ fontFamily: "serif" }}>
-                المنصة العقارية الأولى<br />
-                <span className="text-[#c9a84c]">للجالية العربية</span> في بريطانيا
-              </h2>
-              <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-                ابحث عن منازل وغرف وعقارات للاستثمار في المملكة المتحدة والمغرب ومصر وما بعدها — بالعربية أو الإنجليزية. منصة واحدة. لغتان. مجتمعك.
+              <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 text-white" style={{ fontFamily: "serif" }}>
+                اعرض عقارك مرة واحدة.<br />
+                <span style={{ color: "#e8c877" }}>المستأجرون والشركات</span> يرونه معاً.
+              </h1>
+              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.78)" }}>
+                غرف واستوديوهات وعقارات كاملة. إيجارات طويلة وإيجارات للشركات — بما في ذلك شركات
+                الإقامة المخدومة والسكن المدعوم التي كان الوكيل العقاري سيرفضها نيابة عنك.
               </p>
             </div>
           )}
 
-          {/* Stats */}
-          <div className="flex flex-wrap justify-center gap-8 mb-10">
-            {[["2", "Countries at launch"], ["🇬🇧🇲🇦", "UK & Morocco"], ["عربي", "Arabic-first"], ["Free", "To list"]].map(([v, l]) => (
-              <div key={l} className="text-center">
-                <p className="text-2xl font-black text-[#c9a84c]">{v}</p>
-                <p className="text-white/55 text-xs">{l}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Waitlist */}
-          {submitted ? (
-            <div className="bg-[#c9a84c]/15 border border-[#c9a84c]/40 rounded-2xl px-8 py-6 max-w-md mx-auto">
-              <p className="text-2xl mb-2">🎉</p>
-              <p className="font-bold text-white text-lg">You&apos;re on the list!</p>
-              <p className="text-white/55 text-sm mt-1" dir="ltr">We&apos;ll notify you the moment Makan goes live.</p>
-              {lang === "ar" && <p className="text-white/55 text-sm mt-1" dir="rtl">سنُعلمك فور إطلاق منصة مكان.</p>}
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder={lang === "ar" ? "بريدك الإلكتروني" : "your@email.com"}
-                dir={lang === "ar" ? "rtl" : "ltr"}
-                className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 focus:bg-white/15 transition-all" />
-              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
-                {lang === "ar" ? "انضم للقائمة" : "Notify Me →"}
-              </button>
-            </form>
-          )}
-          <p className="text-white/55 text-xs mt-3">{lang === "ar" ? "لا رسائل مزعجة. إلغاء الاشتراك في أي وقت." : "No spam. Unsubscribe any time."}</p>
-        </div>
-      </section>
-
-      {/* WHAT IS MAKAN */}
-      <section className="bg-[#0f1b36] py-20 px-6">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">What is Makan?</p>
-            <h2 className="text-3xl font-black text-white mb-5">Property Search Built for a Community That Was Ignored</h2>
-            <div className="space-y-4 text-white/70 leading-relaxed text-sm">
-              <p>There are over <strong className="text-white">600,000 Arab-speaking people</strong> living in the UK — and until now, every property platform assumed they only spoke English and only wanted properties in one country.</p>
-              <p>Makan is built for the Arab diaspora. Whether you&apos;re a family in Birmingham searching for a home, an investor comparing yields in Nottingham vs Marrakech, or a student looking for a room near your university — Makan speaks your language.</p>
-              <p>Listings are available in <strong className="text-white">Arabic and English</strong>. Landlords are <strong className="text-white">verified</strong>. And it&apos;s completely <strong className="text-white">free to list</strong>.</p>
-            </div>
-          </div>
-          {/* Bilingual comparison */}
-          <div className="space-y-3">
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <p className="text-white/55 text-xs uppercase tracking-wider mb-3">Other platforms</p>
-              <ul className="space-y-2 text-sm text-white/60">
-                {["English only", "UK properties only", "No understanding of Arab market needs", "Expensive listing fees for landlords", "No bilingual support or messaging"].map((p) => (
-                  <li key={p} className="flex gap-2"><span className="text-red-400">✗</span>{p}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-xl p-5">
-              <p className="text-[#c9a84c] text-xs uppercase tracking-wider font-bold mb-3">مكان / Makan</p>
-              <ul className="space-y-2 text-sm text-white/75">
-                {["Arabic & English — fully bilingual", "UK, Morocco, Egypt and expanding", "Built by and for the community", "Always free to list", "Message landlords in your language"].map((p) => (
-                  <li key={p} className="flex gap-2"><span className="text-green-400">✓</span>{p}</li>
-                ))}
-              </ul>
-            </div>
+          {/* The two doors. Everything else on this page is secondary. */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
+            <Link href="/makan/list"
+                  className="flex-1 rounded-2xl px-6 py-5 font-bold text-lg transition-transform hover:-translate-y-0.5"
+                  style={{ background: "#c9a84c", color: "#0a1628" }}>
+              I have a property
+              <span className="block text-sm font-normal mt-0.5" style={{ color: "rgba(10,22,40,0.75)" }}>
+                Free to list, no agent
+              </span>
+            </Link>
+            <Link href="/makan/rooms"
+                  className="flex-1 rounded-2xl px-6 py-5 font-bold text-lg text-white transition-transform hover:-translate-y-0.5"
+                  style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)" }}>
+              I&apos;m looking
+              <span className="block text-sm font-normal mt-0.5" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Rooms, studios, whole places
+              </span>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="py-20 px-6">
+      {/* ── The problem. The sharpest thing on the page. ── */}
+      <section className="py-20 px-6" style={{ background: "#0f1b36" }}>
+        <div className="max-w-3xl mx-auto">
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#e8c877" }}>
+            Why Makan exists
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black mb-6 text-white leading-tight">
+            Your agent has been saying no on your behalf
+          </h2>
+          <div className="text-lg leading-relaxed space-y-4" style={{ color: "rgba(255,255,255,0.8)" }}>
+            <p>
+              Ring an estate agent about a four-bed for supported living or serviced accommodation
+              and you get a no on the spot. Not after they&apos;ve asked the landlord — immediately.
+            </p>
+            <p>
+              There&apos;s a reason. A company let means the landlord signs a multi-year lease
+              directly with an operator, and the agent&apos;s ongoing management fee disappears with
+              it. It doesn&apos;t fit their standard tenancy paperwork either.
+            </p>
+            <p style={{ color: "#ffffff" }}>
+              Meanwhile the landlord has a property that&apos;s been empty for six weeks and would
+              take a three-year guaranteed lease tomorrow. They never find out the offer existed.
+            </p>
+            <p>
+              Makan puts the two of you in the same place, with nobody in between deciding what
+              you&apos;d be interested in.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── How it works ──────────────────────────────── */}
+      <section className="py-20 px-6" style={{ background: "var(--h-bg)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Planned At Launch</p>
-            <h2 className="text-3xl font-black text-white">What Makan Will Do</h2>
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--h-accent-hover)" }}>
+              For landlords
+            </p>
+            <h2 className="text-3xl font-black" style={{ color: "var(--h-text)" }}>
+              Three minutes, no agent, no fee
+            </h2>
           </div>
-          <div className="grid sm:grid-cols-2 gap-5">
-            {FEATURES.map((f) => (
-              <div key={f.title} className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-6 hover:border-[#c9a84c]/30 transition-colors">
-                <span className="text-3xl shrink-0">{f.icon}</span>
-                <div>
-                  <h3 className="font-bold text-white mb-1">{f.title}</h3>
-                  <p className="text-white/55 text-sm leading-relaxed">{f.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* MARKETS */}
-      <section className="bg-[#0f1b36] py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Where We&apos;re Launching</p>
-            <h2 className="text-3xl font-black text-white">From the UK to North Africa and Beyond</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {MARKETS.map((m) => (
-              <div key={m.country} className={`rounded-2xl p-5 border ${m.status === "Launching first" ? "border-[#c9a84c]/40 bg-[#c9a84c]/10" : "border-white/10 bg-white/5"}`}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-3xl">{m.flag}</span>
-                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${m.status === "Launching first" ? "bg-[#c9a84c]/20 text-[#d6ba66]" : "bg-white/10 text-white/55"}`}>{m.status}</span>
-                </div>
-                <h3 className="font-bold text-white mb-2">{m.country}</h3>
-                <div className="flex flex-wrap gap-1">
-                  {m.cities.map((c) => (
-                    <span key={c} className="text-xs text-white/55 bg-white/5 px-2 py-0.5 rounded-full">{c}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHO IT'S FOR */}
-      <section className="py-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Who Makan Is For</p>
-            <h2 className="text-3xl font-black text-white">Built for Your Community</h2>
-          </div>
           <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { icon: "🏠", who: "Renters & Buyers", desc: "Arab-speaking families and individuals looking for homes and rooms in the UK — in a platform that speaks their language and understands their needs." },
-              { icon: "💰", who: "UK-Based Investors", desc: "Arab diaspora investors comparing UK and MENA opportunities — yield analysis, bilingual listings, and a community of like-minded property investors." },
-              { icon: "📋", who: "Landlords & Agents", desc: "Property professionals who want to reach the large, underserved Arab-speaking tenant and buyer market in the UK. List for free, reach more people." },
-            ].map((c) => (
-              <div key={c.who} className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center hover:border-[#c9a84c]/30 transition-colors">
-                <span className="text-4xl block mb-4">{c.icon}</span>
-                <h3 className="font-bold text-white mb-2">{c.who}</h3>
-                <p className="text-white/55 text-sm leading-relaxed">{c.desc}</p>
+            {STEPS.map(s => (
+              <div key={s.n} className="rounded-2xl p-6"
+                   style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+                <p className="text-3xl font-black mb-3" style={{ color: "var(--h-accent)" }}>{s.n}</p>
+                <h3 className="font-bold text-lg mb-2" style={{ color: "var(--h-text)" }}>{s.title}</h3>
+                <p className="text-sm m-0" style={{ color: "var(--h-muted)" }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Link href="/makan/list" className="h-btn h-btn-primary">List a property — free</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Who is looking ────────────────────────────── */}
+      <section className="py-20 px-6" style={{ background: "var(--h-warm)" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--h-accent-hover)" }}>
+              Who sees your listing
+            </p>
+            <h2 className="text-3xl font-black mb-3" style={{ color: "var(--h-text)" }}>
+              Not just tenants
+            </h2>
+            <p className="text-base max-w-xl mx-auto m-0" style={{ color: "var(--h-muted)" }}>
+              Say yes to company lets and your property reaches businesses that take whole
+              properties on long leases.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            {OPERATOR_TYPES.map(o => (
+              <div key={o.title} className="flex gap-4 rounded-2xl p-6"
+                   style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+                <span className="text-2xl shrink-0" aria-hidden="true">{o.icon}</span>
+                <div>
+                  <h3 className="font-bold mb-1" style={{ color: "var(--h-text)" }}>{o.title}</h3>
+                  <p className="text-sm m-0" style={{ color: "var(--h-muted)" }}>{o.body}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* BOTTOM CTA */}
-      <section className="bg-[#0f1b36] py-20 px-6">
-        <div className="max-w-xl mx-auto text-center">
-          <div className="text-4xl mb-4" style={{ fontFamily: "serif" }}>مكان</div>
-          <h2 className="text-3xl font-black text-white mb-3">Be First Through the Door</h2>
-          <p className="text-white/55 mb-8">Join the waitlist and be notified the moment Makan launches. Early users get priority listing placement.</p>
-          {submitted ? (
-            <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
-              <p className="font-bold text-white text-lg">You&apos;re on the list 🎉</p>
-              <p className="text-white/55 text-sm mt-1">We&apos;ll be in touch very soon.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
-                className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 transition-all" />
-              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
-            </form>
-          )}
-          <div className="mt-10 pt-8 border-t border-white/10">
-            <Link href="/" className="text-white/55 hover:text-white/70 text-sm transition-colors">← Back to PropertyVault</Link>
+      {/* ── Looking for something? ────────────────────── */}
+      <section className="py-20 px-6" style={{ background: "var(--h-bg)" }}>
+        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-5">
+          <div className="rounded-2xl p-8" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+            <h3 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Looking for a place</h3>
+            <p className="text-sm mb-5" style={{ color: "var(--h-muted)" }}>
+              Rooms, studios and whole properties, each showing when the landlord last confirmed it
+              was still available — so you&apos;re not enquiring about something that went weeks ago.
+            </p>
+            <Link href="/makan/rooms" className="h-btn h-btn-primary">Search</Link>
+          </div>
+
+          <div className="rounded-2xl p-8" style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+            <h3 className="text-xl font-bold mb-2" style={{ color: "var(--h-text)" }}>Can&apos;t find it? Post what you need</h3>
+            <p className="text-sm mb-5" style={{ color: "var(--h-muted)" }}>
+              Operators and tenants can post what they&apos;re after — &ldquo;four-bed wanted in
+              Sandwell, supported living, three-year lease&rdquo; — and landlords answer directly.
+            </p>
+            <Link href="/makan/wanted" className="h-btn h-btn-secondary">The Wanted board</Link>
           </div>
         </div>
       </section>
 
+      {/* ── Bilingual, as a feature rather than the pitch ── */}
+      <section className="py-16 px-6" style={{ background: "var(--h-warm)" }}>
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-3xl mb-3" style={{ fontFamily: "serif", color: "var(--h-text)" }}>مكان</p>
+          <h2 className="text-2xl font-black mb-3" style={{ color: "var(--h-text)" }}>
+            Makan means place
+          </h2>
+          <p className="text-base m-0" style={{ color: "var(--h-muted)" }}>
+            Built in the Midlands, and bilingual from the start — English and Arabic, with
+            right-to-left throughout. If you&apos;re buying or letting across the UK, Morocco, Egypt
+            or the Gulf, there are guides for that too.
+          </p>
+          <div className="flex flex-wrap gap-3 justify-center mt-6">
+            <Link href="/makan/gcc" className="h-btn h-btn-secondary !py-2 !text-sm">Buying from the Gulf</Link>
+            <Link href="/makan/compliance" className="h-btn h-btn-secondary !py-2 !text-sm">Country-by-country rules</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Close ─────────────────────────────────────── */}
+      <section className="py-20 px-6" style={{ background: "#0a1628" }}>
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-black mb-4 text-white leading-tight">
+            See the offers your agent turned down
+          </h2>
+          <p className="text-lg mb-8" style={{ color: "rgba(255,255,255,0.78)" }}>
+            Free to list. No commission, no tie-in, and you can take it down whenever you like.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link href="/makan/list" className="rounded-xl px-7 py-4 font-bold"
+                  style={{ background: "#c9a84c", color: "#0a1628" }}>
+              List your property
+            </Link>
+            <Link href="/makan/rooms" className="rounded-xl px-7 py-4 font-bold text-white"
+                  style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)" }}>
+              Browse what&apos;s there
+            </Link>
+          </div>
+          <p className="text-sm mt-8 mb-0">
+            <Link href="/" style={{ color: "rgba(255,255,255,0.75)" }}>← Back to PropertyVault</Link>
+          </p>
+        </div>
+      </section>
     </main>
   );
 }

@@ -9,13 +9,13 @@ import { LangProvider } from "@/lib/lang-context";
 // in its own layout instead. Title and description stay as the fallback for
 // any page that does not override them.
 export const metadata: Metadata = {
-  title: "Makan — Bilingual UK & International Property Platform | PropertyVault",
-  description: "The first bilingual property platform for the Arab diaspora. Find homes, rooms and investment properties across the UK, Morocco and Egypt — in Arabic and English.",
+  title: "Makan — Property Lettings Without an Agent | PropertyVault UK",
+  description: "List rooms, studios and whole properties free. Long lets and company lets, reaching tenants and operators directly — no estate agent in between.",
   openGraph: {
-    title: "Makan — Bilingual UK Property Platform for the Arab Diaspora",
-    description: "Find homes, rooms and investment properties across the UK, Morocco and Egypt in Arabic and English. Built for the Arab diaspora community.",
+    title: "Makan — List once. Tenants and companies both see it.",
+    description: "Free to list, no agent, no commission. Rooms, studios and whole properties across the UK, in English and Arabic.",
     type: "website",
-    locale: "ar_AR",
+    locale: "en_GB",
     siteName: "Makan — PropertyVault UK",
   },
 };
