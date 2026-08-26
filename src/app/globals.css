@@ -10,7 +10,12 @@
   --color-navy-100: #e4e8f0;
   --color-navy-200: #c5cde0;
   --color-navy-300: #97a5c5;
-  --color-navy-400: #6b7db0;
+  /* Darkened from #6b7db0, which measured 4.05 on white against the 4.5 AA
+     floor. This token is text in 446 of its 455 uses — it is the site’s
+     muted body colour, so captions, footer links and bylines on every page
+     were failing. Same hue, 9% darker: 4.75 on white, 4.54 on the tinted
+     card surfaces. Dark mode overrides it separately below. */
+  --color-navy-400: #6172a0;
   --color-navy-500: #4a5f96;
   --color-navy-600: #1a2e5a;
   --color-navy-700: #152548;
@@ -829,6 +834,15 @@ input::placeholder, textarea::placeholder {
   --gold-ink: #7d631d;   /* 5.72 on white  */
   --gold-ink-dark: #f4d35e; /* 11.3 on navy */
 }
+
+/* The active nav item sits on rgba(201,168,76,0.09) — a wash thin enough that
+   the surface underneath, not the gold, decides whether dark ink reads. The
+   colour was inline-hardcoded to #0f1b36, and inline styles beat every
+   stylesheet, so dark mode could not reach it: navy ink on the dark header
+   measured 1.11. Same failure as the Makan hero heading, and it survived for
+   the same reason — it is only wrong in one theme. */
+:root { --nav-ink-active: #0f1b36; }
+html.dark { --nav-ink-active: #e8eefc; }
 
 .hero-section,
 .gradient-navy,

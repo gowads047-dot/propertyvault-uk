@@ -67,7 +67,7 @@ export function NavDropdown({
         onFocus={openNow}
         className="px-3.5 py-2 text-[13px] font-semibold rounded-lg transition-all flex items-center gap-1 leading-none relative hover:bg-navy-50"
         style={{
-          color: groupIsActive ? "#0f1b36" : undefined,
+          color: groupIsActive ? "var(--nav-ink-active)" : undefined,
           background: groupIsActive ? "rgba(201,168,76,0.09)" : undefined,
         }}
       >
