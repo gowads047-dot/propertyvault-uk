@@ -146,15 +146,15 @@ export default function GCCBuyersPage() {
         <div className="relative max-w-4xl mx-auto">
           {/* Lang toggle */}
           <div className={`flex gap-2 mb-8 ${ar ? "justify-end" : ""}`}>
-            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${!ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60 hover:bg-white/15"}`}>English</button>
-            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/60 hover:bg-white/15"}`}>العربية</button>
+            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${!ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>English</button>
+            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>العربية</button>
           </div>
 
           {/* Breadcrumb */}
-          <div className={`flex items-center gap-2 text-xs text-white/40 mb-6 ${ar ? "flex-row-reverse" : ""}`}>
+          <div className={`flex items-center gap-2 text-xs text-white/55 mb-6 ${ar ? "flex-row-reverse" : ""}`}>
             <Link href="/makan" className="hover:text-white/70 transition-colors">Makan</Link>
             <span>/</span>
-            <span className="text-white/60">{ar ? "مشترو الخليج" : "GCC Buyers"}</span>
+            <span className="text-white/75">{ar ? "مشترو الخليج" : "GCC Buyers"}</span>
           </div>
 
           {ar ? (
@@ -213,7 +213,7 @@ export default function GCCBuyersPage() {
             ].map((s) => (
               <div key={s.v} className={ar ? "text-right" : ""}>
                 <p className="text-2xl font-black text-[#c9a84c]">{s.v}</p>
-                <p className="text-white/45 text-xs max-w-[140px] leading-relaxed mt-1">{ar ? s.ar : s.en}</p>
+                <p className="text-white/55 text-xs max-w-[140px] leading-relaxed mt-1">{ar ? s.ar : s.en}</p>
               </div>
             ))}
           </div>
@@ -269,14 +269,14 @@ export default function GCCBuyersPage() {
               <input type="range" min={50000} max={2000000} step={5000} value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
                 className="w-full accent-[#c9a84c]" />
-              <div className={`flex justify-between text-xs text-white/30 mt-1 ${ar ? "flex-row-reverse" : ""}`}>
+              <div className={`flex justify-between text-xs text-white/55 mt-1 ${ar ? "flex-row-reverse" : ""}`}>
                 <span>£50k</span><span>£2m</span>
               </div>
             </div>
 
             {/* Manual input */}
             <div className="mb-6">
-              <label className="text-xs text-white/50 block mb-2">{ar ? "أو أدخل السعر يدوياً:" : "Or type a price:"}</label>
+              <label className="text-xs text-white/55 block mb-2">{ar ? "أو أدخل السعر يدوياً:" : "Or type a price:"}</label>
               <input type="number" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
                 className="bg-white/5 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm w-full focus:outline-none focus:border-[#c9a84c]/50"
                 dir="ltr" />
@@ -292,7 +292,7 @@ export default function GCCBuyersPage() {
                   { v: "additional", en: "Additional property", ar: "عقار إضافي" },
                 ] as const).map((o) => (
                   <button key={o.v} onClick={() => setBuyerType(o.v)}
-                    className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-center ${buyerType === o.v ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/10"}`}>
+                    className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-center ${buyerType === o.v ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/5 text-white/75 hover:bg-white/10 border border-white/10"}`}>
                     {ar ? o.ar : o.en}
                   </button>
                 ))}
@@ -303,11 +303,11 @@ export default function GCCBuyersPage() {
             <div className="bg-white/5 border border-[#c9a84c]/20 rounded-xl p-6">
               <div className={`flex items-start justify-between mb-5 ${ar ? "flex-row-reverse" : ""}`}>
                 <div className={ar ? "text-right" : ""}>
-                  <p className="text-white/50 text-xs mb-1">{ar ? "إجمالي ضريبة الدمغة" : "Total SDLT Due"}</p>
+                  <p className="text-white/55 text-xs mb-1">{ar ? "إجمالي ضريبة الدمغة" : "Total SDLT Due"}</p>
                   <p className="text-4xl font-black text-white">{fmt(total)}</p>
                   <p className="text-[#c9a84c] text-sm mt-1">{effectiveRate}% {ar ? "معدل فعلي" : "effective rate"}</p>
                 </div>
-                <div className={`text-xs text-white/40 max-w-[160px] leading-relaxed ${ar ? "text-right" : "text-right"}`}>
+                <div className={`text-xs text-white/55 max-w-[160px] leading-relaxed ${ar ? "text-right" : "text-right"}`}>
                   {ar ? "تُسدَّد خلال ١٤ يوماً من إتمام الصفقة" : "Due within 14 days of completion"}
                 </div>
               </div>
@@ -325,7 +325,7 @@ export default function GCCBuyersPage() {
               </div>
             </div>
 
-            <p className="text-white/30 text-xs mt-4 leading-relaxed" dir={ar ? "rtl" : "ltr"}>
+            <p className="text-white/55 text-xs mt-4 leading-relaxed" dir={ar ? "rtl" : "ltr"}>
               {ar
                 ? "هذه الحاسبة للأغراض التوضيحية فقط. تسري رسوم المقيمين خارج بريطانيا منذ أبريل ٢٠٢١. يُرجى استشارة محامٍ مرخص للحصول على حساب دقيق."
                 : "This calculator is for illustrative purposes. Non-resident surcharge applies from April 2021. Consult a licensed solicitor for a precise calculation."}
@@ -344,7 +344,7 @@ export default function GCCBuyersPage() {
           <div className="space-y-5">
             {(ar ? STEPS_AR : STEPS_EN).map((s) => (
               <div key={s.n} className={`flex gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/20 transition-colors ${ar ? "flex-row-reverse" : ""}`} dir={ar ? "rtl" : "ltr"}>
-                <div className="text-3xl font-black text-[#c9a84c]/30 shrink-0 w-12 text-center">{s.n}</div>
+                <div className="text-3xl font-black text-[#c9a84c]/60 shrink-0 w-12 text-center">{s.n}</div>
                 <div>
                   <h3 className="font-bold text-white mb-2">{s.title}</h3>
                   <p className="text-white/55 text-sm leading-relaxed">{s.body}</p>
@@ -375,7 +375,7 @@ export default function GCCBuyersPage() {
                 <span className="text-2xl shrink-0">{c.icon}</span>
                 <div>
                   <h3 className="font-semibold text-white text-sm mb-1">{ar ? c.ar[0] : c.en[0]}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{ar ? c.ar[1] : c.en[1]}</p>
+                  <p className="text-white/55 text-sm leading-relaxed">{ar ? c.ar[1] : c.en[1]}</p>
                 </div>
               </div>
             ))}
@@ -431,11 +431,11 @@ export default function GCCBuyersPage() {
                 { label_en: "Management fee saved", label_ar: "رسوم الإدارة الموفّرة", value: "~£1,800 / yr" },
               ].map((r) => (
                 <div key={r.label_en} className={`flex items-center justify-between bg-white/5 border ${r.highlight ? "border-[#c9a84c]/30 bg-[#c9a84c]/5" : "border-white/10"} rounded-xl px-5 py-3.5 ${ar ? "flex-row-reverse" : ""}`}>
-                  <span className="text-white/60 text-sm">{ar ? r.label_ar : r.label_en}</span>
+                  <span className="text-white/75 text-sm">{ar ? r.label_ar : r.label_en}</span>
                   <span className={`font-bold text-sm ${r.highlight ? "text-[#c9a84c]" : "text-white"}`}>{r.value}</span>
                 </div>
               ))}
-              <p className="text-white/30 text-xs" dir={ar ? "rtl" : "ltr"}>{ar ? "مثال على عقار بـ٩٠٠ جنيه/شهر. الأرقام للتوضيح." : "Example for a £900/mo property. Figures for illustration."}</p>
+              <p className="text-white/55 text-xs" dir={ar ? "rtl" : "ltr"}>{ar ? "مثال على عقار بـ٩٠٠ جنيه/شهر. الأرقام للتوضيح." : "Example for a £900/mo property. Figures for illustration."}</p>
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@ export default function GCCBuyersPage() {
         <div className="max-w-2xl mx-auto text-center">
           <div className="text-4xl mb-4" style={{ fontFamily: "serif" }}>مكان</div>
           <h2 className="text-3xl font-black mb-3">{ar ? "جاهز لبدء الاستثمار؟" : "Ready to Start?"}</h2>
-          <p className="text-white/50 mb-8 text-sm leading-relaxed">
+          <p className="text-white/55 mb-8 text-sm leading-relaxed">
             {ar
               ? "تحدث مع فريقنا عبر واتساب. لا تزال الأسئلة الأساسية مجانية. إذا كنت جاهزاً، يمكننا مساعدتك في العثور على عقار مناسب ونظام الإيجار المضمون."
               : "Talk to our team on WhatsApp. Basic questions are always free. If you're ready, we can help you find a suitable property and pair it with a guaranteed rent arrangement."}
@@ -461,10 +461,10 @@ export default function GCCBuyersPage() {
               {ar ? "الإيجار المضمون" : "Guaranteed Rent"}
             </Link>
           </div>
-          <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-6 text-sm text-white/35">
-            <Link href="/makan" className="hover:text-white/60 transition-colors">← Makan</Link>
-            <Link href="/calculators/stamp-duty" className="hover:text-white/60 transition-colors">{ar ? "حاسبة الدمغة الكاملة" : "Full Stamp Duty Calculator"}</Link>
-            <Link href="/contact" className="hover:text-white/60 transition-colors">{ar ? "تواصل معنا" : "Contact"}</Link>
+          <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-6 text-sm text-white/55">
+            <Link href="/makan" className="hover:text-white/75 transition-colors">← Makan</Link>
+            <Link href="/calculators/stamp-duty" className="hover:text-white/75 transition-colors">{ar ? "حاسبة الدمغة الكاملة" : "Full Stamp Duty Calculator"}</Link>
+            <Link href="/contact" className="hover:text-white/75 transition-colors">{ar ? "تواصل معنا" : "Contact"}</Link>
           </div>
         </div>
       </section>

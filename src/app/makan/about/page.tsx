@@ -113,12 +113,12 @@ export default function AboutMakanPage() {
           <p className="text-3xl md:text-4xl font-extrabold text-white leading-tight mb-6">
             This isn&apos;t a property portal.<br />It&apos;s a movement.
           </p>
-          <p className="text-white/50 mb-8 max-w-md mx-auto">Every listing on Makan is a door. And every door should be open.</p>
+          <p className="text-white/55 mb-8 max-w-md mx-auto">Every listing on Makan is a door. And every door should be open.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/makan" className="h-btn h-btn-primary text-center">Browse listings</Link>
             <Link href="/makan/list" className="h-btn h-btn-secondary !border-white/20 !text-white text-center">List for free</Link>
           </div>
-          <p className="text-white/30 text-sm mt-8">Welcome to Makan. Find your place.</p>
+          <p className="text-white/55 text-sm mt-8">Welcome to Makan. Find your place.</p>
         </div>
       </section>
     </>

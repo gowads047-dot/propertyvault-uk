@@ -94,7 +94,7 @@ export default function MakanPage() {
             </div>
             <div className="flex items-baseline justify-center gap-3">
               <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: "serif" }}>مكان</h1>
-              <span className="text-white/30 text-2xl">·</span>
+              <span className="text-white/55 text-2xl">·</span>
               <h1 className="text-4xl font-black text-white tracking-tight">MAKAN</h1>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function MakanPage() {
             {[["2", "Countries at launch"], ["🇬🇧🇲🇦", "UK & Morocco"], ["عربي", "Arabic-first"], ["Free", "To list"]].map(([v, l]) => (
               <div key={l} className="text-center">
                 <p className="text-2xl font-black text-[#c9a84c]">{v}</p>
-                <p className="text-white/50 text-xs">{l}</p>
+                <p className="text-white/55 text-xs">{l}</p>
               </div>
             ))}
           </div>
@@ -156,7 +156,7 @@ export default function MakanPage() {
               </button>
             </form>
           )}
-          <p className="text-white/30 text-xs mt-3">{lang === "ar" ? "لا رسائل مزعجة. إلغاء الاشتراك في أي وقت." : "No spam. Unsubscribe any time."}</p>
+          <p className="text-white/55 text-xs mt-3">{lang === "ar" ? "لا رسائل مزعجة. إلغاء الاشتراك في أي وقت." : "No spam. Unsubscribe any time."}</p>
         </div>
       </section>
 
@@ -175,7 +175,7 @@ export default function MakanPage() {
           {/* Bilingual comparison */}
           <div className="space-y-3">
             <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <p className="text-white/40 text-xs uppercase tracking-wider mb-3">Other platforms</p>
+              <p className="text-white/55 text-xs uppercase tracking-wider mb-3">Other platforms</p>
               <ul className="space-y-2 text-sm text-white/60">
                 {["English only", "UK properties only", "No understanding of Arab market needs", "Expensive listing fees for landlords", "No bilingual support or messaging"].map((p) => (
                   <li key={p} className="flex gap-2"><span className="text-red-400">✗</span>{p}</li>
@@ -227,12 +227,12 @@ export default function MakanPage() {
               <div key={m.country} className={`rounded-2xl p-5 border ${m.status === "Launching first" ? "border-[#c9a84c]/40 bg-[#c9a84c]/10" : "border-white/10 bg-white/5"}`}>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-3xl">{m.flag}</span>
-                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${m.status === "Launching first" ? "bg-[#c9a84c]/20 text-[#c9a84c]" : "bg-white/10 text-white/40"}`}>{m.status}</span>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${m.status === "Launching first" ? "bg-[#c9a84c]/20 text-[#d6ba66]" : "bg-white/10 text-white/55"}`}>{m.status}</span>
                 </div>
                 <h3 className="font-bold text-white mb-2">{m.country}</h3>
                 <div className="flex flex-wrap gap-1">
                   {m.cities.map((c) => (
-                    <span key={c} className="text-xs text-white/50 bg-white/5 px-2 py-0.5 rounded-full">{c}</span>
+                    <span key={c} className="text-xs text-white/55 bg-white/5 px-2 py-0.5 rounded-full">{c}</span>
                   ))}
                 </div>
               </div>
@@ -269,11 +269,11 @@ export default function MakanPage() {
         <div className="max-w-xl mx-auto text-center">
           <div className="text-4xl mb-4" style={{ fontFamily: "serif" }}>مكان</div>
           <h2 className="text-3xl font-black text-white mb-3">Be First Through the Door</h2>
-          <p className="text-white/50 mb-8">Join the waitlist and be notified the moment Makan launches. Early users get priority listing placement.</p>
+          <p className="text-white/55 mb-8">Join the waitlist and be notified the moment Makan launches. Early users get priority listing placement.</p>
           {submitted ? (
             <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
               <p className="font-bold text-white text-lg">You&apos;re on the list 🎉</p>
-              <p className="text-white/50 text-sm mt-1">We&apos;ll be in touch very soon.</p>
+              <p className="text-white/55 text-sm mt-1">We&apos;ll be in touch very soon.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -283,7 +283,7 @@ export default function MakanPage() {
             </form>
           )}
           <div className="mt-10 pt-8 border-t border-white/10">
-            <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors">← Back to PropertyVault</Link>
+            <Link href="/" className="text-white/55 hover:text-white/70 text-sm transition-colors">← Back to PropertyVault</Link>
           </div>
         </div>
       </section>
