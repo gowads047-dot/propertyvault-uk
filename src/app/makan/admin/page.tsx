@@ -186,7 +186,7 @@ export default function MakanAdmin() {
                         </button>
                       </td>
                       <td style={{ padding: "10px 14px" }}>
-                        <button onClick={() => toggleVerified(l.id, l.verified)} style={{ fontSize: 11, fontWeight: 700, color: l.verified ? "var(--h-accent)" : "var(--h-muted)", background: l.verified ? "rgba(201,168,76,0.1)" : "rgba(0,0,0,0.05)", border: "none", borderRadius: 10, padding: "2px 10px", cursor: "pointer" }}>
+                        <button onClick={() => toggleVerified(l.id, l.verified)} style={{ fontSize: 11, fontWeight: 700, color: l.verified ? "var(--h-accent)" : "var(--h-muted)", background: l.verified ? "var(--h-accent-light)" : "rgba(0,0,0,0.05)", border: "none", borderRadius: 10, padding: "2px 10px", cursor: "pointer" }}>
                           {l.verified ? "✓ Verified" : "Unverified"}
                         </button>
                       </td>

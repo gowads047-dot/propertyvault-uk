@@ -44,9 +44,9 @@ export default function MakanPage() {
     <main style={{ background: "var(--h-bg)" }}>
 
       {/* ── Hero ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden py-20 md:py-28 px-6" style={{ background: "#0a1628" }}>
+      <section className="relative overflow-hidden py-20 md:py-28 px-6" style={{ background: "var(--h-ink-deep)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)",
+          backgroundImage: "linear-gradient(rgba(232,139,98,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(232,139,98,0.05) 1px,transparent 1px)",
           backgroundSize: "60px 60px",
         }} />
 
@@ -62,8 +62,8 @@ export default function MakanPage() {
               <button key={l} onClick={() => setLang(l)}
                       className="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all"
                       style={{
-                        background: lang === l ? "#c9a84c" : "rgba(255,255,255,0.1)",
-                        color: lang === l ? "#0a1628" : "rgba(255,255,255,0.75)",
+                        background: lang === l ? "var(--h-accent)" : "rgba(255,255,255,0.1)",
+                        color: lang === l ? "#ffffff" : "var(--h-on-ink-muted)",
                       }}>
                 {l === "en" ? "English" : "العربية"}
               </button>
@@ -74,9 +74,9 @@ export default function MakanPage() {
             <>
               <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 text-white">
                 List once.<br />
-                Tenants <span style={{ color: "#e8c877" }}>and companies</span> both see it.
+                Tenants <span style={{ color: "var(--h-accent-on-ink)" }}>and companies</span> both see it.
               </h1>
-              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.78)" }}>
+              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "var(--h-on-ink-muted)" }}>
                 Rooms, studios and whole properties. Long lets and company lets — including the
                 serviced-accommodation and supported-living companies an estate agent would have
                 turned down on your behalf.
@@ -86,9 +86,9 @@ export default function MakanPage() {
             <div dir="rtl">
               <h1 className="text-4xl md:text-6xl font-black leading-tight mb-6 text-white" style={{ fontFamily: "serif" }}>
                 اعرض عقارك مرة واحدة.<br />
-                <span style={{ color: "#e8c877" }}>المستأجرون والشركات</span> يرونه معاً.
+                <span style={{ color: "var(--h-accent-on-ink)" }}>المستأجرون والشركات</span> يرونه معاً.
               </h1>
-              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.78)" }}>
+              <p className="text-lg leading-relaxed mb-10 max-w-2xl mx-auto" style={{ color: "var(--h-on-ink-muted)" }}>
                 غرف واستوديوهات وعقارات كاملة. إيجارات طويلة وإيجارات للشركات — بما في ذلك شركات
                 الإقامة المخدومة والسكن المدعوم التي كان الوكيل العقاري سيرفضها نيابة عنك.
               </p>
@@ -99,9 +99,9 @@ export default function MakanPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-xl mx-auto">
             <Link href="/makan/list"
                   className="flex-1 rounded-2xl px-6 py-5 font-bold text-lg transition-transform hover:-translate-y-0.5"
-                  style={{ background: "#c9a84c", color: "#0a1628" }}>
+                  style={{ background: "var(--h-accent)", color: "#ffffff" }}>
               I have a property
-              <span className="block text-sm font-normal mt-0.5" style={{ color: "rgba(10,22,40,0.75)" }}>
+              <span className="block text-sm font-normal mt-0.5" style={{ color: "rgba(255,255,255,0.85)" }}>
                 Free to list, no agent
               </span>
             </Link>
@@ -109,7 +109,7 @@ export default function MakanPage() {
                   className="flex-1 rounded-2xl px-6 py-5 font-bold text-lg text-white transition-transform hover:-translate-y-0.5"
                   style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)" }}>
               I&apos;m looking
-              <span className="block text-sm font-normal mt-0.5" style={{ color: "rgba(255,255,255,0.75)" }}>
+              <span className="block text-sm font-normal mt-0.5" style={{ color: "var(--h-on-ink-muted)" }}>
                 Rooms, studios, whole places
               </span>
             </Link>
@@ -118,15 +118,15 @@ export default function MakanPage() {
       </section>
 
       {/* ── The problem. The sharpest thing on the page. ── */}
-      <section className="py-20 px-6" style={{ background: "#0f1b36" }}>
+      <section className="py-20 px-6" style={{ background: "var(--h-ink)" }}>
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#e8c877" }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--h-accent-on-ink)" }}>
             Why Makan exists
           </p>
           <h2 className="text-3xl md:text-4xl font-black mb-6 text-white leading-tight">
             Your agent has been saying no on your behalf
           </h2>
-          <div className="text-lg leading-relaxed space-y-4" style={{ color: "rgba(255,255,255,0.8)" }}>
+          <div className="text-lg leading-relaxed space-y-4" style={{ color: "var(--h-on-ink-muted)" }}>
             <p>
               Ring an agent about a four-bed for supported living or serviced accommodation and the
               answer is no. Not after they&apos;ve asked the landlord — instead of asking them.
@@ -251,17 +251,17 @@ export default function MakanPage() {
       </section>
 
       {/* ── Close ─────────────────────────────────────── */}
-      <section className="py-20 px-6" style={{ background: "#0a1628" }}>
+      <section className="py-20 px-6" style={{ background: "var(--h-ink-deep)" }}>
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-black mb-4 text-white leading-tight">
             See the offers your agent turned down
           </h2>
-          <p className="text-lg mb-8" style={{ color: "rgba(255,255,255,0.78)" }}>
+          <p className="text-lg mb-8" style={{ color: "var(--h-on-ink-muted)" }}>
             Free to list. No commission, no tie-in, and you can take it down whenever you like.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/makan/list" className="rounded-xl px-7 py-4 font-bold"
-                  style={{ background: "#c9a84c", color: "#0a1628" }}>
+                  style={{ background: "var(--h-accent)", color: "#ffffff" }}>
               List your property
             </Link>
             <Link href="/makan/rooms" className="rounded-xl px-7 py-4 font-bold text-white"
@@ -270,7 +270,7 @@ export default function MakanPage() {
             </Link>
           </div>
           <p className="text-sm mt-8 mb-0">
-            <Link href="/" style={{ color: "rgba(255,255,255,0.75)" }}>← Back to PropertyVault</Link>
+            <Link href="/" style={{ color: "var(--h-on-ink-muted)" }}>← Back to PropertyVault</Link>
           </p>
         </div>
       </section>

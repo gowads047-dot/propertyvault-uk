@@ -136,18 +136,18 @@ export default function GCCBuyersPage() {
   const effectiveRate = ((total / price) * 100).toFixed(2);
 
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main className="min-h-screen bg-[var(--h-ink-deep)] text-white">
 
       {/* HERO */}
       <section className="relative py-24 px-6 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
-        <div className="absolute top-0 right-1/4 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 65%)" }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(232,139,98,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(232,139,98,0.05) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute top-0 right-1/4 w-[700px] h-[700px] rounded-full pointer-events-none" style={{ background: "radial-gradient(circle,rgba(232,139,98,0.10) 0%,transparent 65%)" }} />
 
         <div className="relative max-w-4xl mx-auto">
           {/* Lang toggle */}
           <div className={`flex gap-2 mb-8 ${ar ? "justify-end" : ""}`}>
-            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${!ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>English</button>
-            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${ar ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>العربية</button>
+            <button onClick={() => setLang("en")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${!ar ? "bg-[var(--h-accent)] text-white" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>English</button>
+            <button onClick={() => setLang("ar")} className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${ar ? "bg-[var(--h-accent)] text-white" : "bg-white/10 text-white/75 hover:bg-white/15"}`}>العربية</button>
           </div>
 
           {/* Breadcrumb */}
@@ -159,19 +159,19 @@ export default function GCCBuyersPage() {
 
           {ar ? (
             <div dir="rtl" className="text-right">
-              <div className="inline-flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-4 py-2 mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#c9a84c]" />
-                <span className="text-[#c9a84c] text-sm font-semibold tracking-wide">🇸🇦 🇦🇪 🇰🇼 🇶🇦 🇧🇭 🇴🇲 — دليل المشتري الخليجي</span>
+              <div className="inline-flex items-center gap-2 bg-[var(--h-accent)]/15 border border-[var(--h-accent)]/30 rounded-full px-4 py-2 mb-6">
+                <span className="w-2 h-2 rounded-full bg-[var(--h-accent)]" />
+                <span className="text-[var(--h-accent-on-ink)] text-sm font-semibold tracking-wide">🇸🇦 🇦🇪 🇰🇼 🇶🇦 🇧🇭 🇴🇲 — دليل المشتري الخليجي</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-black leading-tight mb-5" style={{ fontFamily: "serif" }}>
                 شراء عقارات بريطانية<br />
-                <span className="text-[#c9a84c]">من دول الخليج</span>
+                <span className="text-[var(--h-accent-on-ink)]">من دول الخليج</span>
               </h1>
               <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl">
                 دليل شامل لمواطني دول مجلس التعاون الخليجي للاستثمار العقاري في المملكة المتحدة. نظرة صادقة على التكاليف والخطوات والفرص المتاحة، مع حاسبة ضريبة الدمغة (SDLT) للمقيمين خارج بريطانيا.
               </p>
               <div className="flex flex-wrap gap-4 justify-end">
-                <a href={WA} target="_blank" rel="noopener noreferrer" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-7 py-3.5 rounded-xl transition-colors">
+                <a href={WA} target="_blank" rel="noopener noreferrer" className="bg-[var(--h-accent)] hover:bg-[#b8973b] text-white font-bold px-7 py-3.5 rounded-xl transition-colors">
                   تحدث مع خبير ←
                 </a>
                 <a href="#calculator" className="bg-white/10 hover:bg-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-colors border border-white/20">
@@ -181,19 +181,19 @@ export default function GCCBuyersPage() {
             </div>
           ) : (
             <>
-              <div className="inline-flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-4 py-2 mb-6">
-                <span className="w-2 h-2 rounded-full bg-[#c9a84c]" />
-                <span className="text-[#c9a84c] text-sm font-semibold tracking-wide">🇸🇦 🇦🇪 🇰🇼 🇶🇦 🇧🇭 🇴🇲 — GCC BUYER GUIDE</span>
+              <div className="inline-flex items-center gap-2 bg-[var(--h-accent)]/15 border border-[var(--h-accent)]/30 rounded-full px-4 py-2 mb-6">
+                <span className="w-2 h-2 rounded-full bg-[var(--h-accent)]" />
+                <span className="text-[var(--h-accent-on-ink)] text-sm font-semibold tracking-wide">🇸🇦 🇦🇪 🇰🇼 🇶🇦 🇧🇭 🇴🇲 — GCC BUYER GUIDE</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-black leading-tight mb-5">
                 Buying UK Property<br />
-                <span className="text-[#c9a84c]">from the Gulf</span>
+                <span className="text-[var(--h-accent-on-ink)]">from the Gulf</span>
               </h1>
               <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-2xl">
                 A complete guide for GCC nationals investing in UK property. An honest look at the real costs, the process, and the opportunities — including a free SDLT calculator built for non-UK residents.
               </p>
               <div className="flex flex-wrap gap-4">
-                <a href={WA} target="_blank" rel="noopener noreferrer" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-7 py-3.5 rounded-xl transition-colors">
+                <a href={WA} target="_blank" rel="noopener noreferrer" className="bg-[var(--h-accent)] hover:bg-[#b8973b] text-white font-bold px-7 py-3.5 rounded-xl transition-colors">
                   Speak to an Expert →
                 </a>
                 <a href="#calculator" className="bg-white/10 hover:bg-white/15 text-white font-semibold px-7 py-3.5 rounded-xl transition-colors border border-white/20">
@@ -212,7 +212,7 @@ export default function GCCBuyersPage() {
               { v: "100%", en: "Freehold ownership possible", ar: "إمكانية التملك الحر الكامل" },
             ].map((s) => (
               <div key={s.v} className={ar ? "text-right" : ""}>
-                <p className="text-2xl font-black text-[#c9a84c]">{s.v}</p>
+                <p className="text-2xl font-black text-[var(--h-accent-on-ink)]">{s.v}</p>
                 <p className="text-white/55 text-xs max-w-[140px] leading-relaxed mt-1">{ar ? s.ar : s.en}</p>
               </div>
             ))}
@@ -221,10 +221,10 @@ export default function GCCBuyersPage() {
       </section>
 
       {/* WHY UK PROPERTY */}
-      <section className="bg-[#0f1b36] py-20 px-6">
+      <section className="bg-[var(--h-ink)] py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className={`text-center mb-12 ${ar ? "text-right" : ""}`} dir={ar ? "rtl" : "ltr"}>
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "لماذا المملكة المتحدة؟" : "Why UK Property?"}</p>
+            <p className="text-[var(--h-accent-on-ink)] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "لماذا المملكة المتحدة؟" : "Why UK Property?"}</p>
             <h2 className="text-3xl font-black">{ar ? "ما يجذب المستثمرين الخليجيين إلى السوق البريطاني" : "What Draws Gulf Investors to the UK Market"}</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -236,7 +236,7 @@ export default function GCCBuyersPage() {
               { icon: "✈️", en: ["No need to relocate", "You can buy, manage, and profit from UK property without living here. With a letting agent or a guaranteed rent scheme, the property earns while you live in the Gulf."], ar: ["لا حاجة للانتقال", "يمكنك شراء وإدارة والاستفادة من العقارات البريطانية دون الإقامة هنا. بوكالة تأجير أو نظام الإيجار المضمون، يدرّ عقارك دخلاً بينما تعيش في الخليج."] },
               { icon: "🕌", en: ["Halal finance available", "Sharia-compliant mortgages (home purchase plans) are available from several UK banks. Al Rayan Bank, Gatehouse Bank, and others offer HPPs with no interest — structured as co-ownership agreements."], ar: ["تمويل إسلامي متاح", "تتوفر الرهون العقارية المتوافقة مع الشريعة الإسلامية (خطط شراء المنازل) لدى عدة بنوك بريطانية. بنك الريان وبنك غيتهاوس وغيرهما يقدمون خطط HPP بدون فوائد، مهيكلةً كاتفاقيات مشاركة في الملكية."] },
             ].map((item) => (
-              <div key={item.en[0]} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/30 transition-colors" dir={ar ? "rtl" : "ltr"}>
+              <div key={item.en[0]} className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[var(--h-accent)]/30 transition-colors" dir={ar ? "rtl" : "ltr"}>
                 <span className="text-3xl block mb-4">{item.icon}</span>
                 <h3 className="font-bold text-white mb-2">{ar ? item.ar[0] : item.en[0]}</h3>
                 <p className="text-white/55 text-sm leading-relaxed">{ar ? item.ar[1] : item.en[1]}</p>
@@ -250,7 +250,7 @@ export default function GCCBuyersPage() {
       <section id="calculator" className="py-20 px-6">
         <div className="max-w-3xl mx-auto">
           <div className={ar ? "text-right" : ""} dir={ar ? "rtl" : "ltr"}>
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "حاسبة ضريبة الدمغة" : "SDLT Calculator"}</p>
+            <p className="text-[var(--h-accent-on-ink)] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "حاسبة ضريبة الدمغة" : "SDLT Calculator"}</p>
             <h2 className="text-3xl font-black mb-2">{ar ? "ضريبة الدمغة للمقيمين خارج بريطانيا" : "Stamp Duty for Non-UK Residents"}</h2>
             <p className="text-white/55 text-sm mb-8 leading-relaxed">
               {ar
@@ -259,16 +259,16 @@ export default function GCCBuyersPage() {
             </p>
           </div>
 
-          <div className="bg-[#0f1b36] border border-white/10 rounded-2xl p-8" dir={ar ? "rtl" : "ltr"}>
+          <div className="bg-[var(--h-ink)] border border-white/10 rounded-2xl p-8" dir={ar ? "rtl" : "ltr"}>
             {/* Price slider */}
             <div className="mb-6">
               <div className={`flex items-center justify-between mb-3 ${ar ? "flex-row-reverse" : ""}`}>
                 <label className="text-sm font-semibold text-white/80">{ar ? "سعر العقار" : "Property Price"}</label>
-                <span className="text-xl font-black text-[#c9a84c]">{fmt(price)}</span>
+                <span className="text-xl font-black text-[var(--h-accent-on-ink)]">{fmt(price)}</span>
               </div>
               <input type="range" min={50000} max={2000000} step={5000} value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
-                className="w-full accent-[#c9a84c]" />
+                className="w-full accent-[var(--h-accent-on-ink)]" />
               <div className={`flex justify-between text-xs text-white/55 mt-1 ${ar ? "flex-row-reverse" : ""}`}>
                 <span>£50k</span><span>£2m</span>
               </div>
@@ -278,7 +278,7 @@ export default function GCCBuyersPage() {
             <div className="mb-6">
               <label className="text-xs text-white/55 block mb-2">{ar ? "أو أدخل السعر يدوياً:" : "Or type a price:"}</label>
               <input type="number" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
-                className="bg-white/5 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm w-full focus:outline-none focus:border-[#c9a84c]/50"
+                className="bg-white/5 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm w-full focus:outline-none focus:border-[var(--h-accent-on-ink)]/50"
                 dir="ltr" />
             </div>
 
@@ -292,7 +292,7 @@ export default function GCCBuyersPage() {
                   { v: "additional", en: "Additional property", ar: "عقار إضافي" },
                 ] as const).map((o) => (
                   <button key={o.v} onClick={() => setBuyerType(o.v)}
-                    className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-center ${buyerType === o.v ? "bg-[#c9a84c] text-[#0a1628]" : "bg-white/5 text-white/75 hover:bg-white/10 border border-white/10"}`}>
+                    className={`px-3 py-2.5 rounded-xl text-xs font-semibold transition-all text-center ${buyerType === o.v ? "bg-[var(--h-accent)] text-white" : "bg-white/5 text-white/75 hover:bg-white/10 border border-white/10"}`}>
                     {ar ? o.ar : o.en}
                   </button>
                 ))}
@@ -300,12 +300,12 @@ export default function GCCBuyersPage() {
             </div>
 
             {/* Result */}
-            <div className="bg-white/5 border border-[#c9a84c]/20 rounded-xl p-6">
+            <div className="bg-white/5 border border-[var(--h-accent-on-ink)]/20 rounded-xl p-6">
               <div className={`flex items-start justify-between mb-5 ${ar ? "flex-row-reverse" : ""}`}>
                 <div className={ar ? "text-right" : ""}>
                   <p className="text-white/55 text-xs mb-1">{ar ? "إجمالي ضريبة الدمغة" : "Total SDLT Due"}</p>
                   <p className="text-4xl font-black text-white">{fmt(total)}</p>
-                  <p className="text-[#c9a84c] text-sm mt-1">{effectiveRate}% {ar ? "معدل فعلي" : "effective rate"}</p>
+                  <p className="text-[var(--h-accent-on-ink)] text-sm mt-1">{effectiveRate}% {ar ? "معدل فعلي" : "effective rate"}</p>
                 </div>
                 <div className={`text-xs text-white/55 max-w-[160px] leading-relaxed ${ar ? "text-right" : "text-right"}`}>
                   {ar ? "تُسدَّد خلال ١٤ يوماً من إتمام الصفقة" : "Due within 14 days of completion"}
@@ -335,16 +335,16 @@ export default function GCCBuyersPage() {
       </section>
 
       {/* HOW TO BUY */}
-      <section className="bg-[#0f1b36] py-20 px-6">
+      <section className="bg-[var(--h-ink)] py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className={`text-center mb-12 ${ar ? "text-right" : ""}`} dir={ar ? "rtl" : "ltr"}>
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "خطوة بخطوة" : "Step by Step"}</p>
+            <p className="text-[var(--h-accent-on-ink)] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "خطوة بخطوة" : "Step by Step"}</p>
             <h2 className="text-3xl font-black">{ar ? "كيفية شراء عقار في بريطانيا من الخليج" : "How to Buy UK Property from the Gulf"}</h2>
           </div>
           <div className="space-y-5">
             {(ar ? STEPS_AR : STEPS_EN).map((s) => (
-              <div key={s.n} className={`flex gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[#c9a84c]/20 transition-colors ${ar ? "flex-row-reverse" : ""}`} dir={ar ? "rtl" : "ltr"}>
-                <div className="text-3xl font-black text-[#c9a84c]/60 shrink-0 w-12 text-center">{s.n}</div>
+              <div key={s.n} className={`flex gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[var(--h-accent-on-ink)]/20 transition-colors ${ar ? "flex-row-reverse" : ""}`} dir={ar ? "rtl" : "ltr"}>
+                <div className="text-3xl font-black text-[var(--h-accent-on-ink)]/60 shrink-0 w-12 text-center">{s.n}</div>
                 <div>
                   <h3 className="font-bold text-white mb-2">{s.title}</h3>
                   <p className="text-white/55 text-sm leading-relaxed">{s.body}</p>
@@ -359,7 +359,7 @@ export default function GCCBuyersPage() {
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className={`text-center mb-12 ${ar ? "text-right" : ""}`} dir={ar ? "rtl" : "ltr"}>
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "التكاليف الكاملة" : "Full Cost Picture"}</p>
+            <p className="text-[var(--h-accent-on-ink)] text-xs font-bold uppercase tracking-widest mb-3">{ar ? "التكاليف الكاملة" : "Full Cost Picture"}</p>
             <h2 className="text-3xl font-black">{ar ? "ما تحتاج لأن تعرفه قبل الشراء" : "What You Need to Budget Beyond the Price"}</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-5" dir={ar ? "rtl" : "ltr"}>
@@ -371,7 +371,7 @@ export default function GCCBuyersPage() {
               { icon: "📦", en: ["Letting agent / management", "High street agents charge 10–15% of rent. Fully managed: 15–20%. Or use guaranteed rent — we pay you a fixed monthly rate and manage everything."], ar: ["وكالة التأجير والإدارة", "تتقاضى وكالات الشوارع الرئيسية ١٠–١٥٪ من الإيجار. الإدارة الكاملة: ١٥–٢٠٪. أو استخدم نظام الإيجار المضمون — ندفع لك مبلغاً شهرياً ثابتاً ونتولى كل شيء."] },
               { icon: "🧾", en: ["UK income tax on rental income", "Non-residents must register for UK Self Assessment and pay income tax on rental profit (after allowable expenses). You get a personal allowance of £12,570/year."], ar: ["ضريبة الدخل البريطانية على الإيجار", "يجب على غير المقيمين التسجيل في نظام Self Assessment البريطاني ودفع ضريبة الدخل على الأرباح الإيجارية (بعد النفقات المسموح بها). يحق لك إعفاء شخصي بقيمة ١٢,٥٧٠ جنيهاً سنوياً."] },
             ].map((c) => (
-              <div key={c.en[0]} className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-[#c9a84c]/20 transition-colors">
+              <div key={c.en[0]} className="flex gap-4 bg-white/5 border border-white/10 rounded-xl p-5 hover:border-[var(--h-accent-on-ink)]/20 transition-colors">
                 <span className="text-2xl shrink-0">{c.icon}</span>
                 <div>
                   <h3 className="font-semibold text-white text-sm mb-1">{ar ? c.ar[0] : c.en[0]}</h3>
@@ -384,19 +384,19 @@ export default function GCCBuyersPage() {
       </section>
 
       {/* GUARANTEED RENT CTA */}
-      <section className="bg-[#0f1b36] py-20 px-6">
+      <section className="bg-[var(--h-ink)] py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-10 items-center" dir={ar ? "rtl" : "ltr"}>
             <div className={ar ? "text-right" : ""}>
-              <div className="inline-flex items-center gap-2 bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-3 py-1.5 mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c9a84c] animate-pulse" />
-                <span className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest">{ar ? "مثالي للمستثمرين الخليجيين" : "Perfect for Gulf Investors"}</span>
+              <div className="inline-flex items-center gap-2 bg-[var(--h-accent)]/15 border border-[var(--h-accent)]/30 rounded-full px-3 py-1.5 mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--h-accent)] animate-pulse" />
+                <span className="text-[var(--h-accent-on-ink)] text-xs font-bold uppercase tracking-widest">{ar ? "مثالي للمستثمرين الخليجيين" : "Perfect for Gulf Investors"}</span>
               </div>
               <h2 className="text-3xl font-black mb-4">
                 {ar ? (
-                  <><span className="text-[#c9a84c]">إيجار مضمون</span><br />دون إدارة من الخليج</>
+                  <><span className="text-[var(--h-accent-on-ink)]">إيجار مضمون</span><br />دون إدارة من الخليج</>
                 ) : (
-                  <><span className="text-[#c9a84c]">Guaranteed rent.</span><br />Managed from the Gulf.</>
+                  <><span className="text-[var(--h-accent-on-ink)]">Guaranteed rent.</span><br />Managed from the Gulf.</>
                 )}
               </h2>
               <div className="space-y-3 text-white/65 text-sm leading-relaxed mb-8">
@@ -417,7 +417,7 @@ export default function GCCBuyersPage() {
                 ))}
               </div>
               <a href={WA} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-7 py-3.5 rounded-xl transition-colors">
+                className="inline-flex items-center gap-2 bg-[var(--h-accent)] hover:bg-[#b8973b] text-white font-bold px-7 py-3.5 rounded-xl transition-colors">
                 {ar ? "تحدث معنا عبر واتساب" : "WhatsApp Us"} →
               </a>
             </div>
@@ -430,9 +430,9 @@ export default function GCCBuyersPage() {
                 { label_en: "Annual income (guaranteed rent)", label_ar: "الدخل السنوي (إيجار مضمون)", value: "£9,720", highlight: true },
                 { label_en: "Management fee saved", label_ar: "رسوم الإدارة الموفّرة", value: "~£1,800 / yr" },
               ].map((r) => (
-                <div key={r.label_en} className={`flex items-center justify-between bg-white/5 border ${r.highlight ? "border-[#c9a84c]/30 bg-[#c9a84c]/5" : "border-white/10"} rounded-xl px-5 py-3.5 ${ar ? "flex-row-reverse" : ""}`}>
+                <div key={r.label_en} className={`flex items-center justify-between bg-white/5 border ${r.highlight ? "border-[var(--h-accent)]/30 bg-[var(--h-accent)]/5" : "border-white/10"} rounded-xl px-5 py-3.5 ${ar ? "flex-row-reverse" : ""}`}>
                   <span className="text-white/75 text-sm">{ar ? r.label_ar : r.label_en}</span>
-                  <span className={`font-bold text-sm ${r.highlight ? "text-[#c9a84c]" : "text-white"}`}>{r.value}</span>
+                  <span className={`font-bold text-sm ${r.highlight ? "text-[var(--h-accent-on-ink)]" : "text-white"}`}>{r.value}</span>
                 </div>
               ))}
               <p className="text-white/55 text-xs" dir={ar ? "rtl" : "ltr"}>{ar ? "مثال على عقار بـ٩٠٠ جنيه/شهر. الأرقام للتوضيح." : "Example for a £900/mo property. Figures for illustration."}</p>
@@ -453,7 +453,7 @@ export default function GCCBuyersPage() {
           </p>
           <div className={`flex flex-wrap gap-4 justify-center ${ar ? "flex-row-reverse" : ""}`}>
             <a href={WA} target="_blank" rel="noopener noreferrer"
-              className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-8 py-4 rounded-xl transition-colors text-lg">
+              className="bg-[var(--h-accent)] hover:bg-[#b8973b] text-white font-bold px-8 py-4 rounded-xl transition-colors text-lg">
               {ar ? "واتساب الآن" : "WhatsApp Now"} →
             </a>
             <Link href="/guaranteed-rent"

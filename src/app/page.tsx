@@ -713,16 +713,16 @@ export default function Home() {
       <section style={{ background: "white", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-          <Link href="/makan" style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #f0ece8", background: "linear-gradient(135deg, #faf9f7 0%, #fef0ed 100%)", textDecoration: "none" }}
-            className="group hover:border-[#e8553d]/30 transition-all">
+          <Link href="/makan" style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #E2D9CA", background: "linear-gradient(135deg, #F5F0E8 0%, #FBEFE9 100%)", textDecoration: "none" }}
+            className="group hover:border-[#AD4429]/30 transition-all">
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40, alignItems: "center" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 12, background: "#e8553d", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: "#AD4429", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <svg width="22" height="22" viewBox="0 0 20 20" fill="white"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
                   </div>
                   <span style={{ fontSize: 24, fontWeight: 800, color: "#0f1b36", letterSpacing: "-0.01em" }}>makan</span>
-                  <span style={{ fontSize: 11, fontWeight: 700, background: "#e8553d", color: "white", padding: "3px 8px", borderRadius: 20 }}>New</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, background: "#AD4429", color: "white", padding: "3px 8px", borderRadius: 20 }}>New</span>
                 </div>
                 <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#0f1b36", marginBottom: 10 }}>
                   Free property listings — UK, Middle East & North Africa
@@ -731,7 +731,7 @@ export default function Home() {
                   Browse rooms, flats, houses, and villas. List your property free. No agents, no fees, no catch — ever.
                 </p>
                 <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  Browse listings <span style={{ color: "#e8553d" }}>→</span>
+                  Browse listings <span style={{ color: "#AD4429" }}>→</span>
                 </span>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10 }}>

@@ -192,7 +192,7 @@ export default function AboutPage() {
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: "#0b0f14" }}
                 >
-                  <span className="font-black text-sm" style={{ color: "#e8553d" }}>م</span>
+                  <span className="font-black text-sm" style={{ color: "#AD4429" }}>م</span>
                 </div>
                 <div>
                   <p className="font-black text-navy-800 text-lg leading-tight">Makan</p>

@@ -445,28 +445,47 @@ input::placeholder, textarea::placeholder {
    Warm slate + coral + cream palette
    ═══════════════════════════════════════════ */
 
+/* ── Makan: Clay ─────────────────────────────────────────────────────────
+   Makan had three palettes fighting: the PropertyVault navy/gold chrome, a
+   Makan hero that hardcoded that same navy/gold, and this warm cream/coral
+   set underneath. None of them was Makan’s, and the coral was not even a
+   decision — .hetta was dead CSS until it was first applied.
+
+   Clay is olive ink and terracotta on oat. It is warm without being a
+   pastiche of the Arabic name, and no UK portal owns it: Rightmove is green,
+   Zoopla purple, OnTheMarket teal, Purplebricks purple, PropertyVault
+   navy/gold.
+
+   Every value below clears WCAG AA on every surface it can land on, checked
+   rather than eyeballed. The two that needed moving were --h-subtle (4.37 on
+   oat) and the terracotta (4.41 on the warm surface); both are nudged until
+   the worst case clears 4.5. The dark-ground tokens exist so a hero never has
+   to hardcode a hex again, which is how the navy got in here. */
 .hetta {
-  --h-bg: #f8f7f5;
+  --h-bg: #F5F0E8;
   --h-surface: #ffffff;
-  --h-text: #111111;
-  --h-muted: #555555;
-  /* Was #999999, which is 2.85:1 on white and 2.66:1 on --h-bg -- below the
-     4.5:1 AA floor for body text. It went unnoticed while .hetta was never
-     applied and the token resolved to nothing. #6b6b6b clears AA on both
-     surfaces (5.33 and 4.98) and still reads as de-emphasised. */
-  --h-subtle: #6b6b6b;
-  --h-border: #e5e2de;
-  /* Was #e8553d, which gives 3.62:1 both as text on white and as a button
-     background under white text -- short of the 4.5:1 AA floor for the small
-     text it is actually used for. #d14530 was already the palette's hover
-     shade, so this is the design system's own colour rather than a new one,
-     and it clears AA at 4.56:1. Hover steps down one further.
-     Revert both lines to go back to the original coral. */
-  --h-accent: #d14530;
-  --h-accent-hover: #bd3a24;
-  --h-accent-light: #fef0ed;
-  --h-warm: #f4efe9;
-  --h-slate: #1e1e1e;
+  --h-text: #1B211A;
+  --h-muted: #4E574B;
+  /* The de-emphasised tier. Solved for rather than picked: the natural olive
+     grey landed at 4.37 on oat and 4.04 on the warm surface, both under the
+     4.5 floor, so it steps down until the worst case clears (4.53). */
+  --h-subtle: #646A61;
+  --h-border: #E2D9CA;
+  /* Terracotta. Straight off the swatch it measured 4.41 on --h-warm, so it
+     is darkened until the worst surface clears: 5.78 on white, 5.09 on oat,
+     4.71 on warm, and 5.78 for white text sitting on it as a button. */
+  --h-accent: #AD4429;
+  --h-accent-hover: #8F3620;
+  --h-accent-light: #FBEFE9;
+  --h-warm: #EFE7DA;
+  --h-slate: #21281F;
+
+  /* Dark grounds. Makan sections used to hardcode PropertyVault navy here. */
+  --h-ink: #21281F;
+  --h-ink-deep: #171C16;
+  --h-on-ink: #F5F0E8;
+  --h-on-ink-muted: #C6C9BF;
+  --h-accent-on-ink: #E88B62;
   --h-green: #16a34a;
   --h-green-light: #f0fdf4;
   font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;

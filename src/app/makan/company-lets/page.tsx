@@ -85,15 +85,15 @@ export default function CompanyLetsPage() {
   return (
     <main style={{ background: "var(--h-bg)" }}>
 
-      <section className="py-16 md:py-20 px-6" style={{ background: "#0f1b36" }}>
+      <section className="py-16 md:py-20 px-6" style={{ background: "var(--h-ink)" }}>
         <div className="max-w-3xl mx-auto">
-          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#e8c877" }}>
+          <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "var(--h-accent-on-ink)" }}>
             For landlords and operators
           </p>
           <h1 className="text-4xl md:text-5xl font-black mb-5 text-white leading-tight">
             Company lets, explained
           </h1>
-          <p className="text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
+          <p className="text-lg leading-relaxed" style={{ color: "var(--h-on-ink-muted)" }}>
             A company takes the whole property on a lease and pays you whether or not it is
             occupied. It is a normal arrangement, it is not right for every property, and it is
             the one an estate agent tends to decline on your behalf without asking.
@@ -193,12 +193,12 @@ export default function CompanyLetsPage() {
         </div>
       </section>
 
-      <section className="py-14 px-6" style={{ background: "#0f1b36" }}>
+      <section className="py-14 px-6" style={{ background: "var(--h-ink)" }}>
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-2xl md:text-3xl font-black mb-4 text-white">
             Makan just makes the introduction possible
           </h2>
-          <p className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.8)" }}>
+          <p className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: "var(--h-on-ink-muted)" }}>
             A landlord ticks whether they would consider a company let. An operator can search for
             landlords who have. Everything after that &mdash; terms, references, the lease &mdash;
             is between the two of you. We are not a party to the agreement and we do not take a cut
@@ -207,7 +207,7 @@ export default function CompanyLetsPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
             <Link href="/makan/list"
                   className="flex-1 rounded-2xl px-6 py-4 font-bold transition-transform hover:-translate-y-0.5"
-                  style={{ background: "#c9a84c", color: "#0a1628" }}>
+                  style={{ background: "var(--h-accent)", color: "#ffffff" }}>
               List a property
             </Link>
             <Link href="/makan/rooms?let=company"
