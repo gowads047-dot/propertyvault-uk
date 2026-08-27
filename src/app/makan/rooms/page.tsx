@@ -77,7 +77,16 @@ function RoomsSearch() {
   const [now, setNow] = useState<Date | null>(null);
   const [draftQ, setDraftQ] = useState(filters.q);
 
-  useEffect(() => setDraftQ(filters.q), [filters.q]);
+  // The search box is a draft the user types into, but it also has to follow
+  // the URL when that changes underneath it — a back button, or a link with
+  // ?q= already set. Doing that in an effect meant a second render pass on
+  // every keystroke-driven URL change; adjusting during render is React's own
+  // pattern for state derived from changing props.
+  const [lastQ, setLastQ] = useState(filters.q);
+  if (filters.q !== lastQ) {
+    setLastQ(filters.q);
+    setDraftQ(filters.q);
+  }
 
   const apply = useCallback(
     (next: Filters) => router.replace(`/makan/rooms${toQueryString(next)}`, { scroll: false }),

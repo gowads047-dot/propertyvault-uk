@@ -17,7 +17,7 @@ import {
   type MatchableSpace,
   type WantedQueryRow,
   WANTED_USES,
-  useLabel,
+  intendedUseLabel,
   companyTermsSummary,
 } from "./makan-wanted";
 
@@ -283,6 +283,6 @@ describe("company wanted posts", () => {
   });
 
   it("labels every use the schema allows", () => {
-    for (const u of WANTED_USES) expect(useLabel(u.value), u.value).toBe(u.label);
+    for (const u of WANTED_USES) expect(intendedUseLabel(u.value), u.value).toBe(u.label);
   });
 });

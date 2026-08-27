@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import { isMissingTable } from "@/lib/makan-inventory";
@@ -58,7 +57,6 @@ interface Lookup {
 
 export default function ListPage() {
   const { user, profile, loading: authLoading } = useAuth();
-  const router = useRouter();
 
   const [d, setD] = useState<ListingDraft>(EMPTY_DRAFT);
   const [stage, setStage] = useState<Stage>({ at: "editing" });

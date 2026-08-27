@@ -55,7 +55,7 @@ export interface WantedPost {
  * A company post with no stated use is the one a landlord cannot evaluate, so
  * it reads as an explicit gap rather than being left blank.
  */
-export function useLabel(use: WantedUse | null): string {
+export function intendedUseLabel(use: WantedUse | null): string {
   return WANTED_USES.find(u => u.value === use)?.label ?? "Use not stated";
 }
 
@@ -63,7 +63,7 @@ export function useLabel(use: WantedUse | null): string {
 export function companyTermsSummary(p: Pick<WantedPost, "letType" | "intendedUse" | "leaseMonths">): string | null {
   if (p.letType !== "company") return null;
   const lease = p.leaseMonths ? `${p.leaseMonths}-month lease` : "lease length open";
-  return `Company let · ${useLabel(p.intendedUse)} · ${lease}`;
+  return `Company let · ${intendedUseLabel(p.intendedUse)} · ${lease}`;
 }
 
 /**
