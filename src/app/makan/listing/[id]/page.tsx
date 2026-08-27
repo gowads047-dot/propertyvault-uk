@@ -6,8 +6,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth-context";
-import { ShareButtons } from "@/components/hetta/ShareButtons";
-import { countries, formatPrice } from "@/lib/hetta-config";
+import { ShareButtons } from "@/components/makan/ShareButtons";
+import { countries, formatPrice } from "@/lib/makan-config";
 
 interface Listing {
   id: string;

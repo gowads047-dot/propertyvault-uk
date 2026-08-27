@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { countries } from "@/lib/hetta-config";
+import { countries } from "@/lib/makan-config";
 
 interface Props {
   params: Promise<{ code: string }>;

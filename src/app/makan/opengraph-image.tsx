@@ -1,6 +1,6 @@
 // Clay, written as literals on purpose: next/og rasterises this server-side
 // and cannot read CSS custom properties, so var(--h-accent) would render as
-// nothing. Keep these in step with the .hetta block in globals.css.
+// nothing. Keep these in step with the .makan block in globals.css.
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans, Noto_Sans_Arabic } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteHeader, SiteFooter } from "@/components/layout/SiteChrome";
 import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
@@ -207,9 +206,9 @@ export default function RootLayout({
       </Script>
       <body className="min-h-full flex flex-col">
         <a href="#main-content" className="skip-link">Skip to main content</a>
-        <Header />
+        <SiteHeader />
         <main id="main-content" className="flex-1">{children}</main>
-        <Footer />
+        <SiteFooter />
         <CookieConsent />
         <WhatsAppButton />
         <NewsletterPopup />

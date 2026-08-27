@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ShareButtons } from "@/components/hetta/ShareButtons";
+import { ShareButtons } from "@/components/makan/ShareButtons";
 
 interface Props {
   title: string;

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { formatPrice } from "@/lib/hetta-config";
+import { formatPrice } from "@/lib/makan-config";
 
 interface Listing {
   id: string;

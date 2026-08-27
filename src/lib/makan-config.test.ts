@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatPrice } from "./hetta-config";
+import { formatPrice } from "./makan-config";
 
 describe("formatPrice", () => {
   it("formats GBP with a symbol and thousands separators", () => {
@@ -9,7 +9,7 @@ describe("formatPrice", () => {
 
   it("formats non-GBP with the currency code after the amount", () => {
     // Only gb, ma and eg are active; the GCC entries are commented out in
-    // hetta-config as "not active in this phase".
+    // makan-config as "not active in this phase".
     expect(formatPrice(8000, "ma")).toBe("8,000 MAD");
     expect(formatPrice(8000, "eg")).toBe("8,000 EGP");
   });

@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { translations, type Lang } from "./hetta-config";
+import { translations, type Lang } from "./makan-config";
 
 interface LangContextType {
   lang: Lang;
@@ -18,14 +18,21 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
-    const stored = localStorage.getItem("hetta-lang") as Lang | null;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage, which is unavailable during render
-    if (stored && translations[stored]) setLangState(stored);
+    // Falls back to the old key so the rename does not silently reset the
+    // language for anyone who had already chosen Arabic, and migrates them
+    // forward on read so the fallback can be deleted later.
+    const stored = (localStorage.getItem("makan-lang")
+      ?? localStorage.getItem("hetta-lang")) as Lang | null;
+    if (stored && translations[stored]) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage, which is unavailable during render
+      setLangState(stored);
+      localStorage.setItem("makan-lang", stored);
+    }
   }, []);
 
   const setLang = (l: Lang) => {
     setLangState(l);
-    localStorage.setItem("hetta-lang", l);
+    localStorage.setItem("makan-lang", l);
   };
 
   const t = (key: string) => translations[lang]?.[key] || translations.en[key] || key;

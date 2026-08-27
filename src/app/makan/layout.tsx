@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
 import { LangProvider } from "@/lib/lang-context";
+import { MakanHeader } from "@/components/makan/MakanHeader";
+import { MakanFooter } from "@/components/makan/MakanFooter";
 
 // No canonical here on purpose. This layout wraps every page under /makan, so a
 // canonical set at this level told Google that /makan/rooms/, /makan/wanted/,
@@ -29,8 +31,8 @@ export const metadata: Metadata = {
 // so /makan/list rendered the literal strings "list.signinRequired" and
 // "nav.signup" to users, and dir never became "rtl" for Arabic.
 //
-// The "hetta" class carries Makan's entire design system. globals.css defines
-// --h-bg, --h-accent, --h-slate and the rest on ".hetta", along with every
+// The "makan" class carries Makan's entire design system. globals.css defines
+// --h-bg, --h-accent, --h-slate and the rest on ".makan", along with every
 // .h-btn, .h-card, .h-input and .h-container rule scoped beneath it.
 //
 // Nothing in the app ever applied that class, so all of it was dead. Every
@@ -42,12 +44,24 @@ export const metadata: Metadata = {
 // floor. The sentence explaining what /makan/rooms is was invisible.
 //
 // Scoped here rather than on <body> so the palette cannot leak into the rest
-// of PropertyVault, which is why it was written as .hetta in the first place.
+// of PropertyVault, which is why it was written as .makan in the first place.
+// Makan carries its own header and footer, not PropertyVault's.
+//
+// They sit here rather than in the root layout because both read useAuth and
+// useLang, and those providers are below the root — rendered at root level the
+// header would read the default context, whose loading is hard-coded true, and
+// never resolve.
+//
+// The root chrome hides itself on /makan so the two do not stack.
 export default function MakanLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="hetta">
+    <div className="makan flex flex-col min-h-screen">
       <LangProvider>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <MakanHeader />
+          <div className="flex-1">{children}</div>
+          <MakanFooter />
+        </AuthProvider>
       </LangProvider>
     </div>
   );

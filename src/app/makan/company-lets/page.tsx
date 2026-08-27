@@ -201,9 +201,31 @@ export default function CompanyLetsPage() {
           <p className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto" style={{ color: "var(--h-on-ink-muted)" }}>
             A landlord ticks whether they would consider a company let. An operator can search for
             landlords who have. Everything after that &mdash; terms, references, the lease &mdash;
-            is between the two of you. We are not a party to the agreement and we do not take a cut
-            of it.
+            is between the two of you. Makan is not a party to your agreement and takes no cut of it.
           </p>
+
+          {/* Said plainly, because the alternative is somebody working it out
+              on their own. PropertyVault runs a guaranteed-rent business that
+              leases properties directly from landlords, which is a company let
+              — so the company behind this marketplace is also one of the
+              businesses that might answer a listing on it. Disclosed, that is
+              a fact about the market. Discovered, it is a reason not to trust
+              the platform. */}
+          <div className="max-w-2xl mx-auto mb-8 p-5 rounded-2xl text-left"
+               style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.16)" }}>
+            <p className="font-bold mb-2 text-white">One thing you should know</p>
+            <p className="leading-relaxed" style={{ color: "var(--h-on-ink-muted)" }}>
+              PropertyVault, which runs Makan, also takes some properties on itself under{" "}
+              <Link href="/guaranteed-rent" className="underline" style={{ color: "var(--h-accent-on-ink)" }}>
+                guaranteed rent
+              </Link>{" "}
+              &mdash; which is a company let. So we may be one of the companies that replies to you.
+              We get no priority, no advance sight of a listing and no better position than anyone
+              else here, and you are free to ignore us. The market is far bigger than what we take
+              on, and the point of Makan is that every other operator gets to make you an offer too
+              &mdash; which is exactly what an agent prevents.
+            </p>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
             <Link href="/makan/list"
                   className="flex-1 rounded-2xl px-6 py-4 font-bold transition-transform hover:-translate-y-0.5"

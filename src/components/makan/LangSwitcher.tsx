@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/lib/lang-context";
-import type { Lang } from "@/lib/hetta-config";
+import type { Lang } from "@/lib/makan-config";
 
 const langs: { code: Lang; label: string; flag: string }[] = [
   { code: "en", label: "EN", flag: "🇬🇧" },

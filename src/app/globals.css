@@ -50,22 +50,22 @@ html.dark .bg-cream { background-color: #111827 !important; }
 
 /* Makan is ALWAYS light mode — reset everything.
  *
- * The universal selector used to be included here, as `html.dark .hetta *`.
+ * The universal selector used to be included here, as `html.dark .makan *`.
  * That is a blunter instrument than it looks: `color: inherit` on every
  * descendant, at specificity (0,2,1), beats the component rules further down
- * this file — `.hetta .h-btn-primary { color: #ffffff }` among them — so in
+ * this file — `.makan .h-btn-primary { color: #ffffff }` among them — so in
  * dark mode every Makan button kept its coral background but took its text
  * colour from whatever happened to surround it. A primary button inside a
  * light card rendered dark ink on coral at 4.14:1, while the same button in a
  * dark panel rendered white. Same class, two different colours, decided by
  * the parent.
  *
- * Setting the colour on `.hetta` alone is enough: descendants inherit from it
+ * Setting the colour on `.makan` alone is enough: descendants inherit from it
  * normally, and components that declare their own colour keep it. */
-html.dark .hetta {
+html.dark .makan {
   color: inherit;
 }
-.hetta {
+.makan {
   color-scheme: light;
 }
 
@@ -78,13 +78,13 @@ html.dark h1, html.dark h2, html.dark h3,
 html.dark h4, html.dark h5, html.dark h6 {
   color: #f5f7fa;
 }
-/* Inherit, for the same reason as the .hetta heading rule further down — and
+/* Inherit, for the same reason as the .makan heading rule further down — and
  * this is the copy that actually bit. It is unlayered, so it beat the layered
- * `.hetta h1,h2,h3 { color: inherit }` fix and kept pinning Makan headings to
+ * `.makan h1,h2,h3 { color: inherit }` fix and kept pinning Makan headings to
  * dark ink. Because it is behind html.dark it only showed in dark mode, which
  * is exactly how it survived a localhost check that happened to be in light. */
-html.dark .hetta h1, html.dark .hetta h2, html.dark .hetta h3,
-html.dark .hetta h4, html.dark .hetta h5, html.dark .hetta h6 {
+html.dark .makan h1, html.dark .makan h2, html.dark .makan h3,
+html.dark .makan h4, html.dark .makan h5, html.dark .makan h6 {
   color: inherit;
 }
 
@@ -183,26 +183,26 @@ html.dark .text-purple-800 { color: #c4b5fd !important; }
 
 /* ══ MAKAN: force light mode always — undo ALL dark overrides ══ */
 /* Makan: completely immune to dark mode */
-html.dark .hetta { background: var(--h-bg) !important; }
-html.dark .hetta .bg-white { background-color: #ffffff !important; }
-html.dark .hetta .bg-navy-50 { background-color: var(--h-bg) !important; }
-html.dark .hetta .border-navy-100 { border-color: var(--h-border) !important; }
-html.dark .hetta .text-navy-800 { color: var(--h-text) !important; }
-html.dark .hetta .text-navy-700 { color: var(--h-text) !important; }
-html.dark .hetta .text-navy-600 { color: var(--h-muted) !important; }
-html.dark .hetta .text-navy-500 { color: var(--h-muted) !important; }
-html.dark .hetta .text-navy-400 { color: var(--h-subtle) !important; }
-html.dark .hetta .text-white { color: #ffffff !important; }
-html.dark .hetta .text-gold-600 { color: #b8922f !important; }
-html.dark .hetta .bg-gold-50 { background-color: #fefcf3 !important; }
-html.dark .hetta .bg-green-50 { background-color: #f0fdf4 !important; }
-html.dark .hetta .btn-secondary { background-color: #ffffff !important; color: #1a1a1a !important; border-color: #e8e5e1 !important; }
-html.dark .hetta input, html.dark .hetta select, html.dark .hetta textarea {
+html.dark .makan { background: var(--h-bg) !important; }
+html.dark .makan .bg-white { background-color: #ffffff !important; }
+html.dark .makan .bg-navy-50 { background-color: var(--h-bg) !important; }
+html.dark .makan .border-navy-100 { border-color: var(--h-border) !important; }
+html.dark .makan .text-navy-800 { color: var(--h-text) !important; }
+html.dark .makan .text-navy-700 { color: var(--h-text) !important; }
+html.dark .makan .text-navy-600 { color: var(--h-muted) !important; }
+html.dark .makan .text-navy-500 { color: var(--h-muted) !important; }
+html.dark .makan .text-navy-400 { color: var(--h-subtle) !important; }
+html.dark .makan .text-white { color: #ffffff !important; }
+html.dark .makan .text-gold-600 { color: #b8922f !important; }
+html.dark .makan .bg-gold-50 { background-color: #fefcf3 !important; }
+html.dark .makan .bg-green-50 { background-color: #f0fdf4 !important; }
+html.dark .makan .btn-secondary { background-color: #ffffff !important; color: #1a1a1a !important; border-color: #e8e5e1 !important; }
+html.dark .makan input, html.dark .makan select, html.dark .makan textarea {
   background-color: #ffffff !important;
   color: #1a1a1a !important;
   border-color: #e8e5e1 !important;
 }
-html.dark .hetta input::placeholder, html.dark .hetta textarea::placeholder {
+html.dark .makan input::placeholder, html.dark .makan textarea::placeholder {
   color: #a3a3a3 !important;
 }
 
@@ -441,15 +441,15 @@ input::placeholder, textarea::placeholder {
 }
 
 /* ═══════════════════════════════════════════
-   HETTA — Separate design system
-   Warm slate + coral + cream palette
+   MAKAN — Separate design system
+   Scoped to .makan so it cannot leak into PropertyVault
    ═══════════════════════════════════════════ */
 
 /* ── Makan: Clay ─────────────────────────────────────────────────────────
    Makan had three palettes fighting: the PropertyVault navy/gold chrome, a
    Makan hero that hardcoded that same navy/gold, and this warm cream/coral
    set underneath. None of them was Makan’s, and the coral was not even a
-   decision — .hetta was dead CSS until it was first applied.
+   decision — .makan was dead CSS until it was first applied.
 
    Clay is olive ink and terracotta on oat. It is warm without being a
    pastiche of the Arabic name, and no UK portal owns it: Rightmove is green,
@@ -461,7 +461,7 @@ input::placeholder, textarea::placeholder {
    oat) and the terracotta (4.41 on the warm surface); both are nudged until
    the worst case clears 4.5. The dark-ground tokens exist so a hero never has
    to hardcode a hex again, which is how the navy got in here. */
-.hetta {
+.makan {
   --h-bg: #F5F0E8;
   --h-surface: #ffffff;
   --h-text: #1B211A;
@@ -505,12 +505,12 @@ input::placeholder, textarea::placeholder {
  * invisible — and the fix I shipped for it patched five headings by matching
  * their exact class string, missing the one heading whose classes differed.
  *
- * Inheriting removes the whole category instead of the instances. `.hetta`
+ * Inheriting removes the whole category instead of the instances. `.makan`
  * sets `color: var(--h-text)` on the wrapper, so a heading on a light surface
  * still gets dark ink; a heading inside a `text-white` dark section gets white
  * without having to ask. */
 @layer base {
-  .hetta h1, .hetta h2, .hetta h3 {
+  .makan h1, .makan h2, .makan h3 {
     font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -524,7 +524,7 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-.hetta .h-container {
+.makan .h-container {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
@@ -532,7 +532,7 @@ input::placeholder, textarea::placeholder {
   padding-right: 20px;
 }
 
-.hetta .h-btn {
+.makan .h-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -545,46 +545,46 @@ input::placeholder, textarea::placeholder {
   cursor: pointer;
 }
 
-.hetta .h-btn-primary {
+.makan .h-btn-primary {
   background: var(--h-accent);
   color: #ffffff;
 }
-.hetta .h-btn-primary:hover {
+.makan .h-btn-primary:hover {
   background: var(--h-accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px -2px rgba(232, 85, 61, 0.35);
 }
 
-.hetta .h-btn-secondary {
+.makan .h-btn-secondary {
   background: var(--h-surface);
   color: var(--h-text);
   border: 1.5px solid var(--h-border);
 }
-.hetta .h-btn-secondary:hover {
+.makan .h-btn-secondary:hover {
   border-color: var(--h-text);
 }
 
-.hetta .h-btn-dark {
+.makan .h-btn-dark {
   background: var(--h-slate);
   color: #ffffff;
 }
-.hetta .h-btn-dark:hover {
+.makan .h-btn-dark:hover {
   background: #1a1a1a;
 }
 
-.hetta .h-card {
+.makan .h-card {
   background: var(--h-surface);
   border: 1px solid var(--h-border);
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.2s ease;
 }
-.hetta .h-card:hover {
+.makan .h-card:hover {
   box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.1);
   transform: translateY(-3px);
 }
 
-.hetta .h-input {
+.makan .h-input {
   width: 100%;
   padding: 12px 16px;
   border: 1.5px solid var(--h-border);
@@ -594,20 +594,20 @@ input::placeholder, textarea::placeholder {
   color: #1a1a1a !important;
   transition: border-color 0.15s;
 }
-.hetta .h-input:focus {
+.makan .h-input:focus {
   outline: none;
   border-color: var(--h-accent);
   box-shadow: 0 0 0 3px rgba(232, 85, 61, 0.1);
 }
-.hetta .h-input::placeholder {
+.makan .h-input::placeholder {
   color: #a3a3a3 !important;
 }
 
-.hetta select.h-input {
+.makan select.h-input {
   color: #1a1a1a !important;
 }
 
-.hetta .h-badge {
+.makan .h-badge {
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
@@ -616,7 +616,7 @@ input::placeholder, textarea::placeholder {
   font-weight: 600;
 }
 
-.hetta .h-tag {
+.makan .h-tag {
   display: inline-block;
   padding: 6px 14px;
   border-radius: 8px;
@@ -627,7 +627,7 @@ input::placeholder, textarea::placeholder {
   transition: all 0.15s;
   cursor: pointer;
 }
-.hetta .h-tag:hover, .hetta .h-tag-active {
+.makan .h-tag:hover, .makan .h-tag-active {
   background: var(--h-accent);
   color: #ffffff;
 }

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { staticRoutes, isIndexable, rankOf } from "@/lib/routes";
 import { blogPosts, slugOf } from "@/lib/blog-posts";
-import { countries } from "@/lib/hetta-config";
+import { countries } from "@/lib/makan-config";
 import { DISTRICTS } from "@/app/areas/postcodes/[district]/page";
 
 /**
