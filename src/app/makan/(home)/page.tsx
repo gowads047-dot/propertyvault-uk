@@ -128,21 +128,21 @@ export default function MakanPage() {
           </h2>
           <div className="text-lg leading-relaxed space-y-4" style={{ color: "rgba(255,255,255,0.8)" }}>
             <p>
-              Ring an estate agent about a four-bed for supported living or serviced accommodation
-              and you get a no on the spot. Not after they&apos;ve asked the landlord — immediately.
+              Ring an agent about a four-bed for supported living or serviced accommodation and the
+              answer is no. Not after they&apos;ve asked the landlord — instead of asking them.
             </p>
             <p>
-              There&apos;s a reason. A company let means the landlord signs a multi-year lease
-              directly with an operator, and the agent&apos;s ongoing management fee disappears with
-              it. It doesn&apos;t fit their standard tenancy paperwork either.
+              There&apos;s a reason, and it isn&apos;t the property. A company let means the
+              landlord signs a multi-year lease directly with an operator, and the agent&apos;s
+              monthly management fee goes with it.
             </p>
             <p style={{ color: "#ffffff" }}>
-              Meanwhile the landlord has a property that&apos;s been empty for six weeks and would
-              take a three-year guaranteed lease tomorrow. They never find out the offer existed.
+              So the offer stops at the phone. The landlord carries on paying for an empty property
+              and never learns that anybody wanted it.
             </p>
             <p>
-              Makan puts the two of you in the same place, with nobody in between deciding what
-              you&apos;d be interested in.
+              Makan takes that decision back off the agent. Both sides say what they would consider,
+              and they find each other directly.
             </p>
           </div>
         </div>
