@@ -18,7 +18,7 @@ export default function Image() {
           <span style={{ fontSize: 90, fontWeight: 800, color: "#ffffff", letterSpacing: "-2px", lineHeight: 1, fontFamily: "serif" }}>PROPERTY</span>
           <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginTop: -6 }}>
             <span style={{ fontSize: 90, fontWeight: 800, color: "var(--gold-ink)", letterSpacing: "-2px", lineHeight: 1, fontFamily: "serif" }}>VAULT</span>
-            <span style={{ fontSize: 56, fontWeight: 300, color: "rgba(255,255,255,0.45)", fontFamily: "serif" }}>UK</span>
+            <span style={{ fontSize: 56, fontWeight: 300, color: "rgba(255,255,255,0.62)", fontFamily: "serif" }}>UK</span>
           </div>
 
           {/* Gold divider */}

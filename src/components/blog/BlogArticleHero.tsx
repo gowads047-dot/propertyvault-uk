@@ -32,7 +32,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Tax:        "#dc2626",
   Finance:    "#059669",
   Buying:     "#0891b2",
-  Comparison: "#64748b",
+  Comparison: "#475569",
 };
 
 export function BlogArticleHero({ title, excerpt, category, date, readTime, image }: Props) {
@@ -73,7 +73,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
       <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
 
       <div className="container-max px-4" style={{ position: "relative", zIndex: 2, paddingTop: 56, paddingBottom: 60 }}>
-        <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 24 }}
+        <Link href="/blog" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 24 }}
           className="hover:text-white transition-colors">
           <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/></svg>
           All articles
@@ -83,7 +83,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
           <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: CATEGORY_COLORS[category] ?? "#0f1b36", color: "white" }}>
             {category}
           </span>
-          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>By Nass · {date} · {readTime} read</span>
+          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>By Nass · {date} · {readTime} read</span>
         </div>
 
         <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 48px)", fontWeight: 800, color: "white", lineHeight: 1.1, letterSpacing: "-0.02em", marginBottom: 16, maxWidth: 760 }}>
@@ -93,7 +93,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
           {excerpt}
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>Share</span>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>Share</span>
           <ShareButtons title={title} />
         </div>
       </div>

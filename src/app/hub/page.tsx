@@ -8,8 +8,8 @@ import { supabase } from "@/lib/supabase";
 const BG = "#08090f";
 const BORDER = "rgba(255,255,255,0.07)";
 const INK = "rgba(255,255,255,0.88)";
-const INK2 = "rgba(255,255,255,0.45)";
-const INK3 = "rgba(255,255,255,0.22)";
+const INK2 = "rgba(255,255,255,0.62)";
+const INK3 = "rgba(255,255,255,0.62)";
 const GOLD = "#c9a84c";
 
 type Stats = {

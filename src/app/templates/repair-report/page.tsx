@@ -23,7 +23,7 @@ export default function RepairReport() {
   const fmt = (d: string) => d ? new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "_______________";
 
   const urgencyConfig = {
-    emergency: { label: "🚨 Emergency (24 hrs)", color: "#dc2626", bg: "#fef2f2", desc: "No hot water, no heating in winter, flooding, gas leak, structural danger, sewage — landlord must act within 24 hours" },
+    emergency: { label: "🚨 Emergency (24 hrs)", color: "#b91c1c", bg: "#fef2f2", desc: "No hot water, no heating in winter, flooding, gas leak, structural danger, sewage — landlord must act within 24 hours" },
     urgent: { label: "⚠️ Urgent (2–7 days)", color: "#d97706", bg: "#fffbeb", desc: "Broken boiler, serious leak, mould affecting health, broken locks — 2–7 days is typically expected" },
     routine: { label: "ℹ️ Routine (28 days)", color: "#2563eb", bg: "#eff6ff", desc: "Dripping tap, broken window handle, minor damp — landlord has around 28 days to respond" },
   };

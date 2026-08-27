@@ -69,7 +69,7 @@ export async function POST(req: Request) {
   const html = `
     <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a2942;">
       <div style="background:#1a2942;padding:24px 32px;border-radius:12px 12px 0 0;">
-        <span style="color:#c9a84c;font-weight:900;font-size:20px;">PropertyVault UK</span>
+        <span style="color:var(--gold-ink);font-weight:900;font-size:20px;">PropertyVault UK</span>
       </div>
       <div style="background:#f8f7f5;padding:36px 32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;border-top:none;">
         <h2 style="font-size:20px;font-weight:800;margin:0 0 8px;">Hi ${firstName} — a maintenance issue has been logged for you</h2>
@@ -97,7 +97,7 @@ export async function POST(req: Request) {
         </a>
 
         <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:14px 18px;">
-          <p style="font-size:12px;font-weight:700;color:#c9a84c;margin:0 0 6px;">From your portal you can:</p>
+          <p style="font-size:12px;font-weight:700;color:var(--gold-ink);margin:0 0 6px;">From your portal you can:</p>
           <ul style="font-size:12px;color:rgba(26,41,66,0.6);padding-left:18px;margin:0;line-height:2;">
             <li>See the status of this repair in real time</li>
             <li>Message your landlord directly on this issue</li>

@@ -75,7 +75,7 @@ export default function DownloadsPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "40px 24px" }}>
         <h1 style={{ fontSize: 36, fontWeight: 800, marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Downloads Library</h1>
         <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 8 }}>Every template, calculator, checklist, and tool — ready to use.</p>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 40 }}>Legal templates are educational only. Always seek independent legal advice before use.</p>
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", marginBottom: 40 }}>Legal templates are educational only. Always seek independent legal advice before use.</p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
           {DOWNLOADS.map(group => (
@@ -90,7 +90,7 @@ export default function DownloadsPage() {
                     </div>
                     <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.4, flexGrow: 1 }}>{item.desc}</p>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{item.pages}</span>
+                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.62)" }}>{item.pages}</span>
                       <button style={{ fontSize: 12, fontWeight: 700, color: "#d4af37", background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 7, padding: "4px 12px", cursor: "pointer" }}>
                         ↓ Download
                       </button>

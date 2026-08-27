@@ -161,7 +161,7 @@ function Field({ label, children, hint }: { label: string; children: React.React
   return (
     <div>
       <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#0f1b36", marginBottom: 4 }}>{label}</label>
-      {hint && <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 4 }}>{hint}</p>}
+      {hint && <p style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{hint}</p>}
       {children}
     </div>
   );
@@ -1140,7 +1140,7 @@ export default function CommercialLeasePage() {
       }
       // Subtitle / meta (first 4 lines, non-numeric)
       if (i <= 3 && !t.match(/^\d/) && t.length > 5) {
-        els.push(<p key={k++} style={{ fontSize: 11, color: "#64748b", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>);
+        els.push(<p key={k++} style={{ fontSize: 11, color: "#475569", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>);
         continue;
       }
       // Numbered section heading: "1. PROPERTY" style (all caps)
@@ -1168,7 +1168,7 @@ export default function CommercialLeasePage() {
       if (kv) {
         els.push(
           <div key={k++} style={{ display: "grid", gridTemplateColumns: "170px 1fr", gap: 10, marginBottom: 5, alignItems: "start" }}>
-            <span style={{ fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span>
             <span style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.65 }}>{kv[2] || "—"}</span>
           </div>
         );
@@ -1448,7 +1448,7 @@ export default function CommercialLeasePage() {
         <section style={{ background: "#f8f9fc", padding: "48px 0 80px" }}>
           <div className="container-max px-4" style={{ maxWidth: 900 }}>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: 24, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>Phase 1 — Select Document Type</h2>
-            <p style={{ fontSize: 14, color: "#64748b", marginBottom: 32 }}>What type of commercial occupation arrangement is required?</p>
+            <p style={{ fontSize: 14, color: "#475569", marginBottom: 32 }}>What type of commercial occupation arrangement is required?</p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 12 }}>
               {LEASE_TYPES.map(lt => (
                 <button key={lt.id} onClick={() => { set("leaseType")(lt.label); setPhase("questionnaire"); setStep(0); }}
@@ -1467,18 +1467,18 @@ export default function CommercialLeasePage() {
         <>
           <div style={navBarStyle}>
             <div className="container-max px-4" style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-              <button onClick={() => setPhase("type")} style={{ fontSize: 12, color: "#64748b", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>
+              <button onClick={() => setPhase("type")} style={{ fontSize: 12, color: "#475569", background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}>
                 ← Change type
               </button>
               <div style={{ flex: 1, display: "flex", gap: 4, flexWrap: "nowrap", overflowX: "auto" }}>
                 {SECTION_STEPS.map((s, i) => (
                   <button key={s} onClick={() => setStep(i)}
-                    style={{ fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 20, flexShrink: 0, cursor: "pointer", border: "none", background: i === step ? "#0f1b36" : i < step ? "#c9a84c" : "#f1f5f9", color: i === step ? "white" : i < step ? "#0f1b36" : "#94a3b8" }}>
+                    style={{ fontSize: 11, fontWeight: 600, padding: "4px 10px", borderRadius: 20, flexShrink: 0, cursor: "pointer", border: "none", background: i === step ? "#0f1b36" : i < step ? "#c9a84c" : "#f1f5f9", color: i === step ? "white" : i < step ? "#0f1b36" : "#475569" }}>
                     {i + 1}
                   </button>
                 ))}
               </div>
-              <span style={{ fontSize: 12, color: "#64748b", flexShrink: 0 }}>{step + 1}/{SECTION_STEPS.length}</span>
+              <span style={{ fontSize: 12, color: "#475569", flexShrink: 0 }}>{step + 1}/{SECTION_STEPS.length}</span>
             </div>
           </div>
           <section style={{ background: "#f8f9fc", padding: "40px 0 80px" }}>
@@ -1487,7 +1487,7 @@ export default function CommercialLeasePage() {
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: 22, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>
                 {SECTION_STEPS[step]}
               </h2>
-              <p style={{ fontSize: 13, color: "#64748b", marginBottom: 24 }}>
+              <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>
                 {f.leaseType}
               </p>
               {sectionContent[step]}
@@ -1517,7 +1517,7 @@ export default function CommercialLeasePage() {
       {phase === "risks" && (
         <section style={{ background: "#f8f9fc", padding: "48px 0 80px" }}>
           <div className="container-max px-4" style={{ maxWidth: 800 }}>
-            <button onClick={() => setPhase("questionnaire")} style={{ fontSize: 12, color: "#64748b", background: "none", border: "none", cursor: "pointer", marginBottom: 20 }}>← Back to questionnaire</button>
+            <button onClick={() => setPhase("questionnaire")} style={{ fontSize: 12, color: "#475569", background: "none", border: "none", cursor: "pointer", marginBottom: 20 }}>← Back to questionnaire</button>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Phase 3 — Legal Risk Identification</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: 24, fontWeight: 800, color: "#0f1b36", marginBottom: 24 }}>Pre-Drafting Risk Assessment</h2>
 
@@ -1570,11 +1570,11 @@ export default function CommercialLeasePage() {
         <>
           <div style={navBarStyle}>
             <div className="container-max px-4" style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-              <button onClick={() => setPhase("risks")} style={{ fontSize: 12, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back</button>
+              <button onClick={() => setPhase("risks")} style={{ fontSize: 12, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back</button>
               <div style={{ flex: 1, display: "flex", gap: 6, flexWrap: "nowrap", overflowX: "auto" }}>
                 {DOCS.map((d, i) => (
                   <button key={d.label} onClick={() => setActiveDoc(i)}
-                    style={{ fontSize: 11, fontWeight: 600, padding: "5px 12px", borderRadius: 20, flexShrink: 0, cursor: "pointer", border: "none", background: i === activeDoc ? "#0f1b36" : "#f1f5f9", color: i === activeDoc ? "white" : "#64748b", whiteSpace: "nowrap" }}>
+                    style={{ fontSize: 11, fontWeight: 600, padding: "5px 12px", borderRadius: 20, flexShrink: 0, cursor: "pointer", border: "none", background: i === activeDoc ? "#0f1b36" : "#f1f5f9", color: i === activeDoc ? "white" : "#475569", whiteSpace: "nowrap" }}>
                     {d.label}
                   </button>
                 ))}
@@ -1597,7 +1597,7 @@ export default function CommercialLeasePage() {
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
                 {DOCS.map((d, i) => (
                   <button key={d.label} onClick={() => setActiveDoc(i)}
-                    style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 20, cursor: "pointer", border: "1.5px solid", borderColor: i === activeDoc ? "#0f1b36" : "#e2e8f0", background: i === activeDoc ? "#0f1b36" : "white", color: i === activeDoc ? "white" : "#64748b" }}>
+                    style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 20, cursor: "pointer", border: "1.5px solid", borderColor: i === activeDoc ? "#0f1b36" : "#e2e8f0", background: i === activeDoc ? "#0f1b36" : "white", color: i === activeDoc ? "white" : "#475569" }}>
                     {i + 1}. {d.label}
                   </button>
                 ))}
@@ -1609,10 +1609,10 @@ export default function CommercialLeasePage() {
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingBottom: 14, borderBottom: "2.5px solid #0f1b36" }}>
                     <div>
                       <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", letterSpacing: "0.06em", margin: 0, textTransform: "uppercase" }}>England &amp; Wales</p>
-                      <p style={{ fontSize: 9, color: "#94a3b8", margin: 0 }}>Commercial Property — For Solicitor Review</p>
+                      <p style={{ fontSize: 9, color: "#475569", margin: 0 }}>Commercial Property — For Solicitor Review</p>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <p style={{ fontSize: 9, color: "#94a3b8", margin: 0 }}>
+                      <p style={{ fontSize: 9, color: "#475569", margin: 0 }}>
                         {f.documentDate
                           ? new Date(f.documentDate).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
                           : "Date: _______________"}
@@ -1658,14 +1658,14 @@ export default function CommercialLeasePage() {
 
                 {/* Footer */}
                 <div style={{ marginTop: 36, paddingTop: 14, borderTop: "1px solid #e2e8f0" }}>
-                  <p style={{ fontSize: 9.5, color: "#94a3b8", margin: 0, lineHeight: 1.5 }}>
+                  <p style={{ fontSize: 9.5, color: "#475569", margin: 0, lineHeight: 1.5 }}>
                     Strictly subject to contract and without prejudice. Both parties should instruct their own independent legal representation before execution.
                   </p>
                 </div>
               </div>
 
               {/* Acknowledgement checkbox — must tick before printing */}
-              <div style={{ marginTop: 20, background: "white", border: `2px solid ${acknowledged ? "#16a34a" : "#e2e8f0"}`, borderRadius: 14, padding: 20, transition: "border-color 0.2s" }}>
+              <div style={{ marginTop: 20, background: "white", border: `2px solid ${acknowledged ? "#15803d" : "#e2e8f0"}`, borderRadius: 14, padding: 20, transition: "border-color 0.2s" }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 10 }}>Legal Acknowledgement — Required Before Printing</p>
                 <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.65, marginBottom: 16 }}>
                   This document has been automatically generated by the PropertyVault Commercial Lease Assembly System for discussion and solicitor review purposes only. It does not constitute a binding legal document, legal advice, or a completed lease. It must be reviewed and approved by a qualified commercial property solicitor (England &amp; Wales) before execution. Where <strong>[LEGAL REVIEW REQUIRED]</strong> appears in the text, that matter must be specifically addressed by a solicitor before signing. Both parties should instruct their own independent legal representation. PropertyVault UK accepts no liability arising from the use of this document.
@@ -1698,7 +1698,7 @@ export default function CommercialLeasePage() {
                   <h3 style={{ fontSize: 14, fontWeight: 800, color: "#0f1b36", marginBottom: 16 }}>Matters Requiring Solicitor Review</h3>
                   {risks.high.map((r, i) => (
                     <div key={i} style={{ display: "flex", gap: 10, marginBottom: 8, padding: "8px 12px", background: "#fff1f2", borderRadius: 8 }}>
-                      <span style={{ color: "#dc2626", fontSize: 12, flexShrink: 0 }}>HIGH</span>
+                      <span style={{ color: "#b91c1c", fontSize: 12, flexShrink: 0 }}>HIGH</span>
                       <p style={{ fontSize: 12, color: "#9f1239", lineHeight: 1.5 }}>{r}</p>
                     </div>
                   ))}

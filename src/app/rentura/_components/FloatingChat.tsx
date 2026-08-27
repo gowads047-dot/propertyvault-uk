@@ -59,8 +59,8 @@ type APIHistory = { role: "user" | "assistant"; content: string }[];
 type PortfolioCtx = Record<string, unknown>;
 
 const CAT_COLOR: Record<string, string> = {
-  compliance: "#0891b2", financial: "#16a34a", tenancy: "#7c3aed",
-  mortgage: "#b8962e", identity: "#2563eb", insurance: "#d97706", other: "#64748b",
+  compliance: "#0891b2", financial: "#15803d", tenancy: "#7c3aed",
+  mortgage: "#b8962e", identity: "#2563eb", insurance: "#d97706", other: "#475569",
 };
 
 // Where each action saves — shown in the UI
@@ -565,7 +565,7 @@ export default function FloatingChat() {
   // ── Scan results panel ───────────────────────────────────────────────────────
   const ScanPanel = pendingScan ? (() => {
     const { result, done, propId, tenantId } = pendingScan;
-    const catColor = CAT_COLOR[result.document_category] ?? "#64748b";
+    const catColor = CAT_COLOR[result.document_category] ?? "#475569";
     const anyDone = Object.values(done).some(v => v === "ok");
     const allDone = result.suggested_actions.length > 0 && result.suggested_actions.every(a => done[a.id] === "ok");
     const needsPropSelect = !propId && result.suggested_actions.some(a => a.id !== "save_to_documents");
@@ -603,7 +603,7 @@ export default function FloatingChat() {
           {/* Property selector */}
           {needsPropSelect && props.length > 1 && (
             <div style={{ marginBottom: 8 }}>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which property?</p>
+              <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which property?</p>
               <select value={pendingScan.propId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, propId: e.target.value || null } : s)}
                 style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, padding: "7px 10px", color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "inherit" }}>
                 <option value="">Select property…</option>
@@ -615,7 +615,7 @@ export default function FloatingChat() {
           {/* Tenant selector */}
           {needsTenantSelect && tenants.length > 0 && (
             <div style={{ marginBottom: 8 }}>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which tenant?</p>
+              <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which tenant?</p>
               <select value={pendingScan.tenantId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, tenantId: e.target.value || null } : s)}
                 style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, padding: "7px 10px", color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "inherit" }}>
                 <option value="">Select tenant…</option>
@@ -645,7 +645,7 @@ export default function FloatingChat() {
                     opacity: loading ? 0.6 : 1, transition: "all 0.15s",
                   }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: action.primary ? 13 : 12, fontWeight: action.primary ? 700 : 600, marginBottom: 2, color: ok ? "#16a34a" : err ? "#ef4444" : action.primary ? action.color : "rgba(255,255,255,0.7)" }}>
+                    <p style={{ fontSize: action.primary ? 13 : 12, fontWeight: action.primary ? 700 : 600, marginBottom: 2, color: ok ? "#15803d" : err ? "#ef4444" : action.primary ? action.color : "rgba(255,255,255,0.7)" }}>
                       {ok ? `✓ Saved` : loading ? "Saving…" : action.label}
                     </p>
                     <p style={{ fontSize: 11, color: "rgba(255,255,255,0.28)", lineHeight: 1.3 }}>
@@ -667,7 +667,7 @@ export default function FloatingChat() {
             </button>
           )}
           {allDone && (
-            <p style={{ marginTop: 8, textAlign: "center", fontSize: 11, color: "#16a34a", fontWeight: 700 }}>✓ All saved — tap ✕ to dismiss</p>
+            <p style={{ marginTop: 8, textAlign: "center", fontSize: 11, color: "#15803d", fontWeight: 700 }}>✓ All saved — tap ✕ to dismiss</p>
           )}
         </div>
       </div>
@@ -729,7 +729,7 @@ export default function FloatingChat() {
             <div style={{ display: "flex", gap: 8 }}>
               {messages.length > 1 && (
                 <button onClick={() => { setMessages([]); setApiHistory([]); setReady(false); setCtx(null); setPendingScan(null); setPendingFile(null); setPendingActions([]); }}
-                  style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>Clear</button>
+                  style={{ background: "none", border: "none", color: "rgba(255,255,255,0.62)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>Clear</button>
               )}
               <button onClick={() => setOpen(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: 18, cursor: "pointer", lineHeight: 1, fontFamily: "inherit" }}>×</button>
             </div>
@@ -798,7 +798,7 @@ export default function FloatingChat() {
                               return (
                                 <button key={i}
                                   onClick={() => window.open(url, "_blank")}
-                                  style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, padding: "7px 13px", borderRadius: 20, background: "#16a34a22", color: "#16a34a", border: "1px solid #16a34a60", cursor: "pointer", fontFamily: "inherit" }}>
+                                  style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, fontWeight: 700, padding: "7px 13px", borderRadius: 20, background: "#15803d22", color: "#15803d", border: "1px solid #15803d60", cursor: "pointer", fontFamily: "inherit" }}>
                                   <span style={{ fontSize: 15 }}>📱</span> {a.label}
                                 </button>
                               );
@@ -810,7 +810,7 @@ export default function FloatingChat() {
                           })}
                         </div>
                       )}
-                      {msg.saved && <p style={{ fontSize: 11, color: "#16a34a", fontWeight: 700, marginTop: 6 }}>✓ Saved to Property Passport</p>}
+                      {msg.saved && <p style={{ fontSize: 11, color: "#15803d", fontWeight: 700, marginTop: 6 }}>✓ Saved to Property Passport</p>}
                       {msg.followUp && (
                         <button onClick={() => send(msg.followUp!)} style={{ marginTop: 8, background: "none", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "4px 11px", color: "rgba(255,255,255,0.5)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
                           {msg.followUp} →
@@ -830,13 +830,13 @@ export default function FloatingChat() {
             {chatLoading && (
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <div style={{ width: 24, height: 24, background: "#1e293b", borderRadius: "50%", flexShrink: 0 }} />
-                <div style={{ display: "flex", gap: 4 }}>{[0,1,2].map(i => <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.3)", animation: `fcPulse 1.2s ${i*0.2}s infinite` }} />)}</div>
+                <div style={{ display: "flex", gap: 4 }}>{[0,1,2].map(i => <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.62)", animation: `fcPulse 1.2s ${i*0.2}s infinite` }} />)}</div>
               </div>
             )}
             {!ready && !chatLoading && messages.length === 0 && (
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <div style={{ width: 24, height: 24, background: "#1e293b", borderRadius: "50%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: "rgba(255,255,255,0.5)" }}>R</div>
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13 }}>Loading your portfolio…</p>
+                <p style={{ color: "rgba(255,255,255,0.58)", fontSize: 13 }}>Loading your portfolio…</p>
               </div>
             )}
             <div ref={bottomRef} />
@@ -869,9 +869,9 @@ export default function FloatingChat() {
                     landlord_decide: "#d97706",
                     send_to_tenant: "#7c3aed",
                     chase_contractor: "#0891b2",
-                    log_action: "#16a34a",
+                    log_action: "#15803d",
                   };
-                  const col = COL[a.type] ?? "#64748b";
+                  const col = COL[a.type] ?? "#475569";
                   return (
                     <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 8, background: `${col}0d`, border: `1px solid ${col}25`, borderRadius: 8, padding: "6px 10px" }}>
                       <span style={{ fontSize: 13, flexShrink: 0 }}>{ICON[a.type] ?? "•"}</span>
@@ -884,7 +884,7 @@ export default function FloatingChat() {
                               window.open(`https://wa.me/${phone}?text=${encodeURIComponent(a.message!)}`, "_blank");
                               setPendingActions(p => p.map(x => x.id === a.id ? { ...x, dismissed: true } : x));
                             }}
-                            style={{ fontSize: 10, fontWeight: 700, padding: "3px 9px", background: "#16a34a1a", border: "1px solid #16a34a55", borderRadius: 10, color: "#16a34a", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
+                            style={{ fontSize: 10, fontWeight: 700, padding: "3px 9px", background: "#15803d1a", border: "1px solid #15803d55", borderRadius: 10, color: "#15803d", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
                             📱 Send
                           </button>
                         )}
@@ -930,9 +930,9 @@ export default function FloatingChat() {
               <div style={{ display: "flex", alignItems: "center", gap: 7, background: "rgba(8,145,178,0.1)", border: "1px solid rgba(8,145,178,0.3)", borderRadius: 8, padding: "5px 10px", flex: 1, minWidth: 0 }}>
                 <span style={{ fontSize: 15, flexShrink: 0 }}>{pendingFile.file.type === "application/pdf" ? "📄" : "🖼"}</span>
                 <span style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{pendingFile.file.name}</span>
-                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>{(pendingFile.file.size / 1024).toFixed(0)} KB</span>
+                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.62)", flexShrink: 0 }}>{(pendingFile.file.size / 1024).toFixed(0)} KB</span>
               </div>
-              <button onClick={() => setPendingFile(null)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.3)", fontSize: 16, cursor: "pointer", flexShrink: 0 }}>✕</button>
+              <button onClick={() => setPendingFile(null)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.62)", fontSize: 16, cursor: "pointer", flexShrink: 0 }}>✕</button>
             </div>
           )}
 
@@ -964,7 +964,7 @@ export default function FloatingChat() {
                       <span style={{ fontSize: 18, lineHeight: 1, flexShrink: 0 }}>{opt.icon}</span>
                       <div>
                         <p style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.82)", margin: 0 }}>{opt.label}</p>
-                        <p style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", margin: 0 }}>{opt.sub}</p>
+                        <p style={{ fontSize: 10, color: "rgba(255,255,255,0.62)", margin: 0 }}>{opt.sub}</p>
                       </div>
                     </button>
                   ))}

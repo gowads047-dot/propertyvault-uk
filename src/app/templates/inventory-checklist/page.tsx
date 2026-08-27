@@ -45,12 +45,12 @@ export default function InventoryChecklistTemplate() {
 
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>📋 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Property Inventory Checklist</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Room-by-room condition report — essential for deposit protection</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>Room-by-room condition report — essential for deposit protection</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setMode("form")} style={{ padding: "9px 18px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", background: mode === "form" ? "white" : "transparent", color: mode === "form" ? "#0f1b36" : "rgba(255,255,255,0.6)", border: "1.5px solid rgba(255,255,255,0.2)" }}>✏️ Fill in</button>
@@ -105,9 +105,9 @@ export default function InventoryChecklistTemplate() {
                               <button key={c} onClick={() => setCondition(key, c)}
                                 style={{ padding: "5px 10px", borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: "pointer", border: "none",
                                   background: conditions[key] === c
-                                    ? c === "Excellent" ? "#16a34a" : c === "Good" ? "#2563eb" : c === "Fair" ? "#d97706" : "#dc2626"
+                                    ? c === "Excellent" ? "#15803d" : c === "Good" ? "#2563eb" : c === "Fair" ? "#d97706" : "#dc2626"
                                     : "#f1f5f9",
-                                  color: conditions[key] === c ? "white" : "#64748b" }}>
+                                  color: conditions[key] === c ? "white" : "#475569" }}>
                                 {c}
                               </button>
                             ))}
@@ -141,7 +141,7 @@ export default function InventoryChecklistTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
@@ -167,14 +167,14 @@ export default function InventoryChecklistTemplate() {
                   { l: "Ref", v: refNum },
                 ].map(s => (
                   <div key={s.l}>
-                    <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.l}</p>
+                    <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.l}</p>
                     <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36", marginTop: 2 }}>{s.v}</p>
                   </div>
                 ))}
               </div>
 
               <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
-                {[["Excellent","#16a34a"],["Good","#2563eb"],["Fair","#d97706"],["Poor","#dc2626"]].map(([c,col]) => (
+                {[["Excellent","#15803d"],["Good","#2563eb"],["Fair","#d97706"],["Poor","#dc2626"]].map(([c,col]) => (
                   <div key={c} style={{ display: "flex", alignItems: "center", gap: 5 }}>
                     <div style={{ width: 10, height: 10, borderRadius: 2, background: col as string }} />
                     <p style={{ fontSize: 9, color: "#374151" }}>{c}</p>
@@ -193,14 +193,14 @@ export default function InventoryChecklistTemplate() {
                         const key = `${room.id}-${item}`;
                         const cond = conditions[key];
                         const note = notes[key];
-                        const col = cond === "Excellent" ? "#16a34a" : cond === "Good" ? "#2563eb" : cond === "Fair" ? "#d97706" : cond === "Poor" ? "#dc2626" : "#94a3b8";
+                        const col = cond === "Excellent" ? "#15803d" : cond === "Good" ? "#2563eb" : cond === "Fair" ? "#d97706" : cond === "Poor" ? "#dc2626" : "#475569";
                         return (
                           <div key={ii} style={{ display: "flex", padding: "6px 12px", borderBottom: "1px solid #f8f9fc", alignItems: "flex-start", gap: 10 }}>
                             <p style={{ fontSize: 10, flex: 1, color: "#374151" }}>{item}</p>
                             <div style={{ textAlign: "right", flexShrink: 0 }}>
                               {cond ? <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px", background: col + "20", color: col, borderRadius: 3 }}>{cond}</span>
                                     : <span style={{ fontSize: 9, color: "#cbd5e1" }}>—</span>}
-                              {note && <p style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>{note}</p>}
+                              {note && <p style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>{note}</p>}
                             </div>
                           </div>
                         );

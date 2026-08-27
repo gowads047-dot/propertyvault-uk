@@ -151,7 +151,7 @@ function PropertyCard({
     return d != null && d <= 45;
   });
   const healthScore = computeHealthScore(property, compliance, mortgage ? [mortgage] : [], tenant ? [tenant] : []);
-  const healthColor = healthScore >= 80 ? "#16a34a" : healthScore >= 60 ? "#d97706" : "#dc2626";
+  const healthColor = healthScore >= 80 ? "#15803d" : healthScore >= 60 ? "#d97706" : "#dc2626";
 
   return (
     <div style={{ background: "white", border: `1px solid ${BORDER}`, borderRadius: 16, padding: "22px 24px", display: "flex", flexDirection: "column", gap: 0 }}>
@@ -189,7 +189,7 @@ function PropertyCard({
 
       {/* Alerts */}
       {urgentCert && (
-        <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.18)", borderRadius: 8, padding: "8px 12px", marginBottom: 10, fontSize: 12, color: "#dc2626", fontWeight: 600 }}>
+        <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.18)", borderRadius: 8, padding: "8px 12px", marginBottom: 10, fontSize: 12, color: "#b91c1c", fontWeight: 600 }}>
           ⚠ {urgentCert.certificate_type.replace(/_/g, " ").toUpperCase()} — {daysUntil(urgentCert.expiry_date) ?? 0} days
         </div>
       )}
@@ -268,7 +268,7 @@ function SubscribedBanner() {
       <span style={{ fontSize: 24 }}>🎉</span>
       <div>
         <p style={{ fontSize: 15, fontWeight: 800, color: "#0f1b2d", marginBottom: 2 }}>Welcome to Rentura — your Property Passport platform is ready.</p>
-        <p style={{ fontSize: 13, color: "rgba(15,27,45,0.5)" }}>Start by adding your first property. Your invoice has been sent to your email.</p>
+        <p style={{ fontSize: 13, color: "rgba(15,27,45,0.66)" }}>Start by adding your first property. Your invoice has been sent to your email.</p>
       </div>
       <Link href="/rentura/properties/new" style={{ marginLeft: "auto", background: "#0f1b2d", color: "white", fontWeight: 700, fontSize: 13, padding: "9px 20px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap" }}>
         Add first property →
@@ -690,8 +690,8 @@ export default function RenturaDashboard() {
             {([
               ["Properties", properties.length.toString(), undefined],
               ["Monthly income", properties.length ? fmt(totalIncome) : "£0", undefined],
-              ["Net cashflow", properties.length ? fmt(netCashflow) : "—", netCashflow < 0 ? "#dc2626" : netCashflow > 0 ? "#16a34a" : undefined],
-              ["Tax year profit", taxSummary ? fmt(taxSummary.net) : "—", taxSummary && taxSummary.net < 0 ? "#dc2626" : taxSummary && taxSummary.net > 0 ? "#16a34a" : undefined],
+              ["Net cashflow", properties.length ? fmt(netCashflow) : "—", netCashflow < 0 ? "#dc2626" : netCashflow > 0 ? "#15803d" : undefined],
+              ["Tax year profit", taxSummary ? fmt(taxSummary.net) : "—", taxSummary && taxSummary.net < 0 ? "#dc2626" : taxSummary && taxSummary.net > 0 ? "#15803d" : undefined],
               ["Urgent alerts", urgentCount.toString(), urgentCount > 0 ? "#dc2626" : undefined],
             ] as [string, string, string?][]).map(([label, val, color], i, arr) => (
               <div key={label} style={{ flex: 1, minWidth: 120, padding: "18px 20px", borderRight: i < arr.length - 1 ? `1px solid ${BORDER}` : "none" }}>
@@ -721,11 +721,11 @@ export default function RenturaDashboard() {
                 ["Tell the AI what happened", null, false],
               ].map(([step, href, done]) => (
                 <div key={step as string} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
-                  <div style={{ width: 20, height: 20, borderRadius: "50%", border: `2px solid ${done ? "#16a34a" : BORDER}`, background: done ? "#16a34a" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <div style={{ width: 20, height: 20, borderRadius: "50%", border: `2px solid ${done ? "#15803d" : BORDER}`, background: done ? "#15803d" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                     {done && <span style={{ color: "white", fontSize: 10, fontWeight: 900 }}>✓</span>}
                   </div>
                   {href ? (
-                    <Link href={href as string} style={{ fontSize: 13, color: done ? "#16a34a" : INK, fontWeight: done ? 700 : 500, textDecoration: "none" }}>{step as string}</Link>
+                    <Link href={href as string} style={{ fontSize: 13, color: done ? "#15803d" : INK, fontWeight: done ? 700 : 500, textDecoration: "none" }}>{step as string}</Link>
                   ) : (
                     <span style={{ fontSize: 13, color: INK2 }}>{step as string}</span>
                   )}
@@ -772,7 +772,7 @@ export default function RenturaDashboard() {
               <div style={{ marginBottom: 40 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
                   <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Tenant Messages</p>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "rgba(220,38,38,0.08)", padding: "3px 10px", borderRadius: 20 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c", background: "rgba(220,38,38,0.08)", padding: "3px 10px", borderRadius: 20 }}>
                     {unrespondedIssues.length} awaiting response
                   </span>
                 </div>
@@ -829,10 +829,10 @@ export default function RenturaDashboard() {
           <div style={{ background: CTA, padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
               <p style={{ color: "white", fontWeight: 800, fontSize: 15, letterSpacing: "-0.01em" }}>Tell Rentura what happened</p>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>Log events, ask questions, get insights</p>
+              <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 12 }}>Log events, ask questions, get insights</p>
             </div>
             {messages.length > 1 && (
-              <button onClick={() => { setMessages([INIT]); setApiHistory([]); }} style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>Clear</button>
+              <button onClick={() => { setMessages([INIT]); setApiHistory([]); }} style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>Clear</button>
             )}
           </div>
 
@@ -869,7 +869,7 @@ export default function RenturaDashboard() {
 
                       {/* Saved confirmation */}
                       {msg.saved && msg.savedTo && (
-                        <p style={{ fontSize: 11, color: "#16a34a", fontWeight: 700, marginTop: 8 }}>✓ Saved to {msg.savedTo}&apos;s Passport</p>
+                        <p style={{ fontSize: 11, color: "#15803d", fontWeight: 700, marginTop: 8 }}>✓ Saved to {msg.savedTo}&apos;s Passport</p>
                       )}
 
                       {/* Follow-up suggestion */}
@@ -902,7 +902,7 @@ export default function RenturaDashboard() {
                 <div style={{ width: 28, height: 28, background: "#1e293b", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 12, fontWeight: 800, color: "rgba(255,255,255,0.6)" }}>R</div>
                 <div style={{ display: "flex", gap: 4, alignItems: "center", padding: "10px 0" }}>
                   {[0, 1, 2].map(i => (
-                    <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.3)", animation: `pulse 1.2s ${i * 0.2}s infinite` }} />
+                    <div key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.62)", animation: `pulse 1.2s ${i * 0.2}s infinite` }} />
                   ))}
                 </div>
               </div>

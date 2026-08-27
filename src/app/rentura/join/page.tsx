@@ -63,7 +63,7 @@ export default function RenturaJoinPage() {
   };
   const labelStyle = {
     display: "block" as const, fontSize: 11, fontWeight: 700 as const,
-    color: "rgba(15,27,45,0.5)", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.07em",
+    color: "rgba(15,27,45,0.66)", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.07em",
   };
 
   return (
@@ -110,7 +110,7 @@ export default function RenturaJoinPage() {
           ) : (
             <>
               <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b2d", marginBottom: 4, textAlign: "center" }}>Start your free 30-day trial</h1>
-              <p style={{ fontSize: 13, color: "rgba(15,27,45,0.45)", textAlign: "center", marginBottom: 4 }}>Free for 30 days · Then £9.99/month · Cancel anytime</p>
+              <p style={{ fontSize: 13, color: "rgba(15,27,45,0.66)", textAlign: "center", marginBottom: 4 }}>Free for 30 days · Then £9.99/month · Cancel anytime</p>
               <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", textAlign: "center", marginBottom: 28 }}>We&apos;ll collect your card details now — no charge for 30 days</p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -133,7 +133,7 @@ export default function RenturaJoinPage() {
                 </div>
 
                 {error && (
-                  <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#dc2626" }}>
+                  <div style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#b91c1c" }}>
                     {error}
                   </div>
                 )}
@@ -145,8 +145,8 @@ export default function RenturaJoinPage() {
 
               <p style={{ fontSize: 12, color: "rgba(15,27,45,0.3)", textAlign: "center", marginTop: 20, lineHeight: 1.7 }}>
                 By signing up you agree to our{" "}
-                <Link href="/terms" style={{ color: "rgba(15,27,45,0.5)", textDecoration: "underline" }}>Terms</Link>{" "}and{" "}
-                <Link href="/privacy" style={{ color: "rgba(15,27,45,0.5)", textDecoration: "underline" }}>Privacy Policy</Link>.
+                <Link href="/terms" style={{ color: "rgba(15,27,45,0.66)", textDecoration: "underline" }}>Terms</Link>{" "}and{" "}
+                <Link href="/privacy" style={{ color: "rgba(15,27,45,0.66)", textDecoration: "underline" }}>Privacy Policy</Link>.
                 <br />Your card won&apos;t be charged for 30 days. Cancel anytime before then at no cost.
               </p>
             </>

@@ -81,7 +81,7 @@ export default function AcademyAuthPage() {
           ) : mode === "reset" ? (
             <>
               <h1 style={{ fontSize: 20, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>Reset password</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 24 }}>Enter your email and we&apos;ll send a reset link.</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 24 }}>Enter your email and we&apos;ll send a reset link.</p>
               <form onSubmit={handleReset} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com"
                   style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "12px 16px", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
@@ -89,7 +89,7 @@ export default function AcademyAuthPage() {
                   style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 15, padding: "13px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "inherit", opacity: loading ? 0.6 : 1 }}>
                   {loading ? "Sending…" : "Send reset link"}
                 </button>
-                <button type="button" onClick={() => setMode("login")} style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>
+                <button type="button" onClick={() => setMode("login")} style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}>
                   ← Back to login
                 </button>
               </form>
@@ -97,7 +97,7 @@ export default function AcademyAuthPage() {
           ) : (
             <>
               <h1 style={{ fontSize: 20, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>Sign in to Academy</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 24 }}>Access your courses and dashboard.</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 24 }}>Access your courses and dashboard.</p>
               <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
                   <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Email</label>
@@ -114,7 +114,7 @@ export default function AcademyAuthPage() {
                   style={{ background: loading ? "rgba(212,175,55,0.5)" : "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 16, padding: "14px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "inherit" }}>
                   {loading ? "Signing in…" : "Sign in →"}
                 </button>
-                <button type="button" onClick={() => setMode("reset")} style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
+                <button type="button" onClick={() => setMode("reset")} style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", textAlign: "center" }}>
                   Forgot password?
                 </button>
               </form>
@@ -122,7 +122,7 @@ export default function AcademyAuthPage() {
           )}
         </div>
 
-        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
+        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(255,255,255,0.62)" }}>
           No account?{" "}
           <Link href="/academy/subscribe" style={{ color: "#d4af37", fontWeight: 700, textDecoration: "none" }}>Join for £14.99/mo →</Link>
         </p>

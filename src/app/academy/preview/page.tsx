@@ -83,21 +83,21 @@ export default function AcademyPreviewPage() {
             <div style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 8, padding: "4px 12px", fontSize: 11, fontWeight: 700, color: C.gold, textTransform: "uppercase", letterSpacing: "0.08em" }}>Start Here</div>
             <h2 style={{ fontSize: 22, fontWeight: 800 }}>7-Day First Deal Challenge</h2>
           </div>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>Seven days. Seven tasks. Do every step once — so you know exactly what the process feels like.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 20 }}>Seven days. Seven tasks. Do every step once — so you know exactly what the process feels like.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 12 }}>
             {CHALLENGE.map((d, i) => (
               <div key={d.day} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "16px 18px", position: "relative", overflow: "hidden" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", background: i < 2 ? `linear-gradient(135deg,${C.gold},#f0d060)` : "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: i < 2 ? C.dark : "rgba(255,255,255,0.4)", flexShrink: 0 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: "50%", background: i < 2 ? `linear-gradient(135deg,${C.gold},#f0d060)` : "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: i < 2 ? C.dark : "rgba(255,255,255,0.58)", flexShrink: 0 }}>
                     {d.day}
                   </div>
                   <span style={{ fontWeight: 700, fontSize: 13, color: i < 2 ? "white" : "rgba(255,255,255,0.85)" }}>{d.title}</span>
                 </div>
                 {i < 2 ? (
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{d.preview}</p>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", lineHeight: 1.6 }}>{d.preview}</p>
                 ) : (
                   <div style={{ position: "relative" }}>
-                    <p className="lesson-locked" style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{d.preview}</p>
+                    <p className="lesson-locked" style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", lineHeight: 1.6 }}>{d.preview}</p>
                     <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <span style={{ fontSize: 11, color: C.gold, fontWeight: 700, background: "rgba(10,15,30,0.8)", padding: "3px 10px", borderRadius: 6 }}>🔒 Members only</span>
                     </div>
@@ -111,17 +111,17 @@ export default function AcademyPreviewPage() {
         {/* 12 MODULES */}
         <div style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 6 }}>12-Module Masterclass</h2>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 24 }}>80+ lessons covering every aspect of professional deal sourcing. Every module ends with a real-world task.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 24 }}>80+ lessons covering every aspect of professional deal sourcing. Every module ends with a real-world task.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {MODULES.map((m, mi) => (
               <div key={m.n} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "18px 20px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: mi < 2 ? "rgba(212,175,55,0.15)" : "rgba(255,255,255,0.05)", border: `1px solid ${mi < 2 ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.07)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, color: mi < 2 ? C.gold : "rgba(255,255,255,0.3)", flexShrink: 0 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: mi < 2 ? "rgba(212,175,55,0.15)" : "rgba(255,255,255,0.05)", border: `1px solid ${mi < 2 ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.07)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12, color: mi < 2 ? C.gold : "rgba(255,255,255,0.62)", flexShrink: 0 }}>
                     {m.n}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 800, fontSize: 15, color: mi < 2 ? "white" : "rgba(255,255,255,0.9)" }}>{m.title}</div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{m.lessons.length} lessons</div>
+                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.62)", marginTop: 2 }}>{m.lessons.length} lessons</div>
                   </div>
                   {mi >= 2 && <span style={{ fontSize: 11, color: C.gold, fontWeight: 700, background: "rgba(212,175,55,0.08)", padding: "3px 10px", borderRadius: 6 }}>🔒 Members</span>}
                 </div>
@@ -131,7 +131,7 @@ export default function AcademyPreviewPage() {
                       fontSize: 11, padding: "4px 10px", borderRadius: 6,
                       background: (mi < 2 && li < 2) ? "rgba(212,175,55,0.08)" : "rgba(255,255,255,0.04)",
                       border: `1px solid ${(mi < 2 && li < 2) ? "rgba(212,175,55,0.2)" : "rgba(255,255,255,0.06)"}`,
-                      color: (mi < 2 && li < 2) ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.3)",
+                      color: (mi < 2 && li < 2) ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.62)",
                       filter: mi >= 2 && li >= 1 ? "blur(3.5px)" : "none",
                       userSelect: mi >= 2 && li >= 1 ? "none" : "auto",
                     }}>{lesson}</span>
@@ -145,13 +145,13 @@ export default function AcademyPreviewPage() {
         {/* ALSO INCLUDED */}
         <div style={{ marginBottom: 64 }}>
           <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 6 }}>Also included in your membership</h2>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 24 }}>Courses are just the start. Your dashboard gives you access to an entire operating system for deal sourcers.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 24 }}>Courses are just the start. Your dashboard gives you access to an entire operating system for deal sourcers.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 14 }}>
             {ALSO_INCLUDED.map(item => (
               <div key={item.title} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "18px 18px" }}>
                 <div style={{ fontSize: 26, marginBottom: 10 }}>{item.icon}</div>
                 <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 6 }}>{item.title}</div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>{item.desc}</div>
+                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", lineHeight: 1.6 }}>{item.desc}</div>
               </div>
             ))}
           </div>
@@ -167,7 +167,7 @@ export default function AcademyPreviewPage() {
           </Link>
           <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 20, flexWrap: "wrap" }}>
             {["✓ Cancel anytime", "✓ Instant access", "✓ No refunds after payment"].map(t => (
-              <span key={t} style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>{t}</span>
+              <span key={t} style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>{t}</span>
             ))}
           </div>
         </div>

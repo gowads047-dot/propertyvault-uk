@@ -69,7 +69,7 @@ export default function AcademyQAPage() {
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Q&A Board</h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, marginBottom: 28 }}>
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 28 }}>
           Ask anything about deal sourcing. Nass answers every question personally.
         </p>
 
@@ -114,13 +114,13 @@ export default function AcademyQAPage() {
               <button onClick={() => setExpanded(expanded === item.id ? null : item.id)} style={{ width: "100%", background: "none", border: "none", padding: "16px 20px", display: "flex", alignItems: "flex-start", justifyContent: "space-between", cursor: "pointer", color: "white", textAlign: "left", gap: 12 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.45)" }}>{item.category}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.62)" }}>{item.category}</span>
                     {item.answered && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "rgba(74,222,128,0.1)", color: "#4ade80" }}>✓ Answered</span>}
                     {!item.answered && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "rgba(251,191,36,0.1)", color: "#fbbf24" }}>⏳ Pending</span>}
                   </div>
                   <p style={{ fontSize: 14, fontWeight: 700, lineHeight: 1.4 }}>{item.q}</p>
                 </div>
-                <span style={{ fontSize: 16, color: "rgba(255,255,255,0.3)", flexShrink: 0, marginTop: 4 }}>{expanded === item.id ? "−" : "+"}</span>
+                <span style={{ fontSize: 16, color: "rgba(255,255,255,0.62)", flexShrink: 0, marginTop: 4 }}>{expanded === item.id ? "−" : "+"}</span>
               </button>
 
               {expanded === item.id && (
@@ -131,12 +131,12 @@ export default function AcademyQAPage() {
                       <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.7 }}>{item.a}</p>
                     </div>
                   ) : (
-                    <div style={{ background: "rgba(251,191,36,0.05)", borderRadius: 10, padding: "12px 16px", marginBottom: 14, fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+                    <div style={{ background: "rgba(251,191,36,0.05)", borderRadius: 10, padding: "12px 16px", marginBottom: 14, fontSize: 13, color: "rgba(255,255,255,0.58)" }}>
                       This question is in the queue. Expect an answer within 48 hours.
                     </div>
                   )}
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <button onClick={() => like(item.id)} disabled={liked.has(item.id)} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: liked.has(item.id) ? "#d4af37" : "rgba(255,255,255,0.4)", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "5px 12px", cursor: liked.has(item.id) ? "default" : "pointer" }}>
+                    <button onClick={() => like(item.id)} disabled={liked.has(item.id)} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: liked.has(item.id) ? "#d4af37" : "rgba(255,255,255,0.58)", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "5px 12px", cursor: liked.has(item.id) ? "default" : "pointer" }}>
                       👍 {item.likes} helpful
                     </button>
                     <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>{item.date}</span>

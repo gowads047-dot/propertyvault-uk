@@ -112,7 +112,7 @@ export async function GET(request: Request) {
       crimeTotal < 80 ? "High" : "Very High";
 
     const crimeColor =
-      crimeLevel === "Low"      ? "#16a34a" :
+      crimeLevel === "Low"      ? "#15803d" :
       crimeLevel === "Medium"   ? "#d97706" :
       crimeLevel === "High"     ? "#ea580c" : "#dc2626";
 

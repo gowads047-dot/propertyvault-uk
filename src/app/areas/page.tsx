@@ -289,9 +289,9 @@ export default function AreasPage() {
           {/* Legend */}
           <div className="flex flex-wrap gap-4 justify-center mb-8">
             {[
-              { label: "High yield (7%+)", color: "#16a34a", bg: "#f0fdf4" },
+              { label: "High yield (7%+)", color: "#15803d", bg: "#f0fdf4" },
               { label: "Solid (5–7%)", color: "var(--gold-ink)", bg: "#faf8f0" },
-              { label: "Capital growth (<5%)", color: "#64748b", bg: "#f8fafc" },
+              { label: "Capital growth (<5%)", color: "#475569", bg: "#f8fafc" },
             ].map(b => (
               <span key={b.label} className="flex items-center gap-2 text-xs font-semibold" style={{ color: b.color }}>
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: b.color, display: "inline-block" }} />
@@ -323,7 +323,9 @@ export default function AreasPage() {
               { city: "Southampton",   href: "/areas/southampton",   yield: "4–6%",  mid: 5.0, band: "growth" },
               { city: "Edinburgh",     href: "/areas/edinburgh",     yield: "4–5%",  mid: 4.5, band: "growth" },
             ].map((c, i) => {
-              const color = c.band === "high" ? "#16a34a" : c.band === "solid" ? "#c9a84c" : "#94a3b8";
+              // Built in a ternary, which is why the colour sweep could not see it:
+              // #c9a84c measured 2.15 on the #faf8f0 badge behind it.
+              const color = c.band === "high" ? "#15803d" : c.band === "solid" ? "#7d631d" : "#475569";
               const bg    = c.band === "high" ? "#f0fdf4" : c.band === "solid" ? "#faf8f0" : "#f8fafc";
               const barW  = `${Math.round((c.mid / 8.5) * 100)}%`;
               return (

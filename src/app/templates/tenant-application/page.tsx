@@ -10,7 +10,7 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
   return (
     <div style={{ marginBottom: 16 }}>
       <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}>{label}</label>
-      {hint && <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 5 }}>{hint}</p>}
+      {hint && <p style={{ fontSize: 11, color: "#475569", marginBottom: 5 }}>{hint}</p>}
       {children}
     </div>
   );
@@ -84,14 +84,14 @@ export default function TenantApplicationTemplate() {
       {/* Header */}
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
             ← All templates
           </Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>👤 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Tenant Application Form</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Fill in the form · Preview the document · Print to PDF</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>Fill in the form · Preview the document · Print to PDF</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => { setMode("form"); }} className="no-print"
@@ -122,15 +122,15 @@ export default function TenantApplicationTemplate() {
                 <div key={s} style={{ display: "flex", alignItems: "center", gap: 6, flex: i < STEPS.length - 1 ? "1 1 auto" : "0 0 auto" }}>
                   <button onClick={() => setStep(i)}
                     style={{ width: 30, height: 30, borderRadius: "50%", border: "none", cursor: "pointer", fontWeight: 800, fontSize: 12, flexShrink: 0,
-                      background: i < step ? "#16a34a" : i === step ? "#0f1b36" : "#e2e8f0",
-                      color: i <= step ? "white" : "#94a3b8" }}>
+                      background: i < step ? "#15803d" : i === step ? "#0f1b36" : "#e2e8f0",
+                      color: i <= step ? "white" : "#475569" }}>
                     {i < step ? "✓" : i + 1}
                   </button>
-                  {i < STEPS.length - 1 && <div style={{ flex: 1, height: 2, background: i < step ? "#16a34a" : "#e2e8f0", borderRadius: 2 }} />}
+                  {i < STEPS.length - 1 && <div style={{ flex: 1, height: 2, background: i < step ? "#15803d" : "#e2e8f0", borderRadius: 2 }} />}
                 </div>
               ))}
             </div>
-            <p style={{ fontSize: 12, color: "#94a3b8", marginBottom: 24 }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
+            <p style={{ fontSize: 12, color: "#475569", marginBottom: 24 }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
 
             <div style={{ background: "white", borderRadius: 20, border: "1.5px solid #e2e8f0", padding: "32px 28px" }}>
 
@@ -138,7 +138,7 @@ export default function TenantApplicationTemplate() {
               {step === 0 && (
                 <div>
                   <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Property Details</h2>
-                  <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 24 }}>The property this application is for.</p>
+                  <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>The property this application is for.</p>
                   <Field label="Property address *"><Textarea value={f.propertyAddress} onChange={set("propertyAddress")} placeholder="Full address including postcode" rows={2} /></Field>
                   <Grid>
                     <Field label="Proposed tenancy start *"><Input type="date" value={f.tenancyStart} onChange={set("tenancyStart")} /></Field>
@@ -153,7 +153,7 @@ export default function TenantApplicationTemplate() {
               {step === 1 && (
                 <div>
                   <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Personal Details</h2>
-                  <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 24 }}>Applicant's personal information.</p>
+                  <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>Applicant's personal information.</p>
                   <Grid>
                     <Field label="Full legal name *"><Input value={f.fullName} onChange={set("fullName")} placeholder="As on passport/ID" /></Field>
                     <Field label="Date of birth *"><Input type="date" value={f.dob} onChange={set("dob")} /></Field>
@@ -175,7 +175,7 @@ export default function TenantApplicationTemplate() {
               {step === 2 && (
                 <div>
                   <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Employment & Income</h2>
-                  <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 24 }}>Your current employment situation.</p>
+                  <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>Your current employment situation.</p>
                   <Field label="Employment status *">
                     <Select value={f.employmentStatus} onChange={set("employmentStatus")} options={["Employed full-time", "Employed part-time", "Self-employed", "Director / Company owner", "Retired", "Student", "Unemployed", "Other"]} />
                   </Field>
@@ -194,7 +194,7 @@ export default function TenantApplicationTemplate() {
               {step === 3 && (
                 <div>
                   <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>References</h2>
-                  <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 24 }}>Two references are required. At least one should be a previous landlord or employer.</p>
+                  <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>Two references are required. At least one should be a previous landlord or employer.</p>
                   <div style={{ padding: "16px", background: "#f8f9fc", borderRadius: 12, marginBottom: 20 }}>
                     <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>Reference 1</p>
                     <Grid>
@@ -220,7 +220,7 @@ export default function TenantApplicationTemplate() {
               {step === 4 && (
                 <div>
                   <h2 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }}>Right to Rent & Declaration</h2>
-                  <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 24 }}>Right to Rent checks are a legal requirement under the Immigration Act 2014.</p>
+                  <p style={{ fontSize: 13, color: "#475569", marginBottom: 24 }}>Right to Rent checks are a legal requirement under the Immigration Act 2014.</p>
                   <Grid>
                     <Field label="Nationality"><Input value={f.nationality} onChange={set("nationality")} placeholder="Country of citizenship" /></Field>
                     <Field label="Right to Rent document">
@@ -231,12 +231,12 @@ export default function TenantApplicationTemplate() {
                     <Textarea value={f.additionalNotes} onChange={set("additionalNotes")} placeholder="Any other information the landlord should know" />
                   </Field>
                   <div style={{ padding: "16px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 12, marginTop: 8 }}>
-                    <p style={{ fontSize: 13, fontWeight: 700, color: "#16a34a", marginBottom: 8 }}>Declaration</p>
+                    <p style={{ fontSize: 13, fontWeight: 700, color: "#15803d", marginBottom: 8 }}>Declaration</p>
                     <p style={{ fontSize: 12, color: "#374151", lineHeight: 1.6 }}>
                       By proceeding, the applicant declares that all information provided is true and accurate to the best of their knowledge. The applicant consents to the landlord conducting credit, employment, and reference checks and contacting the references provided. The applicant understands that providing false information may result in the application being rejected or, if a tenancy has commenced, constitute grounds for possession.
                     </p>
                   </div>
-                  <p style={{ fontSize: 12, color: "#94a3b8", marginTop: 12 }}>A signature line is included in the printed document. Click "Preview" then "Print / PDF" to generate.</p>
+                  <p style={{ fontSize: 12, color: "#475569", marginTop: 12 }}>A signature line is included in the printed document. Click "Preview" then "Print / PDF" to generate.</p>
                 </div>
               )}
             </div>
@@ -244,7 +244,7 @@ export default function TenantApplicationTemplate() {
             {/* Navigation */}
             <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
               <button onClick={() => step > 0 ? setStep(s => s - 1) : undefined}
-                style={{ padding: "10px 22px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: step === 0 ? "not-allowed" : "pointer", background: step === 0 ? "#f1f5f9" : "white", color: step === 0 ? "#94a3b8" : "#0f1b36", border: "1.5px solid #e2e8f0" }}>
+                style={{ padding: "10px 22px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: step === 0 ? "not-allowed" : "pointer", background: step === 0 ? "#f1f5f9" : "white", color: step === 0 ? "#475569" : "#0f1b36", border: "1.5px solid #e2e8f0" }}>
                 ← Back
               </button>
               {step < STEPS.length - 1 ? (
@@ -267,7 +267,7 @@ export default function TenantApplicationTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Edit form</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Edit form</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
               🖨 Print / Save as PDF
             </button>
@@ -323,14 +323,14 @@ export default function TenantApplicationTemplate() {
               <DocSection title="4. References">
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 24px" }}>
                   <div>
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8, marginTop: 12 }}>Reference 1</p>
+                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8, marginTop: 12 }}>Reference 1</p>
                     <DocRow label="Name" value={f.ref1Name || "—"} />
                     <DocRow label="Relationship" value={f.ref1Rel || "—"} />
                     <DocRow label="Phone" value={f.ref1Phone || "—"} />
                     <DocRow label="Email" value={f.ref1Email || "—"} />
                   </div>
                   <div>
-                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8, marginTop: 12 }}>Reference 2</p>
+                    <p style={{ fontFamily: "Arial, sans-serif", fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8, marginTop: 12 }}>Reference 2</p>
                     <DocRow label="Name" value={f.ref2Name || "—"} />
                     <DocRow label="Relationship" value={f.ref2Rel || "—"} />
                     <DocRow label="Phone" value={f.ref2Phone || "—"} />

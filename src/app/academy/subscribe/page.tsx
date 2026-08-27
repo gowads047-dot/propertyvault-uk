@@ -54,7 +54,7 @@ export default function AcademySubscribePage() {
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "60px 24px 80px" }}>
 
         {/* Back */}
-        <Link href="/academy" style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", textDecoration: "none", display: "block", marginBottom: 48 }}>← Academy</Link>
+        <Link href="/academy" style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textDecoration: "none", display: "block", marginBottom: 48 }}>← Academy</Link>
 
         {/* Headline */}
         <div style={{ textAlign: "center", marginBottom: 56 }}>
@@ -71,7 +71,7 @@ export default function AcademySubscribePage() {
 
           {/* Features */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>What&apos;s included</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 20 }}>What&apos;s included</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {FEATURES.map(f => (
                 <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
@@ -84,13 +84,13 @@ export default function AcademySubscribePage() {
 
           {/* Pricing card */}
           <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(212,175,55,0.25)", borderRadius: 20, padding: "36px 32px", position: "sticky", top: 24 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Monthly membership</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Monthly membership</p>
 
             <div style={{ display: "flex", alignItems: "flex-end", gap: 6, marginBottom: 6 }}>
               <span style={{ fontSize: 52, fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-0.03em" }}>£14.99</span>
-              <span style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>/month</span>
+              <span style={{ fontSize: 14, color: "rgba(255,255,255,0.58)", marginBottom: 8 }}>/month</span>
             </div>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
 
             {checkoutError && (
               <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#f87171", marginBottom: 16 }}>
@@ -107,11 +107,11 @@ export default function AcademySubscribePage() {
             </button>
 
             {user ? (
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textAlign: "center", marginBottom: 16 }}>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", textAlign: "center", marginBottom: 16 }}>
                 Signed in as <strong style={{ color: "rgba(255,255,255,0.5)" }}>{user.email}</strong>
               </p>
             ) : !loading && (
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", textAlign: "center", marginBottom: 16 }}>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 16 }}>
                 Stripe will ask for your email and card details.
               </p>
             )}
@@ -124,7 +124,7 @@ export default function AcademySubscribePage() {
               ].map(([icon, text]) => (
                 <div key={text} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <span style={{ fontSize: 14 }}>{icon}</span>
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{text}</p>
+                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{text}</p>
                 </div>
               ))}
             </div>
@@ -138,7 +138,7 @@ export default function AcademySubscribePage() {
             {[["100+", "Investors enrolled"], ["12+", "Courses"], ["4.5h+", "Content per course"]].map(([v, l]) => (
               <div key={l} style={{ textAlign: "center" }}>
                 <p style={{ fontSize: 24, fontWeight: 900, color: "#d4af37", lineHeight: 1 }}>{v}</p>
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{l}</p>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 4 }}>{l}</p>
               </div>
             ))}
           </div>

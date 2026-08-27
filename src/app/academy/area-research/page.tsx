@@ -104,7 +104,7 @@ export default function AcademyAreaResearchPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only Tool</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Area Research Tool</h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, marginBottom: 28 }}>
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 28 }}>
           Sourcer-focused market intelligence. Which areas work for which strategy — and why.
         </p>
 
@@ -124,7 +124,7 @@ export default function AcademyAreaResearchPage() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
               <div>
                 <h2 style={{ fontSize: 22, fontWeight: 800 }}>{selected}</h2>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{area.region}</p>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>{area.region}</p>
               </div>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
                 {STRATEGY_TAGS.map(t => area[t.key as keyof typeof area] && (
@@ -145,7 +145,7 @@ export default function AcademyAreaResearchPage() {
                 { label: "Active Agents", value: area.agentCount + "+" },
               ].map(s => (
                 <div key={s.label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 12px" }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{s.label}</p>
+                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", marginBottom: 3 }}>{s.label}</p>
                   <p style={{ fontSize: 14, fontWeight: 700, color: "#d4af37" }}>{s.value}</p>
                 </div>
               ))}
@@ -172,7 +172,7 @@ export default function AcademyAreaResearchPage() {
         {/* Postcode lookup */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 24 }}>
           <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 6 }}>Postcode Deep Dive</h3>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>Enter a specific postcode to see sold prices, rental data, and crime stats.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 16 }}>Enter a specific postcode to see sold prices, rental data, and crime stats.</p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
             <input
               type="text" placeholder="e.g. B21 9BB" value={postcode} onChange={e => setPostcode(e.target.value)}
@@ -195,7 +195,7 @@ export default function AcademyAreaResearchPage() {
                 { label: "Crime Rate", value: (lookupData as Record<string, unknown>).crimeRate as string || "N/A" },
               ].filter(r => r.value).map(r => (
                 <div key={r.label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 14px" }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{r.label}</p>
+                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", marginBottom: 3 }}>{r.label}</p>
                   <p style={{ fontSize: 14, fontWeight: 700, color: "#d4af37" }}>{r.value}</p>
                 </div>
               ))}

@@ -116,7 +116,7 @@ export default function CoursesPage() {
             <div style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 10, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#d4af37" }}>START HERE</div>
             <h2 style={{ fontSize: 24, fontWeight: 800, fontFamily: "var(--font-family-heading)" }}>7-Day First Deal Challenge</h2>
           </div>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>Seven days. Seven tasks. Real progress — not just motivation. Tap each day to see Nass&apos;s honest take.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 20 }}>Seven days. Seven tasks. Real progress — not just motivation. Tap each day to see Nass&apos;s honest take.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {CHALLENGE_DAYS.map(d => (
               <div key={d.day} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${openDay === d.day ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: 14, overflow: "hidden" }}>
@@ -127,9 +127,9 @@ export default function CoursesPage() {
                   </div>
                   <div style={{ flex: 1 }}>
                     <h3 style={{ fontWeight: 800, fontSize: 15 }}>{d.title}</h3>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{d.task}</p>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 2 }}>{d.task}</p>
                   </div>
-                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18 }}>{openDay === d.day ? "−" : "+"}</span>
+                  <span style={{ color: "rgba(255,255,255,0.62)", fontSize: 18 }}>{openDay === d.day ? "−" : "+"}</span>
                 </button>
                 {openDay === d.day && (
                   <div style={{ padding: "0 20px 20px 88px" }}>
@@ -161,7 +161,7 @@ export default function CoursesPage() {
             <div style={{ background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)", borderRadius: 10, padding: "6px 14px", fontSize: 12, fontWeight: 700, color: "#60a5fa" }}>FLAGSHIP COURSE</div>
             <h2 style={{ fontSize: 24, fontWeight: 800, fontFamily: "var(--font-family-heading)" }}>Deal Sourcing Masterclass</h2>
           </div>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>12 modules, each with lessons and a real action task. Tap any module to expand it.</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 20 }}>12 modules, each with lessons and a real action task. Tap any module to expand it.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {MODULES.map(m => (
               <div key={m.n} id={`module-${m.n}`} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${openModule === m.n ? "rgba(99,102,241,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: 14, overflow: "hidden" }}>
@@ -169,9 +169,9 @@ export default function CoursesPage() {
                   <div style={{ minWidth: 44, height: 44, background: "rgba(99,102,241,0.12)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: "#a5b4fc", flexShrink: 0 }}>M{m.n}</div>
                   <div style={{ flex: 1 }}>
                     <h3 style={{ fontWeight: 800, fontSize: 15 }}>{m.title}</h3>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{m.lessons.length} lessons · {m.objectives.length} objectives</p>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 2 }}>{m.lessons.length} lessons · {m.objectives.length} objectives</p>
                   </div>
-                  <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 18 }}>{openModule === m.n ? "−" : "+"}</span>
+                  <span style={{ color: "rgba(255,255,255,0.62)", fontSize: 18 }}>{openModule === m.n ? "−" : "+"}</span>
                 </button>
                 {openModule === m.n && (
                   <div style={{ padding: "0 20px 20px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>

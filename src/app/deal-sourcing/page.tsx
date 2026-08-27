@@ -97,7 +97,7 @@ export default function DealSourcingPage() {
             <p style={{ fontSize: 16, color: "rgba(255,255,255,0.6)", maxWidth: 540, margin: "0 auto 8px" }}>
               The Deal Sourcing Academy teaches you exactly how to find deals, package them professionally, build an investor list, and earn sourcing fees.
             </p>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Educational platform. Not financial advice. Results vary.</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>Educational platform. Not financial advice. Results vary.</p>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 14, marginBottom: 36 }}>
@@ -120,7 +120,7 @@ export default function DealSourcingPage() {
             <Link href="/academy" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "15px 40px", borderRadius: 14, textDecoration: "none", marginBottom: 10 }}>
               Join the Academy — £14.99/month →
             </Link>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Cancel anytime. Secure checkout via Stripe.</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>Cancel anytime. Secure checkout via Stripe.</p>
           </div>
         </div>
       </section>

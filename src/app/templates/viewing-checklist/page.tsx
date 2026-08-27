@@ -165,12 +165,12 @@ export default function ViewingChecklistTemplate() {
       {/* Header */}
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>🔍 Buyer / Investor Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Property Viewing Checklist</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{checked} of {total} items checked</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>{checked} of {total} items checked</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setMode("form")} style={{ padding: "9px 18px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", background: mode === "form" ? "white" : "transparent", color: mode === "form" ? "#0f1b36" : "rgba(255,255,255,0.6)", border: "1.5px solid rgba(255,255,255,0.2)" }}>✏️ Checklist</button>
@@ -209,7 +209,7 @@ export default function ViewingChecklistTemplate() {
             {/* Progress bar */}
             <div style={{ background: "white", borderRadius: 12, border: "1.5px solid #e2e8f0", padding: "14px 20px", marginBottom: 20, display: "flex", alignItems: "center", gap: 16 }}>
               <div style={{ flex: 1, height: 8, background: "#e2e8f0", borderRadius: 4, overflow: "hidden" }}>
-                <div style={{ height: "100%", width: `${(checked / total) * 100}%`, background: checked === total ? "#16a34a" : "#c9a84c", borderRadius: 4, transition: "width 0.3s" }} />
+                <div style={{ height: "100%", width: `${(checked / total) * 100}%`, background: checked === total ? "#15803d" : "#c9a84c", borderRadius: 4, transition: "width 0.3s" }} />
               </div>
               <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", whiteSpace: "nowrap" }}>{checked} / {total}</span>
             </div>
@@ -219,14 +219,14 @@ export default function ViewingChecklistTemplate() {
               <div key={si} style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", marginBottom: 16, overflow: "hidden" }}>
                 <div style={{ padding: "14px 20px", background: "#f8f9fc", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between" }}>
                   <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36" }}>{sec.title}</h3>
-                  <span style={{ fontSize: 12, color: "#94a3b8" }}>
+                  <span style={{ fontSize: 12, color: "#475569" }}>
                     {sec.items.filter(i => f.checks[i]).length}/{sec.items.length}
                   </span>
                 </div>
                 <div style={{ padding: "4px 0" }}>
                   {sec.items.map(item => (
                     <label key={item} onClick={() => toggle(item)} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "10px 20px", cursor: "pointer", borderBottom: "1px solid #f8f9fc", background: f.checks[item] ? "#f0fdf4" : "white", transition: "background 0.1s" }}>
-                      <div style={{ width: 20, height: 20, borderRadius: 5, border: f.checks[item] ? "none" : "2px solid #cbd5e1", background: f.checks[item] ? "#16a34a" : "white", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1, transition: "all 0.15s" }}>
+                      <div style={{ width: 20, height: 20, borderRadius: 5, border: f.checks[item] ? "none" : "2px solid #cbd5e1", background: f.checks[item] ? "#15803d" : "white", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1, transition: "all 0.15s" }}>
                         {f.checks[item] && <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                       </div>
                       <span style={{ fontSize: 13, color: f.checks[item] ? "#15803d" : "#374151", textDecoration: f.checks[item] ? "line-through" : "none", lineHeight: 1.5 }}>{item}</span>
@@ -253,7 +253,7 @@ export default function ViewingChecklistTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back to checklist</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back to checklist</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
@@ -276,7 +276,7 @@ export default function ViewingChecklistTemplate() {
                   { label: "Completion", value: `${checked}/${total} items` },
                 ].map(s => (
                   <div key={s.label}>
-                    <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</p>
+                    <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</p>
                     <p style={{ fontSize: 12, fontWeight: 600, color: "#0f1b36", marginTop: 2 }}>{s.value}</p>
                   </div>
                 ))}
@@ -291,7 +291,7 @@ export default function ViewingChecklistTemplate() {
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                     {sec.items.map((item, ii) => (
                       <div key={ii} style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 12px", borderBottom: "1px solid #f1f5f9", background: f.checks[item] ? "#f0fdf4" : "white" }}>
-                        <div style={{ width: 14, height: 14, border: f.checks[item] ? "none" : "1.5px solid #cbd5e1", background: f.checks[item] ? "#16a34a" : "white", borderRadius: 3, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div style={{ width: 14, height: 14, border: f.checks[item] ? "none" : "1.5px solid #cbd5e1", background: f.checks[item] ? "#15803d" : "white", borderRadius: 3, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                           {f.checks[item] && <span style={{ color: "white", fontSize: 10 }}>✓</span>}
                         </div>
                         <p style={{ fontSize: 10, color: f.checks[item] ? "#15803d" : "#374151", textDecoration: f.checks[item] ? "line-through" : "none" }}>{item}</p>
@@ -317,7 +317,7 @@ export default function ViewingChecklistTemplate() {
                 <div style={{ display: "flex", gap: 20 }}>
                   {["Strong Buy", "Consider", "Pass"].map(v => (
                     <div key={v} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <div style={{ width: 14, height: 14, border: "1.5px solid #94a3b8" }} />
+                      <div style={{ width: 14, height: 14, border: "1.5px solid #475569" }} />
                       <p style={{ fontSize: 11, color: "#374151" }}>{v}</p>
                     </div>
                   ))}

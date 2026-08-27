@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   const html = `
     <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a2942;">
       <div style="background:#1a2942;padding:24px 32px;border-radius:12px 12px 0 0;display:flex;align-items:center;gap:12px;">
-        <span style="color:#c9a84c;font-weight:900;font-size:20px;">PropertyVault UK</span>
+        <span style="color:var(--gold-ink);font-weight:900;font-size:20px;">PropertyVault UK</span>
       </div>
       <div style="background:#f8f7f5;padding:36px 32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;border-top:none;">
         <h2 style="font-size:22px;font-weight:800;margin:0 0 12px;">Hi ${firstName} — welcome to your tenant portal 👋</h2>

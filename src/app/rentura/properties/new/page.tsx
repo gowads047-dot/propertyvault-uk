@@ -73,7 +73,7 @@ export default function NewProperty() {
 
   const BG = "#eceae2";
   const INK = "#111111";
-  const INK2 = "rgba(17,17,17,0.5)";
+  const INK2 = "rgba(17,17,17,0.72)";
   const BORDER = "rgba(17,17,17,0.1)";
   const CTA = "#0f1728";
 
@@ -207,7 +207,7 @@ export default function NewProperty() {
 
           {/* Error */}
           {error && (
-            <div style={{ background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 10, padding: "12px 16px", color: "#dc2626", fontSize: 13, fontWeight: 600 }}>
+            <div style={{ background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 10, padding: "12px 16px", color: "#b91c1c", fontSize: 13, fontWeight: 600 }}>
               {error}
             </div>
           )}

@@ -16,7 +16,7 @@ const BORDER = "rgba(17,17,17,0.09)";
 const CTA = "#0f1728";
 const RED = "#dc2626";
 const AMBER = "#d97706";
-const GREEN = "#16a34a";
+const GREEN = "#15803d";
 const BLUE = "#2563eb";
 
 // ── Types ──────────────────────────────────────────────────────────────────────

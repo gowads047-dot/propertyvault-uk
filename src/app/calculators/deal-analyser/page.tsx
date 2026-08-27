@@ -117,7 +117,7 @@ function ShareButton({ params }: { params: Record<string, string | number> }) {
 // Deal Score gauge component
 function DealScoreGauge({ score }: { score: number }) {
   const clamp = Math.max(0, Math.min(100, score));
-  const color = clamp >= 70 ? "#16a34a" : clamp >= 45 ? "#c9a84c" : "#dc2626";
+  const color = clamp >= 70 ? "#15803d" : clamp >= 45 ? "#c9a84c" : "#dc2626";
   const label = clamp >= 70 ? "Strong" : clamp >= 55 ? "Decent" : clamp >= 40 ? "Marginal" : "Weak";
   // SVG arc: 180° semicircle
   const r = 54, cx = 70, cy = 70;
@@ -144,7 +144,7 @@ function DealScoreGauge({ score }: { score: number }) {
         <circle cx={cx} cy={cy} r="4" fill="#0f1b36" />
         {/* Score */}
         <text x={cx} y={cy - 14} textAnchor="middle" fontSize="20" fontWeight="800" fill="#0f1b36">{clamp}</text>
-        <text x={cx} y={cy - 2} textAnchor="middle" fontSize="8" fill="#94a3b8">/ 100</text>
+        <text x={cx} y={cy - 2} textAnchor="middle" fontSize="8" fill="#475569">/ 100</text>
       </svg>
       <p style={{ fontSize: 14, fontWeight: 700, color, marginTop: -8 }}>{label} Deal</p>
     </div>
@@ -642,7 +642,7 @@ export default function DealAnalyserPage() {
                   <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, color: "white", lineHeight: 1 }}>Deal Analyser</h1>
                 </div>
               </div>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 15, maxWidth: 500 }}>8 perspectives. Stress tests. Tax impact. 5-year projection. The comprehensive UK property deal analysis tool.</p>
+              <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 15, maxWidth: 500 }}>8 perspectives. Stress tests. Tax impact. 5-year projection. The comprehensive UK property deal analysis tool.</p>
               <div style={{ display: "flex", gap: 16, marginTop: 16 }}><PrintButton /><ShareButton params={shareParams} /></div>
             </div>
             <DealScoreGauge score={calc.dealScore} />
@@ -676,7 +676,7 @@ export default function DealAnalyserPage() {
                   <button
                     onClick={lookupPropertyUrl}
                     disabled={urlLoading || !urlInput.trim()}
-                    style={{ padding: "10px 16px", background: urlLoading || !urlInput.trim() ? "#94a3b8" : "#c9a84c", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: urlLoading || !urlInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
+                    style={{ padding: "10px 16px", background: urlLoading || !urlInput.trim() ? "#475569" : "#c9a84c", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: urlLoading || !urlInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
                   >
                     {urlLoading ? "Fetching…" : "Fetch"}
                   </button>
@@ -708,7 +708,7 @@ export default function DealAnalyserPage() {
                         )}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 4 }}>
                           {propertyPreview.price && (
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#16a34a", background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "2px 8px", borderRadius: 6 }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "#15803d", background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "2px 8px", borderRadius: 6 }}>
                               £{propertyPreview.price.toLocaleString()}
                             </span>
                           )}
@@ -731,11 +731,11 @@ export default function DealAnalyserPage() {
                     {propertyPreview.keyFeatures && propertyPreview.keyFeatures.length > 0 && (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 10 }}>
                         {propertyPreview.keyFeatures.map((f, i) => (
-                          <span key={i} style={{ fontSize: 10, color: "#64748b", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>{f}</span>
+                          <span key={i} style={{ fontSize: 10, color: "#475569", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>{f}</span>
                         ))}
                       </div>
                     )}
-                    <p style={{ fontSize: 11, color: "#16a34a", fontWeight: 600, marginTop: 8 }}>
+                    <p style={{ fontSize: 11, color: "#15803d", fontWeight: 600, marginTop: 8 }}>
                       ✓ Price auto-filled · postcode area data loaded
                     </p>
                   </div>
@@ -750,11 +750,11 @@ export default function DealAnalyserPage() {
                     <button key={key} onClick={() => handleStrategyChange(key)}
                       style={{ padding: "8px 4px", borderRadius: 10, border: strategy === key ? "2px solid #c9a84c" : "1.5px solid #e2e8f0", background: strategy === key ? "#fefce8" : "white", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
                       <div style={{ fontSize: 18 }}>{meta.icon}</div>
-                      <div style={{ fontSize: 10, fontWeight: 700, color: strategy === key ? "#92400e" : "#64748b", marginTop: 3, lineHeight: 1.2 }}>{meta.label}</div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: strategy === key ? "#92400e" : "#475569", marginTop: 3, lineHeight: 1.2 }}>{meta.label}</div>
                     </button>
                   ))}
                 </div>
-                <p style={{ fontSize: 11, color: "#64748b", marginTop: 8 }}>{STRATEGY_META[strategy].desc}</p>
+                <p style={{ fontSize: 11, color: "#475569", marginTop: 8 }}>{STRATEGY_META[strategy].desc}</p>
               </div>
 
               {/* Postcode lookup */}
@@ -774,13 +774,13 @@ export default function DealAnalyserPage() {
                   <button
                     onClick={lookupPostcode}
                     disabled={postcodeLoading || !postcodeInput.trim()}
-                    style={{ padding: "10px 18px", background: postcodeLoading || !postcodeInput.trim() ? "#94a3b8" : "#0f1b36", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: postcodeLoading || !postcodeInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
+                    style={{ padding: "10px 18px", background: postcodeLoading || !postcodeInput.trim() ? "#475569" : "#0f1b36", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: postcodeLoading || !postcodeInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
                   >
                     {postcodeLoading ? "Looking up…" : "Look up"}
                   </button>
                 </div>
                 {postcodeError && (
-                  <p style={{ fontSize: 12, color: "#dc2626", marginTop: 8, fontWeight: 500 }}>⚠️ {postcodeError}</p>
+                  <p style={{ fontSize: 12, color: "#b91c1c", marginTop: 8, fontWeight: 500 }}>⚠️ {postcodeError}</p>
                 )}
 
                 {/* Area Intelligence results */}
@@ -790,8 +790,8 @@ export default function DealAnalyserPage() {
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                       <div>
                         <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36" }}>{areaData.postcode}</p>
-                        <p style={{ fontSize: 12, color: "#64748b" }}>{[areaData.district, areaData.county, areaData.region].filter(Boolean).join(" · ")}</p>
-                        <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>{areaData.ward} ward · {areaData.constituency}</p>
+                        <p style={{ fontSize: 12, color: "#475569" }}>{[areaData.district, areaData.county, areaData.region].filter(Boolean).join(" · ")}</p>
+                        <p style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>{areaData.ward} ward · {areaData.constituency}</p>
                       </div>
                       <a
                         href={`https://www.google.com/maps?q=${areaData.lat},${areaData.lng}`}
@@ -813,13 +813,13 @@ export default function DealAnalyserPage() {
                       {areaData.crime.topCategories.length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 8px" }}>
                           {areaData.crime.topCategories.map(c => (
-                            <span key={c.label} style={{ fontSize: 10, color: "#64748b", background: "white", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>
+                            <span key={c.label} style={{ fontSize: 10, color: "#475569", background: "white", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>
                               {c.label} ({c.count})
                             </span>
                           ))}
                         </div>
                       )}
-                      <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 4 }}>Source: data.police.uk — crimes within ~1 mile</p>
+                      <p style={{ fontSize: 10, color: "#475569", marginTop: 4 }}>Source: data.police.uk — crimes within ~1 mile</p>
                     </div>
 
                     {/* Recent sold prices */}
@@ -836,7 +836,7 @@ export default function DealAnalyserPage() {
                             <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: i < 4 ? "1px solid #e2e8f0" : "none" }}>
                               <div>
                                 <p style={{ fontSize: 11, fontWeight: 600, color: "#374151" }}>{s.address || s.type}</p>
-                                <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.type} · {s.tenure} {s.newBuild ? "· New Build" : ""} · {s.date.slice(0, 7)}</p>
+                                <p style={{ fontSize: 10, color: "#475569" }}>{s.type} · {s.tenure} {s.newBuild ? "· New Build" : ""} · {s.date.slice(0, 7)}</p>
                               </div>
                               <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", flexShrink: 0, marginLeft: 8 }}>
                                 £{s.price.toLocaleString()}
@@ -844,10 +844,10 @@ export default function DealAnalyserPage() {
                             </div>
                           ))}
                         </div>
-                        <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 6 }}>Source: HM Land Registry Price Paid Data</p>
+                        <p style={{ fontSize: 10, color: "#475569", marginTop: 6 }}>Source: HM Land Registry Price Paid Data</p>
                       </div>
                     ) : (
-                      <p style={{ fontSize: 12, color: "#94a3b8", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
+                      <p style={{ fontSize: 12, color: "#475569", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
                     )}
 
                     {/* Rental Market */}
@@ -856,8 +856,8 @@ export default function DealAnalyserPage() {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏘️ Rental Market ({areaData.region})</span>
                           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                            <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 6, background: areaData.rental.demand === "Very High" ? "#fef2f2" : areaData.rental.demand === "High" ? "#fefce8" : "#f0fdf4", color: areaData.rental.demand === "Very High" ? "#dc2626" : areaData.rental.demand === "High" ? "#ca8a04" : "#16a34a" }}>{areaData.rental.demand} Demand</span>
-                            <span style={{ fontSize: 10, color: "#16a34a", fontWeight: 600 }}>{areaData.rental.trend}</span>
+                            <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 6, background: areaData.rental.demand === "Very High" ? "#fef2f2" : areaData.rental.demand === "High" ? "#fefce8" : "#f0fdf4", color: areaData.rental.demand === "Very High" ? "#dc2626" : areaData.rental.demand === "High" ? "#ca8a04" : "#15803d" }}>{areaData.rental.demand} Demand</span>
+                            <span style={{ fontSize: 10, color: "#15803d", fontWeight: 600 }}>{areaData.rental.trend}</span>
                           </div>
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4, marginBottom: 8 }}>
@@ -869,23 +869,23 @@ export default function DealAnalyserPage() {
                             { label: "4 Bed+", val: areaData.rental.fourBed },
                           ].map(r => (
                             <div key={r.label} style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 7, padding: "5px 4px", textAlign: "center" }}>
-                              <div style={{ fontSize: 9, color: "#94a3b8", fontWeight: 600 }}>{r.label}</div>
+                              <div style={{ fontSize: 9, color: "#475569", fontWeight: 600 }}>{r.label}</div>
                               <div style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36" }}>£{r.val.toLocaleString()}</div>
-                              <div style={{ fontSize: 9, color: "#64748b" }}>/mo</div>
+                              <div style={{ fontSize: 9, color: "#475569" }}>/mo</div>
                             </div>
                           ))}
                         </div>
                         {areaData.rental.yieldRangeLow && areaData.rental.yieldRangeHigh && (
-                          <p style={{ fontSize: 10, color: "#64748b" }}>
+                          <p style={{ fontSize: 10, color: "#475569" }}>
                             Estimated gross yield: <strong style={{ color: "var(--gold-ink)" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> based on area sold prices
                           </p>
                         )}
-                        <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
+                        <p style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
                       </div>
                     )}
 
                     {areaData.suggestedCity && (
-                      <p style={{ fontSize: 11, color: "#64748b", marginTop: 8 }}>
+                      <p style={{ fontSize: 11, color: "#475569", marginTop: 8 }}>
                         📊 Benchmark auto-set to <strong>{BENCHMARKS[areaData.suggestedCity]?.name}</strong> based on region.
                       </p>
                     )}
@@ -934,7 +934,7 @@ export default function DealAnalyserPage() {
                           <span className="block text-xs text-navy-500 mb-1">Guaranteed % of market rent: {guaranteedRentPct}%</span>
                           <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                         </label>
-                        <p style={{ fontSize: 11, color: "#64748b", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
+                        <p style={{ fontSize: 11, color: "#475569", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
                       </div>
                     )}
                   </div>
@@ -1004,7 +1004,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" min="0" value={hmoUtilities} onChange={e => setHmoUtilities(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" min="0" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
-                    <p style={{ fontSize: 11, color: "#64748b" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
+                    <p style={{ fontSize: 11, color: "#475569" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
                   </div>
                 </div>
               )}
@@ -1061,7 +1061,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" min="0" value={saAvgStayNights} onChange={e => setSaAvgStayNights(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={saRunningCosts} onChange={e => setSaRunningCosts(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
-                    <p style={{ fontSize: 11, color: "#64748b" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
+                    <p style={{ fontSize: 11, color: "#475569" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
                   </div>
                 </div>
               )}
@@ -1135,7 +1135,7 @@ export default function DealAnalyserPage() {
               <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
                 {availableTabs.map(tab => (
                   <button key={tab.id} onClick={() => setActiveSection(tab.id)}
-                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeSection === tab.id ? "none" : "1.5px solid #e2e8f0", background: activeSection === tab.id ? "#0f1b36" : "white", color: activeSection === tab.id ? "white" : "#64748b", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
+                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeSection === tab.id ? "none" : "1.5px solid #e2e8f0", background: activeSection === tab.id ? "#0f1b36" : "white", color: activeSection === tab.id ? "white" : "#475569", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
                     {tab.label}
                   </button>
                 ))}
@@ -1248,21 +1248,21 @@ export default function DealAnalyserPage() {
                       <h4 className="font-bold text-navy-800 text-sm mb-3">🛡️ Guaranteed Rent vs Self-Managed</h4>
                       <div className="grid grid-cols-2 gap-3">
                         <div style={{ padding: "14px", borderRadius: 12, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
-                          <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
+                          <p style={{ fontSize: 11, color: "#475569", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
                           <p style={{ fontSize: 20, fontWeight: 800, color: calc.monthlyCF >= 0 ? "#0f1b36" : "#dc2626" }}>{fmt(calc.monthlyCF)}/mo</p>
-                          <div style={{ marginTop: 8, fontSize: 11, color: "#64748b" }}>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "#475569" }}>
                             <div>Rent: {fmt(monthlyRent)}/mo</div>
                             <div>Voids: ~{voidWeeks} wks/yr</div>
                             <div>Mgmt: {managementPct}%</div>
                           </div>
                         </div>
                         <div style={{ padding: "14px", borderRadius: 12, background: "#f0fdf4", border: "1.5px solid #bbf7d0" }}>
-                          <p style={{ fontSize: 11, color: "#16a34a", marginBottom: 6, fontWeight: 700 }}>GUARANTEED RENT</p>
-                          <p style={{ fontSize: 20, fontWeight: 800, color: grCalc.grMonthlyCF >= 0 ? "#16a34a" : "#dc2626" }}>{fmt(grCalc.grMonthlyCF)}/mo</p>
-                          <div style={{ marginTop: 8, fontSize: 11, color: "#64748b" }}>
+                          <p style={{ fontSize: 11, color: "#15803d", marginBottom: 6, fontWeight: 700 }}>GUARANTEED RENT</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: grCalc.grMonthlyCF >= 0 ? "#15803d" : "#dc2626" }}>{fmt(grCalc.grMonthlyCF)}/mo</p>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "#475569" }}>
                             <div>Rent: {fmt(grCalc.grMonthly)}/mo ({guaranteedRentPct}%)</div>
-                            <div>Voids: <strong style={{ color: "#16a34a" }}>0 weeks</strong></div>
-                            <div>Mgmt: <strong style={{ color: "#16a34a" }}>0%</strong></div>
+                            <div>Voids: <strong style={{ color: "#15803d" }}>0 weeks</strong></div>
+                            <div>Mgmt: <strong style={{ color: "#15803d" }}>0%</strong></div>
                           </div>
                         </div>
                       </div>
@@ -1308,7 +1308,7 @@ export default function DealAnalyserPage() {
                       <button
                         onClick={getAiVerdict}
                         disabled={aiVerdictLoading}
-                        style={{ width: "100%", padding: "11px", background: aiVerdictLoading ? "#94a3b8" : "#0f1b36", color: aiVerdictLoading ? "white" : "#c9a84c", border: "none", borderRadius: 12, fontSize: 14, fontWeight: 700, cursor: aiVerdictLoading ? "not-allowed" : "pointer", transition: "background 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+                        style={{ width: "100%", padding: "11px", background: aiVerdictLoading ? "#475569" : "#0f1b36", color: aiVerdictLoading ? "white" : "#c9a84c", border: "none", borderRadius: 12, fontSize: 14, fontWeight: 700, cursor: aiVerdictLoading ? "not-allowed" : "pointer", transition: "background 0.15s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
                       >
                         {aiVerdictLoading ? (
                           <>
@@ -1320,7 +1320,7 @@ export default function DealAnalyserPage() {
                     )}
 
                     {aiVerdictError && (
-                      <p style={{ fontSize: 12, color: "#dc2626", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>⚠️ {aiVerdictError}</p>
+                      <p style={{ fontSize: 12, color: "#b91c1c", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>⚠️ {aiVerdictError}</p>
                     )}
 
                     {aiVerdict && (
@@ -1329,12 +1329,12 @@ export default function DealAnalyserPage() {
                         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: aiVerdict.verdict === "Buy" ? "#f0fdf4" : aiVerdict.verdict === "Negotiate" ? "#fffbeb" : "#fef2f2", border: `2px solid ${aiVerdict.verdict === "Buy" ? "#86efac" : aiVerdict.verdict === "Negotiate" ? "#fde68a" : "#fecaca"}` }}>
                           <span style={{ fontSize: 28 }}>{aiVerdict.verdict === "Buy" ? "✅" : aiVerdict.verdict === "Negotiate" ? "🤝" : "❌"}</span>
                           <div>
-                            <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "#16a34a" : aiVerdict.verdict === "Negotiate" ? "#92400e" : "#dc2626", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
-                            <p style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>AI-assisted analysis · not financial advice</p>
+                            <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "#15803d" : aiVerdict.verdict === "Negotiate" ? "#92400e" : "#dc2626", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
+                            <p style={{ fontSize: 11, color: "#475569", fontWeight: 600 }}>AI-assisted analysis · not financial advice</p>
                           </div>
                         </div>
 
-                        <p style={{ fontSize: 11, lineHeight: 1.5, color: "#64748b", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 11px", marginBottom: 14 }}>
+                        <p style={{ fontSize: 11, lineHeight: 1.5, color: "#475569", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 11px", marginBottom: 14 }}>
                           This is an automated reading of the figures you entered, not a personal recommendation.
                           PropertyVault UK is not authorised or regulated by the FCA. Check the numbers yourself and
                           speak to a qualified professional before committing to a purchase.
@@ -1346,7 +1346,7 @@ export default function DealAnalyserPage() {
                         {/* Green flags */}
                         {aiVerdict.greenFlags?.length > 0 && (
                           <div style={{ marginBottom: 12 }}>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#16a34a", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>✅ Green flags</p>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#15803d", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>✅ Green flags</p>
                             <div className="space-y-1.5">
                               {aiVerdict.greenFlags.map((f, i) => (
                                 <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#f0fdf4", borderRadius: 8, border: "1px solid #bbf7d0" }}>{f}</div>
@@ -1358,7 +1358,7 @@ export default function DealAnalyserPage() {
                         {/* Red flags */}
                         {aiVerdict.redFlags?.length > 0 && (
                           <div style={{ marginBottom: 12 }}>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>⚠️ Red flags</p>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>⚠️ Red flags</p>
                             <div className="space-y-1.5">
                               {aiVerdict.redFlags.map((f, i) => (
                                 <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#fef2f2", borderRadius: 8, border: "1px solid #fecaca" }}>{f}</div>
@@ -1384,7 +1384,7 @@ export default function DealAnalyserPage() {
 
                         <button
                           onClick={() => { setAiVerdict(null); setAiVerdictError(""); }}
-                          style={{ marginTop: 12, fontSize: 12, color: "#94a3b8", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                          style={{ marginTop: 12, fontSize: 12, color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0 }}
                         >
                           Re-analyse →
                         </button>
@@ -1401,15 +1401,15 @@ export default function DealAnalyserPage() {
                         { label: "Your Net Yield",   yours: calc.netYield,   avg: BENCHMARKS[cityBenchmark].net },
                       ].map(b => (
                         <div key={b.label} style={{ padding: "12px 14px", borderRadius: 12, background: "#f8f9fc", border: "1px solid #e2e8f0" }}>
-                          <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 6 }}>{b.label}</p>
+                          <p style={{ fontSize: 11, color: "#475569", marginBottom: 6 }}>{b.label}</p>
                           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
-                            <span style={{ fontSize: 20, fontWeight: 800, color: b.yours >= b.avg ? "#16a34a" : "#dc2626" }}>{b.yours.toFixed(1)}%</span>
-                            <span style={{ fontSize: 12, color: "#94a3b8" }}>vs {b.avg}% avg</span>
+                            <span style={{ fontSize: 20, fontWeight: 800, color: b.yours >= b.avg ? "#15803d" : "#dc2626" }}>{b.yours.toFixed(1)}%</span>
+                            <span style={{ fontSize: 12, color: "#475569" }}>vs {b.avg}% avg</span>
                           </div>
                           <div style={{ height: 6, borderRadius: 4, background: "#e2e8f0", overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${Math.min(100, (b.yours / (b.avg * 2)) * 100)}%`, background: b.yours >= b.avg ? "#16a34a" : "#f59e0b", borderRadius: 4, transition: "width 0.4s" }} />
+                            <div style={{ height: "100%", width: `${Math.min(100, (b.yours / (b.avg * 2)) * 100)}%`, background: b.yours >= b.avg ? "#15803d" : "#f59e0b", borderRadius: 4, transition: "width 0.4s" }} />
                           </div>
-                          <p style={{ fontSize: 10, color: b.yours >= b.avg ? "#16a34a" : "#dc2626", marginTop: 4, fontWeight: 600 }}>
+                          <p style={{ fontSize: 10, color: b.yours >= b.avg ? "#15803d" : "#dc2626", marginTop: 4, fontWeight: 600 }}>
                             {b.yours >= b.avg ? `▲ ${(b.yours - b.avg).toFixed(1)}% above` : `▼ ${(b.avg - b.yours).toFixed(1)}% below`} market avg
                           </p>
                         </div>
@@ -1510,9 +1510,9 @@ export default function DealAnalyserPage() {
                           <span style={{ fontSize: 18, flexShrink: 0 }}>{s.icon}</span>
                           <div style={{ flex: 1 }}>
                             <p style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>{s.label}</p>
-                            {s.label !== "Current (baseline)" && <p style={{ fontSize: 11, color: "#94a3b8" }}>{pct >= 0 ? `+${pct.toFixed(0)}%` : `${pct.toFixed(0)}%`} vs baseline</p>}
+                            {s.label !== "Current (baseline)" && <p style={{ fontSize: 11, color: "#475569" }}>{pct >= 0 ? `+${pct.toFixed(0)}%` : `${pct.toFixed(0)}%`} vs baseline</p>}
                           </div>
-                          <span style={{ fontSize: 16, fontWeight: 800, color: s.value >= 200 ? "#16a34a" : s.value >= 0 ? "#d97706" : "#dc2626", fontFamily: "monospace" }}>
+                          <span style={{ fontSize: 16, fontWeight: 800, color: s.value >= 200 ? "#15803d" : s.value >= 0 ? "#d97706" : "#dc2626", fontFamily: "monospace" }}>
                             {fmt(s.value)}/mo
                           </span>
                         </div>
@@ -1531,23 +1531,23 @@ export default function DealAnalyserPage() {
                     <p className="text-xs text-navy-400 mb-3">Interest Coverage Ratio — lenders require rent to cover mortgage by 125% (basic rate) or 145% (higher rate / company).</p>
                     <div className="grid grid-cols-3 gap-3 mb-3">
                       <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: "#f8f9fc" }}>
-                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Your ICR</p>
-                        <p style={{ fontSize: 22, fontWeight: 800, color: icrCalc.passes125 ? "#16a34a" : "#dc2626" }}>{icrCalc.icr === Infinity ? "∞" : icrCalc.icr.toFixed(2)}x</p>
+                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Your ICR</p>
+                        <p style={{ fontSize: 22, fontWeight: 800, color: icrCalc.passes125 ? "#15803d" : "#dc2626" }}>{icrCalc.icr === Infinity ? "∞" : icrCalc.icr.toFixed(2)}x</p>
                       </div>
                       <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes125 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes125 ? "#bbf7d0" : "#fecaca"}` }}>
-                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Basic Rate 1.25x</p>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes125 ? "#16a34a" : "#dc2626" }}>{icrCalc.passes125 ? "✓ PASS" : "✗ FAIL"}</p>
-                        <p style={{ fontSize: 10, color: "#94a3b8" }}>Need {fmt(icrCalc.required125)}/mo</p>
+                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Basic Rate 1.25x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes125 ? "#15803d" : "#dc2626" }}>{icrCalc.passes125 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "#475569" }}>Need {fmt(icrCalc.required125)}/mo</p>
                       </div>
                       <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes145 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes145 ? "#bbf7d0" : "#fecaca"}` }}>
-                        <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 4 }}>Higher Rate 1.45x</p>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes145 ? "#16a34a" : "#dc2626" }}>{icrCalc.passes145 ? "✓ PASS" : "✗ FAIL"}</p>
-                        <p style={{ fontSize: 10, color: "#94a3b8" }}>Need {fmt(icrCalc.required145)}/mo</p>
+                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Higher Rate 1.45x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes145 ? "#15803d" : "#dc2626" }}>{icrCalc.passes145 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "#475569" }}>Need {fmt(icrCalc.required145)}/mo</p>
                       </div>
                     </div>
                     {!icrCalc.passes125 && (
                       <div style={{ padding: "10px 12px", borderRadius: 10, background: "#fef2f2", border: "1px solid #fecaca" }}>
-                        <p style={{ fontSize: 12, color: "#dc2626", fontWeight: 600 }}>⚠️ This deal fails lender ICR checks at current rent. You need {fmt(icrCalc.required125 - icrCalc.effectiveRent)}/mo more rent, or a lower mortgage.</p>
+                        <p style={{ fontSize: 12, color: "#b91c1c", fontWeight: 600 }}>⚠️ This deal fails lender ICR checks at current rent. You need {fmt(icrCalc.required125 - icrCalc.effectiveRent)}/mo more rent, or a lower mortgage.</p>
                       </div>
                     )}
                     {icrCalc.passes125 && !icrCalc.passes145 && (
@@ -1576,7 +1576,7 @@ export default function DealAnalyserPage() {
                       <thead>
                         <tr>
                           {["Year", "Property Value", "Net Income", "Cumul. Income", "Equity", "Total Gain"].map(h => (
-                            <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid #e2e8f0", color: "#94a3b8", fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>{h}</th>
+                            <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid #e2e8f0", color: "#475569", fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
@@ -1585,10 +1585,10 @@ export default function DealAnalyserPage() {
                           <tr key={row.yr} style={{ background: i % 2 === 0 ? "#f8f9fc" : "white" }}>
                             <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", fontWeight: 700, color: "#0f1b36", textAlign: "right" }}>Yr {row.yr}</td>
                             <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.capitalValue)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: calc.netIncome >= 0 ? "#16a34a" : "#dc2626" }}>{fmt(calc.netIncome)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: calc.netIncome >= 0 ? "#15803d" : "#dc2626" }}>{fmt(calc.netIncome)}</td>
                             <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.cumulativeIncome)}</td>
                             <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.equity)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", fontWeight: 700, color: row.totalWealth >= 0 ? "#16a34a" : "#dc2626" }}>{fmt(row.totalWealth)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", fontWeight: 700, color: row.totalWealth >= 0 ? "#15803d" : "#dc2626" }}>{fmt(row.totalWealth)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -1610,11 +1610,11 @@ export default function DealAnalyserPage() {
                         { label: "Ltd company (CT)", net: taxAnalysis.companyNet, tax: taxAnalysis.companyTax, note: "Full mortgage interest deductible. CT 19%–25% via marginal relief" },
                       ].map((t, i) => (
                         <div key={t.label} style={{ padding: "14px 12px", borderRadius: 14, border: "1.5px solid", borderColor: i === 2 ? "#bbf7d0" : i === 1 ? "#fde68a" : "#e2e8f0", background: i === 2 ? "#f0fdf4" : "#f8f9fc", textAlign: "center" }}>
-                          <p style={{ fontSize: 11, fontWeight: 600, color: "#64748b", marginBottom: 8 }}>{t.label}</p>
+                          <p style={{ fontSize: 11, fontWeight: 600, color: "#475569", marginBottom: 8 }}>{t.label}</p>
                           <p style={{ fontSize: 20, fontWeight: 800, color: t.net > 0 ? "#0f1b36" : "#dc2626" }}>{fmt(t.net)}</p>
-                          <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 2 }}>net/yr after tax</p>
-                          <p style={{ fontSize: 12, fontWeight: 600, color: "#dc2626", marginTop: 6 }}>Tax: {fmt(t.tax)}</p>
-                          <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 6, lineHeight: 1.4 }}>{t.note}</p>
+                          <p style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>net/yr after tax</p>
+                          <p style={{ fontSize: 12, fontWeight: 600, color: "#b91c1c", marginTop: 6 }}>Tax: {fmt(t.tax)}</p>
+                          <p style={{ fontSize: 10, color: "#475569", marginTop: 6, lineHeight: 1.4 }}>{t.note}</p>
                         </div>
                       ))}
                     </div>
@@ -1674,15 +1674,15 @@ export default function DealAnalyserPage() {
                             { label: "Cash Released", value: fmt(Math.max(0, bridgingCalc.cashReleased)), note: "Net capital returned", highlight: bridgingCalc.cashReleased > 0 },
                           ].map(s => (
                             <div key={s.label} style={{ padding: "12px", borderRadius: 10, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
-                              <p style={{ fontSize: 10, color: "#94a3b8", marginBottom: 3 }}>{s.label}</p>
-                              <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "#16a34a" : "#0f1b36" }}>{s.value}</p>
-                              <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.note}</p>
+                              <p style={{ fontSize: 10, color: "#475569", marginBottom: 3 }}>{s.label}</p>
+                              <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "#15803d" : "#0f1b36" }}>{s.value}</p>
+                              <p style={{ fontSize: 10, color: "#475569" }}>{s.note}</p>
                             </div>
                           ))}
                         </div>
                         {bridgingCalc.netCashLeft < 0 && (
                           <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
-                            <p style={{ fontSize: 13, color: "#16a34a", fontWeight: 600 }}>✅ Full BRRR recycle! Cash released ({fmt(bridgingCalc.cashReleased)}) exceeds cash invested ({fmt(bridgingCalc.cashRequired)}) — <strong>infinite ROI</strong> on this deal.</p>
+                            <p style={{ fontSize: 13, color: "#15803d", fontWeight: 600 }}>✅ Full BRRR recycle! Cash released ({fmt(bridgingCalc.cashReleased)}) exceeds cash invested ({fmt(bridgingCalc.cashRequired)}) — <strong>infinite ROI</strong> on this deal.</p>
                           </div>
                         )}
                       </>
@@ -1695,7 +1695,7 @@ export default function DealAnalyserPage() {
                     <p className="text-xs text-navy-400 mb-4">Refinance at 75% LTV on after-refurb value</p>
                     {afterRefurbValue <= purchasePrice + refurbCost ? (
                       <div style={{ padding: "16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca", textAlign: "center" }}>
-                        <p style={{ fontSize: 14, color: "#dc2626", fontWeight: 600 }}>⚠️ No equity gain — ARV must exceed (purchase price + refurb cost) to benefit from BRRR refinance.</p>
+                        <p style={{ fontSize: 14, color: "#b91c1c", fontWeight: 600 }}>⚠️ No equity gain — ARV must exceed (purchase price + refurb cost) to benefit from BRRR refinance.</p>
                       </div>
                     ) : (
                       <>
@@ -1709,9 +1709,9 @@ export default function DealAnalyserPage() {
                             { label: "New cash flow",      value: `${fmt(brrrCalc.newNetIncome)}/mo`, note: "After new mortgage", highlight: brrrCalc.newNetIncome > 0 },
                           ].map(s => (
                             <div key={s.label} style={{ padding: "14px 12px", borderRadius: 12, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
-                              <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 4 }}>{s.label}</p>
-                              <p style={{ fontSize: 18, fontWeight: 800, color: s.highlight ? "#16a34a" : "#0f1b36" }}>{s.value}</p>
-                              <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 2 }}>{s.note}</p>
+                              <p style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{s.label}</p>
+                              <p style={{ fontSize: 18, fontWeight: 800, color: s.highlight ? "#15803d" : "#0f1b36" }}>{s.value}</p>
+                              <p style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>{s.note}</p>
                             </div>
                           ))}
                         </div>
@@ -1724,7 +1724,7 @@ export default function DealAnalyserPage() {
                               </p>
                             </div>
                             <div style={{ textAlign: "right" }}>
-                              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>vs original</p>
+                              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)" }}>vs original</p>
                               <p style={{ fontSize: 20, fontWeight: 700, color: "rgba(255,255,255,0.6)" }}>{calc.cashOnCash.toFixed(1)}%</p>
                             </div>
                           </div>

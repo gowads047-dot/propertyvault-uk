@@ -42,7 +42,7 @@ payment_chase → "Hi [Name], hope the job went well. Could you send over the in
 work_update → "Hi [Name], just checking in on the [work type] at [address]. Any update on the timescale? Thanks, [Landlord Name]"
 
 Action chip:
-{ type: "whatsapp", label: "Send on WhatsApp · [contractor_name]", value: "[phone]", color: "#16a34a" }
+{ type: "whatsapp", label: "Send on WhatsApp · [contractor_name]", value: "[phone]", color: "#15803d" }
 
 Set completed: true immediately (no confirmation needed — message is previewed in the reply).
 Set followUp: "Log when [contractor_name] responds?"
@@ -64,7 +64,7 @@ access_request → "Hi [Name], we need to arrange access to the property on [dat
 rent_reminder → "Hi [Name], just a friendly reminder that rent of £[amount] was due on [date]. Please could you arrange payment if you haven't already? Thanks, [Landlord Name]"
 
 Action chip:
-{ type: "whatsapp", label: "Send on WhatsApp · [tenant_name]", value: "[phone]", color: "#16a34a" }
+{ type: "whatsapp", label: "Send on WhatsApp · [tenant_name]", value: "[phone]", color: "#15803d" }
 
 Set completed: true immediately.
 
@@ -161,7 +161,7 @@ Items: max 5 terse lines, key-value style: "Contractor: Mr A", "Quote: £150", "
 
 Colors by stage:
 - quote_received → "#d97706"
-- scheduled → "#16a34a"
+- scheduled → "#15803d"
 - completed → "#0891b2"
 - awaiting_landlord → "#d97706"
 - tenant_updated → "#7c3aed"
@@ -228,7 +228,7 @@ pending_actions shape (empty array when none):
 - type "whatsapp": opens WhatsApp with the phone in value field — use for all message intents
 - type "log_when_done": click-to-send prompt in chat
 - type "info": non-clickable label
-- #16a34a = green (WhatsApp, success, payment, logged)
+- #15803d = green (WhatsApp, success, payment, logged)
 - #2563eb = blue (created, updated, new property)
 - #dc2626 = red (urgent, arrears, legal)
 - #d97706 = amber (warning, pending, void)

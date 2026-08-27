@@ -26,8 +26,8 @@ const C = {
   border: "rgba(255,255,255,0.07)",
   gold: "#c9a84c",
   ink: "rgba(255,255,255,0.85)",
-  ink2: "rgba(255,255,255,0.45)",
-  ink3: "rgba(255,255,255,0.22)",
+  ink2: "rgba(255,255,255,0.62)",
+  ink3: "rgba(255,255,255,0.62)",
 };
 
 export function RenturaSidebar() {

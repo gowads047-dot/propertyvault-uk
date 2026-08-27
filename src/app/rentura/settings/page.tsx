@@ -130,7 +130,7 @@ export default function RenturaSettings() {
 
   const C = {
     bg: "#0c0f1a", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
-    ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.45)", ink3: "rgba(255,255,255,0.22)",
+    ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.62)", ink3: "rgba(255,255,255,0.62)",
     gold: "#c9a84c", green: "#22c55e", red: "#ef4444",
   };
 

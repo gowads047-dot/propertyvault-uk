@@ -40,12 +40,12 @@ export default function InspectionRecordTemplate() {
 
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>📋 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Mid-Tenancy Inspection Record</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Periodic inspection — typically every 3-6 months during tenancy</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>Periodic inspection — typically every 3-6 months during tenancy</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setMode("form")} style={{ padding: "9px 18px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", background: mode === "form" ? "white" : "transparent", color: mode === "form" ? "#0f1b36" : "rgba(255,255,255,0.6)", border: "1.5px solid rgba(255,255,255,0.2)" }}>✏️ Fill in</button>
@@ -107,12 +107,12 @@ export default function InspectionRecordTemplate() {
                           <span style={{ fontSize: 13, color: "#374151", flex: "1 1 180px" }}>{check}</span>
                           <div style={{ display: "flex", gap: 6 }}>
                             {RATINGS.map(r => {
-                              const col = r === "OK" ? "#16a34a" : r === "Monitor" ? "#2563eb" : r === "Action needed" ? "#d97706" : "#dc2626";
+                              const col = r === "OK" ? "#15803d" : r === "Monitor" ? "#2563eb" : r === "Action needed" ? "#d97706" : "#dc2626";
                               return (
                                 <button key={r} onClick={() => setRatings(p => ({ ...p, [key]: r }))}
                                   style={{ padding: "5px 8px", borderRadius: 7, fontSize: 10, fontWeight: 600, cursor: "pointer", border: "none",
                                     background: ratings[key] === r ? col : "#f1f5f9",
-                                    color: ratings[key] === r ? "white" : "#64748b" }}>
+                                    color: ratings[key] === r ? "white" : "#475569" }}>
                                   {r}
                                 </button>
                               );
@@ -152,7 +152,7 @@ export default function InspectionRecordTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
@@ -175,7 +175,7 @@ export default function InspectionRecordTemplate() {
                   { l: "Inspection no.", v: inspectionNo || "—" },
                 ].map(s => (
                   <div key={s.l}>
-                    <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase" }}>{s.l}</p>
+                    <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase" }}>{s.l}</p>
                     <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36", marginTop: 2 }}>{s.v}</p>
                   </div>
                 ))}
@@ -191,14 +191,14 @@ export default function InspectionRecordTemplate() {
                       const key = `${area.id}-${check}`;
                       const r = ratings[key];
                       const n = notes[key];
-                      const col = r === "OK" ? "#16a34a" : r === "Monitor" ? "#2563eb" : r === "Action needed" ? "#d97706" : r === "Urgent" ? "#dc2626" : "#94a3b8";
+                      const col = r === "OK" ? "#15803d" : r === "Monitor" ? "#2563eb" : r === "Action needed" ? "#d97706" : r === "Urgent" ? "#dc2626" : "#475569";
                       return (
                         <div key={ii} style={{ display: "flex", padding: "6px 12px", borderBottom: "1px solid #f8f9fc", alignItems: "flex-start", gap: 10 }}>
                           <p style={{ fontSize: 10, flex: 1, color: "#374151" }}>{check}</p>
                           <div style={{ textAlign: "right", flexShrink: 0 }}>
                             {r ? <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px", background: col + "20", color: col, borderRadius: 3 }}>{r}</span>
                                : <span style={{ fontSize: 9, color: "#cbd5e1" }}>—</span>}
-                            {n && <p style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>{n}</p>}
+                            {n && <p style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>{n}</p>}
                           </div>
                         </div>
                       );
@@ -212,7 +212,7 @@ export default function InspectionRecordTemplate() {
                   <div style={{ borderLeft: "3px solid #0f1b36", paddingLeft: 10 }}><p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", textTransform: "uppercase" }}>Actions Required</p></div>
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none", padding: 12 }}>
                     <p style={{ fontSize: 11, color: "#374151", lineHeight: 1.6, whiteSpace: "pre-wrap" }}>{actionsRequired}</p>
-                    {followUpDate && <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 8 }}>Follow-up by: {new Date(followUpDate).toLocaleDateString("en-GB")}</p>}
+                    {followUpDate && <p style={{ fontSize: 10, color: "#475569", marginTop: 8 }}>Follow-up by: {new Date(followUpDate).toLocaleDateString("en-GB")}</p>}
                   </div>
                 </div>
               )}

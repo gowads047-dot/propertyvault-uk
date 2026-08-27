@@ -52,7 +52,7 @@ export default function CourseCertificate() {
 
   if (loading || authLoading) return (
     <div style={{ minHeight: "100vh", background: "#0c0f1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <p style={{ color: "rgba(255,255,255,0.4)" }}>Loading…</p>
+      <p style={{ color: "rgba(255,255,255,0.58)" }}>Loading…</p>
     </div>
   );
 
@@ -91,9 +91,9 @@ export default function CourseCertificate() {
 
       {/* Actions bar */}
       <div className="no-print" style={{ padding: "20px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-        <Link href={`/academy/courses/${slug}`} style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none" }}>← Back to course</Link>
+        <Link href={`/academy/courses/${slug}`} style={{ fontSize: 13, color: "rgba(255,255,255,0.62)", textDecoration: "none" }}>← Back to course</Link>
         <div style={{ display: "flex", gap: 12 }}>
-          <Link href="/academy/dashboard" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", textDecoration: "none", padding: "8px 16px" }}>Dashboard</Link>
+          <Link href="/academy/dashboard" style={{ fontSize: 13, color: "rgba(255,255,255,0.62)", textDecoration: "none", padding: "8px 16px" }}>Dashboard</Link>
           <button onClick={printCert} style={{ background: "#c9a84c", color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "9px 22px", borderRadius: 8, border: "none", cursor: "pointer", fontFamily: "inherit" }}>
             Download / Print
           </button>
@@ -185,7 +185,7 @@ export default function CourseCertificate() {
 
       {/* Social share nudge */}
       <div className="no-print" style={{ textAlign: "center", paddingBottom: 48 }}>
-        <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>Share your achievement</p>
+        <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 16 }}>Share your achievement</p>
         <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
           {["LinkedIn", "Twitter/X", "WhatsApp"].map(s => (
             <button key={s} style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "7px 14px", cursor: "pointer", fontFamily: "inherit" }}>

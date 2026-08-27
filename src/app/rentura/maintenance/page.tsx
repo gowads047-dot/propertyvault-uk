@@ -21,7 +21,7 @@ const CATEGORIES: { value: MaintenanceCategory; label: string; icon: string }[] 
 ];
 
 const URGENCY_CFG: Record<MaintenanceUrgency, { label: string; color: string; bg: string; border: string; detail: string }> = {
-  emergency: { label: "Emergency",    color: "#dc2626", bg: "rgba(220,38,38,0.05)", border: "rgba(220,38,38,0.25)", detail: "Within 24 hours" },
+  emergency: { label: "Emergency",    color: "#b91c1c", bg: "rgba(220,38,38,0.05)", border: "rgba(220,38,38,0.25)", detail: "Within 24 hours" },
   urgent:    { label: "Urgent",       color: "#d97706", bg: "rgba(217,119,6,0.05)", border: "rgba(217,119,6,0.25)",  detail: "Within 7 days" },
   routine:   { label: "Routine",      color: "#2563eb", bg: "rgba(37,99,235,0.04)", border: "rgba(37,99,235,0.15)",  detail: "When convenient" },
 };
@@ -29,7 +29,7 @@ const URGENCY_CFG: Record<MaintenanceUrgency, { label: string; color: string; bg
 const STATUS_CFG: Record<MaintenanceStatus, { label: string; color: string; next: MaintenanceStatus | null; nextLabel: string }> = {
   open:        { label: "Open",        color: "#d97706", next: "in_progress", nextLabel: "Mark in progress" },
   in_progress: { label: "In progress", color: "#2563eb", next: "resolved",    nextLabel: "Mark resolved" },
-  resolved:    { label: "Resolved",    color: "#16a34a", next: null,          nextLabel: "" },
+  resolved:    { label: "Resolved",    color: "#15803d", next: null,          nextLabel: "" },
 };
 
 function fmtDate(d: string | null) {
@@ -129,7 +129,7 @@ function IssueCard({
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 8, paddingTop: 10, borderTop: `1px solid ${BORDER}` }}>
             {sta.next && (
               <button onClick={() => onUpdate(issue.id, sta.next!)}
-                style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", cursor: "pointer", fontFamily: "inherit", background: sta.next === "resolved" ? "#16a34a" : "#0f1728", color: "white" }}>
+                style={{ fontSize: 12, fontWeight: 700, padding: "6px 14px", borderRadius: 7, border: "none", cursor: "pointer", fontFamily: "inherit", background: sta.next === "resolved" ? "#15803d" : "#0f1728", color: "white" }}>
                 {sta.nextLabel}
               </button>
             )}
@@ -140,11 +140,11 @@ function IssueCard({
               </button>
             )}
             <button onClick={() => onEdit(issue)}
-              style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 7, border: `1px solid ${BORDER}`, cursor: "pointer", fontFamily: "inherit", background: "none", color: "rgba(17,17,17,0.5)" }}>
+              style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 7, border: `1px solid ${BORDER}`, cursor: "pointer", fontFamily: "inherit", background: "none", color: "rgba(17,17,17,0.72)" }}>
               Edit
             </button>
             <Link href={`/rentura/properties/${issue.property_id}`}
-              style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 7, color: "rgba(17,17,17,0.5)", textDecoration: "none", border: `1px solid ${BORDER}` }}>
+              style={{ fontSize: 12, fontWeight: 600, padding: "6px 14px", borderRadius: 7, color: "rgba(17,17,17,0.72)", textDecoration: "none", border: `1px solid ${BORDER}` }}>
               View Passport →
             </Link>
           </div>
@@ -335,7 +335,7 @@ export default function MaintenancePage() {
             Maintenance
           </h1>
           {emergencyCount > 0 && (
-            <p style={{ fontSize: 14, color: "#dc2626", fontWeight: 700 }}>
+            <p style={{ fontSize: 14, color: "#b91c1c", fontWeight: 700 }}>
               ⚠ {emergencyCount} emergency issue{emergencyCount > 1 ? "s" : ""} requiring immediate attention
             </p>
           )}

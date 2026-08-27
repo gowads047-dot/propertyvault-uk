@@ -122,7 +122,7 @@ export default function AcademyDealReviewsPage() {
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only · Weekly</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Live Deal Reviews</h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, marginBottom: 8 }}>
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 8 }}>
           Real deals analysed every week — addresses blurred. See exactly how Nass runs the numbers, what he looks for, and why he passes or proceeds.
         </p>
         <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginBottom: 32 }}>
@@ -138,12 +138,12 @@ export default function AcademyDealReviewsPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
                     <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: deal.tagColor + "22", color: deal.tagColor }}>{deal.tag}</span>
                     <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: deal.verdictColor + "22", color: deal.verdictColor }}>{deal.verdict}</span>
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{deal.week} · {deal.date}</span>
+                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.62)" }}>{deal.week} · {deal.date}</span>
                   </div>
                   <h2 style={{ fontSize: 16, fontWeight: 800 }}>{deal.title}</h2>
-                  <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 4, lineHeight: 1.5 }}>{deal.summary}</p>
+                  <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginTop: 4, lineHeight: 1.5 }}>{deal.summary}</p>
                 </div>
-                <span style={{ fontSize: 20, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>{expanded === deal.id ? "−" : "+"}</span>
+                <span style={{ fontSize: 20, color: "rgba(255,255,255,0.62)", flexShrink: 0 }}>{expanded === deal.id ? "−" : "+"}</span>
               </button>
 
               {expanded === deal.id && (
@@ -154,7 +154,7 @@ export default function AcademyDealReviewsPage() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))", gap: 10 }}>
                       {deal.numbers.map(n => (
                         <div key={n.label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 14px" }}>
-                          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 3 }}>{n.label}</p>
+                          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", marginBottom: 3 }}>{n.label}</p>
                           <p style={{ fontSize: 15, fontWeight: 800, color: "#d4af37" }}>{n.value}</p>
                         </div>
                       ))}

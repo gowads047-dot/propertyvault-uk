@@ -34,7 +34,7 @@ export function EmbedCalculator({ slug }: { slug: string }) {
       case "monthly-cashflow":return <CashFlowCalculator />;
       case "rent-increase":   return <RentIncreaseCalculator />;
       default: return (
-        <div style={{ padding: 40, textAlign: "center", color: "#64748b" }}>
+        <div style={{ padding: 40, textAlign: "center", color: "#475569" }}>
           <p style={{ fontWeight: 700, marginBottom: 8 }}>Calculator not found</p>
           <p style={{ fontSize: 14 }}>Valid slugs: stamp-duty, mortgage, rental-yield, btl-mortgage, landlord-tax, void-period, brrr, monthly-cashflow, rent-increase</p>
         </div>
@@ -53,7 +53,7 @@ export function EmbedCalculator({ slug }: { slug: string }) {
         {renderCalc()}
       </div>
       <div style={{ padding: "10px 20px", borderTop: "1px solid #f1f5f9", display: "flex", justifyContent: "flex-end" }}>
-        <a href="https://www.propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#94a3b8", textDecoration: "none", fontWeight: 600 }}>
+        <a href="https://www.propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: "#475569", textDecoration: "none", fontWeight: 600 }}>
           Powered by PropertyVault UK →
         </a>
       </div>

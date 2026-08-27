@@ -211,7 +211,7 @@ function TRow({ label, value, sub, color, large, indent }: { label: string; valu
   );
 }
 function ConfBar({ score }: { score: number }) {
-  const c = score >= 80 ? "#16a34a" : score >= 60 ? "#d97706" : "#dc2626";
+  const c = score >= 80 ? "#15803d" : score >= 60 ? "#d97706" : "#dc2626";
   const l = score >= 80 ? "High confidence" : score >= 60 ? "Medium confidence" : "Low confidence";
   return (
     <div>
@@ -367,11 +367,11 @@ export default function TaxIntelligence() {
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
               {[
-                result.totalIncome === 0 && { color: "#dc2626", text: "Log outstanding rent before year end" },
+                result.totalIncome === 0 && { color: "#b91c1c", text: "Log outstanding rent before year end" },
                 result.totalExpenses === 0 && { color: "#d97706", text: "No expenses logged — claim what you can now" },
                 result.netTaxOwed > 0 && { color: "#d97706", text: `Spend on qualifying repairs to reduce your £${Math.round(result.netTaxOwed).toLocaleString()} bill` },
                 result.lines.some(l => !l.mortgage) && { color: "#2563eb", text: "Add mortgage details to claim finance cost credit" },
-                { color: "#16a34a", text: "Collect receipts for all expenses this year" },
+                { color: "#15803d", text: "Collect receipts for all expenses this year" },
               ].filter(Boolean).slice(0, 4).map((item, i) => item && (
                 <div key={i} style={{ display: "flex", gap: 6, alignItems: "center", background: `${item.color}10`, border: `1px solid ${item.color}30`, borderRadius: 8, padding: "6px 12px" }}>
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
@@ -418,13 +418,13 @@ export default function TaxIntelligence() {
               <div style={{ height: 1, background: BORDER, margin: "4px 0" }} />
               <TRow label={`Tax at ${taxRate * 100}%`} value={fmt(result.taxOnProfit)} color="#d97706"
                 sub={`${taxRate * 100}% × £${Math.round(result.netProfit).toLocaleString()} net profit`} />
-              <TRow label="Finance cost credit (Section 24)" value={`−${fmt(result.financeCredit)}`} color="#16a34a" indent
+              <TRow label="Finance cost credit (Section 24)" value={`−${fmt(result.financeCredit)}`} color="#15803d" indent
                 sub={`20% of £${Math.round(result.totalMortgage).toLocaleString()} estimated mortgage interest`} />
               <div style={{ height: 1, background: "#111", margin: "4px 0" }} />
-              <TRow label="Estimated tax owed" value={fmt(result.netTaxOwed)} color={result.netTaxOwed > 0 ? "#dc2626" : "#16a34a"} large />
+              <TRow label="Estimated tax owed" value={fmt(result.netTaxOwed)} color={result.netTaxOwed > 0 ? "#dc2626" : "#15803d"} large />
               {whatIfSpend > 0 && (
-                <div style={{ marginTop: 10, padding: "9px 12px", background: "#16a34a10", borderRadius: 8, borderLeft: "3px solid #16a34a" }}>
-                  <p style={{ fontSize: 12, color: "#16a34a", fontWeight: 700 }}>
+                <div style={{ marginTop: 10, padding: "9px 12px", background: "#15803d10", borderRadius: 8, borderLeft: "3px solid #15803d" }}>
+                  <p style={{ fontSize: 12, color: "#15803d", fontWeight: 700 }}>
                     What-if included: £{Math.round(whatIfSpend).toLocaleString()} extra spend → saves £{Math.round(whatIfSpend * taxRate).toLocaleString()} in tax
                   </p>
                 </div>
@@ -438,11 +438,11 @@ export default function TaxIntelligence() {
             {result.totalMortgage > 0 && (
               <Card>
                 <SH title="Section 24 Impact — Finance Cost Restriction" />
-                <TRow label="Tax under old rules (pre-2020)" value={fmt(result.taxUnderOldRules)} color="#16a34a"
+                <TRow label="Tax under old rules (pre-2020)" value={fmt(result.taxUnderOldRules)} color="#15803d"
                   sub="Mortgage interest was fully deductible from profit" />
                 <TRow label="Tax under current rules (Section 24)" value={fmt(result.netTaxOwed)} color={result.netTaxOwed > result.taxUnderOldRules ? "#dc2626" : INK}
                   sub="Only a 20% tax credit on mortgage interest" />
-                <TRow label="Extra tax due to restriction" value={result.s24ExtraCost > 0 ? `+${fmt(result.s24ExtraCost)}` : "£0"} color={result.s24ExtraCost > 0 ? "#dc2626" : "#16a34a"} large />
+                <TRow label="Extra tax due to restriction" value={result.s24ExtraCost > 0 ? `+${fmt(result.s24ExtraCost)}` : "£0"} color={result.s24ExtraCost > 0 ? "#dc2626" : "#15803d"} large />
                 {result.s24ExtraCost > 0 && (
                   <div style={{ marginTop: 10, padding: "10px 14px", background: "#fef2f2", borderRadius: 9, borderLeft: "3px solid #dc2626" }}>
                     <p style={{ fontSize: 12, color: "#991b1b", lineHeight: 1.6 }}>
@@ -467,7 +467,7 @@ export default function TaxIntelligence() {
                     <div style={{ textAlign: "left" }}>
                       <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                         <p style={{ fontSize: 14, fontWeight: 800 }}>{l.property.address.split(",")[0]}</p>
-                        {l.tenant && <span style={{ fontSize: 11, background: "#16a34a15", color: "#16a34a", padding: "2px 7px", borderRadius: 6, fontWeight: 700 }}>Tenant: {l.tenant.name ?? `${l.tenant.first_name ?? ""} ${l.tenant.last_name ?? ""}`.trim()}</span>}
+                        {l.tenant && <span style={{ fontSize: 11, background: "#15803d15", color: "#15803d", padding: "2px 7px", borderRadius: 6, fontWeight: 700 }}>Tenant: {l.tenant.name ?? `${l.tenant.first_name ?? ""} ${l.tenant.last_name ?? ""}`.trim()}</span>}
                         {!l.tenant && <span style={{ fontSize: 11, background: "#d9770615", color: "#d97706", padding: "2px 7px", borderRadius: 6, fontWeight: 700 }}>Vacant</span>}
                         {l.mortgage && <span style={{ fontSize: 11, background: "#2563eb15", color: "#2563eb", padding: "2px 7px", borderRadius: 6, fontWeight: 700 }}>{l.mortgage.lender ?? "Mortgaged"}</span>}
                       </div>
@@ -506,14 +506,14 @@ export default function TaxIntelligence() {
                         <>
                           {l.fIncomeRows.map(i => (
                             <div key={i.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
-                              <span style={{ color: INK2 }}>{fmtDate(i.date)} · {i.notes || i.type} <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Financials</span></span>
-                              <span style={{ fontWeight: 700, color: "#16a34a" }}>+{fmt(i.amount)}</span>
+                              <span style={{ color: INK2 }}>{fmtDate(i.date)} · {i.notes || i.type} <span style={{ fontSize: 10, background: "#dcfce7", color: "#15803d", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Financials</span></span>
+                              <span style={{ fontWeight: 700, color: "#15803d" }}>+{fmt(i.amount)}</span>
                             </div>
                           ))}
                           {l.incomeEvents.map(e => (
                             <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
                               <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title} <span style={{ fontSize: 10, background: "#e0e7ff", color: "#4338ca", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Chat</span></span>
-                              <span style={{ fontWeight: 700, color: "#16a34a" }}>+{fmt(e.amount ?? 0)}</span>
+                              <span style={{ fontWeight: 700, color: "#15803d" }}>+{fmt(e.amount ?? 0)}</span>
                             </div>
                           ))}
                         </>
@@ -534,14 +534,14 @@ export default function TaxIntelligence() {
                           <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8, marginTop: 14 }}>Expenses — logged</p>
                           {l.fExpenseRows.map(e => (
                             <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
-                              <span style={{ color: INK2 }}>{fmtDate(e.date)} · {e.description} <span style={{ fontSize: 10, background: "#fee2e2", color: "#dc2626", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>{e.category}</span> <span style={{ fontSize: 10, background: "#dcfce7", color: "#16a34a", padding: "1px 5px", borderRadius: 4 }}>Financials</span></span>
-                              <span style={{ fontWeight: 700, color: "#dc2626" }}>−{fmt(e.amount)}</span>
+                              <span style={{ color: INK2 }}>{fmtDate(e.date)} · {e.description} <span style={{ fontSize: 10, background: "#fee2e2", color: "#b91c1c", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>{e.category}</span> <span style={{ fontSize: 10, background: "#dcfce7", color: "#15803d", padding: "1px 5px", borderRadius: 4 }}>Financials</span></span>
+                              <span style={{ fontWeight: 700, color: "#b91c1c" }}>−{fmt(e.amount)}</span>
                             </div>
                           ))}
                           {l.expenseEvents.map(e => (
                             <div key={e.id} style={{ display: "flex", justifyContent: "space-between", fontSize: 12, padding: "5px 0", borderBottom: `1px solid ${BORDER}` }}>
                               <span style={{ color: INK2 }}>{fmtDate(e.event_date)} · {e.title} <span style={{ fontSize: 10, background: "#e0e7ff", color: "#4338ca", padding: "1px 5px", borderRadius: 4, marginLeft: 4 }}>Chat</span></span>
-                              <span style={{ fontWeight: 700, color: "#dc2626" }}>−{fmt(e.amount ?? 0)}</span>
+                              <span style={{ fontWeight: 700, color: "#b91c1c" }}>−{fmt(e.amount ?? 0)}</span>
                             </div>
                           ))}
                         </>
@@ -672,10 +672,10 @@ export default function TaxIntelligence() {
                   {whatIfSpend > 0 && (
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
                       {[
-                        { label: "Tax saving", value: fmt(whatIfSpend * taxRate), color: "#16a34a" },
+                        { label: "Tax saving", value: fmt(whatIfSpend * taxRate), color: "#15803d" },
                         { label: "Net cost to you", value: fmt(whatIfSpend - whatIfSpend * taxRate), color: INK },
-                        { label: "New tax owed", value: fmt(Math.max(0, result.netTaxOwed - whatIfSpend * taxRate)), color: "#dc2626" },
-                        { label: "vs. current estimate", value: `−${fmt(whatIfSpend * taxRate)}`, color: "#16a34a" },
+                        { label: "New tax owed", value: fmt(Math.max(0, result.netTaxOwed - whatIfSpend * taxRate)), color: "#b91c1c" },
+                        { label: "vs. current estimate", value: `−${fmt(whatIfSpend * taxRate)}`, color: "#15803d" },
                       ].map(s => (
                         <div key={s.label} style={{ background: "#fafaf9", borderRadius: 10, padding: "12px 14px" }}>
                           <p style={{ fontSize: 11, color: INK2, marginBottom: 4 }}>{s.label}</p>
@@ -812,8 +812,8 @@ export default function TaxIntelligence() {
                 );
               })}
               {result.missedTotal > 0 && (
-                <div style={{ marginTop: 8, padding: "8px 12px", background: "#16a34a10", borderRadius: 8, borderLeft: "3px solid #16a34a" }}>
-                  <p style={{ fontSize: 12, color: "#16a34a", fontWeight: 700 }}>
+                <div style={{ marginTop: 8, padding: "8px 12px", background: "#15803d10", borderRadius: 8, borderLeft: "3px solid #15803d" }}>
+                  <p style={{ fontSize: 12, color: "#15803d", fontWeight: 700 }}>
                     {fmt(result.missedTotal)} additional expenses → saves approx. {fmt(result.missedTotal * taxRate)} in tax
                   </p>
                 </div>

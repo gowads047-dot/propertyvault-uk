@@ -81,7 +81,7 @@ export default function AcademyJoinPage() {
               <span style={{ fontSize: 18, fontWeight: 900, color: "white", letterSpacing: "-0.02em" }}>Deal Sourcing Academy</span>
             </div>
           </Link>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>by PropertyVault UK</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>by PropertyVault UK</p>
         </div>
 
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: "36px 32px" }}>
@@ -118,7 +118,7 @@ export default function AcademyJoinPage() {
               <h1 style={{ fontSize: 22, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>
                 Start your free 30-day trial
               </h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 4 }}>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 4 }}>
                 Free for 30 days · Then £14.99/month · Cancel anytime
               </p>
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textAlign: "center", marginBottom: 24 }}>
@@ -179,9 +179,9 @@ export default function AcademyJoinPage() {
 
               <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: 20, lineHeight: 1.7 }}>
                 By signing up you agree to our{" "}
-                <Link href="/terms" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Terms</Link>
+                <Link href="/terms" style={{ color: "rgba(255,255,255,0.58)", textDecoration: "underline" }}>Terms</Link>
                 {" "}and{" "}
-                <Link href="/privacy" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "underline" }}>Privacy Policy</Link>.
+                <Link href="/privacy" style={{ color: "rgba(255,255,255,0.58)", textDecoration: "underline" }}>Privacy Policy</Link>.
                 <br />Educational platform only — not financial advice.
                 <br />All payments are non-refundable. Cancel anytime.
               </p>
@@ -189,7 +189,7 @@ export default function AcademyJoinPage() {
           )}
         </div>
 
-        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>
+        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(255,255,255,0.62)" }}>
           Already have an account?{" "}
           <Link href="/academy/auth" style={{ color: "#d4af37", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
         </p>

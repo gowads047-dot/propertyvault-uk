@@ -266,7 +266,7 @@ export default function AcademyEmailsPage() {
       <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Email Swipe File</h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, marginBottom: 28 }}>
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 28 }}>
           {EMAILS.length} copy-paste email templates for every scenario. Click any email to expand, then copy the body.
         </p>
 
@@ -287,13 +287,13 @@ export default function AcademyEmailsPage() {
                   <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "rgba(212,175,55,0.12)", color: "#d4af37" }}>{email.category}</span>
                   <span style={{ fontSize: 14, fontWeight: 700 }}>{email.title}</span>
                 </div>
-                <span style={{ fontSize: 18, color: "rgba(255,255,255,0.3)", flexShrink: 0 }}>{expanded === email.id ? "−" : "+"}</span>
+                <span style={{ fontSize: 18, color: "rgba(255,255,255,0.62)", flexShrink: 0 }}>{expanded === email.id ? "−" : "+"}</span>
               </button>
 
               {expanded === email.id && (
                 <div style={{ padding: "0 20px 20px" }}>
                   <div style={{ marginBottom: 12 }}>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 4 }}>SUBJECT LINE</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", marginBottom: 4 }}>SUBJECT LINE</p>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.05)", borderRadius: 8, padding: "10px 14px" }}>
                       <span style={{ fontSize: 13, fontWeight: 600 }}>{email.subject}</span>
                       <button onClick={() => copy(email.id * 100, email.subject)} style={{ fontSize: 11, color: "#d4af37", background: "none", border: "none", cursor: "pointer", flexShrink: 0, marginLeft: 12 }}>
@@ -304,7 +304,7 @@ export default function AcademyEmailsPage() {
 
                   <div style={{ marginBottom: 16 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
-                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>EMAIL BODY</p>
+                      <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)" }}>EMAIL BODY</p>
                       <button onClick={() => copy(email.id, email.body)} style={{ fontSize: 12, fontWeight: 700, color: copied === email.id ? "#4ade80" : "#d4af37", background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 8, padding: "5px 12px", cursor: "pointer" }}>
                         {copied === email.id ? "✓ Copied!" : "Copy Email"}
                       </button>

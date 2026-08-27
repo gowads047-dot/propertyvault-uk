@@ -131,7 +131,7 @@ export function CalculatorsGrid() {
               cursor: "pointer",
               border: active === cat ? "none" : "1.5px solid #e2e5ee",
               background: active === cat ? "#0f1b36" : "white",
-              color: active === cat ? "white" : "#64748b",
+              color: active === cat ? "white" : "#475569",
               boxShadow: active === cat ? "0 2px 8px rgba(15,27,54,0.18)" : "none",
             }}
           >
@@ -141,7 +141,7 @@ export function CalculatorsGrid() {
                 marginLeft: 6,
                 fontSize: 11,
                 fontWeight: 700,
-                color: active === cat ? "#c9a84c" : "#94a3b8",
+                color: active === cat ? "#c9a84c" : "#475569",
               }}
             >
               {counts[cat]}

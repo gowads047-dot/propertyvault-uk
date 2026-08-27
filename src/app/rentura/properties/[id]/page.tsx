@@ -28,7 +28,7 @@ function daysUntil(dateStr: string | null) {
 
 function TrustBadge({ level }: { level: string }) {
   const cfg: Record<string, { label: string; color: string; bg: string }> = {
-    verified:  { label: "✓ Verified",  color: "#16a34a", bg: "rgba(22,163,74,0.08)" },
+    verified:  { label: "✓ Verified",  color: "#15803d", bg: "rgba(22,163,74,0.08)" },
     confirmed: { label: "◎ Confirmed", color: "#2563eb", bg: "rgba(37,99,235,0.08)" },
     suggested: { label: "~ Suggested", color: "#d97706", bg: "rgba(217,119,6,0.08)" },
   };
@@ -44,7 +44,7 @@ function ExpiryPill({ expiry }: { expiry: string | null }) {
   if (!expiry) return <span style={{ fontSize: 12, color: "rgba(17,17,17,0.4)" }}>No expiry recorded</span>;
   const days = daysUntil(expiry);
   if (days == null) return null;
-  const color = days <= 0 ? "#dc2626" : days <= 14 ? "#dc2626" : days <= 45 ? "#d97706" : "#16a34a";
+  const color = days <= 0 ? "#dc2626" : days <= 14 ? "#dc2626" : days <= 45 ? "#d97706" : "#15803d";
   const label = days <= 0 ? "EXPIRED" : `${days}d remaining`;
   return (
     <span style={{ fontSize: 11, fontWeight: 700, color, background: color + "12", padding: "3px 8px", borderRadius: 20 }}>
@@ -386,7 +386,7 @@ export default function PropertyPassport() {
   ];
 
   const MAINT_URGENCY: Record<string, { label: string; color: string }> = {
-    emergency: { label: "Emergency", color: "#dc2626" },
+    emergency: { label: "Emergency", color: "#b91c1c" },
     urgent:    { label: "Urgent",    color: "#d97706" },
     routine:   { label: "Routine",   color: "#2563eb" },
   };
@@ -394,7 +394,7 @@ export default function PropertyPassport() {
   const MAINT_STATUS: Record<string, { label: string; color: string }> = {
     open:        { label: "Open",        color: "#d97706" },
     in_progress: { label: "In progress", color: "#2563eb" },
-    resolved:    { label: "Resolved",    color: "#16a34a" },
+    resolved:    { label: "Resolved",    color: "#15803d" },
   };
 
   async function saveMaintIssue() {
@@ -769,7 +769,7 @@ export default function PropertyPassport() {
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
                         <p style={{ fontSize: 15, fontWeight: 800 }}>{t.name}</p>
-                        {t.is_current && <span style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", background: "rgba(22,163,74,0.08)", padding: "2px 8px", borderRadius: 20 }}>Current</span>}
+                        {t.is_current && <span style={{ fontSize: 10, fontWeight: 700, color: "#15803d", background: "rgba(22,163,74,0.08)", padding: "2px 8px", borderRadius: 20 }}>Current</span>}
                       </div>
                       <p style={{ fontSize: 13, color: INK2 }}>
                         {fmt(t.monthly_rent)}/mo{t.move_in_date ? ` · from ${fmtDate(t.move_in_date)}` : ""}
@@ -856,7 +856,7 @@ export default function PropertyPassport() {
                 return (
                   <>
                     <div style={{ marginBottom: 14, padding: "10px 14px", borderRadius: 8, background: failCount > 0 ? "rgba(220,38,38,0.06)" : allPass ? "rgba(22,163,74,0.06)" : "rgba(217,119,6,0.06)", border: `1px solid ${failCount > 0 ? "rgba(220,38,38,0.2)" : allPass ? "rgba(22,163,74,0.2)" : "rgba(217,119,6,0.2)"}` }}>
-                      <p style={{ fontSize: 13, fontWeight: 800, color: failCount > 0 ? "#dc2626" : allPass ? "#16a34a" : "#d97706" }}>
+                      <p style={{ fontSize: 13, fontWeight: 800, color: failCount > 0 ? "#dc2626" : allPass ? "#15803d" : "#d97706" }}>
                         {failCount > 0 ? `${failCount} issue${failCount > 1 ? "s" : ""} must be resolved before serving` : allPass ? "Ready to serve Section 21" : `${unknownCount} item${unknownCount > 1 ? "s" : ""} need manual confirmation`}
                       </p>
                     </div>
@@ -871,7 +871,7 @@ export default function PropertyPassport() {
                             <p style={{ fontSize: 12, color: check.pass === false ? "#dc2626" : INK2 }}>{check.detail}</p>
                           </div>
                           {check.pass === false && check.fixTab && (
-                            <button onClick={() => setTab(check.fixTab!)} style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "none", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontFamily: "inherit", flexShrink: 0 }}>
+                            <button onClick={() => setTab(check.fixTab!)} style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c", background: "none", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 6, padding: "4px 10px", cursor: "pointer", fontFamily: "inherit", flexShrink: 0 }}>
                               Fix →
                             </button>
                           )}
@@ -1034,21 +1034,21 @@ export default function PropertyPassport() {
                           <input autoFocus type="number" placeholder="0.00" value={editingCost.value}
                             onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
                             onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "actual_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
-                            style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid #16a34a`, outline: "none", fontFamily: "inherit" }} />
+                            style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid #15803d`, outline: "none", fontFamily: "inherit" }} />
                           <button onClick={() => saveMaintCost(issue.id, "actual_cost", editingCost.value)} style={{ padding: "6px 10px", background: "#16a34a", color: "white", fontWeight: 700, fontSize: 12, border: "none", borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>Save</button>
                           <button onClick={() => setEditingCost(null)} style={{ padding: "6px 8px", background: "none", color: INK2, fontWeight: 700, fontSize: 12, border: `1px solid ${BORDER}`, borderRadius: 7, cursor: "pointer", fontFamily: "inherit" }}>✕</button>
                         </div>
                       ) : issue.actual_cost != null ? (
                         <div style={{ background: "rgba(34,197,94,0.07)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 8, padding: "7px 12px", minWidth: 90, cursor: "pointer" }}
                           onClick={() => setEditingCost({ id: issue.id, field: "actual_cost", value: String(issue.actual_cost) })}>
-                          <p style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>Final cost ✎</p>
-                          <p style={{ fontSize: 14, fontWeight: 800, color: "#16a34a" }}>£{issue.actual_cost.toLocaleString("en-GB")}</p>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#15803d", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>Final cost ✎</p>
+                          <p style={{ fontSize: 14, fontWeight: 800, color: "#15803d" }}>£{issue.actual_cost.toLocaleString("en-GB")}</p>
                         </div>
                       ) : (
                         <button onClick={() => setEditingCost({ id: issue.id, field: "actual_cost", value: "" })}
                           style={{ background: "rgba(34,197,94,0.05)", border: "1px dashed rgba(34,197,94,0.3)", borderRadius: 8, padding: "7px 12px", cursor: "pointer", fontFamily: "inherit" }}>
-                          <p style={{ fontSize: 10, fontWeight: 700, color: "#16a34a", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>+ Final cost</p>
-                          <p style={{ fontSize: 12, color: "#16a34a" }}>£ —</p>
+                          <p style={{ fontSize: 10, fontWeight: 700, color: "#15803d", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.06em" }}>+ Final cost</p>
+                          <p style={{ fontSize: 12, color: "#15803d" }}>£ —</p>
                         </button>
                       )}
                     </div>
@@ -1087,13 +1087,13 @@ export default function PropertyPassport() {
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
                   <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Reported by tenant ({tenantIssues.length})</p>
                   {tenantIssues.filter((ti: { landlord_first_response_at?: string | null; status: string }) => !ti.landlord_first_response_at && ti.status !== "resolved").length > 0 && (
-                    <span style={{ fontSize: 11, fontWeight: 700, color: "#dc2626", background: "rgba(220,38,38,0.08)", padding: "3px 9px", borderRadius: 20 }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c", background: "rgba(220,38,38,0.08)", padding: "3px 9px", borderRadius: 20 }}>
                       {tenantIssues.filter((ti: { landlord_first_response_at?: string | null; status: string }) => !ti.landlord_first_response_at && ti.status !== "resolved").length} awaiting your response
                     </span>
                   )}
                 </div>
                 {tenantIssues.map((ti: { id: string; title: string; status: string; priority: string; category: string; tenant_name?: string; created_at: string; landlord_first_response_at?: string | null }) => {
-                  const stCfg: Record<string, { label: string; color: string }> = { open: { label: "Open", color: "#dc2626" }, in_progress: { label: "In progress", color: "#ca8a04" }, scheduled: { label: "Scheduled", color: "#2563eb" }, resolved: { label: "Resolved", color: "#16a34a" } };
+                  const stCfg: Record<string, { label: string; color: string }> = { open: { label: "Open", color: "#b91c1c" }, in_progress: { label: "In progress", color: "#ca8a04" }, scheduled: { label: "Scheduled", color: "#2563eb" }, resolved: { label: "Resolved", color: "#15803d" } };
                   const sc = stCfg[ti.status] ?? { label: ti.status, color: "#111" };
                   const awaitingResponse = !ti.landlord_first_response_at && ti.status !== "resolved";
                   const isUrgent = ti.priority === "urgent";
@@ -1225,7 +1225,7 @@ export default function PropertyPassport() {
               <p style={{ fontSize: 13, color: INK2, marginBottom: 20, lineHeight: 1.6 }}>
                 Gas Safety, EICR, EPC, mortgage statement, insurance, tenancy agreement.<br />
                 Rentura reads it and updates the Passport automatically — data marked{" "}
-                <span style={{ color: "#16a34a", fontWeight: 700 }}>✓ VERIFIED</span>.
+                <span style={{ color: "#15803d", fontWeight: 700 }}>✓ VERIFIED</span>.
               </p>
               <label style={{ display: "inline-block", background: CTA, color: "white", fontWeight: 700, fontSize: 14, padding: "11px 24px", borderRadius: 9, cursor: "pointer" }}>
                 {uploading ? "Extracting…" : "Choose file (PDF or image)"}
@@ -1237,7 +1237,7 @@ export default function PropertyPassport() {
 
             {/* Upload error */}
             {uploadError && (
-              <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 10, padding: "12px 16px", color: "#dc2626", fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
+              <div style={{ background: "rgba(220,38,38,0.06)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 10, padding: "12px 16px", color: "#b91c1c", fontSize: 13, fontWeight: 600, marginBottom: 16 }}>
                 {uploadError}
               </div>
             )}
@@ -1251,7 +1251,7 @@ export default function PropertyPassport() {
                     <p style={{ fontSize: 14, fontWeight: 800 }}>Document read successfully</p>
                     <p style={{ fontSize: 12, color: INK2 }}>{uploadResult.summary}</p>
                   </div>
-                  <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 700, color: "#16a34a", background: "rgba(22,163,74,0.08)", padding: "3px 8px", borderRadius: 20 }}>
+                  <span style={{ marginLeft: "auto", fontSize: 11, fontWeight: 700, color: "#15803d", background: "rgba(22,163,74,0.08)", padding: "3px 8px", borderRadius: 20 }}>
                     {Math.round((uploadResult.confidence ?? 0) * 100)}% confidence
                   </span>
                 </div>

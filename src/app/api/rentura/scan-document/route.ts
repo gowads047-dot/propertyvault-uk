@@ -58,12 +58,12 @@ Each action object:
 Colour guide:
 - save_compliance → "#0891b2" (teal)
 - log_expense → "#dc2626" (red)
-- log_income → "#16a34a" (green)
+- log_income → "#15803d" (green)
 - update_tenant → "#7c3aed" (purple)
 - log_event → "#d97706" (amber)
 - log_rtr → "#0891b2" (teal)
 - save_mortgage → "#b8962e" (gold)
-- save_to_documents → "#64748b" (slate)
+- save_to_documents → "#475569" (slate)
 
 ## DATA FIELDS PER ACTION (include in action.data)
 
@@ -148,7 +148,7 @@ export async function POST(req: Request) {
         document_type: "Unknown",
         document_category: "other",
         extracted: {},
-        suggested_actions: [{ id: "save_to_documents", label: "Save to Documents", description: "Store this file in your document vault.", color: "#64748b", primary: true, data: { category: "other", file_name: filename } }],
+        suggested_actions: [{ id: "save_to_documents", label: "Save to Documents", description: "Store this file in your document vault.", color: "#475569", primary: true, data: { category: "other", file_name: filename } }],
         property_match: null,
         tenant_match: null,
         confidence: "low",
@@ -206,7 +206,7 @@ export async function POST(req: Request) {
         document_type: "Unknown",
         document_category: "other",
         extracted: {},
-        suggested_actions: [{ id: "save_to_documents", label: "Save to Documents", description: "Store this file in your document vault.", color: "#64748b", primary: true, data: { category: "other", file_name: filename } }],
+        suggested_actions: [{ id: "save_to_documents", label: "Save to Documents", description: "Store this file in your document vault.", color: "#475569", primary: true, data: { category: "other", file_name: filename } }],
         property_match: null,
         tenant_match: null,
         confidence: "low",

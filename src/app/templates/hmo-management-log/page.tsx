@@ -221,7 +221,7 @@ export default function HmoManagementLog() {
                         <td style={{ padding: "6px 10px" }}>{r.rent ? `£${r.rent}` : "—"}</td>
                         <td style={{ padding: "6px 10px", color: r.arrears && parseFloat(r.arrears) > 0 ? "#dc2626" : "#6b7280", fontWeight: r.arrears && parseFloat(r.arrears) > 0 ? 700 : 400 }}>{r.arrears ? `£${r.arrears}` : "—"}</td>
                         <td style={{ padding: "6px 10px" }}>
-                          <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: 10, fontWeight: 700, background: r.condition === "good" ? "#dcfce7" : r.condition === "fair" ? "#fef9c3" : "#fee2e2", color: r.condition === "good" ? "#16a34a" : r.condition === "fair" ? "#ca8a04" : "#dc2626" }}>{r.condition}</span>
+                          <span style={{ padding: "2px 8px", borderRadius: 10, fontSize: 10, fontWeight: 700, background: r.condition === "good" ? "#dcfce7" : r.condition === "fair" ? "#fef9c3" : "#fee2e2", color: r.condition === "good" ? "#15803d" : r.condition === "fair" ? "#ca8a04" : "#dc2626" }}>{r.condition}</span>
                         </td>
                         <td style={{ padding: "6px 10px", color: "#6b7280" }}>{r.notes || "—"}</td>
                       </tr>
@@ -234,12 +234,12 @@ export default function HmoManagementLog() {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                   <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Compliance Checklist</p>
-                  <span style={{ fontSize: 11, fontWeight: 700, background: passCount === COMPLIANCE_ITEMS.length ? "#dcfce7" : "#fef9c3", color: passCount === COMPLIANCE_ITEMS.length ? "#16a34a" : "#ca8a04", padding: "2px 10px", borderRadius: 10 }}>{passCount}/{COMPLIANCE_ITEMS.length} ✓</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, background: passCount === COMPLIANCE_ITEMS.length ? "#dcfce7" : "#fef9c3", color: passCount === COMPLIANCE_ITEMS.length ? "#15803d" : "#ca8a04", padding: "2px 10px", borderRadius: 10 }}>{passCount}/{COMPLIANCE_ITEMS.length} ✓</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                   {COMPLIANCE_ITEMS.map(item => (
                     <div key={item.id} style={{ display: "flex", gap: 6, alignItems: "flex-start", fontSize: 10, padding: "3px 0" }}>
-                      <span style={{ color: compliance[item.id] ? "#16a34a" : "#dc2626", fontWeight: 800, flexShrink: 0 }}>{compliance[item.id] ? "✓" : "✗"}</span>
+                      <span style={{ color: compliance[item.id] ? "#15803d" : "#dc2626", fontWeight: 800, flexShrink: 0 }}>{compliance[item.id] ? "✓" : "✗"}</span>
                       <div>
                         <span style={{ color: "#374151" }}>{item.label}</span>
                         {complianceNotes[item.id] && <span style={{ color: "#9ca3af", marginLeft: 4 }}>— {complianceNotes[item.id]}</span>}

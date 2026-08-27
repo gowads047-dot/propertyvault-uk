@@ -11,10 +11,10 @@ type Update = { id: string; author_type: string; author_name: string; message: s
 type Issue = { id: string; title: string; category: string; priority: string; status: string; description: string; created_at: string; tenant_name: string };
 
 const STATUS_LABELS: Record<string, { label: string; color: string; bg: string }> = {
-  open: { label: "Open", color: "#dc2626", bg: "rgba(220,38,38,0.08)" },
+  open: { label: "Open", color: "#b91c1c", bg: "rgba(220,38,38,0.08)" },
   in_progress: { label: "In progress", color: "#ca8a04", bg: "rgba(234,179,8,0.08)" },
   scheduled: { label: "Scheduled", color: "#2563eb", bg: "rgba(59,130,246,0.08)" },
-  resolved: { label: "Resolved ✓", color: "#16a34a", bg: "rgba(34,197,94,0.08)" },
+  resolved: { label: "Resolved ✓", color: "#15803d", bg: "rgba(34,197,94,0.08)" },
 };
 
 function IssueThreadInner() {
@@ -83,7 +83,7 @@ function IssueThreadInner() {
 
       <nav style={{ background: S.accent, padding: "0 24px", display: "flex", alignItems: "center", height: 56, gap: 14 }}>
         <Link href={`/tenant/dashboard?token=${token}`} style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none" }}>← Dashboard</Link>
-        <span style={{ color: "rgba(255,255,255,0.3)" }}>›</span>
+        <span style={{ color: "rgba(255,255,255,0.62)" }}>›</span>
         <span style={{ color: "white", fontWeight: 700, fontSize: 13, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{issue.title}</span>
       </nav>
 
@@ -93,7 +93,7 @@ function IssueThreadInner() {
           <div style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 12, padding: "14px 18px", marginBottom: 24, display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 20 }}>✅</span>
             <div>
-              <p style={{ fontWeight: 700, fontSize: 14, color: "#16a34a" }}>Issue submitted successfully</p>
+              <p style={{ fontWeight: 700, fontSize: 14, color: "#15803d" }}>Issue submitted successfully</p>
               <p style={{ fontSize: 12, color: "rgba(26,41,66,0.5)" }}>Your landlord has been notified by email. You&apos;ll hear back soon.</p>
             </div>
           </div>
@@ -210,7 +210,7 @@ function IssueThreadInner() {
 
         {issue.status === "resolved" && (
           <div style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 12, padding: "14px 18px", textAlign: "center" }}>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "#16a34a" }}>✓ This issue has been resolved</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: "#15803d" }}>✓ This issue has been resolved</p>
             <Link href={`/tenant/issues/new?token=${token}`} style={{ display: "inline-block", marginTop: 10, fontSize: 13, color: S.ink2, textDecoration: "none" }}>Report a new issue →</Link>
           </div>
         )}

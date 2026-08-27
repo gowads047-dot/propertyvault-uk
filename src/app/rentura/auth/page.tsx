@@ -79,7 +79,7 @@ function RenturaAuthForm() {
 
   const BG = "#eceae2";
   const INK = "#111111";
-  const INK2 = "rgba(17,17,17,0.5)";
+  const INK2 = "rgba(17,17,17,0.72)";
   const BORDER = "rgba(17,17,17,0.11)";
   const CTA = "#0f1728";
 
@@ -207,13 +207,13 @@ function RenturaAuthForm() {
             )}
 
             {error && (
-              <div style={{ background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 9, padding: "11px 14px", color: "#dc2626", fontSize: 13, fontWeight: 600 }}>
+              <div style={{ background: "rgba(220,38,38,0.07)", border: "1px solid rgba(220,38,38,0.2)", borderRadius: 9, padding: "11px 14px", color: "#b91c1c", fontSize: 13, fontWeight: 600 }}>
                 {error}
               </div>
             )}
 
             {success && (
-              <div style={{ background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 9, padding: "11px 14px", color: "#16a34a", fontSize: 13, fontWeight: 600 }}>
+              <div style={{ background: "rgba(22,163,74,0.07)", border: "1px solid rgba(22,163,74,0.2)", borderRadius: 9, padding: "11px 14px", color: "#15803d", fontSize: 13, fontWeight: 600 }}>
                 {success}
               </div>
             )}

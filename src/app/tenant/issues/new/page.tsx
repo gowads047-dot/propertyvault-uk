@@ -75,7 +75,7 @@ function NewIssueInner() {
 
       <nav style={{ background: S.accent, padding: "0 24px", display: "flex", alignItems: "center", height: 56, gap: 14 }}>
         <Link href={`/tenant/dashboard?token=${token}`} style={{ color: "rgba(255,255,255,0.5)", fontSize: 13, textDecoration: "none", fontWeight: 500 }}>← Dashboard</Link>
-        <span style={{ color: "rgba(255,255,255,0.3)" }}>›</span>
+        <span style={{ color: "rgba(255,255,255,0.62)" }}>›</span>
         <span style={{ color: "white", fontWeight: 700, fontSize: 13 }}>Report issue</span>
       </nav>
 
@@ -152,7 +152,7 @@ function NewIssueInner() {
             )}
           </div>
 
-          {error && <p style={{ fontSize: 13, color: "#dc2626", background: "rgba(220,38,38,0.06)", padding: "10px 14px", borderRadius: 8 }}>{error}</p>}
+          {error && <p style={{ fontSize: 13, color: "#b91c1c", background: "rgba(220,38,38,0.06)", padding: "10px 14px", borderRadius: 8 }}>{error}</p>}
 
           <button type="submit" disabled={submitting || uploading}
             style={{ background: submitting ? "rgba(26,41,66,0.4)" : S.accent, color: "white", fontWeight: 800, fontSize: 16, padding: "14px", borderRadius: 12, border: "none", cursor: submitting ? "not-allowed" : "pointer", fontFamily: "inherit" }}>

@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<string, string> = {
   open: "#dc2626",
   in_progress: "#ca8a04",
   scheduled: "#2563eb",
-  resolved: "#16a34a",
+  resolved: "#15803d",
 };
 
 function TenantPortalInner() {
@@ -152,7 +152,7 @@ function TenantPortalInner() {
         <style>{`body > header, body > footer { display: none !important; }`}</style>
         <div style={{ textAlign: "center" }}>
           <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#c9a84c", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 900, color: "#111", margin: "0 auto 16px" }}>R</div>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, fontFamily: "sans-serif" }}>Loading your portal…</p>
+          <p style={{ color: "rgba(255,255,255,0.58)", fontSize: 13, fontFamily: "sans-serif" }}>Loading your portal…</p>
         </div>
       </div>
     );
@@ -196,7 +196,7 @@ function TenantPortalInner() {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ color: "var(--gold-ink)", fontWeight: 900, fontSize: 13 }}>PropertyVault</span>
           <span style={{ color: "rgba(255,255,255,0.12)", fontSize: 16 }}>·</span>
-          <span style={{ color: "rgba(255,255,255,0.4)", fontSize: 12, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortAddr}</span>
+          <span style={{ color: "rgba(255,255,255,0.58)", fontSize: 12, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{shortAddr}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {openCount > 0 && (
@@ -205,9 +205,9 @@ function TenantPortalInner() {
               {openCount} open issue{openCount > 1 ? "s" : ""}
             </button>
           )}
-          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>{firstName}</span>
+          <span style={{ color: "rgba(255,255,255,0.62)", fontSize: 12 }}>{firstName}</span>
           <button onClick={handleSignOut}
-            style={{ background: "none", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: "4px 10px", color: "rgba(255,255,255,0.22)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
+            style={{ background: "none", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: "4px 10px", color: "rgba(255,255,255,0.62)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
             Sign out
           </button>
         </div>
@@ -261,7 +261,7 @@ function TenantPortalInner() {
 
                     {msg.followUp && idx === messages.length - 1 && !chatLoading && (
                       <button onClick={() => send(msg.followUp!)}
-                        style={{ marginTop: 10, background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "5px 13px", color: "rgba(255,255,255,0.45)", fontSize: 12, cursor: "pointer", fontFamily: "inherit" }}>
+                        style={{ marginTop: 10, background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "5px 13px", color: "rgba(255,255,255,0.62)", fontSize: 12, cursor: "pointer", fontFamily: "inherit" }}>
                         {msg.followUp} →
                       </button>
                     )}

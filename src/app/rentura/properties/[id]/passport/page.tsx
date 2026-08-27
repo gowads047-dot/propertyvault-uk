@@ -125,10 +125,10 @@ export default function PassportPage() {
     if (!cert) return { label: "Not recorded", color: "#9ca3af" };
     const d = daysUntil(cert.expiry_date);
     if (d == null) return { label: "Recorded (no expiry)", color: "#6b7280" };
-    if (d <= 0) return { label: `EXPIRED — ${fmtDate(cert.expiry_date)}`, color: "#dc2626" };
-    if (d <= 30) return { label: `Expires ${fmtDate(cert.expiry_date)} (${d}d)`, color: "#dc2626" };
+    if (d <= 0) return { label: `EXPIRED — ${fmtDate(cert.expiry_date)}`, color: "#b91c1c" };
+    if (d <= 30) return { label: `Expires ${fmtDate(cert.expiry_date)} (${d}d)`, color: "#b91c1c" };
     if (d <= 90) return { label: `Expires ${fmtDate(cert.expiry_date)} (${d}d)`, color: "#d97706" };
-    return { label: `Valid — ${fmtDate(cert.expiry_date)}`, color: "#16a34a" };
+    return { label: `Valid — ${fmtDate(cert.expiry_date)}`, color: "#15803d" };
   }
 
   const s21Checks = [
@@ -195,7 +195,7 @@ export default function PassportPage() {
                 <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "14px 20px" }}>
                   <p style={{ color: GOLD, fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 6 }}>Property Passport</p>
                   <p style={{ color: "rgba(255,255,255,0.75)", fontSize: 12, marginBottom: 2 }}>{today}</p>
-                  <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>
+                  <p style={{ color: "rgba(255,255,255,0.58)", fontSize: 11 }}>
                     {(property.property_type ?? "Property").toUpperCase()} · {property.bedrooms ?? "?"}BED
                   </p>
                 </div>
@@ -271,7 +271,7 @@ export default function PassportPage() {
                   {mortgage.fixed_term_expiry && (() => {
                     const d = daysUntil(mortgage.fixed_term_expiry);
                     if (!d) return null;
-                    const color = d <= 0 ? "#dc2626" : d <= 90 ? "#d97706" : "#16a34a";
+                    const color = d <= 0 ? "#dc2626" : d <= 90 ? "#d97706" : "#15803d";
                     return (
                       <div style={{ marginTop: 10, padding: "9px 12px", background: color + "12", borderRadius: 8, borderLeft: `3px solid ${color}` }}>
                         <p style={{ fontSize: 12, color, fontWeight: 700 }}>
@@ -308,7 +308,7 @@ export default function PassportPage() {
                   const d = daysUntil(c.expiry_date);
                   return d != null && d <= 0;
                 });
-                const color = expired.length === 0 ? "#16a34a" : "#dc2626";
+                const color = expired.length === 0 ? "#15803d" : "#dc2626";
                 return (
                   <div style={{ marginTop: 12, padding: "8px 12px", background: color + "10", borderRadius: 8, borderLeft: `3px solid ${color}` }}>
                     <p style={{ fontSize: 12, color, fontWeight: 700 }}>
@@ -328,11 +328,11 @@ export default function PassportPage() {
               </h3>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
                 {s21Checks.map((item, i) => (
-                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 12px", background: "white", borderRadius: 8, border: `1px solid ${item.unknown ? BORDER : item.pass ? "#16a34a30" : "#dc262630"}` }}>
-                    <span style={{ fontSize: 14, flexShrink: 0, color: item.unknown ? "#9ca3af" : item.pass ? "#16a34a" : "#dc2626", fontWeight: 900 }}>
+                  <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 12px", background: "white", borderRadius: 8, border: `1px solid ${item.unknown ? BORDER : item.pass ? "#15803d30" : "#dc262630"}` }}>
+                    <span style={{ fontSize: 14, flexShrink: 0, color: item.unknown ? "#9ca3af" : item.pass ? "#15803d" : "#dc2626", fontWeight: 900 }}>
                       {item.unknown ? "?" : item.pass ? "✓" : "✗"}
                     </span>
-                    <p style={{ fontSize: 11, color: item.unknown ? "#9ca3af" : item.pass ? "#16a34a" : "#dc2626", fontWeight: 600, lineHeight: 1.4 }}>
+                    <p style={{ fontSize: 11, color: item.unknown ? "#9ca3af" : item.pass ? "#15803d" : "#dc2626", fontWeight: 600, lineHeight: 1.4 }}>
                       {item.label}
                     </p>
                   </div>
@@ -361,7 +361,7 @@ export default function PassportPage() {
                       <p style={{ fontSize: 11, color: INK2 }}>{fmtDate(e.event_date)}</p>
                     </div>
                     {e.amount != null && (
-                      <p style={{ fontSize: 14, fontWeight: 800, color: ["payment","rent_payment","bulk_payment"].includes(e.event_type) ? "#16a34a" : "#dc2626", flexShrink: 0 }}>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: ["payment","rent_payment","bulk_payment"].includes(e.event_type) ? "#15803d" : "#dc2626", flexShrink: 0 }}>
                         {["payment","rent_payment","bulk_payment"].includes(e.event_type) ? "+" : "−"}{fmt(e.amount)}
                       </p>
                     )}
@@ -375,7 +375,7 @@ export default function PassportPage() {
           <div style={{ background: NAVY, padding: "18px 40px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div>
               <p style={{ color: GOLD, fontSize: 11, fontWeight: 700 }}>Rentura · PropertyVault UK</p>
-              <p style={{ color: "rgba(255,255,255,0.35)", fontSize: 10, marginTop: 2 }}>Generated {today} · propertyvaultuk.co.uk/rentura</p>
+              <p style={{ color: "rgba(255,255,255,0.58)", fontSize: 10, marginTop: 2 }}>Generated {today} · propertyvaultuk.co.uk/rentura</p>
             </div>
             <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 10 }}>Confidential — not for public distribution</p>
           </div>

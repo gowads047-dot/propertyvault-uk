@@ -86,7 +86,7 @@ function SignaturePad({ label, name, onSign, signed, onClear }: PadProps) {
         <div style={{ position: "relative", border: "1.5px solid #0f1b36", borderRadius: 8, overflow: "hidden" }}>
           {/* eslint-disable-next-line @next/next/no-img-element -- data: URL from the signature canvas, rendered into a printable document; next/image cannot handle data URLs */}
           <img src={signed} alt="signature" style={{ width: "100%", height: 80, objectFit: "contain", background: "white" }} />
-          <button onClick={clear} style={{ position: "absolute", top: 4, right: 4, fontSize: 10, background: "#fee2e2", color: "#dc2626", border: "none", borderRadius: 4, padding: "2px 6px", cursor: "pointer" }}>Clear</button>
+          <button onClick={clear} style={{ position: "absolute", top: 4, right: 4, fontSize: 10, background: "#fee2e2", color: "#b91c1c", border: "none", borderRadius: 4, padding: "2px 6px", cursor: "pointer" }}>Clear</button>
         </div>
       ) : (
         <div style={{ border: "1.5px dashed #d1d5db", borderRadius: 8, overflow: "hidden", touchAction: "none" }}>

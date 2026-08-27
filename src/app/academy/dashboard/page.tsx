@@ -116,7 +116,7 @@ export default function AcademyDashboard() {
     return <div style={{ minHeight: "100vh", background: "#0a0f1e", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 14 }}>
       <div style={{ width: 40, height: 40, border: "3px solid rgba(212,175,55,0.2)", borderTopColor: "#d4af37", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      <div style={{ color: "rgba(255,255,255,0.4)", fontSize: 14 }}>Loading your academy…</div>
+      <div style={{ color: "rgba(255,255,255,0.58)", fontSize: 14 }}>Loading your academy…</div>
     </div>;
   }
 
@@ -125,7 +125,7 @@ export default function AcademyDashboard() {
       <div style={{ fontSize: 48 }}>🔒</div>
       <h2 style={{ color: "white", fontSize: 24, fontWeight: 800 }}>Sign in to access the Academy</h2>
       <Link href="/academy/auth" style={{ background: "#d4af37", color: "#0a0f1e", fontWeight: 700, padding: "12px 32px", borderRadius: 12, textDecoration: "none" }}>Sign In</Link>
-      <Link href="/academy/subscribe" style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>No account? Join for £14.99/mo →</Link>
+      <Link href="/academy/subscribe" style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textDecoration: "none" }}>No account? Join for £14.99/mo →</Link>
     </div>;
   }
 
@@ -144,12 +144,12 @@ export default function AcademyDashboard() {
         <div style={{ fontSize: 48 }}>🎉</div>
         <h2 style={{ color: "white", fontSize: 26, fontWeight: 800 }}>Payment confirmed!</h2>
         <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 14, maxWidth: 360 }}>Setting up your access — this takes just a moment.</p>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "rgba(255,255,255,0.58)", fontSize: 13 }}>
           <div style={{ width: 18, height: 18, border: "2px solid rgba(212,175,55,0.3)", borderTopColor: "#d4af37", borderRadius: "50%", animation: "spin 0.8s linear infinite" }} />
           Activating your membership…
         </div>
         {pollCount >= 8 && (
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.62)", marginTop: 8 }}>
             Taking longer than expected.{" "}
             <button onClick={() => window.location.reload()} style={{ color: "#d4af37", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: 13, textDecoration: "underline" }}>Refresh</button>
           </p>
@@ -228,8 +228,8 @@ export default function AcademyDashboard() {
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{memberData?.name || user.email}</span>
-          <button onClick={openBillingPortal} style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "4px 10px", cursor: "pointer" }}>Manage Subscription</button>
+          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{memberData?.name || user.email}</span>
+          <button onClick={openBillingPortal} style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "4px 10px", cursor: "pointer" }}>Manage Subscription</button>
         </div>
       </div>
 
@@ -248,7 +248,7 @@ export default function AcademyDashboard() {
           <div style={{ background: "rgba(212,175,55,0.08)", border: "1px solid rgba(212,175,55,0.2)", borderRadius: 14, padding: "14px 20px", textAlign: "center", minWidth: 160 }}>
             <div style={{ fontSize: 24 }}>{currentLevel.icon}</div>
             <div style={{ fontWeight: 800, fontSize: 14, color: "#d4af37", marginTop: 4 }}>{currentLevel.name}</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", margin: "4px 0" }}>{points} pts {nextLevel ? `→ ${nextLevel.min}` : ""}</div>
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", margin: "4px 0" }}>{points} pts {nextLevel ? `→ ${nextLevel.min}` : ""}</div>
             <div style={{ height: 4, background: "rgba(255,255,255,0.1)", borderRadius: 4 }}>
               <div style={{ height: "100%", width: `${progress}%`, background: "#d4af37", borderRadius: 4, transition: "width 0.5s" }} />
             </div>
@@ -277,7 +277,7 @@ export default function AcademyDashboard() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 10 }}>
             {QUICK_STEPS.map(s => (
               <Link key={s.n} href={s.href} style={{ textDecoration: "none", background: s.done ? "rgba(212,175,55,0.08)" : "rgba(255,255,255,0.03)", border: `1px solid ${s.done ? "rgba(212,175,55,0.3)" : "rgba(255,255,255,0.07)"}`, borderRadius: 10, padding: "12px 14px", display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 26, height: 26, borderRadius: "50%", background: s.done ? "#d4af37" : "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: s.done ? "#0a0f1e" : "rgba(255,255,255,0.4)", flexShrink: 0 }}>
+                <div style={{ width: 26, height: 26, borderRadius: "50%", background: s.done ? "#d4af37" : "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 800, color: s.done ? "#0a0f1e" : "rgba(255,255,255,0.58)", flexShrink: 0 }}>
                   {s.done ? "✓" : s.n}
                 </div>
                 <span style={{ fontSize: 13, fontWeight: 600, color: s.done ? "#d4af37" : "white" }}>{s.label}</span>
@@ -297,7 +297,7 @@ export default function AcademyDashboard() {
             </div>
             {enrollments.length === 0 ? (
               <div style={{ textAlign: "center", padding: "20px 0" }}>
-                <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 13, marginBottom: 12 }}>No courses enrolled yet.</p>
+                <p style={{ color: "rgba(255,255,255,0.58)", fontSize: 13, marginBottom: 12 }}>No courses enrolled yet.</p>
                 <Link href="/academy/courses" style={{ background: "#d4af37", color: "#0a0f1e", fontWeight: 700, fontSize: 12, padding: "8px 18px", borderRadius: 8, textDecoration: "none" }}>Browse courses →</Link>
               </div>
             ) : (
@@ -309,12 +309,12 @@ export default function AcademyDashboard() {
                 <Link key={e.id} href={`/academy/courses/${e.course?.slug}`} style={{ textDecoration: "none", display: "block", background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: "12px 14px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: "white" }}>{e.course?.title || "Course"}</span>
-                    <span style={{ fontSize: 11, color: pct === 100 ? "#22c55e" : "rgba(255,255,255,0.4)" }}>{pct === 100 ? "✓ Complete" : `${pct}%`}</span>
+                    <span style={{ fontSize: 11, color: pct === 100 ? "#22c55e" : "rgba(255,255,255,0.58)" }}>{pct === 100 ? "✓ Complete" : `${pct}%`}</span>
                   </div>
                   <div style={{ height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3 }}>
                     <div style={{ height: "100%", width: `${pct}%`, background: pct === 100 ? "#22c55e" : "#d4af37", borderRadius: 3 }} />
                   </div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{e.completed_lessons}/{e.course?.lesson_count || 0} lessons · {e.course?.duration_hrs}h</div>
+                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.62)", marginTop: 4 }}>{e.completed_lessons}/{e.course?.lesson_count || 0} lessons · {e.course?.duration_hrs}h</div>
                 </Link>
                 );
               })}
@@ -351,7 +351,7 @@ export default function AcademyDashboard() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {ROAD_STAGES.map((stage, i) => (
               <div key={stage} style={{ background: i === 0 ? "rgba(212,175,55,0.15)" : "rgba(255,255,255,0.03)", border: `1px solid ${i === 0 ? "rgba(212,175,55,0.4)" : "rgba(255,255,255,0.07)"}`, borderRadius: 10, padding: "8px 14px", display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ fontSize: 11, fontWeight: 800, color: i === 0 ? "#d4af37" : "rgba(255,255,255,0.3)" }}>S{i + 1}</span>
+                <span style={{ fontSize: 11, fontWeight: 800, color: i === 0 ? "#d4af37" : "rgba(255,255,255,0.62)" }}>S{i + 1}</span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: i === 0 ? "#d4af37" : "rgba(255,255,255,0.5)" }}>{stage}</span>
               </div>
             ))}
@@ -376,7 +376,7 @@ export default function AcademyDashboard() {
                 className="hover:border-yellow-500/30 transition-colors">
                 <span style={{ fontSize: 20 }}>{t.icon}</span>
                 <span style={{ fontSize: 13, fontWeight: 700, color: "white" }}>{t.label}</span>
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{t.sub}</span>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.58)" }}>{t.sub}</span>
               </Link>
             ))}
           </div>

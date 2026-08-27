@@ -53,12 +53,12 @@ export default function CheckOutReportTemplate() {
 
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>📋 Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Check-Out Inspection Report</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>End-of-tenancy condition report with deposit deduction schedule</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>End-of-tenancy condition report with deposit deduction schedule</p>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
               <button onClick={() => setMode("form")} style={{ padding: "9px 18px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", background: mode === "form" ? "white" : "transparent", color: mode === "form" ? "#0f1b36" : "rgba(255,255,255,0.6)", border: "1.5px solid rgba(255,255,255,0.2)" }}>✏️ Fill in</button>
@@ -109,12 +109,12 @@ export default function CheckOutReportTemplate() {
                 <div style={{ padding: "14px 20px" }}>
                   <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
                     {CONDITIONS.map(c => {
-                      const col = c === "Same as check-in" ? "#16a34a" : c === "Fair wear & tear" ? "#2563eb" : c === "Tenant damage" ? "#dc2626" : "#d97706";
+                      const col = c === "Same as check-in" ? "#15803d" : c === "Fair wear & tear" ? "#2563eb" : c === "Tenant damage" ? "#dc2626" : "#d97706";
                       return (
                         <button key={c} onClick={() => setConditions(p => ({ ...p, [room.id]: c }))}
                           style={{ padding: "6px 12px", borderRadius: 8, fontSize: 11, fontWeight: 600, cursor: "pointer", border: "none",
                             background: conditions[room.id] === c ? col : "#f1f5f9",
-                            color: conditions[room.id] === c ? "white" : "#64748b" }}>
+                            color: conditions[room.id] === c ? "white" : "#475569" }}>
                           {c}
                         </button>
                       );
@@ -152,12 +152,12 @@ export default function CheckOutReportTemplate() {
                   </div>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                     <span style={{ fontSize: 13, color: "#374151" }}>Total deductions</span>
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "#dc2626" }}>−{fmt(totalDeductions)}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#b91c1c" }}>−{fmt(totalDeductions)}</span>
                   </div>
                   <div style={{ height: 1, background: "#e2e8f0", margin: "8px 0" }} />
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36" }}>Refund to tenant</span>
-                    <span style={{ fontSize: 16, fontWeight: 800, color: refund > 0 ? "#16a34a" : "#94a3b8" }}>{fmt(refund)}</span>
+                    <span style={{ fontSize: 16, fontWeight: 800, color: refund > 0 ? "#15803d" : "#475569" }}>{fmt(refund)}</span>
                   </div>
                 </div>
               )}
@@ -180,7 +180,7 @@ export default function CheckOutReportTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back to form</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
@@ -206,7 +206,7 @@ export default function CheckOutReportTemplate() {
                   { l: "Elec meter", v: meterElec || "—" },
                 ].map(s => (
                   <div key={s.l}>
-                    <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase" }}>{s.l}</p>
+                    <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase" }}>{s.l}</p>
                     <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36", marginTop: 2 }}>{s.v}</p>
                   </div>
                 ))}
@@ -219,14 +219,14 @@ export default function CheckOutReportTemplate() {
                   {ROOMS.map(room => {
                     const cond = conditions[room.id];
                     const note = notes[room.id];
-                    const col = cond === "Same as check-in" ? "#16a34a" : cond === "Fair wear & tear" ? "#2563eb" : cond === "Tenant damage" ? "#dc2626" : cond === "Missing" ? "#d97706" : "#94a3b8";
+                    const col = cond === "Same as check-in" ? "#15803d" : cond === "Fair wear & tear" ? "#2563eb" : cond === "Tenant damage" ? "#dc2626" : cond === "Missing" ? "#d97706" : "#475569";
                     return (
                       <div key={room.id} style={{ display: "flex", borderBottom: "1px solid #f8f9fc", padding: "8px 12px", gap: 10 }}>
                         <p style={{ fontSize: 10, fontWeight: 600, color: "#374151", flex: 1 }}>{room.name}</p>
                         <div style={{ textAlign: "right", flexShrink: 0 }}>
                           {cond ? <span style={{ fontSize: 9, fontWeight: 700, padding: "2px 6px", background: col + "20", color: col, borderRadius: 3 }}>{cond}</span>
                                 : <span style={{ fontSize: 9, color: "#cbd5e1" }}>Not inspected</span>}
-                          {note && <p style={{ fontSize: 9, color: "#64748b", marginTop: 2, maxWidth: 220, textAlign: "left" }}>{note}</p>}
+                          {note && <p style={{ fontSize: 9, color: "#475569", marginTop: 2, maxWidth: 220, textAlign: "left" }}>{note}</p>}
                         </div>
                       </div>
                     );
@@ -242,16 +242,16 @@ export default function CheckOutReportTemplate() {
                     {deductions.filter(d => d.desc || d.amount > 0).map((d, i) => (
                       <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "7px 12px", borderBottom: "1px solid #f8f9fc" }}>
                         <p style={{ fontSize: 11, color: "#374151" }}>{d.desc || `Deduction ${i + 1}`}</p>
-                        <p style={{ fontSize: 11, fontWeight: 700, color: "#dc2626" }}>{fmt(d.amount)}</p>
+                        <p style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c" }}>{fmt(d.amount)}</p>
                       </div>
                     ))}
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 12px", borderBottom: "1px solid #e2e8f0", background: "#fafafa" }}>
                       <p style={{ fontSize: 11, fontWeight: 600 }}>Total deductions</p>
-                      <p style={{ fontSize: 11, fontWeight: 700, color: "#dc2626" }}>{fmt(totalDeductions)}</p>
+                      <p style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c" }}>{fmt(totalDeductions)}</p>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 12px", background: refund > 0 ? "#f0fdf4" : "#fafafa" }}>
                       <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>Refund to tenant</p>
-                      <p style={{ fontSize: 14, fontWeight: 800, color: refund > 0 ? "#16a34a" : "#94a3b8" }}>{fmt(refund)}</p>
+                      <p style={{ fontSize: 14, fontWeight: 800, color: refund > 0 ? "#15803d" : "#475569" }}>{fmt(refund)}</p>
                     </div>
                   </div>
                 </div>

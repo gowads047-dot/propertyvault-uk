@@ -41,7 +41,7 @@ export default function RenturaPage() {
           <span style={{ fontWeight: 900, fontSize: 16, color: "#0f1b2d", letterSpacing: "-0.02em" }}>Rentura</span>
         </Link>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Link href="/rentura/auth" style={{ fontSize: 13, fontWeight: 600, color: "rgba(15,27,45,0.5)", textDecoration: "none", padding: "8px 14px" }}>Log in</Link>
+          <Link href="/rentura/auth" style={{ fontSize: 13, fontWeight: 600, color: "rgba(15,27,45,0.66)", textDecoration: "none", padding: "8px 14px" }}>Log in</Link>
           <Link href="/rentura/join" style={{ background: "#0f1b2d", color: "white", fontWeight: 700, fontSize: 13, padding: "9px 22px", borderRadius: 10, textDecoration: "none" }}>Start free trial →</Link>
         </div>
       </nav>
@@ -75,7 +75,7 @@ export default function RenturaPage() {
           {[["8", "Core modules"], ["∞", "Properties"], ["1", "Dashboard"], ["£9.99", "Per month"]].map(([v, l], i, arr) => (
             <div key={l} style={{ textAlign: "center", padding: "0 40px", borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
               <div style={{ fontSize: 30, fontWeight: 900, color: "var(--gold-ink)", fontFamily: "var(--font-family-heading)" }}>{v}</div>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{l}</div>
+              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 4 }}>{l}</div>
             </div>
           ))}
         </div>
@@ -95,7 +95,7 @@ export default function RenturaPage() {
                 <span style={{ fontSize: 20 }}>{b.icon}</span>
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#0f1b2d" }}>{b.label}</div>
-                  <div style={{ fontSize: 11, color: "rgba(15,27,45,0.45)" }}>{b.sub}</div>
+                  <div style={{ fontSize: 11, color: "rgba(15,27,45,0.66)" }}>{b.sub}</div>
                 </div>
               </div>
             ))}
@@ -123,8 +123,8 @@ export default function RenturaPage() {
                 {COMPARE.map((row, i) => (
                   <tr key={row.feature} style={{ background: i % 2 === 0 ? "white" : "#f5f3ef", borderBottom: "1px solid rgba(15,27,45,0.05)" }}>
                     <td style={{ padding: "14px 16px", fontWeight: 600, color: "#0f1b2d" }}>{row.feature}</td>
-                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.45)", fontSize: 13 }}>{row.spreadsheet}</td>
-                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.45)", fontSize: 13 }}>{row.other}</td>
+                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.66)", fontSize: 13 }}>{row.spreadsheet}</td>
+                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.66)", fontSize: 13 }}>{row.other}</td>
                     <td style={{ padding: "14px 16px", textAlign: "center", color: "#0f6e30", fontWeight: 700, fontSize: 13 }}>{row.rentura}</td>
                   </tr>
                 ))}
@@ -168,7 +168,7 @@ export default function RenturaPage() {
               <h3 style={{ color: "white", fontWeight: 800, fontSize: 17 }}>14 Maple Street, Leeds LS1</h3>
               {[["Type", "HMO — 4 bed"], ["Monthly Rent", "£2,600"], ["EPC Rating", "C — expires Jun 2027"], ["Gas Safety", "✓ Valid to Dec 2025"], ["Tenants", "3 active"], ["Mortgage", "£187,000 @ 4.2% — NatWest"]].map(([k, v]) => (
                 <div key={k} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: 8 }}>
-                  <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>{k}</span>
+                  <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{k}</span>
                   <span style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>{v}</span>
                 </div>
               ))}
@@ -182,13 +182,13 @@ export default function RenturaPage() {
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", textAlign: "center", marginBottom: 12 }}>Everything included</p>
           <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, letterSpacing: "-0.02em", textAlign: "center", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>One platform. Every tool you need.</h2>
-          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.5)", textAlign: "center", marginBottom: 48 }}>No add-ons. No tiers. Everything in the list below is included from day one.</p>
+          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.66)", textAlign: "center", marginBottom: 48 }}>No add-ons. No tiers. Everything in the list below is included from day one.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 16 }}>
             {FEATURES.map(f => (
               <div key={f.title} style={{ background: "white", borderRadius: 16, padding: "22px 22px", border: "1px solid rgba(15,27,45,0.07)" }}>
                 <div style={{ fontSize: 26, marginBottom: 10 }}>{f.icon}</div>
                 <h3 style={{ fontWeight: 800, fontSize: 15, marginBottom: 6, color: "#0f1b2d" }}>{f.title}</h3>
-                <p style={{ fontSize: 13, color: "rgba(15,27,45,0.5)", lineHeight: 1.6 }}>{f.desc}</p>
+                <p style={{ fontSize: 13, color: "rgba(15,27,45,0.66)", lineHeight: 1.6 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -200,15 +200,15 @@ export default function RenturaPage() {
         <div style={{ maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Simple pricing</p>
           <h2 style={{ fontSize: "clamp(26px,4vw,42px)", fontWeight: 900, color: "white", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>One price. Everything included.</h2>
-          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 44 }}>No property limits. No feature tiers. No surprises.</p>
+          <p style={{ fontSize: 14, color: "rgba(255,255,255,0.58)", marginBottom: 44 }}>No property limits. No feature tiers. No surprises.</p>
 
           <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.25)", borderRadius: 20, padding: "40px 36px" }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Monthly membership</p>
+            <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Monthly membership</p>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 6, justifyContent: "center", marginBottom: 6 }}>
               <span style={{ fontSize: 60, fontWeight: 900, color: "white", lineHeight: 1, letterSpacing: "-0.03em" }}>£9.99</span>
-              <span style={{ fontSize: 15, color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>/month</span>
+              <span style={{ fontSize: 15, color: "rgba(255,255,255,0.58)", marginBottom: 10 }}>/month</span>
             </div>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", marginBottom: 32 }}>30 days free · Card required · Cancel before trial ends = no charge</p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32, textAlign: "left" }}>
               {INCLUDED.map(item => (
@@ -281,7 +281,7 @@ export default function RenturaPage() {
                 <div key={item.before} style={{ background: "#f5f3ef", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(15,27,45,0.06)" }}>
                   <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <span style={{ fontSize: 13, color: "rgba(239,68,68,0.6)", marginTop: 2, flexShrink: 0 }}>✗</span>
-                    <span style={{ fontSize: 13, color: "rgba(15,27,45,0.45)", textDecoration: "line-through" }}>{item.before}</span>
+                    <span style={{ fontSize: 13, color: "rgba(15,27,45,0.66)", textDecoration: "line-through" }}>{item.before}</span>
                   </div>
                   <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 6 }}>
                     <span style={{ fontSize: 13, color: "#22c55e", marginTop: 2, flexShrink: 0 }}>✓</span>
@@ -297,7 +297,7 @@ export default function RenturaPage() {
       {/* FOOTER CTA */}
       <section style={{ background: "#0f1b2d", padding: "64px 24px", textAlign: "center" }}>
         <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)" }}>Ready to organise your portfolio?</h2>
-        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", marginBottom: 32 }}>Join UK landlords already using Rentura to manage smarter.</p>
+        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.62)", marginBottom: 32 }}>Join UK landlords already using Rentura to manage smarter.</p>
         <Link href="/rentura/join" style={{ display: "inline-flex", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "15px 42px", borderRadius: 12, textDecoration: "none" }}>
           Start free 30-day trial →
         </Link>

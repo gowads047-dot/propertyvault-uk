@@ -436,7 +436,7 @@ export default function ASTPage() {
         els.push(<p key={k++} style={{ fontSize: 11.5, color: "#92400e", background: "#fef3c7", borderLeft: "3px solid #f59e0b", padding: "5px 10px", borderRadius: "0 6px 6px 0", fontFamily: "Georgia,serif", lineHeight: 1.65, margin: "3px 0" }}>{t}</p>); continue;
       }
       if (i === 0) { els.push(<h2 key={k++} style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", textAlign: "center", letterSpacing: "0.06em", margin: "0 0 4px", fontFamily: "Georgia,serif" }}>{t}</h2>); continue; }
-      if (i <= 3 && !t.match(/^\d/) && t.length > 5) { els.push(<p key={k++} style={{ fontSize: 11, color: "#64748b", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>); continue; }
+      if (i <= 3 && !t.match(/^\d/) && t.length > 5) { els.push(<p key={k++} style={{ fontSize: 11, color: "#475569", textAlign: "center", fontStyle: "italic", margin: "2px 0", fontFamily: "Georgia,serif" }}>{t}</p>); continue; }
       if (t.match(/^\d+\.[\s\t]+[A-Z][A-Z\s&(),\-/]+$/) && t.length < 70) {
         els.push(<div key={k++} style={{ marginTop: 22, marginBottom: 10 }}><p style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36", textTransform: "uppercase", letterSpacing: "0.1em", margin: 0 }}>{t}</p><div style={{ height: 2, width: 48, background: "#c9a84c", marginTop: 5 }} /></div>); continue;
       }
@@ -444,7 +444,7 @@ export default function ASTPage() {
       if (t.startsWith("☐") || t.startsWith("□")) { els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.7, margin: "3px 0" }}>{t}</p>); continue; }
       const kv = t.match(/^([A-Za-z][^:]{1,40}):\s{2,}(.*)/);
       if (kv) {
-        els.push(<div key={k++} style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 10, marginBottom: 5, alignItems: "start" }}><span style={{ fontSize: 10, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span><span style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.65 }}>{kv[2] || "—"}</span></div>); continue;
+        els.push(<div key={k++} style={{ display: "grid", gridTemplateColumns: "160px 1fr", gap: 10, marginBottom: 5, alignItems: "start" }}><span style={{ fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em", lineHeight: 1.5, paddingTop: 1 }}>{kv[1]}</span><span style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.65 }}>{kv[2] || "—"}</span></div>); continue;
       }
       els.push(<p key={k++} style={{ fontSize: 12, color: "#1e293b", fontFamily: "Georgia,serif", lineHeight: 1.75, margin: "3px 0" }}>{t}</p>);
     }
@@ -546,14 +546,14 @@ export default function ASTPage() {
             </div>
 
             {/* Acknowledgement gate */}
-            <div style={{ marginTop: 24, background: "white", border: acknowledged ? "2px solid #16a34a" : "2px solid #e4e8f0", borderRadius: 16, padding: 24 }} className="no-print">
+            <div style={{ marginTop: 24, background: "white", border: acknowledged ? "2px solid #15803d" : "2px solid #e4e8f0", borderRadius: 16, padding: 24 }} className="no-print">
               <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>⚠️ Legal Acknowledgement — Required Before Printing</h3>
               <p style={{ fontSize: 13, color: "#374151", marginBottom: 16, lineHeight: 1.6 }}>
                 This document has been automatically generated for discussion purposes only. It does not constitute legal advice or a valid tenancy agreement without review by a qualified solicitor. Tenancy law changes frequently — clauses marked <strong>[LEGAL REVIEW REQUIRED]</strong> must be verified before execution. PropertyVault UK accepts no liability arising from use of this document.
               </p>
               <label style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer" }}>
                 <input type="checkbox" checked={acknowledged} onChange={e => setAcknowledged(e.target.checked)}
-                  style={{ width: 18, height: 18, marginTop: 2, accentColor: "#16a34a", flexShrink: 0 }} />
+                  style={{ width: 18, height: 18, marginTop: 2, accentColor: "#15803d", flexShrink: 0 }} />
                 <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1b36", lineHeight: 1.5 }}>
                   I understand this is a draft document. I will have it reviewed by a qualified solicitor before any party signs.
                 </span>
@@ -602,8 +602,8 @@ export default function ASTPage() {
           {STEPS.map((s, i) => (
             <button key={s} onClick={() => setStep(i)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all"
-              style={{ background: i === step ? "#0f1b36" : i < step ? "#e8f5e9" : "#e4e8f0", color: i === step ? "white" : i < step ? "#15803d" : "#64748b" }}>
-              <span style={{ width: 18, height: 18, borderRadius: "50%", background: i === step ? "rgba(255,255,255,0.2)" : i < step ? "#16a34a" : "#cbd5e1", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: i < step ? "white" : "inherit" }}>
+              style={{ background: i === step ? "#0f1b36" : i < step ? "#e8f5e9" : "#e4e8f0", color: i === step ? "white" : i < step ? "#15803d" : "#475569" }}>
+              <span style={{ width: 18, height: 18, borderRadius: "50%", background: i === step ? "rgba(255,255,255,0.2)" : i < step ? "#15803d" : "#cbd5e1", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 10, color: i < step ? "white" : "inherit" }}>
                 {i < step ? "✓" : i + 1}
               </span>
               {s}

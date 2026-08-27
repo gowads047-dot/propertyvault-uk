@@ -20,9 +20,9 @@ export default function PetPermission() {
   const fmt = (d: string) => d ? new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "_______________";
 
   const decisionConfig = {
-    approve: { label: "✅ Approve", color: "#16a34a", bg: "#f0fdf4", border: "#86efac", text: "Permission granted" },
+    approve: { label: "✅ Approve", color: "#15803d", bg: "#f0fdf4", border: "#86efac", text: "Permission granted" },
     "approve-conditions": { label: "⚠️ Approve with conditions", color: "#d97706", bg: "#fffbeb", border: "#fcd34d", text: "Permission granted with conditions" },
-    refuse: { label: "❌ Refuse", color: "#dc2626", bg: "#fef2f2", border: "#fca5a5", text: "Permission refused" },
+    refuse: { label: "❌ Refuse", color: "#b91c1c", bg: "#fef2f2", border: "#fca5a5", text: "Permission refused" },
   };
 
   return (
@@ -164,8 +164,8 @@ export default function PetPermission() {
 
               {decision === "approve" && (
                 <>
-                  <div style={{ border: "1.5px solid #16a34a", padding: "10px 14px", marginBottom: 16 }}>
-                    <p style={{ fontSize: 12, fontWeight: 800, color: "#16a34a", marginBottom: 4 }}>PERMISSION GRANTED</p>
+                  <div style={{ border: "1.5px solid #15803d", padding: "10px 14px", marginBottom: 16 }}>
+                    <p style={{ fontSize: 12, fontWeight: 800, color: "#15803d", marginBottom: 4 }}>PERMISSION GRANTED</p>
                     <p style={{ fontSize: 11.5, color: "#374151" }}>I am pleased to confirm that you have my permission to keep the above-described pet at the property.</p>
                   </div>
                   <div style={{ fontSize: 11.5, color: "#374151", lineHeight: 1.8 }}>
@@ -193,7 +193,7 @@ export default function PetPermission() {
               {decision === "refuse" && (
                 <>
                   <div style={{ border: "1.5px solid #dc2626", padding: "10px 14px", marginBottom: 16 }}>
-                    <p style={{ fontSize: 12, fontWeight: 800, color: "#dc2626", marginBottom: 4 }}>PERMISSION REFUSED</p>
+                    <p style={{ fontSize: 12, fontWeight: 800, color: "#b91c1c", marginBottom: 4 }}>PERMISSION REFUSED</p>
                     <p style={{ fontSize: 11.5, color: "#374151" }}>After careful consideration, I am unable to grant permission for the pet at this property. The reason is set out below.</p>
                   </div>
                   <div style={{ background: "#fafafa", border: "1px solid #e5e7eb", padding: 12, marginBottom: 16, fontSize: 11.5, color: "#374151", lineHeight: 1.7 }}>

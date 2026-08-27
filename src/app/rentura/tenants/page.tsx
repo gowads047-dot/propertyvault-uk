@@ -8,7 +8,7 @@ import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 const C = {
   bg: "#0c0f1a", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
-  ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.45)", ink3: "rgba(255,255,255,0.22)",
+  ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.62)", ink3: "rgba(255,255,255,0.62)",
   gold: "#c9a84c", green: "#22c55e", red: "#ef4444", amber: "#f59e0b", blue: "#3b82f6",
 };
 
@@ -127,7 +127,7 @@ const BLANK_RTR: Partial<RtRCheck> = {
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div>
-      <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>
+      <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>
         {label}{required && <span style={{ color: C.red, marginLeft: 2 }}>*</span>}
       </label>
       {children}

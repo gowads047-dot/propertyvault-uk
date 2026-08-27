@@ -51,7 +51,7 @@ export function GRQuoteWidget() {
           <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Instant estimate</p>
         </div>
         <h3 style={{ fontSize: 20, fontWeight: 800, color: "white", marginTop: 4 }}>What would we pay you?</h3>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 3 }}>Answer 2 questions — see your estimated guaranteed rent in seconds.</p>
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", marginTop: 3 }}>Answer 2 questions — see your estimated guaranteed rent in seconds.</p>
       </div>
 
       <div style={{ padding: "24px" }}>
@@ -95,7 +95,7 @@ export function GRQuoteWidget() {
                 </button>
               ))}
             </div>
-            <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 8, lineHeight: 1.4 }}>
+            <p style={{ fontSize: 11, color: "#475569", marginTop: 8, lineHeight: 1.4 }}>
               Based on typical Birmingham, Nottingham & Derby market rents. Your actual offer depends on property condition, location, and a free valuation visit.
             </p>
           </div>
@@ -106,7 +106,7 @@ export function GRQuoteWidget() {
           <button onClick={() => { if (canShow) setShown(true); }}
             style={{ width: "100%", padding: "14px", borderRadius: 12, border: "none", cursor: canShow ? "pointer" : "not-allowed", fontWeight: 800, fontSize: 15,
               background: canShow ? "#c9a84c" : "#e2e8f0",
-              color: canShow ? "#0f1b36" : "#94a3b8",
+              color: canShow ? "#0f1b36" : "#475569",
               transition: "all 0.15s" }}>
             {canShow ? "Show my estimated rent →" : "Select city and bedrooms above"}
           </button>
@@ -121,7 +121,7 @@ export function GRQuoteWidget() {
               <p style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
                 Your estimated guaranteed rent
               </p>
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>
+              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", marginBottom: 4 }}>
                 {bedrooms}-bedroom in {city.charAt(0).toUpperCase() + city.slice(1)}
               </p>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 8, margin: "12px 0" }}>
@@ -131,17 +131,17 @@ export function GRQuoteWidget() {
 
               <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Even if empty</p>
+                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Even if empty</p>
                   <p style={{ fontSize: 14, fontWeight: 800, color: "white" }}>Still paid</p>
                 </div>
                 <div style={{ width: 1, background: "rgba(255,255,255,0.08)" }} />
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Management fees</p>
+                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Management fees</p>
                   <p style={{ fontSize: 14, fontWeight: 800, color: "white" }}>£0</p>
                 </div>
                 <div style={{ width: 1, background: "rgba(255,255,255,0.08)" }} />
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Lease length</p>
+                  <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Lease length</p>
                   <p style={{ fontSize: 14, fontWeight: 800, color: "white" }}>3–5 yrs</p>
                 </div>
               </div>
@@ -152,13 +152,13 @@ export function GRQuoteWidget() {
               <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>Annual income comparison</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {[
-                  { label: "Gross market rent", self: fmt(selfManageGross), gr: "—", selfColor: "#374151", grColor: "#94a3b8" },
-                  { label: "Agent fees (10%)", self: `−${fmt(agentCut)}`, gr: "£0", selfColor: "#dc2626", grColor: "#16a34a" },
-                  { label: `Void periods (${SELF_MANAGE_DEDUCTIONS.voidWeeks} wks)`, self: `−${fmt(voidLoss)}`, gr: "£0", selfColor: "#dc2626", grColor: "#16a34a" },
-                  { label: "Maintenance & compliance", self: `−${fmt(SELF_MANAGE_DEDUCTIONS.maintenance + SELF_MANAGE_DEDUCTIONS.compliance)}`, gr: "£0", selfColor: "#dc2626", grColor: "#16a34a" },
+                  { label: "Gross market rent", self: fmt(selfManageGross), gr: "—", selfColor: "#374151", grColor: "#475569" },
+                  { label: "Agent fees (10%)", self: `−${fmt(agentCut)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: `Void periods (${SELF_MANAGE_DEDUCTIONS.voidWeeks} wks)`, self: `−${fmt(voidLoss)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: "Maintenance & compliance", self: `−${fmt(SELF_MANAGE_DEDUCTIONS.maintenance + SELF_MANAGE_DEDUCTIONS.compliance)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
                 ].map(r => (
                   <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-                    <span style={{ color: "#64748b" }}>{r.label}</span>
+                    <span style={{ color: "#475569" }}>{r.label}</span>
                     <div style={{ display: "flex", gap: 24 }}>
                       <span style={{ fontWeight: 700, color: r.selfColor, minWidth: 80, textAlign: "right" }}>{r.self}</span>
                       <span style={{ fontWeight: 700, color: r.grColor, minWidth: 80, textAlign: "right" }}>{r.gr}</span>
@@ -170,7 +170,7 @@ export function GRQuoteWidget() {
                   <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>Your annual net income</span>
                   <div style={{ display: "flex", gap: 24 }}>
                     <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", minWidth: 80, textAlign: "right" }}>{fmt(selfNet)}</span>
-                    <span style={{ fontSize: 13, fontWeight: 800, color: "#16a34a", minWidth: 80, textAlign: "right" }}>{fmt(grMidAnnual)}</span>
+                    <span style={{ fontSize: 13, fontWeight: 800, color: "#15803d", minWidth: 80, textAlign: "right" }}>{fmt(grMidAnnual)}</span>
                   </div>
                 </div>
                 {annualDiff > 0 && (
@@ -181,7 +181,7 @@ export function GRQuoteWidget() {
                   </div>
                 )}
               </div>
-              <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 10 }}>
+              <p style={{ fontSize: 10, color: "#475569", marginTop: 10 }}>
                 Illustrative. Self-managing figures assume 10% agent fees, 3 void weeks, £{SELF_MANAGE_DEDUCTIONS.maintenance + SELF_MANAGE_DEDUCTIONS.compliance} annual maintenance & compliance.
                 Your GR columns show {fmt(grLow)}–{fmt(grHigh)}/mo mid-point annualised.
               </p>
@@ -189,7 +189,7 @@ export function GRQuoteWidget() {
 
             {/* Column headers for comparison */}
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 24, marginBottom: 4, paddingRight: 4 }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#64748b", minWidth: 80, textAlign: "right" }}>Self-manage</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", minWidth: 80, textAlign: "right" }}>Self-manage</span>
               <span style={{ fontSize: 10, fontWeight: 700, color: "#15803d", minWidth: 80, textAlign: "right" }}>Guaranteed rent</span>
             </div>
 
@@ -209,7 +209,7 @@ export function GRQuoteWidget() {
                 Or WhatsApp us
               </a>
             </div>
-            <p style={{ fontSize: 11, color: "#94a3b8", textAlign: "center", marginTop: 10 }}>
+            <p style={{ fontSize: 11, color: "#475569", textAlign: "center", marginTop: 10 }}>
               No obligation · We respond within 2 hours · Free property valuation
             </p>
           </div>

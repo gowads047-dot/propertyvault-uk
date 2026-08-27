@@ -98,7 +98,16 @@ html.dark .text-navy-700 { color: #e2e8f0; }
 html.dark .text-navy-600 { color: #cbd5e1; }
 html.dark .text-navy-500 { color: #94a3b8; }
 html.dark .text-navy-400 { color: #94a3b8; }
-html.dark .text-gold-600 { color: #f4d35e; }
+/* A dark section in LIGHT mode: the muted navy is 3.59 on #0f1b36, so the
+   breadcrumbs and captions inside these heroes take the lighter tier. */
+.section-dark-rich .text-navy-400,
+.gradient-navy .text-navy-400,
+.hero-section .text-navy-400,
+[data-surface="dark"] .text-navy-400,
+.section-dark-rich .text-navy-500,
+.gradient-navy .text-navy-500,
+.hero-section .text-navy-500 { color: #9aa6b8; }
+
 /* A gold button stays gold in dark mode, so its label has to stay dark. The
    .btn-gold utility does set color: #0f1b36, but it lives in @layer utilities
    and the unlayered `html.dark a { color: inherit }` reset beats it — which left
@@ -123,7 +132,7 @@ html.dark .btn-gold-shimmer { color: #0f1b36; }
   --page-surface: #ffffff;
   --card-surface: #f8f9fc;
   --ink: #0f1b36;         /* 17.07 on white          */
-  --ink-muted: #5b6979;   /* 5.61 on white           */
+  --ink-muted: #475569;   /* 7.58 on white, 5.10 on the #cbd5e1 chips */
   --ink-subtle: #616f82;  /* 5.12 on white           */
   --hairline: #e8eaf0;
   --ok: #15803d;              /* 5.02 on white */
@@ -132,6 +141,7 @@ html.dark .btn-gold-shimmer { color: #0f1b36; }
      label on an ordinary page background. */
   --ok-flat: #15803d;
   --gold-pill-ink: #7a5f1c;
+  --danger: #b91c1c;          /* 6.99 on white */
 }
 html.dark {
   --page-surface: #0f141d;
@@ -145,6 +155,7 @@ html.dark {
   --ok: #4ade80;              /* 9.89 on the dark card */
   --ok-flat: #4ade80;
   --gold-pill-ink: #e8c877;
+  --danger: #f87171;          /* 6.17 on #0f1b36 */
 }
 
 /* The Makan promo card keeps its own palette in both themes: it is a Clay
@@ -983,6 +994,18 @@ html.dark { --nav-ink-active: #e8eefc; }
 [style*="background-color:#0c0f1a"],
 [style*="background: #0c0f1a"],
 [style*="background-color: #0c0f1a"],
+[style*="background:#252c38"],
+[style*="background: #252c38"],
+[style*="background:#111827"],
+[style*="background: #111827"],
+[style*="background:#090b13"],
+[style*="background: #090b13"],
+[style*="background:#182435"],
+[style*="background: #182435"],
+[style*="background:#141720"],
+[style*="background: #141720"],
+[style*="background:#12161e"],
+[style*="background: #12161e"],
 [style*="background:#0f1728"],
 [style*="background-color:#0f1728"],
 [style*="background: #0f1728"],
@@ -1013,7 +1036,13 @@ html.dark { --nav-ink-active: #e8eefc; }
   --gold-ink: #0f1b36;
 }
 
+
 html.dark {
+  /* Restored after measuring both ways. Removing this flip fixed 31 elements on
+     light cards but broke 49 on genuinely dark sections — net worse, because
+     the surface selectors above key on literal hexes and no longer match the
+     sections whose backgrounds are now tokens. The remaining light-card cases
+     are pinned individually instead. */
   --gold-ink: var(--gold-ink-dark);
   --ok: #4ade80;
 }
@@ -1030,6 +1059,11 @@ html.dark {
    gold on dark surfaces. This also supersedes the older
    `html.dark .text-gold-600` override, which only handled the dark-mode case
    and left light mode failing. */
+/* -400 joins them: the note above measured it only on /guaranteed-rent/, where
+   it does always sit on dark. On /areas/ it lands on #faf8f0 at 2.15, and
+   --gold-ink resolves to the bright shade on dark surfaces anyway, so routing
+   it here costs nothing there and fixes it here. */
+.text-gold-400,
 .text-gold-500,
 .text-gold-600,
 .text-gold-700 {

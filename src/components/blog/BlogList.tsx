@@ -160,7 +160,7 @@ function FeaturedCard({ article, onCategoryClick }: { article: Article; onCatego
                   ★ Featured
                 </span>
               )}
-              <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{article.readTime} read · {article.date}</span>
+              <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{article.readTime} read · {article.date}</span>
             </div>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(20px, 3.5vw, 36px)", fontWeight: 800, color: "white", lineHeight: 1.12, marginBottom: 12, maxWidth: 720, letterSpacing: "-0.02em" }}>
               {article.title}
@@ -214,7 +214,7 @@ function ArticleCard({ post, onCategoryClick }: { post: Article; onCategoryClick
       </div>
 
       <div style={{ padding: "18px 20px 22px", display: "flex", flexDirection: "column", flex: 1 }}>
-        <p style={{ fontSize: 11, color: "#94a3b8", marginBottom: 8, fontWeight: 500 }}>
+        <p style={{ fontSize: 11, color: "#475569", marginBottom: 8, fontWeight: 500 }}>
           {post.date}
         </p>
         <h3
@@ -223,11 +223,11 @@ function ArticleCard({ post, onCategoryClick }: { post: Article; onCategoryClick
         >
           {post.title}
         </h3>
-        <p style={{ fontSize: 12.5, color: "#64748b", lineHeight: 1.6, marginBottom: 16 }}>
+        <p style={{ fontSize: 12.5, color: "#475569", lineHeight: 1.6, marginBottom: 16 }}>
           {post.excerpt.length > 90 ? post.excerpt.slice(0, 90) + "…" : post.excerpt}
         </p>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: 12, color: "#64748b", fontWeight: 500 }}>By Nass</span>
+          <span style={{ fontSize: 12, color: "#475569", fontWeight: 500 }}>By Nass</span>
           <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
             Read
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -243,7 +243,7 @@ function ToolsCTABanner() {
     <div style={{ background: "#f8faff", border: "1.5px solid #e2e8f0", borderRadius: 20, padding: "28px 28px", margin: "16px 0 32px" }}>
       <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Free tools</p>
       <h3 style={{ fontSize: 17, fontWeight: 800, color: "#0f1b36", marginBottom: 6, lineHeight: 1.3 }}>Put the numbers behind the strategy</h3>
-      <p style={{ fontSize: 13, color: "#64748b", marginBottom: 18, lineHeight: 1.55 }}>Every article links to a free calculator. Run the numbers on your next deal.</p>
+      <p style={{ fontSize: 13, color: "#475569", marginBottom: 18, lineHeight: 1.55 }}>Every article links to a free calculator. Run the numbers on your next deal.</p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {[
           { label: "Deal Analyser", href: "/calculators/deal-analyser" },
@@ -294,7 +294,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
       <div style={{ marginBottom: 36 }}>
         {/* Search */}
         <div style={{ position: "relative", marginBottom: 16 }}>
-          <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8" }} width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#475569" }} width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
           <input
@@ -319,7 +319,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
             onBlur={e => (e.target.style.borderColor = "#e2e8f0")}
           />
           {search && (
-            <button onClick={() => setSearch("")} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", fontSize: 16, lineHeight: 1 }}>✕</button>
+            <button onClick={() => setSearch("")} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#475569", fontSize: 16, lineHeight: 1 }}>✕</button>
           )}
         </div>
 
@@ -337,7 +337,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
                 cursor: "pointer",
                 border: active === cat ? "none" : "1.5px solid #e2e8f0",
                 background: active === cat ? "#0f1b36" : "white",
-                color: active === cat ? "white" : "#64748b",
+                color: active === cat ? "white" : "#475569",
                 transition: "all 0.15s",
               }}
             >
@@ -357,7 +357,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
         <div style={{ textAlign: "center", padding: "80px 0" }}>
           <p style={{ fontSize: 32, marginBottom: 12 }}>🔍</p>
           <p style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 6 }}>No articles found</p>
-          <p style={{ color: "#94a3b8", fontSize: 14 }}>Try a different search or category.</p>
+          <p style={{ color: "#475569", fontSize: 14 }}>Try a different search or category.</p>
           <button onClick={() => { setSearch(""); setActive("All"); }} style={{ marginTop: 16, background: "#0f1b36", color: "white", border: "none", borderRadius: 12, padding: "10px 24px", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
             Show all articles
           </button>
@@ -372,7 +372,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
       {/* When filtering/searching, show results in grid without featured */}
       {(search || active !== "All") && filtered.length > 0 && (
         <div style={{ marginBottom: 8 }}>
-          <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 20 }}>
+          <p style={{ fontSize: 13, color: "#475569", marginBottom: 20 }}>
             {filtered.length} article{filtered.length !== 1 ? "s" : ""}{active !== "All" ? ` in ${active}` : ""}{search ? ` matching "${search}"` : ""}
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>

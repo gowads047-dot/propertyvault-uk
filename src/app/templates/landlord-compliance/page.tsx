@@ -126,12 +126,12 @@ export default function LandlordComplianceTemplate() {
       {/* Header */}
       <section className="no-print" style={{ background: "#0f1b36", padding: "32px 0 24px" }}>
         <div className="container-max px-4" style={{ maxWidth: 900 }}>
-          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
+          <Link href="/templates" style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", textDecoration: "none", marginBottom: 16, display: "inline-block" }}>← All templates</Link>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
             <div>
               <p style={{ fontSize: 11, color: "var(--gold-ink)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>✅ Essential Landlord Template</p>
               <h1 style={{ fontSize: "clamp(22px, 3.5vw, 32px)", fontWeight: 800, color: "white", margin: "4px 0" }}>Landlord Compliance Checklist</h1>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>
                 {criticalChecked}/{criticalItems} critical items · {checkedCount}/{totalItems} total
               </p>
             </div>
@@ -152,16 +152,16 @@ export default function LandlordComplianceTemplate() {
             <div style={{ background: "white", borderRadius: 12, border: "1.5px solid #e2e8f0", padding: "16px 20px", marginBottom: 20 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
                 <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>Completion</span>
-                <span style={{ fontSize: 13, color: "#64748b" }}>{checkedCount}/{totalItems} items · {criticalChecked}/{criticalItems} critical</span>
+                <span style={{ fontSize: 13, color: "#475569" }}>{checkedCount}/{totalItems} items · {criticalChecked}/{criticalItems} critical</span>
               </div>
               <div style={{ height: 8, background: "#e2e8f0", borderRadius: 4, overflow: "hidden", marginBottom: 6 }}>
-                <div style={{ height: "100%", width: `${(checkedCount / totalItems) * 100}%`, background: criticalChecked === criticalItems ? "#16a34a" : "#c9a84c", borderRadius: 4, transition: "width 0.3s" }} />
+                <div style={{ height: "100%", width: `${(checkedCount / totalItems) * 100}%`, background: criticalChecked === criticalItems ? "#15803d" : "#c9a84c", borderRadius: 4, transition: "width 0.3s" }} />
               </div>
               {criticalChecked < criticalItems && (
-                <p style={{ fontSize: 11, color: "#dc2626" }}>⚠ {criticalItems - criticalChecked} critical item{criticalItems - criticalChecked !== 1 ? "s" : ""} remaining</p>
+                <p style={{ fontSize: 11, color: "#b91c1c" }}>⚠ {criticalItems - criticalChecked} critical item{criticalItems - criticalChecked !== 1 ? "s" : ""} remaining</p>
               )}
               {criticalChecked === criticalItems && criticalItems > 0 && (
-                <p style={{ fontSize: 11, color: "#16a34a" }}>✓ All critical items complete</p>
+                <p style={{ fontSize: 11, color: "#15803d" }}>✓ All critical items complete</p>
               )}
             </div>
 
@@ -194,28 +194,28 @@ export default function LandlordComplianceTemplate() {
               <div key={si} style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", marginBottom: 16, overflow: "hidden" }}>
                 <div style={{ padding: "14px 20px", background: "#f8f9fc", borderBottom: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36" }}>{sec.icon} {sec.title}</h3>
-                  <span style={{ fontSize: 12, color: "#94a3b8" }}>{sec.items.filter(i => checked[i.id]).length}/{sec.items.length}</span>
+                  <span style={{ fontSize: 12, color: "#475569" }}>{sec.items.filter(i => checked[i.id]).length}/{sec.items.length}</span>
                 </div>
                 <div>
                   {sec.items.map(item => (
                     <div key={item.id} style={{ borderBottom: "1px solid #f1f5f9", background: checked[item.id] ? "#f0fdf4" : "white" }}>
                       <label onClick={() => toggleCheck(item.id)} style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "14px 20px", cursor: "pointer" }}>
-                        <div style={{ width: 22, height: 22, borderRadius: 6, border: checked[item.id] ? "none" : "2px solid #cbd5e1", background: checked[item.id] ? "#16a34a" : "white", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}>
+                        <div style={{ width: 22, height: 22, borderRadius: 6, border: checked[item.id] ? "none" : "2px solid #cbd5e1", background: checked[item.id] ? "#15803d" : "white", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}>
                           {checked[item.id] && <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.5 6.5l3 3 5-5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
                             <span style={{ fontSize: 14, fontWeight: 600, color: checked[item.id] ? "#15803d" : "#0f1b36" }}>{item.title}</span>
-                            {item.critical && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 4, background: "#fee2e2", color: "#dc2626" }}>Legal requirement</span>}
-                            <span style={{ fontSize: 11, color: "#94a3b8" }}>{item.freq}</span>
+                            {item.critical && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 6px", borderRadius: 4, background: "#fee2e2", color: "#b91c1c" }}>Legal requirement</span>}
+                            <span style={{ fontSize: 11, color: "#475569" }}>{item.freq}</span>
                           </div>
-                          <p style={{ fontSize: 12, color: "#64748b", lineHeight: 1.5 }}>{item.detail}</p>
-                          <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 3, fontStyle: "italic" }}>{item.law}</p>
+                          <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.5 }}>{item.detail}</p>
+                          <p style={{ fontSize: 11, color: "#475569", marginTop: 3, fontStyle: "italic" }}>{item.law}</p>
                         </div>
                       </label>
                       {item.dateField && (
                         <div style={{ padding: "0 20px 14px 54px", display: "flex", alignItems: "center", gap: 10 }}>
-                          <label style={{ fontSize: 12, color: "#64748b", whiteSpace: "nowrap" }}>{item.dateLabel}:</label>
+                          <label style={{ fontSize: 12, color: "#475569", whiteSpace: "nowrap" }}>{item.dateLabel}:</label>
                           <input type="date" value={dates[item.dateField as keyof Dates]} onChange={e => setDates(p => ({ ...p, [item.dateField!]: e.target.value }))}
                             style={{ padding: "6px 10px", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12, outline: "none" }} />
                         </div>
@@ -243,7 +243,7 @@ export default function LandlordComplianceTemplate() {
       {mode === "preview" && (
         <section style={{ background: "#e8ecf0", padding: "32px 16px 64px" }}>
           <div className="no-print" style={{ maxWidth: 800, margin: "0 auto 20px", display: "flex", justifyContent: "space-between" }}>
-            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#64748b", background: "none", border: "none", cursor: "pointer" }}>← Back to checklist</button>
+            <button onClick={() => setMode("form")} style={{ fontSize: 13, fontWeight: 600, color: "#475569", background: "none", border: "none", cursor: "pointer" }}>← Back to checklist</button>
             <button onClick={() => window.print()} style={{ padding: "10px 24px", background: "#c9a84c", color: "#0f1b36", border: "none", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer" }}>🖨 Print / Save as PDF</button>
           </div>
 
@@ -269,7 +269,7 @@ export default function LandlordComplianceTemplate() {
                   { label: "Property Type", value: hmoProperty ? "HMO" : "Single let" },
                 ].map(s => (
                   <div key={s.label}>
-                    <p style={{ fontSize: 9, fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</p>
+                    <p style={{ fontSize: 9, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.label}</p>
                     <p style={{ fontSize: 11, fontWeight: 600, color: "#0f1b36", marginTop: 2 }}>{s.value}</p>
                   </div>
                 ))}
@@ -284,7 +284,7 @@ export default function LandlordComplianceTemplate() {
                   <div style={{ width: 14, height: 14, border: "1.5px solid #cbd5e1", borderRadius: 3 }} /><p style={{ fontSize: 10, color: "#374151" }}>Not yet complete</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 10, fontWeight: 700, padding: "1px 6px", background: "#fee2e2", color: "#dc2626", borderRadius: 3 }}>L</span><p style={{ fontSize: 10, color: "#374151" }}>Legal requirement</p>
+                  <span style={{ fontSize: 10, fontWeight: 700, padding: "1px 6px", background: "#fee2e2", color: "#b91c1c", borderRadius: 3 }}>L</span><p style={{ fontSize: 10, color: "#374151" }}>Legal requirement</p>
                 </div>
               </div>
 
@@ -297,19 +297,19 @@ export default function LandlordComplianceTemplate() {
                   <div style={{ border: "1px solid #e2e8f0", borderTop: "none" }}>
                     {sec.items.map((item, ii) => (
                       <div key={ii} style={{ display: "flex", gap: 10, padding: "8px 12px", borderBottom: "1px solid #f1f5f9", background: checked[item.id] ? "#f0fdf4" : "white", alignItems: "flex-start" }}>
-                        <div style={{ width: 14, height: 14, border: checked[item.id] ? "none" : "1.5px solid #cbd5e1", background: checked[item.id] ? "#16a34a" : "white", borderRadius: 3, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>
+                        <div style={{ width: 14, height: 14, border: checked[item.id] ? "none" : "1.5px solid #cbd5e1", background: checked[item.id] ? "#15803d" : "white", borderRadius: 3, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 2 }}>
                           {checked[item.id] && <span style={{ color: "white", fontSize: 10 }}>✓</span>}
                         </div>
                         <div style={{ flex: 1 }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                             <p style={{ fontSize: 11, fontWeight: 700, color: checked[item.id] ? "#15803d" : "#0f1b36" }}>{item.title}</p>
-                            {item.critical && <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", background: "#fee2e2", color: "#dc2626", borderRadius: 3 }}>L</span>}
-                            <p style={{ fontSize: 9, color: "#94a3b8" }}>{item.freq}</p>
+                            {item.critical && <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", background: "#fee2e2", color: "#b91c1c", borderRadius: 3 }}>L</span>}
+                            <p style={{ fontSize: 9, color: "#475569" }}>{item.freq}</p>
                             {item.dateField && dates[item.dateField as keyof Dates] && (
                               <p style={{ fontSize: 9, color: "#0f1b36", fontWeight: 600 }}>📅 {fmtDate(dates[item.dateField as keyof Dates])}</p>
                             )}
                           </div>
-                          <p style={{ fontSize: 9, color: "#64748b", fontStyle: "italic" }}>{item.law}</p>
+                          <p style={{ fontSize: 9, color: "#475569", fontStyle: "italic" }}>{item.law}</p>
                         </div>
                       </div>
                     ))}
@@ -330,10 +330,10 @@ export default function LandlordComplianceTemplate() {
 
               <div style={{ border: "1px solid #e5e7eb", padding: 12, marginBottom: 16, background: criticalChecked === criticalItems ? "#f0fdf4" : "#fff7ed" }}>
                 <p style={{ fontSize: 10, fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>COMPLIANCE STATUS</p>
-                <p style={{ fontSize: 14, fontWeight: 800, color: criticalChecked === criticalItems ? "#16a34a" : "#d97706" }}>
+                <p style={{ fontSize: 14, fontWeight: 800, color: criticalChecked === criticalItems ? "#15803d" : "#d97706" }}>
                   {criticalChecked === criticalItems ? "COMPLIANT" : `${criticalItems - criticalChecked} CRITICAL ITEMS OUTSTANDING`}
                 </p>
-                <p style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>{checkedCount}/{totalItems} items complete · {criticalChecked}/{criticalItems} critical items complete</p>
+                <p style={{ fontSize: 10, color: "#475569", marginTop: 4 }}>{checkedCount}/{totalItems} items complete · {criticalChecked}/{criticalItems} critical items complete</p>
               </div>
               <SignatureBlock signerLabel="Signed (Landlord)" signerName={landlordName} showWitness={false} />
               <PrintFooter docTitle="Landlord Compliance Checklist" note="Guidance only — verify current requirements with a qualified solicitor" />

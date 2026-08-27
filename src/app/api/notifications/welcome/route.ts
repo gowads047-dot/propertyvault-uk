@@ -18,8 +18,8 @@ function renturaWelcomeHtml(name: string) {
   return `
   <div style="font-family:system-ui,sans-serif;max-width:580px;margin:0 auto;background:#0c0f1a;color:#e5e5e5;border-radius:16px;overflow:hidden;">
     <div style="background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.04));padding:36px 40px;border-bottom:1px solid rgba(255,255,255,0.07);">
-      <p style="font-size:20px;font-weight:800;color:#c9a84c;margin:0 0 4px;">Rentura™</p>
-      <p style="font-size:12px;color:rgba(255,255,255,0.35);margin:0;">Property Operating System</p>
+      <p style="font-size:20px;font-weight:800;color:var(--gold-ink);margin:0 0 4px;">Rentura™</p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.58);margin:0;">Property Operating System</p>
     </div>
     <div style="padding:36px 40px;">
       <h1 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;line-height:1.2;">Welcome${name ? `, ${name}` : ""}. You're in.</h1>
@@ -39,7 +39,7 @@ function renturaWelcomeHtml(name: string) {
             <span style="font-size:18px;flex-shrink:0;">${icon}</span>
             <div>
               <p style="font-size:13px;font-weight:700;color:#e5e5e5;margin:0 0 2px;">${title}</p>
-              <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;">${desc}</p>
+              <p style="font-size:12px;color:rgba(255,255,255,0.58);margin:0;">${desc}</p>
             </div>
           </div>
         `).join("")}
@@ -48,11 +48,11 @@ function renturaWelcomeHtml(name: string) {
         Open Rentura →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:32px;">
-        Questions? Reply to this email or WhatsApp us: <a href="https://wa.me/447415721628" style="color:#c9a84c;">message us on WhatsApp</a>
+        Questions? Reply to this email or WhatsApp us: <a href="https://wa.me/447415721628" style="color:var(--gold-ink);">message us on WhatsApp</a>
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);">
-      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/rentura/settings" style="color:rgba(255,255,255,0.3);">Manage notifications</a></p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/rentura/settings" style="color:rgba(255,255,255,0.62);">Manage notifications</a></p>
     </div>
   </div>`;
 }
@@ -94,7 +94,7 @@ function academyWelcomeHtml(name: string) {
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.3);">
-      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/academy/dashboard" style="color:rgba(255,255,255,0.3);">Your dashboard</a></p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.2);margin:0;">© PropertyVault UK · <a href="https://www.propertyvaultuk.co.uk/academy/dashboard" style="color:rgba(255,255,255,0.62);">Your dashboard</a></p>
     </div>
   </div>`;
 }

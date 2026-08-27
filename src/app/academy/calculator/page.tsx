@@ -19,7 +19,7 @@ function Row({ label, value, note }: { label: string; value: string; note?: stri
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
       <div>
         <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{label}</span>
-        {note && <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginLeft: 6 }}>{note}</span>}
+        {note && <span style={{ fontSize: 11, color: "rgba(255,255,255,0.62)", marginLeft: 6 }}>{note}</span>}
       </div>
       <span style={{ fontSize: 14, fontWeight: 700, color: "#d4af37" }}>{value}</span>
     </div>
@@ -96,7 +96,7 @@ export default function AcademyCalculatorPage() {
         <div style={{ marginBottom: 28 }}>
           <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only Tool</p>
           <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Advanced Deal Calculator</h1>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}>Model BRRR, JV splits, packaging fees and bridging finance in one place.</p>
+          <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14 }}>Model BRRR, JV splits, packaging fees and bridging finance in one place.</p>
         </div>
 
         {/* Deal type tabs */}
@@ -122,7 +122,7 @@ export default function AcademyCalculatorPage() {
             {(dealType === "bmc") && (
               <>
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: 8, paddingTop: 16 }}>
-                  <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>BRIDGING FINANCE</p>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.58)", marginBottom: 12 }}>BRIDGING FINANCE</p>
                   <Slider label="Finance Rate (% p.a.)" value={financeRate} min={5} max={18} step={0.5} onChange={setFinanceRate} prefix="" suffix="%" />
                   <Slider label="Finance Term (months)" value={financeTerm} min={3} max={18} step={1} onChange={setFinanceTerm} prefix="" suffix=" mo" />
                 </div>
@@ -131,14 +131,14 @@ export default function AcademyCalculatorPage() {
 
             {dealType === "jv" && (
               <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: 8, paddingTop: 16 }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>JV SPLIT</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.58)", marginBottom: 12 }}>JV SPLIT</p>
                 <Slider label="Your Share %" value={jvSplit} min={10} max={90} step={5} onChange={setJvSplit} prefix="" suffix="%" />
               </div>
             )}
 
             {dealType === "packaging" && (
               <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: 8, paddingTop: 16 }}>
-                <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>PACKAGING FEE</p>
+                <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.58)", marginBottom: 12 }}>PACKAGING FEE</p>
                 <Slider label="Sourcing / Packaging Fee" value={packagingFee} min={1000} max={20000} step={500} onChange={setPackagingFee} />
               </div>
             )}
@@ -155,7 +155,7 @@ export default function AcademyCalculatorPage() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 {scoreItems.map(s => (
                   <div key={s.label} style={{ background: s.ok ? "rgba(212,175,55,0.07)" : "rgba(255,0,0,0.05)", border: `1px solid ${s.ok ? "rgba(212,175,55,0.2)" : "rgba(255,0,0,0.15)"}`, borderRadius: 8, padding: "8px 10px" }}>
-                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginBottom: 2 }}>{s.label}</p>
+                    <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", marginBottom: 2 }}>{s.label}</p>
                     <p style={{ fontSize: 13, fontWeight: 700, color: s.ok ? "#d4af37" : "#f87171" }}>{s.val}</p>
                     <p style={{ fontSize: 10, color: s.ok ? "#4ade80" : "#f87171" }}>{s.ok ? "✓ Pass" : "✗ Weak"}</p>
                   </div>
@@ -192,7 +192,7 @@ export default function AcademyCalculatorPage() {
               </>}
             </div>
 
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 16, fontSize: 12, color: "rgba(255,255,255,0.35)", lineHeight: 1.6 }}>
+            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 16, fontSize: 12, color: "rgba(255,255,255,0.58)", lineHeight: 1.6 }}>
               ⚠️ For educational modelling only. Always verify figures with your solicitor, mortgage broker, and surveyor before committing to any deal.
             </div>
           </div>

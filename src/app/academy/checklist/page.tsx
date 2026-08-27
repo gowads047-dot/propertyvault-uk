@@ -108,7 +108,7 @@ export default function AcademyChecklistPage() {
       <div style={{ maxWidth: 800, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Deal Sourcing Checklist</h1>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14, marginBottom: 24 }}>
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 24 }}>
           Every step from setup to your first fee. Tick each item as you complete it.
         </p>
 
@@ -121,7 +121,7 @@ export default function AcademyChecklistPage() {
           <div style={{ height: 8, background: "rgba(255,255,255,0.08)", borderRadius: 8 }}>
             <div style={{ height: "100%", width: `${overallPct}%`, background: "linear-gradient(90deg, #d4af37, #f0d060)", borderRadius: 8, transition: "width 0.4s" }} />
           </div>
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 8 }}>{totalDone} of {totalItems} steps completed</p>
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 8 }}>{totalDone} of {totalItems} steps completed</p>
         </div>
 
         {/* Phases */}
@@ -137,7 +137,7 @@ export default function AcademyChecklistPage() {
                     <h2 style={{ fontSize: 15, fontWeight: 800 }}>{phase.phase}</h2>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.35)" }}>{phaseDone}/{phase.items.length}</span>
+                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{phaseDone}/{phase.items.length}</span>
                     <div style={{ width: 60, height: 4, background: "rgba(255,255,255,0.08)", borderRadius: 4 }}>
                       <div style={{ height: "100%", width: `${phasePct}%`, background: phase.color, borderRadius: 4 }} />
                     </div>
@@ -150,7 +150,7 @@ export default function AcademyChecklistPage() {
                         {checked.has(item.id) && <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0a0f1e" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
                       </button>
                       <div style={{ flex: 1 }}>
-                        <span style={{ fontSize: 13, lineHeight: 1.5, color: checked.has(item.id) ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.8)", textDecoration: checked.has(item.id) ? "line-through" : "none" }}>
+                        <span style={{ fontSize: 13, lineHeight: 1.5, color: checked.has(item.id) ? "rgba(255,255,255,0.58)" : "rgba(255,255,255,0.8)", textDecoration: checked.has(item.id) ? "line-through" : "none" }}>
                           {item.text}
                         </span>
                         {item.link && !checked.has(item.id) && (
@@ -166,7 +166,7 @@ export default function AcademyChecklistPage() {
         </div>
 
         <div style={{ marginTop: 24, textAlign: "center" }}>
-          <button onClick={() => setChecked(new Set())} style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Reset all progress</button>
+          <button onClick={() => setChecked(new Set())} style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Reset all progress</button>
         </div>
       </div>
     </div>

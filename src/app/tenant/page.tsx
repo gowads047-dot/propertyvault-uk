@@ -105,7 +105,7 @@ function TenantAuthInner() {
                   <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Create a password</label>
                   <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 6 characters" style={input} />
                 </div>
-                {error && <p style={{ fontSize: 13, color: "#dc2626", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
+                {error && <p style={{ fontSize: 13, color: "#b91c1c", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
                 <button type="submit" disabled={submitting} style={btn(submitting)}>{submitting ? "Setting up…" : "Access my portal →"}</button>
               </form>
               <p style={{ fontSize: 12, color: S.ink2, textAlign: "center", marginTop: 18 }}>Already set up? <button onClick={() => setMode("login")} style={{ background: "none", border: "none", color: S.accent, fontWeight: 700, fontSize: 12, cursor: "pointer", fontFamily: "inherit" }}>Log in instead</button></p>
@@ -123,7 +123,7 @@ function TenantAuthInner() {
                   <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
                   <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password" style={input} />
                 </div>
-                {error && <p style={{ fontSize: 13, color: "#dc2626", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
+                {error && <p style={{ fontSize: 13, color: "#b91c1c", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
                 <button type="submit" disabled={submitting} style={btn(submitting)}>{submitting ? "Logging in…" : "Log in →"}</button>
               </form>
             </>

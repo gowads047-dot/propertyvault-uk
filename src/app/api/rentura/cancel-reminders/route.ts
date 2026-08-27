@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     const emailHtml = `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#0f1b2d;">
         <div style="background:#0f1b2d;padding:24px 32px;border-radius:12px 12px 0 0;">
-          <span style="color:#c9a84c;font-weight:900;font-size:20px;">Rentura</span>
+          <span style="color:var(--gold-ink);font-weight:900;font-size:20px;">Rentura</span>
         </div>
         <div style="background:#f5f3ef;padding:32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;">
           <h2 style="font-size:20px;font-weight:800;margin:0 0 12px;">Hi ${firstName} — your access expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}</h2>

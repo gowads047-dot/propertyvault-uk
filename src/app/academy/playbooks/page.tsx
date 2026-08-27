@@ -189,7 +189,7 @@ export default function PlaybooksPage() {
                   <span style={{ fontSize: 12, fontWeight: 800, color: "#d4af37", opacity: 0.6, minWidth: 24 }}>{p.n}</span>
                   <div>
                     <div style={{ fontSize: 16, fontWeight: 800, color: "white" }}>{p.title}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>{p.steps.length} steps · {p.scripts.length} scripts · {p.checklist.length} checklist items</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", marginTop: 2 }}>{p.steps.length} steps · {p.scripts.length} scripts · {p.checklist.length} checklist items</div>
                   </div>
                 </div>
                 <span style={{ color: "#d4af37", fontSize: 18 }}>{open === p.id ? "−" : "+"}</span>

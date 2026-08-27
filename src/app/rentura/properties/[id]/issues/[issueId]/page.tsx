@@ -16,10 +16,10 @@ type Update = { id: string; author_type: string; author_name: string; message: s
 type Issue = { id: string; title: string; category: string; priority: string; status: string; description: string; created_at: string; tenant_name: string; tenant_email: string; property_id: string };
 
 const STATUS_CFG: Record<string, { label: string; color: string; bg: string }> = {
-  open: { label: "Open", color: "#dc2626", bg: "rgba(220,38,38,0.08)" },
+  open: { label: "Open", color: "#b91c1c", bg: "rgba(220,38,38,0.08)" },
   in_progress: { label: "In progress", color: "#ca8a04", bg: "rgba(234,179,8,0.08)" },
   scheduled: { label: "Scheduled", color: "#2563eb", bg: "rgba(59,130,246,0.08)" },
-  resolved: { label: "Resolved ✓", color: "#16a34a", bg: "rgba(34,197,94,0.08)" },
+  resolved: { label: "Resolved ✓", color: "#15803d", bg: "rgba(34,197,94,0.08)" },
 };
 
 export default function LandlordIssuePage() {
@@ -158,7 +158,7 @@ export default function LandlordIssuePage() {
 
         {issue.status === "resolved" && (
           <div style={{ background: "rgba(34,197,94,0.06)", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 12, padding: "14px 18px", textAlign: "center" }}>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "#16a34a" }}>✓ This issue has been resolved</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: "#15803d" }}>✓ This issue has been resolved</p>
           </div>
         )}
       </div>

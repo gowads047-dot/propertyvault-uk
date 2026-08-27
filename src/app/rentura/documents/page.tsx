@@ -21,13 +21,13 @@ const CATEGORIES = ["all", "tenancy", "compliance", "mortgage", "insurance", "co
 
 const C = {
   bg: "#0c0f1a", card: "rgba(255,255,255,0.03)", border: "rgba(255,255,255,0.07)",
-  ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.45)", ink3: "rgba(255,255,255,0.22)",
+  ink: "rgba(255,255,255,0.85)", ink2: "rgba(255,255,255,0.62)", ink3: "rgba(255,255,255,0.62)",
   gold: "#c9a84c", green: "#22c55e",
 };
 
 const CAT_COLORS: Record<string, string> = {
   tenancy: "#6366f1", compliance: "#22c55e", mortgage: "#c9a84c",
-  insurance: "#0891b2", correspondence: "#a78bfa", financial: "#f59e0b", other: "#64748b",
+  insurance: "#0891b2", correspondence: "#a78bfa", financial: "#f59e0b", other: "#475569",
 };
 
 function fmtSize(b: number | null) {
@@ -187,7 +187,7 @@ export default function RenturaDocuments() {
                     {doc.file_size ? ` · ${fmtSize(doc.file_size)}` : ""}
                   </p>
                 </div>
-                <span style={{ background: (CAT_COLORS[doc.category] || "#64748b") + "22", color: CAT_COLORS[doc.category] || "#64748b", fontSize: 10, fontWeight: 700, padding: "3px 9px", borderRadius: 20, textTransform: "capitalize" }}>
+                <span style={{ background: (CAT_COLORS[doc.category] || "#475569") + "22", color: CAT_COLORS[doc.category] || "#475569", fontSize: 10, fontWeight: 700, padding: "3px 9px", borderRadius: 20, textTransform: "capitalize" }}>
                   {doc.category}
                 </span>
                 <div style={{ display: "flex", gap: 8 }}>

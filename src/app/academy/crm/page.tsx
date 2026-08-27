@@ -17,7 +17,7 @@ interface Investor {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  Hot: "#ef4444", Warm: "#f59e0b", Cold: "#3b82f6", Inactive: "#64748b",
+  Hot: "#ef4444", Warm: "#f59e0b", Cold: "#3b82f6", Inactive: "#475569",
 };
 
 const INITIAL: Investor[] = [
@@ -91,7 +91,7 @@ export default function AcademyCRMPage() {
           <div>
             <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only Tool</p>
             <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Investor CRM</h1>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 14 }}>Track your investor contacts, preferences and follow-up pipeline.</p>
+            <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14 }}>Track your investor contacts, preferences and follow-up pipeline.</p>
           </div>
           <div style={{ display: "flex", gap: 10 }}>
             <button onClick={exportCSV} style={{ padding: "10px 18px", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer", background: "rgba(255,255,255,0.07)", color: "white", border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -110,7 +110,7 @@ export default function AcademyCRMPage() {
             return (
               <button key={s} onClick={() => setFilterStatus(s)} style={{ background: filterStatus === s ? "rgba(212,175,55,0.12)" : "rgba(255,255,255,0.03)", border: `1px solid ${filterStatus === s ? "rgba(212,175,55,0.4)" : "rgba(255,255,255,0.08)"}`, borderRadius: 12, padding: "14px 16px", textAlign: "center", cursor: "pointer", color: "white" }}>
                 <p style={{ fontSize: 22, fontWeight: 800, color: s === "All" ? "#d4af37" : STATUS_COLORS[s] ?? "#d4af37" }}>{count}</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>{s}</p>
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.62)", marginTop: 2 }}>{s}</p>
               </button>
             );
           })}
@@ -127,23 +127,23 @@ export default function AcademyCRMPage() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(200px,1fr))", gap: 12, marginBottom: 12 }}>
               {([["Name *", "name"], ["Phone", "phone"], ["Email", "email"], ["Strategy (e.g. BTL, HMO)", "strategy"], ["Budget Range", "budget"], ["Target Areas", "area"]] as [string, keyof typeof BLANK][]).map(([label, key]) => (
                 <div key={key}>
-                  <label style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 4 }}>{label}</label>
+                  <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>{label}</label>
                   <input style={inp()} value={form[key] as string} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} />
                 </div>
               ))}
               <div>
-                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 4 }}>Status</label>
+                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Status</label>
                 <select style={inp()} value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value as Investor["status"] }))}>
                   {["Hot","Warm","Cold","Inactive"].map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 4 }}>Last Contact</label>
+                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Last Contact</label>
                 <input type="date" style={inp()} value={form.lastContact} onChange={e => setForm(f => ({ ...f, lastContact: e.target.value }))} />
               </div>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 4 }}>Notes</label>
+              <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Notes</label>
               <textarea style={{ ...inp(), minHeight: 72, resize: "vertical" }} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
             </div>
             <div style={{ display: "flex", gap: 10 }}>
@@ -161,7 +161,7 @@ export default function AcademyCRMPage() {
             <thead>
               <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                 {["Name","Strategy","Budget","Area","Status","Last Contact",""].map(h => (
-                  <th key={h} style={{ textAlign: "left", padding: "10px 12px", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{h}</th>
+                  <th key={h} style={{ textAlign: "left", padding: "10px 12px", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.58)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -170,7 +170,7 @@ export default function AcademyCRMPage() {
                 <tr key={inv.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }} className="group">
                   <td style={{ padding: "12px 12px" }}>
                     <p style={{ fontSize: 14, fontWeight: 700 }}>{inv.name}</p>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{inv.email}</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", marginTop: 2 }}>{inv.email}</p>
                     {inv.notes && <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 2, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{inv.notes}</p>}
                   </td>
                   <td style={{ padding: "12px 12px", fontSize: 13, color: "rgba(255,255,255,0.6)" }}>{inv.strategy}</td>
@@ -179,7 +179,7 @@ export default function AcademyCRMPage() {
                   <td style={{ padding: "12px 12px" }}>
                     <span style={{ fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: `${STATUS_COLORS[inv.status]}22`, color: STATUS_COLORS[inv.status] }}>{inv.status}</span>
                   </td>
-                  <td style={{ padding: "12px 12px", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{inv.lastContact}</td>
+                  <td style={{ padding: "12px 12px", fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{inv.lastContact}</td>
                   <td style={{ padding: "12px 12px" }}>
                     <div style={{ display: "flex", gap: 8 }}>
                       <button onClick={() => startEdit(inv)} style={{ fontSize: 12, color: "#d4af37", background: "none", border: "none", cursor: "pointer", padding: 0 }}>Edit</button>
@@ -189,7 +189,7 @@ export default function AcademyCRMPage() {
                 </tr>
               ))}
               {filtered.length === 0 && (
-                <tr><td colSpan={7} style={{ padding: "40px 12px", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 14 }}>No investors found. Add your first contact above.</td></tr>
+                <tr><td colSpan={7} style={{ padding: "40px 12px", textAlign: "center", color: "rgba(255,255,255,0.62)", fontSize: 14 }}>No investors found. Add your first contact above.</td></tr>
               )}
             </tbody>
           </table>

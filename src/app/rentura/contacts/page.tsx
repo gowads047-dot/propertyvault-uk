@@ -13,7 +13,7 @@ const S = {
   ink: "rgba(255,255,255,0.88)",
   ink2: "rgba(255,255,255,0.5)",
   ink3: "rgba(255,255,255,0.25)",
-  green: "#16a34a",
+  green: "#15803d",
   teal: "#0891b2",
 };
 
@@ -28,9 +28,9 @@ const ROLES = ["contractor", "agent", "supplier", "solicitor", "accountant", "ot
 
 const SPEC_COLOR: Record<string, string> = {
   plumber: "#0891b2", electrician: "#d97706", "gas engineer": "#dc2626",
-  "general builder": "#7c3aed", locksmith: "#16a34a", decorator: "#b8962e",
-  cleaner: "#2563eb", roofer: "#64748b", solicitor: "#7c3aed",
-  agent: "#16a34a", accountant: "#b8962e", surveyor: "#0891b2",
+  "general builder": "#7c3aed", locksmith: "#15803d", decorator: "#b8962e",
+  cleaner: "#2563eb", roofer: "#475569", solicitor: "#7c3aed",
+  agent: "#15803d", accountant: "#b8962e", surveyor: "#0891b2",
 };
 
 type Contact = {
@@ -146,7 +146,7 @@ export default function ContactsPage() {
       <style>{`
         body > header, body > footer { display: none !important; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        ::placeholder { color: rgba(255,255,255,0.22) !important; }
+        ::placeholder { color: rgba(255,255,255,0.62) !important; }
         select option { background: #1e293b; color: white; }
         .contact-card:hover { background: rgba(255,255,255,0.055) !important; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
@@ -346,7 +346,7 @@ function ContactCard({ c, onEdit, onDelete, deleting }: { c: Contact; onEdit: (c
             </span>
           )}
           {c.role !== "contractor" && (
-            <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.45)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "capitalize" }}>
+            <span style={{ fontSize: 10, fontWeight: 600, padding: "2px 8px", borderRadius: 10, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.62)", border: "1px solid rgba(255,255,255,0.1)", textTransform: "capitalize" }}>
               {c.role}
             </span>
           )}
@@ -357,24 +357,24 @@ function ContactCard({ c, onEdit, onDelete, deleting }: { c: Contact; onEdit: (c
       <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 12 }}>
         {c.phone && (
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", width: 14 }}>📞</span>
+            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", width: 14 }}>📞</span>
             <span style={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }}>{c.phone}</span>
           </div>
         )}
         {c.whatsapp && (
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", width: 14 }}>💬</span>
+            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", width: 14 }}>💬</span>
             <span style={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }}>{c.whatsapp}</span>
           </div>
         )}
         {c.email && (
           <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", width: 14 }}>✉</span>
+            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", width: 14 }}>✉</span>
             <span style={{ fontSize: 12, color: "rgba(255,255,255,0.65)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.email}</span>
           </div>
         )}
         {c.notes && (
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", lineHeight: 1.5, marginTop: 2 }}>{c.notes}</p>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", lineHeight: 1.5, marginTop: 2 }}>{c.notes}</p>
         )}
       </div>
 
@@ -382,7 +382,7 @@ function ContactCard({ c, onEdit, onDelete, deleting }: { c: Contact; onEdit: (c
       <div style={{ display: "flex", gap: 7, alignItems: "center" }}>
         {wa && (
           <a href={wa} target="_blank" rel="noopener noreferrer"
-            style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", background: "#16a34a1a", border: "1px solid #16a34a55", borderRadius: 8, color: "#16a34a", fontSize: 11, fontWeight: 700, textDecoration: "none" }}>
+            style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", background: "#15803d1a", border: "1px solid #15803d55", borderRadius: 8, color: "#15803d", fontSize: 11, fontWeight: 700, textDecoration: "none" }}>
             📱 WhatsApp
           </a>
         )}
@@ -398,11 +398,11 @@ function ContactCard({ c, onEdit, onDelete, deleting }: { c: Contact; onEdit: (c
         ) : (
           <div style={{ marginLeft: "auto", display: "flex", gap: 5 }}>
             <button onClick={() => onDelete(c.id)} disabled={deleting === c.id}
-              style={{ padding: "5px 10px", background: "#dc262620", border: "1px solid #dc262655", borderRadius: 7, color: "#dc2626", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
+              style={{ padding: "5px 10px", background: "#dc262620", border: "1px solid #dc262655", borderRadius: 7, color: "#b91c1c", fontSize: 11, fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}>
               {deleting === c.id ? "…" : "Delete"}
             </button>
             <button onClick={() => setConfirmDel(false)}
-              style={{ padding: "5px 8px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, color: "rgba(255,255,255,0.4)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
+              style={{ padding: "5px 8px", background: "none", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, color: "rgba(255,255,255,0.58)", fontSize: 11, cursor: "pointer", fontFamily: "inherit" }}>
               Cancel
             </button>
           </div>

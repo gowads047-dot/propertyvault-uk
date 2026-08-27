@@ -232,7 +232,7 @@ export default function ScriptsPage() {
                   style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "18px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", textAlign: "left" }}>
                   <div>
                     <div style={{ fontWeight: 800, fontSize: 15, color: "white" }}>{s.title}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 3 }}>{s.scenario}</div>
+                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", marginTop: 3 }}>{s.scenario}</div>
                   </div>
                   <span style={{ color: "#d4af37", fontSize: 18, marginLeft: 16 }}>{openScript === s.title ? "−" : "+"}</span>
                 </button>

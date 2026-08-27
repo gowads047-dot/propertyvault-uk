@@ -210,7 +210,7 @@ const CAT_COLORS: Record<string, { dot: string; label: string }> = {
   landlord:   { dot: "#c9a84c", label: "Landlord" },
   tenant:     { dot: "#0891b2", label: "Tenant" },
   buyer:      { dot: "#1d4ed8", label: "Home Buyer" },
-  seller:     { dot: "#16a34a", label: "Seller" },
+  seller:     { dot: "#15803d", label: "Seller" },
   commercial: { dot: "#7c3aed", label: "Commercial" },
 };
 
@@ -239,9 +239,9 @@ export default function TemplatesPage() {
           </p>
           <h1 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 5vw, 56px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 16 }}>
             Property<br />
-            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Templates.</em>
+            <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.62)" }}>Templates.</em>
           </h1>
-          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.45)", maxWidth: 520, lineHeight: 1.65, marginBottom: 32 }}>
+          <p style={{ fontSize: 16, color: "rgba(255,255,255,0.62)", maxWidth: 520, lineHeight: 1.65, marginBottom: 32 }}>
             Fill in a simple form. Get a print-ready professional document — tenancy applications, compliance checklists, inspection records, and more.
           </p>
           {/* Stats row */}
@@ -254,7 +254,7 @@ export default function TemplatesPage() {
             ].map(s => (
               <div key={s.label}>
                 <p style={{ fontSize: 22, fontWeight: 800, color: "white" }}>{s.value}</p>
-                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{s.label}</p>
+                <p style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -268,7 +268,7 @@ export default function TemplatesPage() {
           {/* Search + Filters */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 32, alignItems: "center" }}>
             <div style={{ position: "relative", flex: "1 1 260px", maxWidth: 360 }}>
-              <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#94a3b8", pointerEvents: "none" }} width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#475569", pointerEvents: "none" }} width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
               </svg>
               <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search templates…"
@@ -278,7 +278,7 @@ export default function TemplatesPage() {
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
               {CATEGORY_FILTERS.map(f => (
                 <button key={f.id} onClick={() => setActiveCategory(f.id)}
-                  style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, cursor: "pointer", border: activeCategory === f.id ? "none" : "1.5px solid #e2e8f0", background: activeCategory === f.id ? "#0f1b36" : "white", color: activeCategory === f.id ? "white" : "#64748b", transition: "all 0.15s" }}>
+                  style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, cursor: "pointer", border: activeCategory === f.id ? "none" : "1.5px solid #e2e8f0", background: activeCategory === f.id ? "#0f1b36" : "white", color: activeCategory === f.id ? "white" : "#475569", transition: "all 0.15s" }}>
                   {f.label}
                 </button>
               ))}
@@ -286,7 +286,7 @@ export default function TemplatesPage() {
           </div>
 
           {/* Results count */}
-          <p style={{ fontSize: 13, color: "#94a3b8", marginBottom: 20 }}>{filtered.length} template{filtered.length !== 1 ? "s" : ""}</p>
+          <p style={{ fontSize: 13, color: "#475569", marginBottom: 20 }}>{filtered.length} template{filtered.length !== 1 ? "s" : ""}</p>
 
           {/* Template grid */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
@@ -304,17 +304,17 @@ export default function TemplatesPage() {
                         <div>
                           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
                             <span style={{ width: 8, height: 8, borderRadius: "50%", background: cat.dot, display: "inline-block", flexShrink: 0 }} />
-                            <span style={{ fontSize: 11, fontWeight: 600, color: "#64748b" }}>{cat.label}</span>
+                            <span style={{ fontSize: 11, fontWeight: 600, color: "#475569" }}>{cat.label}</span>
                             {t.badge && <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: "#fef3c7", color: "#92400e" }}>{t.badge}</span>}
                           </div>
                           <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", lineHeight: 1.3 }}>{t.title}</h3>
                         </div>
                       </div>
                     </div>
-                    <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.55, marginBottom: 14 }}>{t.desc}</p>
+                    <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.55, marginBottom: 14 }}>{t.desc}</p>
                     <div style={{ display: "flex", gap: 16, marginBottom: 16 }}>
-                      <span style={{ fontSize: 11, color: "#94a3b8" }}>⏱ {t.time}</span>
-                      <span style={{ fontSize: 11, color: "#94a3b8" }}>📄 {t.pages}</span>
+                      <span style={{ fontSize: 11, color: "#475569" }}>⏱ {t.time}</span>
+                      <span style={{ fontSize: 11, color: "#475569" }}>📄 {t.pages}</span>
                       {isInteractive && <span style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)" }}>✦ Interactive</span>}
                     </div>
                   </div>
@@ -328,7 +328,7 @@ export default function TemplatesPage() {
                         Fill in & Download →
                       </Link>
                     ) : (
-                      <span style={{ flex: 1, padding: "10px 0", background: "#f1f5f9", color: "#94a3b8", borderRadius: 10, fontSize: 13, fontWeight: 600, textAlign: "center", display: "block", cursor: "default" }}>
+                      <span style={{ flex: 1, padding: "10px 0", background: "#f1f5f9", color: "#475569", borderRadius: 10, fontSize: 13, fontWeight: 600, textAlign: "center", display: "block", cursor: "default" }}>
                         Coming soon
                       </span>
                     )}
@@ -339,7 +339,7 @@ export default function TemplatesPage() {
           </div>
 
           {filtered.length === 0 && (
-            <div style={{ textAlign: "center", padding: "64px 0", color: "#94a3b8" }}>No templates match your search.</div>
+            <div style={{ textAlign: "center", padding: "64px 0", color: "#475569" }}>No templates match your search.</div>
           )}
         </div>
       </section>
@@ -358,7 +358,7 @@ export default function TemplatesPage() {
               <div key={s.step} style={{ textAlign: "center" }}>
                 <p style={{ fontSize: 11, fontWeight: 800, color: "var(--gold-ink)", letterSpacing: "0.08em", marginBottom: 8 }}>{s.step}</p>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 6 }}>{s.title}</h3>
-                <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>{s.desc}</p>
+                <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.5 }}>{s.desc}</p>
               </div>
             ))}
           </div>

@@ -41,7 +41,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
           Live data · Land Registry
         </p>
         <h3 style={{ fontSize: 17, fontWeight: 800, color: "white", marginBottom: 3 }}>Sold Prices & Crime Data</h3>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.45)" }}>Enter any postcode to see recent sold prices and crime stats.</p>
+        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>Enter any postcode to see recent sold prices and crime stats.</p>
       </div>
 
       {/* Search */}
@@ -52,11 +52,11 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
             placeholder="e.g. B12 8QX or NG7 2PH"
             style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 14, outline: "none", fontFamily: "monospace", textTransform: "uppercase" }} />
           <button onClick={() => lookup()} disabled={loading}
-            style={{ padding: "10px 20px", background: loading ? "#e2e8f0" : "#0f1b36", color: loading ? "#94a3b8" : "white", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 13, cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap" }}>
+            style={{ padding: "10px 20px", background: loading ? "#e2e8f0" : "#0f1b36", color: loading ? "#475569" : "white", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 13, cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap" }}>
             {loading ? "Looking up…" : "Look up"}
           </button>
         </div>
-        {error && <p style={{ fontSize: 12, color: "#dc2626", marginTop: 8 }}>{error}</p>}
+        {error && <p style={{ fontSize: 12, color: "#b91c1c", marginTop: 8 }}>{error}</p>}
       </div>
 
       {/* Results */}
@@ -70,7 +70,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
               { l: "Region",      v: data.region || "—" },
             ].map(s => (
               <div key={s.l}>
-                <p style={{ fontSize: 10, color: "#94a3b8", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.l}</p>
+                <p style={{ fontSize: 10, color: "#475569", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>{s.l}</p>
                 <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>{s.v}</p>
               </div>
             ))}
@@ -93,8 +93,8 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
                       <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "8px 10px", background: "#f8f9fc", borderRadius: 8 }}>
                         <div>
                           <p style={{ fontSize: 11, fontWeight: 700, color: "#0f1b36" }}>{s.address || "—"}</p>
-                          <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.type} · {s.tenure} {s.newBuild ? "· New build" : ""}</p>
-                          <p style={{ fontSize: 10, color: "#94a3b8" }}>{s.date}</p>
+                          <p style={{ fontSize: 10, color: "#475569" }}>{s.type} · {s.tenure} {s.newBuild ? "· New build" : ""}</p>
+                          <p style={{ fontSize: 10, color: "#475569" }}>{s.date}</p>
                         </div>
                         <p style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", whiteSpace: "nowrap", paddingLeft: 8 }}>{fmt(s.price)}</p>
                       </div>
@@ -102,7 +102,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
                   </div>
                 </>
               ) : (
-                <p style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>No recent sales found for this postcode. Try a nearby postcode for more results.</p>
+                <p style={{ fontSize: 12, color: "#475569", fontStyle: "italic" }}>No recent sales found for this postcode. Try a nearby postcode for more results.</p>
               )}
             </div>
 
@@ -113,11 +113,11 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
                 <>
                   <div style={{ padding: "10px 14px", background: "#f8f9fc", borderRadius: 10, marginBottom: 10, display: "flex", gap: 12, alignItems: "center" }}>
                     <div>
-                      <p style={{ fontSize: 10, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>Level</p>
+                      <p style={{ fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" }}>Level</p>
                       <p style={{ fontSize: 18, fontWeight: 800, color: data.crime.color }}>{data.crime.level}</p>
                     </div>
                     <div>
-                      <p style={{ fontSize: 10, color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.06em" }}>Incidents</p>
+                      <p style={{ fontSize: 10, color: "#475569", textTransform: "uppercase", letterSpacing: "0.06em" }}>Incidents</p>
                       <p style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36" }}>{data.crime.total}</p>
                     </div>
                   </div>
@@ -132,22 +132,22 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
                       </div>
                     </div>
                   ))}
-                  <p style={{ fontSize: 10, color: "#94a3b8", marginTop: 8 }}>Source: data.police.uk · 1 mile radius</p>
+                  <p style={{ fontSize: 10, color: "#475569", marginTop: 8 }}>Source: data.police.uk · 1 mile radius</p>
                 </>
               ) : (
-                <p style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}>No crime data available for this period.</p>
+                <p style={{ fontSize: 12, color: "#475569", fontStyle: "italic" }}>No crime data available for this period.</p>
               )}
             </div>
           </div>
 
-          <p style={{ fontSize: 11, color: "#94a3b8" }}>
+          <p style={{ fontSize: 11, color: "#475569" }}>
             Sold prices: HM Land Registry. Crime: data.police.uk. For research purposes only.
           </p>
         </div>
       )}
 
       {!data && !loading && (
-        <div style={{ padding: "32px 24px", textAlign: "center", color: "#94a3b8" }}>
+        <div style={{ padding: "32px 24px", textAlign: "center", color: "#475569" }}>
           <p style={{ fontSize: 13 }}>Enter a postcode above to see live sold prices and crime data for any UK address.</p>
         </div>
       )}
