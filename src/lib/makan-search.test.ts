@@ -178,6 +178,7 @@ describe("toResults", () => {
     id: "s1",
     kind: "room",
     label: "Room 1",
+    makan_media: null,
     let_types: ["tenant"],
     permitted_uses: [],
     min_lease_months: null,
@@ -292,6 +293,7 @@ describe("company lets", () => {
       id: "s1", kind: "room", label: "Room 1", ensuite: false, bills_included: true,
       rent_pcm: 650, status: "available_now", available_from: null,
       status_confirmed_at: "2026-08-01T00:00:00Z",
+      makan_media: null,
       let_types: null, permitted_uses: null, min_lease_months: null,
       guaranteed_rent_considered: null,
       makan_unit: {
@@ -313,5 +315,34 @@ describe("company lets", () => {
       expect(resultNoun(k, 1), String(k)).toBeTruthy();
       expect(resultNoun(k, 2), String(k)).toBeTruthy();
     }
+  });
+});
+
+describe("cover photo", () => {
+  const base = {
+    id: "s1", kind: "room", label: "Room 1", ensuite: false, bills_included: true,
+    rent_pcm: 650, status: "available_now", available_from: null,
+    status_confirmed_at: "2026-08-01T00:00:00Z",
+    let_types: ["tenant"], permitted_uses: [], min_lease_months: null,
+    guaranteed_rent_considered: false,
+    makan_unit: {
+      label: "Whole house", shared_bathrooms: 1,
+      makan_building: { address_line1: "12 Chapel St", city: "Birmingham", postcode: "B29 6AA" },
+    },
+  };
+
+  // PostgREST does not guarantee the order of an embedded resource, so the
+  // cover has to be chosen rather than taken off the top.
+  it("takes the lowest sort_order, not the first row returned", () => {
+    const [r] = toResults([{ ...base, makan_media: [
+      { url: "second.jpg", sort_order: 3 },
+      { url: "cover.jpg", sort_order: 0 },
+    ] }] as never);
+    expect(r.coverUrl).toBe("cover.jpg");
+  });
+
+  it("has no cover when the listing has no photos", () => {
+    expect(toResults([{ ...base, makan_media: [] }] as never)[0].coverUrl).toBeNull();
+    expect(toResults([{ ...base, makan_media: null }] as never)[0].coverUrl).toBeNull();
   });
 });

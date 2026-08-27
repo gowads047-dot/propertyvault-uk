@@ -228,6 +228,7 @@ export interface SearchQueryRow {
   status: string;
   available_from: string | null;
   status_confirmed_at: string;
+  makan_media: { url: string; sort_order: number }[] | null;
   let_types: string[] | null;
   permitted_uses: string[] | null;
   min_lease_months: number | null;
@@ -252,6 +253,8 @@ export interface SearchResult {
   addressLine1: string;
   availableFrom: string | null;
   statusConfirmedAt: string;
+  /** The first photo, or null. Search shows one; the listing shows the rest. */
+  coverUrl: string | null;
   letTypes: string[];
   permittedUses: string[];
   minLeaseMonths: number | null;
@@ -284,6 +287,9 @@ export function toResults(rows: SearchQueryRow[]): SearchResult[] {
       // Older rows predate the company-let columns and come back null. A
       // listing with no recorded audience is a tenant listing, which is what
       // the column default says too.
+      // Ordered here rather than trusting the embed: PostgREST does not
+      // guarantee the order of an embedded resource without an explicit sort.
+      coverUrl: (r.makan_media ?? []).slice().sort((a, b) => a.sort_order - b.sort_order)[0]?.url ?? null,
       letTypes: r.let_types ?? ["tenant"],
       permittedUses: r.permitted_uses ?? [],
       minLeaseMonths: r.min_lease_months,

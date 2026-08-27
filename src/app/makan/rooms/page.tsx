@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { freshnessLabel, isMissingTable } from "@/lib/makan-inventory";
@@ -99,6 +100,7 @@ function RoomsSearch() {
       .select(
         `id,kind,label,ensuite,bills_included,rent_pcm,status,available_from,status_confirmed_at,
          let_types,permitted_uses,min_lease_months,guaranteed_rent_considered,
+         makan_media(url,sort_order),
          makan_unit!inner(label,shared_bathrooms,makan_building!inner(address_line1,city,postcode)),
          makan_listing!inner(channel,published_at)`
       )
@@ -328,8 +330,15 @@ function RoomsSearch() {
                   {results.map(r => (
                     <li key={r.spaceId}>
                       <Link href={`/makan/space/${r.spaceId}`}
-                            className="block rounded-2xl p-5 h-full transition-shadow hover:shadow-lg"
+                            className="block rounded-2xl h-full overflow-hidden transition-shadow hover:shadow-lg"
                             style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)" }}>
+                        {r.coverUrl && (
+                          <div className="relative w-full" style={{ aspectRatio: "4 / 3", background: "var(--h-warm)" }}>
+                            <Image src={r.coverUrl} alt="" fill sizes="(max-width: 640px) 100vw, 360px"
+                                   className="object-cover" />
+                          </div>
+                        )}
+                        <div className="p-5">
                         <div className="flex items-baseline justify-between gap-2 mb-1">
                           <p className="font-bold text-lg" style={{ color: "var(--h-text)" }}>
                             {r.rentPcm !== null ? `£${r.rentPcm.toLocaleString("en-GB")}` : "Price on request"}
@@ -355,6 +364,7 @@ function RoomsSearch() {
                         <p className="text-xs" style={{ color: "var(--h-subtle)" }}>
                           Availability confirmed {freshnessLabel(r.statusConfirmedAt, now)}
                         </p>
+                        </div>
                       </Link>
                     </li>
                   ))}

@@ -7,6 +7,10 @@ import { freshnessLabel, isMissingTable, STATUS_LABEL, type SpaceStatus } from "
 import { publicLocation } from "@/lib/makan-search";
 import { PERMITTED_USES } from "@/lib/makan-listing";
 import { EnquiryForm } from "@/components/makan/EnquiryForm";
+import { MediaGallery } from "@/components/makan/MediaGallery";
+import { PhotoManager } from "@/components/makan/PhotoManager";
+import { useAuth } from "@/lib/auth-context";
+import { toMedia, type MediaItem, type MediaQueryRow } from "@/lib/makan-media";
 
 /**
  * Room detail.
@@ -77,6 +81,9 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
   const { id } = use(params);
   const [load, setLoad] = useState<Load>({ state: "loading" });
   const [now, setNow] = useState<Date | null>(null);
+  const [media, setMedia] = useState<MediaItem[]>([]);
+  const [memberOfOrg, setMemberOfOrg] = useState<string | null>(null);
+  const { user } = useAuth();
 
   const fetchSpace = useCallback(async () => {
     const { data, error } = await supabase
@@ -109,9 +116,39 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
       .neq("id", space.id)
       .order("label");
 
+    // Photos are fetched alongside, not blocking: a listing with no photos is
+    // still a listing, and a failure here must not take the page down with it.
+    const shots = await supabase
+      .from("makan_media")
+      .select("id,url,caption,sort_order")
+      .eq("space_id", space.id)
+      .eq("kind", "photo")
+      .order("sort_order");
+    setMedia(toMedia((shots.data ?? []) as MediaQueryRow[]));
+
     setNow(new Date());
     setLoad({ state: "ready", space, siblings: (sib.data ?? []) as Sibling[] });
   }, [id]);
+
+  // Which org this viewer belongs to, if any. Recorded rather than reduced to
+  // a boolean here so nothing has to be set synchronously in the effect —
+  // whether the manager shows is derived at render time instead.
+  //
+  // RLS refuses the write regardless; this only decides whether to offer it.
+  useEffect(() => {
+    if (!user || load.state !== "ready") return;
+    const orgId = load.space.makan_unit?.makan_building?.org_id;
+    if (!orgId) return;
+    let live = true;
+    void supabase
+      .from("makan_org_member")
+      .select("org_id")
+      .eq("user_id", user.id)
+      .eq("org_id", orgId)
+      .maybeSingle()
+      .then(({ data }) => { if (live && data) setMemberOfOrg(orgId); });
+    return () => { live = false; };
+  }, [user, load]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch; setState runs after the await
@@ -140,11 +177,14 @@ export default function SpacePage({ params }: { params: Promise<{ id: string }> 
   }
 
   const availableSiblings = siblings.filter(s => AVAILABLE.includes(s.status));
+  const canManage = Boolean(user) && memberOfOrg !== null && memberOfOrg === building.org_id;
 
   return (
     <Shell>
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
+          <MediaGallery items={media} alt={space.label} />
+          {canManage && <PhotoManager spaceId={space.id} />}
           <p className="text-sm mb-2" style={{ color: "var(--h-muted)" }}>
             {publicLocation({ addressLine1: building.address_line1, city: building.city, postcode: building.postcode })}
             {" · "}{building.city}
