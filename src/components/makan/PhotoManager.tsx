@@ -48,6 +48,7 @@ export function PhotoManager({ spaceId }: { spaceId: string }) {
     setItems(toMedia((data ?? []) as MediaQueryRow[]));
   }, [spaceId]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch on mount; every setState is behind an await
   useEffect(() => { void load(); }, [load]);
 
   async function onPick(files: FileList | null) {
