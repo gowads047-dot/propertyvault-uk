@@ -53,3 +53,6 @@ scripts/.backfill-sent.json
 # Full test report, written by `npm run test:trace` when chasing an
 # intermittent failure. Never commit it.
 .vitest-report.json
+
+# Local dev server output
+dev.log
