@@ -99,6 +99,78 @@ html.dark .text-navy-600 { color: #cbd5e1; }
 html.dark .text-navy-500 { color: #94a3b8; }
 html.dark .text-navy-400 { color: #94a3b8; }
 html.dark .text-gold-600 { color: #f4d35e; }
+/* A gold button stays gold in dark mode, so its label has to stay dark. The
+   .btn-gold utility does set color: #0f1b36, but it lives in @layer utilities
+   and the unlayered `html.dark a { color: inherit }` reset beats it — which left
+   #e4e8f0 on #f4d35e at 1.19:1 across every gold call to action on the site. */
+html.dark .btn-gold,
+html.dark .btn-gold-shimmer { color: #0f1b36; }
+
+/* Card surfaces that follow the theme.
+   The homepage set these to the literal #f8f9fc, so in dark mode the card
+   stayed near-white while every dark-mode text override lightened the type on
+   it — gold at 1.39:1, slate at 2.4:1. A token flips both together. */
+/* Homepage surface and ink roles.
+   The homepage is built almost entirely from inline literal colours, so the
+   html.dark overrides — which only ever targeted Tailwind classes — never
+   reached it. Dark mode lightened the type while every background stayed light,
+   and the page shipped 124 contrast failures against 80 in light.
+
+   Pairing surface with ink is the whole point: flipping one without the other
+   is what produced navy-on-navy at 1.01:1 the first time I moved only the
+   surface. Every value below is checked against both dark surfaces.  */
+:root {
+  --page-surface: #ffffff;
+  --card-surface: #f8f9fc;
+  --ink: #0f1b36;         /* 17.07 on white          */
+  --ink-muted: #5b6979;   /* 5.61 on white           */
+  --ink-subtle: #616f82;  /* 5.12 on white           */
+  --hairline: #e8eaf0;
+  --ok: #15803d;              /* 5.02 on white */
+  /* Follows the THEME only, never the surface. --ok flips on dark-surface
+     containers too, which is right for a tick on a dark card and wrong for a
+     label on an ordinary page background. */
+  --ok-flat: #15803d;
+  --gold-pill-ink: #7a5f1c;
+}
+html.dark {
+  --page-surface: #0f141d;
+  --card-surface: #161b26;
+  --ink: #e4e8f0;         /* 15.02 / 14.03 on the two dark surfaces */
+  --ink-muted: #9aa6b8;   /* 7.49 / 6.99  */
+  --ink-subtle: #8b98ab;  /* 6.31 / 5.89  */
+  --hairline: #252b38;
+  --warm-top: #12161f;
+  --warm-bottom: #0d1119;
+  --ok: #4ade80;              /* 9.89 on the dark card */
+  --ok-flat: #4ade80;
+  --gold-pill-ink: #e8c877;
+}
+
+/* The Makan promo card keeps its own palette in both themes: it is a Clay
+   surface advertising a Clay product, so page-level dark ink must not repaint
+   its text and leave #e4e8f0 on oat at 1.08:1. */
+/* The Makan promo card is a Clay surface on a PropertyVault page, so it
+   carries Clay ink — as variables, not as a colour rule.
+   Its children set colour inline as var(--ink), and an inline style beats any
+   selector, so no amount of specificity could repaint them; in dark mode they
+   resolved the page ink and put #e4e8f0 on oat at 1.08:1. Redefining the
+   tokens on the card fixes every one of them at the source, in both themes. */
+.makan-promo {
+  --ink: #1B211A;
+  --ink-muted: #4E574B;
+  --ink-subtle: #646A61;
+  --hairline: #E2D9CA;
+  /* Surfaces too: the stat boxes inside the card read --page-surface, which
+     goes dark with the rest of the page and left Clay ink on it at 1.12:1.
+     Inside a Clay card the surfaces stay Clay. */
+  --page-surface: #ffffff;
+  --card-surface: #FBEFE9;
+}
+
+/* Solid brand gold never changes with the theme, so text on it never should
+   either — this was #e4e8f0 on #c9a84c at 1.86:1 in dark mode. */
+html.dark [style*="c9a84c"], html.dark [style*="C9A84C"] { color: #0f1b36; }
 html.dark .bg-gold-50 { background-color: #1e1a0e; }
 html.dark .bg-green-50 { background-color: #0a1e12; }
 html.dark .bg-blue-50 { background-color: #0a1224; }
@@ -381,7 +453,10 @@ input::placeholder, textarea::placeholder {
 }
 
 @utility gradient-navy {
-  background: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
+  /* Same reasoning as .section-dark-rich: a colour underneath, so any later
+     rule that sets only background-image cannot leave light text on cream. */
+  background-color: #0b1226;
+  background-image: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
   background-size: 300% 300%;
   animation: gradient-shift 14s ease infinite;
 }
@@ -668,12 +743,22 @@ input::placeholder, textarea::placeholder {
 
 /* Warm cream — breaks up white/#f8f9fc monotony */
 @utility section-warm {
-  background: linear-gradient(180deg, #fffbf4 0%, #fff8ef 100%);
+  /* Themed, because it stayed cream in dark mode while the ink on it went
+     light — "We pay your rent. Every month." measured 1.19:1. */
+  background: linear-gradient(180deg, var(--warm-top, #fffbf4) 0%, var(--warm-bottom, #fff8ef) 100%);
 }
 
 /* Richer dark navy with subtle warm glow */
 .section-dark-rich {
-  background: linear-gradient(160deg, #070b16 0%, #0f1b36 45%, #0b1729 100%);
+  /* The dark ground is a background-COLOR as well as a gradient, on purpose.
+     .dot-grid-gold sets only background-image, comes later in this file, and
+     matches with the same specificity — so on <section class="section-dark-rich
+     dot-grid-gold"> it replaced this gradient outright. With no colour beneath
+     it the section fell through to the page cream and rendered its white
+     headings on it: "Less hassle. More return." at 1.06:1, invisible, on the
+     live homepage. The colour survives any later image-only override. */
+  background-color: #0b1226;
+  background-image: linear-gradient(160deg, #070b16 0%, #0f1b36 45%, #0b1729 100%);
   position: relative;
   overflow: hidden;
 }
@@ -874,6 +959,7 @@ html.dark { --nav-ink-active: #e8eefc; }
 [class*="bg-navy-9"],
 [data-surface="dark"] {
   --gold-ink: var(--gold-ink-dark);
+  --ok: #4ade80;
 }
 
 /* Dark surfaces set with an inline hex rather than a class — Rentura and the
@@ -918,6 +1004,7 @@ html.dark { --nav-ink-active: #e8eefc; }
 [style*="background: #0a1628"],
 [style*="background-color: #0a1628"] {
   --gold-ink: var(--gold-ink-dark);
+  --ok: #4ade80;
 }
 
 [style*="#c9a84c"],
@@ -928,6 +1015,7 @@ html.dark { --nav-ink-active: #e8eefc; }
 
 html.dark {
   --gold-ink: var(--gold-ink-dark);
+  --ok: #4ade80;
 }
 
 /* ── Gold text utilities ───────────────────────────────────────────────────

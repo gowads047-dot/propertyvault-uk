@@ -85,7 +85,7 @@ export default function Home() {
                 Your rent,{" "}
                 <span style={{ color: "var(--gold-ink)" }}>guaranteed</span>
                 <br />every month —<br />
-                <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.35)" }}>no voids, ever.</em>
+                <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.62)" }}>no voids, ever.</em>
               </h1>
 
               <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 16, maxWidth: 420 }}>
@@ -95,7 +95,7 @@ export default function Home() {
               <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 32 }}>
                 {["No void periods", "No management stress", "No hidden fees"].map(t => (
                   <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12, color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "4px 10px" }}>
-                    <span style={{ color: "#22c55e", fontWeight: 700 }}>✓</span> {t}
+                    <span style={{ color: "var(--ok)", fontWeight: 700 }}>✓</span> {t}
                   </span>
                 ))}
               </div>
@@ -106,7 +106,7 @@ export default function Home() {
                 </Link>
               </div>
               <div className="hero-line" style={{ marginBottom: 20 }}>
-                <Link href="/calculators" style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", fontWeight: 600, textDecoration: "none" }}>
+                <Link href="/calculators" style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", fontWeight: 600, textDecoration: "none" }}>
                   or explore {siteMetrics.calculators} free tools ↓
                 </Link>
               </div>
@@ -117,7 +117,7 @@ export default function Home() {
                 ].map(t => (
                   <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                     <span style={{ fontSize: 13 }}>{t.icon}</span>
-                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", fontWeight: 600 }}>{t.text}</span>
+                    <span style={{ fontSize: 12, color: "rgba(255,255,255,0.66)", fontWeight: 600 }}>{t.text}</span>
                   </div>
                 ))}
               </div>
@@ -129,7 +129,7 @@ export default function Home() {
               <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: 24, backdropFilter: "blur(8px)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                   <div>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Your portfolio</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Your portfolio</p>
                     <p style={{ fontSize: 28, fontWeight: 800, color: "white", fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums" }}>£4,250</p>
                     <p style={{ fontSize: 12, color: "rgba(201,168,76,0.8)", marginTop: 2 }}>▲ rent received this month</p>
                   </div>
@@ -146,21 +146,21 @@ export default function Home() {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   {["Jan","Feb","Mar","Apr","May","Jun","Jul"].map(m => (
-                    <span key={m} style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>{m}</span>
+                    <span key={m} style={{ fontSize: 9, color: "rgba(255,255,255,0.62)" }}>{m}</span>
                   ))}
                 </div>
 
                 {/* Status rows */}
                 <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: 20, paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
                   {[
-                    { label: "Void periods", value: "0 days", dot: "#22c55e" },
+                    { label: "Void periods", value: "0 days", dot: "var(--ok)" },
                     { label: "Next inspection", value: "14 Aug", dot: "#c9a84c" },
-                    { label: "Compliance", value: "Up to date ✓", dot: "#22c55e" },
+                    { label: "Compliance", value: "Up to date ✓", dot: "var(--ok)" },
                   ].map(r => (
                     <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                         <div style={{ width: 6, height: 6, borderRadius: "50%", background: r.dot, flexShrink: 0 }} />
-                        <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>{r.label}</span>
+                        <span style={{ fontSize: 12, color: "rgba(255,255,255,0.66)" }}>{r.label}</span>
                       </div>
                       <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.75)" }}>{r.value}</span>
                     </div>
@@ -169,10 +169,10 @@ export default function Home() {
               </div>
 
               {/* Floating yield card */}
-              <div style={{ position: "absolute", bottom: -20, left: -20, background: "white", borderRadius: 14, padding: "12px 16px", boxShadow: "0 12px 40px rgba(0,0,0,0.25)", minWidth: 140 }}>
-                <p style={{ fontSize: 10, color: "#a3a3a3", marginBottom: 2 }}>Gross yield</p>
-                <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums" }}>7.2%</p>
-                <p style={{ fontSize: 10, color: "#22c55e", fontWeight: 600 }}>▲ above market avg</p>
+              <div style={{ position: "absolute", bottom: -20, left: -20, background: "var(--page-surface)", borderRadius: 14, padding: "12px 16px", boxShadow: "0 12px 40px rgba(0,0,0,0.25)", minWidth: 140 }}>
+                <p style={{ fontSize: 10, color: "var(--ink-subtle)", marginBottom: 2 }}>Gross yield</p>
+                <p style={{ fontSize: 22, fontWeight: 800, color: "var(--ink)", fontFamily: "ui-monospace, monospace", fontVariantNumeric: "tabular-nums" }}>7.2%</p>
+                <p style={{ fontSize: 10, color: "var(--ok-flat)", fontWeight: 600 }}>▲ above market avg</p>
               </div>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function Home() {
             ].map((s, i) => (
               <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none", padding: "0 24px" }}>
                 <p style={{ fontSize: 32, fontWeight: 800, color: "white", lineHeight: 1, fontFamily: "ui-monospace, 'Cascadia Code', monospace", fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{s.l}</p>
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.66)", marginTop: 6, fontWeight: 500, letterSpacing: "0.04em" }}>{s.l}</p>
               </div>
             ))}
           </div>
@@ -205,7 +205,7 @@ export default function Home() {
             ].map(t => (
               <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 14 }}>{t.icon}</span>
-                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.45)", fontWeight: 600, whiteSpace: "nowrap" }}>{t.text}</span>
+                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)", fontWeight: 600, whiteSpace: "nowrap" }}>{t.text}</span>
               </div>
             ))}
           </div>
@@ -213,7 +213,7 @@ export default function Home() {
       </section>
 
       {/* ── SHOCK STAT BANNER ─────────────────────────────── */}
-      <section style={{ background: "#c9a84c" }}>
+      <section style={{ background: "#c9a84c", color: "#0f1b36" }}>
         <div className="container-max px-4" style={{ padding: "20px 16px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 16, textAlign: "center" }}>
             <p style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36" }}>
@@ -227,11 +227,11 @@ export default function Home() {
       </section>
 
       {/* ── FEATURED TOOLS ────────────────────────────────── */}
-      <section style={{ background: "white", padding: "56px 0 40px" }}>
+      <section style={{ background: "var(--page-surface)", padding: "56px 0 40px" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>Most-used tools</p>
-            <p style={{ fontSize: 22, fontWeight: 800, color: "#0f1b36", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</p>
+            <p style={{ fontSize: 22, fontWeight: 800, color: "var(--ink)", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</p>
           </FadeIn>
           <FadeIn>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
@@ -267,23 +267,23 @@ export default function Home() {
                   icon: "📄",
                 },
               ].map((t) => (
-                <Link key={t.href} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: "28px 24px", textDecoration: "none", display: "flex", flexDirection: "column", gap: 12 }}
+                <Link key={t.href} href={t.href} style={{ background: "var(--card-surface)", border: "1.5px solid var(--hairline)", borderRadius: 20, padding: "28px 24px", textDecoration: "none", display: "flex", flexDirection: "column", gap: 12 }}
                   className="hover:border-gold-300 hover:shadow-md transition-all group">
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span style={{ fontSize: 28 }}>{t.icon}</span>
                     <span style={{ fontSize: 10, fontWeight: 700, background: t.badgeColor, color: t.badgeText, padding: "3px 10px", borderRadius: 20 }}>{t.badge}</span>
                   </div>
                   <div>
-                    <p style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 4 }}>{t.stat}</p>
-                    <h3 style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 4 }} className="group-hover:text-gold-600 transition-colors">{t.title}</h3>
-                    <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>{t.desc}</p>
+                    <p style={{ fontSize: 11, fontWeight: 600, color: "var(--ink-subtle)", marginBottom: 4 }}>{t.stat}</p>
+                    <h3 style={{ fontSize: 16, fontWeight: 800, color: "var(--ink)", marginBottom: 4 }} className="group-hover:text-gold-600 transition-colors">{t.title}</h3>
+                    <p style={{ fontSize: 13, color: "var(--ink-muted)", lineHeight: 1.5 }}>{t.desc}</p>
                   </div>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)", marginTop: "auto" }}>Try free →</span>
                 </Link>
               ))}
             </div>
             <div style={{ textAlign: "center", marginTop: 20 }}>
-              <Link href="/calculators" style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, textDecoration: "none" }}>
+              <Link href="/calculators" style={{ fontSize: 13, color: "var(--ink-subtle)", fontWeight: 600, textDecoration: "none" }}>
                 All {siteMetrics.calculators} free calculators →
               </Link>
             </div>
@@ -296,16 +296,16 @@ export default function Home() {
            and Makan and the Deal Analyser only in passing, so a first-time
            visitor had no way to see that PropertyVault is more than
            guaranteed rent. Grouped by what someone is trying to do. */}
-      <section style={{ background: "#f8f9fc", padding: "72px 0", borderTop: "1px solid #e8eaf0", borderBottom: "1px solid #e8eaf0" }}>
+      <section style={{ background: "var(--card-surface)", padding: "72px 0", borderTop: "1px solid var(--hairline)", borderBottom: "1px solid var(--hairline)" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>
               The platform
             </p>
-            <h2 style={{ fontSize: "clamp(24px,3.4vw,34px)", fontWeight: 900, color: "#0f1b36", textAlign: "center", letterSpacing: "-0.02em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
+            <h2 style={{ fontSize: "clamp(24px,3.4vw,34px)", fontWeight: 900, color: "var(--ink)", textAlign: "center", letterSpacing: "-0.02em", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>
               Tools to analyse, manage and grow a portfolio
             </h2>
-            <p style={{ fontSize: 15, color: "#5b6478", textAlign: "center", maxWidth: 560, margin: "0 auto 36px", lineHeight: 1.6 }}>
+            <p style={{ fontSize: 15, color: "var(--ink-muted)", textAlign: "center", maxWidth: 560, margin: "0 auto 36px", lineHeight: 1.6 }}>
               Guaranteed rent is one part of it. Here is everything else, grouped by
               what you are actually trying to do.
             </p>
@@ -362,8 +362,8 @@ export default function Home() {
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    background: "white",
-                    border: "1.5px solid #e8eaf0",
+                    background: "var(--page-surface)",
+                    border: "1.5px solid var(--hairline)",
                     borderRadius: 16,
                     padding: "22px 20px",
                     textDecoration: "none",
@@ -374,7 +374,7 @@ export default function Home() {
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                     <span aria-hidden="true" style={{ fontSize: 24 }}>{item.icon}</span>
                     {item.badge && (
-                      <span style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", background: "rgba(201,168,76,0.16)", color: "#8a6d20", padding: "4px 8px", borderRadius: 999 }}>
+                      <span style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", background: "rgba(201,168,76,0.16)", color: "var(--gold-pill-ink)", padding: "4px 8px", borderRadius: 999 }}>
                         {item.badge}
                       </span>
                     )}
@@ -382,13 +382,13 @@ export default function Home() {
                   <p style={{ fontSize: 11, fontWeight: 800, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>
                     {item.kicker}
                   </p>
-                  <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
+                  <p style={{ fontSize: 16, fontWeight: 800, color: "var(--ink)", marginBottom: 8, fontFamily: "var(--font-family-heading)" }}>
                     {item.title}
                   </p>
-                  <p style={{ fontSize: 13, color: "#5b6478", lineHeight: 1.55, marginBottom: 16, flex: 1 }}>
+                  <p style={{ fontSize: 13, color: "var(--ink-muted)", lineHeight: 1.55, marginBottom: 16, flex: 1 }}>
                     {item.desc}
                   </p>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>
                     {item.cta} →
                   </span>
                 </Link>
@@ -399,11 +399,11 @@ export default function Home() {
       </section>
 
       {/* ── THREE PILLARS ─────────────────────────────────── */}
-      <section style={{ background: "white", padding: "80px 0" }}>
+      <section style={{ background: "var(--page-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Why PropertyVault</p>
-            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 52, letterSpacing: "-0.01em" }}>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 800, textAlign: "center", color: "var(--ink)", marginBottom: 52, letterSpacing: "-0.01em" }}>
               No agents. No voids.<br />No calls at midnight.
             </h2>
           </FadeIn>
@@ -454,14 +454,14 @@ export default function Home() {
               },
             ].map((p, i) => (
               <FadeIn key={p.title} delay={i * 100} from="bottom">
-                <div className="pillar-card" style={{ border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 32, display: "flex", flexDirection: "column", height: "100%" }}>
-                  <div style={{ width: 56, height: 56, borderRadius: 16, background: "#f8f9fc", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
+                <div className="pillar-card" style={{ border: "1.5px solid var(--hairline)", borderRadius: 20, padding: 32, display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ width: 56, height: 56, borderRadius: 16, background: "var(--card-surface)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                     {p.icon}
                   </div>
                   <p style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>{p.stat}</p>
-                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
-                  <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
-                  <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  <h3 style={{ fontSize: 20, fontWeight: 800, color: "var(--ink)", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{p.title}</h3>
+                  <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 24, flex: 1 }}>{p.desc}</p>
+                  <Link href={p.href} style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
                     {p.cta} <span style={{ color: "var(--gold-ink)" }}>→</span>
                   </Link>
                 </div>
@@ -479,16 +479,16 @@ export default function Home() {
             {/* Left: copy */}
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>For landlords</p>
-              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                We pay your rent.<br />Every month.<br /><em style={{ fontStyle: "italic", fontWeight: 600, color: "#64748b" }}>Whether tenanted or not.</em>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "var(--ink)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+                We pay your rent.<br />Every month.<br /><em style={{ fontStyle: "italic", fontWeight: 600, color: "var(--ink-muted)" }}>Whether tenanted or not.</em>
               </h2>
-              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
+              <p style={{ fontSize: 15, color: "var(--ink-muted)", lineHeight: 1.7, marginBottom: 32 }}>
                 We take on your property on a 3–5 year lease and pay you a fixed monthly amount, whether or not it is occupied. No management fees, no tenant hassle — we handle the day-to-day management, tenants and routine repairs.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/guaranteed-rent" className="btn-gold">Get a free rent estimate</Link>
                 <a href="https://calendly.com/gowads047/30min" target="_blank" rel="noopener noreferrer"
-                  style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
+                  style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 600, color: "var(--ink)", padding: "10px 20px", border: "1.5px solid var(--hairline)", borderRadius: 10, background: "var(--page-surface)", textDecoration: "none" }}>
                   <svg width="16" height="16" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="#0f1b36"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
                   Book a free call
                 </a>
@@ -503,10 +503,10 @@ export default function Home() {
                 { n: "Zero", l: "Void periods for you", sub: "paid even when empty" },
                 { n: "Zero", l: "Tenant contact", sub: "we manage day to day" },
               ].map(s => (
-                <div key={s.l} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
-                  <p style={{ fontSize: 26, fontWeight: 800, color: "#0f1b36", lineHeight: 1 }}>{s.n}</p>
-                  <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginTop: 4 }}>{s.l}</p>
-                  <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 2 }}>{s.sub}</p>
+                <div key={s.l} style={{ background: "var(--page-surface)", border: "1.5px solid var(--hairline)", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
+                  <p style={{ fontSize: 26, fontWeight: 800, color: "var(--ink)", lineHeight: 1 }}>{s.n}</p>
+                  <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)", marginTop: 4 }}>{s.l}</p>
+                  <p style={{ fontSize: 11, color: "var(--ink-subtle)", marginTop: 2 }}>{s.sub}</p>
                 </div>
               ))}
             </div>
@@ -516,14 +516,14 @@ export default function Home() {
       </section>
 
       {/* ── FREE TOOLS SECTION ────────────────────────────── */}
-      <section style={{ background: "white", padding: "80px 0" }}>
+      <section style={{ background: "var(--page-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
-            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 12, letterSpacing: "-0.01em" }}>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "var(--ink)", marginBottom: 12, letterSpacing: "-0.01em" }}>
               Everything a landlord needs — free, forever
             </h2>
-            <p style={{ fontSize: 16, color: "#64748b", textAlign: "center", maxWidth: 560, margin: "0 auto 52px", lineHeight: 1.6 }}>
+            <p style={{ fontSize: 16, color: "var(--ink-muted)", textAlign: "center", maxWidth: 560, margin: "0 auto 52px", lineHeight: 1.6 }}>
               No account required. No paywall. Use our calculators and legal templates directly in your browser.
             </p>
           </FadeIn>
@@ -552,19 +552,19 @@ export default function Home() {
                 items: ["No agent fees", "WhatsApp direct contact", "Multi-country search"],
               },
             ].map(card => (
-              <Link key={card.href} href={card.href} style={{ textDecoration: "none", display: "flex", flexDirection: "column", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, transition: "border-color 0.2s, box-shadow 0.2s" }}
+              <Link key={card.href} href={card.href} style={{ textDecoration: "none", display: "flex", flexDirection: "column", border: "1.5px solid var(--hairline)", borderRadius: 20, padding: 28, transition: "border-color 0.2s, box-shadow 0.2s" }}
                 className="pillar-card">
                 <span style={{ fontSize: 10, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{card.tag}</span>
-                <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{card.title}</h3>
-                <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6, marginBottom: 20, flex: 1 }}>{card.desc}</p>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 10, fontFamily: "var(--font-family-heading)" }}>{card.title}</h3>
+                <p style={{ fontSize: 13, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20, flex: 1 }}>{card.desc}</p>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 6, marginBottom: 20 }}>
                   {card.items.map(item => (
-                    <li key={item} style={{ fontSize: 12, color: "#374151", display: "flex", alignItems: "center", gap: 6 }}>
-                      <span style={{ color: "#22c55e", fontWeight: 700, flexShrink: 0 }}>✓</span> {item}
+                    <li key={item} style={{ fontSize: 12, color: "var(--ink-muted)", display: "flex", alignItems: "center", gap: 6 }}>
+                      <span style={{ color: "var(--ok)", fontWeight: 700, flexShrink: 0 }}>✓</span> {item}
                     </li>
                   ))}
                 </ul>
-                <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", display: "inline-flex", alignItems: "center", gap: 4 }}>
                   Explore free <span style={{ color: "var(--gold-ink)" }}>→</span>
                 </span>
               </Link>
@@ -593,10 +593,10 @@ export default function Home() {
               <div key={s.step} className="step-card" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, padding: 32 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.2)", display: "flex", alignItems: "center", justifyContent: "center" }}>{s.icon}</div>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(201,168,76,0.5)", letterSpacing: "0.08em" }}>{s.step}</span>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: "#e8c877", letterSpacing: "0.08em" }}>{s.step}</span>
                 </div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: "white", marginBottom: 10 }}>{s.title}</h3>
-                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.65 }}>{s.desc}</p>
+                <p style={{ fontSize: 14, color: "rgba(255,255,255,0.58)", lineHeight: 1.65 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -610,7 +610,7 @@ export default function Home() {
       </section>
 
       {/* ── ALTERNATING SECTION 2: Tools ──────────────────── */}
-      <section style={{ background: "white", padding: "80px 0" }}>
+      <section style={{ background: "var(--page-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 64, alignItems: "center" }}>
@@ -625,10 +625,10 @@ export default function Home() {
                 { label: "Landlord Tax", tag: "New", href: "/calculators/landlord-tax" },
                 { label: "BTL Stress Test", tag: "New", href: "/calculators/btl-mortgage" },
               ].map(t => (
-                <Link key={t.label} href={t.href} style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "16px 14px", textDecoration: "none", display: "block" }}
+                <Link key={t.label} href={t.href} style={{ background: "var(--card-surface)", border: "1.5px solid var(--hairline)", borderRadius: 14, padding: "16px 14px", textDecoration: "none", display: "block" }}
                   className="hover:border-gold-300 transition-colors">
                   <p style={{ fontSize: 10, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 4 }}>{t.tag}</p>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>{t.label}</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{t.label}</p>
                 </Link>
               ))}
             </div>
@@ -636,15 +636,15 @@ export default function Home() {
             {/* Right: copy */}
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Free tools</p>
-              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                {siteMetrics.calculators} calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "#94a3b8", fontWeight: 600 }}>Completely free.</em>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "var(--ink)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+                {siteMetrics.calculators} calculators.<br />Zero sign-up.<br /><em style={{ fontStyle: "italic", color: "var(--ink-subtle)", fontWeight: 600 }}>Completely free.</em>
               </h2>
-              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 32 }}>
+              <p style={{ fontSize: 15, color: "var(--ink-muted)", lineHeight: 1.7, marginBottom: 32 }}>
                 From deal analysis to tax planning, stamp duty to mortgage stress-tests — every calculation a UK property investor needs, in one place.
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/calculators" className="btn-gold">All {siteMetrics.calculators} calculators</Link>
-                <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "#0f1b36", padding: "10px 20px", border: "1.5px solid #e8eaf0", borderRadius: 10, background: "white", textDecoration: "none" }}>
+                <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", padding: "10px 20px", border: "1.5px solid var(--hairline)", borderRadius: 10, background: "var(--page-surface)", textDecoration: "none" }}>
                   19 free templates
                 </Link>
               </div>
@@ -655,20 +655,20 @@ export default function Home() {
       </section>
 
       {/* ── VIDEO / TESTIMONIAL SECTION ───────────────────── */}
-      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
+      <section style={{ background: "var(--card-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
             {/* Left: copy */}
             <div>
               <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Landlord success</p>
-              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "#0f1b36", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
+              <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "var(--ink)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
                 "Not a single void month in two years"
               </h2>
-              <p style={{ fontSize: 15, color: "#64748b", lineHeight: 1.7, marginBottom: 8 }}>
+              <p style={{ fontSize: 15, color: "var(--ink-muted)", lineHeight: 1.7, marginBottom: 8 }}>
                 Our landlords in Birmingham, Nottingham, and Derby tell us the same thing: guaranteed rent changed how they think about property.
               </p>
-              <p style={{ fontSize: 14, color: "#94a3b8", marginBottom: 32 }}>No chasing rent. No tenant calls. No surprise costs.</p>
+              <p style={{ fontSize: 14, color: "var(--ink-subtle)", marginBottom: 32 }}>No chasing rent. No tenant calls. No surprise costs.</p>
               <Link href="/guaranteed-rent" className="btn-gold">See if your property qualifies</Link>
             </div>
 
@@ -685,7 +685,7 @@ export default function Home() {
                   </div>
                   <div style={{ textAlign: "center" }}>
                     <p style={{ fontSize: 15, fontWeight: 700, color: "white", marginBottom: 4 }}>Speak with Nass</p>
-                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>Free 15-min call · WhatsApp</p>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.66)" }}>Free 15-min call · WhatsApp</p>
                   </div>
                 </a>
                 {/* Corner badge */}
@@ -697,8 +697,8 @@ export default function Home() {
               {/* Below-video trust badges */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginTop: 12 }}>
                 {["No fees", "No lock-in", "No agents"].map(b => (
-                  <div key={b} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 10, padding: "10px 8px", textAlign: "center" }}>
-                    <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>✓ {b}</p>
+                  <div key={b} style={{ background: "var(--page-surface)", border: "1.5px solid var(--hairline)", borderRadius: 10, padding: "10px 8px", textAlign: "center" }}>
+                    <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)" }}>✓ {b}</p>
                   </div>
                 ))}
               </div>
@@ -710,27 +710,28 @@ export default function Home() {
 
 
       {/* ── MAKAN PROMO ───────────────────────────────────── */}
-      <section style={{ background: "white", padding: "80px 0" }}>
+      <section style={{ background: "var(--page-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
-          <Link href="/makan" style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #E2D9CA", background: "linear-gradient(135deg, #F5F0E8 0%, #FBEFE9 100%)", textDecoration: "none" }}
-            className="group hover:border-[#AD4429]/30 transition-all">
+          <Link href="/makan"
+            className="makan-promo group hover:border-[#AD4429]/30 transition-all"
+            style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #E2D9CA", background: "linear-gradient(135deg, #F5F0E8 0%, #FBEFE9 100%)", textDecoration: "none" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40, alignItems: "center" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "#AD4429", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <svg width="22" height="22" viewBox="0 0 20 20" fill="white"><path d="M10 2L2 8.5V17a1 1 0 001 1h4.5v-5a1.5 1.5 0 011.5-1.5h2a1.5 1.5 0 011.5 1.5v5H17a1 1 0 001-1V8.5L10 2z"/></svg>
                   </div>
-                  <span style={{ fontSize: 24, fontWeight: 800, color: "#0f1b36", letterSpacing: "-0.01em" }}>makan</span>
+                  <span style={{ fontSize: 24, fontWeight: 800, color: "var(--ink)", letterSpacing: "-0.01em" }}>makan</span>
                   <span style={{ fontSize: 11, fontWeight: 700, background: "#AD4429", color: "white", padding: "3px 8px", borderRadius: 20 }}>New</span>
                 </div>
-                <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "#0f1b36", marginBottom: 10 }}>
+                <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 800, color: "var(--ink)", marginBottom: 10 }}>
                   Free property listings — UK, Middle East & North Africa
                 </h2>
-                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>
+                <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20 }}>
                   Browse rooms, flats, houses, and villas. List your property free. No agents, no fees, no catch — ever.
                 </p>
-                <span style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                <span style={{ fontSize: 14, fontWeight: 700, color: "var(--ink)", display: "inline-flex", alignItems: "center", gap: 4 }}>
                   Browse listings <span style={{ color: "#AD4429" }}>→</span>
                 </span>
               </div>
@@ -740,9 +741,9 @@ export default function Home() {
                   { n: "Free", l: "To browse" },
                   { n: "£0", l: "Agent fees" },
                 ].map(s => (
-                  <div key={s.l} style={{ background: "white", borderRadius: 16, padding: "20px 12px", textAlign: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
-                    <p style={{ fontSize: 20, fontWeight: 800, color: "#0f1b36" }}>{s.n}</p>
-                    <p style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>{s.l}</p>
+                  <div key={s.l} style={{ background: "var(--page-surface)", borderRadius: 16, padding: "20px 12px", textAlign: "center", boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+                    <p style={{ fontSize: 20, fontWeight: 800, color: "var(--ink)" }}>{s.n}</p>
+                    <p style={{ fontSize: 11, color: "var(--ink-subtle)", marginTop: 4 }}>{s.l}</p>
                   </div>
                 ))}
               </div>
@@ -753,28 +754,28 @@ export default function Home() {
       </section>
 
       {/* ── TOOLS GRID ────────────────────────────────────── */}
-      <section style={{ background: "#f8f9fc", padding: "80px 0" }}>
+      <section style={{ background: "var(--card-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 12 }}>Free tools</p>
-            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "#0f1b36", marginBottom: 48 }}>Everything in one place</h2>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "var(--ink)", marginBottom: 48 }}>Everything in one place</h2>
           </FadeIn>
           <FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 16 }}>
-            <Link href="/calculators" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>
+            <Link href="/calculators" className="group" style={{ background: "var(--page-surface)", borderRadius: 20, border: "1.5px solid var(--hairline)", padding: 32, textDecoration: "none", display: "block" }}>
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>22 Free Calculators</h3>
-              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>22 Free Calculators</h3>
+              <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
-            <Link href="/templates" className="group" style={{ background: "white", borderRadius: 20, border: "1.5px solid #e8eaf0", padding: 32, textDecoration: "none", display: "block" }}>
+            <Link href="/templates" className="group" style={{ background: "var(--page-surface)", borderRadius: 20, border: "1.5px solid var(--hairline)", padding: 32, textDecoration: "none", display: "block" }}>
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 8 }}>19 Free Templates</h3>
-              <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>19 Free Templates</h3>
+              <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
           </div>
@@ -785,10 +786,10 @@ export default function Home() {
               { href: "/property-investing", label: "Expert Guides", sub: "BTL, BRRR, HMO, tax, law" },
               { href: "/glossary", label: "Property Glossary", sub: "49 terms explained" },
             ].map(t => (
-              <Link key={t.href} href={t.href} style={{ background: "white", border: "1.5px solid #e8eaf0", borderRadius: 14, padding: "20px 16px", textDecoration: "none", display: "block" }}
+              <Link key={t.href} href={t.href} style={{ background: "var(--page-surface)", border: "1.5px solid var(--hairline)", borderRadius: 14, padding: "20px 16px", textDecoration: "none", display: "block" }}
                 className="hover:border-gold-300 transition-colors">
-                <h3 style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>{t.label}</h3>
-                <p style={{ fontSize: 12, color: "#94a3b8" }}>{t.sub}</p>
+                <h3 style={{ fontSize: 14, fontWeight: 700, color: "var(--ink)", marginBottom: 4 }}>{t.label}</h3>
+                <p style={{ fontSize: 12, color: "var(--ink-subtle)" }}>{t.sub}</p>
               </Link>
             ))}
           </div>
@@ -797,29 +798,29 @@ export default function Home() {
       </section>
 
       {/* ── BLOG ──────────────────────────────────────────── */}
-      <section style={{ background: "white", padding: "80px 0" }}>
+      <section style={{ background: "var(--page-surface)", padding: "80px 0" }}>
         <div className="container-max px-4">
           <FadeIn>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 32 }}>
-            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "#0f1b36" }}>From the blog</h2>
-            <Link href="/blog" style={{ fontSize: 13, fontWeight: 600, color: "#64748b", textDecoration: "none" }}>All articles →</Link>
+            <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "var(--ink)" }}>From the blog</h2>
+            <Link href="/blog" style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-muted)", textDecoration: "none" }}>All articles →</Link>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
             <Link href="/blog/uk-property-market-2026" style={{ background: "#0f1b36", borderRadius: 20, padding: "36px 32px", textDecoration: "none", display: "block", gridColumn: "span 2" }}
               className="blog-hero-card">
               <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", padding: "4px 12px", borderRadius: 20, marginBottom: 20 }}>New · June 2026</span>
               <h3 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 800, color: "white", marginBottom: 10, lineHeight: 1.25 }}>UK Property Market 2026 — What Investors Need to Know</h3>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.58)", lineHeight: 1.6 }}>Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>
             </Link>
-            <Link href="/blog/brrr-strategy-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
+            <Link href="/blog/brrr-strategy-explained" style={{ background: "var(--card-surface)", border: "1.5px solid var(--hairline)", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
               className="hover:border-gold-300 transition-colors">
               <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Investing</p>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>What Is the BRRR Strategy?</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink)", lineHeight: 1.35 }}>What Is the BRRR Strategy?</h3>
             </Link>
-            <Link href="/blog/guaranteed-rent-explained" style={{ background: "#f8f9fc", border: "1.5px solid #e8eaf0", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
+            <Link href="/blog/guaranteed-rent-explained" style={{ background: "var(--card-surface)", border: "1.5px solid var(--hairline)", borderRadius: 20, padding: 28, textDecoration: "none", display: "block" }}
               className="hover:border-gold-300 transition-colors">
               <p style={{ fontSize: 11, fontWeight: 600, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 8 }}>Landlords</p>
-              <h3 style={{ fontSize: 16, fontWeight: 700, color: "#0f1b36", lineHeight: 1.35 }}>Guaranteed Rent — Is It Worth It?</h3>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--ink)", lineHeight: 1.35 }}>Guaranteed Rent — Is It Worth It?</h3>
             </Link>
           </div>
           </FadeIn>
@@ -827,7 +828,7 @@ export default function Home() {
       </section>
 
       {/* ── QUICK LINKS ───────────────────────────────────── */}
-      <section style={{ background: "#f8f9fc", borderTop: "1px solid #e8eaf0", padding: "60px 0" }}>
+      <section style={{ background: "var(--card-surface)", borderTop: "1px solid var(--hairline)", padding: "60px 0" }}>
         <div className="container-max px-4">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: 40, fontSize: 14 }}>
             {[
@@ -857,10 +858,10 @@ export default function Home() {
               ]},
             ].map(group => (
               <div key={group.title}>
-                <h3 style={{ fontWeight: 700, color: "#0f1b36", marginBottom: 14, fontSize: 13 }}>{group.title}</h3>
+                <h3 style={{ fontWeight: 700, color: "var(--ink)", marginBottom: 14, fontSize: 13 }}>{group.title}</h3>
                 <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
                   {group.links.map(link => (
-                    <li key={link.href}><Link href={link.href} style={{ fontSize: 13, color: "#94a3b8", textDecoration: "none" }} className="hover:text-navy-800 transition-colors">{link.label}</Link></li>
+                    <li key={link.href}><Link href={link.href} style={{ fontSize: 13, color: "var(--ink-subtle)", textDecoration: "none" }} className="hover:text-navy-800 transition-colors">{link.label}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -878,9 +879,9 @@ export default function Home() {
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Get started</p>
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "white", marginBottom: 16, letterSpacing: "-0.01em" }}>
               Less hassle. More return.<br />
-              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.3)" }}>Starting now.</em>
+              <em style={{ fontStyle: "italic", color: "rgba(255,255,255,0.62)" }}>Starting now.</em>
             </h2>
-            <p style={{ color: "rgba(255,255,255,0.35)", marginBottom: 36, fontSize: 15, maxWidth: 400, margin: "0 auto 36px" }}>Free forever. No sign-up. No paywalls. No catch.</p>
+            <p style={{ color: "rgba(255,255,255,0.62)", marginBottom: 36, fontSize: 15, maxWidth: 400, margin: "0 auto 36px" }}>Free forever. No sign-up. No paywalls. No catch.</p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/calculators" className="btn-gold">Explore calculators</Link>
               <Link href="/guaranteed-rent" style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.6)", padding: "12px 24px", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, textDecoration: "none" }}>
