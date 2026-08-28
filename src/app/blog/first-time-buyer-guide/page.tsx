@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "First-Time Buyer Guide UK — Step by Step | PropertyVault UK",
@@ -130,6 +131,7 @@ export default function FTBArticle() {
 
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
+        <HelpCTA />
       </div></article>
     </>
   );

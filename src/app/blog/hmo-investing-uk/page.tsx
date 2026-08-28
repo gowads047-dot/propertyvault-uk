@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "HMO Investing UK — Is It Still Profitable?",
@@ -138,6 +139,7 @@ export default function HMOArticle() {
 
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
+        <HelpCTA />
       </div></article>
     </>
   );

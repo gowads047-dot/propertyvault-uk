@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "UK Property Market 2026 — What Investors Need to Know",
@@ -136,6 +137,7 @@ export default function PropertyMarket2026() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
+        <HelpCTA />
       </article>
     </>
   );

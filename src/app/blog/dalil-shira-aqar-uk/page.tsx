@@ -5,6 +5,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Buying Property in the UK — Arabic Guide | PropertyVault UK",
@@ -510,6 +511,7 @@ export default function DalilShiraAqarUK() {
             </div>
           </div>
         </div>
+        <HelpCTA dir="rtl" />
       </article>
 
       <FAQSchema faqs={faqs} />

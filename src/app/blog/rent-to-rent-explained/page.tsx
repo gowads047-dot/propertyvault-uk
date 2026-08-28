@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Rent-to-Rent Explained — The Complete UK Guide 2026",
@@ -483,6 +484,7 @@ export default function RentToRentBlog() {
           </div>
         </div>
 
+        <HelpCTA />
       </article>
     </main>
   );

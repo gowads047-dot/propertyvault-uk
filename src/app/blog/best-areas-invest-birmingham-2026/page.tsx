@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/" },
@@ -208,6 +209,7 @@ export default function BestAreasBirmingham2026Article() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
+        <HelpCTA />
       </article>
       <RelatedArticles
         slug="best-areas-invest-birmingham-2026"

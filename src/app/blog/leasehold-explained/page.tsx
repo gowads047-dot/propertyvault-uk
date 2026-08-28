@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Leasehold Property Explained — The Complete UK Buyer's Guide",
@@ -346,6 +347,7 @@ export default function LeaseholdExplained() {
             ))}
           </div>
         </div>
+        <HelpCTA />
       </article>
     </main>
   );

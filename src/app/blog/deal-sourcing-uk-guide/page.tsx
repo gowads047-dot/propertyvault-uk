@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/" },
@@ -156,6 +157,7 @@ export default function DealSourcingGuideArticle() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="general" />
         </div>
+        <HelpCTA />
       </article>
       <RelatedArticles
         slug="deal-sourcing-uk-guide"

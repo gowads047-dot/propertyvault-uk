@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "The Biggest Financial Lie in Britain Is Unravelling",
@@ -313,6 +314,7 @@ export default function BiggestLieArticle() {
             <Disclaimer type="financial" />
           </div>
         </div>
+        <HelpCTA />
       </article>
       <RelatedArticles
         slug="biggest-financial-lie-britain"

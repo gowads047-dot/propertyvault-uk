@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills",
@@ -139,6 +140,7 @@ export default function Section24Article() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
+        <HelpCTA />
       </article>
     </>
   );

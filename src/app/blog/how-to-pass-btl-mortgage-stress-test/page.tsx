@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 const howToSchema = {
   "@context": "https://schema.org",
@@ -217,6 +218,7 @@ export default function BtlStressTestPage() {
 
           <Disclaimer type="financial" />
         </div>
+        <HelpCTA />
       </article>
 
       <FAQSchema faqs={faqs} />

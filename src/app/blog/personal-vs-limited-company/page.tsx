@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Personal vs Limited Company — Which Is Better for BTL?",
@@ -146,6 +147,7 @@ export default function PersonalVsLtdArticle() {
 
           <FAQSchema faqs={faqs} />
           <Disclaimer type="tax" />
+        <HelpCTA />
       </div></article>
     </>
   );

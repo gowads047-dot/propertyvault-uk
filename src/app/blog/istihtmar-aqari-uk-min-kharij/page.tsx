@@ -5,6 +5,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Investing in UK Property from Abroad — Arabic Guide",
@@ -356,6 +357,7 @@ export default function IstihtmarAqariUKPage() {
             <Disclaimer type="financial" />
           </div>
         </div>
+        <HelpCTA dir="rtl" />
       </article>
 
       <section className="section-padding bg-navy-50">

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Stamp Duty UK — Complete Guide to Current SDLT Rates",
@@ -148,6 +149,7 @@ export default function StampDutyArticle() {
 
           <FAQSchema faqs={faqs} />
           <Disclaimer type="calculator" />
+        <HelpCTA />
       </div></article>
       <RelatedArticles
         slug="stamp-duty-guide"

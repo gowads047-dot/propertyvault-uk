@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "EPC C Deadline 2030 — What Landlords Need to Know",
@@ -146,6 +147,7 @@ export default function EPCArticle() {
 
           <FAQSchema faqs={faqs} />
           <Disclaimer type="general" />
+        <HelpCTA />
       </div></article>
     </>
   );

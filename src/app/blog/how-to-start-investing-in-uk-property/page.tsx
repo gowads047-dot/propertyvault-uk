@@ -5,6 +5,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 const articleSchema = {
   "@context": "https://schema.org",
@@ -418,6 +419,7 @@ export default function HowToStartInvestingPage() {
             />
           </div>
         </div>
+        <HelpCTA />
       </article>
 
       {/* FAQ */}

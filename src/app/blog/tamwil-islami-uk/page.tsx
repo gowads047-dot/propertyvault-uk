@@ -5,6 +5,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Islamic Finance & Halal Mortgages UK — Arabic Guide",
@@ -313,6 +314,7 @@ export default function TamwilIslamiUKPage() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
+        <HelpCTA dir="rtl" />
       </article>
       <RelatedArticles
         slug="tamwil-islami-uk"

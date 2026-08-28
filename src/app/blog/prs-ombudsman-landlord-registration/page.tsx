@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
@@ -151,6 +152,7 @@ export default function PRSOmbudsmanGuideArticle() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="general" />
         </div>
+        <HelpCTA />
       </article>
     </>
   );

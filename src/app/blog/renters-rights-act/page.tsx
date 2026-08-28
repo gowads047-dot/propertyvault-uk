@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know",
@@ -267,6 +268,7 @@ export default function RentersRightsActArticle() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="legal" />
         </div>
+        <HelpCTA />
       </article>
 
       <section className="section-padding bg-navy-50">

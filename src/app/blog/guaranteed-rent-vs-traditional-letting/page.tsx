@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
@@ -138,6 +139,7 @@ export default function GuaranteedRentComparison() {
             <Disclaimer type="financial" />
           </div>
         </div>
+        <HelpCTA />
       </article>
       <RelatedArticles
         slug="guaranteed-rent-vs-traditional-letting"

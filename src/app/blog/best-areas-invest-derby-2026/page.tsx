@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "Best Areas to Invest in Derby 2026 — Landlord Guide",
@@ -212,6 +213,7 @@ export default function BestAreasDerby2026Article() {
           <FAQSchema faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
+        <HelpCTA />
       </article>
       <RelatedArticles
         slug="best-areas-invest-derby-2026"
