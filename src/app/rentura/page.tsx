@@ -163,7 +163,7 @@ export default function RenturaPage() {
             <div style={{ background: "#0f1b2d", borderRadius: 20, padding: 28, display: "flex", flexDirection: "column", gap: 14 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>Property Passport</span>
-                <span style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 6 }}>COMPLIANT</span>
+                <span style={{ background: "rgba(34,197,94,0.15)", color: "#15803d", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 6 }}>COMPLIANT</span>
               </div>
               <h3 style={{ color: "white", fontWeight: 800, fontSize: 17 }}>14 Maple Street, Leeds LS1</h3>
               {[["Type", "HMO — 4 bed"], ["Monthly Rent", "£2,600"], ["EPC Rating", "C — expires Jun 2027"], ["Gas Safety", "✓ Valid to Dec 2025"], ["Tenants", "3 active"], ["Mortgage", "£187,000 @ 4.2% — NatWest"]].map(([k, v]) => (
@@ -213,7 +213,7 @@ export default function RenturaPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32, textAlign: "left" }}>
               {INCLUDED.map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ color: "#22c55e", fontSize: 14, flexShrink: 0 }}>✓</span>
+                  <span style={{ color: "#4ade80", fontSize: 14, flexShrink: 0 }}>✓</span>
                   <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)" }}>{item}</span>
                 </div>
               ))}
@@ -280,11 +280,11 @@ export default function RenturaPage() {
               ].map(item => (
                 <div key={item.before} style={{ background: "#f5f3ef", borderRadius: 14, padding: "18px 20px", border: "1px solid rgba(15,27,45,0.06)" }}>
                   <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                    <span style={{ fontSize: 13, color: "rgba(239,68,68,0.6)", marginTop: 2, flexShrink: 0 }}>✗</span>
+                    <span style={{ fontSize: 13, color: "#b91c1c", marginTop: 2, flexShrink: 0 }}>✗</span>
                     <span style={{ fontSize: 13, color: "rgba(15,27,45,0.66)", textDecoration: "line-through" }}>{item.before}</span>
                   </div>
                   <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginTop: 6 }}>
-                    <span style={{ fontSize: 13, color: "#22c55e", marginTop: 2, flexShrink: 0 }}>✓</span>
+                    <span style={{ fontSize: 13, color: "#15803d", marginTop: 2, flexShrink: 0 }}>✓</span>
                     <span style={{ fontSize: 13, fontWeight: 600, color: "#0f1b2d" }}>{item.after}</span>
                   </div>
                 </div>

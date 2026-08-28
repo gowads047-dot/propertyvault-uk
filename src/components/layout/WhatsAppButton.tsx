@@ -48,7 +48,8 @@ export function WhatsAppButton() {
         <span className="hidden sm:block bg-white text-green-700 text-xs font-bold px-3 py-2 rounded-xl shadow-lg border border-green-100 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-2 group-hover:translate-x-0 whitespace-nowrap pointer-events-none">
           WhatsApp us now
         </span>
-        <span className="w-10 h-10 sm:w-14 sm:h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200 text-white">
+        <span className="w-10 h-10 sm:w-14 sm:h-14 bg-green-600 hover:bg-green-700 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-all duration-200"
+              style={{ color: "#ffffff" }}>
           <WaIcon />
         </span>
       </a>

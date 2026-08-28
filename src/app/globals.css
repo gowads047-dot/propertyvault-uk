@@ -106,7 +106,22 @@ html.dark .text-navy-400 { color: #94a3b8; }
 [data-surface="dark"] .text-navy-400,
 .section-dark-rich .text-navy-500,
 .gradient-navy .text-navy-500,
-.hero-section .text-navy-500 { color: #9aa6b8; }
+.hero-section .text-navy-500,
+[data-surface="dark"] .text-navy-500 { color: #9aa6b8; }
+
+/* Darker still, and worse: text-navy-600/700/800 on one of these heroes
+   measured 1.29:1 on /calculators/leasehold/ — an invisible heading, not a
+   dim one. Light mode only; dark mode already remaps these. */
+.section-dark-rich .text-navy-600,
+.gradient-navy .text-navy-600,
+.hero-section .text-navy-600,
+[data-surface="dark"] .text-navy-600,
+.section-dark-rich .text-navy-700,
+.gradient-navy .text-navy-700,
+.hero-section .text-navy-700,
+.section-dark-rich .text-navy-800,
+.gradient-navy .text-navy-800,
+.hero-section .text-navy-800 { color: #e4e8f0; }
 
 /* A gold button stays gold in dark mode, so its label has to stay dark. The
    .btn-gold utility does set color: #0f1b36, but it lives in @layer utilities
