@@ -89,11 +89,17 @@ export async function GET(req: Request) {
           `,
         }),
       });
-    } else {
-      // no-op: RESEND_API_KEY not configured
+      sent++;
     }
-    sent++;
   }
 
-  return NextResponse.json({ sent });
+  // A silent zero here looks the same as "nothing was due today".
+  if (!RESEND_KEY && sent === 0) {
+    return NextResponse.json(
+      { sent: 0, error: "RESEND_API_KEY not configured — reminders were NOT sent" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({ sent, configured: Boolean(RESEND_KEY) });
 }

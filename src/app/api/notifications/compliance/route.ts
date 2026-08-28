@@ -74,11 +74,17 @@ export async function GET(req: Request) {
         }),
       });
       sent++;
-    } else {
-      // no-op: RESEND_API_KEY not configured
-      sent++;
     }
   }
 
-  return NextResponse.json({ sent, alerts: alerts.length });
+  // Reporting sent:N with no key configured is indistinguishable from having
+  // actually sent, which is how an alerting system dies quietly. Say so.
+  if (!RESEND_KEY && alerts.length > 0) {
+    return NextResponse.json(
+      { sent: 0, due: alerts.length, error: "RESEND_API_KEY not configured — alerts were NOT sent" },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json({ sent, alerts: alerts.length, configured: Boolean(RESEND_KEY) });
 }

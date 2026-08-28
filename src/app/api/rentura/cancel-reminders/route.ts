@@ -31,7 +31,10 @@ export async function POST(req: Request) {
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   if (!RESEND_API_KEY) {
     // no-op: RESEND_API_KEY not configured
-    return NextResponse.json({ sent: 0, note: "No Resend key" });
+    return NextResponse.json(
+      { sent: 0, error: "RESEND_API_KEY not configured — reminders were NOT sent" },
+      { status: 500 }
+    );
   }
 
   for (const member of cancelledMembers) {
