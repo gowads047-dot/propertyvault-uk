@@ -11,17 +11,19 @@ const stampDutyFaqs = [
   { q: "How much is stamp duty on a £300,000 house?", a: "For a standard purchase at £300,000 from April 2025: £0 on the first £125,000, 2% on £125,001-£250,000 (£2,500), and 5% on £250,001-£300,000 (£2,500) = £5,000 total. First-time buyers pay £0 (nil rate up to £300,000)." },
   { q: "Do first-time buyers pay stamp duty?", a: "First-time buyers pay no stamp duty on the first £300,000 of a property purchase (from 1 April 2025). They pay 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, the relief does not apply." },
   { q: "What is the additional property surcharge?", a: "If you already own a property and are buying an additional one (buy-to-let, second home), you pay a 5% surcharge on top of standard SDLT rates. This was increased from 3% to 5% on 31 October 2024." },
+  { q: "Do non-UK residents pay extra stamp duty?", a: "Yes. Non-UK residents buying residential property in England or Northern Ireland pay a 2% surcharge on top of whatever rate would otherwise apply, including the additional property surcharge. You count as non-resident if you were present in the UK for fewer than 183 days in the 12 months before the purchase. The surcharge does not apply below £40,000." },
+  { q: "Can I claim back the 2% non-resident surcharge?", a: "Sometimes. If you spend 183 days or more in the UK in any continuous 365-day period that falls within the two years around the purchase date, you can apply to HMRC for a refund of the 2% surcharge. The claim must normally be made within two years of the transaction." },
   { q: "Does stamp duty apply in Scotland and Wales?", a: "No. SDLT only applies in England and Northern Ireland. Scotland has Land and Buildings Transaction Tax (LBTT) and Wales has Land Transaction Tax (LTT) — both have different rates and thresholds." },
   { q: "When do I pay stamp duty?", a: "SDLT must be paid within 14 days of completion. Your solicitor or conveyancer usually handles the payment and filing on your behalf as part of the conveyancing process." },
 ];
 
 export const metadata: Metadata = {
-  title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
-  description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
+  title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
+  description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/" },
   openGraph: {
-    title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
-    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
+    title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
+    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/",
     siteName: "PropertyVault UK",
@@ -29,8 +31,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
-    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
+    title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
+    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
   },
 };
 
@@ -42,7 +44,7 @@ export default function StampDutyPage() {
           <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Stamp Duty" }]} />
           <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-2">Free Calculator</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Stamp Duty Calculator (SDLT)</h1>
-          <p className="text-navy-200 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, additional property surcharge, and first-time buyer relief.</p>
+          <p className="text-navy-200 max-w-2xl">Calculate your Stamp Duty Land Tax for England and Northern Ireland. Includes standard rates, the additional property surcharge, the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.</p>
           <div className="mt-3"><PrintButton /></div>
         </div>
       </section>
@@ -76,6 +78,9 @@ export default function StampDutyPage() {
             </div>
             <h3 className="text-xl font-bold text-navy-800 mt-8">Additional Property Surcharge</h3>
             <p>If you are buying an additional property (second home, buy-to-let investment, or any property where you already own another), you pay a 5% surcharge on top of the standard rates on the entire purchase price.</p>
+            <h3 className="text-xl font-bold text-navy-800 mt-8">Non-Resident Surcharge (2%)</h3>
+            <p>Buyers who are not UK resident pay a further 2% on every band, on top of the standard rates and on top of the additional property surcharge if that also applies. The test is presence, not nationality or visa status: you are treated as non-resident if you spent fewer than 183 days in the UK in the 12 months before the purchase. Like the additional property surcharge, it does not bite below £40,000.</p>
+            <p>If you later spend 183 days or more in the UK in any continuous 365-day period within the two years around the purchase, you can apply to HMRC to have the 2% refunded. Tick the non-resident box in the calculator above to see what it adds to your bill.</p>
             <h3 className="text-xl font-bold text-navy-800 mt-8">First-Time Buyer Relief (from 1 April 2025)</h3>
             <p>First-time buyers pay no SDLT on the first £300,000 and 5% on the portion from £300,001 to £500,000. If the property costs more than £500,000, first-time buyer relief does not apply and you pay the standard rates. Note: the temporary higher thresholds (£425,000 / £625,000) ended on 31 March 2025.</p>
           </div>
