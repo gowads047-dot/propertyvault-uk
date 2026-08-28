@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
+  title: "Property Glossary — 50+ UK Property Terms Explained",
   description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
   keywords: "property glossary, property terms explained, buy to let glossary, property investment terminology, UK property definitions",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/glossary/" },
   openGraph: {
-    title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
+    title: "Property Glossary — 50+ UK Property Terms Explained",
     description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/glossary/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Glossary — 50+ UK Property Terms Explained | PropertyVault UK",
+    title: "Property Glossary — 50+ UK Property Terms Explained",
     description: "A-Z glossary of UK property investment terms. From ARV to yield, every term landlords, investors, and buyers need to know — explained simply.",
   },
 };

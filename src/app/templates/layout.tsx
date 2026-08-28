@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free UK Property Templates — 19 Legal & Landlord Documents | PropertyVault",
+  title: "Free UK Property Templates — 19 Legal & Landlord Documents",
   description: "Download free UK property templates. AST agreements, Section 8 notices, inventory checklists, inspection records, rent receipts, and 19 more legal documents for landlords.",
   keywords: "free property templates UK, landlord legal templates, free tenancy agreement template, Section 8 notice template, AST template download",
   openGraph: {
-    title: "Free UK Property Templates — 19 Legal Documents | PropertyVault",
+    title: "Free UK Property Templates — 19 Legal Documents",
     description: "Download free UK property templates. 19 legal documents for landlords, tenants, and investors — no sign-up required.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/templates/",

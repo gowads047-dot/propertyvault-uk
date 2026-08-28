@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/" },
   openGraph: {
     type: "article",
-    title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills | PropertyVault UK",
+    title: "Section 24 Explained — How It Affects UK Landlords' Tax Bills",
     description: "Section 24 mortgage interest restriction explained. How it works, how much extra tax you pay, and whether a limited company (SPV) could save you money.",
     url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/",
     siteName: "PropertyVault UK",

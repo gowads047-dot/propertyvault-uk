@@ -6,12 +6,12 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+  title: "Stamp Duty UK — Complete Guide to Current SDLT Rates",
   description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
   keywords: "stamp duty UK, SDLT rates, stamp duty calculator, first time buyer stamp duty, additional property surcharge, stamp duty 2025",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
   openGraph: {
-    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates",
     description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates",
     description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
   },
 };

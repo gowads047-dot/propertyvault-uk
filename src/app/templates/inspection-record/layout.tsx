@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Inspection Report Template UK — Landlord Inspection Form | PropertyVault",
+  title: "Free Property Inspection Report Template UK — Landlord Inspection Form",
   description: "Download a free property inspection report template for UK landlords. Conduct periodic inspections professionally and document property condition with photos and notes.",
   keywords: "property inspection report template UK, landlord inspection form, periodic inspection template, rental property inspection checklist",
   openGraph: {

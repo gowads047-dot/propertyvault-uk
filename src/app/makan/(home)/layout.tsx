@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 // /makan/list/ and every listing declared themselves duplicates of /makan/.
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/makan/" },
-  title: "Makan — List Your Property to Tenants and Companies | PropertyVault UK",
+  title: "Makan — List Your Property to Tenants and Companies",
   description:
     "List a room, studio or whole property free. Reach tenants and the serviced-accommodation and supported-living companies an estate agent would turn down on your behalf.",
   openGraph: {

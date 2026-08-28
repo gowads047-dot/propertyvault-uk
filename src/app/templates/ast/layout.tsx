@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free AST Template UK 2026 — Assured Shorthold Tenancy Agreement | PropertyVault",
+  title: "Free AST Template UK 2026 — Assured Shorthold Tenancy Agreement",
   description: "Download a free Assured Shorthold Tenancy (AST) agreement template for England. Updated for 2026 including Renters Rights Act 2025 provisions. No sign-up required.",
   keywords: "free AST template UK, assured shorthold tenancy agreement template, AST template download, tenancy agreement template UK 2026",
   openGraph: {

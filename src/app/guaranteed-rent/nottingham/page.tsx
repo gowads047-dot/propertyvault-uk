@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent Nottingham — Landlords Get Paid Every Month | PropertyVault UK",
+  title: "Guaranteed Rent Nottingham — Landlords Get Paid Every Month",
   description: "Guaranteed rent for landlords in Nottingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Nottingham postcodes covered.",
   keywords: "guaranteed rent Nottingham, guaranteed rent scheme Nottingham, landlord guaranteed rent NG postcode, lease my property Nottingham",
   openGraph: {

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Due Diligence Checklist UK — Investment Research Template | PropertyVault",
+  title: "Free Property Due Diligence Checklist UK — Investment Research Template",
   description: "Download a free property investment due diligence checklist. Area research, deal analysis, legal checks, financing, and planning considerations for UK investors.",
   keywords: "property due diligence checklist UK, property investment research template, buy to let due diligence, property deal checklist UK",
   openGraph: {

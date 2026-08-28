@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "UK Property Market Insights — House Prices, Yields & Trends | PropertyVault",
+  title: "UK Property Market Insights — House Prices, Yields & Trends",
   description: "UK property market data and analysis. House price trends, rental yields by region, interest rate impact, and property hotspot reports.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/market-insights/" },
   openGraph: {
-    title: "UK Property Market Insights — House Prices, Yields & Trends | PropertyVault",
+    title: "UK Property Market Insights — House Prices, Yields & Trends",
     description: "UK property market data and analysis. House price trends, rental yields by region, interest rate impact, and property hotspot reports.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/market-insights/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Property Market Insights — House Prices, Yields & Trends | PropertyVault",
+    title: "UK Property Market Insights — House Prices, Yields & Trends",
     description: "UK property market data and analysis. House price trends, rental yields by region, interest rate impact, and property hotspot reports.",
   },
 };

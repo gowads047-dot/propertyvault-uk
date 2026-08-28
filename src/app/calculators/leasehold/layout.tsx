@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Leasehold Calculator UK 2026 — Extension Cost, Depreciation & Ground Rent | PropertyVault",
+  title: "Leasehold Calculator UK 2026 — Extension Cost & Ground Rent",
   description: "Calculate lease extension premium, annual lease depreciation, ground rent escalation, and mortgage eligibility. Instantly see what a short lease is costing you — and how much you'll pay to extend.",
   keywords: "leasehold calculator UK, lease extension cost calculator, how much does lease extension cost, leasehold depreciation calculator, ground rent calculator UK, marriage value calculator, leasehold mortgage eligibility",
   openGraph: {

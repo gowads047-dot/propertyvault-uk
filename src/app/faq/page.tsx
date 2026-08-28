@@ -3,12 +3,12 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
+  title: "FAQ — Guaranteed Rent, Calculators & Property Questions",
   description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
   keywords: "PropertyVault FAQ, guaranteed rent questions, landlord FAQ UK, property calculator help, PropertyVault Academy FAQ",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/faq/" },
   openGraph: {
-    title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
+    title: "FAQ — Guaranteed Rent, Calculators & Property Questions",
     description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/faq/",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Frequently Asked Questions — PropertyVault UK | Guaranteed Rent, Calculators & Property",
+    title: "FAQ — Guaranteed Rent, Calculators & Property Questions",
     description: "Answers to common questions about PropertyVault UK's guaranteed rent service, free property calculators, landlord management, and the Academy. Find what you need instantly.",
   },
 };

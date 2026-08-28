@@ -7,12 +7,12 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
-  title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
+  title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide",
   description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
   keywords: "property investment Derby, buy to let Derby, rental yield Derby, Derby property prices, best areas to invest Derby, guaranteed rent Derby",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/derby/" },
   openGraph: {
-    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
+    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide",
     description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/areas/derby/",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide | PropertyVault UK",
+    title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide",
     description: "Complete Derby property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration projects, and guaranteed rent options.",
   },
 };

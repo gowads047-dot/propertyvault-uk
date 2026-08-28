@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "HMO Guide UK — Licensing, Yields & Management | PropertyVault",
+  title: "HMO Guide UK — Licensing, Yields & Management",
   description: "Complete HMO investing guide. Licensing requirements, room sizes, fire safety, yields, management, and how to run a profitable House in Multiple Occupation.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/hmo-hub/" },
   openGraph: {
-    title: "HMO Guide UK — Licensing, Yields & Management | PropertyVault",
+    title: "HMO Guide UK — Licensing, Yields & Management",
     description: "Complete HMO investing guide. Licensing requirements, room sizes, fire safety, yields, management, and how to run a profitable House in Multiple Occupation.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/hmo-hub/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HMO Guide UK — Licensing, Yields & Management | PropertyVault",
+    title: "HMO Guide UK — Licensing, Yields & Management",
     description: "Complete HMO investing guide. Licensing requirements, room sizes, fire safety, yields, management, and how to run a profitable House in Multiple Occupation.",
   },
 };

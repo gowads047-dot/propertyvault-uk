@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
+  title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide",
   description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/brrr-academy/" },
   openGraph: {
-    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
+    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide",
     description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/brrr-academy/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide | PropertyVault",
+    title: "BRRR Academy UK — Buy Refurbish Rent Refinance Strategy Guide",
     description: "Master the BRRR strategy. Complete guide to buying below market value, refurbishing for profit, renting, and refinancing to recycle capital and scale your portfolio.",
   },
 };

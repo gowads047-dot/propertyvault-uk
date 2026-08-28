@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Tenant Application Form Template UK — Landlord Reference Form | PropertyVault",
+  title: "Free Tenant Application Form Template UK — Landlord Reference Form",
   description: "Download a free tenant application form template for UK landlords. Collect employment, rental history, references, and identity documents before offering a tenancy.",
   keywords: "tenant application form UK, landlord tenant reference form, rental application template UK, tenant vetting form, tenant screening form UK",
   openGraph: {

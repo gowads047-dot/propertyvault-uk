@@ -2,12 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
+  title: "Leasehold Property Explained — The Complete UK Buyer's Guide",
   description:
     "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/" },
   openGraph: {
-    title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
+    title: "Leasehold Property Explained — The Complete UK Buyer's Guide",
     description: "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
+    title: "Leasehold Property Explained — The Complete UK Buyer's Guide",
     description: "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
   },
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "HMO Yield Calculator UK — Room-by-Room Returns | PropertyVault",
+  title: "HMO Yield Calculator UK — Room-by-Room Returns",
   description: "Calculate HMO gross yield, net yield, and monthly cash flow room by room. Factor in bills, licensing, management, and mortgage payments. Free UK tool.",
   keywords: "HMO yield calculator, HMO calculator UK, house in multiple occupation yield, HMO return calculator, HMO investment calculator",
   openGraph: {

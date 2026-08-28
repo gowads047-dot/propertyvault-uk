@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
   openGraph: {
     type: "article",
-    title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+    title: "UK Property Market 2026 — What Investors Need to Know",
     description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
     url: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/",
     siteName: "PropertyVault UK",

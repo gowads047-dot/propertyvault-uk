@@ -6,7 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { PostcodeEmailCapture } from "@/components/resources/PostcodeEmailCapture";
 
 export const metadata: Metadata = {
-  title: "Top 20 UK Buy-to-Let Postcodes 2025 — Free Guide | PropertyVault UK",
+  title: "Top 20 UK Buy-to-Let Postcodes 2025 — Free Guide",
   description: "The 20 UK postcodes with the highest documented gross rental yields in 2025. Based on Land Registry sales data and Rightmove rental listings. Free — no email required.",
   keywords: "best buy to let postcodes UK 2025, highest rental yield UK, buy to let investment locations, best postcodes for property investment",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/resources/top-20-btl-postcodes" },

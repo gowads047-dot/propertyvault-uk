@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent Derby — Landlords Get Paid Every Month | PropertyVault UK",
+  title: "Guaranteed Rent Derby — Landlords Get Paid Every Month",
   description: "Guaranteed rent for landlords in Derby. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Derby postcodes covered.",
   keywords: "guaranteed rent Derby, guaranteed rent scheme Derby, landlord guaranteed rent DE postcode, lease my property Derby",
   openGraph: {

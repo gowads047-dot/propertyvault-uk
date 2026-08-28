@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Viewing Checklist UK — What to Look For When Viewing | PropertyVault",
+  title: "Free Property Viewing Checklist UK — What to Look For When Viewing",
   description: "Download a free property viewing checklist for UK buyers and investors. Check structure, damp, electrics, heating, legal questions, and negotiation points at every viewing.",
   keywords: "property viewing checklist UK, house viewing checklist, what to check when viewing a property, property viewing tips UK, buy to let viewing checklist",
   openGraph: {

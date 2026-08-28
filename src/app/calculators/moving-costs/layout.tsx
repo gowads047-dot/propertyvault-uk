@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Moving Costs Calculator UK 2026 — Total Cost of Moving House | PropertyVault",
+  title: "Moving Costs Calculator UK 2026 — Total Cost of Moving House",
   description: "Calculate the full cost of moving house in the UK. Stamp duty, solicitor fees, survey, removal costs, mortgage arrangement fees, and more. Free 2026 tool.",
   keywords: "moving costs calculator UK, cost of moving house 2026, moving house calculator, home buying costs calculator, total moving costs UK",
   openGraph: {

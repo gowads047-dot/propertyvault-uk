@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent Coventry — Landlords Get Paid Every Month | PropertyVault UK",
+  title: "Guaranteed Rent Coventry — Landlords Get Paid Every Month",
   description: "Guaranteed rent for landlords in Coventry. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Coventry postcodes covered.",
   keywords: "guaranteed rent Coventry, guaranteed rent scheme Coventry, landlord guaranteed rent CV postcode, lease my property Coventry",
   openGraph: {

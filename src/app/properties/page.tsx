@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Property Listings — List & Browse Properties | PropertyVault UK",
+  title: "Property Listings — List & Browse Properties",
   description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/properties/" },
   openGraph: {
-    title: "Property Listings — List & Browse Properties | PropertyVault UK",
+    title: "Property Listings — List & Browse Properties",
     description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/properties/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Listings — List & Browse Properties | PropertyVault UK",
+    title: "Property Listings — List & Browse Properties",
     description: "List your property for rent or sale on PropertyVault, or search UK property portals from one place.",
   },
 };

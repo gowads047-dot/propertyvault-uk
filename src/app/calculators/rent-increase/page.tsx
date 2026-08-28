@@ -8,12 +8,12 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact | PropertyVault",
+  title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact",
   description: "Calculate the impact of a rent increase on your annual income, check Section 13 notice requirements, and benchmark against CPI and market rates.",
   keywords: "rent increase calculator UK, Section 13 notice, how much can I increase rent, rent increase notice UK, landlord rent increase 2025",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/rent-increase/" },
   openGraph: {
-    title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact | PropertyVault",
+    title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact",
     description: "Calculate the impact of a rent increase on your annual income, check Section 13 notice requirements, and benchmark against CPI and market rates.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/rent-increase/",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact | PropertyVault",
+    title: "Free Rent Increase Calculator UK — Section 13 Notice & Impact",
     description: "Calculate the impact of a rent increase on your annual income, check Section 13 notice requirements, and benchmark against CPI and market rates.",
   },
 };

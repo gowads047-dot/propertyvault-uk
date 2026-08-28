@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Property Flip ROI Calculator UK — Buy, Refurb & Sell Profit | PropertyVault",
+  title: "Property Flip ROI Calculator UK — Buy, Refurb & Sell Profit",
   description: "Calculate your profit, ROI, and annualised return on a UK property flip. Factor in purchase costs, stamp duty, refurb budget, finance costs, and sale fees.",
   keywords: "property flip calculator UK, flip ROI calculator, house flip profit calculator, buy refurb sell calculator, flip property returns UK",
   openGraph: {

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Resources — Templates, Checklists & Toolkits | PropertyVault",
+  title: "Free Property Resources — Templates, Checklists & Toolkits",
   description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/resources/" },
   openGraph: {
-    title: "Free Property Resources — Templates, Checklists & Toolkits | PropertyVault",
+    title: "Free Property Resources — Templates, Checklists & Toolkits",
     description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/resources/",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Property Resources — Templates, Checklists & Toolkits | PropertyVault",
+    title: "Free Property Resources — Templates, Checklists & Toolkits",
     description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
   },
 };

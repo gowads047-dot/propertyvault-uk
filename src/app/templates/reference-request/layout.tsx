@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Tenant Reference Request Letter UK — Landlord Reference Template | PropertyVault",
+  title: "Free Tenant Reference Request Letter UK — Landlord Reference Template",
   description: "Download a free tenant reference request letter template for UK landlords. Request employer references, previous landlord references, and character references professionally.",
   keywords: "tenant reference request letter UK, landlord reference template, tenant referencing template, reference request letter download UK",
   openGraph: {

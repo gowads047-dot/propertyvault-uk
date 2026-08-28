@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Section 8 Notice Template UK 2026 — Landlord Eviction Notice | PropertyVault",
+  title: "Free Section 8 Notice Template UK 2026 — Landlord Eviction Notice",
   description: "Download a free Section 8 notice template for UK landlords. Covers all 17 grounds for possession. Updated for 2026. Use when tenants breach tenancy terms.",
   keywords: "Section 8 notice template UK, free Section 8 notice, landlord eviction notice template, Section 8 grounds for possession, Section 8 notice 2026",
   openGraph: {

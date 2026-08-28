@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/rent-to-rent-explained/" },
-  title: "Rent-to-Rent Explained — The Complete UK Guide 2026 | PropertyVault UK",
+  title: "Rent-to-Rent Explained — The Complete UK Guide 2026",
   description:
     "Everything you need to know about Rent-to-Rent in the UK: how it works, the 3 models, legal requirements, how much you can earn, and how to get your first deal.",
   openGraph: {

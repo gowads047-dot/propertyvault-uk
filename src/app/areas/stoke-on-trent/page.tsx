@@ -7,14 +7,14 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
-  title: "Stoke-on-Trent Buy-to-Let Investment Guide | PropertyVault UK",
+  title: "Stoke-on-Trent Buy-to-Let Investment Guide",
   description:
     "Complete Stoke-on-Trent property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   keywords:
     "property investment Stoke-on-Trent, buy to let Stoke-on-Trent, rental yield Stoke-on-Trent, Stoke-on-Trent property prices, best areas to invest Stoke-on-Trent",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/stoke-on-trent/" },
   openGraph: {
-    title: "Stoke-on-Trent Buy-to-Let Investment Guide | PropertyVault UK",
+    title: "Stoke-on-Trent Buy-to-Let Investment Guide",
     description: "Complete Stoke-on-Trent property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/areas/stoke-on-trent/",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stoke-on-Trent Buy-to-Let Investment Guide | PropertyVault UK",
+    title: "Stoke-on-Trent Buy-to-Let Investment Guide",
     description: "Complete Stoke-on-Trent property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and free tools for investors.",
   },
 };

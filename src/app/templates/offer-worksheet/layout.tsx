@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Offer Worksheet UK — Calculate Your Maximum Offer | PropertyVault",
+  title: "Free Property Offer Worksheet UK — Calculate Your Maximum Offer",
   description: "Download a free property offer worksheet. Calculate your maximum purchase price based on target yield, refurb costs, comparables, and exit strategy. For UK investors.",
   keywords: "property offer worksheet UK, maximum offer calculator property, property offer template, buy to let offer calculation, investment property offer sheet",
   openGraph: {

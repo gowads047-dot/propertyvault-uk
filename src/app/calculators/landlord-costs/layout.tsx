@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Landlord Costs Calculator UK — Annual Running Costs for Buy-to-Let | PropertyVault",
+  title: "Landlord Costs Calculator UK — Annual Running Costs for Buy-to-Let",
   description: "Calculate the true annual cost of owning a rental property in the UK. Insurance, maintenance, compliance, management fees, and void periods — all in one place.",
   keywords: "landlord costs calculator UK, buy to let running costs, annual landlord expenses, rental property cost calculator, BTL cost breakdown",
   openGraph: {

@@ -7,13 +7,13 @@ import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Investing in UK Property from Abroad — Arabic Guide | PropertyVault UK",
+  title: "Investing in UK Property from Abroad — Arabic Guide",
   description:
     "How to invest in UK buy-to-let property from outside the UK. Mortgages, taxes, management, and the full process in Arabic for Arab investors.",
   keywords:
     "UK property investment from abroad Arabic, استثمار عقاري في بريطانيا من الخارج, Arab investor UK property, non-resident UK property",
   openGraph: {
-    title: "Investing in UK Property from Abroad — Arabic Guide | PropertyVault UK",
+    title: "Investing in UK Property from Abroad — Arabic Guide",
     description:
       "How to invest in UK buy-to-let property from outside the UK. Mortgages, taxes, management, and the full process in Arabic for Arab investors.",
     type: "article",

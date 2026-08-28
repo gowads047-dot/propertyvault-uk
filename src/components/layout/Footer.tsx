@@ -1,5 +1,18 @@
 import Link from "next/link";
 
+// Every city page that exists under /areas. They are 20 of the site's 205
+// URLs, and the only link to any of them was the /areas hub — the homepage
+// body linked to none. A footer row gives each one a link from every page on
+// the site, which is where internal link equity actually comes from.
+const AREA_CITIES = [
+  "Birmingham", "Bradford", "Bristol", "Cardiff", "Coventry",
+  "Derby", "Edinburgh", "Glasgow", "Hull", "Leeds",
+  "Leicester", "Liverpool", "Manchester", "Newcastle", "Nottingham",
+  "Portsmouth", "Sheffield", "Southampton", "Stoke-on-Trent", "Wolverhampton",
+] as const;
+
+const areaSlug = (city: string) => city.toLowerCase().replace(/\s+/g, "-");
+
 const sections = [
   { title: "Makan", links: [
     { href: "/makan", label: "Makan" },
@@ -53,6 +66,24 @@ export function Footer() {
           ))}
         </div>
       </div>
+      <div className="border-t border-navy-100/50">
+        <div className="container-max px-4 py-6">
+          <h4 className="font-semibold text-navy-800 text-xs uppercase tracking-wider mb-3">
+            Area guides
+          </h4>
+          <ul className="flex flex-wrap gap-x-4 gap-y-2 list-none p-0 m-0">
+            {AREA_CITIES.map(city => (
+              <li key={city}>
+                <Link href={`/areas/${areaSlug(city)}`}
+                      className="text-sm text-navy-400 hover:text-navy-800 transition-colors">
+                  {city}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
       <div className="border-t border-navy-100/50">
         <div className="container-max px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-navy-400">
           <span>&copy; {new Date().getFullYear()} PropertyVault UK</span>

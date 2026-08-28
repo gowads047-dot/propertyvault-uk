@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/" },
   openGraph: {
     type: "article",
-    title: "Personal vs Limited Company — Which Is Better for BTL? | PropertyVault UK",
+    title: "Personal vs Limited Company — Which Is Better for BTL?",
     description: "Should you hold buy-to-let property personally or through a limited company (SPV)? Tax comparison, pros, cons, and which structure suits you.",
     url: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/",
     siteName: "PropertyVault UK",

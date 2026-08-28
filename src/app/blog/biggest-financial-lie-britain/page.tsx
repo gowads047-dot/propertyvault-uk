@@ -6,12 +6,12 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+  title: "The Biggest Financial Lie in Britain Is Unravelling",
   description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
   keywords: "UK housing market, property market UK, house prices UK, property investment, housing crisis, property freeze, wealth through property",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
   openGraph: {
-    title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+    title: "The Biggest Financial Lie in Britain Is Unravelling",
     description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+    title: "The Biggest Financial Lie in Britain Is Unravelling",
     description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
   },
 };

@@ -8,11 +8,11 @@ import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/" },
-  title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
+  title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots",
   description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
   keywords: "best areas to invest Birmingham, Birmingham property investment 2026, buy to let Birmingham, Birmingham BTL hotspots, property investment Birmingham UK",
   openGraph: {
-    title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots | PropertyVault UK",
+    title: "Best Areas to Invest in Birmingham 2026 — Buy-to-Let Hotspots",
     description: "Where to invest in Birmingham property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/",

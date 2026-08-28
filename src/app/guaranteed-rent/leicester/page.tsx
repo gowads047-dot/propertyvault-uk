@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent Leicester — Landlords Get Paid Every Month | PropertyVault UK",
+  title: "Guaranteed Rent Leicester — Landlords Get Paid Every Month",
   description: "Guaranteed rent for landlords in Leicester. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Leicester postcodes covered.",
   keywords: "guaranteed rent Leicester, guaranteed rent scheme Leicester, landlord guaranteed rent LE postcode, lease my property Leicester",
   openGraph: {

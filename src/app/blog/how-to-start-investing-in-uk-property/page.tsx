@@ -25,7 +25,7 @@ const articleSchema = {
 };
 
 export const metadata: Metadata = {
-  title: "How to Start Investing in UK Property in 2026: A Beginner's Guide | PropertyVault UK",
+  title: "How to Start Investing in UK Property in 2026: A Beginner's Guide",
   description:
     "What property investing actually looks like, how much money you need, which strategy fits your situation, and how to run the numbers before you spend anything. A honest guide for beginners.",
   keywords:

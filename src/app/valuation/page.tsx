@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Property Valuation UK — Instant Online Estimates | PropertyVault UK",
+  title: "Free Property Valuation UK — Instant Online Estimates",
   description: "Get a free instant property valuation using official tools from Zoopla, Rightmove, and HM Land Registry. Compare estimates from multiple sources.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/valuation/" },
   openGraph: {
-    title: "Free Property Valuation UK — Instant Online Estimates | PropertyVault UK",
+    title: "Free Property Valuation UK — Instant Online Estimates",
     description: "Get a free instant property valuation using official tools from Zoopla, Rightmove, and HM Land Registry. Compare estimates from multiple sources.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/valuation/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Property Valuation UK — Instant Online Estimates | PropertyVault UK",
+    title: "Free Property Valuation UK — Instant Online Estimates",
     description: "Get a free instant property valuation using official tools from Zoopla, Rightmove, and HM Land Registry. Compare estimates from multiple sources.",
   },
 };

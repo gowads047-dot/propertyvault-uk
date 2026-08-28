@@ -16,7 +16,7 @@ const faqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "Rental Yield Calculator UK — Gross & Net Yield | PropertyVault",
+  title: "Rental Yield Calculator UK — Gross & Net Yield",
   description: "Calculate gross yield, net yield, and monthly cash flow on any UK buy-to-let property. Factor in voids, management fees, and running costs.",
   openGraph: {
     title: "Rental Yield Calculator UK | PropertyVault",

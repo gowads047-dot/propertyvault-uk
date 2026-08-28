@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Property Deal Analyser UK — Free Investment Calculator | PropertyVault",
+  title: "Property Deal Analyser UK — Free Investment Calculator",
   description: "Analyse any UK property deal in minutes. Calculate cash flow, ROI, yield, equity, and annual returns. Covers buy-to-let, HMO, BRRR, and flips. Free tool.",
   keywords: "property deal analyser UK, property investment calculator, buy to let deal analyser, property ROI calculator, deal analysis tool",
   openGraph: {

@@ -16,11 +16,11 @@ const brrrFaqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
+  title: "BRRR Calculator UK — Buy Refurbish Rent Refinance",
   description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/brrr/" },
   openGraph: {
-    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
+    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance",
     description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/brrr/",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance | PropertyVault",
+    title: "BRRR Calculator UK — Buy Refurbish Rent Refinance",
     description: "Free BRRR calculator. Model your buy, refurbish, rent, refinance deal. Calculate money left in, ROI, cash flow, equity created, and capital recycling.",
   },
 };

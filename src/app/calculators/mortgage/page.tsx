@@ -16,11 +16,11 @@ const mortgageFaqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "Free Mortgage Calculator UK — Monthly Payments & Interest | PropertyVault",
+  title: "Free Mortgage Calculator UK — Monthly Payments & Interest",
   description: "Calculate your UK mortgage monthly payments, total interest, and compare repayment vs interest-only. Free, accurate, and mobile-friendly mortgage calculator.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/mortgage/" },
   openGraph: {
-    title: "Free Mortgage Calculator UK — Monthly Payments & Interest | PropertyVault",
+    title: "Free Mortgage Calculator UK — Monthly Payments & Interest",
     description: "Calculate your UK mortgage monthly payments, total interest, and compare repayment vs interest-only. Free, accurate, and mobile-friendly mortgage calculator.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/mortgage/",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Mortgage Calculator UK — Monthly Payments & Interest | PropertyVault",
+    title: "Free Mortgage Calculator UK — Monthly Payments & Interest",
     description: "Calculate your UK mortgage monthly payments, total interest, and compare repayment vs interest-only. Free, accurate, and mobile-friendly mortgage calculator.",
   },
 };

@@ -3,11 +3,11 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import ApiForm from "@/components/forms/ApiForm";
 
 export const metadata: Metadata = {
-  title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
+  title: "List Your Property — Advertise to Tenants & Investors",
   description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/list-property/" },
   openGraph: {
-    title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
+    title: "List Your Property — Advertise to Tenants & Investors",
     description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/list-property/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "List Your Property — Advertise to Tenants & Investors | PropertyVault UK",
+    title: "List Your Property — Advertise to Tenants & Investors",
     description: "List your property for rent or sale on PropertyVault. Reach thousands of tenants and investors. Free listings for landlords with premium upgrade options.",
   },
 };

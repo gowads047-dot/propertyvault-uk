@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Pet Permission Letter Template UK — Landlord Pet Addendum | PropertyVault",
+  title: "Free Pet Permission Letter Template UK — Landlord Pet Addendum",
   description: "Download a free pet permission letter template for UK landlords. Grant conditional permission for pets with conditions on cleaning, damage liability, and inspection rights.",
   keywords: "pet permission letter template UK, landlord pet addendum, pet permission tenancy UK, allow pets rental property template, pet clause tenancy agreement",
   openGraph: {

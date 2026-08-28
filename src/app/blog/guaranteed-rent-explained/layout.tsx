@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-explained/" },
   openGraph: {
     type: "article",
-    title: "Guaranteed Rent Explained — Is It Worth It for Landlords? | PropertyVault UK",
+    title: "Guaranteed Rent Explained — Is It Worth It for Landlords?",
     description: "What is guaranteed rent? How it works, the pros and cons, and whether it's worth it for UK landlords. Complete guide with income comparison.",
     url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-explained/",
     siteName: "PropertyVault UK",

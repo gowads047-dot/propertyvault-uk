@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/" },
   openGraph: {
     type: "article",
-    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates | PropertyVault UK",
+    title: "Stamp Duty UK — Complete Guide to Current SDLT Rates",
     description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
     url: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/",
     siteName: "PropertyVault UK",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Rent Receipt Template UK — Printable Landlord Rent Receipt | PropertyVault",
+  title: "Free Rent Receipt Template UK — Printable Landlord Rent Receipt",
   description: "Download a free rent receipt template for UK landlords. Issue professional rent receipts to tenants for monthly payments. Print or send digitally. No sign-up required.",
   keywords: "free rent receipt template UK, landlord rent receipt, printable rent receipt, rent receipt download, rental payment receipt UK",
   openGraph: {

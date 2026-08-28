@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mortgage Affordability Calculator UK 2026 — How Much Can I Borrow? | PropertyVault",
+  title: "Mortgage Affordability Calculator UK 2026 — How Much Can I Borrow?",
   description: "Find out how much mortgage you can borrow based on your income, outgoings, and deposit. Covers residential and buy-to-let stress testing. Free UK calculator.",
   keywords: "mortgage affordability calculator UK, how much can I borrow, mortgage calculator 2026, buy to let affordability, stress test mortgage",
   openGraph: {

@@ -7,11 +7,11 @@ import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Renters' Rights Act Landlord Checklist 2025 — 12 Things You Must Do Now | PropertyVault UK",
+  title: "Renters' Rights Act Landlord Checklist 2025 — 12 Things You Must Do Now",
   description: "The Renters' Rights Act 2025 is live. Here is the practical landlord checklist: what to update, what to stop doing, what to prepare — before enforcement catches you out.",
   keywords: "renters reform act landlord checklist, renters rights act 2025 landlords, landlord compliance checklist 2025, section 21 abolished what to do, periodic tenancy landlord checklist",
   openGraph: {
-    title: "Renters' Rights Act Landlord Checklist 2025 | PropertyVault UK",
+    title: "Renters' Rights Act Landlord Checklist 2025",
     description: "12 practical actions every landlord must take now that the Renters' Rights Act is live. Section 21 is gone — here is what replaces it.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/",

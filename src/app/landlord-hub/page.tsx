@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
+  title: "Landlord Hub UK — Compliance, Management & Legal Guide",
   description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/landlord-hub/" },
   openGraph: {
-    title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
+    title: "Landlord Hub UK — Compliance, Management & Legal Guide",
     description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/landlord-hub/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Landlord Hub UK — Compliance, Management & Legal Guide | PropertyVault",
+    title: "Landlord Hub UK — Compliance, Management & Legal Guide",
     description: "Everything UK landlords need to know. Compliance checklists, deposit protection, EPC requirements, eviction processes, insurance, and tenant management.",
   },
 };

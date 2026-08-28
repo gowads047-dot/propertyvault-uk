@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Landlord Compliance Checklist UK 2026 — Legal Requirements | PropertyVault",
+  title: "Free Landlord Compliance Checklist UK 2026 — Legal Requirements",
   description: "Download a free landlord compliance checklist for 2026. Gas safety, EPC, EICR, smoke alarms, deposit protection, right to rent, and all legal landlord obligations.",
   keywords: "landlord compliance checklist UK 2026, landlord legal requirements checklist, rental property compliance UK, landlord obligations checklist",
   openGraph: {

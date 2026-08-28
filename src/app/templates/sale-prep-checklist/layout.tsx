@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Property Sale Preparation Checklist UK — Get Your Home Market Ready | PropertyVault",
+  title: "Free Property Sale Preparation Checklist UK — Get Your Home Market Ready",
   description: "Download a free property sale preparation checklist. From valuation and conveyancer to presentation, EPC, and legal documents — cover every step before listing.",
   keywords: "property sale preparation checklist UK, selling house checklist, get property ready to sell, home sale prep checklist UK",
   openGraph: {

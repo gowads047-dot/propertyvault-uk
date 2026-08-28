@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
+  title: "Property Development UK — Land, Planning, Build Costs Guide",
   description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-development/" },
   openGraph: {
-    title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
+    title: "Property Development UK — Land, Planning, Build Costs Guide",
     description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-development/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Development UK — Land, Planning, Build Costs Guide | PropertyVault",
+    title: "Property Development UK — Land, Planning, Build Costs Guide",
     description: "Complete UK property development guide. Land acquisition, planning permission, build costs, GDV calculations, development finance, and exit strategies.",
   },
 };

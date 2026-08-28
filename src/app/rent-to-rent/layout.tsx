@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 // this it inherited the root layout's title and description, which made it a
 // duplicate of the homepage in search results and left it with no canonical.
 export const metadata: Metadata = {
-  title: "Rent-to-Rent UK — How It Works, Step by Step | PropertyVault UK",
+  title: "Rent-to-Rent UK — How It Works, Step by Step",
   description:
     "A practical rent-to-rent guide for the UK: choosing between HMO and serviced accommodation, setting up the business, finding and pitching landlords, contracts, compliance and the numbers to run before you commit.",
   keywords:

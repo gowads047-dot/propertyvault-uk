@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/" },
   openGraph: {
     type: "article",
-    title: "HMO Investing UK — Is It Still Profitable? | PropertyVault UK",
+    title: "HMO Investing UK — Is It Still Profitable?",
     description: "HMO investing explained. Licensing, room sizes, fire safety, yields, and whether Houses in Multiple Occupation are still worth it for UK landlords.",
     url: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/",
     siteName: "PropertyVault UK",

@@ -2,12 +2,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rent-to-Rent Explained — The Complete UK Guide 2026 | PropertyVault UK",
+  title: "Rent-to-Rent Explained — The Complete UK Guide 2026",
   description:
     "Everything you need to know about Rent-to-Rent in the UK: how it works, the 3 models, legal requirements, how much you can earn, and how to get your first deal.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/rent-to-rent-explained/" },
   openGraph: {
-    title: "Rent-to-Rent Explained — The Complete UK Guide 2026 | PropertyVault UK",
+    title: "Rent-to-Rent Explained — The Complete UK Guide 2026",
     description: "Everything you need to know about Rent-to-Rent in the UK: how it works, the 3 models, legal requirements, how much you can earn, and how to get your first deal.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/rent-to-rent-explained/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rent-to-Rent Explained — The Complete UK Guide 2026 | PropertyVault UK",
+    title: "Rent-to-Rent Explained — The Complete UK Guide 2026",
     description: "Everything you need to know about Rent-to-Rent in the UK: how it works, the 3 models, legal requirements, how much you can earn, and how to get your first deal.",
   },
 };

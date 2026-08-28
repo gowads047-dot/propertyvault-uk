@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "EPC Retrofit Cost Calculator UK 2026 — Upgrade to EPC C | PropertyVault",
+  title: "EPC Retrofit Cost Calculator UK 2026 — Upgrade to EPC C",
   description: "Estimate the cost of upgrading your rental property to EPC C rating. Model insulation, heating, windows, and solar upgrades before the 2030 EPC deadline.",
   keywords: "EPC retrofit calculator UK, EPC C upgrade cost, EPC improvement cost calculator, energy efficiency upgrade landlord, EPC 2030 deadline cost",
   openGraph: {

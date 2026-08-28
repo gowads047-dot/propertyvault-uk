@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Check-Out Report Template UK — End of Tenancy Inspection | PropertyVault",
+  title: "Free Check-Out Report Template UK — End of Tenancy Inspection",
   description: "Download a free check-out report template for UK landlords. Document property condition at end of tenancy, compare against inventory, and support deposit deductions.",
   keywords: "checkout report template UK, end of tenancy inspection template, check out report landlord, tenancy checkout form, deposit deduction evidence template",
   openGraph: {

@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
+  title: "UK Mortgages Explained — Every Mortgage Type Guide",
   description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/mortgages/" },
   openGraph: {
-    title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
+    title: "UK Mortgages Explained — Every Mortgage Type Guide",
     description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/mortgages/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Mortgages Explained — Every Mortgage Type Guide | PropertyVault",
+    title: "UK Mortgages Explained — Every Mortgage Type Guide",
     description: "Complete guide to every UK mortgage type. Residential, buy-to-let, HMO, commercial, bridging, development finance, self-employed, and limited company mortgages explained.",
   },
 };

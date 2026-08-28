@@ -7,12 +7,12 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
-  title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+  title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026",
   description: "Complete Sheffield property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Sheffield, buy to let Sheffield, rental yield Sheffield, Sheffield property prices, best areas to invest Sheffield, guaranteed rent Sheffield",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/sheffield/" },
   openGraph: {
-    title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+    title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026",
     description: "Complete Sheffield property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/areas/sheffield/",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+    title: "Property Investing in Sheffield — Buy-to-Let, Yields & Area Guide 2026",
     description: "Complete Sheffield property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   },
 };

@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
+  title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
   description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/renting-strategies/" },
   openGraph: {
-    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
+    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
     description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/renting-strategies/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More | PropertyVault",
+    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
     description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
   },
 };

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/" },
   openGraph: {
     type: "article",
-    title: "EPC C Deadline 2030 — What Landlords Need to Know | PropertyVault UK",
+    title: "EPC C Deadline 2030 — What Landlords Need to Know",
     description: "The confirmed EPC C deadline (2030) for UK rental properties explained. What landlords need to do, estimated costs, available grants, and how to prepare.",
     url: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/",
     siteName: "PropertyVault UK",

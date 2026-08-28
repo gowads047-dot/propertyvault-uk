@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Property Finance UK — Funding Your Investment | PropertyVault",
+  title: "Property Finance UK — Funding Your Investment",
   description: "Complete guide to UK property finance. Mortgages, bridging, development finance, JVs, private lending, and creative funding strategies.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-finance/" },
   openGraph: {
-    title: "Property Finance UK — Funding Your Investment | PropertyVault",
+    title: "Property Finance UK — Funding Your Investment",
     description: "Complete guide to UK property finance. Mortgages, bridging, development finance, JVs, private lending, and creative funding strategies.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-finance/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Finance UK — Funding Your Investment | PropertyVault",
+    title: "Property Finance UK — Funding Your Investment",
     description: "Complete guide to UK property finance. Mortgages, bridging, development finance, JVs, private lending, and creative funding strategies.",
   },
 };

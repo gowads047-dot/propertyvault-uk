@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent Birmingham — Landlords Get Paid Every Month | PropertyVault UK",
+  title: "Guaranteed Rent Birmingham — Landlords Get Paid Every Month",
   description: "Guaranteed rent for landlords in Birmingham. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Birmingham postcodes covered.",
   keywords: "guaranteed rent Birmingham, guaranteed rent scheme Birmingham, landlord guaranteed rent B postcode, lease my property Birmingham",
   openGraph: {

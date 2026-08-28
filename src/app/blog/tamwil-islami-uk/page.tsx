@@ -7,14 +7,14 @@ import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Islamic Finance & Halal Mortgages UK — Arabic Guide | PropertyVault UK",
+  title: "Islamic Finance & Halal Mortgages UK — Arabic Guide",
   description:
     "Islamic finance and halal mortgage options in the UK. Murabaha, Diminishing Musharaka explained in Arabic with UK lender comparisons.",
   keywords:
     "Islamic mortgage UK, halal mortgage UK Arabic, Islamic finance property UK, رهن عقاري إسلامي بريطانيا, تمويل إسلامي",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/tamwil-islami-uk/" },
   openGraph: {
-    title: "Islamic Finance & Halal Mortgages UK — Arabic Guide | PropertyVault UK",
+    title: "Islamic Finance & Halal Mortgages UK — Arabic Guide",
     description: "Islamic finance and halal mortgage options in the UK. Murabaha, Diminishing Musharaka explained in Arabic with UK lender comparisons.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/tamwil-islami-uk/",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Islamic Finance & Halal Mortgages UK — Arabic Guide | PropertyVault UK",
+    title: "Islamic Finance & Halal Mortgages UK — Arabic Guide",
     description: "Islamic finance and halal mortgage options in the UK. Murabaha, Diminishing Musharaka explained in Arabic with UK lender comparisons.",
   },
 };

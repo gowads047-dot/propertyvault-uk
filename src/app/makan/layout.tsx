@@ -11,7 +11,7 @@ import { MakanFooter } from "@/components/makan/MakanFooter";
 // in its own layout instead. Title and description stay as the fallback for
 // any page that does not override them.
 export const metadata: Metadata = {
-  title: "Makan — Property Lettings Without an Agent | PropertyVault UK",
+  title: "Makan — Property Lettings Without an Agent",
   description: "List rooms, studios and whole properties free. Long lets and company lets, reaching tenants and operators directly — no estate agent in between.",
   openGraph: {
     title: "Makan — List once. Tenants and companies both see it.",

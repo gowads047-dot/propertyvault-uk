@@ -6,12 +6,12 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent vs Traditional Letting — Full Comparison | PropertyVault UK",
+  title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
   description: "Compare guaranteed rent vs traditional letting side by side. Income, risk, management, costs, and which option suits your situation as a UK landlord.",
   keywords: "guaranteed rent vs traditional letting, guaranteed rent comparison, landlord rent options, guaranteed rent pros cons, company let vs self manage",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-vs-traditional-letting/" },
   openGraph: {
-    title: "Guaranteed Rent vs Traditional Letting — Full Comparison | PropertyVault UK",
+    title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
     description: "Compare guaranteed rent vs traditional letting side by side. Income, risk, management, costs, and which option suits your situation as a UK landlord.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-vs-traditional-letting/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Guaranteed Rent vs Traditional Letting — Full Comparison | PropertyVault UK",
+    title: "Guaranteed Rent vs Traditional Letting — Full Comparison",
     description: "Compare guaranteed rent vs traditional letting side by side. Income, risk, management, costs, and which option suits your situation as a UK landlord.",
   },
 };

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/" },
   openGraph: {
     type: "article",
-    title: "Leasehold Property Explained — The Complete UK Buyer's Guide | PropertyVault UK",
+    title: "Leasehold Property Explained — The Complete UK Buyer's Guide",
     description: "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
     url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/",
     siteName: "PropertyVault UK",

@@ -8,11 +8,11 @@ import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/" },
-  title: "Deal Sourcing UK — Complete Beginner Guide 2026 | PropertyVault Academy",
+  title: "Deal Sourcing UK — Complete Beginner Guide 2026",
   description: "What is property deal sourcing in the UK? How it works, how much you can earn, what's legal, and how to source your first deal. Complete beginner guide from PropertyVault Academy.",
   keywords: "deal sourcing UK guide, property deal sourcing beginners, how to become a deal sourcer UK, deal sourcing income UK, property deal sourcing legal UK",
   openGraph: {
-    title: "Deal Sourcing UK — Complete Beginner Guide 2026 | PropertyVault Academy",
+    title: "Deal Sourcing UK — Complete Beginner Guide 2026",
     description: "What is property deal sourcing in the UK? How it works, how much you can earn, what's legal, and how to source your first deal. Complete beginner guide from PropertyVault Academy.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/deal-sourcing-uk-guide/",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Deal Sourcing UK — Complete Beginner Guide 2026 | PropertyVault Academy",
+    title: "Deal Sourcing UK — Complete Beginner Guide 2026",
     description: "What is property deal sourcing in the UK? How it works, how much you can earn, what's legal, and how to source your first deal. Complete beginner guide from PropertyVault Academy.",
   },
 };

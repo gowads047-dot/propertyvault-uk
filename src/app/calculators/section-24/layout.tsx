@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Section 24 Tax Calculator UK 2026 — Landlord Mortgage Relief | PropertyVault",
+  title: "Section 24 Tax Calculator UK 2026 — Landlord Mortgage Relief",
   description: "Calculate exactly how much extra tax you pay under Section 24's mortgage interest restriction. Compare before/after as a basic or higher rate taxpayer. Free tool.",
   keywords: "Section 24 calculator, mortgage interest relief calculator, Section 24 tax UK, landlord tax calculator 2026",
   openGraph: {

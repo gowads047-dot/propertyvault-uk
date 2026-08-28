@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
+  title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations",
   description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-law/" },
   openGraph: {
-    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
+    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations",
     description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-law/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations | PropertyVault",
+    title: "UK Property Law — Conveyancing, Landlord Law, HMO Regulations",
     description: "Complete UK property law guide. Conveyancing, landlord obligations, tenant rights, HMO licensing, planning permission, building regulations, and lease law explained.",
   },
 };

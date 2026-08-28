@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free HMO Management Log Template UK — House in Multiple Occupation Record | PropertyVault",
+  title: "Free HMO Management Log Template UK — Landlord Record",
   description: "Download a free HMO management log for UK landlords. Track room occupancy, rent payments, maintenance, compliance, and licensing renewals in one place.",
   keywords: "HMO management log UK, HMO record template, house in multiple occupation log, HMO landlord management template, HMO compliance record",
   openGraph: {

@@ -16,11 +16,11 @@ const stampDutyFaqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "Free Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let & First-Time Buyers | PropertyVault",
+  title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
   description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/" },
   openGraph: {
-    title: "Free Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let & First-Time Buyers | PropertyVault",
+    title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
     description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let & First-Time Buyers | PropertyVault",
+    title: "Stamp Duty Calculator UK 2026 — SDLT for Buy-to-Let",
     description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5% surcharge), and first-time buyer relief. Updated for 2026.",
   },
 };

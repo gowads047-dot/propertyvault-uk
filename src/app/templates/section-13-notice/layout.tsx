@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Section 13 Rent Increase Notice UK Template | PropertyVault",
+  title: "Free Section 13 Rent Increase Notice UK Template",
   description: "Download a free Section 13 notice template to increase rent on an AST. Compliant with Housing Act 1988. Enter the new rent and notice period — print and serve.",
   keywords: "Section 13 notice template UK, rent increase notice template, Section 13 Housing Act 1988, free rent increase notice landlord",
   openGraph: {

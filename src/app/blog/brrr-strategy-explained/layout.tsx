@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/" },
   openGraph: {
     type: "article",
-    title: "What Is the BRRR Strategy? A Complete UK Guide | PropertyVault UK",
+    title: "What Is the BRRR Strategy? A Complete UK Guide",
     description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
     url: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/",
     siteName: "PropertyVault UK",

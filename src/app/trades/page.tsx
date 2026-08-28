@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
+  title: "Find Tradespeople & Post Jobs — Coming Soon",
   description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/trades/" },
   openGraph: {
-    title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
+    title: "Find Tradespeople & Post Jobs — Coming Soon",
     description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/trades/",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Find Tradespeople & Post Jobs — Coming Soon | PropertyVault UK",
+    title: "Find Tradespeople & Post Jobs — Coming Soon",
     description: "Find vetted plumbers, electricians, builders, and gas engineers for your rental properties. Post jobs and get quotes. Coming soon to PropertyVault.",
   },
 };

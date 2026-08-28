@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Property Investing UK — Complete Guide for Beginners to Advanced | PropertyVault UK",
+  title: "Property Investing UK — Complete Guide for Beginners to Advanced",
   description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
   keywords: "property investing UK, buy to let guide, BRRR strategy UK, HMO investing, property investment for beginners, how to invest in property UK, rental yield, property portfolio",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-investing/" },
   openGraph: {
-    title: "Property Investing UK — Complete Guide for Beginners to Advanced | PropertyVault UK",
+    title: "Property Investing UK — Complete Guide for Beginners to Advanced",
     description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-investing/",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Investing UK — Complete Guide for Beginners to Advanced | PropertyVault UK",
+    title: "Property Investing UK — Complete Guide for Beginners to Advanced",
     description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
   },
 };

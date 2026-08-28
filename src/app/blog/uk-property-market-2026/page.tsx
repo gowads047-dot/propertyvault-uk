@@ -5,12 +5,12 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+  title: "UK Property Market 2026 — What Investors Need to Know",
   description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
   keywords: "UK property market 2026, house prices 2026, mortgage rates 2026, buy to let 2026, property investment outlook",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/" },
   openGraph: {
-    title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+    title: "UK Property Market 2026 — What Investors Need to Know",
     description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "UK Property Market 2026 — What Investors Need to Know | PropertyVault UK",
+    title: "UK Property Market 2026 — What Investors Need to Know",
     description: "UK property market analysis for 2026. Mortgage rates, house prices, rental demand, and what it means for buy-to-let investors and landlords.",
   },
 };

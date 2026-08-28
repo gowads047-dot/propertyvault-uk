@@ -9,12 +9,12 @@ import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio | PropertyVault",
+  title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio",
   description: "Check if your rental income passes the buy-to-let mortgage stress test. Calculate ICR at actual and stress rates, max borrowing, and whether your deal qualifies for BTL finance.",
   keywords: "BTL mortgage stress test, interest coverage ratio calculator, buy to let mortgage calculator, ICR calculator UK, rental income mortgage test",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/btl-mortgage/" },
   openGraph: {
-    title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio | PropertyVault",
+    title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio",
     description: "Check if your rental income passes the buy-to-let mortgage stress test. Calculate ICR at actual and stress rates, max borrowing, and whether your deal qualifies for BTL finance.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/btl-mortgage/",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio | PropertyVault",
+    title: "Free BTL Mortgage Stress Test Calculator UK — Interest Coverage Ratio",
     description: "Check if your rental income passes the buy-to-let mortgage stress test. Calculate ICR at actual and stress rates, max borrowing, and whether your deal qualifies for BTL finance.",
   },
 };

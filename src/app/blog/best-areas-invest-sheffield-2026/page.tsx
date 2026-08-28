@@ -7,12 +7,12 @@ import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 
 export const metadata: Metadata = {
-  title: "Best Areas to Invest in Sheffield 2026 — Landlord Guide | PropertyVault UK",
+  title: "Best Areas to Invest in Sheffield 2026 — Landlord Guide",
   description: "Where to invest in Sheffield property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
   keywords: "best areas to invest Sheffield, Sheffield property investment 2026, buy to let Sheffield, Sheffield BTL hotspots, property investment Sheffield UK",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-sheffield-2026/" },
   openGraph: {
-    title: "Best Areas to Invest in Sheffield 2026 — Landlord Guide | PropertyVault UK",
+    title: "Best Areas to Invest in Sheffield 2026 — Landlord Guide",
     description: "Where to invest in Sheffield property in 2026. We break down yields, average prices, tenant demand, and regeneration prospects for the best BTL areas in the city.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-sheffield-2026/",

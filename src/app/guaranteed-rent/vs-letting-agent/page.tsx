@@ -4,7 +4,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Guaranteed Rent vs Letting Agent — Which Pays More? | PropertyVault UK",
+  title: "Guaranteed Rent vs Letting Agent — Which Pays More?",
   description: "Guaranteed rent vs letting agent — a full cost comparison. We break down agent fees, void periods, maintenance and compliance costs vs guaranteed rent. See which makes you more money.",
   keywords: "guaranteed rent vs letting agent, guaranteed rent vs traditional let, is guaranteed rent worth it, letting agent fees vs guaranteed rent, guaranteed rent comparison UK",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent" },

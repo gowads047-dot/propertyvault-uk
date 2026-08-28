@@ -7,12 +7,12 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
-  title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+  title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026",
   description: "Complete Leicester property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Leicester, buy to let Leicester, rental yield Leicester, Leicester property prices, best areas to invest Leicester, guaranteed rent Leicester",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/leicester/" },
   openGraph: {
-    title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+    title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026",
     description: "Complete Leicester property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/areas/leicester/",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026 | PropertyVault UK",
+    title: "Property Investing in Leicester — Buy-to-Let, Yields & Area Guide 2026",
     description: "Complete Leicester property investment guide 2026. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   },
 };

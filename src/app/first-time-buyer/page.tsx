@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
+  title: "First-Time Buyer Guide UK — Step by Step to Your First Home",
   description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/first-time-buyer/" },
   openGraph: {
-    title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
+    title: "First-Time Buyer Guide UK — Step by Step to Your First Home",
     description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/first-time-buyer/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "First-Time Buyer Guide UK — Step by Step to Your First Home | PropertyVault",
+    title: "First-Time Buyer Guide UK — Step by Step to Your First Home",
     description: "Complete first-time buyer guide. Saving a deposit, mortgages, government schemes, the buying process, stamp duty relief, and tips for getting on the property ladder.",
   },
 };

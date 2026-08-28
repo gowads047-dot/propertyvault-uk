@@ -7,12 +7,12 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 
 export const metadata: Metadata = {
-  title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
+  title: "Birmingham Buy-to-Let Guide — Yields & Areas",
   description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   keywords: "property investment Birmingham, buy to let Birmingham, rental yield Birmingham, Birmingham property prices, best areas to invest Birmingham, guaranteed rent Birmingham",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/areas/birmingham/" },
   openGraph: {
-    title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
+    title: "Birmingham Buy-to-Let Guide — Yields & Areas",
     description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/areas/birmingham/",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Birmingham Buy-to-Let Guide — Yields & Areas | PropertyVault UK",
+    title: "Birmingham Buy-to-Let Guide — Yields & Areas",
     description: "Complete Birmingham property investment guide. Best areas for buy-to-let, average rental yields, house prices, regeneration zones, and guaranteed rent options.",
   },
 };

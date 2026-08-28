@@ -7,11 +7,11 @@ import { ArticleSchema } from "@/components/seo/ArticleSchema";
 
 export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/is-guaranteed-rent-a-scam/" },
-  title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords | PropertyVault UK",
+  title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords",
   description: "Landlords ask: is guaranteed rent too good to be true? We explain how legitimate schemes work, the red flags to watch for, and what to check before signing anything.",
   keywords: "is guaranteed rent a scam, guaranteed rent scam UK, guaranteed rent scheme legitimate, rent to rent scam, guaranteed rent red flags",
   openGraph: {
-    title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords | PropertyVault UK",
+    title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords",
     description: "Landlords ask: is guaranteed rent too good to be true? We explain how legitimate schemes work, the red flags to watch for, and what to check before signing anything.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/is-guaranteed-rent-a-scam/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords | PropertyVault UK",
+    title: "Is Guaranteed Rent a Scam? — Honest Guide for UK Landlords",
     description: "Landlords ask: is guaranteed rent too good to be true? We explain how legitimate schemes work, the red flags to watch for, and what to check before signing anything.",
   },
 };

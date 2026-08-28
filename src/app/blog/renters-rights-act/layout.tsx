@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/renters-rights-act/" },
   openGraph: {
     type: "article",
-    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know",
     description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords.",
     url: "https://www.propertyvaultuk.co.uk/blog/renters-rights-act/",
     siteName: "PropertyVault UK",

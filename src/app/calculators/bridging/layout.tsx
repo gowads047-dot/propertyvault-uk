@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bridging Loan Calculator UK — Total Cost & Monthly Interest | PropertyVault",
+  title: "Bridging Loan Calculator UK — Total Cost & Monthly Interest",
   description: "Calculate bridging loan costs, monthly interest, arrangement fees, and exit fees. See total cost of bridging finance for property purchases, auctions, and refurbishments.",
   keywords: "bridging loan calculator UK, bridging finance calculator, bridging loan costs, property bridging calculator, auction finance calculator",
   openGraph: {

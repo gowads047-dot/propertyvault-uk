@@ -6,12 +6,12 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 
 export const metadata: Metadata = {
-  title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+  title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
   description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
   keywords: "PRS ombudsman registration landlord, private rented sector ombudsman UK, landlord ombudsman registration 2025, Renters Rights Act ombudsman, landlord registration England 2026",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/" },
   openGraph: {
-    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
     description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare | PropertyVault UK",
+    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
     description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
   },
 };

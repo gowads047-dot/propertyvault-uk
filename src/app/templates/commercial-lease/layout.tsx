@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Commercial Lease Template UK — Basic Commercial Property Agreement | PropertyVault",
+  title: "Free Commercial Lease Template UK — Basic Commercial Property Agreement",
   description: "Download a free basic commercial lease template for UK landlords. Covers small offices, retail units, and light industrial. Not a substitute for professional legal advice.",
   keywords: "commercial lease template UK, free commercial lease agreement, commercial property lease template, basic commercial tenancy UK",
   openGraph: {

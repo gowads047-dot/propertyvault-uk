@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/" },
   openGraph: {
     type: "article",
-    title: "The Biggest Financial Lie in Britain Is Unravelling | PropertyVault UK",
+    title: "The Biggest Financial Lie in Britain Is Unravelling",
     description: "For 40 years, Britain believed property prices would always rise. That assumption is now failing. The housing market isn't crashing — it's freezing. And that could be worse.",
     url: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
     siteName: "PropertyVault UK",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Remortgage Calculator UK — Should I Remortgage? Savings & Costs | PropertyVault",
+  title: "Remortgage Calculator UK — Should I Remortgage? Savings & Costs",
   description: "Calculate if remortgaging makes financial sense. Compare your current rate vs new deals, see monthly savings, break-even point, and net saving after all fees.",
   keywords: "remortgage calculator UK, should I remortgage, remortgage savings calculator, when to remortgage, remortgage cost calculator",
   openGraph: {

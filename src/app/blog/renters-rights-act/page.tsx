@@ -5,12 +5,12 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
-  title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+  title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know",
   description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
   keywords: "Renters Rights Act 2025, Section 21 abolished, renters reform UK, landlord guide renters rights, no fault eviction ban, periodic tenancy UK",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/renters-rights-act/" },
   openGraph: {
-    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know",
     description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/renters-rights-act/",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know | PropertyVault UK",
+    title: "Renters' Rights Act 2025 — What Every UK Landlord Must Know",
     description: "The Renters' Rights Act abolishes Section 21, ends fixed-term tenancies, restricts rent increases, and extends new rights to tenants. Full guide for landlords on what changed and when.",
   },
 };

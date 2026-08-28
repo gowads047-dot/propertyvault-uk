@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
+  title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide",
   description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-tax/" },
   openGraph: {
-    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
+    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide",
     description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-tax/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide | PropertyVault",
+    title: "Property Tax UK — Stamp Duty, CGT, Section 24, SPV Guide",
     description: "Complete UK property tax guide. Stamp duty, capital gains tax, income tax on rent, Section 24, corporation tax, VAT, inheritance tax, and SPV structures explained.",
   },
 };

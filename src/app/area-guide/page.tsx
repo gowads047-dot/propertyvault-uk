@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
+  title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk",
   description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/area-guide/" },
   openGraph: {
-    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
+    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk",
     description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/area-guide/",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk | PropertyVault UK",
+    title: "Area Research Tools UK — Schools, Crime, Transport, Flood Risk",
     description: "Research any UK area before buying or investing. Free tools for schools, crime stats, flood risk, broadband, council tax, and transport links.",
   },
 };
