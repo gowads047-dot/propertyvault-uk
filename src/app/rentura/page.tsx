@@ -142,7 +142,7 @@ export default function RenturaPage() {
       {/* PROPERTY PASSPORT HIGHLIGHT */}
       <section style={{ background: "white", padding: "72px 24px" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))", gap: 56, alignItems: "center" }}>
             <div>
               <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 14 }}>Flagship Feature</p>
               <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, letterSpacing: "-0.02em", fontFamily: "var(--font-family-heading)", lineHeight: 1.15, marginBottom: 16 }}>

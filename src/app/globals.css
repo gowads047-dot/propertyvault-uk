@@ -1069,3 +1069,13 @@ html.dark {
 .text-gold-700 {
   color: var(--gold-ink);
 }
+
+
+/* A featured card that spans two columns — until there are not two columns.
+   repeat(auto-fit, minmax(280px, 1fr)) collapses to a single track on a phone,
+   but grid-column: span 2 forces a second one into existence, and the row then
+   runs 80px past the viewport. Measured on the homepage at 375px wide. */
+.grid-feature { grid-column: span 2; }
+@media (max-width: 767px) {
+  .grid-feature { grid-column: auto; }
+}

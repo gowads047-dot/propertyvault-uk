@@ -161,7 +161,7 @@ export default function CompliancePage() {
           </div>
 
           {/* Summary cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14, marginBottom: 28 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 14, marginBottom: 28 }}>
             {[
               { label: "Total certificates", value: certs.length, color: INK },
               { label: "Expiring within 45 days", value: urgentCount, color: urgentCount > 0 ? AMBER : GREEN },
@@ -270,7 +270,7 @@ export default function CompliancePage() {
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
                   <label style={labelStyle}>Issue date</label>
                   <input type="date" value={form.issue_date} onChange={e => setF("issue_date", e.target.value)} style={inputStyle} />

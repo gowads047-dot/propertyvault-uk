@@ -716,7 +716,7 @@ export default function Home() {
           <Link href="/makan"
             className="makan-promo group hover:border-[#AD4429]/30 transition-all"
             style={{ display: "block", borderRadius: 24, padding: "48px 40px", border: "2px solid #E2D9CA", background: "linear-gradient(135deg, #F5F0E8 0%, #FBEFE9 100%)", textDecoration: "none" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 40, alignItems: "center" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 40, alignItems: "center" }}>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "#AD4429", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -761,7 +761,7 @@ export default function Home() {
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, textAlign: "center", color: "var(--ink)", marginBottom: 48 }}>Everything in one place</h2>
           </FadeIn>
           <FadeIn>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16, marginBottom: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16, marginBottom: 16 }}>
             <Link href="/calculators" className="group" style={{ background: "var(--page-surface)", borderRadius: 20, border: "1.5px solid var(--hairline)", padding: 32, textDecoration: "none", display: "block" }}>
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
@@ -805,9 +805,9 @@ export default function Home() {
             <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(22px, 3vw, 32px)", fontWeight: 800, color: "var(--ink)" }}>From the blog</h2>
             <Link href="/blog" style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-muted)", textDecoration: "none" }}>All articles →</Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
-            <Link href="/blog/uk-property-market-2026" style={{ background: "#0f1b36", borderRadius: 20, padding: "36px 32px", textDecoration: "none", display: "block", gridColumn: "span 2" }}
-              className="blog-hero-card">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16 }}>
+            <Link href="/blog/uk-property-market-2026" style={{ background: "#0f1b36", borderRadius: 20, padding: "36px 32px", textDecoration: "none", display: "block" }}
+              className="grid-feature blog-hero-card">
               <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", padding: "4px 12px", borderRadius: 20, marginBottom: 20 }}>New · June 2026</span>
               <h3 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 800, color: "white", marginBottom: 10, lineHeight: 1.25 }}>UK Property Market 2026 — What Investors Need to Know</h3>
               <p style={{ fontSize: 14, color: "rgba(255,255,255,0.58)", lineHeight: 1.6 }}>Mortgage rates, house prices, rental demand — an honest look at where we are and what it means for your next deal.</p>

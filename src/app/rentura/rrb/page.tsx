@@ -400,7 +400,7 @@ export default function RRBPage() {
         </div>
 
         {/* Portfolio banner */}
-        <div style={{ margin: "28px 0 24px", display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
+        <div style={{ margin: "28px 0 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))", gap: 12 }}>
           {[
             { label: "Portfolio readiness", value: `${overallPct}%`, color: scoreColor(overallPct), sub: scoreLabel(overallPct) },
             { label: "Critical gaps", value: String(totalCritical), color: totalCritical > 0 ? RED : GREEN, sub: totalCritical > 0 ? "Need immediate action" : "None found" },

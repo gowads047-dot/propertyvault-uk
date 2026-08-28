@@ -688,7 +688,7 @@ export default function ArrearsPage() {
                 {showLogForm && (
                   <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 18px", marginBottom: 16 }}>
                     <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 12 }}>Log action</p>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10, marginBottom: 10 }}>
                       <div>
                         <Lbl>Action type</Lbl>
                         <select value={logForm.event_type} onChange={e => setLogForm(f => ({ ...f, event_type: e.target.value }))} style={inpSm}>
@@ -717,7 +717,7 @@ export default function ArrearsPage() {
                 {showPayForm && (
                   <div style={{ background: "rgba(34,197,94,0.04)", border: "1px solid rgba(34,197,94,0.15)", borderRadius: 10, padding: "16px 18px", marginBottom: 16 }}>
                     <p style={{ fontSize: 13, fontWeight: 700, color: C.green, marginBottom: 12 }}>Log payment received</p>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 10, marginBottom: 10 }}>
                       <div>
                         <Lbl>Amount (£) *</Lbl>
                         <input type="number" value={payForm.amount} onChange={e => setPayForm(f => ({ ...f, amount: e.target.value }))} placeholder="0.00" style={inpSm} />
@@ -827,7 +827,7 @@ export default function ArrearsPage() {
                 {/* ── Payments tab ──────────────────────────────────────────── */}
                 {tab === "payments" && (
                   <div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 20 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 10, marginBottom: 20 }}>
                       {[
                         { label: "Monthly rent", value: fmt(selected.monthly_rent) },
                         { label: "Total owed now", value: fmt(selected.total_owed), color: C.red },

@@ -179,7 +179,7 @@ export default function EventsPage() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14, marginBottom: 28 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 14, marginBottom: 28 }}>
             {[
               { label: "Total events", value: events.length.toString(), color: INK },
               { label: "Income logged", value: `£${totalIncome.toLocaleString("en-GB")}`, color: "#22c55e" },
@@ -309,7 +309,7 @@ export default function EventsPage() {
                 <textarea value={form.description} onChange={e => setF("description", e.target.value)} rows={2} placeholder="Optional details…" style={{ ...inputStyle, resize: "vertical" }} />
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
                   <label style={labelStyle}>Amount (£)</label>
                   <input type="number" value={form.amount} onChange={e => setF("amount", e.target.value)} placeholder="0.00" style={inputStyle} />

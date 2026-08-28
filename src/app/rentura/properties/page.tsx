@@ -92,7 +92,7 @@ export default function RenturaPropertiesPage() {
 
           {/* Stats */}
           {properties.length > 0 && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 12, marginBottom: 24 }}>
               {[
                 { label: "Properties", value: properties.length.toString(), color: C.ink },
                 { label: "Monthly rent", value: `£${totalRent.toLocaleString()}`, color: C.gold },

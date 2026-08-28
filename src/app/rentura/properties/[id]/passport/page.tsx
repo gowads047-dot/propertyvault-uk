@@ -204,7 +204,7 @@ export default function PassportPage() {
           </div>
 
           {/* Stats bar */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", borderBottom: `2px solid ${BORDER}` }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))", borderBottom: `2px solid ${BORDER}` }}>
             {[
               { label: "Purchase Price", value: fmt(property.purchase_price) },
               { label: "Monthly Rent", value: currentTenant?.monthly_rent ? fmt(currentTenant.monthly_rent) : "Vacant" },
@@ -219,7 +219,7 @@ export default function PassportPage() {
           </div>
 
           {/* Main grid */}
-          <div style={{ padding: "32px 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 36 }}>
+          <div style={{ padding: "32px 40px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 36 }}>
 
             <Section title="Property Details" icon="⌂">
               <Row label="Full Address" value={property.address} />
@@ -326,7 +326,7 @@ export default function PassportPage() {
               <h3 style={{ fontSize: 11, fontWeight: 800, color: NAVY, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16, display: "flex", alignItems: "center", gap: 8 }}>
                 📋 Section 21 Readiness Check
               </h3>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 8 }}>
                 {s21Checks.map((item, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, padding: "10px 12px", background: "white", borderRadius: 8, border: `1px solid ${item.unknown ? BORDER : item.pass ? "#15803d30" : "#dc262630"}` }}>
                     <span style={{ fontSize: 14, flexShrink: 0, color: item.unknown ? "#9ca3af" : item.pass ? "#15803d" : "#dc2626", fontWeight: 900 }}>

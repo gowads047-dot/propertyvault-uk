@@ -182,7 +182,7 @@ export default function MortgagesPage() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))", gap: 14, marginBottom: 32 }}>
             {[
               { label: "Total debt", value: fmt(totalDebt), color: INK },
               { label: "Monthly payments", value: fmt(totalPayments), color: RED },
@@ -290,7 +290,7 @@ export default function MortgagesPage() {
                 </div>
               )}
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
                   <label style={labelStyle}>Lender *</label>
                   <input value={form.lender as string} onChange={e => setF("lender", e.target.value)} placeholder="e.g. Barclays" style={inputStyle} />
@@ -301,7 +301,7 @@ export default function MortgagesPage() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 12 }}>
                 <div>
                   <label style={labelStyle}>Rate (%)</label>
                   <input type="number" step="0.01" value={form.interest_rate as string} onChange={e => setF("interest_rate", e.target.value)} placeholder="4.29" style={inputStyle} />
@@ -316,7 +316,7 @@ export default function MortgagesPage() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
                   <label style={labelStyle}>Fixed term ends</label>
                   <input type="date" value={form.fixed_term_expiry as string} onChange={e => setF("fixed_term_expiry", e.target.value)} style={inputStyle} />

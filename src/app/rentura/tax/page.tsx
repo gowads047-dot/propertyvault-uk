@@ -482,7 +482,7 @@ export default function TaxIntelligence() {
                   {expandedProp === l.property.id && (
                     <div style={{ marginTop: 12 }}>
                       {/* Passport data summary */}
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 16 }}>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 8, marginBottom: 16 }}>
                         {[
                           { label: "Purchase price", value: fmt(l.property.purchase_price ?? 0) },
                           { label: "Monthly rent", value: l.tenant?.monthly_rent ? fmt(l.tenant.monthly_rent) : "Vacant" },
@@ -670,7 +670,7 @@ export default function TaxIntelligence() {
                     </div>
                   </div>
                   {whatIfSpend > 0 && (
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
                       {[
                         { label: "Tax saving", value: fmt(whatIfSpend * taxRate), color: "#15803d" },
                         { label: "Net cost to you", value: fmt(whatIfSpend - whatIfSpend * taxRate), color: INK },

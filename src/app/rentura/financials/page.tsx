@@ -131,7 +131,7 @@ export default function RenturaFinancials() {
         </div>
 
         {/* Summary cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 28 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 14, marginBottom: 28 }}>
           {[
             { label: "Total income", value: fmt(totalIncome), color: C.green, sub: `${filteredInc.length} transactions` },
             { label: "Total expenses", value: fmt(totalExpenses), color: C.red, sub: `${filteredExp.length} transactions` },
@@ -160,7 +160,7 @@ export default function RenturaFinancials() {
 
         {/* Overview tab */}
         {tab === "overview" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 20 }}>
             {/* Expense breakdown */}
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, padding: "22px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 18 }}>Expense breakdown {tyLabel}</p>

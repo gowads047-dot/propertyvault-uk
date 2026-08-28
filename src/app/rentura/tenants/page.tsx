@@ -376,7 +376,7 @@ export default function RenturaTenants() {
               </div>
 
               {/* Stats grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 28 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 14, marginBottom: 28 }}>
                 {[
                   { label: "Monthly rent",  value: fmt(selected.monthly_rent ?? null) },
                   { label: "Deposit",        value: fmt(selected.deposit_amount ?? null) },
@@ -473,7 +473,7 @@ export default function RenturaTenants() {
               <h2 style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 24 }}>
                 {form.id ? "Edit tenant" : "Add tenant"}
               </h2>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16, marginBottom: 16 }}>
                 <Field label="First name" required>
                   <input value={form.first_name || ""} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))} placeholder="James" style={inp} />
                 </Field>
@@ -601,7 +601,7 @@ function RtRStatusPanel({ checks, latestCheck, onEdit, onLogNew }: {
       </div>
 
       {/* Current check details */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12, marginBottom: 20 }}>
         {[
           { label: "Document type", value: docLabel(latestCheck.document_type) },
           { label: "Document ref.", value: latestCheck.document_ref || "Not recorded" },
@@ -711,7 +711,7 @@ function RtRForm({ form, setForm, onDocTypeChange, onSave, onCancel, saving }: {
         {form.id ? "Edit R2R check" : "Log Right to Rent check"}
       </p>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 14, marginBottom: 14 }}>
         <div style={{ gridColumn: "1 / -1" }}>
           <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Document type *</label>
           <select value={form.document_type || "uk_passport"} onChange={e => onDocTypeChange(e.target.value)} style={inpSm}>

@@ -436,7 +436,7 @@ export default function MaintenancePage() {
                 style={{ ...inputStyle, minHeight: 80, resize: "vertical" as const }} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
               <div>
                 <label style={labelStyle}>Category</label>
                 <select value={form.category} onChange={e => setF("category", e.target.value as MaintenanceCategory)} style={inputStyle}>
@@ -462,7 +462,7 @@ export default function MaintenancePage() {
               </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
               <div>
                 <label style={labelStyle}>Estimated cost (£)</label>
                 <input type="text" placeholder="500" value={form.estimated_cost} onChange={e => setF("estimated_cost", e.target.value)} style={inputStyle} />

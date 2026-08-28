@@ -704,7 +704,7 @@ export default function RenturaDashboard() {
 
         {!dataLoading && properties.length === 0 ? (
           /* ── SMART ONBOARDING ── */
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 48 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 24, marginBottom: 48 }}>
 
             {/* Left: what you're building */}
             <div style={{ background: "white", borderRadius: 20, padding: "28px 28px", border: `1px solid ${BORDER}` }}>

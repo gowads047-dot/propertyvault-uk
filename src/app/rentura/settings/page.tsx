@@ -162,7 +162,7 @@ export default function RenturaSettings() {
           {/* Profile Tab */}
           {tab === "profile" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16 }}>
                 {[
                   { label: "Full name", value: name, set: setName, placeholder: "Your name" },
                   { label: "Phone number", value: phone, set: setPhone, placeholder: "+44 7700 000000" },

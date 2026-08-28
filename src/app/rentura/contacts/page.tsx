@@ -242,7 +242,7 @@ export default function ContactsPage() {
               </div>
 
               {/* Role + Specialty side by side */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
                 <div>
                   <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Role</label>
                   <select value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}

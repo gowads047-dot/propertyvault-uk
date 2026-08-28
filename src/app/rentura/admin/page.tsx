@@ -85,7 +85,7 @@ export default function RenturaAdmin() {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
 
         {/* Stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 32 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))", gap: 14, marginBottom: 32 }}>
           {[
             { label: "Total users", value: stats.users, color: C.blue },
             { label: "Active subscribers", value: stats.active, color: C.green },
@@ -114,7 +114,7 @@ export default function RenturaAdmin() {
 
         {/* Overview */}
         {tab === "overview" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 20 }}>
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, marginBottom: 16 }}>Recent signups</p>
               {waitlist.slice(0, 8).map(w => (

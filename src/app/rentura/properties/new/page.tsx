@@ -189,7 +189,7 @@ export default function NewProperty() {
           {/* Purchase */}
           <div style={{ background: "white", borderRadius: 14, padding: 22, border: `1px solid ${BORDER}` }}>
             <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>Purchase details</p>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16 }}>
               <div>
                 <label style={labelStyle}>Purchase date</label>
                 <input type="date" value={form.purchase_date} onChange={e => set("purchase_date", e.target.value)} style={inputStyle} />

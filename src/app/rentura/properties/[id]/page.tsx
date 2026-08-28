@@ -613,7 +613,7 @@ export default function PropertyPassport() {
 
         {/* ── OVERVIEW ── */}
         {tab === "overview" && (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 20 }}>
             {/* Current tenant */}
             <div style={{ background: "white", borderRadius: 14, padding: 22, border: `1px solid ${BORDER}` }}>
               <p style={{ fontSize: 11, fontWeight: 800, color: "rgba(17,17,17,0.38)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 14 }}>Current Tenant</p>
@@ -1146,7 +1146,7 @@ export default function PropertyPassport() {
                     style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                   <textarea placeholder="Describe the issue (optional — detail helps the contractor quote accurately)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
                     style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 80, resize: "vertical" as const, lineHeight: 1.6 }} />
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
                     <select value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
                       style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, fontFamily: "inherit", color: INK }}>
                       {[["plumbing","🚿 Plumbing"],["electrical","⚡ Electrical"],["structural","🏠 Structural"],["appliance","🔌 Appliance"],["damp","💧 Damp / Mould"],["roofing","🏚 Roofing"],["other","🔧 Other"]].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
@@ -1164,13 +1164,13 @@ export default function PropertyPassport() {
                 <div style={{ marginBottom: 20 }}>
                   <p style={{ fontSize: 11, fontWeight: 800, color: INK2, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>👷 Contractor (optional)</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
                       <input type="text" placeholder="Contractor name" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                       <input type="text" placeholder="Company / trade" value={maintForm.contractor_company} onChange={e => setMaintForm(f => ({ ...f, contractor_company: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
                       <input type="tel" placeholder="📞 Phone" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                       <input type="email" placeholder="✉️ Email" value={maintForm.contractor_email} onChange={e => setMaintForm(f => ({ ...f, contractor_email: e.target.value }))}
@@ -1183,7 +1183,7 @@ export default function PropertyPassport() {
                 {/* Cost section */}
                 <div style={{ marginBottom: 20 }}>
                   <p style={{ fontSize: 11, fontWeight: 800, color: INK2, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>💷 Costs (used in tax reports)</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
                     <div>
                       <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Your estimate (£)</p>
                       <input type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
