@@ -3,6 +3,11 @@
 --
 -- Run AFTER makan-rooms-schema.sql, in: Supabase Dashboard -> SQL Editor.
 --
+-- STATUS: BLOCK 1 was run against production on 2026-08-28 for
+-- gowads_18@hotmail.co.uk, which now owns the org "PropertyVault Rooms"
+-- (slug propertyvault-rooms). BLOCK 2 was deliberately NOT run — the sample
+-- building is invented data and this is a live database.
+--
 -- Rooms belong to an organisation rather than to a single account, so the Room
 -- Manager needs you to be a member of one before it will show you anything.
 -- This creates that organisation and adds you as its owner.
@@ -25,7 +30,7 @@
 do $$
 declare
   -- ↓↓↓ CHANGE THIS to your Makan sign-in email ↓↓↓
-  v_email text := 'gowad047@gmail.com';
+  v_email text := 'gowads_18@hotmail.co.uk';
 
   v_user uuid;
   v_org  uuid;
