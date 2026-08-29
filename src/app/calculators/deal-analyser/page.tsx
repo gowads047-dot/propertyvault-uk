@@ -11,6 +11,7 @@ import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax, calcSDLT } from "@/lib/tax";
 import { monthlyRepayment, monthlyInterestOnly, compoundGrowth, pctOf } from "@/lib/finance";
+import { scoreDeal, type ScoreBand } from "@/lib/deal-score";
 
 /**
  * Read a number input, floored at zero.
@@ -115,21 +116,32 @@ function ShareButton({ params }: { params: Record<string, string | number> }) {
 }
 
 // Deal Score gauge component
-function DealScoreGauge({ score }: { score: number }) {
+// The band comes from lib/deal-score.ts rather than being decided here. The
+// gauge used to carry its own thresholds (70/55/40) which disagreed with the
+// score's, so the same number could read "Decent" in one place and something
+// else in another.
+function DealScoreGauge({ score, band }: { score: number; band: ScoreBand }) {
   const clamp = Math.max(0, Math.min(100, score));
-  const color = clamp >= 70 ? "#15803d" : clamp >= 45 ? "#c9a84c" : "#dc2626";
-  const label = clamp >= 70 ? "Strong" : clamp >= 55 ? "Decent" : clamp >= 40 ? "Marginal" : "Weak";
+  // This gauge only ever renders inside the navy hero, so every colour here is
+  // chosen against #0f1b36. The score itself used to be filled #0f1b36 — navy
+  // on navy — which made the headline number invisible.
+  const color =
+    band === "STRONG" ? "#4ade80" : band === "WATCHLIST" ? "#f4d35e" : band === "RISKY" ? "#fb923c" : "#f87171";
+  // The four bands are verdicts, not adjectives, so they read as a call rather
+  // than as a description: "Watchlist", not "Watchlist Deal".
+  const label: Record<ScoreBand, string> = {
+    STRONG: "Strong",
+    WATCHLIST: "Watchlist",
+    RISKY: "Risky",
+    PASS: "Pass",
+  };
   // SVG arc: 180° semicircle
   const r = 54, cx = 70, cy = 70;
-  const angle = (clamp / 100) * 180 - 90;
-  const rad = (angle * Math.PI) / 180;
-  const needleX = cx + r * 0.78 * Math.cos(rad);
-  const needleY = cy + r * 0.78 * Math.sin(rad);
   return (
     <div style={{ textAlign: "center" }}>
       <svg viewBox="0 0 140 80" width="160" style={{ display: "block", margin: "0 auto" }}>
         {/* Track */}
-        <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+        <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`} fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="12" strokeLinecap="round" />
         {/* Filled arc */}
         {clamp > 0 && (() => {
           const endAngle = -180 + (clamp / 100) * 180;
@@ -139,14 +151,14 @@ function DealScoreGauge({ score }: { score: number }) {
           const large = clamp > 50 ? 1 : 0;
           return <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 ${large} 1 ${ex} ${ey}`} fill="none" stroke={color} strokeWidth="12" strokeLinecap="round" />;
         })()}
-        {/* Needle */}
-        <line x1={cx} y1={cy} x2={needleX} y2={needleY} stroke="#0f1b36" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r="4" fill="#0f1b36" />
+        {/* No needle: the arc already encodes the value, and a needle from the
+            centre runs straight through the score text. */}
         {/* Score */}
-        <text x={cx} y={cy - 14} textAnchor="middle" fontSize="20" fontWeight="800" fill="#0f1b36">{clamp}</text>
-        <text x={cx} y={cy - 2} textAnchor="middle" fontSize="8" fill="#475569">/ 100</text>
+        <text x={cx} y={cy - 14} textAnchor="middle" fontSize="20" fontWeight="800" fill="#ffffff">{clamp}</text>
+        <text x={cx} y={cy - 2} textAnchor="middle" fontSize="8" fill="#97a5c5">/ 100</text>
       </svg>
-      <p style={{ fontSize: 14, fontWeight: 700, color, marginTop: -8 }}>{label} Deal</p>
+      <p style={{ fontSize: 14, fontWeight: 700, color, marginTop: -8 }}>{label[band]}</p>
+      <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: ".08em", textTransform: "uppercase", color: "#97a5c5" }}>PropertyVault Score</p>
     </div>
   );
 }
@@ -315,7 +327,7 @@ export default function DealAnalyserPage() {
           netYield: calc.netYield,
           monthlyCF: calc.monthlyCF,
           cashOnCash: calc.cashOnCash,
-          dealScore: calc.dealScore,
+          dealScore: pvScore.total,
           stressRatePlus2: stressCalc.ratePlus2,
           cityBenchmark: bm?.name ?? cityBenchmark,
           benchmarkGross: bm?.gross,
@@ -373,19 +385,14 @@ export default function DealAnalyserPage() {
     const totalReturn = netIncome + equityGain;
     const roi = totalCashIn > 0 ? (totalReturn / totalCashIn) * 100 : 0;
 
-    // Deal Score (0–100)
-    const scoreGrossYield  = Math.min(20, (grossYield / 10) * 20);
-    const scoreNetYield    = Math.min(25, (netYield / 5) * 25);
-    const scoreCF          = Math.min(25, (Math.max(0, monthlyCF) / 300) * 25);
-    const scoreCoC         = Math.min(20, (cashOnCash / 10) * 20);
-    const scoreEquity      = Math.min(10, pctOf(Math.max(0, equityGain), purchasePrice * 0.1) / 10);
-    const dealScore = Math.round(scoreGrossYield + scoreNetYield + scoreCF + scoreCoC + scoreEquity);
-
+    // The PropertyVault Score lives in lib/deal-score.ts and is computed below,
+    // after the stress test — rate resilience is one of its components, so it
+    // cannot be worked out here.
     return {
       annualRent, grossYield, depositAmount, loanAmount, monthlyMortgage,
       annualMortgage, management, maintenance, insurance, voidCost,
       totalExpenses, netIncome, netYield, monthlyCF, totalCashIn,
-      cashOnCash, equityGain, totalReturn, roi, dealScore,
+      cashOnCash, equityGain, totalReturn, roi,
     };
   }, [purchasePrice, refurbCost, afterRefurbValue, monthlyRent, depositPct, mortgageRate, mortgageTerm, mortgageType, purchaseCosts, managementPct, maintenancePct, insuranceMonthly, voidWeeks]);
 
@@ -415,6 +422,21 @@ export default function DealAnalyserPage() {
       worstCase: run(2, 1, -0.1),
     };
   }, [purchasePrice, depositPct, mortgageRate, mortgageTerm, mortgageType, monthlyRent, managementPct, maintenancePct, insuranceMonthly, voidWeeks]);
+
+  // ── The PropertyVault Score ──────────────────────────────
+  // Deliberately computed from lib/deal-score.ts rather than inline, so the
+  // number here and the number in the social content are the same number.
+  // Not memoised: it is a handful of multiplications over values that are
+  // already memoised above, so a dependency array would cost more than it saves
+  // — and the surrounding manual memoisation is what stops the compiler here.
+  const pvScore = scoreDeal({
+    netYield: calc.netYield,
+    monthlyCashflow: calc.monthlyCF,
+    cashOnCash: calc.cashOnCash,
+    cashflowAtPlus2: stressCalc.ratePlus2,
+    purchasePrice,
+    equityGain: calc.equityGain,
+  });
 
   // ── 5-Year Projection ────────────────────────────────────
   const projection = useMemo(() => {
@@ -645,7 +667,7 @@ export default function DealAnalyserPage() {
               <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 15, maxWidth: 500 }}>8 perspectives. Stress tests. Tax impact. 5-year projection. The comprehensive UK property deal analysis tool.</p>
               <div style={{ display: "flex", gap: 16, marginTop: 16 }}><PrintButton /><ShareButton params={shareParams} /></div>
             </div>
-            <DealScoreGauge score={calc.dealScore} />
+            <DealScoreGauge score={pvScore.total} band={pvScore.band} />
           </div>
         </div>
       </section>
@@ -1481,12 +1503,12 @@ export default function DealAnalyserPage() {
                     netYield: calc.netYield,
                     monthlyCF: calc.monthlyCF,
                     cashOnCash: calc.cashOnCash,
-                    dealScore: calc.dealScore,
+                    dealScore: pvScore.total,
                     totalCashIn: calc.totalCashIn,
                     netIncome: calc.netIncome,
                     strategy: STRATEGY_META[strategy].label,
                   }} />
-                  <ShareResults title="Property Deal Analyser" summary={`Deal score ${calc.dealScore}/100: ${calc.grossYield.toFixed(1)}% gross yield, ${fmt(calc.monthlyCF)}/mo cash flow, ${calc.cashOnCash.toFixed(1)}% cash-on-cash`} />
+                  <ShareResults title="Property Deal Analyser" summary={`PropertyVault Score ${pvScore.total}/100: ${calc.grossYield.toFixed(1)}% gross yield, ${fmt(calc.monthlyCF)}/mo cash flow, ${calc.cashOnCash.toFixed(1)}% cash-on-cash`} />
                 </div>
               )}
 
