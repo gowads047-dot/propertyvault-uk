@@ -563,7 +563,7 @@ export function durationOf(spec: ReelSpec): number {
  * REEL_CAMPAIGN_START still overrides it if the schedule needs shifting
  * without a deploy.
  */
-export const CAMPAIGN_START = "2026-08-29";
+export const CAMPAIGN_START = "2026-08-30";
 
 /**
  * The IG account posts go to. A Business account id is public information —
