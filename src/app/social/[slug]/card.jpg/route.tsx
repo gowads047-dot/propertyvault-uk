@@ -1,6 +1,20 @@
 import { ImageResponse } from "next/og";
 import sharp from "sharp";
-import { cardBySlug, SOCIAL_CARDS } from "@/lib/social-cards";
+import { cardBySlug, SOCIAL_CARDS, type CardFace } from "@/lib/social-cards";
+import { autopsyFaces } from "@/lib/autopsy";
+
+/**
+ * Standalone posts and carousel slides are the same thing to this route: a
+ * card face at a slug. Keeping one renderer is what stops an Autopsy slide and
+ * a stamp duty card drifting into two different-looking designs.
+ */
+function faceBySlug(slug: string): CardFace | undefined {
+  return cardBySlug(slug) ?? autopsyFaces().get(slug);
+}
+
+function allSlugs(): string[] {
+  return [...SOCIAL_CARDS.map(c => c.slug), ...autopsyFaces().keys()];
+}
 
 /**
  * A 1080x1080 Instagram card, rendered from calculator output.
@@ -26,7 +40,7 @@ const MUTED = "#97a5c5";
 const HAIRLINE = "rgba(255,255,255,0.12)";
 
 export function generateStaticParams() {
-  return SOCIAL_CARDS.map(c => ({ slug: c.slug }));
+  return allSlugs().map(slug => ({ slug }));
 }
 
 export async function GET(
@@ -34,7 +48,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const card = cardBySlug(slug);
+  const card = faceBySlug(slug);
   if (!card) {
     return new Response("Not found", { status: 404 });
   }

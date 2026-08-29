@@ -21,9 +21,11 @@ export interface CardRow {
   v: string;
 }
 
-export interface SocialCard {
-  /** URL segment. Stable — it is the public image path. */
-  slug: string;
+/**
+ * The visual half of a card. Shared by standalone posts and by the slides of a
+ * carousel, so both go through one renderer and one design.
+ */
+export interface CardFace {
   /** Small label above the headline. */
   eyebrow: string;
   /** The question the card answers. */
@@ -38,6 +40,17 @@ export interface SocialCard {
   tone?: "warn";
   /** The workings, so the number is never merely asserted. */
   rows: CardRow[];
+  /**
+   * Page where the reader can reproduce the number. Optional on a face because
+   * a carousel slide inherits it from its episode; required on a standalone
+   * post, which has nowhere else to carry it.
+   */
+  verifyPath?: string;
+}
+
+export interface SocialCard extends CardFace {
+  /** URL segment. Stable — it is the public image path. */
+  slug: string;
   /** Instagram caption. */
   caption: string;
   /** Page on the site where the reader can reproduce the number. */
