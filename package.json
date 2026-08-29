@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "backfill:starter-pack": "tsx --env-file=.env.local scripts/backfill-starter-pack.mjs",
-    "test:trace": "vitest run --reporter=default --reporter=json --outputFile.json=.vitest-report.json"
+    "test:trace": "vitest run --reporter=default --reporter=json --outputFile.json=.vitest-report.json",
+    "reels": "tsx scripts/generate-reels.tsx"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

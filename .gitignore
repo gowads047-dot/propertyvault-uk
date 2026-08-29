@@ -56,3 +56,4 @@ scripts/.backfill-sent.json
 
 # Local dev server output
 dev.log
+.reel-frames
