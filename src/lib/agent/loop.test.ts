@@ -271,3 +271,48 @@ describe("textOf", () => {
     ])).toBe("one\ntwo");
   });
 });
+
+describe("the maximum offer tool", () => {
+  it("is offered to the model and dispatches", async () => {
+    const client = scripted([
+      useTool("maximum_offer", { askingPrice: 185_000, monthlyRent: 1_050, minMonthlyCashflow: 250 }),
+      text("You should offer no more than that."),
+    ]);
+    const out = await runAgent(client, [{ role: "user", content: "what should I offer?" }], noArea);
+
+    expect(out.steps[0].ok).toBe(true);
+    expect(out.steps[0].result!.render).toBe("offer");
+    const d = out.steps[0].result!.data as { maxOffer: number; explanation: string };
+    expect(d.maxOffer).toBeLessThan(185_000);
+    expect(d.explanation).toContain("cash flow");
+  });
+
+  it("records the offer as calculated, with its source", async () => {
+    const client = scripted([
+      useTool("maximum_offer", { askingPrice: 185_000, monthlyRent: 1_050, minScore: 55 }),
+      text("ok"),
+    ]);
+    const out = await runAgent(client, [{ role: "user", content: "x" }], noArea);
+    const e = out.evidence.find(x => x.field === "maximum_offer")!;
+    expect(e.state).toBe("calculated");
+    expect(e.source).toBe("lib/max-offer.ts");
+  });
+
+  // If no price works, the tool must not hand back a number that implies
+  // negotiation could fix an income problem.
+  it("records missing rather than a number when no offer works", async () => {
+    const client = scripted([
+      useTool("maximum_offer", { askingPrice: 200_000, monthlyRent: 400, runningCostsMonthly: 550, minMonthlyCashflow: 0 }),
+      text("ok"),
+    ]);
+    const out = await runAgent(client, [{ role: "user", content: "x" }], noArea);
+    const e = out.evidence.find(x => x.field === "maximum_offer")!;
+    expect(e.state).toBe("missing");
+    expect(e.valueNum).toBeUndefined();
+  });
+
+  it("tells the model to ask for a target rather than invent one", () => {
+    const t = TOOL_DEFS.find(x => x.name === "maximum_offer")!;
+    expect(t.description).toContain("do not invent one");
+  });
+});
