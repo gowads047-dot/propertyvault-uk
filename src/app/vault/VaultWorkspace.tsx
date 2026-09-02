@@ -27,6 +27,12 @@ const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
 
 type Step = { label: string; done: boolean };
 
+interface ConstraintView {
+  label: string;
+  matters: string;
+  entries: Record<string, string>[];
+}
+
 interface Result {
   analysis: ReturnType<typeof analyseDeal>;
   offer: ReturnType<typeof calculateMaximumOffer>;
@@ -34,6 +40,8 @@ interface Result {
   evidence: Evidence[];
   areaMedian: number | null;
   areaNote: string | null;
+  constraints: ConstraintView[];
+  noRecord: string[];
 }
 
 export function VaultWorkspace() {
@@ -64,6 +72,7 @@ export function VaultWorkspace() {
     // and one indefinite spinner reads as broken.
     const plan: Step[] = [
       { label: "Checking sold prices", done: false },
+      { label: "Checking planning constraints", done: false },
       { label: "Running the numbers", done: false },
       { label: "Solving the maximum offer", done: false },
     ];
@@ -96,19 +105,35 @@ export function VaultWorkspace() {
       }
       advance(0);
 
+      let constraints: ConstraintView[] = [];
+      let noRecord: string[] = [];
+      if (postcode.trim()) {
+        const res = await fetch("/api/vault/constraints/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ postcode: postcode.trim() }),
+        });
+        if (res.ok) {
+          const j = await res.json();
+          constraints = j.data?.constraintsFound ?? [];
+          noRecord = j.data?.checkedWithNoRecord ?? [];
+        }
+      }
+      advance(1);
+
       const analysis = analyseDeal({
         purchasePrice: p,
         monthlyRent: r,
         areaMedianSoldPrice: areaMedian ?? undefined,
       });
-      advance(1);
+      advance(2);
 
       const targets = { minMonthlyCashflow: Number(targetCashflow) || undefined };
       const offer = calculateMaximumOffer(
         { askingPrice: p, monthlyRent: r, areaMedianSoldPrice: areaMedian ?? undefined },
         targets,
       );
-      advance(2);
+      advance(3);
 
       setResult({
         analysis,
@@ -117,6 +142,8 @@ export function VaultWorkspace() {
         evidence: analysis.evidence,
         areaMedian,
         areaNote,
+        constraints,
+        noRecord,
       });
     } catch {
       setError("Could not complete that. Please try again.");
@@ -214,6 +241,52 @@ export function VaultWorkspace() {
           />
 
           <MaxOfferCard offer={result.offer} explanation={result.offerExplanation} />
+
+          {result.constraints.length > 0 && (
+            <section
+              style={{
+                background: "var(--card-surface)",
+                border: "1px solid var(--hairline)",
+                borderRadius: "8px",
+                padding: "1.25rem",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em",
+                  textTransform: "uppercase", color: "var(--ink-subtle)", margin: "0 0 0.5rem",
+                }}
+              >
+                What applies to this location
+              </p>
+              {result.constraints.map(c => (
+                <div key={c.label} style={{ padding: "0.6rem 0", borderTop: "1px solid var(--hairline)" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", flexWrap: "wrap" }}>
+                    <strong style={{ color: "var(--ink)" }}>{c.label}</strong>
+                    <DataState state="verified" source="planning.data.gov.uk" method={c.matters} />
+                  </div>
+                  <p style={{ margin: "0.2rem 0 0", color: "var(--ink)", fontSize: "0.9rem" }}>
+                    {c.entries
+                      .map(e => Object.values(e).filter(Boolean).join(" \u00b7 "))
+                      .join("; ")}
+                  </p>
+                  <p style={{ margin: "0.15rem 0 0", color: "var(--ink-muted)", fontSize: "0.8125rem" }}>
+                    {c.matters}
+                  </p>
+                </div>
+              ))}
+
+              {/* Absence of a record is not confirmation. Saying so is the
+                  difference between this and a clean bill of health. */}
+              {result.noRecord.length > 0 && (
+                <p style={{ marginTop: "0.9rem", fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
+                  <DataState state="missing" method="Checked, no record found" /> No record found for{" "}
+                  {result.noRecord.join(", ").toLowerCase()}. The national register does not cover every
+                  local authority, so this is not confirmation that none applies.
+                </p>
+              )}
+            </section>
+          )}
 
           <section
             style={{
