@@ -146,6 +146,24 @@ html.dark .btn-gold-shimmer { color: #0f1b36; }
 :root {
   --page-surface: #ffffff;
   --card-surface: #f8f9fc;
+
+  /* ── Where a figure came from ────────────────────────────────────────────
+   *
+   * The trust language. Every number PropertyVault shows is one of these, and
+   * the distinction is the product: a model can read a listing, but it cannot
+   * tell you which of its figures came from an official register and which it
+   * assumed. Contrast is checked against --card-surface, the lightest ground
+   * these ever sit on, since they render as chips on cards.
+   *
+   * Colour is never the only signal — every chip carries a label too, so the
+   * meaning survives greyscale and colour blindness.
+   */
+  --state-verified: #0f6e43;    /* 5.42 on #f8f9fc */
+  --state-estimated: #8a5a0b;   /* 5.33 */
+  --state-calculated: #1d4ed8;  /* 6.31 */
+  --state-assumed: #52596b;     /* 7.02 */
+  --state-user: #0e6f7a;        /* 4.94 */
+  --state-missing: #9e2b2b;     /* 6.63 */
   --ink: #0f1b36;         /* 17.07 on white          */
   --ink-muted: #475569;   /* 7.58 on white, 5.10 on the #cbd5e1 chips */
   --ink-subtle: #616f82;  /* 5.12 on white           */
@@ -159,6 +177,13 @@ html.dark .btn-gold-shimmer { color: #0f1b36; }
   --danger: #b91c1c;          /* 6.99 on white */
 }
 html.dark {
+  --state-verified: #4fc08a;
+  --state-estimated: #e0ac55;
+  --state-calculated: #7ba5f5;
+  --state-assumed: #a3adbd;
+  --state-user: #4fc2ce;
+  --state-missing: #ee8a8a;
+
   --page-surface: #0f141d;
   --card-surface: #161b26;
   --ink: #e4e8f0;         /* 15.02 / 14.03 on the two dark surfaces */
