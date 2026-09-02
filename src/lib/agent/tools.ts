@@ -1,6 +1,7 @@
 import { calcSDLT, sdltBreakdown, calcSection24Credit, calcCGTResidential, personalAllowance } from "../tax";
 import { grossYield, netYield, cashOnCash, monthlyInterestOnly, monthlyRepayment } from "../finance";
 import { scoreDeal } from "../deal-score";
+import { calculateMaximumOffer, explainBinding, type OfferTargets } from "../max-offer";
 import type { Evidence } from "../property";
 import { calculated, verified, assumed, missing } from "../property";
 
@@ -41,7 +42,7 @@ export interface ToolResult {
   /** Where each figure came from. Rendered as the trust chips. */
   evidence: Evidence[];
   /** Which component the UI should draw, if any. */
-  render?: "score" | "sdlt" | "area" | "stress" | "tax";
+  render?: "score" | "sdlt" | "area" | "stress" | "tax" | "offer";
 }
 
 const num = { type: "number" as const };
@@ -280,6 +281,33 @@ export async function lookupArea(
   };
 }
 
+// ── maximum offer ──────────────────────────────────────────────────────────
+
+export function maximumOffer(a: {
+  askingPrice: number; monthlyRent: number; depositPct?: number; mortgageRate?: number;
+  runningCostsMonthly?: number; areaMedianSoldPrice?: number;
+  minMonthlyCashflow?: number; minCashOnCash?: number; minNetYield?: number;
+  minScore?: number; minCashflowAtPlus2?: number;
+}): ToolResult {
+  const targets: OfferTargets = {
+    minMonthlyCashflow: a.minMonthlyCashflow,
+    minCashOnCash: a.minCashOnCash,
+    minNetYield: a.minNetYield,
+    minScore: a.minScore,
+    minCashflowAtPlus2: a.minCashflowAtPlus2,
+  };
+  const o = calculateMaximumOffer(a, targets);
+
+  return {
+    data: { ...o, explanation: explainBinding(o, targets) },
+    evidence: o.maxOffer == null
+      ? [missing("maximum_offer", o.reason ?? "no price meets these targets")]
+      : [calculated("maximum_offer", o.maxOffer, "lib/max-offer.ts",
+          "highest price meeting the buyer’s own targets")],
+    render: "offer",
+  };
+}
+
 // ── the definitions the model sees ─────────────────────────────────────────
 
 export const TOOL_DEFS: ToolDef[] = [
@@ -348,6 +376,28 @@ export const TOOL_DEFS: ToolDef[] = [
     },
   },
   {
+    name: "maximum_offer",
+    description:
+      "The most the buyer should pay for this property given their own targets — solved backwards " +
+      "from what they need rather than forwards from the asking price. Use this whenever someone " +
+      "asks what to offer, whether a price is too high, or how far they should negotiate. " +
+      "Ask for at least one target first if none is known; do not invent one.",
+    input_schema: {
+      type: "object",
+      properties: {
+        askingPrice: num, monthlyRent: num, depositPct: num, mortgageRate: num,
+        runningCostsMonthly: num,
+        areaMedianSoldPrice: { ...num, description: "From lookup_area." },
+        minMonthlyCashflow: { ...num, description: "Pounds per month the buyer needs after everything." },
+        minCashOnCash: { ...num, description: "Percent return on cash invested." },
+        minNetYield: num,
+        minScore: { ...num, description: "PropertyVault Score out of 100." },
+        minCashflowAtPlus2: { ...num, description: "Cash flow that must survive a two point rate rise." },
+      },
+      required: ["askingPrice", "monthlyRent"],
+    },
+  },
+  {
     name: "calculate_section_24",
     description: "The Section 24 basic-rate credit on mortgage interest, and what it costs a higher-rate landlord.",
     input_schema: {
@@ -378,6 +428,7 @@ export async function runTool(
     case "calculate_stamp_duty": return stampDuty(input as never);
     case "stress_test": return stressTest(input as never);
     case "lookup_area": return lookupArea(input as never, deps.fetchArea);
+    case "maximum_offer": return maximumOffer(input as never);
     case "calculate_section_24": return section24(input as never);
     case "calculate_capital_gains": return capitalGains(input as never);
     default: throw new Error(`Unknown tool: ${name}`);
