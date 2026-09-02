@@ -90,6 +90,19 @@ html.dark .makan h4, html.dark .makan h5, html.dark .makan h6 {
 
 /* Dark mode — main site only */
 html.dark .bg-white { background-color: #111827; }
+
+/*
+ * The alpha variants are separate classes, so the rule above never reaches
+ * them. The site header uses bg-white/98, which left a near-white bar
+ * carrying near-white text in dark mode: #e4e8f0 on #ffffff is 1.19:1, and
+ * the logo was effectively invisible on every page once scrolled.
+ */
+html.dark .bg-white\/98 { background-color: rgb(17 24 39 / 0.98); }
+html.dark .bg-white\/95 { background-color: rgb(17 24 39 / 0.95); }
+html.dark .bg-white\/90 { background-color: rgb(17 24 39 / 0.90); }
+html.dark .bg-white\/80 { background-color: rgb(17 24 39 / 0.80); }
+html.dark .bg-white\/70 { background-color: rgb(17 24 39 / 0.70); }
+html.dark .bg-white\/50 { background-color: rgb(17 24 39 / 0.50); }
 html.dark .bg-navy-50 { background-color: #0a1224; }
 html.dark .bg-navy-800 { background-color: #1e293b; }
 html.dark .border-navy-100 { border-color: #1e293b; }

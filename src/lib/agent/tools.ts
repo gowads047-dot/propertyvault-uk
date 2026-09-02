@@ -2,6 +2,9 @@ import { calcSDLT, sdltBreakdown, calcSection24Credit, calcCGTResidential, perso
 import { grossYield, netYield, cashOnCash, monthlyInterestOnly, monthlyRepayment } from "../finance";
 import { scoreDeal } from "../deal-score";
 import { calculateMaximumOffer, explainBinding, type OfferTargets } from "../max-offer";
+import {
+  coordsFor, fetchConstraints, constraintEvidence, notableConstraints,
+} from "./constraints";
 import type { Evidence } from "../property";
 import { calculated, verified, assumed, missing } from "../property";
 
@@ -42,7 +45,7 @@ export interface ToolResult {
   /** Where each figure came from. Rendered as the trust chips. */
   evidence: Evidence[];
   /** Which component the UI should draw, if any. */
-  render?: "score" | "sdlt" | "area" | "stress" | "tax" | "offer";
+  render?: "score" | "sdlt" | "area" | "stress" | "tax" | "offer" | "constraints";
 }
 
 const num = { type: "number" as const };
@@ -308,6 +311,43 @@ export function maximumOffer(a: {
   };
 }
 
+// ── planning constraints ─────────────────────────────────────────────
+
+export async function lookupConstraints(a: { postcode: string }): Promise<ToolResult> {
+  const coords = await coordsFor(a.postcode);
+  if (!coords) {
+    return {
+      data: { found: false, postcode: a.postcode, reason: "not a recognised UK postcode" },
+      evidence: [missing("planning_constraints", "could not resolve " + a.postcode)],
+      render: "constraints",
+    };
+  }
+
+  const results = await fetchConstraints(coords.lat, coords.lon);
+  const notable = notableConstraints(results);
+
+  return {
+    data: {
+      found: true,
+      postcode: a.postcode,
+      // Named separately from "none found", because the register does not cover
+      // every authority and absence is not confirmation.
+      constraintsFound: notable.map(r => ({
+        label: r.label,
+        matters: r.matters,
+        entries: r.hits.map(h => ({ name: h.name ?? h.reference, ...h.detail })),
+      })),
+      checkedWithNoRecord: results.filter(r => !r.unavailable && r.hits.length === 0).map(r => r.label),
+      couldNotCheck: results.filter(r => r.unavailable).map(r => r.label),
+      coverageNote:
+        "planning.data.gov.uk does not cover every local authority. A dataset with no record " +
+        "here is not confirmation that nothing applies.",
+    },
+    evidence: constraintEvidence(results),
+    render: "constraints",
+  };
+}
+
 // ── the definitions the model sees ─────────────────────────────────────────
 
 export const TOOL_DEFS: ToolDef[] = [
@@ -376,6 +416,20 @@ export const TOOL_DEFS: ToolDef[] = [
     },
   },
   {
+    name: "lookup_constraints",
+    description:
+      "Official planning constraints on a property from planning.data.gov.uk: flood risk zone, " +
+      "Article 4 directions, conservation area, listed building, tree preservation and green belt. " +
+      "Call this whenever a postcode is known — an Article 4 direction is what stops an HMO " +
+      "conversion, and a flood zone changes insurance and lending. A dataset with no record is " +
+      "NOT confirmation that nothing applies; say so rather than reporting the property as clear.",
+    input_schema: {
+      type: "object",
+      properties: { postcode: { type: "string", description: "A UK postcode, e.g. NG7 1AA." } },
+      required: ["postcode"],
+    },
+  },
+  {
     name: "maximum_offer",
     description:
       "The most the buyer should pay for this property given their own targets — solved backwards " +
@@ -428,6 +482,7 @@ export async function runTool(
     case "calculate_stamp_duty": return stampDuty(input as never);
     case "stress_test": return stressTest(input as never);
     case "lookup_area": return lookupArea(input as never, deps.fetchArea);
+    case "lookup_constraints": return lookupConstraints(input as never);
     case "maximum_offer": return maximumOffer(input as never);
     case "calculate_section_24": return section24(input as never);
     case "calculate_capital_gains": return capitalGains(input as never);
