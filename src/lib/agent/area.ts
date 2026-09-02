@@ -12,8 +12,40 @@ const TIMEOUT_MS = 4_000;
 
 export interface AreaData {
   region?: string;
-  soldPrices?: { date: string; price: number; propertyType?: string }[];
+  /** Date is null when the source gave one this cannot parse — never a guess. */
+  soldPrices?: { date: string | null; price: number; propertyType?: string }[];
   crimeLevel?: string;
+}
+
+const MONTHS = [
+  "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec",
+];
+
+/**
+ * A sold date as ISO, from whatever shape the register returned.
+ *
+ * HM Land Registry's linked-data API returns "Fri, 13 Feb 2026", not an ISO
+ * date. Slicing the first ten characters off that gives "Fri, 13 Fe", which is
+ * what shipped — a mangled date next to a real price, which is exactly the
+ * kind of thing that makes a reader doubt the numbers beside it.
+ *
+ * Parsed explicitly rather than through `new Date`, whose behaviour on
+ * non-standard strings is implementation-defined, and which would silently
+ * shift the day across a timezone. Anything unrecognised returns null so the
+ * caller can show nothing rather than something wrong.
+ */
+export function normaliseSoldDate(raw: string): string | null {
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(raw);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+
+  const rfc = /(\d{1,2})\s+([A-Za-z]{3})[a-z]*\s+(\d{4})/.exec(raw);
+  if (!rfc) return null;
+  const month = MONTHS.indexOf(rfc[2].toLowerCase());
+  if (month < 0) return null;
+
+  const day = Number(rfc[1]);
+  if (day < 1 || day > 31) return null;
+  return `${rfc[3]}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 }
 
 async function fetchJson(url: string, ms = TIMEOUT_MS): Promise<unknown | null> {
@@ -64,7 +96,9 @@ export async function fetchArea(postcode: string): Promise<AreaData | null> {
       const type = typeof i.propertyType === "string"
         ? i.propertyType
         : i.propertyType?.prefLabel?.[0]?._value;
-      return date && price ? { date: date.slice(0, 10), price, propertyType: type } : null;
+      // A sale with an unreadable date is still a real sale, and dropping it
+      // would quietly bias the median. The date goes null; the price stays.
+      return price ? { date: date ? normaliseSoldDate(date) : null, price, propertyType: type } : null;
     })
     .filter((s): s is NonNullable<typeof s> => s !== null);
 

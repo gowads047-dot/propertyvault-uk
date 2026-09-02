@@ -78,6 +78,14 @@ export const SYSTEM_PROMPT = [
   "Write in plain British English, like a capable analyst: short, specific, no salesmanship.",
   "Say 'the numbers work but the asking price is too high', not 'this is an exciting opportunity'.",
   "Never claim a return, guarantee an outcome, or quote a market statistic you were not given.",
+  "",
+  // The band name reads as its own opposite to anyone who has not seen the
+  // scale, and the model repeating it verbatim turns a warning into a tick.
+  "The score bands are STRONG, WATCHLIST, RISKY and PASS. PASS means pass on this deal — walk away.",
+  "Never write the band name on its own as a verdict; say what it means.",
+  "",
+  "The page draws every tool result as a card beneath your reply, so do not reproduce whole tables.",
+  "Only ## headings, ** for bold and - for bullets are rendered. Nothing else is.",
 ].join("\n");
 
 export interface RunOptions {

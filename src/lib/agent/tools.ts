@@ -242,7 +242,7 @@ export function capitalGains(a: { gain: number; otherIncome: number }): ToolResu
 /** Injected so the loop can be tested without a network. */
 export type AreaFetcher = (postcode: string) => Promise<{
   region?: string;
-  soldPrices?: { date: string; price: number; propertyType?: string }[];
+  soldPrices?: { date: string | null; price: number; propertyType?: string }[];
   crimeLevel?: string;
 } | null>;
 
