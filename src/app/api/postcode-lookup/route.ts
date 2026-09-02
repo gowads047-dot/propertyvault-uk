@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { normaliseSoldDate } from "@/lib/agent/area";
 
 // ONS Private Rental Market Statistics 2024 — median monthly rents by region & bedrooms
 const RENTAL_BY_REGION: Record<string, { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number; demand: string; trend: string }> = {
@@ -236,13 +237,10 @@ function num(v: LRVal): number {
 // Parse any date value to ISO YYYY-MM-DD
 function isoDate(v: LRVal): string {
   const s = str(v);
-  if (!s) return "";
-  // Already ISO
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
-  // Try native Date parse (handles "Mon, 28 Jul 2023 ...")
-  const d = new Date(s);
-  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
-  return s.slice(0, 10);
+  // Shared with the agent's area lookup, which reads the same register. The
+  // previous native-Date parse turned local midnight into the day before under
+  // British Summer Time; this reads the parts and never shifts a day.
+  return s ? normaliseSoldDate(s) ?? "" : "";
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

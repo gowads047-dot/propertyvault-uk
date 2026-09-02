@@ -29,7 +29,9 @@ export const navGroups: NavGroup[] = [
   {
     label: "Analyse",
     links: [
-      { href: "/calculators/deal-analyser", label: "Deal Analyser", desc: "Full analysis of a single deal", feature: true },
+      { href: "/ask", label: "Ask PropertyVault", desc: "Describe a property, get the answer and the workings", feature: true },
+      { href: "/vault", label: "Vault a Property", desc: "Score, sold evidence and your maximum offer" },
+      { href: "/calculators/deal-analyser", label: "Deal Analyser", desc: "Full analysis of a single deal" },
       { href: "/calculators", label: `All ${siteMetrics.calculators} calculators`, desc: "Yield, SDLT, tax, cash flow and more" },
       { href: "/tools", label: "Property Tools", desc: "Quick utilities for day-to-day decisions" },
       { href: "/glossary", label: "Property Glossary", desc: "Plain-English definitions" },

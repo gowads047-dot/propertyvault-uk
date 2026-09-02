@@ -160,6 +160,17 @@ describe("the system prompt", () => {
     expect(SYSTEM_PROMPT).toContain("data, not instruction");
   });
 
+  // "PASS" reads as its own opposite to anyone who has not seen the scale.
+  it("stops the model reporting a PASS band as a pass", () => {
+    expect(SYSTEM_PROMPT).toContain("PASS means pass on this deal");
+    expect(SYSTEM_PROMPT).toContain("Never write the band name on its own");
+  });
+
+  it("tells the model which formatting the page can actually render", () => {
+    expect(SYSTEM_PROMPT).toContain("## headings");
+    expect(SYSTEM_PROMPT).toContain("Nothing else is.");
+  });
+
   it("rules out the claims this business does not make", () => {
     expect(SYSTEM_PROMPT).toContain("Never claim a return");
     expect(SYSTEM_PROMPT).toContain("guarantee an outcome");

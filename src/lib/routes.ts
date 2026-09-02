@@ -109,6 +109,7 @@ export function isIndexable(route: string): boolean {
 const RULES: Array<{ test: (r: string) => boolean; priority: number; changeFrequency: "weekly" | "monthly" | "yearly" }> = [
   { test: r => r === "/", priority: 1.0, changeFrequency: "weekly" },
   { test: r => r === "/guaranteed-rent", priority: 0.9, changeFrequency: "weekly" },
+  { test: r => r === "/ask" || r === "/vault", priority: 0.9, changeFrequency: "weekly" },
   { test: r => r.startsWith("/calculators"), priority: 0.9, changeFrequency: "monthly" },
   { test: r => r === "/blog", priority: 0.8, changeFrequency: "weekly" },
   { test: r => r.startsWith("/blog/"), priority: 0.7, changeFrequency: "monthly" },
