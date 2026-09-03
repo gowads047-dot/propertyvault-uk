@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataState, EvidenceRow } from "@/components/property/DataState";
 import { PVScore } from "@/components/property/PVScore";
 import { MaxOfferCard } from "@/components/property/MaxOfferCard";
@@ -26,6 +26,49 @@ import type { ScoreBand } from "@/lib/deal-score";
 const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
 
 type Step = { label: string; done: boolean };
+
+/**
+ * The vault token.
+ *
+ * A bearer credential for properties saved without an account: whoever holds
+ * it owns them. It lives here rather than in a cookie so it is never attached
+ * to a request that does not need it, and every access is wrapped because a
+ * private window can throw on the first read rather than returning null.
+ */
+const TOKEN_KEY = "pv_vault_token";
+
+function readToken(): string | null {
+  try {
+    const t = localStorage.getItem(TOKEN_KEY);
+    return t && /^[0-9a-f]{64}$/.test(t) ? t : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeToken(token: string) {
+  try {
+    localStorage.setItem(TOKEN_KEY, token);
+  } catch {
+    // Storage refused. The property is still saved; it just cannot be
+    // recovered on a later visit, which the UI says rather than hides.
+  }
+}
+
+interface SavedProperty {
+  id: string;
+  postcode: string | null;
+  address: string | null;
+  asking_price: number | null;
+  updated_at: string;
+  pv_analysis?: { score: number | null; band: string | null; created_at: string }[];
+}
+
+type SaveState =
+  | { kind: "idle" }
+  | { kind: "saving" }
+  | { kind: "saved"; persistable: boolean }
+  | { kind: "error"; message: string };
 
 interface ConstraintView {
   label: string;
@@ -55,6 +98,87 @@ export function VaultWorkspace() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<Result | null>(null);
 
+  const [save, setSave] = useState<SaveState>({ kind: "idle" });
+  const [saved, setSaved] = useState<SavedProperty[]>([]);
+
+  // What is already in the vault, so the page opens on the work rather than
+  // on an empty form that forgets every visit.
+  useEffect(() => {
+    const token = readToken();
+    if (!token) return;
+    fetch("/api/vault/property/", { headers: { "X-Vault-Token": token } })
+      .then(r => (r.ok ? r.json() : null))
+      .then(j => setSaved(j?.properties ?? []))
+      .catch(() => {});
+  }, []);
+
+  /**
+   * Persist what was just worked out.
+   *
+   * The evidence is keyed by field on the way in, because the API refuses the
+   * same field twice rather than letting send order decide which value wins —
+   * and the rows assembled here genuinely can collide, since the area lookup
+   * and the analysis both have something to say about the median sold price.
+   */
+  async function persist(r: Result, price: number, monthlyRent: number, pc: string) {
+    setSave({ kind: "saving" });
+
+    const byField = new Map<string, Record<string, unknown>>();
+    for (const e of r.evidence) byField.set(e.field, { ...e });
+    byField.set("monthly_rent", { field: "monthly_rent", state: "user", valueNum: monthlyRent, source: "you" });
+    byField.set("asking_price", { field: "asking_price", state: "user", valueNum: price, source: "you" });
+    if (r.areaMedian != null) {
+      byField.set("area_median_sold", {
+        field: "area_median_sold", state: "verified", valueNum: r.areaMedian,
+        source: "HM Land Registry Price Paid", method: r.areaNote ?? undefined,
+      });
+    }
+    for (const c of r.constraints) {
+      byField.set(`planning_${c.label.toLowerCase().replace(/[^a-z]+/g, "_")}`, {
+        field: `planning_${c.label.toLowerCase().replace(/[^a-z]+/g, "_")}`,
+        state: "verified",
+        valueText: c.entries.map(e => Object.values(e).filter(Boolean).join(" · ")).join("; "),
+        source: "planning.data.gov.uk",
+        method: c.matters,
+      });
+    }
+
+    try {
+      const res = await fetch("/api/vault/property/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          claimToken: readToken(),
+          property: { source: "postcode", postcode: pc || null, askingPrice: price },
+          evidence: [...byField.values()],
+          analysis: {
+            inputs: { askingPrice: price, monthlyRent, postcode: pc || null },
+            computed: r.analysis.data,
+            score: (r.analysis.data as { pvScore?: number }).pvScore,
+            band: (r.analysis.data as { band?: string }).band,
+          },
+        }),
+      });
+      const j = await res.json();
+      if (!res.ok) {
+        setSave({ kind: "error", message: j?.error ?? "Could not save that." });
+        return;
+      }
+      if (j.claimTokenIsNew) writeToken(j.claimToken);
+      // If storage refused the token, the row exists but this browser cannot
+      // find it again. Say so rather than promising a vault that is not there.
+      setSave({ kind: "saved", persistable: readToken() === j.claimToken });
+
+      const token = readToken();
+      if (token) {
+        const list = await fetch("/api/vault/property/", { headers: { "X-Vault-Token": token } });
+        if (list.ok) setSaved((await list.json()).properties ?? []);
+      }
+    } catch {
+      setSave({ kind: "error", message: "Could not reach the vault." });
+    }
+  }
+
   async function vault(e: React.FormEvent) {
     e.preventDefault();
     const p = Number(price);
@@ -67,6 +191,7 @@ export function VaultWorkspace() {
     setBusy(true);
     setError("");
     setResult(null);
+    setSave({ kind: "idle" });
 
     // Progressive, because research takes a few seconds across several sources
     // and one indefinite spinner reads as broken.
@@ -135,7 +260,7 @@ export function VaultWorkspace() {
       );
       advance(3);
 
-      setResult({
+      const built: Result = {
         analysis,
         offer,
         offerExplanation: explainBinding(offer, targets),
@@ -144,7 +269,11 @@ export function VaultWorkspace() {
         areaNote,
         constraints,
         noRecord,
-      });
+      };
+      setResult(built);
+      // Saving is deliberately not awaited: the analysis is on screen either
+      // way, and a slow write should not hold up the thing the user asked for.
+      void persist(built, p, r, postcode.trim().toUpperCase());
     } catch {
       setError("Could not complete that. Please try again.");
     } finally {
@@ -230,6 +359,8 @@ export function VaultWorkspace() {
       )}
 
       {error && <p style={{ color: "var(--danger)", margin: 0 }}>{error}</p>}
+
+      {result && <SaveNote state={save} />}
 
       {result && d && (
         <>
@@ -351,7 +482,96 @@ export function VaultWorkspace() {
           </section>
         </>
       )}
+
+      {saved.length > 0 && <VaultList properties={saved} />}
     </div>
+  );
+}
+
+/** What happened to the save, in one honest line. */
+function SaveNote({ state }: { state: SaveState }) {
+  if (state.kind === "idle") return null;
+
+  const line =
+    state.kind === "saving" ? "Saving to your vault…"
+      : state.kind === "error" ? state.message
+        : state.persistable
+          ? "Saved to your vault on this device. Run it again later and you will see what changed."
+          : "Saved, but this browser would not store your vault key — you will not find it again here.";
+
+  return (
+    <p
+      style={{
+        margin: 0,
+        fontSize: "0.875rem",
+        color: state.kind === "error" ? "var(--danger)"
+          : state.kind === "saved" && !state.persistable ? "var(--state-estimated)"
+            : "var(--ink-muted)",
+      }}
+    >
+      {line}
+    </p>
+  );
+}
+
+/**
+ * Everything vaulted from this browser.
+ *
+ * Each row carries its latest score and how many times it has been run, which
+ * is the point of storing analysis as snapshots rather than a mutable record.
+ */
+function VaultList({ properties }: { properties: SavedProperty[] }) {
+  return (
+    <section
+      style={{
+        background: "var(--card-surface)",
+        border: "1px solid var(--hairline)",
+        borderRadius: "8px",
+        padding: "1.25rem",
+      }}
+    >
+      <p
+        style={{
+          fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.1em",
+          textTransform: "uppercase", color: "var(--ink-subtle)", margin: "0 0 0.5rem",
+        }}
+      >
+        In your vault
+      </p>
+
+      {properties.map(p => {
+        const runs = p.pv_analysis ?? [];
+        const latest = runs[0];
+        return (
+          <div
+            key={p.id}
+            style={{
+              display: "flex", justifyContent: "space-between", alignItems: "baseline",
+              gap: "1rem", padding: "0.6rem 0", borderTop: "1px solid var(--hairline)",
+            }}
+          >
+            <div>
+              <strong style={{ color: "var(--ink)" }}>{p.postcode ?? p.address ?? "Unnamed property"}</strong>
+              <div style={{ fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
+                {p.asking_price != null ? gbp(p.asking_price) : "no price"}
+                {runs.length > 1 ? ` · ${runs.length} runs` : ""}
+              </div>
+            </div>
+            {latest?.score != null && (
+              <span style={{ fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>
+                {latest.score}
+                <span style={{ color: "var(--ink-subtle)", fontWeight: 400 }}>/100</span>
+              </span>
+            )}
+          </div>
+        );
+      })}
+
+      <p style={{ margin: "0.9rem 0 0", fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
+        These are held against a key stored in this browser, not an account. Clear your site data and
+        they are gone.
+      </p>
+    </section>
   );
 }
 
