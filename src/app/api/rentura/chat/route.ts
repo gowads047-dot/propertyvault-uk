@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { boundConversation } from "@/lib/ai-input";
-import { RULES, guardAI } from "@/lib/rate-limit";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 
 const BASE_SYSTEM = `You are Rentura, a conversational property management OS for UK landlords. You help landlords log events, manage communications, track compliance, and run their portfolio — all through natural language.
@@ -340,7 +340,7 @@ function buildSystem(properties: PropertySummary[], context?: PortfolioContext):
 }
 
 export async function POST(req: Request) {
-  const limited = await guardAI(req, RULES.chatPerCaller, RULES.chatGlobal);
+  const limited = await rateGuard(req, RULES.chatPerCaller, RULES.chatGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }

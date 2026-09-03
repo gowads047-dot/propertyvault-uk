@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { boundConversation } from "@/lib/ai-input";
-import { RULES, guardAI } from "@/lib/rate-limit";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import Anthropic from "@anthropic-ai/sdk";
 import { REPLY_TO } from "@/lib/site";
@@ -76,7 +76,7 @@ ${issueList}`;
 }
 
 export async function POST(req: Request) {
-  const limited = await guardAI(req, RULES.chatPerCaller, RULES.chatGlobal);
+  const limited = await rateGuard(req, RULES.chatPerCaller, RULES.chatGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }

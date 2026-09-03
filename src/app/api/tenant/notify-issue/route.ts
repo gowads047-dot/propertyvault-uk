@@ -1,9 +1,15 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
 import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!

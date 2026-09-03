@@ -1,16 +1,24 @@
 import { NextResponse } from "next/server";
+import { safeHeaderText, validRecipient } from "@/lib/email-input";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
 import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
   const { tenantId, tenantEmail, tenantName, tenantPhone, propertyId, propertyAddress, landlordUserId } = await req.json();
-  if (!tenantEmail || !landlordUserId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  const recipient = validRecipient(tenantEmail);
+  if (!recipient || !landlordUserId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
 
   const token = randomUUID();
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
@@ -73,8 +81,8 @@ export async function POST(req: Request) {
       body: JSON.stringify({
         from: "PropertyVault UK <info@propertyvaultuk.co.uk>",
         replyTo: REPLY_TO,
-        to: tenantEmail,
-        subject: `${firstName}, your tenant portal is ready — ${shortAddress}`,
+        to: recipient,
+        subject: `${safeHeaderText(firstName, 40)}, your tenant portal is ready — ${safeHeaderText(shortAddress, 80)}`,
         html,
       }),
     });

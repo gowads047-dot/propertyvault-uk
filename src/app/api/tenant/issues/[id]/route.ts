@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
 
@@ -31,6 +32,11 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
 // POST — add update/message to issue thread
 export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = sb();
   const { id } = await params;
   const { token, landlordId, message, statusChange, attachments, authorName } = await req.json();

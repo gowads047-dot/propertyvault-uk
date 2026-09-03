@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { RULES, guardAI } from "@/lib/rate-limit";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 
 const EXTRACT_PROMPT = `You are a document data extraction engine for a UK property management platform.
@@ -55,7 +55,7 @@ Return ONLY valid JSON:
 }`;
 
 export async function POST(req: Request) {
-  const limited = await guardAI(req, RULES.visionPerCaller, RULES.visionGlobal);
+  const limited = await rateGuard(req, RULES.visionPerCaller, RULES.visionGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }

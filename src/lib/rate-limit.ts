@@ -128,6 +128,20 @@ export const RULES = {
    */
   visionPerCaller: { name: "ai-vision", limit: 20, windowSeconds: 3600 },
   visionGlobal: { name: "ai-vision-global", limit: 1_000, windowSeconds: 86_400 },
+
+  /**
+   * Sending email.
+   *
+   * The thing being protected here is not the Resend bill, it is the sending
+   * domain. An open endpoint that puts mail into strangers' inboxes from
+   * info@propertyvaultuk.co.uk gets that domain onto blocklists, and a
+   * reputation is far harder to get back than a quota.
+   *
+   * Low per caller, because nobody legitimately emails themselves a deal ten
+   * times in an hour.
+   */
+  emailPerCaller: { name: "email", limit: 10, windowSeconds: 3600 },
+  emailGlobal: { name: "email-global", limit: 500, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
 
 /**
@@ -142,7 +156,7 @@ export const RULES = {
  *
  * Returns null when the request may proceed, or the response to send back.
  */
-export async function guardAI(
+export async function rateGuard(
   request: Request,
   perCaller: RateLimitRule,
   global: RateLimitRule,

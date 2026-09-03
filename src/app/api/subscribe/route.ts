@@ -1,18 +1,27 @@
 import { createClient } from "@supabase/supabase-js";
+import { RULES, rateGuard } from "@/lib/rate-limit";
+import { validRecipient } from "@/lib/email-input";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import StarterPackEmail from "@/emails/StarterPackEmail";
 import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const { name, email, user_type } = await req.json();
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  // One well-formed address. The previous check excluded whitespace but not a
+  // comma, and a comma is how one recipient becomes a list.
+  const recipient = validRecipient(email);
+  if (!recipient) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
@@ -50,7 +59,7 @@ export async function POST(req: Request) {
     const { error: emailError } = await resend.emails.send({
       from: "Nass at PropertyVault <info@propertyvaultuk.co.uk>",
       replyTo: REPLY_TO,
-      to: email.trim().toLowerCase(),
+      to: recipient,
       subject: "Your Free Property Starter Pack 🏠",
       react: StarterPackEmail({ name: name.trim(), userType: user_type ?? null }),
     });
