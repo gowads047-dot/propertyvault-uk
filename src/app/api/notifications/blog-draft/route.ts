@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { authorizeCron } from "@/lib/cron-auth";
 import { REPLY_TO } from "@/lib/site";
 import { briefPrompt, buildPlan } from "@/lib/blog-planner";
 
@@ -17,8 +18,7 @@ export const maxDuration = 60;
 const TO = "info@propertyvaultuk.co.uk";
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
