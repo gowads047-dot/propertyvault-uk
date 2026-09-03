@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { RULES, guardAI } from "@/lib/rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 
 const EXTRACT_SYSTEM = `You are a UK property compliance assistant. The landlord has uploaded a compliance certificate image or PDF. Your job is to read it carefully and extract all key fields.
@@ -48,6 +49,11 @@ Return ONLY valid JSON, no markdown:
 type PropertySummary = { id: string; address: string; nickname: string | null };
 
 export async function POST(req: Request) {
+  const limited = await guardAI(req, RULES.visionPerCaller, RULES.visionGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   try {
     const body = await req.json() as {
       base64Data: string;
