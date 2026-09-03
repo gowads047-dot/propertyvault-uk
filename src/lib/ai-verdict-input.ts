@@ -40,7 +40,6 @@ export interface VerdictInput {
   address: string | null;
   crimeLevel: string | null;
   avgSoldPrice: number | null;
-  rentalDemand: string | null;
   strategy: string;
   taxBand: string;
 }
@@ -53,7 +52,6 @@ export type ValidationResult =
 const STRATEGIES = ["btl", "hmo", "r2r", "flip", "sa"] as const;
 const TAX_BANDS = ["basic", "higher", "additional", "company"] as const;
 const CRIME_LEVELS = ["Low", "Below average", "Average", "Above average", "High"] as const;
-const DEMAND_LEVELS = ["Very High", "High", "Medium", "Low"] as const;
 
 /** Bounds. Wide enough for any real UK deal, narrow enough to reject nonsense. */
 const LIMITS = {
@@ -145,7 +143,6 @@ export function validateVerdictInput(body: unknown): ValidationResult {
       strategy: oneOf(b.strategy, STRATEGIES) ?? "btl",
       taxBand: oneOf(b.taxBand, TAX_BANDS) ?? "higher",
       crimeLevel: oneOf(b.crimeLevel, CRIME_LEVELS),
-      rentalDemand: oneOf(b.rentalDemand, DEMAND_LEVELS),
 
       // Genuinely free text, reduced to something that cannot carry a sentence.
       cityBenchmark: sanitiseText(b.cityBenchmark, 40),

@@ -119,10 +119,9 @@ CALCULATED BY PROPERTYVAULT (trust these)
 - Stress test (rates +2%): ${gbp(v.stressRatePlus2)}/mo cash flow
 
 MARKET CONTEXT${v.cityBenchmark ? `
-- Benchmark (${v.cityBenchmark}): ${v.benchmarkGross ?? "n/a"}% gross / ${v.benchmarkNet ?? "n/a"}% net` : ""}${v.crimeLevel ? `
+- Reference yield for ${v.cityBenchmark} (our own figure for a typical deal, not a measured market average): ${v.benchmarkGross ?? "n/a"}% gross / ${v.benchmarkNet ?? "n/a"}% net` : ""}${v.crimeLevel ? `
 - Crime level: ${v.crimeLevel}` : ""}${v.avgSoldPrice ? `
-- Area average sold price: ${gbp(v.avgSoldPrice)}` : ""}${v.rentalDemand ? `
-- Rental demand: ${v.rentalDemand}` : ""}
+- Area average sold price: ${gbp(v.avgSoldPrice)}` : ""}
 
 Return ONLY valid JSON (no markdown, no preamble):
 {

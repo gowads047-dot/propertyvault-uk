@@ -145,3 +145,30 @@ describe("postcodes", () => {
     }
   });
 });
+
+describe("what the model is not told", () => {
+  /**
+   * A "rental demand" rating used to be sent here. It was never measured: a
+   * hardcoded string per region, delivered next to a specific postcode. The
+   * model then reasoned from it, so an invented input came back out wearing
+   * the authority of a verdict. It is gone, and it stays gone.
+   */
+  it("drops a rental demand rating instead of passing it to the model", () => {
+    const r = validateVerdictInput({ ...valid, rentalDemand: "Very High" });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(JSON.stringify(r.value)).not.toContain("Very High");
+      expect("rentalDemand" in r.value).toBe(false);
+    }
+  });
+
+  it("drops any unknown field rather than forwarding it", () => {
+    const r = validateVerdictInput({ ...valid, marketTrend: "+4.8% YoY", vendorMotivation: "high" });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      const json = JSON.stringify(r.value);
+      expect(json).not.toContain("4.8");
+      expect(json).not.toContain("vendorMotivation");
+    }
+  });
+});

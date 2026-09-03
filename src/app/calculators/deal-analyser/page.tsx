@@ -50,7 +50,7 @@ interface AreaData {
   lng: number;
   crime: { total: number; level: string; color: string; month: string; topCategories: { label: string; count: number }[] };
   sales: { recent: Sale[]; avgPrice: number };
-  rental: { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number; demand: string; trend: string; yieldRangeLow: string | null; yieldRangeHigh: string | null };
+  rental: { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number; basis: string; yieldRangeLow: string | null; yieldRangeHigh: string | null };
   suggestedCity: string;
 }
 interface Sale { date: string; price: number; type: string; tenure: string; address: string; newBuild: boolean; }
@@ -81,7 +81,15 @@ interface AiVerdict {
   keyInsight: string;
 }
 
-// City benchmark data
+/**
+ * Reference yields per city.
+ *
+ * These are hand-set reference points, not measured market averages. They were
+ * previously labelled "market avg" and coloured red or green against it, which
+ * told the reader their deal had failed a standard nobody had measured. The
+ * numbers are unchanged and still useful as a sanity check; what changed is
+ * that the screen no longer claims more for them than they are.
+ */
 const BENCHMARKS: Record<string, { gross: number; net: number; name: string }> = {
   birmingham: { gross: 6.2, net: 4.1, name: "Birmingham" },
   nottingham: { gross: 6.8, net: 4.4, name: "Nottingham" },
@@ -338,7 +346,6 @@ export default function DealAnalyserPage() {
           address: propertyPreview?.address,
           crimeLevel: areaData?.crime?.level,
           avgSoldPrice: areaData?.sales?.avgPrice,
-          rentalDemand: areaData?.rental?.demand,
           strategy,
           taxBand,
         }),
@@ -877,10 +884,12 @@ export default function DealAnalyserPage() {
                       <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0", marginTop: 10 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                           <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏘️ Rental Market ({areaData.region})</span>
-                          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                            <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 7px", borderRadius: 6, background: areaData.rental.demand === "Very High" ? "#fef2f2" : areaData.rental.demand === "High" ? "#fefce8" : "#f0fdf4", color: areaData.rental.demand === "Very High" ? "#dc2626" : areaData.rental.demand === "High" ? "#ca8a04" : "#15803d" }}>{areaData.rental.demand} Demand</span>
-                            <span style={{ fontSize: 10, color: "#15803d", fontWeight: 600 }}>{areaData.rental.trend}</span>
-                          </div>
+                          {/* A demand rating and a "+4.8% YoY" trend used to sit
+                              here. Both were hardcoded regional constants with no
+                              source, shown in traffic-light colours next to a
+                              specific postcode — a guess wearing the clothes of a
+                              measurement. What replaces them is what is true. */}
+                          <span style={{ fontSize: 10, fontWeight: 600, color: "#475569" }}>Regional average</span>
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4, marginBottom: 8 }}>
                           {[
@@ -899,9 +908,10 @@ export default function DealAnalyserPage() {
                         </div>
                         {areaData.rental.yieldRangeLow && areaData.rental.yieldRangeHigh && (
                           <p style={{ fontSize: 10, color: "#475569" }}>
-                            Estimated gross yield: <strong style={{ color: "var(--gold-ink)" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> based on area sold prices
+                            Estimated gross yield: <strong style={{ color: "var(--gold-ink)" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> — regional rent against this postcode&apos;s sold prices, so treat it as a guide
                           </p>
                         )}
+                        <p style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>{areaData.rental.basis}</p>
                         <p style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
                       </div>
                     )}
@@ -1416,7 +1426,7 @@ export default function DealAnalyserPage() {
 
                   {/* City Benchmark */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-3">📍 vs {BENCHMARKS[cityBenchmark].name} Market</h4>
+                    <h4 className="font-bold text-navy-800 text-sm mb-3">📍 vs our {BENCHMARKS[cityBenchmark].name} reference</h4>
                     <div className="grid grid-cols-2 gap-3">
                       {[
                         { label: "Your Gross Yield", yours: calc.grossYield, avg: BENCHMARKS[cityBenchmark].gross },
@@ -1426,17 +1436,22 @@ export default function DealAnalyserPage() {
                           <p style={{ fontSize: 11, color: "#475569", marginBottom: 6 }}>{b.label}</p>
                           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
                             <span style={{ fontSize: 20, fontWeight: 800, color: b.yours >= b.avg ? "#15803d" : "#dc2626" }}>{b.yours.toFixed(1)}%</span>
-                            <span style={{ fontSize: 12, color: "#475569" }}>vs {b.avg}% avg</span>
+                            <span style={{ fontSize: 12, color: "#475569" }}>vs {b.avg}% reference</span>
                           </div>
                           <div style={{ height: 6, borderRadius: 4, background: "#e2e8f0", overflow: "hidden" }}>
                             <div style={{ height: "100%", width: `${Math.min(100, (b.yours / (b.avg * 2)) * 100)}%`, background: b.yours >= b.avg ? "#15803d" : "#f59e0b", borderRadius: 4, transition: "width 0.4s" }} />
                           </div>
                           <p style={{ fontSize: 10, color: b.yours >= b.avg ? "#15803d" : "#dc2626", marginTop: 4, fontWeight: 600 }}>
-                            {b.yours >= b.avg ? `▲ ${(b.yours - b.avg).toFixed(1)}% above` : `▼ ${(b.avg - b.yours).toFixed(1)}% below`} market avg
+                            {b.yours >= b.avg ? `▲ ${(b.yours - b.avg).toFixed(1)}% above` : `▼ ${(b.avg - b.yours).toFixed(1)}% below`} this reference
                           </p>
                         </div>
                       ))}
                     </div>
+                    <p style={{ fontSize: 10, color: "#475569", marginTop: 8 }}>
+                      Reference yields are our own figures for a typical deal in each city. They are not
+                      a measured market average — for sold evidence on a specific postcode, use the area
+                      lookup above.
+                    </p>
                   </div>
 
                   {/* Expense Breakdown */}

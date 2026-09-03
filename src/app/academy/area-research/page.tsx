@@ -6,57 +6,57 @@ import Link from "next/link";
 const NAV = [["Courses","/academy/courses"],["Playbooks","/academy/playbooks"],["Scripts","/academy/scripts"],["Downloads","/academy/downloads"],["Calculator","/academy/calculator"],["CRM","/academy/crm"],["Emails","/academy/emails"],["Q&A","/academy/qa"]];
 
 const AREA_DATA: Record<string, {
-  region: string; avgPrice: number; avgRent: number; yield: number; demand: string; trend: string;
+  region: string; avgPrice: number; avgRent: number; yield: number;
   hmoViable: boolean; brrrViable: boolean; packagingViable: boolean;
-  avgDiscount: string; refurbCost: string; agentCount: number; notes: string;
+  avgDiscount: string; refurbCost: string; notes: string;
   postcodes: string[];
 }> = {
   "Birmingham": {
-    region: "West Midlands", avgPrice: 215000, avgRent: 900, yield: 5.0, demand: "Very High", trend: "+4.5% YoY",
+    region: "West Midlands", avgPrice: 215000, avgRent: 900, yield: 5.0,
     hmoViable: true, brrrViable: true, packagingViable: true,
-    avgDiscount: "8–14%", refurbCost: "£18k–£35k", agentCount: 60,
+    avgDiscount: "8–14%", refurbCost: "£18k–£35k",
     notes: "Strong investor demand. High HMO licensing activity. Focus on B suburbs (Bournville, Bearwood, Handsworth) for best BRRR deals. Article 4 applies in city centre — check before packaging HMOs.",
     postcodes: ["B1", "B3", "B11", "B12", "B21"],
   },
   "Nottingham": {
-    region: "East Midlands", avgPrice: 185000, avgRent: 825, yield: 5.3, demand: "High", trend: "+3.8% YoY",
+    region: "East Midlands", avgPrice: 185000, avgRent: 825, yield: 5.3,
     hmoViable: true, brrrViable: true, packagingViable: true,
-    avgDiscount: "10–16%", refurbCost: "£15k–£28k", agentCount: 35,
+    avgDiscount: "10–16%", refurbCost: "£15k–£28k",
     notes: "Large student and young professional population. HMO demand is strong near Trent University. Some of the best BRRR numbers in the East Midlands. Avoid flood risk zones (check Environment Agency).",
     postcodes: ["NG1", "NG3", "NG5", "NG7", "NG9"],
   },
   "Derby": {
-    region: "East Midlands", avgPrice: 175000, avgRent: 775, yield: 5.3, demand: "High", trend: "+3.2% YoY",
+    region: "East Midlands", avgPrice: 175000, avgRent: 775, yield: 5.3,
     hmoViable: true, brrrViable: true, packagingViable: true,
-    avgDiscount: "10–18%", refurbCost: "£14k–£26k", agentCount: 28,
+    avgDiscount: "10–18%", refurbCost: "£14k–£26k",
     notes: "Lower entry prices than Nottingham. Rolls-Royce and Toyota employment base drives strong rental demand. Less competition from other sourcers. Good area for beginners to source their first deal.",
     postcodes: ["DE1", "DE3", "DE22", "DE23", "DE24"],
   },
   "Wolverhampton": {
-    region: "West Midlands", avgPrice: 165000, avgRent: 750, yield: 5.5, demand: "High", trend: "+4.1% YoY",
+    region: "West Midlands", avgPrice: 165000, avgRent: 750, yield: 5.5,
     hmoViable: false, brrrViable: true, packagingViable: true,
-    avgDiscount: "12–20%", refurbCost: "£16k–£30k", agentCount: 22,
+    avgDiscount: "12–20%", refurbCost: "£16k–£30k",
     notes: "Excellent BRRR numbers. More motivated sellers than Birmingham due to market conditions. Lower GDVs but also lower entry cost. Avoid WV10 for HMOs — enforcement is active.",
     postcodes: ["WV1", "WV2", "WV4", "WV10", "WV11"],
   },
   "Leicester": {
-    region: "East Midlands", avgPrice: 210000, avgRent: 875, yield: 5.0, demand: "High", trend: "+3.5% YoY",
+    region: "East Midlands", avgPrice: 210000, avgRent: 875, yield: 5.0,
     hmoViable: true, brrrViable: true, packagingViable: true,
-    avgDiscount: "8–13%", refurbCost: "£17k–£32k", agentCount: 30,
+    avgDiscount: "8–13%", refurbCost: "£17k–£32k",
     notes: "Growing tech sector driving rental demand. Strong mix of student and professional renters. LE2 and LE3 are best for BRRR. HMO demand strong near De Montfort University.",
     postcodes: ["LE1", "LE2", "LE3", "LE4", "LE5"],
   },
   "Sheffield": {
-    region: "Yorkshire", avgPrice: 195000, avgRent: 825, yield: 5.1, demand: "High", trend: "+3.9% YoY",
+    region: "Yorkshire", avgPrice: 195000, avgRent: 825, yield: 5.1,
     hmoViable: true, brrrViable: true, packagingViable: true,
-    avgDiscount: "9–15%", refurbCost: "£16k–£30k", agentCount: 40,
+    avgDiscount: "9–15%", refurbCost: "£16k–£30k",
     notes: "Two large universities create massive HMO demand. S10 and S11 are student-heavy — great for HMO. City-wide regeneration ongoing. Steelworks regeneration areas to watch for future capital growth.",
     postcodes: ["S1", "S3", "S10", "S11", "S13"],
   },
   "Manchester": {
-    region: "North West", avgPrice: 255000, avgRent: 1100, yield: 5.2, demand: "Very High", trend: "+5.1% YoY",
+    region: "North West", avgPrice: 255000, avgRent: 1100, yield: 5.2,
     hmoViable: true, brrrViable: false, packagingViable: true,
-    avgDiscount: "5–10%", refurbCost: "£20k–£45k", agentCount: 80,
+    avgDiscount: "5–10%", refurbCost: "£20k–£45k",
     notes: "High demand but also high competition. BRRR is harder due to strong prices and limited below-market deals. Better as a packaging market. Salford and parts of Oldham offer better numbers than city centre.",
     postcodes: ["M1", "M4", "M14", "M15", "M21"],
   },
@@ -104,9 +104,36 @@ export default function AcademyAreaResearchPage() {
       <div style={{ maxWidth: 1000, margin: "0 auto", padding: "32px 24px" }}>
         <p style={{ fontSize: 11, color: "#d4af37", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Members Only Tool</p>
         <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 6 }}>Area Research Tool</h1>
-        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 28 }}>
-          Sourcer-focused market intelligence. Which areas work for which strategy — and why.
+        <p style={{ color: "rgba(255,255,255,0.62)", fontSize: 14, marginBottom: 16 }}>
+          Sourcer-focused orientation. Which areas suit which strategy — and why.
         </p>
+
+        {/*
+          This page was presenting editorial judgement as measurement: prices,
+          rents, yields, a demand rating, a "+4.5% YoY" trend and an agent count,
+          all typed in by hand and rendered in gold like readings. The demand,
+          trend and agent figures are gone. What remains is a starting point for
+          a course, and it now says so rather than implying it was measured.
+        */}
+        <div
+          style={{
+            border: "1px solid rgba(212,175,55,0.35)",
+            background: "rgba(212,175,55,0.08)",
+            borderRadius: 12,
+            padding: "12px 16px",
+            marginBottom: 28,
+            fontSize: 13,
+            lineHeight: 1.6,
+            color: "rgba(255,255,255,0.78)",
+          }}
+        >
+          <strong style={{ color: "#d4af37" }}>These are orientation figures, not market data.</strong>{" "}
+          Prices, rents and yields here are hand-written guides for choosing where to start — they were
+          not measured, and they are not current. For real figures on a specific place, use{" "}
+          <Link href="/ask" style={{ color: "#d4af37" }}>Ask PropertyVault</Link> or the{" "}
+          <Link href="/calculators/deal-analyser" style={{ color: "#d4af37" }}>Deal Analyser</Link>,
+          which read HM Land Registry and the planning registers directly.
+        </div>
 
         {/* Area selector */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
@@ -138,11 +165,10 @@ export default function AcademyAreaResearchPage() {
                 { label: "Avg Price", value: "£" + area.avgPrice.toLocaleString() },
                 { label: "Avg Monthly Rent", value: "£" + area.avgRent.toLocaleString() },
                 { label: "Gross Yield", value: area.yield.toFixed(1) + "%" },
-                { label: "Rental Demand", value: area.demand },
-                { label: "Price Trend", value: area.trend },
+                // A demand rating, a "+4.5% YoY" trend and a count of active
+                // agents used to sit here. Nobody measured any of the three.
                 { label: "Avg BMV Discount", value: area.avgDiscount },
                 { label: "Typical Refurb", value: area.refurbCost },
-                { label: "Active Agents", value: area.agentCount + "+" },
               ].map(s => (
                 <div key={s.label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 10, padding: "10px 12px" }}>
                   <p style={{ fontSize: 10, color: "rgba(255,255,255,0.58)", marginBottom: 3 }}>{s.label}</p>
