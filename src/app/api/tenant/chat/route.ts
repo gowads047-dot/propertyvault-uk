@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { boundConversation } from "@/lib/ai-input";
+import { RULES, guardAI } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import Anthropic from "@anthropic-ai/sdk";
 import { REPLY_TO } from "@/lib/site";
@@ -74,11 +76,21 @@ ${issueList}`;
 }
 
 export async function POST(req: Request) {
+  const limited = await guardAI(req, RULES.chatPerCaller, RULES.chatGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   try {
     const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
-    const { token, history, userInput } = await req.json();
+    const body = await req.json();
+    const { token } = body;
 
-    if (!token || !userInput) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    const bounded = boundConversation(body);
+    if (!token || !bounded.ok) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
+    const { userInput, history } = bounded;
 
     const { data: invite } = await supabase
       .from("tenant_invites")

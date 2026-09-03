@@ -112,7 +112,61 @@ export const RULES = {
    * the line that actually bounds the bill.
    */
   aiVerdictGlobal: { name: "ai-verdict-global", limit: 2_000, windowSeconds: 86_400 },
+
+  /**
+   * The conversational routes. Higher per-caller than the verdict because a
+   * conversation is many turns by design, and someone mid-flow through a
+   * property setup should not hit a wall.
+   */
+  chatPerCaller: { name: "ai-chat", limit: 60, windowSeconds: 3600 },
+  chatGlobal: { name: "ai-chat-global", limit: 5_000, windowSeconds: 86_400 },
+
+  /**
+   * Document and image extraction. Tighter, because a vision call on a
+   * multi-page scan is the most expensive request this app can make, and
+   * nobody legitimately uploads thirty documents an hour.
+   */
+  visionPerCaller: { name: "ai-vision", limit: 20, windowSeconds: 3600 },
+  visionGlobal: { name: "ai-vision-global", limit: 1_000, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
+
+/**
+ * The guard every AI route puts in front of a paid call.
+ *
+ * Written once because it was written zero times: /api/deal-ai-verdict was
+ * closed when the limiter was built, and five other routes that call Anthropic
+ * on the same key — two chats and three document extractors — were left open,
+ * unauthenticated and unmetered. A helper makes adding the guard a three-line
+ * change, which is the difference between it being done everywhere and being
+ * done once.
+ *
+ * Returns null when the request may proceed, or the response to send back.
+ */
+export async function guardAI(
+  request: Request,
+  perCaller: RateLimitRule,
+  global: RateLimitRule,
+): Promise<{ status: number; error: string } | null> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  // No store means no limiter, and an unmetered call to a paid API is the
+  // thing this exists to prevent. Fail closed, as consume() already does.
+  if (!url || !key) {
+    return { status: 503, error: "This is temporarily unavailable." };
+  }
+
+  const { allowed, results } = await consumeAll(supabaseStore(url, key), [
+    { rule: perCaller, caller: callerKey(request.headers) },
+    { rule: global, caller: "all" },
+  ]);
+  if (allowed) return null;
+
+  const degraded = results.some(r => r.degraded);
+  return degraded
+    ? { status: 503, error: "This is temporarily unavailable." }
+    : { status: 429, error: "Too many requests. Try again shortly." };
+}
 
 /**
  * The Postgres-backed store. Requires the function in
