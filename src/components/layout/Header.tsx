@@ -53,8 +53,22 @@ export function Header() {
         }}
       />
 
+      {/*
+        Only the scroll polish animates.
+
+        This was `transition-all`, which meant background-color and color were
+        transitioned too — so when the theme script adds `dark` at load, the
+        header animated from the light colour to the dark one instead of
+        starting dark. That is a 300ms white bar across the top of every page
+        in dark mode, and it is why the header photographs white: a screenshot
+        catches the transition at its start, and in any context where frames do
+        not run it never leaves it.
+
+        Shadow, blur and border are what should ease as you scroll. The theme
+        colours should simply be the theme's colours.
+      */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 transition-[box-shadow,border-color,backdrop-filter] duration-300 ${
           scrolled
             ? "bg-white/98 backdrop-blur-xl shadow-sm border-b border-navy-100/30"
             : "bg-white border-b border-navy-100/50"
