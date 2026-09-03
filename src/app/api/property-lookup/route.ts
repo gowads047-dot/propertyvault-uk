@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 
 function parsePropertyHtml(
   html: string,
@@ -133,6 +134,11 @@ function parsePropertyHtml(
 }
 
 export async function GET(request: Request) {
+  const limited = await rateGuard(request, RULES.lookupPerCaller, RULES.lookupGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const rawUrl = new URL(request.url).searchParams.get("url") ?? "";
 
   const rmMatch = rawUrl.match(/rightmove\.co\.uk\/properties\/(\d+)/);

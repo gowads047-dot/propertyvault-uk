@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { normaliseSoldDate } from "@/lib/agent/area";
 
 // ONS Private Rental Market Statistics 2024 — median monthly rents by region & bedrooms
@@ -59,6 +60,11 @@ async function fetchWithTimeout(url: string, options: RequestInit & { next?: { r
 }
 
 export async function GET(request: Request) {
+  const limited = await rateGuard(request, RULES.lookupPerCaller, RULES.lookupGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const { searchParams } = new URL(request.url);
   const raw = searchParams.get("postcode") ?? "";
   const postcode = raw.replace(/\s+/g, "").toUpperCase();
