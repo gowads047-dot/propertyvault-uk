@@ -1,29 +1,19 @@
 import { NextResponse } from "next/server";
+import { getVerifiedUser } from "@/lib/server-auth";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-05-27.dahlia" });
 
-  // Auth: get session from cookie
-  const cookieStore = await cookies();
-  const supabaseAuth = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll: () => cookieStore.getAll(),
-        setAll: () => {},
-      },
-    }
-  );
-  const { data: { session } } = await supabaseAuth.auth.getSession();
-  if (!session?.user) {
+  // Verified against the auth server. This id selects whose billing
+  // portal is opened, so taking it on trust from a cookie would let a
+  // caller open somebody else's.
+  const user = await getVerifiedUser();
+  if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const userId = session.user.id;
+  const userId = user.id;
 
   // Service role client to look up customer ID
   const supabase = createClient(

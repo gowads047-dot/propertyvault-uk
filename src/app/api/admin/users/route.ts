@@ -1,20 +1,14 @@
 import { NextResponse } from "next/server";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { createClient } from "@supabase/supabase-js";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import { isAdmin } from "@/lib/admin";
 
 
 export async function GET() {
-  const cookieStore = await cookies();
-  const supabaseAuth = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} } }
-  );
-
-  const { data: { session } } = await supabaseAuth.auth.getSession();
-  if (!session?.user || !isAdmin(session.user.email)) {
+  // Verified against the auth server, not read out of the request cookie:
+  // this decides whether the service role key gets used.
+  const user = await getVerifiedUser();
+  if (!user || !isAdmin(user.email ?? undefined)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
