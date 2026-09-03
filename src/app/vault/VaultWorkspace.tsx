@@ -7,6 +7,9 @@ import { MaxOfferCard } from "@/components/property/MaxOfferCard";
 import { analyseDeal, lookupArea } from "@/lib/agent/tools";
 import { calculateMaximumOffer, explainBinding } from "@/lib/max-offer";
 import type { Evidence } from "@/lib/property";
+import {
+  dedupeEvidence, listVault, saveToVault, type SavedProperty,
+} from "@/lib/vault-client";
 import type { ScoreBand } from "@/lib/deal-score";
 
 /**
@@ -26,43 +29,6 @@ import type { ScoreBand } from "@/lib/deal-score";
 const gbp = (n: number) => `£${Math.round(n).toLocaleString("en-GB")}`;
 
 type Step = { label: string; done: boolean };
-
-/**
- * The vault token.
- *
- * A bearer credential for properties saved without an account: whoever holds
- * it owns them. It lives here rather than in a cookie so it is never attached
- * to a request that does not need it, and every access is wrapped because a
- * private window can throw on the first read rather than returning null.
- */
-const TOKEN_KEY = "pv_vault_token";
-
-function readToken(): string | null {
-  try {
-    const t = localStorage.getItem(TOKEN_KEY);
-    return t && /^[0-9a-f]{64}$/.test(t) ? t : null;
-  } catch {
-    return null;
-  }
-}
-
-function writeToken(token: string) {
-  try {
-    localStorage.setItem(TOKEN_KEY, token);
-  } catch {
-    // Storage refused. The property is still saved; it just cannot be
-    // recovered on a later visit, which the UI says rather than hides.
-  }
-}
-
-interface SavedProperty {
-  id: string;
-  postcode: string | null;
-  address: string | null;
-  asking_price: number | null;
-  updated_at: string;
-  pv_analysis?: { score: number | null; band: string | null; created_at: string }[];
-}
 
 type SaveState =
   | { kind: "idle" }
@@ -104,79 +70,51 @@ export function VaultWorkspace() {
   // What is already in the vault, so the page opens on the work rather than
   // on an empty form that forgets every visit.
   useEffect(() => {
-    const token = readToken();
-    if (!token) return;
-    fetch("/api/vault/property/", { headers: { "X-Vault-Token": token } })
-      .then(r => (r.ok ? r.json() : null))
-      .then(j => setSaved(j?.properties ?? []))
-      .catch(() => {});
+    void listVault().then(setSaved);
   }, []);
 
-  /**
-   * Persist what was just worked out.
-   *
-   * The evidence is keyed by field on the way in, because the API refuses the
-   * same field twice rather than letting send order decide which value wins —
-   * and the rows assembled here genuinely can collide, since the area lookup
-   * and the analysis both have something to say about the median sold price.
-   */
+  /** Persist what was just worked out. */
   async function persist(r: Result, price: number, monthlyRent: number, pc: string) {
     setSave({ kind: "saving" });
 
-    const byField = new Map<string, Record<string, unknown>>();
-    for (const e of r.evidence) byField.set(e.field, { ...e });
-    byField.set("monthly_rent", { field: "monthly_rent", state: "user", valueNum: monthlyRent, source: "you" });
-    byField.set("asking_price", { field: "asking_price", state: "user", valueNum: price, source: "you" });
-    if (r.areaMedian != null) {
-      byField.set("area_median_sold", {
-        field: "area_median_sold", state: "verified", valueNum: r.areaMedian,
-        source: "HM Land Registry Price Paid", method: r.areaNote ?? undefined,
-      });
-    }
-    for (const c of r.constraints) {
-      byField.set(`planning_${c.label.toLowerCase().replace(/[^a-z]+/g, "_")}`, {
-        field: `planning_${c.label.toLowerCase().replace(/[^a-z]+/g, "_")}`,
-        state: "verified",
-        valueText: c.entries.map(e => Object.values(e).filter(Boolean).join(" · ")).join("; "),
-        source: "planning.data.gov.uk",
-        method: c.matters,
-      });
-    }
+    const constraintEvidence: Evidence[] = r.constraints.map(c => ({
+      field: `planning_${c.label.toLowerCase().replace(/[^a-z]+/g, "_")}`,
+      state: "verified",
+      valueText: c.entries.map(e => Object.values(e).filter(Boolean).join(" · ")).join("; "),
+      source: "planning.data.gov.uk",
+      method: c.matters,
+    }));
 
-    try {
-      const res = await fetch("/api/vault/property/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          claimToken: readToken(),
-          property: { source: "postcode", postcode: pc || null, askingPrice: price },
-          evidence: [...byField.values()],
-          analysis: {
-            inputs: { askingPrice: price, monthlyRent, postcode: pc || null },
-            computed: r.analysis.data,
-            score: (r.analysis.data as { pvScore?: number }).pvScore,
-            band: (r.analysis.data as { band?: string }).band,
-          },
-        }),
-      });
-      const j = await res.json();
-      if (!res.ok) {
-        setSave({ kind: "error", message: j?.error ?? "Could not save that." });
-        return;
-      }
-      if (j.claimTokenIsNew) writeToken(j.claimToken);
-      // If storage refused the token, the row exists but this browser cannot
-      // find it again. Say so rather than promising a vault that is not there.
-      setSave({ kind: "saved", persistable: readToken() === j.claimToken });
+    const evidence = dedupeEvidence([
+      ...r.evidence,
+      { field: "monthly_rent", state: "user", valueNum: monthlyRent, source: "you" },
+      { field: "asking_price", state: "user", valueNum: price, source: "you" },
+      ...(r.areaMedian != null
+        ? [{
+            field: "area_median_sold", state: "verified" as const, valueNum: r.areaMedian,
+            source: "HM Land Registry Price Paid", method: r.areaNote,
+          }]
+        : []),
+      ...constraintEvidence,
+    ]);
 
-      const token = readToken();
-      if (token) {
-        const list = await fetch("/api/vault/property/", { headers: { "X-Vault-Token": token } });
-        if (list.ok) setSaved((await list.json()).properties ?? []);
-      }
-    } catch {
-      setSave({ kind: "error", message: "Could not reach the vault." });
+    const out = await saveToVault({
+      property: { source: "postcode", postcode: pc || null, askingPrice: price },
+      evidence,
+      analysis: {
+        inputs: { askingPrice: price, monthlyRent, postcode: pc || null },
+        computed: r.analysis.data,
+        score: (r.analysis.data as { pvScore?: number }).pvScore,
+        band: (r.analysis.data as { band?: string }).band,
+      },
+    });
+
+    if (!out.ok) {
+      setSave({ kind: "error", message: out.error ?? "Could not save that." });
+      return;
     }
+    setSave({ kind: "saved", persistable: out.persistable });
+    setSaved(await listVault());
   }
 
   async function vault(e: React.FormEvent) {

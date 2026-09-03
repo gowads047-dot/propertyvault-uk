@@ -4,6 +4,8 @@ import { useRef, useState } from "react";
 import { AgentProse } from "@/components/property/AgentProse";
 import { AgentStepCard, type StepView } from "@/components/property/AgentStepCard";
 import { trimForRequest } from "@/lib/agent/render";
+import { dedupeEvidence, derivePropertyFromSteps, deriveScore, saveToVault } from "@/lib/vault-client";
+import type { Evidence } from "@/lib/property";
 
 /**
  * Ask PropertyVault.
@@ -21,6 +23,8 @@ interface Turn {
   text: string;
   steps?: StepView[];
   truncated?: boolean;
+  /** Null when the question was not about a property worth keeping. */
+  vaulted?: string | null;
 }
 
 /** Openers that show what this does differently, rather than what a chat box does. */
@@ -71,11 +75,44 @@ export function AskAgent() {
         return;
       }
 
-      const reply = body as { text: string; steps: StepView[]; truncated: boolean };
+      const reply = body as {
+        text: string; steps: StepView[]; evidence?: Evidence[]; truncated: boolean;
+      };
+      const steps = reply.steps ?? [];
       setTurns([
         ...next,
-        { role: "assistant", text: reply.text, steps: reply.steps ?? [], truncated: reply.truncated },
+        { role: "assistant", text: reply.text, steps, truncated: reply.truncated },
       ]);
+
+      // A question the agent answered about a real place is worth keeping, so
+      // asking builds a vault rather than evaporating. A question about tax
+      // with no property identifies nothing, and saves nothing.
+      const property = derivePropertyFromSteps(steps);
+      if (property) {
+        const { score, band } = deriveScore(steps);
+        const out = await saveToVault({
+          property,
+          evidence: dedupeEvidence(reply.evidence ?? []),
+          analysis: {
+            inputs: { question: text },
+            computed: Object.fromEntries(steps.filter(s => s.ok && s.data).map(s => [s.tool, s.data])),
+            score,
+            band,
+          },
+        });
+        setTurns(t => t.map((turn, i) =>
+          i === t.length - 1
+            ? {
+                ...turn,
+                vaulted: out.ok
+                  ? out.persistable
+                    ? `Saved ${property.postcode} to your vault.`
+                    : `Saved ${property.postcode}, but this browser would not store your vault key.`
+                  : null,
+              }
+            : turn,
+        ));
+      }
     } catch {
       setError("Could not reach the agent. Check your connection and try again.");
     } finally {
@@ -135,6 +172,15 @@ export function AskAgent() {
             {(t.steps ?? []).map((s, j) => (
               <AgentStepCard key={j} step={s} />
             ))}
+
+            {t.vaulted && (
+              <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
+                {t.vaulted}{" "}
+                <a href="/vault/" style={{ color: "var(--ink)", textDecoration: "underline" }}>
+                  Open the vault
+                </a>
+              </p>
+            )}
 
             {t.truncated && (
               <p style={{ margin: 0, fontSize: "0.8125rem", color: "var(--state-estimated)" }}>
