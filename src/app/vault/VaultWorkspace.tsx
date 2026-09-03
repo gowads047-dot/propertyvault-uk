@@ -507,7 +507,7 @@ function VaultList({ properties }: { properties: SavedProperty[] }) {
 
       <p style={{ margin: "0.9rem 0 0", fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
         These are held against a key stored in this browser, not an account. Clear your site data and
-        they are gone.
+        they are gone — and a property nobody comes back to is deleted after 90 days.
       </p>
     </section>
   );

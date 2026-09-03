@@ -19,6 +19,10 @@
     {
       "path": "/api/notifications/reel-daily",
       "schedule": "0 18 * * *"
+    },
+    {
+      "path": "/api/vault/purge",
+      "schedule": "0 3 * * 0"
     }
   ]
 }

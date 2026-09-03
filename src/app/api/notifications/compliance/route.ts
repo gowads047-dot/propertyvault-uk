@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
 
@@ -6,8 +7,7 @@ import { REPLY_TO } from "@/lib/site";
 // Set up a Vercel cron in vercel.json: { "crons": [{ "path": "/api/notifications/compliance", "schedule": "0 8 * * *" }] }
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

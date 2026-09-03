@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
+import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
 
 export async function POST(req: Request) {
-  // Verify cron secret
-  const auth = req.headers.get("authorization");
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
