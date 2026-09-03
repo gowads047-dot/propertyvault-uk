@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
 
@@ -6,6 +7,11 @@ const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env
 
 // POST — create a new issue
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = sb();
   const { token, title, description, category, priority, attachments } = await req.json();
   if (!token || !title) return NextResponse.json({ error: "Missing fields" }, { status: 400 });

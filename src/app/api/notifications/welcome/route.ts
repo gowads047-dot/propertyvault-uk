@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
+import { validRecipient } from "@/lib/email-input";
 import { REPLY_TO } from "@/lib/site";
 
 const RESEND_KEY = process.env.RESEND_API_KEY;
@@ -133,17 +135,23 @@ function subscriptionConfirmHtml(name: string, platform: string, amount: string)
 }
 
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   try {
     const { email, name, type, platform } = await req.json();
-    if (!email || !type) return NextResponse.json({ error: "email and type required" }, { status: 400 });
+    const recipient = validRecipient(email);
+    if (!recipient || !type) return NextResponse.json({ error: "email and type required" }, { status: 400 });
 
     if (type === "rentura_welcome") {
-      await sendEmail(email, "Welcome to Rentura™ — your landlord OS is ready", renturaWelcomeHtml(name || ""));
+      await sendEmail(recipient, "Welcome to Rentura™ — your landlord OS is ready", renturaWelcomeHtml(name || ""));
     } else if (type === "academy_welcome") {
-      await sendEmail(email, "Welcome to PropertyVault Academy — your courses are ready", academyWelcomeHtml(name || ""));
+      await sendEmail(recipient, "Welcome to PropertyVault Academy — your courses are ready", academyWelcomeHtml(name || ""));
     } else if (type === "subscription_confirm") {
       const amount = platform === "rentura" ? "£9.99" : "£14.99";
-      await sendEmail(email, `Subscription confirmed — ${platform === "rentura" ? "Rentura™" : "PropertyVault Academy"}`, subscriptionConfirmHtml(name || "", platform || "academy", amount));
+      await sendEmail(recipient, `Subscription confirmed — ${platform === "rentura" ? "Rentura™" : "PropertyVault Academy"}`, subscriptionConfirmHtml(name || "", platform || "academy", amount));
     } else {
       return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }

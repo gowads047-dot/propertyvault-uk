@@ -51,11 +51,19 @@ beforeEach(() => {
   send.mockReset().mockResolvedValue({ error: null });
   process.env.NEXT_PUBLIC_SUPABASE_URL = "https://stub.supabase.co";
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "stub-anon-key";
+  // The rate limiter reads its counter through PostgREST with the service key,
+  // and fails closed when it cannot. Without this the route refuses every
+  // request with a 503 and none of the tests below reach the code they test.
+  process.env.SUPABASE_SERVICE_ROLE_KEY = "stub-service-key";
   process.env.RESEND_API_KEY = "re_stub_key";
+  // One use of the hourly allowance, so the limiter permits the request.
+  vi.stubGlobal("fetch", vi.fn(async () => new Response("1", { status: 200 })));
 });
 
 afterEach(() => {
+  vi.unstubAllGlobals();
   delete process.env.RESEND_API_KEY;
+  delete process.env.SUPABASE_SERVICE_ROLE_KEY;
 });
 
 describe("the enquiry is recorded before it is emailed", () => {

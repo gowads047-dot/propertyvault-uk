@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 
 /**
  * Every route that spends money must meter itself.
@@ -28,14 +28,24 @@ function routeFiles(dir: string): string[] {
   return out;
 }
 
+/** Sends email on our behalf, from our domain. */
+function sendsEmail(src: string): boolean {
+  return /from "resend"|new Resend\(|resend\.emails\.send|api\.resend\.com/.test(src);
+}
+
 /** Calls a paid model API. */
 function callsAnthropic(src: string): boolean {
   return /@anthropic-ai\/sdk|new Anthropic\(|anthropic\.messages\.create/.test(src);
 }
 
+/** Proves who the caller is, which is stronger than bounding how often. */
+function isAuthenticated(src: string): boolean {
+  return /authorizeCron\(|webhooks\.constructEvent\(/.test(src);
+}
+
 /** Has something in front of the call that bounds how often it happens. */
 function isMetered(src: string): boolean {
-  return /guardAI\(|consumeAll\(/.test(src);
+  return /rateGuard\(|consumeAll\(/.test(src);
 }
 
 describe("routes that spend money", () => {
@@ -49,7 +59,7 @@ describe("routes that spend money", () => {
     const unmetered = files
       .filter(f => callsAnthropic(readFileSync(f, "utf8")))
       .filter(f => !isMetered(readFileSync(f, "utf8")))
-      .map(f => f.slice(f.indexOf("api")).replace(/\\/g, "/"));
+      .map(f => f.slice(f.indexOf("api")).split(sep).join("/"));
 
     expect(unmetered, `unmetered AI routes:\n${unmetered.join("\n")}`).toEqual([]);
   });
@@ -59,13 +69,37 @@ describe("routes that spend money", () => {
     expect(withAI.length).toBeGreaterThanOrEqual(5);
   });
 
+  /**
+   * The exposure on an email route is not the send quota, it is the sending
+   * domain: an open endpoint that puts mail into strangers' inboxes from
+   * info@propertyvaultuk.co.uk gets that domain blocklisted, and a reputation
+   * is far harder to get back than a bill.
+   *
+   * Two exemptions, both because they authenticate rather than meter, which is
+   * the stronger check: a cron route carries the shared secret, and the Stripe
+   * webhook verifies a signature over the body.
+   */
+  it("meters every route that sends email", () => {
+    const unmetered = files
+      .map(f => [f, readFileSync(f, "utf8")] as const)
+      .filter(([, src]) => sendsEmail(src))
+      .filter(([, src]) => !isMetered(src) && !isAuthenticated(src))
+      .map(([f]) => f.slice(f.indexOf("api")).split(sep).join("/"));
+
+    expect(unmetered, `unmetered email routes: ${unmetered.join(", ")}`).toEqual([]);
+  });
+
+  it("actually detects an email route, so the filter is not matching nothing", () => {
+    expect(files.filter(f => sendsEmail(readFileSync(f, "utf8"))).length).toBeGreaterThanOrEqual(5);
+  });
+
   // The guard has to run before the body is read, or a large upload is paid
   // for in bandwidth and parsing before it is refused.
   it("puts the guard before the request body is parsed", () => {
     for (const f of files) {
       const src = readFileSync(f, "utf8");
-      if (!callsAnthropic(src) || !src.includes("guardAI(")) continue;
-      const guard = src.indexOf("guardAI(");
+      if (!callsAnthropic(src) || !src.includes("rateGuard(")) continue;
+      const guard = src.indexOf("rateGuard(");
       const parse = src.search(/await req\.(json|formData)\(\)/);
       if (parse >= 0) {
         expect(guard, f).toBeLessThan(parse);

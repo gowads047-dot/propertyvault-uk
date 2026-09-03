@@ -45,6 +45,20 @@ const ALLOWED_NON_OURS = new Set([
   "sarah@example.com",
   "david@example.com",
   "contractor@example.com",
+  // Fixtures in email-input.test.ts. The valid ones prove an ordinary address
+  // survives normalisation; the malformed ones are the cases that must be
+  // refused, since the recipient used to come straight from the request body.
+  "Someone@Example.CO.UK",
+  "someone@example.co.uk",
+  "first.last+tag@sub.example.com",
+  "a@example.com",
+  "b@example.com",
+  "victim@example.com",
+  "a@-example.com",
+  "a@example-.com",
+  ".a@example.com",
+  "a.@example.com",
+  "a..b@example.com",
 ]);
 
 const EMAIL = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;

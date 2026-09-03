@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { REPLY_TO } from "@/lib/site";
@@ -35,6 +36,11 @@ const SOURCE_LABEL: Record<Source, string> = {
 };
 
 export async function POST(req: Request) {
+  const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();
