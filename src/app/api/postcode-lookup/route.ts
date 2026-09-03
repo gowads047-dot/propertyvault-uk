@@ -2,20 +2,20 @@ import { NextResponse } from "next/server";
 import { normaliseSoldDate } from "@/lib/agent/area";
 
 // ONS Private Rental Market Statistics 2024 — median monthly rents by region & bedrooms
-const RENTAL_BY_REGION: Record<string, { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number; demand: string; trend: string }> = {
-  "London":                     { studio: 1425, oneBed: 1825, twoBed: 2250, threeBed: 2800, fourBed: 3700, demand: "Very High", trend: "+4.2% YoY" },
-  "South East":                 { studio: 950,  oneBed: 1100, twoBed: 1350, threeBed: 1700, fourBed: 2200, demand: "High",      trend: "+3.8% YoY" },
-  "East of England":            { studio: 800,  oneBed: 950,  twoBed: 1150, threeBed: 1400, fourBed: 1800, demand: "High",      trend: "+3.5% YoY" },
-  "South West":                 { studio: 750,  oneBed: 850,  twoBed: 1050, threeBed: 1300, fourBed: 1650, demand: "Medium",    trend: "+3.1% YoY" },
-  "West Midlands":              { studio: 600,  oneBed: 700,  twoBed: 875,  threeBed: 1050, fourBed: 1350, demand: "High",      trend: "+4.5% YoY" },
-  "East Midlands":              { studio: 575,  oneBed: 650,  twoBed: 800,  threeBed: 950,  fourBed: 1200, demand: "Medium",    trend: "+3.9% YoY" },
-  "North West":                 { studio: 575,  oneBed: 700,  twoBed: 875,  threeBed: 1025, fourBed: 1300, demand: "High",      trend: "+4.8% YoY" },
-  "Yorkshire and The Humber":   { studio: 525,  oneBed: 625,  twoBed: 750,  threeBed: 900,  fourBed: 1150, demand: "Medium",    trend: "+3.6% YoY" },
-  "North East":                 { studio: 475,  oneBed: 550,  twoBed: 675,  threeBed: 800,  fourBed: 1000, demand: "Medium",    trend: "+3.2% YoY" },
-  "Wales":                      { studio: 525,  oneBed: 625,  twoBed: 775,  threeBed: 925,  fourBed: 1150, demand: "Medium",    trend: "+3.4% YoY" },
-  "Scotland":                   { studio: 650,  oneBed: 775,  twoBed: 975,  threeBed: 1175, fourBed: 1500, demand: "High",      trend: "+5.1% YoY" },
+const RENTAL_BY_REGION: Record<string, { studio: number; oneBed: number; twoBed: number; threeBed: number; fourBed: number }> = {
+  "London":                     { studio: 1425, oneBed: 1825, twoBed: 2250, threeBed: 2800, fourBed: 3700 },
+  "South East":                 { studio: 950,  oneBed: 1100, twoBed: 1350, threeBed: 1700, fourBed: 2200 },
+  "East of England":            { studio: 800,  oneBed: 950,  twoBed: 1150, threeBed: 1400, fourBed: 1800 },
+  "South West":                 { studio: 750,  oneBed: 850,  twoBed: 1050, threeBed: 1300, fourBed: 1650 },
+  "West Midlands":              { studio: 600,  oneBed: 700,  twoBed: 875,  threeBed: 1050, fourBed: 1350 },
+  "East Midlands":              { studio: 575,  oneBed: 650,  twoBed: 800,  threeBed: 950,  fourBed: 1200 },
+  "North West":                 { studio: 575,  oneBed: 700,  twoBed: 875,  threeBed: 1025, fourBed: 1300 },
+  "Yorkshire and The Humber":   { studio: 525,  oneBed: 625,  twoBed: 750,  threeBed: 900,  fourBed: 1150 },
+  "North East":                 { studio: 475,  oneBed: 550,  twoBed: 675,  threeBed: 800,  fourBed: 1000 },
+  "Wales":                      { studio: 525,  oneBed: 625,  twoBed: 775,  threeBed: 925,  fourBed: 1150 },
+  "Scotland":                   { studio: 650,  oneBed: 775,  twoBed: 975,  threeBed: 1175, fourBed: 1500 },
 };
-const DEFAULT_RENTAL = { studio: 600, oneBed: 700, twoBed: 875, threeBed: 1050, fourBed: 1350, demand: "Medium", trend: "+3.5% YoY" };
+const DEFAULT_RENTAL = { studio: 600, oneBed: 700, twoBed: 875, threeBed: 1050, fourBed: 1350 };
 
 // Map UK regions to our benchmark city keys
 const REGION_TO_CITY: Record<string, string> = {
@@ -180,8 +180,9 @@ export async function GET(request: Request) {
         twoBed: rentalData.twoBed,
         threeBed: rentalData.threeBed,
         fourBed: rentalData.fourBed,
-        demand: rentalData.demand,
-        trend: rentalData.trend,
+        // What these figures actually are, so the UI cannot present a regional
+        // median as a reading for this postcode.
+        basis: `Regional averages for ${region ?? "the UK"} — not a figure for this postcode.`,
         yieldRangeLow: yieldLow,
         yieldRangeHigh: yieldHigh,
       },
