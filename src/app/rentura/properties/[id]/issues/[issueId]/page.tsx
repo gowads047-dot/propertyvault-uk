@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
@@ -38,7 +39,7 @@ export default function LandlordIssuePage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) { router.push("/rentura/auth"); return; }
-    fetch(`/api/tenant/issues/${issueId}?landlordId=${user.id}`)
+    authFetch(`/api/tenant/issues/${issueId}`)
       .then(r => r.json())
       .then(d => { if (d.issue) { setIssue(d.issue); setUpdates(d.updates || []); } setLoading(false); });
   }, [issueId, user, authLoading, router]);

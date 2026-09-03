@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -377,7 +378,7 @@ export default function RenturaDashboard() {
         }));
 
         // Fetch tax year summary
-        fetch(`/api/rentura/tax-summary/?userId=${user!.id}`)
+        authFetch("/api/rentura/tax-summary/")
           .then(r => r.json())
           .then(data => { if (data.taxYear) setTaxSummary(data); })
           .catch(() => {});

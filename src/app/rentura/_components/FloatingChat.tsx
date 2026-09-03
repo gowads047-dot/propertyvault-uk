@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
@@ -152,7 +153,7 @@ export default function FloatingChat() {
       supabase.from("rentura_properties").select("id,address,nickname,property_type,bedrooms").eq("user_id", user.id),
       supabase.from("rentura_tenants").select("id,first_name,last_name,property_id,monthly_rent,status,phone,tenancy_start,move_in_date").eq("user_id", user.id),
       supabase.from("rentura_mortgages").select("*").eq("user_id", user.id).eq("is_current", true),
-      fetch(`/api/rentura/tax-summary/?userId=${user.id}`).then(r => r.json()).catch(() => null),
+      authFetch("/api/rentura/tax-summary/").then(r => r.json()).catch(() => null),
       supabase.from("tenant_issues").select("id,title,priority,tenant_name,tenant_phone,property_id").eq("landlord_user_id", user.id).neq("status", "resolved").is("landlord_first_response_at", null).limit(8),
       supabase.from("rentura_contacts").select("id,name,role,specialty,phone,whatsapp").eq("user_id", user.id).order("preferred", { ascending: false }),
     ]);

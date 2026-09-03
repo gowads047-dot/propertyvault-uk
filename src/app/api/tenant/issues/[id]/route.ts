@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
@@ -11,7 +12,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
-  const landlordId = searchParams.get("landlordId");
+  // The landlord id used to come from the query string, and the check was
+  // "does the issue belong to whoever you say you are" — which is not a
+  // check. It is verified against the auth server now.
+  const landlordId = token ? null : (await getVerifiedUser(req))?.id ?? null;
 
   const { data: issue } = await supabase.from("tenant_issues").select("*").eq("id", id).maybeSingle();
   if (!issue) return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -39,7 +43,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
 
   const supabase = sb();
   const { id } = await params;
-  const { token, landlordId, message, statusChange, attachments, authorName } = await req.json();
+  const { token, message, statusChange, attachments, authorName } = await req.json();
+  const landlordId = token ? null : (await getVerifiedUser(req))?.id ?? null;
   if (!message?.trim()) return NextResponse.json({ error: "Message required" }, { status: 400 });
 
   const { data: issue } = await supabase.from("tenant_issues").select("*").eq("id", id).maybeSingle();
