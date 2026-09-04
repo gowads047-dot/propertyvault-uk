@@ -38,6 +38,13 @@ export async function GET(req: Request) {
 
 // PATCH — mark invite as accepted with auth ID
 export async function PATCH(req: Request) {
+  // The GET was metered and this was not. It is the handler that writes —
+  // binding an auth id to an invite — so it is the one that mattered more.
+  const limited = await rateGuard(req, RULES.lookupPerCaller, RULES.lookupGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = sb();
   const { token, authId } = await req.json();
   if (!token || !authId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });

@@ -147,6 +147,40 @@ describe("routes that spend money", () => {
     expect(withStripe.length).toBeGreaterThanOrEqual(2);
   });
 
+  /**
+   * Per handler, not per file.
+   *
+   * Every assertion above reads a whole route file, so a file with a guarded
+   * GET and an unguarded PATCH looks guarded. That is exactly what
+   * /api/tenant/validate was: the read was metered and the write — binding an
+   * auth id to an invite — was not.
+   *
+   * Each exported handler is checked on its own body. That has its own failure
+   * mode, which is worth naming: a route guarding through a helper defined
+   * elsewhere in the file reads as unguarded here. /api/vault/property did,
+   * and rather than teach the test about helpers, that route now calls
+   * rateGuard directly like everything else — two ways to guard is how one of
+   * them gets forgotten.
+   */
+  it("guards every exported handler, not just every file", () => {
+    const gaps: string[] = [];
+
+    for (const f of files) {
+      const src = readFileSync(f, "utf8");
+      const name = f.slice(f.indexOf("api")).split(sep).join("/").replace("/route.ts", "");
+      const marks = [...src.matchAll(/export async function (GET|POST|PATCH|PUT|DELETE)\b/g)];
+
+      marks.forEach((m, i) => {
+        const body = src.slice(m.index, marks[i + 1]?.index ?? src.length);
+        if (!isMetered(body) && !isAuthenticated(body) && !body.includes("getVerifiedUser(")) {
+          gaps.push(`${m[1]} /${name}`);
+        }
+      });
+    }
+
+    expect(gaps, `unguarded handlers: ${gaps.join(", ")}`).toEqual([]);
+  });
+
   // The guard has to run before the body is read, or a large upload is paid
   // for in bandwidth and parsing before it is refused.
   it("puts the guard before the request body is parsed", () => {

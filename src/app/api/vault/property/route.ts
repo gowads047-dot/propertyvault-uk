@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { buildSave, type EvidenceRow } from "@/lib/vault-save";
 import { isValidClaimToken } from "@/lib/property";
-import { callerKey, consumeAll, supabaseStore, type RateLimitRule } from "@/lib/rate-limit";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 
 /**
  * Saving a property to the vault, and reading it back.
@@ -29,9 +29,6 @@ import { callerKey, consumeAll, supabaseStore, type RateLimitRule } from "@/lib/
  * user pressing a button twice, not a failure.
  */
 
-const SAVE_LIMIT: RateLimitRule = { name: "vault-save", limit: 60, windowSeconds: 3600 };
-const READ_LIMIT: RateLimitRule = { name: "vault-read", limit: 240, windowSeconds: 3600 };
-
 export const maxDuration = 30;
 
 function env() {
@@ -49,19 +46,13 @@ function headers(key: string, extra: Record<string, string> = {}) {
   };
 }
 
-async function limited(request: Request, url: string, key: string, rule: RateLimitRule) {
-  const { allowed } = await consumeAll(supabaseStore(url, key), [
-    { rule, caller: callerKey(request.headers) },
-  ]);
-  return !allowed;
-}
-
 export async function POST(request: Request) {
   const e = env();
   if (!e) return NextResponse.json({ error: "The vault is temporarily unavailable." }, { status: 503 });
 
-  if (await limited(request, e.url, e.key, SAVE_LIMIT)) {
-    return NextResponse.json({ error: "Too many saves. Try again later." }, { status: 429 });
+  const limited = await rateGuard(request, RULES.vaultSavePerCaller, RULES.vaultSaveGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
 
   let body: unknown;
@@ -134,8 +125,9 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Expected a vault token." }, { status: 400 });
   }
 
-  if (await limited(request, e.url, e.key, READ_LIMIT)) {
-    return NextResponse.json({ error: "Too many requests. Try again later." }, { status: 429 });
+  const limited = await rateGuard(request, RULES.vaultReadPerCaller, RULES.vaultReadGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
 
   const select =

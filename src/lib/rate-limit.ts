@@ -175,6 +175,12 @@ export const RULES = {
    */
   checkoutPerCaller: { name: "checkout", limit: 8, windowSeconds: 3600 },
   checkoutGlobal: { name: "checkout-global", limit: 400, windowSeconds: 86_400 },
+
+  /** Saving a property to the vault, and reading one back. */
+  vaultSavePerCaller: { name: "vault-save", limit: 60, windowSeconds: 3600 },
+  vaultSaveGlobal: { name: "vault-save-global", limit: 5_000, windowSeconds: 86_400 },
+  vaultReadPerCaller: { name: "vault-read", limit: 240, windowSeconds: 3600 },
+  vaultReadGlobal: { name: "vault-read-global", limit: 20_000, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
 
 /**
