@@ -142,6 +142,22 @@ export const RULES = {
    */
   emailPerCaller: { name: "email", limit: 10, windowSeconds: 3600 },
   emailGlobal: { name: "email-global", limit: 500, windowSeconds: 86_400 },
+
+  /**
+   * Proxying somebody else's free public service.
+   *
+   * /api/postcode-lookup fans out to postcodes.io, data.police.uk and HM Land
+   * Registry on every call. Unmetered, it is an open proxy in front of three
+   * services that owe us nothing — and the cost of abusing it is not paid by
+   * whoever abuses it. It is paid by every real user, when those services
+   * start refusing our egress addresses and the Deal Analyser stops finding
+   * anything.
+   *
+   * Generous per caller, because someone comparing a shortlist genuinely does
+   * a lot of lookups in an hour.
+   */
+  lookupPerCaller: { name: "lookup", limit: 120, windowSeconds: 3600 },
+  lookupGlobal: { name: "lookup-global", limit: 20_000, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
 
 /**

@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
+import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 
 const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 // GET — validate a token and return invite info
 export async function GET(req: Request) {
+  const limited = await rateGuard(req, RULES.lookupPerCaller, RULES.lookupGlobal);
+  if (limited) {
+    return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+
   const supabase = sb();
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
