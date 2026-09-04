@@ -53,6 +53,12 @@ const BAD = "#ef6461";
 const MUTED = "#97a5c5";
 const WHITE = "#ffffff";
 
+/** The same three states the site draws, in the same language. */
+const CHIP: Record<string, { label: string; colour: string }> = {
+  verified:    { label: "VERIFIED", colour: "#7ddf9a" },
+  "no-record": { label: "NO RECORD FOUND", colour: MUTED },
+  assumed:     { label: "ASSUMED", colour: WARN },
+};
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3);
 
 function format(value: number, render: ReelScene["render"]): string {
@@ -117,12 +123,34 @@ export function reelFrame(spec: ReelSpec, t: number, totalSeconds: number) {
         <div style={{ display: "flex", fontSize: "38px", fontWeight: 800, letterSpacing: "4px", color: MUTED }}>
           {scene.kicker}
         </div>
-        <div style={{
-          display: "flex", fontSize: `${Math.round(200 * scale)}px`, fontWeight: 800,
-          color: colour, lineHeight: 1, letterSpacing: "-4px",
-        }}>
-          {format(counted, scene.render)}
-        </div>
+        {scene.render === "text" ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div style={{
+              display: "flex", fontSize: `${Math.round(76 * scale)}px`, fontWeight: 800,
+              color: colour, lineHeight: 1.08, letterSpacing: "-2px",
+              maxWidth: `${CONTENT_WIDTH}px`,
+            }}>
+              {scene.text ?? ""}
+            </div>
+            {scene.state ? (
+              <div style={{
+                display: "flex", alignItems: "center", gap: "12px",
+                fontSize: "28px", fontWeight: 800, letterSpacing: "3px",
+                color: CHIP[scene.state].colour,
+              }}>
+                {CHIP[scene.state].label}
+                {scene.source ? <span style={{ display: "flex", fontWeight: 600, letterSpacing: "1px", color: MUTED }}>· {scene.source}</span> : null}
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div style={{
+            display: "flex", fontSize: `${Math.round(200 * scale)}px`, fontWeight: 800,
+            color: colour, lineHeight: 1, letterSpacing: "-4px",
+          }}>
+            {format(counted, scene.render)}
+          </div>
+        )}
         <div style={{ display: "flex", fontSize: "44px", fontWeight: 700, color: WHITE, maxWidth: `${CONTENT_WIDTH}px`, lineHeight: 1.25 }}>
           {scene.sub}
         </div>
