@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
@@ -114,7 +115,7 @@ export default function RenturaSettings() {
   }
 
   async function openPortal() {
-    const res = await fetch("/api/stripe/portal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ platform: "rentura" }) });
+    const res = await authFetch("/api/stripe/portal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ platform: "rentura" }) });
     const { url, error } = await res.json();
     if (url) window.location.href = url;
     else alert(error || "No billing account found. Subscribe first.");

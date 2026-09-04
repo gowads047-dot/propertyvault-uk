@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
@@ -76,7 +77,6 @@ export async function GET(req: Request) {
   const supabase = sb();
   const { searchParams } = new URL(req.url);
   const token = searchParams.get("token");
-  const landlordId = searchParams.get("landlordId");
   const propertyId = searchParams.get("propertyId");
 
   if (token) {
@@ -86,6 +86,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ issues: issues ?? [], property_id: invite.property_id, property_address: invite.property_address });
   }
 
+  // The landlord path is reached without a tenant token, so the caller
+  // has to prove who they are rather than name themselves.
+  const landlord = await getVerifiedUser(req);
+  const landlordId = landlord?.id;
   if (landlordId && propertyId) {
     const { data: issues } = await supabase
       .from("tenant_issues")

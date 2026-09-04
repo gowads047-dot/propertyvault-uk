@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
@@ -45,7 +46,7 @@ export default function RenturaAdmin() {
   useEffect(() => {
     if (!user || !admin) return;
     Promise.all([
-      fetch("/api/admin/users").then(r => r.json()).then(d => ({ data: d.users || [] })),
+      authFetch("/api/admin/users").then(r => r.json()).then(d => ({ data: d.users || [] })),
       supabase.from("rentura_subscriptions").select("*").order("created_at", { ascending: false }),
       supabase.from("rentura_waitlist").select("*").order("created_at", { ascending: false }),
     ]).then(([u, s, w]) => {

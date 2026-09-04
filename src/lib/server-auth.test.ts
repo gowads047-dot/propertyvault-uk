@@ -49,7 +49,21 @@ describe("who the server thinks the caller is", () => {
 
   it("uses the verified helper where a route needs a user", () => {
     const usesHelper = files.filter(f => readFileSync(f, "utf8").includes("getVerifiedUser("));
-    expect(usesHelper.length).toBeGreaterThanOrEqual(3);
+    expect(usesHelper.length).toBeGreaterThanOrEqual(6);
+  });
+
+  /**
+   * An identifier is not a credential. These routes read the caller's own id
+   * out of the query string and then queried on it with the service role key,
+   * so anyone holding somebody else's user id could ask for their records.
+   */
+  it("never takes the caller's own identity from a query string", () => {
+    const offenders = files
+      .map(f => [f, readFileSync(f, "utf8")] as const)
+      .filter(([, src]) => /searchParams\.get\("(userId|landlordId|user_id|ownerId)"\)/.test(src))
+      .map(([f]) => f.slice(f.indexOf("api")).split(sep).join("/"));
+
+    expect(offenders, `identity from a query string: ${offenders.join(", ")}`).toEqual([]);
   });
 
   // The admin list opens the service role key. The check that guards it has to

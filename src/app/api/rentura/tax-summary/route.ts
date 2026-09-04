@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { createClient } from "@supabase/supabase-js";
 
 function getTaxYear(today: Date): { start: string; end: string; label: string } {
@@ -18,9 +19,11 @@ const EVENT_EXPENSE_TYPES = new Set(["maintenance_cost"]);
 
 export async function GET(req: Request) {
   const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
-  const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId");
-  if (!userId) return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+  // The id used to come from the query string, so anyone holding a user
+  // id could read that person's income, expenses and property records.
+  const user = await getVerifiedUser(req);
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const userId = user.id;
 
   const { start, end, label } = getTaxYear(new Date());
 

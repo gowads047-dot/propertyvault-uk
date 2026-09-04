@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import Link from "next/link";
@@ -175,7 +176,7 @@ export default function AcademyDashboard() {
 
   async function openBillingPortal() {
     if (!memberData?.stripe_customer_id) return;
-    const res = await fetch("/api/stripe/portal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ customerId: memberData.stripe_customer_id }) });
+    const res = await authFetch("/api/stripe/portal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ customerId: memberData.stripe_customer_id }) });
     const { url } = await res.json();
     if (url) window.location.href = url;
   }

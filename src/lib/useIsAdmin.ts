@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 
 /**
  * Asks the server whether the signed-in user is the admin.
@@ -20,7 +21,7 @@ export function useIsAdmin(enabled = true): boolean | null {
     if (!enabled) return;
     let cancelled = false;
 
-    fetch("/api/admin/check")
+    authFetch("/api/admin/check")
       .then(r => (r.ok ? r.json() : { admin: false }))
       .then(d => {
         if (!cancelled) setAdmin(Boolean(d.admin));

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { authFetch } from "@/lib/auth-fetch";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -162,7 +163,7 @@ export default function PropertyPassport() {
       setCompliance(compRes.data ?? []);
       setMaintenance((maintRes.data ?? []) as RenturaMaintenance[]);
       // Load tenant-reported issues
-      fetch(`/api/tenant/issues?landlordId=${user!.id}&propertyId=${id}`)
+      authFetch(`/api/tenant/issues?propertyId=${id}`)
         .then(r => r.json())
         .then(d => setTenantIssues(d.issues ?? []));
       setLoading(false);
