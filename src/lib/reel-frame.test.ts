@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sceneAt, FPS, WIDTH, HEIGHT } from "./reel-frame";
+import { sceneAt, FPS, WIDTH, HEIGHT, SAFE_AREA } from "./reel-frame";
 import { CALENDAR, durationOf } from "./reel-calendar";
 
 describe("the canvas", () => {
@@ -7,6 +7,34 @@ describe("the canvas", () => {
     expect(WIDTH).toBe(1080);
     expect(HEIGHT).toBe(1920);
     expect(FPS).toBe(30);
+  });
+});
+
+/**
+ * The canvas was always 1080x1920. What was wrong is that the frame used all
+ * of it, while Instagram draws its own interface on top — so the progress bar
+ * sat under the header and the propertyvaultuk.co.uk mark sat under the
+ * caption, in all thirty videos. Rendering a frame with that interface drawn
+ * over it is what showed it; these numbers are what stop it coming back.
+ */
+describe("the part of the canvas Instagram actually shows", () => {
+  it("clears the header, the caption strip and the action rail", () => {
+    expect(SAFE_AREA.top).toBeGreaterThanOrEqual(250);
+    expect(SAFE_AREA.bottom).toBeGreaterThanOrEqual(420);
+    expect(SAFE_AREA.right).toBeGreaterThanOrEqual(180);
+    expect(SAFE_AREA.left).toBeGreaterThanOrEqual(60);
+  });
+
+  it("leaves enough room across for the widest value in the calendar", () => {
+    // £30,000 is the longest string any scene renders, at roughly 89px per
+    // character at the headline size.
+    expect(SAFE_AREA.contentWidth).toBe(WIDTH - SAFE_AREA.left - SAFE_AREA.right);
+    expect(SAFE_AREA.contentWidth).toBeGreaterThan(7 * 89);
+  });
+
+  it("still leaves a usable band of canvas between the margins", () => {
+    const usable = HEIGHT - SAFE_AREA.top - SAFE_AREA.bottom;
+    expect(usable).toBeGreaterThan(1000);
   });
 });
 
