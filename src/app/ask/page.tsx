@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AskAgent } from "./AskAgent";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { canonical } from "@/lib/site";
+import { canonical, ogImages } from "@/lib/site";
 
 const TITLE = "Ask PropertyVault — A Property Agent That Shows Its Working";
 const DESCRIPTION =
@@ -14,7 +14,12 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: canonical("/ask/") },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: canonical("/ask/") },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: canonical("/ask/"),
+    images: ogImages("Ask PropertyVault — a property agent that shows its working"),
+  },
 };
 
 export default function AskPage() {

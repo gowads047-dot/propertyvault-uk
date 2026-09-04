@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogImages } from "@/lib/site";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
     title: "Top 20 UK Buy-to-Let Postcodes 2025",
     description: "The 20 UK postcodes with the highest documented gross rental yields in 2025.",
     type: "article",
+    images: ogImages("The 20 UK postcodes with the highest documented gross rental yields"),
   },
 };
 

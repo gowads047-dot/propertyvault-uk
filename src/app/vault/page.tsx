@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { VaultWorkspace } from "./VaultWorkspace";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { canonical } from "@/lib/site";
+import { canonical, ogImages } from "@/lib/site";
 
 const TITLE = "Vault a Property — Score, Evidence and Maximum Offer";
 const DESCRIPTION =
@@ -14,7 +14,12 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: canonical("/vault/") },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: canonical("/vault/") },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: canonical("/vault/"),
+    images: ogImages("Vault a property — score, evidence and maximum offer"),
+  },
 };
 
 export default function VaultPage() {
