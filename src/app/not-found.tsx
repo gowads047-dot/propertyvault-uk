@@ -8,7 +8,8 @@ export default function NotFound() {
         <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Page Not Found</h1>
         <p className="text-navy-200 mb-8 max-w-md mx-auto">The page you&apos;re looking for doesn&apos;t exist or has been moved. Try one of the links below.</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-10">
-          <Link href="/" className="btn-primary">Back to Homepage →</Link>
+          {/* btn-gold, not btn-primary: primary is navy on a navy gradient. */}
+          <Link href="/" className="btn-gold">Back to Homepage →</Link>
           <Link href="/calculators" className="inline-flex items-center justify-center px-6 py-3 glass rounded-xl text-white font-semibold hover:bg-white/10 transition-all">Calculators</Link>
         </div>
         <div className="flex flex-wrap gap-3 justify-center text-sm">
