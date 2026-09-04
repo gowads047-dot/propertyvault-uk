@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
-import { REPLY_TO } from "@/lib/site";
+import { REPLY_TO, siteOrigin } from "@/lib/site";
 
 export async function POST(req: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-05-27.dahlia" });
@@ -160,7 +160,7 @@ export async function POST(req: Request) {
       ? new Date(trialSub.trial_end * 1000).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
       : "soon";
     const price = trialPlatform === "rentura" ? "£9.99/month" : "£14.99/month";
-    const dashboardUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${trialPlatform}/dashboard`;
+    const dashboardUrl = `${siteOrigin()}/${trialPlatform}/dashboard`;
 
     if (trialUserId) {
       const { data: authUser } = await supabase.auth.admin.getUserById(trialUserId);

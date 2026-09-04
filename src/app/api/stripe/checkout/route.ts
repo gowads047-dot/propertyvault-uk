@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { siteOrigin } from "@/lib/site";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
@@ -17,8 +18,8 @@ export async function POST(req: Request) {
         },
       ],
       metadata: { userId: userId || "" },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/academy/dashboard?success=1`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/academy?cancelled=1`,
+      success_url: `${siteOrigin()}/academy/dashboard?success=1`,
+      cancel_url: `${siteOrigin()}/academy?cancelled=1`,
       payment_method_collection: "always",
       subscription_data: {
         metadata: { userId: userId || "" },

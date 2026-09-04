@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getVerifiedUser } from "@/lib/server-auth";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
-import { REPLY_TO } from "@/lib/site";
+import { REPLY_TO, siteOrigin } from "@/lib/site";
 
 const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     const { data: landlordUser } = await supabase.auth.admin.getUserById(invite.landlord_user_id);
     const landlordEmail = landlordUser?.user?.email;
     if (landlordEmail) {
-      const dashUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/properties/${invite.property_id}?tab=maintenance`;
+      const dashUrl = `${siteOrigin()}/rentura/properties/${invite.property_id}?tab=maintenance`;
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },

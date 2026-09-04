@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
-import { REPLY_TO } from "@/lib/site";
+import { REPLY_TO, siteOrigin } from "@/lib/site";
 
 export async function POST(req: Request) {
   if (!authorizeCron(req)) {
@@ -61,10 +61,10 @@ export async function POST(req: Request) {
             <li>Save any tenant contact details</li>
           </ul>
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
-            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/rentura/subscribe" style="background:#0f1b2d;color:white;padding:13px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;">
+            <a href="${siteOrigin()}/rentura/subscribe" style="background:#0f1b2d;color:white;padding:13px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block;">
               Resubscribe — £9.99/mo →
             </a>
-            <a href="${process.env.NEXT_PUBLIC_SITE_URL}/rentura/dashboard" style="background:#f5f3ef;color:#0f1b2d;padding:13px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;border:1px solid #e8e4dd;display:inline-block;">
+            <a href="${siteOrigin()}/rentura/dashboard" style="background:#f5f3ef;color:#0f1b2d;padding:13px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;border:1px solid #e8e4dd;display:inline-block;">
               Download my data
             </a>
           </div>

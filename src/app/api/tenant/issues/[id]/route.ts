@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getVerifiedUser } from "@/lib/server-auth";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 import { createClient } from "@supabase/supabase-js";
-import { REPLY_TO } from "@/lib/site";
+import { REPLY_TO, siteOrigin } from "@/lib/site";
 
 const sb = () => createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
@@ -92,7 +92,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       const { data: landlordUser } = await supabase.auth.admin.getUserById(issue.landlord_user_id);
       const toEmail = landlordUser?.user?.email;
       if (toEmail) {
-        const url = `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/properties/${issue.property_id}?tab=maintenance`;
+        const url = `${siteOrigin()}/rentura/properties/${issue.property_id}?tab=maintenance`;
         await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
@@ -107,7 +107,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       }
     } else if (issue.tenant_email) {
       const { data: invite } = await supabase.from("tenant_invites").select("token").eq("email", issue.tenant_email).eq("property_id", issue.property_id).maybeSingle();
-      const tenantUrl = invite ? `${process.env.NEXT_PUBLIC_SITE_URL}/tenant/issues/${id}?token=${invite.token}` : `${process.env.NEXT_PUBLIC_SITE_URL}/tenant`;
+      const tenantUrl = invite ? `${siteOrigin()}/tenant/issues/${id}?token=${invite.token}` : `${siteOrigin()}/tenant`;
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { "Authorization": `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
