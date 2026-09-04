@@ -16,10 +16,34 @@ import type { ReelSpec, ReelScene } from "./reel-calendar";
 
 export const FPS = 30;
 
-/** 1080x1920. Instagram's own UI covers roughly the bottom 320px. */
+/**
+ * 1080x1920, and only the middle of it is actually visible.
+ *
+ * The canvas size was always right. What was wrong is that the frame used all
+ * of it, while Instagram draws its own interface on top: a header and status
+ * bar across the top, the caption, username and audio strip across the bottom,
+ * and the like/comment/share rail down the right.
+ *
+ * Rendering a frame with that interface drawn over it showed two things sitting
+ * entirely underneath it — the progress bar, and the propertyvaultuk.co.uk
+ * mark. The one element whose whole job is sending people to the site was
+ * invisible in every one of the thirty videos.
+ *
+ * These are Meta's published safe areas for a 1080x1920 Reel, with the right
+ * margin set to clear the action rail rather than the nominal edge.
+ */
 export const WIDTH = 1080;
 export const HEIGHT = 1920;
-const SAFE_BOTTOM = 320;
+const SAFE_TOP = 260;
+const SAFE_BOTTOM = 430;
+const SAFE_LEFT = 72;
+const SAFE_RIGHT = 200;
+/** Everything must fit between the left margin and the action rail. */
+const CONTENT_WIDTH = WIDTH - SAFE_LEFT - SAFE_RIGHT;
+
+export const SAFE_AREA = {
+  top: SAFE_TOP, bottom: SAFE_BOTTOM, left: SAFE_LEFT, right: SAFE_RIGHT, contentWidth: CONTENT_WIDTH,
+};
 
 const NAVY_DEEP = "#050912";
 const NAVY = "#0f1b36";
@@ -77,7 +101,7 @@ export function reelFrame(spec: ReelSpec, t: number, totalSeconds: number) {
       style={{
         display: "flex", flexDirection: "column", width: "100%", height: "100%",
         background: `linear-gradient(165deg, ${NAVY_DEEP} 0%, ${NAVY} 50%, #1a2e5a 100%)`,
-        padding: `88px 72px ${SAFE_BOTTOM}px`,
+        padding: `${SAFE_TOP}px ${SAFE_RIGHT}px ${SAFE_BOTTOM}px ${SAFE_LEFT}px`,
         justifyContent: "space-between", fontFamily: "sans-serif",
       }}
     >
@@ -99,11 +123,11 @@ export function reelFrame(spec: ReelSpec, t: number, totalSeconds: number) {
         }}>
           {format(counted, scene.render)}
         </div>
-        <div style={{ display: "flex", fontSize: "44px", fontWeight: 700, color: WHITE, maxWidth: "900px", lineHeight: 1.25 }}>
+        <div style={{ display: "flex", fontSize: "44px", fontWeight: 700, color: WHITE, maxWidth: `${CONTENT_WIDTH}px`, lineHeight: 1.25 }}>
           {scene.sub}
         </div>
         {scene.foot ? (
-          <div style={{ display: "flex", fontSize: "32px", color: MUTED, maxWidth: "900px", lineHeight: 1.3 }}>
+          <div style={{ display: "flex", fontSize: "32px", color: MUTED, maxWidth: `${CONTENT_WIDTH}px`, lineHeight: 1.3 }}>
             {scene.foot}
           </div>
         ) : null}

@@ -66,8 +66,8 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
   },
   ADMIN_EMAIL: {
     required: false,
-    enables: "The admin pages and /api/admin/users.",
-    withoutIt: "The gate denies everyone, deliberately and silently. There is no fallback by design.",
+    enables: "Naming a different admin than the address the site publishes.",
+    withoutIt: "Falls back to CONTACT_EMAIL, so the owner can sign in as that address and get through.",
   },
 
   STRIPE_SECRET_KEY: {
