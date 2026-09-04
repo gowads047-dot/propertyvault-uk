@@ -32,16 +32,42 @@ const FEATURES = [
 export default function AcademyPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
+  /**
+   * Join the waitlist.
+   *
+   * This used to fire the request without awaiting it, swallow any failure
+   * with `.catch(() => {})`, and set the success state unconditionally — so a
+   * rejected address, a rate limit or an outage all produced "You're on the
+   * list!" for someone who was not on the list. That is the same false success
+   * the guaranteed-rent form was fixed for, still live on a page whose only
+   * job is capturing the address.
+   */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) return;
-    fetch("/api/subscribe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: "Academy Waitlist", email: email.trim(), user_type: "academy_waitlist" }),
-    }).catch(() => {});
-    setSubmitted(true);
+    if (!email.trim() || busy) return;
+
+    setBusy(true);
+    setError("");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "Academy Waitlist", email: email.trim(), user_type: "academy_waitlist" }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(json.error ?? "That did not go through. Please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Could not reach us just then. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -94,11 +120,12 @@ export default function AcademyPage() {
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 focus:bg-white/15 transition-all" />
-              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
-                Notify Me →
+              <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
+                {busy ? "Joining…" : "Notify Me →"}
               </button>
             </form>
           )}
+          {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
           <p className="text-white/30 text-xs mt-3">No spam. Waitlist members get early-bird pricing locked in for life.</p>
         </div>
       </section>
@@ -227,9 +254,10 @@ export default function AcademyPage() {
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 transition-all" />
-              <button type="submit" className="bg-[#c9a84c] hover:bg-[#b8973b] text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
+              <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
             </form>
           )}
+          {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
           <div className="mt-10 pt-8 border-t border-white/10">
             <Link href="/calculators/deal-analyser" className="text-[#c9a84c] hover:underline text-sm">Use our free Deal Analyser while you wait →</Link>
           </div>
