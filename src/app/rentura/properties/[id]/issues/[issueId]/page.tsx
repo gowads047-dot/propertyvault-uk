@@ -50,10 +50,10 @@ export default function LandlordIssuePage() {
     if (!message.trim() || !user) return;
     setSending(true);
     const { data: sub } = await supabase.from("rentura_subscriptions").select("name").eq("user_id", user.id).maybeSingle();
-    const res = await fetch(`/api/tenant/issues/${issueId}`, {
+    const res = await authFetch(`/api/tenant/issues/${issueId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ landlordId: user.id, message, statusChange: statusChange || undefined, authorName: sub?.name || "Your landlord" }),
+      body: JSON.stringify({ message, statusChange: statusChange || undefined, authorName: sub?.name || "Your landlord" }),
     });
     const { update } = await res.json();
     if (update) {
