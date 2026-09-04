@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { siteOrigin } from "@/lib/site";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
@@ -17,8 +18,8 @@ export async function POST(req: Request) {
         },
       ],
       metadata: { userId: userId || "", platform: "rentura" },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/dashboard?success=1`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/rentura?cancelled=1`,
+      success_url: `${siteOrigin()}/rentura/dashboard?success=1`,
+      cancel_url: `${siteOrigin()}/rentura?cancelled=1`,
       payment_method_collection: "always",
       subscription_data: {
         metadata: { userId: userId || "", platform: "rentura" },

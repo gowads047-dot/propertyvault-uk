@@ -26,6 +26,23 @@ export function canonical(path = "/"): string {
 }
 
 /**
+ * The origin to send someone back to — Stripe redirects, links in email.
+ *
+ * Eleven call sites interpolated `process.env.NEXT_PUBLIC_SITE_URL` straight
+ * into a URL with no fallback. Unset, that produces
+ * "undefined/academy/dashboard?success=1", which Stripe rejects when the
+ * session is created — so an unset variable does not degrade checkout, it
+ * stops it. The email links would have pointed at "undefined/..." too.
+ *
+ * The environment variable still wins, so a preview deployment can point at
+ * itself. It just cannot produce a broken URL by being absent.
+ */
+export function siteOrigin(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  return fromEnv && /^https?:\/\//.test(fromEnv) ? fromEnv.replace(/\/+$/, "") : SITE_URL;
+}
+
+/**
  * Cities with a dedicated guaranteed-rent landing page.
  *
  * `slug` must match a directory under src/app/guaranteed-rent. Several pages

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { siteOrigin } from "@/lib/site";
 import { getVerifiedUser } from "@/lib/server-auth";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
@@ -51,8 +52,8 @@ export async function POST(req: Request) {
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: customerId,
       return_url: platform === "rentura"
-        ? `${process.env.NEXT_PUBLIC_SITE_URL}/rentura/settings`
-        : `${process.env.NEXT_PUBLIC_SITE_URL}/academy/dashboard`,
+        ? `${siteOrigin()}/rentura/settings`
+        : `${siteOrigin()}/academy/dashboard`,
     });
     return NextResponse.json({ url: portalSession.url });
   } catch (err) {
