@@ -158,6 +158,23 @@ export const RULES = {
    */
   lookupPerCaller: { name: "lookup", limit: 120, windowSeconds: 3600 },
   lookupGlobal: { name: "lookup-global", limit: 20_000, windowSeconds: 86_400 },
+
+  /**
+   * Creating a Stripe checkout session.
+   *
+   * These routes are deliberately open — the Academy and Rentura pages let
+   * somebody pay before they have an account, and the webhook links the
+   * payment up afterwards by email. Open is fine. Unbounded was not: every
+   * call created a live checkout session on our Stripe account, so anyone
+   * could generate them without limit, fill the dashboard with abandoned
+   * sessions and push us toward Stripe's own API limits, which is how a real
+   * customer's checkout would start failing.
+   *
+   * Low, because a real person who changes their mind and comes back tries
+   * this two or three times, not thirty.
+   */
+  checkoutPerCaller: { name: "checkout", limit: 8, windowSeconds: 3600 },
+  checkoutGlobal: { name: "checkout-global", limit: 400, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
 
 /**

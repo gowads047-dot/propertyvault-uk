@@ -119,6 +119,34 @@ describe("routes that spend money", () => {
     expect(unmetered, `unmetered proxy routes: ${unmetered.join(", ")}`).toEqual([]);
   });
 
+  /**
+   * Creating objects on somebody else's account.
+   *
+   * /api/stripe/checkout and /api/rentura/subscribe are deliberately open, so
+   * a visitor can pay before they have an account. But every call created a
+   * live Stripe checkout session, unbounded — anyone could generate them at
+   * will, bury the real ones in the dashboard, and push the account toward
+   * Stripe's own API limits, at which point a genuine customer's checkout
+   * starts failing.
+   *
+   * The webhook is exempt: it verifies a signature and creates nothing on its
+   * own initiative.
+   */
+  it("meters every route that creates a Stripe object", () => {
+    const unmetered = files
+      .map(f => [f, readFileSync(f, "utf8")] as const)
+      .filter(([, src]) => /stripe\.(checkout\.sessions|billingPortal\.sessions|customers)\.create\(/.test(src))
+      .filter(([, src]) => !isMetered(src) && !isAuthenticated(src) && !src.includes("getVerifiedUser("))
+      .map(([f]) => f.slice(f.indexOf("api")).split(sep).join("/"));
+
+    expect(unmetered, `unmetered Stripe routes: ${unmetered.join(", ")}`).toEqual([]);
+  });
+
+  it("actually detects a Stripe route, so the filter is not matching nothing", () => {
+    const withStripe = files.filter(f => /stripe\.[a-zA-Z.]+\.create\(/.test(readFileSync(f, "utf8")));
+    expect(withStripe.length).toBeGreaterThanOrEqual(2);
+  });
+
   // The guard has to run before the body is read, or a large upload is paid
   // for in bandwidth and parsing before it is refused.
   it("puts the guard before the request body is parsed", () => {
