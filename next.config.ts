@@ -10,14 +10,29 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" },
     ],
   },
+  /**
+   * Every destination ends with a slash, because trailingSlash is true above.
+   *
+   * Without it each redirect costs an extra hop: /landlord-hub/ went to
+   * /landlords, which Next then redirected to /landlords/ — three responses to
+   * serve one page. The two older entries were worse at four, because their
+   * sources have no trailing slash either. Verified against production, not
+   * inferred.
+   *
+   * Search engines do follow redirect chains, but each hop is a chance to lose
+   * a little of the ranking the old URL earned, and every one of these exists
+   * precisely to carry that ranking across.
+   *
+   * redirects.test.ts asserts the rule, so a future entry cannot reintroduce it.
+   */
   async redirects() {
     return [
       // Coming-soon lockdown — Academy only. Makan sub-routes stay reachable.
-      { source: "/academy/:path+", destination: "/academy", permanent: false },
+      { source: "/academy/:path+", destination: "/academy/", permanent: false },
       // Wrong calculator slug used in older content
-      { source: "/calculators/cashflow", destination: "/calculators/monthly-cashflow", permanent: true },
+      { source: "/calculators/cashflow", destination: "/calculators/monthly-cashflow/", permanent: true },
       // Old glossary URL
-      { source: "/property-glossary", destination: "/glossary", permanent: true },
+      { source: "/property-glossary", destination: "/glossary/", permanent: true },
 
       // Hub consolidation. /landlord-hub and /manage both tried to be the
       // landlord entry point and neither was linked as one; /landlords now is,
@@ -27,8 +42,8 @@ const nextConfig: NextConfig = {
       // /hub is deliberately NOT here. Despite the name it is the signed-in
       // dashboard that fans out to Rentura, Academy and Makan — redirecting it
       // would take a working account page away from every logged-in user.
-      { source: "/landlord-hub", destination: "/landlords", permanent: true },
-      { source: "/manage", destination: "/landlords", permanent: true },
+      { source: "/landlord-hub", destination: "/landlords/", permanent: true },
+      { source: "/manage", destination: "/landlords/", permanent: true },
     ];
   },
 };
