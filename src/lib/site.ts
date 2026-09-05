@@ -37,6 +37,22 @@ export function canonical(path = "/"): string {
  * The environment variable still wins, so a preview deployment can point at
  * itself. It just cannot produce a broken URL by being absent.
  */
+/**
+ * The share card, for a page that sets its own openGraph block.
+ *
+ * Next does not merge openGraph field by field: a page that declares the
+ * object gets exactly what it declares, and inherits none of the parent's
+ * remaining fields. So a page setting title, description and url — and
+ * nothing else — silently drops the site's image and appears in WhatsApp,
+ * LinkedIn and iMessage as a bare link.
+ *
+ * Four pages were doing that, including /ask, /vault, and the guaranteed-rent
+ * comparison page somebody would actually forward to a landlord.
+ */
+export function ogImages(alt: string): { url: string; width: number; height: number; alt: string }[] {
+  return [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt }];
+}
+
 export function siteOrigin(): string {
   const fromEnv = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   return fromEnv && /^https?:\/\//.test(fromEnv) ? fromEnv.replace(/\/+$/, "") : SITE_URL;
