@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { track, events } from "@/lib/analytics";
 import { DataState, EvidenceRow } from "@/components/property/DataState";
 import { PVScore } from "@/components/property/PVScore";
 import { MaxOfferCard } from "@/components/property/MaxOfferCard";
@@ -130,6 +131,7 @@ export function VaultWorkspace() {
     setError("");
     setResult(null);
     setSave({ kind: "idle" });
+    track(events.vaultStarted);
 
     // Progressive, because research takes a few seconds across several sources
     // and one indefinite spinner reads as broken.
@@ -209,6 +211,10 @@ export function VaultWorkspace() {
         noRecord,
       };
       setResult(built);
+      // The pair that gives the funnel its shape: how many people start an
+      // analysis against how many see one. A start on its own measures
+      // interest and never says whether the thing worked.
+      track(events.vaultCompleted, { score: (built.analysis.data as { pvScore?: number }).pvScore ?? -1 });
       // Saving is deliberately not awaited: the analysis is on screen either
       // way, and a slow write should not hold up the thing the user asked for.
       void persist(built, p, r, postcode.trim().toUpperCase());

@@ -5,6 +5,8 @@ import ApiForm from "@/components/forms/ApiForm";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ReadinessChip } from "@/components/services/Readiness";
+import { TrackView } from "@/components/services/TrackView";
+import { events } from "@/lib/analytics";
 import { SERVICES, findService, READINESS_MEANING, STAGE_LABEL } from "@/lib/services";
 import { canonical, SITE_URL } from "@/lib/site";
 
@@ -58,6 +60,8 @@ export default async function ServicePage({ params }: Params) {
 
   return (
     <>
+      <TrackView event={events.serviceViewed} params={{ service: service.slug, readiness: service.readiness }} />
+
       <section className="gradient-navy" style={{ padding: "48px 0 44px" }}>
         <div className="container-max px-4">
           <div style={{ maxWidth: 680 }}>
@@ -104,6 +108,8 @@ export default async function ServicePage({ params }: Params) {
                   submitLabel="Join the waitlist"
                   successTitle="You are on the list."
                   successBody={`We will email you when ${service.name} opens. Nothing else — we will not add you to a newsletter.`}
+                  sentEvent={events.waitlistJoined}
+                  sentParams={{ service: service.slug }}
                   className="space-y-4"
                 >
                   <input type="hidden" name="subject" value={`Waitlist — ${service.name}`} />
