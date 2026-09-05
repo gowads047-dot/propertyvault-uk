@@ -69,6 +69,10 @@ export const events = {
   serviceEnquirySent: "service_enquiry_sent",
   waitlistJoined: "waitlist_joined",
 
+  // Movement between pages, which is how you see whether the free tools feed
+  // anything. `from` and `to` are slugs, not display names.
+  ctaClicked: "cta_clicked",
+
   // Checkout
   checkoutStarted: "checkout_started",
 } as const;
