@@ -1,4 +1,5 @@
 import type { Evidence, PropertyInput } from "./property";
+import { authFetch } from "./auth-fetch";
 
 /**
  * The browser side of the vault.
@@ -149,5 +150,64 @@ export async function listVault(): Promise<SavedProperty[]> {
     return (await res.json()).properties ?? [];
   } catch {
     return [];
+  }
+}
+
+/** One property, with every figure and every analysis run it carries. */
+export interface VaultProperty {
+  id: string;
+  address: string | null;
+  postcode: string | null;
+  property_type: string | null;
+  bedrooms: number | null;
+  asking_price: number | null;
+  stage: string;
+  source: string;
+  source_ref: string | null;
+  created_at: string;
+  updated_at: string;
+  pv_evidence?: {
+    field: string;
+    state: string;
+    value_num: number | null;
+    value_text: string | null;
+    value_low: number | null;
+    value_high: number | null;
+    source: string | null;
+    source_url: string | null;
+    method: string | null;
+    checked_at: string;
+  }[];
+  pv_analysis?: {
+    score: number | null;
+    band: string | null;
+    components_scored: number | null;
+    computed: unknown;
+    created_at: string;
+  }[];
+}
+
+/**
+ * Read one property back.
+ *
+ * Uses authFetch so a signed-in owner is identified by their access token, and
+ * falls back to the claim token for a property saved before anyone signed up.
+ * The route accepts either and matches on the corresponding column; presenting
+ * both is fine, and the account wins.
+ *
+ * Returns null for "no such property" and for "not yours", because the route
+ * deliberately does not distinguish them — telling them apart would let anyone
+ * holding an id learn whether it exists.
+ */
+export async function getVaultProperty(id: string): Promise<VaultProperty | null> {
+  const token = readToken();
+  try {
+    const res = await authFetch(`/api/vault/property/${encodeURIComponent(id)}/`, {
+      headers: token ? { "X-Vault-Token": token } : {},
+    });
+    if (!res.ok) return null;
+    return (await res.json()).property ?? null;
+  } catch {
+    return null;
   }
 }

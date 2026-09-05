@@ -35,18 +35,51 @@ function filesUnder(dir: string, match: (name: string) => boolean): string[] {
   return out;
 }
 
+/**
+ * The URL path a route.ts file serves, with dynamic segments dropped.
+ *
+ * Leading slash included. The original walk compared with includes(), where a
+ * missing slash made no difference; comparing paths for equality, it does.
+ */
+function routePath(file: string): string {
+  const path = file
+    .slice(file.indexOf(join("app", "api")) + 4)
+    .split(sep)
+    .join("/")
+    .replace(/[/]route[.]ts$/, "")
+    .replace(/[/]\[[^\]]+\]/g, ""); // /api/tenant/issues/[id] -> /api/tenant/issues
+  return path.startsWith("/") ? path : `/${path}`;
+}
+
+function routesWhere(wants: (source: string) => boolean): string[] {
+  return filesUnder(API, n => n === "route.ts")
+    .filter(f => wants(readFileSync(f, "utf8")))
+    .map(routePath);
+}
+
 /** Route paths whose handlers call getVerifiedUser. */
 function protectedRoutes(): string[] {
-  return filesUnder(API, n => n === "route.ts")
-    .filter(f => readFileSync(f, "utf8").includes("getVerifiedUser("))
-    .map(f =>
-      f
-        .slice(f.indexOf(join("app", "api")) + 4)
-        .split(sep)
-        .join("/")
-        .replace(/\/route\.ts$/, "")
-        .replace(/\/\[[^\]]+\]/g, ""), // /api/tenant/issues/[id] -> /api/tenant/issues
-    );
+  return routesWhere(src => src.includes("getVerifiedUser("));
+}
+
+/**
+ * Route paths whose handlers do not.
+ *
+ * Needed because dropping a dynamic segment can make a protected child collide
+ * with an unprotected parent. /api/vault/property/[id] verifies the user and
+ * flattens to /api/vault/property — which is also a real route, deliberately
+ * authorised by a claim token rather than a bearer. Without this, every caller
+ * of the collection was reported for failing to send a token it must not send.
+ */
+function unprotectedRoutes(): Set<string> {
+  return new Set(routesWhere(src => !src.includes("getVerifiedUser(")));
+}
+
+/** The literal URL a fetch call names, or null when it is built at runtime. */
+function fetchUrl(line: string): string | null {
+  const m = line.match(/[b]?fetch[(]\s*[`"']([^`"']+)[`"']/);
+  if (!m) return null;
+  return m[1].split("?")[0].replace(/[/]$/, "");
 }
 
 /** Client files, excluding the API routes themselves. */
@@ -58,6 +91,7 @@ function clientFiles(): string[] {
 
 describe("callers of routes that require a verified identity", () => {
   const routes = protectedRoutes();
+  const openRoutes = unprotectedRoutes();
 
   it("finds the protected routes, so a broken walk cannot pass silently", () => {
     expect(routes.length).toBeGreaterThanOrEqual(5);
@@ -73,6 +107,11 @@ describe("callers of routes that require a verified identity", () => {
       lines.forEach((line, i) => {
         if (!/\bfetch\(/.test(line) || /authFetch\(/.test(line)) return;
         if (!routes.some(r => line.includes(r))) return;
+
+        // A call to the exact path of a route that does not verify the user is
+        // not a call to the protected one that happens to share its prefix.
+        const url = fetchUrl(line);
+        if (url !== null && openRoutes.has(url)) return;
 
         // The tenant portal presents an invite token, which is a credential
         // rather than a claim. It is usually in the body, a few lines below
