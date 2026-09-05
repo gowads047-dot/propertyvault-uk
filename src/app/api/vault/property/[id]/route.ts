@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { isValidClaimToken } from "@/lib/property";
 import { RULES, rateGuard } from "@/lib/rate-limit";
-import { getVerifiedUser } from "@/lib/server-auth";
+import { ownerFilterFor } from "@/lib/vault-owner";
 import { isStorable, NEXT_STEP, STORABLE_STAGES } from "@/lib/lifecycle";
 
 /**
@@ -116,28 +115,6 @@ export async function GET(
   }
 }
 
-/**
- * The PostgREST filter that limits a query to rows the caller owns, or null
- * when no usable credential was offered.
- *
- * Shared by GET and PATCH deliberately. This filter *is* the authorisation —
- * the row is fetched with the service role, which bypasses RLS — so two
- * handlers each building their own version is precisely how one of them ends
- * up subtly weaker than the other. That is the shape of nearly every access
- * bug already found in this codebase.
- *
- * A signed-in user takes precedence: if someone presents both credentials the
- * account is the stronger claim, and the token is ignored rather than used as
- * a fallback.
- */
-async function ownerFilterFor(request: Request): Promise<string | null> {
-  const user = await getVerifiedUser(request);
-  if (user) return `user_id=eq.${encodeURIComponent(user.id)}`;
-
-  const token = request.headers.get("x-vault-token");
-  if (!isValidClaimToken(token)) return null;
-  return `claim_token=eq.${encodeURIComponent(token!)}`;
-}
 
 /**
  * Moving a property along its lifecycle.
