@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { DataState } from "@/components/property/DataState";
 import { LifecycleBar } from "@/components/property/LifecycleBar";
+import { StageControl } from "@/components/property/StageControl";
 import { specFor, formatValue } from "@/lib/evidence-fields";
 import { NEXT_STEP, lifecycleOf, LIFECYCLE_LABEL, type AnyStage } from "@/lib/lifecycle";
 import { getVaultProperty, type VaultProperty } from "@/lib/vault-client";
@@ -104,12 +105,20 @@ export function PropertyRecord({ id }: { id: string }) {
         </h2>
         <LifecycleBar stage={stage} />
         <p style={{
-          fontSize: 14, color: "var(--ink)", lineHeight: 1.6, margin: "14px 0 0",
+          fontSize: 14, color: "var(--ink)", lineHeight: 1.6, margin: "14px 0 16px",
           padding: "12px 16px", borderRadius: 10,
           background: "var(--card-surface)", border: "1px solid var(--hairline)",
         }}>
           {NEXT_STEP[stage] ?? "No next step recorded for this stage."}
         </p>
+
+        {/* Without this the bar above is decoration: the stage was written once
+            at insert and never again, so every property sat on 'screening'. */}
+        <StageControl
+          id={property.id}
+          stage={stage}
+          onChanged={next => setProperty(p => (p ? { ...p, stage: next } : p))}
+        />
       </section>
 
       {latest ? (

@@ -58,6 +58,7 @@ export const events = {
   vaultCompleted: "vault_completed",
   vaultSaved: "vault_saved",
   vaultClaimed: "vault_claimed",
+  stageChanged: "property_stage_changed",
 
   // Ask — the agent
   askSubmitted: "ask_submitted",

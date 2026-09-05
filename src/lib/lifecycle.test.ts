@@ -3,7 +3,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   LIFECYCLE, LIFECYCLE_LABEL, CLOSED_STAGES, NEXT_STEP,
-  STAGES_PENDING_MIGRATION, isClosed, lifecycleOf, progressOf, reachableToday,
+  STAGES_PENDING_MIGRATION, STORABLE_STAGES, ALL_STAGES,
+  isClosed, isStorable, lifecycleOf, progressOf, reachableToday,
 } from "./lifecycle";
 import type { DealStage } from "./property";
 
@@ -168,5 +169,43 @@ describe("the migration and the model agree", () => {
     // When this fails, the migration has landed: update pv-property-schema.sql
     // to match and empty STAGES_PENDING_MIGRATION.
     expect(STAGES_PENDING_MIGRATION.length).toBeGreaterThan(0);
+  });
+});
+
+describe("what the application will let you write", () => {
+  /**
+   * STORABLE_STAGES is the runtime guard on a stage change, and it is a
+   * hand-written list because a serverless handler cannot read a .sql file.
+   * That makes it exactly the kind of copy that drifts: this pins it to the
+   * check constraint in both directions.
+   *
+   * Getting it wrong in either direction is silent. Too narrow, and a legal
+   * stage becomes unreachable through the UI with no error anywhere. Too wide,
+   * and the write reaches Postgres and comes back as a constraint violation
+   * that reads like a bug in the caller.
+   */
+  it("accepts exactly the stages the database accepts", () => {
+    expect([...STORABLE_STAGES].sort()).toEqual([...storedStages].sort());
+  });
+
+  it("refuses every stage that needs the migration first", () => {
+    const migrationOnly = ALL_STAGES.filter(s => !storedStages.includes(s as DealStage));
+    expect(migrationOnly.length).toBeGreaterThan(0);
+    for (const stage of migrationOnly) {
+      expect(isStorable(stage), `${stage} is storable but the constraint would reject it`).toBe(false);
+    }
+  });
+
+  it("knows a next step for every stage it will accept", () => {
+    // A stage the user can select and the page cannot describe is a dead end.
+    for (const stage of STORABLE_STAGES) {
+      expect(NEXT_STEP[stage], stage).toBeTruthy();
+    }
+  });
+
+  it("treats an unknown string as unstorable", () => {
+    for (const junk of ["", "SCREENING", "purchased ", "drop table", "sold_"]) {
+      expect(isStorable(junk), JSON.stringify(junk)).toBe(false);
+    }
   });
 });
