@@ -1,6 +1,7 @@
 import type { Evidence, PropertyInput } from "./property";
 import { authFetch } from "./auth-fetch";
 import { supabase } from "./supabase";
+import type { AnyStage } from "./lifecycle";
 import { track, events } from "./analytics";
 
 /**
@@ -158,6 +159,12 @@ export interface SavedProperty {
   postcode: string | null;
   address: string | null;
   asking_price: number | null;
+  /**
+   * Where it is in its life. The endpoint has always returned this; the type
+   * did not carry it, so the list could not show it and every property looked
+   * alike whether it was a passing thought or under offer.
+   */
+  stage: AnyStage;
   updated_at: string;
   pv_analysis?: { score: number | null; band: string | null; created_at: string }[];
 }

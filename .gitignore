@@ -58,3 +58,11 @@ scripts/.backfill-sent.json
 dev.log
 .reel-frames
 .reel-preview
+# Intermediate output from the Reel pipeline — audio stems, face plates, part
+# renders and the presenter samples that came out of the paused character
+# work. Sizeable, regenerable, and not something to carry in the repository.
+.reel-build
+
+# The Supabase CLI's scratch directory. Created by any npx supabase invocation,
+# holds nothing worth keeping.
+supabase/.temp

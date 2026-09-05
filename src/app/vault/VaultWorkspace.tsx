@@ -9,6 +9,7 @@ import { MaxOfferCard } from "@/components/property/MaxOfferCard";
 import { analyseDeal, lookupArea } from "@/lib/agent/tools";
 import { calculateMaximumOffer, explainBinding } from "@/lib/max-offer";
 import type { Evidence } from "@/lib/property";
+import { LIFECYCLE, LIFECYCLE_LABEL, STAGE_LABEL, isClosed, lifecycleOf } from "@/lib/lifecycle";
 import {
   dedupeEvidence, listVault, saveToVault, type SavedProperty,
 } from "@/lib/vault-client";
@@ -466,6 +467,17 @@ function SaveNote({ state }: { state: SaveState }) {
  * is the point of storing analysis as snapshots rather than a mutable record.
  */
 function VaultList({ properties }: { properties: SavedProperty[] }) {
+  // Grouped, because a flat list of twelve properties says nothing about which
+  // ones need attention. The order is the lifecycle's own, so the list reads
+  // the way a portfolio actually moves — and anything closed drops to the
+  // bottom rather than sitting between two live deals.
+  const open = properties.filter(p => !isClosed(p.stage));
+  const closed = properties.filter(p => isClosed(p.stage));
+
+  const groups = LIFECYCLE
+    .map(life => ({ life, rows: open.filter(p => lifecycleOf(p.stage) === life) }))
+    .filter(g => g.rows.length > 0);
+
   return (
     <section
       style={{
@@ -481,50 +493,78 @@ function VaultList({ properties }: { properties: SavedProperty[] }) {
           textTransform: "uppercase", color: "var(--ink-subtle)", margin: "0 0 0.5rem",
         }}
       >
-        In your vault
+        In your vault · {properties.length}
       </p>
 
-      {properties.map(p => {
-        const runs = p.pv_analysis ?? [];
-        const latest = runs[0];
-        return (
-          // Each row is now a link. The analysis, the evidence and the
-          // history were all being saved and there was nowhere to go and read
-          // them — the list was the only view of a property that existed.
-          <Link
-            key={p.id}
-            href={`/property/${p.id}`}
-            style={{
-              display: "flex", justifyContent: "space-between", alignItems: "baseline",
-              gap: "1rem", padding: "0.6rem 0", borderTop: "1px solid var(--hairline)",
-              textDecoration: "none",
-            }}
-          >
-            <div>
-              <strong style={{ color: "var(--ink)" }}>{p.postcode ?? p.address ?? "Unnamed property"}</strong>
-              <div style={{ fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
-                {p.asking_price != null ? gbp(p.asking_price) : "no price"}
-                {runs.length > 1 ? ` · ${runs.length} runs` : ""}
-              </div>
-            </div>
-            <span style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
-              {latest?.score != null && (
-                <span style={{ fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>
-                  {latest.score}
-                  <span style={{ color: "var(--ink-subtle)", fontWeight: 400 }}>/100</span>
-                </span>
-              )}
-              <span aria-hidden="true" style={{ color: "var(--gold-ink)", fontWeight: 700 }}>&rarr;</span>
-            </span>
-          </Link>
-        );
-      })}
+      {groups.map(({ life, rows }) => (
+        <div key={life} style={{ marginTop: "0.9rem" }}>
+          <p style={{
+            fontSize: "0.75rem", fontWeight: 700, color: "var(--ink)",
+            margin: "0 0 0.15rem",
+          }}>
+            {LIFECYCLE_LABEL[life]}
+            <span style={{ fontWeight: 400, color: "var(--ink-subtle)" }}> · {rows.length}</span>
+          </p>
+          {rows.map(p => <VaultRow key={p.id} property={p} />)}
+        </div>
+      ))}
+
+      {closed.length > 0 && (
+        <div style={{ marginTop: "0.9rem", opacity: 0.6 }}>
+          <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--ink)", margin: "0 0 0.15rem" }}>
+            No longer looking
+            <span style={{ fontWeight: 400, color: "var(--ink-subtle)" }}> · {closed.length}</span>
+          </p>
+          {closed.map(p => <VaultRow key={p.id} property={p} />)}
+        </div>
+      )}
 
       <p style={{ margin: "0.9rem 0 0", fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
-        These are held against a key stored in this browser, not an account. Clear your site data and
-        they are gone — and a property nobody comes back to is deleted after 90 days.
+        Saved against a key in this browser until you have an account — sign up and they move
+        across with you. Until then, clearing your site data loses them, and a property nobody
+        comes back to is deleted after 90 days.
       </p>
     </section>
+  );
+}
+
+function VaultRow({ property: p }: { property: SavedProperty }) {
+  const runs = p.pv_analysis ?? [];
+  const latest = runs[0];
+  return (
+    // Each row is a link. The analysis, the evidence and the history were all
+    // being saved and there was nowhere to go and read them — the list was the
+    // only view of a property that existed.
+    <Link
+      href={`/property/${p.id}`}
+      style={{
+        display: "flex", justifyContent: "space-between", alignItems: "baseline",
+        gap: "1rem", padding: "0.6rem 0", borderTop: "1px solid var(--hairline)",
+        textDecoration: "none",
+      }}
+    >
+      <div>
+        <strong style={{ color: "var(--ink)" }}>{p.postcode ?? p.address ?? "Unnamed property"}</strong>
+        <div style={{ fontSize: "0.8125rem", color: "var(--ink-muted)" }}>
+          {/* The stage in words, next to the money. A group heading names the
+              phase; this names the step, which is the finer thing a person
+              actually acts on. */}
+          {STAGE_LABEL[p.stage]}
+          {" · "}
+          {p.asking_price != null ? gbp(p.asking_price) : "no price"}
+          {runs.length > 1 ? ` · ${runs.length} runs` : ""}
+        </div>
+      </div>
+      <span style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
+        {latest?.score != null && (
+          <span style={{ fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>
+            {latest.score}
+            <span style={{ color: "var(--ink-subtle)", fontWeight: 400 }}>/100</span>
+          </span>
+        )}
+        <span aria-hidden="true" style={{ color: "var(--gold-ink)", fontWeight: 700 }}>&rarr;</span>
+      </span>
+    </Link>
   );
 }
 

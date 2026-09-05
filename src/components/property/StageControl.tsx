@@ -4,7 +4,7 @@ import { useState } from "react";
 import { setStage as save } from "@/lib/vault-client";
 import { track, events } from "@/lib/analytics";
 import {
-  ALL_STAGES, LIFECYCLE_LABEL, NEXT_STEP, STORABLE_STAGES,
+  ALL_STAGES, LIFECYCLE_LABEL, NEXT_STEP, STAGE_LABEL, STORABLE_STAGES,
   isStorable, lifecycleOf, type AnyStage,
 } from "@/lib/lifecycle";
 
@@ -23,26 +23,6 @@ import {
  * to see that "Letting" is coming rather than conclude it does not exist.
  */
 
-/** Human wording for each stored stage. The database value is not a label. */
-const STAGE_LABEL: Record<AnyStage, string> = {
-  screening: "Just looking",
-  analysing: "Running the numbers",
-  viewing: "Viewing it",
-  offer: "Offer made",
-  negotiating: "Negotiating",
-  under_offer: "Under offer",
-  due_diligence: "Doing the checks",
-  purchased: "Bought it",
-  rejected: "Passed on it",
-  archived: "Archived",
-  refurbishing: "Refurbishing",
-  rent_ready: "Getting it ready",
-  let: "Letting it",
-  managed: "Managing it",
-  optimising: "Reviewing returns",
-  selling: "Selling",
-  sold: "Sold",
-};
 
 export function StageControl({
   id,

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   LIFECYCLE, LIFECYCLE_LABEL, CLOSED_STAGES, NEXT_STEP,
-  STAGES_PENDING_MIGRATION, STORABLE_STAGES, ALL_STAGES,
+  STAGES_PENDING_MIGRATION, STORABLE_STAGES, ALL_STAGES, STAGE_LABEL,
   isClosed, isStorable, lifecycleOf, progressOf, reachableToday,
 } from "./lifecycle";
 import type { DealStage } from "./property";
@@ -56,6 +56,16 @@ describe("every stored stage has a place", () => {
   it("labels every lifecycle stage", () => {
     for (const stage of LIFECYCLE) {
       expect(LIFECYCLE_LABEL[stage], stage).toBeTruthy();
+    }
+  });
+
+  it("gives every stage words a person would use", () => {
+    // STAGE_LABEL is what the vault list and the stage control print. A stage
+    // without one renders as an empty string, which reads as a broken row
+    // rather than as a missing label.
+    for (const stage of ALL_STAGES) {
+      expect(STAGE_LABEL[stage], stage).toBeTruthy();
+      expect(STAGE_LABEL[stage], stage).not.toContain("_");
     }
   });
 });
