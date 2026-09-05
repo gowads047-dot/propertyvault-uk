@@ -218,12 +218,17 @@ describe("the sitemap never advertises a redirect", () => {
     }
   });
 
-  it("still has a directory for the consolidated hubs, so the guard is doing real work", () => {
-    // If these are ever deleted this test should be removed with them —
-    // until then it proves the exclusion is what keeps them out, rather than
-    // their absence from disk.
-    for (const dir of ["landlord-hub", "manage"]) {
-      expect(existsSync(join(appDir, dir)), dir).toBe(true);
+  it("would still exclude a redirected route that does have a directory", () => {
+    // The pair this was written for — landlord-hub and manage — have since
+    // been deleted, so the exclusion no longer has anything to do for them.
+    // Asserting on those two would now be asserting that a deletion happened,
+    // which git already records. What is worth keeping is that the rule still
+    // works for the next redirect whose source has a page behind it.
+    for (const source of sources) {
+      const segments = source.replace(/^\//, "").split("/").filter(Boolean);
+      if (!existsSync(join(appDir, ...segments))) continue;
+      expect(paths, `${source} has a directory and is redirected, so must not be listed`)
+        .not.toContain(source);
     }
   });
 });

@@ -55,16 +55,21 @@ export const CRAWL_EXCLUDED = [
 export const CRAWL_ALLOWED_EXCEPTIONS = ["/rentura", "/academy"] as const;
 
 /**
- * Routes whose directory still exists but which next.config.ts redirects away.
+ * Routes that next.config.ts redirects away.
  *
  * A redirect is checked before the filesystem, so the page never renders — but
  * staticRoutes() walks directories and cannot know that, and would list a URL
  * that 301s. Advertising a redirect in your own sitemap is the same
  * self-conflicting signal as a canonical pointing at one.
  *
+ * /landlord-hub and /manage have since had their directories deleted, so
+ * nothing would find them anyway. They stay listed because the cost is
+ * nothing and the alternative is remembering to re-add an entry the day
+ * somebody redirects a page that still has a file behind it.
+ *
  * routes.test.ts parses the redirect sources out of next.config.ts and asserts
- * this list covers every one of them that has a directory, so adding a
- * redirect without updating this cannot pass review.
+ * none of them reach the sitemap, so adding a redirect without updating this
+ * cannot pass review.
  */
 const REDIRECTED = ["/landlord-hub", "/manage"];
 
