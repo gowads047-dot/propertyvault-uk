@@ -157,6 +157,36 @@ export const NEXT_STEP: Record<AnyStage, string> = {
 };
 
 /**
+ * The stage values pv_property.stage will currently accept.
+ *
+ * Listed rather than derived, because this is the runtime guard on a write and
+ * it has to hold without reading a .sql file from a serverless handler.
+ * lifecycle.test.ts parses the check constraint out of pv-property-schema.sql
+ * and asserts the two agree exactly, in both directions — so a stage added to
+ * the schema without being added here, or the reverse, fails at commit rather
+ * than as a 400 from PostgREST that reads like a bug in the caller.
+ */
+export const STORABLE_STAGES: DealStage[] = [
+  "screening", "analysing", "viewing", "offer", "negotiating",
+  "under_offer", "due_diligence", "purchased", "rejected", "archived",
+];
+
+/**
+ * Whether a stage can be written today.
+ *
+ * The ownership stages exist in the model because the product does, and are
+ * refused here until supabase/pv-lifecycle.sql runs. Refusing them in the
+ * application rather than letting Postgres do it means the person gets told
+ * why, instead of a constraint violation.
+ */
+export function isStorable(stage: string): stage is DealStage {
+  return (STORABLE_STAGES as string[]).includes(stage);
+}
+
+/** Every stage the model knows, storable or not. Ordered by lifecycle position. */
+export const ALL_STAGES: AnyStage[] = Object.keys(NEXT_STEP) as AnyStage[];
+
+/**
  * Stages the database does not accept yet.
  *
  * The check constraint on pv_property.stage stops at 'purchased'. The

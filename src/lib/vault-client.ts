@@ -211,3 +211,34 @@ export async function getVaultProperty(id: string): Promise<VaultProperty | null
     return null;
   }
 }
+
+/**
+ * Move a property to a different stage.
+ *
+ * Sends whichever credential this browser holds, the same way getVaultProperty
+ * does: the bearer token for a signed-in user, the claim token otherwise. The
+ * server decides which one counts.
+ */
+export async function setStage(
+  id: string,
+  stage: string,
+): Promise<{ ok: true; stage: string } | { ok: false; error: string }> {
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const token = readToken();
+  if (token) headers["X-Vault-Token"] = token;
+
+  try {
+    const res = await authFetch(`/api/vault/property/${encodeURIComponent(id)}/`, {
+      method: "PATCH",
+      headers,
+      body: JSON.stringify({ stage }),
+    });
+    const j = await res.json().catch(() => null);
+    if (!res.ok) {
+      return { ok: false, error: j?.error ?? "Could not update that." };
+    }
+    return { ok: true, stage: j.stage };
+  } catch {
+    return { ok: false, error: "Could not reach the vault." };
+  }
+}
