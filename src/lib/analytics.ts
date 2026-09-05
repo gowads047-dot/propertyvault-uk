@@ -29,11 +29,61 @@ export function track(event: string, params: GtagParams = {}): void {
   }
 }
 
-/** Events used by the signup funnel, named in one place to avoid typos. */
+/**
+ * Every event the site emits, named in one place to avoid typos.
+ *
+ * Until now this held five signup events and nothing else, which meant no
+ * question about the funnel could be answered with data — including which of
+ * the twenty-three calculators earns its place, and whether anyone who lands
+ * on a tool ever reaches a service. Prioritisation was argument, not evidence.
+ *
+ * The names are snake_case because that is what GA reports on, and they are
+ * grouped by the journey stage they measure so a gap in the funnel is visible
+ * here rather than only in the reporting.
+ */
 export const events = {
+  // Signup
   signupShown: "signup_form_shown",
   signupDismissed: "signup_form_dismissed",
   signupSubmitted: "signup_submitted",
   signupSucceeded: "signup_succeeded",
   signupFailed: "signup_failed",
+
+  // Discover — someone arrives on a free tool and uses it
+  toolUsed: "tool_used",
+  calculatorCompleted: "calculator_completed",
+
+  // Vault — the analysis funnel, which is the route into everything else
+  vaultStarted: "vault_started",
+  vaultCompleted: "vault_completed",
+  vaultSaved: "vault_saved",
+  vaultClaimed: "vault_claimed",
+
+  // Ask — the agent
+  askSubmitted: "ask_submitted",
+  askAnswered: "ask_answered",
+
+  // Services — the commercial funnel
+  serviceViewed: "service_viewed",
+  serviceEnquiry: "service_enquiry_started",
+  serviceEnquirySent: "service_enquiry_sent",
+  waitlistJoined: "waitlist_joined",
+
+  // Movement between pages, which is how you see whether the free tools feed
+  // anything. `from` and `to` are slugs, not display names.
+  ctaClicked: "cta_clicked",
+
+  // Checkout
+  checkoutStarted: "checkout_started",
 } as const;
+
+export type EventName = (typeof events)[keyof typeof events];
+
+/**
+ * Params carried by service and tool events.
+ *
+ * `service` and `tool` are slugs rather than display names so a copy change on
+ * a page does not silently split one metric into two in the GA reports.
+ */
+export type ServiceParams = { service: string; source?: string };
+export type ToolParams = { tool: string; source?: string };

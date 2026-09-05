@@ -189,3 +189,41 @@ describe("makan indexing", () => {
     }
   });
 });
+
+describe("the sitemap never advertises a redirect", () => {
+  /**
+   * Redirects are checked before the filesystem, so a redirected page never
+   * renders — but staticRoutes() walks directories and cannot know that. The
+   * hub consolidation created exactly this trap: /landlord-hub and /manage
+   * still have directories, and would otherwise have been listed as live URLs
+   * in the sitemap while 301ing to /landlords.
+   *
+   * Telling a crawler to fetch a URL that immediately redirects is the same
+   * self-conflicting signal as a canonical tag pointing at a redirect.
+   */
+  const config = readFileSync(join(process.cwd(), "next.config.ts"), "utf8");
+  const sources = [...config.matchAll(/source:\s*"([^"]+)"/g)]
+    .map(m => m[1])
+    // Wildcard sources cover a subtree rather than a page of their own.
+    .filter(s => !s.includes(":"));
+
+  it("finds the redirect sources in next.config.ts", () => {
+    // A parse that silently matches nothing would make the test below vacuous.
+    expect(sources.length).toBeGreaterThan(0);
+  });
+
+  it("lists none of them, including the ones whose directory still exists", () => {
+    for (const source of sources) {
+      expect(paths, `${source} is redirected but appears in the sitemap`).not.toContain(source);
+    }
+  });
+
+  it("still has a directory for the consolidated hubs, so the guard is doing real work", () => {
+    // If these are ever deleted this test should be removed with them —
+    // until then it proves the exclusion is what keeps them out, rather than
+    // their absence from disk.
+    for (const dir of ["landlord-hub", "manage"]) {
+      expect(existsSync(join(appDir, dir)), dir).toBe(true);
+    }
+  });
+});

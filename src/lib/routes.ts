@@ -54,8 +54,22 @@ export const CRAWL_EXCLUDED = [
  */
 export const CRAWL_ALLOWED_EXCEPTIONS = ["/rentura", "/academy"] as const;
 
+/**
+ * Routes whose directory still exists but which next.config.ts redirects away.
+ *
+ * A redirect is checked before the filesystem, so the page never renders — but
+ * staticRoutes() walks directories and cannot know that, and would list a URL
+ * that 301s. Advertising a redirect in your own sitemap is the same
+ * self-conflicting signal as a canonical pointing at one.
+ *
+ * routes.test.ts parses the redirect sources out of next.config.ts and asserts
+ * this list covers every one of them that has a directory, so adding a
+ * redirect without updating this cannot pass review.
+ */
+const REDIRECTED = ["/landlord-hub", "/manage"];
+
 /** Routes that render but should never be advertised to a crawler. */
-const NEVER_INDEX = ["/embed", "/hub", "/_not-found", "/_global-error"];
+const NEVER_INDEX = ["/embed", "/hub", "/_not-found", "/_global-error", ...REDIRECTED];
 
 const APP_DIR = join(process.cwd(), "src", "app");
 

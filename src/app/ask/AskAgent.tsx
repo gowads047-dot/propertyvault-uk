@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { track, events } from "@/lib/analytics";
 import { AgentProse } from "@/components/property/AgentProse";
 import { AgentStepCard, type StepView } from "@/components/property/AgentStepCard";
 import { trimForRequest } from "@/lib/agent/render";
@@ -51,6 +52,7 @@ export function AskAgent() {
     setDraft("");
     setBusy(true);
     setError("");
+    track(events.askSubmitted, { turn: next.length });
 
     try {
       // Trailing slash to match next.config trailingSlash:true — without it the
@@ -78,6 +80,9 @@ export function AskAgent() {
       const reply = body as {
         text: string; steps: StepView[]; evidence?: Evidence[]; truncated: boolean;
       };
+      // Paired with askSubmitted above. An error return leaves the pair
+      // unmatched, which is the signal worth having.
+      track(events.askAnswered, { steps: reply.steps?.length ?? 0 });
       const steps = reply.steps ?? [];
       setTurns([
         ...next,

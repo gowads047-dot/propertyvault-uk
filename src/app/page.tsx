@@ -4,13 +4,24 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { StickyDealBtn } from "@/components/ui/StickyDealBtn";
 import { siteMetrics } from "@/lib/site";
 
+/**
+ * The title led on "Free Tools, Guaranteed Rent" — one free thing and one
+ * service in six cities, which is what the site used to be. It now describes
+ * what it actually is, and leads on the search terms people use.
+ */
+const TITLE = "PropertyVault UK — Check, Buy, Let and Manage UK Property";
+const DESCRIPTION =
+  `Check a UK property against sold prices before you offer, run the numbers with ` +
+  `${siteMetrics.calculators} free calculators, and stay on top of landlord compliance. ` +
+  `Every figure shows where it came from.`;
+
 export const metadata: Metadata = {
-  title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-  description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/" },
   openGraph: {
-    title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
+    title: TITLE,
+    description: DESCRIPTION,
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/",
     siteName: "PropertyVault UK",
@@ -18,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "PropertyVault UK — Free Tools, Guaranteed Rent & Expert Guides",
-    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, guaranteed rent for landlords, and expert guides for UK investors, buyers, and landlords.`,
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 
@@ -78,22 +89,22 @@ export default function Home() {
             <div>
               <div className="hero-line" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(201,168,76,0.12)", border: "1px solid rgba(201,168,76,0.2)", borderRadius: 20, padding: "6px 14px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#c9a84c", boxShadow: "0 0 0 3px rgba(201,168,76,0.25)", animation: "pulse 2s infinite" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--gold-ink)", letterSpacing: "0.06em" }}>Birmingham · Nottingham · Derby · Leicester · Coventry · Sheffield</span>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--gold-ink)", letterSpacing: "0.06em" }}>Buy it · Let it · Manage it</span>
               </div>
 
               <h1 className="hero-line" style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(34px, 4.5vw, 58px)", fontWeight: 800, color: "white", lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 24 }}>
-                Your rent,{" "}
-                <span style={{ color: "var(--gold-ink)" }}>guaranteed</span>
-                <br />every month —<br />
-                <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.62)" }}>no voids, ever.</em>
+                One place for{" "}
+                <span style={{ color: "var(--gold-ink)" }}>everything</span>
+                <br />property —<br />
+                <em style={{ fontStyle: "normal", color: "rgba(255,255,255,0.62)" }}>with the workings shown.</em>
               </h1>
 
               <p className="hero-line" style={{ fontSize: 17, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 16, maxWidth: 420 }}>
-                Landlords across the UK earning a predictable monthly income with our 3–5 year guaranteed rent scheme. We pay you whether the tenant pays or not.
+                Check a property before you offer, run the numbers, stay on top of compliance, or hand the whole thing over. Every figure comes with its source — including the ones we could not find.
               </p>
 
               <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 32 }}>
-                {["No void periods", "No management stress", "No hidden fees"].map(t => (
+                {["Free to use", "No account needed", "Sources shown"].map(t => (
                   <span key={t} style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12, color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "4px 10px" }}>
                     <span style={{ color: "var(--ok)", fontWeight: 700 }}>✓</span> {t}
                   </span>
@@ -101,13 +112,16 @@ export default function Home() {
               </div>
 
               <div className="hero-line" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
-                <Link href="/guaranteed-rent" className="btn-gold" style={{ fontSize: 15, padding: "13px 24px" }}>
-                  Get Free Rent Estimate →
+                <Link href="/vault" className="btn-gold" style={{ fontSize: 15, padding: "13px 24px" }}>
+                  Vault a property →
+                </Link>
+                <Link href="/landlords" style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.75)", padding: "13px 22px", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 10, textDecoration: "none" }}>
+                  I already own one
                 </Link>
               </div>
               <div className="hero-line" style={{ marginBottom: 20 }}>
                 <Link href="/calculators" style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", fontWeight: 600, textDecoration: "none" }}>
-                  or explore {siteMetrics.calculators} free tools ↓
+                  or explore {siteMetrics.calculators} free calculators ↓
                 </Link>
               </div>
 
@@ -180,10 +194,10 @@ export default function Home() {
           {/* Bottom stats bar — glassmorphic */}
           <div className="stats-grid-4" style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0" }}>
             {[
-              { n: "22", l: "Free calculators" },
-              { n: "19", l: "Free templates" },
-              { n: "£0", l: "Sign-up cost" },
-              { n: "3–5yr", l: "Guaranteed leases" },
+              { n: String(siteMetrics.calculators), l: "Free calculators" },
+              { n: String(siteMetrics.templates), l: "Free templates" },
+              { n: String(siteMetrics.areaGuides), l: "Area guides" },
+              { n: "£0", l: "To use any of it" },
             ].map((s, i) => (
               <div key={s.l} className="stat-num" style={{ textAlign: "center", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.08)" : "none", padding: "0 24px" }}>
                 <p style={{ fontSize: 32, fontWeight: 800, color: "white", lineHeight: 1, fontFamily: "ui-monospace, 'Cascadia Code', monospace", fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
@@ -199,9 +213,9 @@ export default function Home() {
         <div className="container-max px-4" style={{ padding: "16px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "24px 40px" }}>
             {[
+              { icon: "🔎", text: "Every figure shows its source" },
+              { icon: "🔒", text: "No account needed to use the tools" },
               { icon: "⚡", text: "WhatsApp reply within 2 hrs" },
-              { icon: "🔒", text: "No obligation — free estimate" },
-              { icon: "✅", text: "Rent paid even when empty" },
             ].map(t => (
               <div key={t.text} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span style={{ fontSize: 14 }}>{t.icon}</span>
@@ -217,11 +231,64 @@ export default function Home() {
         <div className="container-max px-4" style={{ padding: "20px 16px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 16, textAlign: "center" }}>
             <p style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36" }}>
-              UK landlords spend an average of <strong>£3,200/year</strong> on letting agent management fees.
+              Letting agents typically charge 8–15% of rent to manage. Work out what yours costs you.
             </p>
-            <Link href="/guaranteed-rent" style={{ fontSize: 13, fontWeight: 700, background: "#0f1b36", color: "white", padding: "8px 18px", borderRadius: 20, textDecoration: "none", whiteSpace: "nowrap" }}>
-              See the alternative →
+            <Link href="/calculators/rental-yield" style={{ fontSize: 13, fontWeight: 700, background: "#0f1b36", color: "white", padding: "8px 18px", borderRadius: 20, textDecoration: "none", whiteSpace: "nowrap" }}>
+              Run the numbers →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── THREE DOORS ───────────────────────────────────────
+           The site had no answer to "which of these am I?". Everything was
+           organised by what each tool is, so a landlord and a first-time buyer
+           landed on the same undifferentiated grid. Three doors, one each for
+           the states someone actually arrives in. */}
+      <section style={{ background: "var(--page-surface)", padding: "48px 0 8px" }}>
+        <div className="container-max px-4">
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+            {[
+              {
+                href: "/buy",
+                kicker: "Thinking of buying",
+                title: "Check it before you offer",
+                body: "Sold evidence, the numbers, the risks, and the most you should pay.",
+              },
+              {
+                href: "/landlords",
+                kicker: "Already own one",
+                title: "Know what you owe",
+                body: "A compliance checklist that says which duties are legal, which are conditional, and which are just sensible.",
+              },
+              {
+                href: "/services",
+                kicker: "Want it handled",
+                title: "Hand over the work",
+                body: "Every service, with an honest label on whether it is running today.",
+              },
+            ].map(d => (
+              <Link
+                key={d.href}
+                href={d.href}
+                style={{
+                  display: "flex", flexDirection: "column", gap: 8,
+                  background: "var(--card-surface)", border: "1.5px solid var(--hairline)",
+                  borderRadius: 16, padding: "22px 24px", textDecoration: "none",
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--gold-ink)" }}>
+                  {d.kicker}
+                </span>
+                <span style={{ fontFamily: "var(--font-family-heading)", fontSize: 19, fontWeight: 800, color: "var(--ink)", lineHeight: 1.2 }}>
+                  {d.title}
+                </span>
+                <span style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.55, flex: 1 }}>
+                  {d.body}
+                </span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Start here →</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

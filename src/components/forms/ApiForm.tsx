@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@/lib/analytics";
 
 /**
  * A form that posts itself to /api/contact as JSON.
@@ -23,6 +24,8 @@ export default function ApiForm({
   submitLabel = "Submit",
   successTitle = "Thanks — we have your details.",
   successBody = "We aim to reply within one working day.",
+  sentEvent,
+  sentParams,
 }: {
   source: string;
   children: React.ReactNode;
@@ -30,6 +33,13 @@ export default function ApiForm({
   submitLabel?: string;
   successTitle?: string;
   successBody?: string;
+  /**
+   * Fired once the server has accepted the submission — never on the click.
+   * A click measures intent; only the accepted response measures an enquiry
+   * that actually reached us, which is the number that matters.
+   */
+  sentEvent?: string;
+  sentParams?: Record<string, string | number | boolean | undefined>;
 }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState("");
@@ -55,6 +65,7 @@ export default function ApiForm({
         return;
       }
       setStatus("sent");
+      if (sentEvent) track(sentEvent, sentParams);
     } catch {
       setError("We could not reach the server. Please check your connection and try again.");
       setStatus("error");

@@ -1,35 +1,43 @@
 import Link from "next/link";
+import { AREA_CITIES, areaSlug } from "@/lib/areas";
 
-// Every city page that exists under /areas. They are 20 of the site's 205
-// URLs, and the only link to any of them was the /areas hub — the homepage
-// body linked to none. A footer row gives each one a link from every page on
-// the site, which is where internal link equity actually comes from.
-const AREA_CITIES = [
-  "Birmingham", "Bradford", "Bristol", "Cardiff", "Coventry",
-  "Derby", "Edinburgh", "Glasgow", "Hull", "Leeds",
-  "Leicester", "Liverpool", "Manchester", "Newcastle", "Nottingham",
-  "Portsmouth", "Sheffield", "Southampton", "Stoke-on-Trent", "Wolverhampton",
-] as const;
-
-const areaSlug = (city: string) => city.toLowerCase().replace(/\s+/g, "-");
-
+/**
+ * The footer sits on all 225 pages, so what it omits is omitted site-wide.
+ *
+ * It used to carry a lone one-item "Makan" column and no link at all to Vault,
+ * Ask, or any of the entry points — the two flagship tools and the three pages
+ * the platform is organised around were absent from every page's footer. It now
+ * mirrors the nav, so the same structure holds top and bottom.
+ */
 const sections = [
-  { title: "Makan", links: [
-    { href: "/makan", label: "Makan" },
-  ]},
-  { title: "Platform", links: [
-    { href: "/calculators", label: "Calculators" },
-    { href: "/templates", label: "Templates" },
-    { href: "/glossary", label: "Glossary" },
-    { href: "/guaranteed-rent", label: "Guaranteed Rent" },
+  { title: "Buy", links: [
+    { href: "/vault", label: "Vault a Property" },
+    { href: "/ask", label: "Ask PropertyVault" },
+    { href: "/buy", label: "How Buying Works" },
+    { href: "/sold-prices", label: "Sold Prices" },
     { href: "/areas", label: "Area Guides" },
   ]},
+  { title: "Landlords", links: [
+    { href: "/landlords", label: "Compliance Checklist" },
+    { href: "/rentura", label: "Rentura" },
+    { href: "/templates", label: "Templates" },
+    { href: "/hmo-hub", label: "HMO Hub" },
+    { href: "/calculators", label: "Calculators" },
+  ]},
+  { title: "Services", links: [
+    { href: "/services", label: "All Services" },
+    { href: "/guaranteed-rent", label: "Guaranteed Rent" },
+    { href: "/find-agent", label: "Find a Professional" },
+    { href: "/trades", label: "Find a Trade" },
+    { href: "/valuation", label: "Free Valuation" },
+  ]},
   { title: "Learn", links: [
+    { href: "/blog", label: "Blog" },
     { href: "/property-investing", label: "Investing" },
     { href: "/mortgages", label: "Mortgages" },
     { href: "/property-tax", label: "Tax" },
-    { href: "/property-law", label: "Law" },
-    { href: "/blog", label: "Blog" },
+    { href: "/glossary", label: "Glossary" },
+    { href: "/makan", label: "Makan" },
   ]},
   { title: "Company", links: [
     { href: "/about", label: "About Us" },
@@ -44,7 +52,7 @@ export function Footer() {
   return (
     <footer className="bg-white border-t border-navy-100/50">
       <div className="container-max px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="w-7 h-7 bg-navy-800 rounded-lg flex items-center justify-center">
@@ -52,7 +60,7 @@ export function Footer() {
               </div>
               <span className="font-bold text-navy-800 text-sm">PropertyVault</span>
             </div>
-            <p className="text-xs text-navy-400 leading-relaxed">Free property tools for UK investors, landlords, and buyers.</p>
+            <p className="text-xs text-navy-400 leading-relaxed">One place for everything property — check it, buy it, let it, manage it.</p>
           </div>
           {sections.map((s) => (
             <div key={s.title}>
