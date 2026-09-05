@@ -31,22 +31,44 @@ export type ReelFormat =
   | "the-tax"      // Section 24, CGT, stamp duty
   | "the-cash";    // What completing actually requires
 
-/** One beat of the video. The number moves; the words hold still. */
+/**
+ * One beat of the video.
+ *
+ * Every beat used to count a number, which quietly decided what this account
+ * could ever be about. A planning register, a change in the law, what a tenant
+ * is owed — none of those are a figure ticking upward, so none of them could
+ * be said, and thirty videos came out as thirty pieces of deal arithmetic.
+ *
+ * A beat can now reveal a fact instead. Same rhythm, same punch-in; what lands
+ * is a line of text and, where it matters, the state that line is in —
+ * verified against a named register, or checked and not found. That last one
+ * is the whole product in three words, and it could not be shown before.
+ */
 export interface ReelScene {
-  /** Small label above the number. */
+  /** Small label above the value. */
   kicker: string;
-  /** Value counted to, and how it is rendered. */
+  /** Value counted to, and how it is rendered. Ignored when `text` is set. */
   from: number;
   to: number;
-  render: "gbp" | "pct" | "int" | "gbp-neg";
+  render: "gbp" | "pct" | "int" | "gbp-neg" | "text";
   /** Seconds this beat holds. */
   seconds: number;
-  /** Line under the number. */
+  /** Line under the value. */
   sub: string;
   /** Optional second line. */
   foot?: string;
   /** Bad news is not drawn in the same gold as good news. */
   tone?: "warn" | "bad";
+
+  /** The fact this beat reveals, when it is not a number. */
+  text?: string;
+  /**
+   * Where that fact stands. Drawn as the same chip the site uses, because a
+   * claim with no provenance is the thing this brand exists not to make.
+   */
+  state?: "verified" | "no-record" | "assumed";
+  /** Who says so. Required by `verified`, and refused without it. */
+  source?: string;
 }
 
 export interface ReelSpec {
