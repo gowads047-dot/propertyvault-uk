@@ -1,5 +1,7 @@
 import type { Evidence, PropertyInput } from "./property";
 import { authFetch } from "./auth-fetch";
+import { supabase } from "./supabase";
+import { track, events } from "./analytics";
 
 /**
  * The browser side of the vault.
@@ -35,6 +37,25 @@ export function writeToken(token: string): boolean {
     return true;
   } catch {
     return false;
+  }
+}
+
+/**
+ * Forget the anonymous credential.
+ *
+ * Called once the properties behind it belong to an account. Keeping a spent
+ * bearer token in localStorage buys nothing and is a small liability: anyone
+ * who later reads that storage holds a key to properties it no longer opens,
+ * and a stale token would make every subsequent page load attempt a claim
+ * that can only move zero rows.
+ */
+export function clearToken(): void {
+  try {
+    localStorage.removeItem(TOKEN_KEY);
+  } catch {
+    // Same reasoning as readToken: a storage exception must not take the page
+    // down. A token that cannot be removed is harmless — the next claim moves
+    // nothing.
   }
 }
 
@@ -142,10 +163,20 @@ export interface SavedProperty {
 }
 
 export async function listVault(): Promise<SavedProperty[]> {
+  // Whichever credential this browser has.
+  //
+  // This used to return an empty list the moment there was no token, which
+  // was correct only while nothing could claim a property into an account.
+  // Once claiming works the token is cleared, so a signed-in owner would have
+  // been handed an empty vault at the exact moment their properties became
+  // properly theirs. authFetch attaches the access token; the claim token
+  // rides along only while one exists.
+  const headers: Record<string, string> = {};
   const token = readToken();
-  if (!token) return [];
+  if (token) headers["X-Vault-Token"] = token;
+
   try {
-    const res = await fetch("/api/vault/property/", { headers: { "X-Vault-Token": token } });
+    const res = await authFetch("/api/vault/property/", { headers });
     if (!res.ok) return [];
     return (await res.json()).properties ?? [];
   } catch {
@@ -240,5 +271,45 @@ export async function setStage(
     return { ok: true, stage: j.stage };
   } catch {
     return { ok: false, error: "Could not reach the vault." };
+  }
+}
+
+/**
+ * Move anonymous properties into the account that just signed in.
+ *
+ * The schema went to real trouble to support working without an account:
+ * user_id is nullable, a claim_token identifies an anonymous owner, and
+ * pv_claim_properties exists to hand those rows over at signup. Nothing ever
+ * called it. So five properties vaulted before signing up stayed anonymous
+ * afterwards, invisible from the account — and pv_purge_unclaimed deletes
+ * anonymous rows after ninety days, which made the loss eventual and silent.
+ *
+ * Runs as the signed-in user against a security-definer function, so the
+ * database checks the identity rather than trusting anything sent from here.
+ * The token is only forgotten once the move has actually succeeded: dropping
+ * it on a failed call would strand the very rows this exists to rescue.
+ */
+export async function claimVault(): Promise<{ moved: number } | null> {
+  const token = readToken();
+  if (!token) return null;
+
+  try {
+    const { data, error } = await supabase.rpc("pv_claim_properties", { p_claim_token: token });
+    if (error) {
+      console.error("vault claim failed:", error.message);
+      return null;
+    }
+
+    // Only now. The rows are the account's, so the bearer credential has done
+    // its job and keeping it would make every later page load retry a claim
+    // that can move nothing.
+    clearToken();
+
+    const moved = typeof data === "number" ? data : 0;
+    if (moved > 0) track(events.vaultClaimed, { moved });
+    return { moved };
+  } catch (err) {
+    console.error("vault claim failed:", err);
+    return null;
   }
 }

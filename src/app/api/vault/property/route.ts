@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { buildSave, type EvidenceRow } from "@/lib/vault-save";
-import { isValidClaimToken } from "@/lib/property";
+import { ownerFilterFor } from "@/lib/vault-owner";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 
 /**
@@ -120,8 +120,16 @@ export async function GET(request: Request) {
   const e = env();
   if (!e) return NextResponse.json({ error: "The vault is temporarily unavailable." }, { status: 503 });
 
-  const token = request.headers.get("x-vault-token");
-  if (!isValidClaimToken(token)) {
+  // Either credential, not just the token.
+  //
+  // This was token-only, which was fine for exactly as long as nothing ever
+  // claimed a property into an account. The moment claiming works, a
+  // signed-in owner's rows have claim_token set to null and user_id set to
+  // them — and the only query able to find them filtered on the column that
+  // is now null. Their vault would have gone empty at the instant it became
+  // properly theirs.
+  const ownerFilter = await ownerFilterFor(request);
+  if (!ownerFilter) {
     return NextResponse.json({ error: "Expected a vault token." }, { status: 400 });
   }
 
@@ -137,7 +145,7 @@ export async function GET(request: Request) {
 
   try {
     const res = await fetch(
-      `${e.url}/rest/v1/pv_property?claim_token=eq.${encodeURIComponent(token!)}` +
+      `${e.url}/rest/v1/pv_property?${ownerFilter}` +
       `&select=${encodeURIComponent(select)}&order=updated_at.desc&limit=100`,
       { headers: headers(e.key) },
     );

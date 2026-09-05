@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "./supabase";
+import { claimVault } from "./vault-client";
 import type { User } from "@supabase/supabase-js";
 
 interface Profile {
@@ -61,8 +62,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
-      if (session?.user) fetchProfile(session.user.id);
-      else setProfile(null);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+        // Hand over anything vaulted before this account existed.
+        //
+        // Here rather than inside signIn/signUp because this is the one place
+        // every route into a session passes through — password sign-in, the
+        // confirmation link, a password reset, and a restored session on a
+        // later visit. Putting it in the two functions would have missed the
+        // other three, and someone who vaults a property, closes the tab and
+        // signs up from the confirmation email is exactly the person this is
+        // for.
+        //
+        // Deliberately not awaited: it is a background reconciliation, and
+        // holding the UI on it would make every sign-in slower for the
+        // majority who have nothing to claim. It also clears the token on
+        // success, so it stops trying after the first time.
+        void claimVault();
+      } else {
+        setProfile(null);
+      }
     });
 
     return () => subscription.unsubscribe();
