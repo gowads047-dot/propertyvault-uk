@@ -1,17 +1,5 @@
 import Link from "next/link";
-
-// Every city page that exists under /areas. They are 20 of the site's 205
-// URLs, and the only link to any of them was the /areas hub — the homepage
-// body linked to none. A footer row gives each one a link from every page on
-// the site, which is where internal link equity actually comes from.
-const AREA_CITIES = [
-  "Birmingham", "Bradford", "Bristol", "Cardiff", "Coventry",
-  "Derby", "Edinburgh", "Glasgow", "Hull", "Leeds",
-  "Leicester", "Liverpool", "Manchester", "Newcastle", "Nottingham",
-  "Portsmouth", "Sheffield", "Southampton", "Stoke-on-Trent", "Wolverhampton",
-] as const;
-
-const areaSlug = (city: string) => city.toLowerCase().replace(/\s+/g, "-");
+import { AREA_CITIES, areaSlug } from "@/lib/areas";
 
 /**
  * The footer sits on all 225 pages, so what it omits is omitted site-wide.
