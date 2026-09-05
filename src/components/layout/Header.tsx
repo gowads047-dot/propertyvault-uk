@@ -107,11 +107,17 @@ export function Header() {
             {/* Right actions */}
             <div className="flex items-center gap-2.5">
               <DarkModeToggle />
+              {/* The one action worth putting on all 225 pages.
+                  This used to be Guaranteed Rent, which is one service for one
+                  kind of landlord in six cities. Vault is the front door to
+                  everything else — it is what produces the property record the
+                  rest of the platform hangs off, and it is free. Guaranteed
+                  Rent leads the Services group, so it has not gone anywhere. */}
               <Link
-                href="/guaranteed-rent"
+                href="/vault"
                 className="hidden md:inline-flex items-center gap-2 bg-navy-800 text-white font-semibold text-[13px] py-2.5 px-5 rounded-full hover:bg-navy-900 transition-colors"
               >
-                Guaranteed Rent
+                Vault a property
               </Link>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
