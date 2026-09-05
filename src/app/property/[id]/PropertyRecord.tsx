@@ -7,6 +7,7 @@ import { LifecycleBar } from "@/components/property/LifecycleBar";
 import { specFor, formatValue } from "@/lib/evidence-fields";
 import { NEXT_STEP, lifecycleOf, LIFECYCLE_LABEL, type AnyStage } from "@/lib/lifecycle";
 import { getVaultProperty, type VaultProperty } from "@/lib/vault-client";
+import { assess, coverage, type EvidenceLike } from "@/lib/vaultcheck";
 import type { EvidenceState } from "@/lib/property";
 import { track, events } from "@/lib/analytics";
 
@@ -74,6 +75,8 @@ export function PropertyRecord({ id }: { id: string }) {
   const life = lifecycleOf(stage);
   const latest = property.pv_analysis?.[0];
   const evidence = property.pv_evidence ?? [];
+  const check = coverage(evidence as EvidenceLike[]);
+  const unanswered = assess(evidence as EvidenceLike[]).filter(r => !r.answered);
   const title = property.address ?? property.postcode ?? "Untitled property";
 
   return (
@@ -195,6 +198,46 @@ export function PropertyRecord({ id }: { id: string }) {
             })}
           </div>
         )}
+      </section>
+
+      {/* What is still unanswered about this property.
+          Deliberately a count of named questions rather than a percentage:
+          "answers 9 of 16" can be checked line by line, and a reader cannot
+          mistake it for a verdict the way they would a score. */}
+      <section aria-labelledby="gaps-heading">
+        <h2 id="gaps-heading" style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", marginBottom: 4 }}>
+          What this record does not tell you
+        </h2>
+        <p style={{ fontSize: 13, color: "var(--ink-muted)", margin: "0 0 12px" }}>
+          A buyer needs {check.total} questions answered before offering. This record answers{" "}
+          {check.answered}.
+        </p>
+        <div style={{
+          background: "var(--card-surface)", border: "1.5px solid var(--hairline)",
+          borderRadius: 12, padding: "16px 18px",
+        }}>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+            {unanswered.slice(0, 4).map(c => (
+              <li key={c.id} style={{ fontSize: 13.5, color: "var(--ink)", lineHeight: 1.45 }}>
+                <span aria-hidden="true" style={{ color: "var(--ink-subtle)", marginRight: 8 }}>—</span>
+                {c.question}
+              </li>
+            ))}
+          </ul>
+          {unanswered.length > 4 ? (
+            <p style={{ fontSize: 12.5, color: "var(--ink-subtle)", margin: "0 0 12px" }}>
+              and {unanswered.length - 4} more, including two that need a surveyor or a solicitor
+              rather than us.
+            </p>
+          ) : null}
+          <Link
+            href="/services/vaultcheck-pro"
+            style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)", textDecoration: "none" }}
+            onClick={() => track(events.ctaClicked, { from: `property:${stage}`, to: "vaultcheck-pro" })}
+          >
+            See the full list, and who answers each one &rarr;
+          </Link>
+        </div>
       </section>
 
       <section style={{ display: "flex", flexWrap: "wrap", gap: 10, paddingTop: 4 }}>

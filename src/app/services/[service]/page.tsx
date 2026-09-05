@@ -1,3 +1,5 @@
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,8 +28,22 @@ export function generateStaticParams() {
   // Only the services whose href is actually under /services/. Guaranteed
   // Rent, Rentura, Vault and the professionals directory all live at their
   // own established URLs and keep them.
+  //
+  // And not the ones that have outgrown this page. A service described well
+  // enough to need its own file gets a directory under /services, and Next
+  // serves that in preference — but this route would still prerender a second
+  // copy that nothing can reach, which shows up in the build output as the
+  // same URL twice. Read from disk rather than a flag on the service, so the
+  // two cannot disagree.
+  const own = new Set(
+    readdirSync(join(process.cwd(), "src", "app", "services"), { withFileTypes: true })
+      .filter(e => e.isDirectory() && !e.name.startsWith("["))
+      .map(e => e.name),
+  );
+
   return SERVICES
     .filter(s => s.href.startsWith("/services/"))
+    .filter(s => !own.has(s.slug))
     .map(s => ({ service: s.slug }));
 }
 
