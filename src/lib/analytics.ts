@@ -63,6 +63,9 @@ export const events = {
   askSubmitted: "ask_submitted",
   askAnswered: "ask_answered",
 
+  // The property record — the page the whole lifecycle hangs off
+  propertyViewed: "property_viewed",
+
   // Services — the commercial funnel
   serviceViewed: "service_viewed",
   serviceEnquiry: "service_enquiry_started",

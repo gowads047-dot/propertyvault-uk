@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { track, events } from "@/lib/analytics";
 import { DataState, EvidenceRow } from "@/components/property/DataState";
 import { PVScore } from "@/components/property/PVScore";
@@ -487,11 +488,16 @@ function VaultList({ properties }: { properties: SavedProperty[] }) {
         const runs = p.pv_analysis ?? [];
         const latest = runs[0];
         return (
-          <div
+          // Each row is now a link. The analysis, the evidence and the
+          // history were all being saved and there was nowhere to go and read
+          // them — the list was the only view of a property that existed.
+          <Link
             key={p.id}
+            href={`/property/${p.id}`}
             style={{
               display: "flex", justifyContent: "space-between", alignItems: "baseline",
               gap: "1rem", padding: "0.6rem 0", borderTop: "1px solid var(--hairline)",
+              textDecoration: "none",
             }}
           >
             <div>
@@ -501,13 +507,16 @@ function VaultList({ properties }: { properties: SavedProperty[] }) {
                 {runs.length > 1 ? ` · ${runs.length} runs` : ""}
               </div>
             </div>
-            {latest?.score != null && (
-              <span style={{ fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>
-                {latest.score}
-                <span style={{ color: "var(--ink-subtle)", fontWeight: 400 }}>/100</span>
-              </span>
-            )}
-          </div>
+            <span style={{ display: "flex", alignItems: "baseline", gap: "0.6rem" }}>
+              {latest?.score != null && (
+                <span style={{ fontWeight: 700, color: "var(--ink)", fontVariantNumeric: "tabular-nums" }}>
+                  {latest.score}
+                  <span style={{ color: "var(--ink-subtle)", fontWeight: 400 }}>/100</span>
+                </span>
+              )}
+              <span aria-hidden="true" style={{ color: "var(--gold-ink)", fontWeight: 700 }}>&rarr;</span>
+            </span>
+          </Link>
         );
       })}
 
