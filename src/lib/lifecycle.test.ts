@@ -142,7 +142,14 @@ describe("the migration and the model agree", () => {
   })();
 
   it("finds the widened constraint", () => {
-    expect(migratedStages.length).toBeGreaterThan(storedStages.length);
+    expect(migratedStages.length).toBeGreaterThan(10);
+  });
+
+  it("matches the schema file, now that it has been applied", () => {
+    // Before it ran, the migration was the larger set and pv-property-schema
+    // was behind. They describe the same constraint now, and a drift between
+    // them would mean one of the two files is lying about the live database.
+    expect([...migratedStages].sort()).toEqual([...storedStages].sort());
   });
 
   it("keeps every stage that is storable today", () => {
@@ -175,10 +182,12 @@ describe("the migration and the model agree", () => {
     }
   });
 
-  it("has not been run yet, which is why the pending list is non-empty", () => {
-    // When this fails, the migration has landed: update pv-property-schema.sql
-    // to match and empty STAGES_PENDING_MIGRATION.
-    expect(STAGES_PENDING_MIGRATION.length).toBeGreaterThan(0);
+  it("has been run, so nothing is pending", () => {
+    // The inverse of what this asserted while the migration was outstanding.
+    // Kept rather than deleted: the pending list is the mechanism for the next
+    // time the model runs ahead of the schema, and an assertion that it is
+    // currently empty is what makes a non-empty one deliberate.
+    expect(STAGES_PENDING_MIGRATION).toEqual([]);
   });
 });
 
@@ -198,11 +207,12 @@ describe("what the application will let you write", () => {
     expect([...STORABLE_STAGES].sort()).toEqual([...storedStages].sort());
   });
 
-  it("refuses every stage that needs the migration first", () => {
-    const migrationOnly = ALL_STAGES.filter(s => !storedStages.includes(s as DealStage));
-    expect(migrationOnly.length).toBeGreaterThan(0);
-    for (const stage of migrationOnly) {
-      expect(isStorable(stage), `${stage} is storable but the constraint would reject it`).toBe(false);
+  it("can write every stage the model knows, now the constraint allows them", () => {
+    // This asserted the opposite while the ownership stages were pending. The
+    // rule underneath is unchanged — storable and stored must agree — so what
+    // flipped is the state of the database, not the standard.
+    for (const stage of ALL_STAGES) {
+      expect(isStorable(stage), `the model knows ${stage} but will not write it`).toBe(true);
     }
   });
 

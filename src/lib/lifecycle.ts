@@ -178,29 +178,35 @@ export const STAGE_LABEL: Record<AnyStage, string> = {
 };
 
 /**
- * The stage values pv_property.stage will currently accept.
+ * The stage values pv_property.stage accepts.
  *
- * Listed rather than derived, because this is the runtime guard on a write and
- * it has to hold without reading a .sql file from a serverless handler.
- * lifecycle.test.ts parses the check constraint out of pv-property-schema.sql
- * and asserts the two agree exactly, in both directions — so a stage added to
- * the schema without being added here, or the reverse, fails at commit rather
- * than as a 400 from PostgREST that reads like a bug in the caller.
+ * All of them, since pv-lifecycle.sql was applied. Listed rather than derived,
+ * because this is the runtime guard on a write and it has to hold without
+ * reading a .sql file from a serverless handler. lifecycle.test.ts parses the
+ * check constraint out of pv-property-schema.sql and asserts the two agree
+ * exactly, in both directions — so a stage added to the schema without being
+ * added here, or the reverse, fails at commit rather than as a 400 from
+ * PostgREST that reads like a bug in the caller.
  */
-export const STORABLE_STAGES: DealStage[] = [
+export const STORABLE_STAGES: AnyStage[] = [
+  // Acquisition.
   "screening", "analysing", "viewing", "offer", "negotiating",
-  "under_offer", "due_diligence", "purchased", "rejected", "archived",
+  "under_offer", "due_diligence", "purchased",
+  // Ownership.
+  "refurbishing", "rent_ready", "let", "managed", "optimising", "selling", "sold",
+  // Left the pipeline.
+  "rejected", "archived",
 ];
 
 /**
- * Whether a stage can be written today.
+ * Whether a stage can be written.
  *
- * The ownership stages exist in the model because the product does, and are
- * refused here until supabase/pv-lifecycle.sql runs. Refusing them in the
- * application rather than letting Postgres do it means the person gets told
- * why, instead of a constraint violation.
+ * Kept as a guard rather than removed now that everything is storable. It is
+ * the boundary check on a value arriving from a request body, where the type
+ * system has no say — and the next time the model runs ahead of the schema,
+ * this is where that gets expressed.
  */
-export function isStorable(stage: string): stage is DealStage {
+export function isStorable(stage: string): stage is AnyStage {
   return (STORABLE_STAGES as string[]).includes(stage);
 }
 
@@ -208,17 +214,16 @@ export function isStorable(stage: string): stage is DealStage {
 export const ALL_STAGES: AnyStage[] = Object.keys(NEXT_STEP) as AnyStage[];
 
 /**
- * Stages the database does not accept yet.
+ * Lifecycle stages no storable stage maps to.
  *
- * The check constraint on pv_property.stage stops at 'purchased'. The
- * lifecycle model runs past it because the product does, and the migration
- * that widens the constraint is written and waiting. Until it runs, nothing
- * may write these values — lifecycle.test.ts asserts the split so the two
- * cannot drift apart silently.
+ * Empty, and kept empty deliberately. This held the six ownership stages
+ * between the model gaining them and pv-lifecycle.sql being applied, and the
+ * UI read it to decide what to strike through. It stays as the place that
+ * disagreement gets recorded the next time the product runs ahead of the
+ * database, rather than being rediscovered as a constraint violation on a
+ * write.
  */
-export const STAGES_PENDING_MIGRATION: LifecycleStage[] = [
-  "refurbish", "rent-ready", "let", "manage", "optimise", "sell",
-];
+export const STAGES_PENDING_MIGRATION: LifecycleStage[] = [];
 
 /** Lifecycle stages a stored deal stage can currently reach. */
 export function reachableToday(): LifecycleStage[] {
