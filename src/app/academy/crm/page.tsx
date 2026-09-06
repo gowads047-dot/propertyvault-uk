@@ -132,19 +132,19 @@ export default function AcademyCRMPage() {
                 </div>
               ))}
               <div>
-                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Status</label>
-                <select style={inp()} value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value as Investor["status"] }))}>
+                <label htmlFor="crm-status" style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Status</label>
+                <select id="crm-status" style={inp()} value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value as Investor["status"] }))}>
                   {["Hot","Warm","Cold","Inactive"].map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
               </div>
               <div>
-                <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Last Contact</label>
-                <input type="date" style={inp()} value={form.lastContact} onChange={e => setForm(f => ({ ...f, lastContact: e.target.value }))} />
+                <label htmlFor="crm-last-contact" style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Last Contact</label>
+                <input id="crm-last-contact" type="date" style={inp()} value={form.lastContact} onChange={e => setForm(f => ({ ...f, lastContact: e.target.value }))} />
               </div>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Notes</label>
-              <textarea style={{ ...inp(), minHeight: 72, resize: "vertical" }} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
+              <label htmlFor="crm-notes" style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>Notes</label>
+              <textarea id="crm-notes" style={{ ...inp(), minHeight: 72, resize: "vertical" }} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
             </div>
             <div style={{ display: "flex", gap: 10 }}>
               <button onClick={save} style={{ background: "#d4af37", color: "#0a0f1e", border: "none", borderRadius: 10, padding: "10px 24px", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>

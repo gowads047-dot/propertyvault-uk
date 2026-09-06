@@ -73,42 +73,42 @@ export default function ReferenceRequest() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Your Details (Landlord sending the request)</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Your Name / Agency *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full name or agency name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Your Address</label>
-                <textarea value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Your Email</label>
-                <input type="email" value={landlordEmail} onChange={e => setLandlordEmail(e.target.value)} placeholder="your@email.com" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date</label>
-                <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-your-name-agency" className="block text-sm font-semibold text-navy-700 mb-1">Your Name / Agency *</label>
+                <input id="referencereq-your-name-agency" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full name or agency name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-your-address" className="block text-sm font-semibold text-navy-700 mb-1">Your Address</label>
+                <textarea id="referencereq-your-address" value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="referencereq-your-email" className="block text-sm font-semibold text-navy-700 mb-1">Your Email</label>
+                <input id="referencereq-your-email" type="email" value={landlordEmail} onChange={e => setLandlordEmail(e.target.value)} placeholder="your@email.com" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-date" className="block text-sm font-semibold text-navy-700 mb-1">Date</label>
+                <input id="referencereq-date" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Referee (Person You Are Writing To)</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Referee Name</label>
-                <input value={refereeName} onChange={e => setRefereeName(e.target.value)} placeholder={type === "employer" ? "HR Manager / Line Manager name" : "Previous landlord name"} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-referee-name" className="block text-sm font-semibold text-navy-700 mb-1">Referee Name</label>
+                <input id="referencereq-referee-name" value={refereeName} onChange={e => setRefereeName(e.target.value)} placeholder={type === "employer" ? "HR Manager / Line Manager name" : "Previous landlord name"} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               <div><label className="block text-sm font-semibold text-navy-700 mb-1">{type === "employer" ? "Company / Organisation" : "Property Management Company / Agency"}</label>
                 <input value={refereeCompany} onChange={e => setRefereeCompany(e.target.value)} placeholder={type === "employer" ? "Employer company name" : "Landlord / agency name"} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Response Requested By</label>
-                <input type="date" value={responseDeadline} onChange={e => setResponseDeadline(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-response-requested-by" className="block text-sm font-semibold text-navy-700 mb-1">Response Requested By</label>
+                <input id="referencereq-response-requested-by" type="date" value={responseDeadline} onChange={e => setResponseDeadline(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Applicant Details</h2>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Applicant Full Name *</label>
-                  <input value={applicantName} onChange={e => setApplicantName(e.target.value)} placeholder="As on application" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date of Birth</label>
-                  <input type="date" value={applicantDob} onChange={e => setApplicantDob(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="referencereq-applicant-full-name" className="block text-sm font-semibold text-navy-700 mb-1">Applicant Full Name *</label>
+                  <input id="referencereq-applicant-full-name" value={applicantName} onChange={e => setApplicantName(e.target.value)} placeholder="As on application" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="referencereq-date-of-birth" className="block text-sm font-semibold text-navy-700 mb-1">Date of Birth</label>
+                  <input id="referencereq-date-of-birth" type="date" value={applicantDob} onChange={e => setApplicantDob(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property to Let *</label>
-                <input value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="referencereq-property-to-let" className="block text-sm font-semibold text-navy-700 mb-1">Property to Let *</label>
+                <input id="referencereq-property-to-let" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Proposed Move-In Date</label>
-                  <input type="date" value={moveInDate} onChange={e => setMoveInDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent (£)</label>
+                <div><label htmlFor="referencereq-proposed-move-in-date" className="block text-sm font-semibold text-navy-700 mb-1">Proposed Move-In Date</label>
+                  <input id="referencereq-proposed-move-in-date" type="date" value={moveInDate} onChange={e => setMoveInDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="referencereq-monthly-rent" className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent (£)</label>
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                    <input value={monthlyRent} onChange={e => setMonthlyRent(e.target.value)} placeholder="0" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                    <input id="referencereq-monthly-rent" value={monthlyRent} onChange={e => setMonthlyRent(e.target.value)} placeholder="0" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               </div>
             </div>
 

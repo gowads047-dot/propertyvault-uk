@@ -100,26 +100,26 @@ export default function RentersRightsNotice() {
                 <h2 className="text-lg font-bold text-navy-800 mb-4">Property & Tenancy Details</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                    <input type="text" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)}
+                    <label htmlFor="rentersright-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                    <input id="rentersright-property-address" type="text" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)}
                       placeholder="e.g. 12 Oak Street, Birmingham, B1 2AB"
                       className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-semibold text-navy-700 mb-1">Tenancy Start Date *</label>
-                      <input type="date" value={tenancyStart} onChange={e => setTenancyStart(e.target.value)}
+                      <label htmlFor="rentersright-tenancy-start-date" className="block text-sm font-semibold text-navy-700 mb-1">Tenancy Start Date *</label>
+                      <input id="rentersright-tenancy-start-date" type="date" value={tenancyStart} onChange={e => setTenancyStart(e.target.value)}
                         className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                     </div>
                     <div>
-                      <label className="block text-sm font-semibold text-navy-700 mb-1">Notice Issue Date *</label>
-                      <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)}
+                      <label htmlFor="rentersright-notice-issue-date" className="block text-sm font-semibold text-navy-700 mb-1">Notice Issue Date *</label>
+                      <input id="rentersright-notice-issue-date" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)}
                         className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent (£)</label>
-                    <input type="text" value={monthlyRent} onChange={e => setMonthlyRent(e.target.value)}
+                    <label htmlFor="rentersright-monthly-rent" className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent (£)</label>
+                    <input id="rentersright-monthly-rent" type="text" value={monthlyRent} onChange={e => setMonthlyRent(e.target.value)}
                       placeholder="e.g. 950"
                       className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                   </div>
@@ -129,14 +129,14 @@ export default function RentersRightsNotice() {
               <div>
                 <h2 className="text-lg font-bold text-navy-800 mb-4">Landlord Details</h2>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
-                  <input type="text" value={landlordName} onChange={e => setLandlordName(e.target.value)}
+                  <label htmlFor="rentersright-landlord-agent-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
+                  <input id="rentersright-landlord-agent-name" type="text" value={landlordName} onChange={e => setLandlordName(e.target.value)}
                     placeholder="Your full name or company name"
                     className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div className="mt-4">
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">PRS Ombudsman Reference (if registered)</label>
-                  <input type="text" value={ombudsmanRef} onChange={e => setOmbudsmanRef(e.target.value)}
+                  <label htmlFor="rentersright-prs-ombudsman-reference-if" className="block text-sm font-semibold text-navy-700 mb-1">PRS Ombudsman Reference (if registered)</label>
+                  <input id="rentersright-prs-ombudsman-reference-if" type="text" value={ombudsmanRef} onChange={e => setOmbudsmanRef(e.target.value)}
                     placeholder="e.g. PRO-2025-XXXXX"
                     className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
@@ -145,8 +145,8 @@ export default function RentersRightsNotice() {
               <div>
                 <h2 className="text-lg font-bold text-navy-800 mb-4">Tenant Details</h2>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name(s) *</label>
-                  <input type="text" value={tenantName} onChange={e => setTenantName(e.target.value)}
+                  <label htmlFor="rentersright-tenant-name-s" className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name(s) *</label>
+                  <input id="rentersright-tenant-name-s" type="text" value={tenantName} onChange={e => setTenantName(e.target.value)}
                     placeholder="Full name(s) of all tenants"
                     className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
@@ -156,8 +156,8 @@ export default function RentersRightsNotice() {
                 <h2 className="text-lg font-bold text-navy-800 mb-4">Deposit Details</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-navy-700 mb-1">Deposit Scheme</label>
-                    <select value={depositScheme} onChange={e => setDepositScheme(e.target.value)}
+                    <label htmlFor="rentersright-deposit-scheme" className="block text-sm font-semibold text-navy-700 mb-1">Deposit Scheme</label>
+                    <select id="rentersright-deposit-scheme" value={depositScheme} onChange={e => setDepositScheme(e.target.value)}
                       className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 bg-white">
                       <option>DPS</option>
                       <option>MyDeposits</option>
@@ -165,8 +165,8 @@ export default function RentersRightsNotice() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-navy-700 mb-1">Deposit Reference Number</label>
-                    <input type="text" value={depositRef} onChange={e => setDepositRef(e.target.value)}
+                    <label htmlFor="rentersright-deposit-reference-number" className="block text-sm font-semibold text-navy-700 mb-1">Deposit Reference Number</label>
+                    <input id="rentersright-deposit-reference-number" type="text" value={depositRef} onChange={e => setDepositRef(e.target.value)}
                       placeholder="Scheme reference"
                       className="w-full px-4 py-3 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                   </div>

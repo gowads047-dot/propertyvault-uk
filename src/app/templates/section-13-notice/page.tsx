@@ -78,14 +78,14 @@ export default function Section13Notice() {
           <div className="container-max max-w-2xl space-y-6">
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Parties & Property</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full name or company" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord Address</label>
-                <textarea value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Tenant(s) Name(s) *</label>
-                <input value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="All named tenants" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <textarea value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} rows={2} placeholder="Full address of the property" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="section13not-landlord-agent-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
+                <input id="section13not-landlord-agent-name" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full name or company" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section13not-landlord-address" className="block text-sm font-semibold text-navy-700 mb-1">Landlord Address</label>
+                <textarea id="section13not-landlord-address" value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="section13not-tenant-s-name-s" className="block text-sm font-semibold text-navy-700 mb-1">Tenant(s) Name(s) *</label>
+                <input id="section13not-tenant-s-name-s" value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="All named tenants" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section13not-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <textarea id="section13not-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} rows={2} placeholder="Full address of the property" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
@@ -102,20 +102,20 @@ export default function Section13Notice() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Current Rent (£/{rentPeriod === "monthly" ? "mo" : "wk"}) *</label>
+                <div><label htmlFor="section13not-current-rent" className="block text-sm font-semibold text-navy-700 mb-1">Current Rent (£/{rentPeriod === "monthly" ? "mo" : "wk"}) *</label>
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                    <input type="number" value={currentRent} onChange={e => setCurrentRent(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Proposed New Rent (£/{rentPeriod === "monthly" ? "mo" : "wk"}) *</label>
+                    <input id="section13not-current-rent" type="number" value={currentRent} onChange={e => setCurrentRent(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                <div><label htmlFor="section13not-proposed-new-rent" className="block text-sm font-semibold text-navy-700 mb-1">Proposed New Rent (£/{rentPeriod === "monthly" ? "mo" : "wk"}) *</label>
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                    <input type="number" value={proposedRent} onChange={e => setProposedRent(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                    <input id="section13not-proposed-new-rent" type="number" value={proposedRent} onChange={e => setProposedRent(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               </div>
               {increase && (
                 <div className="bg-navy-50 rounded-xl p-4 text-sm">
                   <p className="text-navy-600">Increase: <strong className="text-navy-800">£{increase}/{rentPeriod === "monthly" ? "mo"  : "wk"}</strong> ({increasePct}%)</p>
                 </div>
               )}
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date of Notice *</label>
-                <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section13not-date-of-notice" className="block text-sm font-semibold text-navy-700 mb-1">Date of Notice *</label>
+                <input id="section13not-date-of-notice" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             {issueDate && proposedRent && (

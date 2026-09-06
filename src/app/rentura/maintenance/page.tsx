@@ -418,34 +418,34 @@ export default function MaintenancePage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
             <div>
-              <label style={labelStyle}>Property *</label>
-              <select value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
+              <label htmlFor="maintenance-property" style={labelStyle}>Property *</label>
+              <select id="maintenance-property" value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
                 <option value="">Select property…</option>
                 {properties.map(p => <option key={p.id} value={p.id}>{p.address.split(",")[0]}</option>)}
               </select>
             </div>
 
             <div>
-              <label style={labelStyle}>Issue title *</label>
-              <input type="text" placeholder="e.g. Boiler not heating water" value={form.title} onChange={e => setF("title", e.target.value)} style={inputStyle} />
+              <label htmlFor="maintenance-issue-title" style={labelStyle}>Issue title *</label>
+              <input id="maintenance-issue-title" type="text" placeholder="e.g. Boiler not heating water" value={form.title} onChange={e => setF("title", e.target.value)} style={inputStyle} />
             </div>
 
             <div>
-              <label style={labelStyle}>Description</label>
-              <textarea placeholder="What happened? What needs doing?" value={form.description} onChange={e => setF("description", e.target.value)}
+              <label htmlFor="maintenance-description" style={labelStyle}>Description</label>
+              <textarea id="maintenance-description" placeholder="What happened? What needs doing?" value={form.description} onChange={e => setF("description", e.target.value)}
                 style={{ ...inputStyle, minHeight: 80, resize: "vertical" as const }} />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
               <div>
-                <label style={labelStyle}>Category</label>
-                <select value={form.category} onChange={e => setF("category", e.target.value as MaintenanceCategory)} style={inputStyle}>
+                <label htmlFor="maintenance-category" style={labelStyle}>Category</label>
+                <select id="maintenance-category" value={form.category} onChange={e => setF("category", e.target.value as MaintenanceCategory)} style={inputStyle}>
                   {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.icon} {c.label}</option>)}
                 </select>
               </div>
               <div>
-                <label style={labelStyle}>Urgency</label>
-                <select value={form.urgency} onChange={e => setF("urgency", e.target.value as MaintenanceUrgency)} style={inputStyle}>
+                <label htmlFor="maintenance-urgency" style={labelStyle}>Urgency</label>
+                <select id="maintenance-urgency" value={form.urgency} onChange={e => setF("urgency", e.target.value as MaintenanceUrgency)} style={inputStyle}>
                   <option value="emergency">⚠ Emergency (24h)</option>
                   <option value="urgent">◎ Urgent (7 days)</option>
                   <option value="routine">○ Routine</option>
@@ -464,12 +464,12 @@ export default function MaintenancePage() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
               <div>
-                <label style={labelStyle}>Estimated cost (£)</label>
-                <input type="text" placeholder="500" value={form.estimated_cost} onChange={e => setF("estimated_cost", e.target.value)} style={inputStyle} />
+                <label htmlFor="maintenance-estimated-cost" style={labelStyle}>Estimated cost (£)</label>
+                <input id="maintenance-estimated-cost" type="text" placeholder="500" value={form.estimated_cost} onChange={e => setF("estimated_cost", e.target.value)} style={inputStyle} />
               </div>
               <div>
-                <label style={labelStyle}>Scheduled date</label>
-                <input type="date" value={form.scheduled_date} onChange={e => setF("scheduled_date", e.target.value)} style={inputStyle} />
+                <label htmlFor="maintenance-scheduled-date" style={labelStyle}>Scheduled date</label>
+                <input id="maintenance-scheduled-date" type="date" value={form.scheduled_date} onChange={e => setF("scheduled_date", e.target.value)} style={inputStyle} />
               </div>
             </div>
 
@@ -492,8 +492,8 @@ export default function MaintenancePage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <p style={{ fontSize: 14, color: INK2 }}>{costIssue.title}</p>
             <div>
-              <label style={labelStyle}>Actual cost (£) *</label>
-              <input type="text" placeholder="320" value={costAmount} onChange={e => setCostAmount(e.target.value)} style={inputStyle} autoFocus />
+              <label htmlFor="maintenance-actual-cost" style={labelStyle}>Actual cost (£) *</label>
+              <input id="maintenance-actual-cost" type="text" placeholder="320" value={costAmount} onChange={e => setCostAmount(e.target.value)} style={inputStyle} autoFocus />
             </div>
             <label style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 14, fontWeight: 600 }}>
               <input type="checkbox" checked={costIsImprovement} onChange={e => setCostIsImprovement(e.target.checked)} style={{ width: 16, height: 16 }} />

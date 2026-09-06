@@ -100,13 +100,13 @@ export default function AcademyAuthPage() {
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 24 }}>Access your courses and dashboard.</p>
               <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Email</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com"
+                  <label htmlFor="auth-email" style={{ display: "block", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Email</label>
+                  <input id="auth-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com"
                     style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "12px 16px", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password"
+                  <label htmlFor="auth-password" style={{ display: "block", fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Password</label>
+                  <input id="auth-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password"
                     style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "12px 16px", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                 </div>
                 {error && <div style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 10, padding: "10px 14px", fontSize: 13, color: "#f87171" }}>{error}</div>}

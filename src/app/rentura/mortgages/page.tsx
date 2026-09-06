@@ -282,8 +282,8 @@ export default function MortgagesPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {properties.length > 0 && (
                 <div>
-                  <label style={labelStyle}>Property</label>
-                  <select value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
+                  <label htmlFor="mortgages-property" style={labelStyle}>Property</label>
+                  <select id="mortgages-property" value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
                     <option value="">Portfolio-wide / unassigned</option>
                     {properties.map(p => <option key={p.id} value={p.id}>{p.nickname || p.address.split(",")[0]}</option>)}
                   </select>
@@ -292,44 +292,44 @@ export default function MortgagesPage() {
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
-                  <label style={labelStyle}>Lender *</label>
-                  <input value={form.lender as string} onChange={e => setF("lender", e.target.value)} placeholder="e.g. Barclays" style={inputStyle} />
+                  <label htmlFor="mortgages-lender" style={labelStyle}>Lender *</label>
+                  <input id="mortgages-lender" value={form.lender as string} onChange={e => setF("lender", e.target.value)} placeholder="e.g. Barclays" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Product name</label>
-                  <input value={form.product_name as string} onChange={e => setF("product_name", e.target.value)} placeholder="e.g. 5yr fixed 4.29%" style={inputStyle} />
+                  <label htmlFor="mortgages-product-name" style={labelStyle}>Product name</label>
+                  <input id="mortgages-product-name" value={form.product_name as string} onChange={e => setF("product_name", e.target.value)} placeholder="e.g. 5yr fixed 4.29%" style={inputStyle} />
                 </div>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 12 }}>
                 <div>
-                  <label style={labelStyle}>Rate (%)</label>
-                  <input type="number" step="0.01" value={form.interest_rate as string} onChange={e => setF("interest_rate", e.target.value)} placeholder="4.29" style={inputStyle} />
+                  <label htmlFor="mortgages-rate" style={labelStyle}>Rate (%)</label>
+                  <input id="mortgages-rate" type="number" step="0.01" value={form.interest_rate as string} onChange={e => setF("interest_rate", e.target.value)} placeholder="4.29" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Monthly (£)</label>
-                  <input type="number" value={form.monthly_payment as string} onChange={e => setF("monthly_payment", e.target.value)} placeholder="650" style={inputStyle} />
+                  <label htmlFor="mortgages-monthly" style={labelStyle}>Monthly (£)</label>
+                  <input id="mortgages-monthly" type="number" value={form.monthly_payment as string} onChange={e => setF("monthly_payment", e.target.value)} placeholder="650" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Balance (£)</label>
-                  <input type="number" value={form.remaining_balance as string} onChange={e => setF("remaining_balance", e.target.value)} placeholder="125000" style={inputStyle} />
+                  <label htmlFor="mortgages-balance" style={labelStyle}>Balance (£)</label>
+                  <input id="mortgages-balance" type="number" value={form.remaining_balance as string} onChange={e => setF("remaining_balance", e.target.value)} placeholder="125000" style={inputStyle} />
                 </div>
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
-                  <label style={labelStyle}>Fixed term ends</label>
-                  <input type="date" value={form.fixed_term_expiry as string} onChange={e => setF("fixed_term_expiry", e.target.value)} style={inputStyle} />
+                  <label htmlFor="mortgages-fixed-term-ends" style={labelStyle}>Fixed term ends</label>
+                  <input id="mortgages-fixed-term-ends" type="date" value={form.fixed_term_expiry as string} onChange={e => setF("fixed_term_expiry", e.target.value)} style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>ERC window ends</label>
-                  <input type="date" value={form.erc_expiry as string} onChange={e => setF("erc_expiry", e.target.value)} style={inputStyle} />
+                  <label htmlFor="mortgages-erc-window-ends" style={labelStyle}>ERC window ends</label>
+                  <input id="mortgages-erc-window-ends" type="date" value={form.erc_expiry as string} onChange={e => setF("erc_expiry", e.target.value)} style={inputStyle} />
                 </div>
               </div>
 
               <div>
-                <label style={labelStyle}>Lender SVR (%)</label>
-                <input type="number" step="0.01" value={form.svr_rate as string} onChange={e => setF("svr_rate", e.target.value)} placeholder="7.99" style={inputStyle} />
+                <label htmlFor="mortgages-lender-svr" style={labelStyle}>Lender SVR (%)</label>
+                <input id="mortgages-lender-svr" type="number" step="0.01" value={form.svr_rate as string} onChange={e => setF("svr_rate", e.target.value)} placeholder="7.99" style={inputStyle} />
                 <p style={{ fontSize: 11, color: INK3, marginTop: 4 }}>The rate you'll revert to when the fixed term ends.</p>
               </div>
 

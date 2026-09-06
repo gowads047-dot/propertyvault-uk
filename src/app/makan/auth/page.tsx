@@ -68,12 +68,12 @@ export default function AuthPage() {
           {mode === "signup" && (
             <>
               <div>
-                <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Full name *</label>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} required className="h-input" placeholder="Your full name" />
+                <label htmlFor="auth-full-name" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Full name *</label>
+                <input id="auth-full-name" type="text" value={name} onChange={e => setName(e.target.value)} required className="h-input" placeholder="Your full name" />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Phone / WhatsApp number *</label>
-                <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required className="h-input" placeholder="e.g. +44 7415 721628" />
+                <label htmlFor="auth-phone-whatsapp-number" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Phone / WhatsApp number *</label>
+                <input id="auth-phone-whatsapp-number" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required className="h-input" placeholder="e.g. +44 7415 721628" />
                 <p className="text-xs mt-1" style={{ color: "var(--h-subtle)" }}>Required for landlords and tenants to communicate directly. Include country code.</p>
               </div>
               <div>
@@ -95,12 +95,12 @@ export default function AuthPage() {
             </>
           )}
           <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Email *</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="h-input" placeholder="you@email.com" />
+            <label htmlFor="auth-email" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Email *</label>
+            <input id="auth-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="h-input" placeholder="you@email.com" />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Password *</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required className="h-input" placeholder={mode === "signup" ? "At least 6 characters" : "Your password"} />
+            <label htmlFor="auth-password" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--h-text)" }}>Password *</label>
+            <input id="auth-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required className="h-input" placeholder={mode === "signup" ? "At least 6 characters" : "Your password"} />
           </div>
 
           {error && <div className="p-3 rounded-lg text-sm font-medium" style={{ background: "#fef2f2", color: "#dc2626" }}>{error}</div>}

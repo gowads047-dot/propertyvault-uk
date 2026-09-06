@@ -96,18 +96,18 @@ export default function Section8Notice() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Parties & Property</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord Full Name *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full legal name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord Address *</label>
-                <textarea value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} placeholder="Address for correspondence" rows={2} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Agent Name (if serving on behalf of landlord)</label>
-                <input value={agentName} onChange={e => setAgentName(e.target.value)} placeholder="Leave blank if landlord serving directly" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Tenant(s) Full Name(s) *</label>
-                <input value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="All named tenants" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <textarea value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address of the let property" rows={2} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date of Notice *</label>
-                <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section8noti-landlord-full-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord Full Name *</label>
+                <input id="section8noti-landlord-full-name" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Full legal name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section8noti-landlord-address" className="block text-sm font-semibold text-navy-700 mb-1">Landlord Address *</label>
+                <textarea id="section8noti-landlord-address" value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} placeholder="Address for correspondence" rows={2} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="section8noti-agent-name-if-serving" className="block text-sm font-semibold text-navy-700 mb-1">Agent Name (if serving on behalf of landlord)</label>
+                <input id="section8noti-agent-name-if-serving" value={agentName} onChange={e => setAgentName(e.target.value)} placeholder="Leave blank if landlord serving directly" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section8noti-tenant-s-full-name" className="block text-sm font-semibold text-navy-700 mb-1">Tenant(s) Full Name(s) *</label>
+                <input id="section8noti-tenant-s-full-name" value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="All named tenants" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="section8noti-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <textarea id="section8noti-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address of the let property" rows={2} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="section8noti-date-of-notice" className="block text-sm font-semibold text-navy-700 mb-1">Date of Notice *</label>
+                <input id="section8noti-date-of-notice" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             {/* Ground selector */}
@@ -133,8 +133,8 @@ export default function Section8Notice() {
                     </div>
                     {selectedGrounds.includes(g.id) && (
                       <div className="mt-3 ml-8" onClick={e => e.stopPropagation()}>
-                        <label className="block text-xs text-navy-200 mb-1">Particulars for this ground (required — describe the specific facts):</label>
-                        <textarea value={groundDetails[g.id] || ""} onChange={e => setGroundDetails(p => ({ ...p, [g.id]: e.target.value }))}
+                        <label htmlFor="section8noti-particulars-for-this-ground" className="block text-xs text-navy-200 mb-1">Particulars for this ground (required — describe the specific facts):</label>
+                        <textarea id="section8noti-particulars-for-this-ground" value={groundDetails[g.id] || ""} onChange={e => setGroundDetails(p => ({ ...p, [g.id]: e.target.value }))}
                           placeholder={g.id === "g8" || g.id === "g10" || g.id === "g11" ? `e.g. As at ${fmt(issueDate)}, the tenant owes £${arrearAmount || "___"} in rent arrears representing ${arrearWeeks || "___"} weeks/months of unpaid rent...` : "Describe the specific facts that support this ground..."}
                           rows={3} className="w-full px-3 py-2 border border-white/20 rounded-lg text-xs text-white bg-white/10 placeholder-navy-300 focus:outline-none focus:ring-1 focus:ring-gold-400 resize-none" />
                       </div>
@@ -148,11 +148,11 @@ export default function Section8Notice() {
               <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
                 <h2 className="font-bold text-navy-800">Rent Arrears Details</h2>
                 <div className="grid grid-cols-2 gap-4">
-                  <div><label className="block text-sm font-semibold text-navy-700 mb-1">Total arrears amount (£)</label>
+                  <div><label htmlFor="section8noti-total-arrears-amount" className="block text-sm font-semibold text-navy-700 mb-1">Total arrears amount (£)</label>
                     <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                      <input value={arrearAmount} onChange={e => setArrearAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
-                  <div><label className="block text-sm font-semibold text-navy-700 mb-1">Weeks / months outstanding</label>
-                    <input value={arrearWeeks} onChange={e => setArrearWeeks(e.target.value)} placeholder="e.g. 3 months" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <input id="section8noti-total-arrears-amount" value={arrearAmount} onChange={e => setArrearAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                  <div><label htmlFor="section8noti-weeks-months-outstanding" className="block text-sm font-semibold text-navy-700 mb-1">Weeks / months outstanding</label>
+                    <input id="section8noti-weeks-months-outstanding" value={arrearWeeks} onChange={e => setArrearWeeks(e.target.value)} placeholder="e.g. 3 months" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 </div>
               </div>
             )}

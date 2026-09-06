@@ -127,8 +127,8 @@ export default function AcademyJoinPage() {
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Full name</label>
-                  <input
+                  <label htmlFor="join-full-name" style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Full name</label>
+                  <input id="join-full-name"
                     type="text"
                     value={name}
                     onChange={e => setName(e.target.value)}
@@ -139,8 +139,8 @@ export default function AcademyJoinPage() {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Email address</label>
-                  <input
+                  <label htmlFor="join-email-address" style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Email address</label>
+                  <input id="join-email-address"
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
@@ -151,8 +151,8 @@ export default function AcademyJoinPage() {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
-                  <input
+                  <label htmlFor="join-password" style={{ display: "block", fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.6)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
+                  <input id="join-password"
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}

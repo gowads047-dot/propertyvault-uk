@@ -140,14 +140,14 @@ export default function SalePrepChecklist() {
             <div className="bg-white rounded-2xl border border-navy-100 p-6 mb-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Property Address</label>
-                  <input type="text" value={address} onChange={e => setAddress(e.target.value)}
+                  <label htmlFor="saleprepchec-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address</label>
+                  <input id="saleprepchec-property-address" type="text" value={address} onChange={e => setAddress(e.target.value)}
                     placeholder="e.g. 14 Maple Avenue, Derby DE1 2AB"
                     className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Target listing date</label>
-                  <input type="date" value={targetDate} onChange={e => setTargetDate(e.target.value)}
+                  <label htmlFor="saleprepchec-target-listing-date" className="block text-sm font-semibold text-navy-700 mb-1">Target listing date</label>
+                  <input id="saleprepchec-target-listing-date" type="date" value={targetDate} onChange={e => setTargetDate(e.target.value)}
                     className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
               </div>

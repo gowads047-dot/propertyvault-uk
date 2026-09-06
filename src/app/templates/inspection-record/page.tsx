@@ -136,8 +136,8 @@ export default function InspectionRecordTemplate() {
                 placeholder="List any actions needed by landlord or tenant, with agreed deadlines..."
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit", marginBottom: 12 }} />
               <div>
-                <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Follow-up date (if applicable)</label>
-                <input type="date" value={followUpDate} onChange={e => setFollowUpDate(e.target.value)}
+                <label htmlFor="inspectionre-follow-up-date-if" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Follow-up date (if applicable)</label>
+                <input id="inspectionre-follow-up-date-if" type="date" value={followUpDate} onChange={e => setFollowUpDate(e.target.value)}
                   style={{ padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none" }} />
               </div>
             </div>

@@ -119,8 +119,8 @@ export default function NewProperty() {
 
           {/* Address */}
           <div>
-            <label style={labelStyle}>Full address *</label>
-            <input
+            <label htmlFor="new-full-address" style={labelStyle}>Full address *</label>
+            <input id="new-full-address"
               type="text"
               value={form.address}
               onChange={e => set("address", e.target.value)}
@@ -132,8 +132,8 @@ export default function NewProperty() {
 
           {/* Nickname */}
           <div>
-            <label style={labelStyle}>Nickname <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional — e.g. "The Manchester Flat")</span></label>
-            <input
+            <label htmlFor="new-nickname" style={labelStyle}>Nickname <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional — e.g. "The Manchester Flat")</span></label>
+            <input id="new-nickname"
               type="text"
               value={form.nickname}
               onChange={e => set("nickname", e.target.value)}
@@ -191,17 +191,17 @@ export default function NewProperty() {
             <p style={{ fontSize: 12, fontWeight: 700, color: "rgba(17,17,17,0.4)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 16 }}>Purchase details</p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16 }}>
               <div>
-                <label style={labelStyle}>Purchase date</label>
-                <input type="date" value={form.purchase_date} onChange={e => set("purchase_date", e.target.value)} style={inputStyle} />
+                <label htmlFor="new-purchase-date" style={labelStyle}>Purchase date</label>
+                <input id="new-purchase-date" type="date" value={form.purchase_date} onChange={e => set("purchase_date", e.target.value)} style={inputStyle} />
               </div>
               <div>
-                <label style={labelStyle}>Purchase price (£)</label>
-                <input type="text" value={form.purchase_price} onChange={e => set("purchase_price", e.target.value)} placeholder="250,000" style={inputStyle} />
+                <label htmlFor="new-purchase-price" style={labelStyle}>Purchase price (£)</label>
+                <input id="new-purchase-price" type="text" value={form.purchase_price} onChange={e => set("purchase_price", e.target.value)} placeholder="250,000" style={inputStyle} />
               </div>
             </div>
             <div style={{ marginTop: 16 }}>
-              <label style={labelStyle}>Estimated current value (£)</label>
-              <input type="text" value={form.current_value} onChange={e => set("current_value", e.target.value)} placeholder="280,000" style={inputStyle} />
+              <label htmlFor="new-estimated-current-value" style={labelStyle}>Estimated current value (£)</label>
+              <input id="new-estimated-current-value" type="text" value={form.current_value} onChange={e => set("current_value", e.target.value)} placeholder="280,000" style={inputStyle} />
             </div>
           </div>
 

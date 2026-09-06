@@ -72,8 +72,8 @@ export default function ListPropertyPage() {
               <h3 className="font-bold text-navy-800 text-lg mb-4 border-b border-navy-100 pb-2">Property Details</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Listing Type</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-listing-type" className="block text-sm font-semibold text-navy-700 mb-1">Listing Type</label>
+                  <select id="listproperty-listing-type" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>For Rent — Long-Term Let</option>
                     <option>For Rent — Short-Term / SA</option>
                     <option>For Rent — HMO (Rooms)</option>
@@ -84,8 +84,8 @@ export default function ListPropertyPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Property Type</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-property-type" className="block text-sm font-semibold text-navy-700 mb-1">Property Type</label>
+                  <select id="listproperty-property-type" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>Detached House</option>
                     <option>Semi-Detached House</option>
                     <option>Terraced House</option>
@@ -102,21 +102,21 @@ export default function ListPropertyPage() {
               </div>
               <div className="grid md:grid-cols-3 gap-4 mt-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Bedrooms</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-bedrooms" className="block text-sm font-semibold text-navy-700 mb-1">Bedrooms</label>
+                  <select id="listproperty-bedrooms" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>Studio</option>
                     <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Bathrooms</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-bathrooms" className="block text-sm font-semibold text-navy-700 mb-1">Bathrooms</label>
+                  <select id="listproperty-bathrooms" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>1</option><option>2</option><option>3</option><option>4+</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Furnished</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-furnished" className="block text-sm font-semibold text-navy-700 mb-1">Furnished</label>
+                  <select id="listproperty-furnished" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>Unfurnished</option>
                     <option>Part-Furnished</option>
                     <option>Fully Furnished</option>
@@ -129,20 +129,20 @@ export default function ListPropertyPage() {
               <h3 className="font-bold text-navy-800 text-lg mb-4 border-b border-navy-100 pb-2">Location</h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Address Line 1</label>
-                  <input type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 14 Victoria Street" />
+                  <label htmlFor="listproperty-address-line-1" className="block text-sm font-semibold text-navy-700 mb-1">Address Line 1</label>
+                  <input id="listproperty-address-line-1" type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 14 Victoria Street" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Town / City</label>
-                  <input type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. Manchester" />
+                  <label htmlFor="listproperty-town-city" className="block text-sm font-semibold text-navy-700 mb-1">Town / City</label>
+                  <input id="listproperty-town-city" type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. Manchester" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">County</label>
-                  <input type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-county" className="block text-sm font-semibold text-navy-700 mb-1">County</label>
+                  <input id="listproperty-county" type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Postcode</label>
-                  <input type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. M1 2AB" />
+                  <label htmlFor="listproperty-postcode" className="block text-sm font-semibold text-navy-700 mb-1">Postcode</label>
+                  <input id="listproperty-postcode" type="text" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. M1 2AB" />
                 </div>
               </div>
             </div>
@@ -151,12 +151,12 @@ export default function ListPropertyPage() {
               <h3 className="font-bold text-navy-800 text-lg mb-4 border-b border-navy-100 pb-2">Pricing & Availability</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Rent / Price (£)</label>
-                  <input type="number" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 950" />
+                  <label htmlFor="listproperty-rent-price" className="block text-sm font-semibold text-navy-700 mb-1">Rent / Price (£)</label>
+                  <input id="listproperty-rent-price" type="number" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 950" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Frequency</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-frequency" className="block text-sm font-semibold text-navy-700 mb-1">Frequency</label>
+                  <select id="listproperty-frequency" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>Per Calendar Month</option>
                     <option>Per Week</option>
                     <option>Per Night</option>
@@ -166,18 +166,18 @@ export default function ListPropertyPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Available From</label>
-                  <input type="date" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-available-from" className="block text-sm font-semibold text-navy-700 mb-1">Available From</label>
+                  <input id="listproperty-available-from" type="date" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-4 mt-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Deposit (£)</label>
-                  <input type="number" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 950" />
+                  <label htmlFor="listproperty-deposit" className="block text-sm font-semibold text-navy-700 mb-1">Deposit (£)</label>
+                  <input id="listproperty-deposit" type="number" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" placeholder="e.g. 950" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Minimum Tenancy</label>
-                  <select className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+                  <label htmlFor="listproperty-minimum-tenancy" className="block text-sm font-semibold text-navy-700 mb-1">Minimum Tenancy</label>
+                  <select id="listproperty-minimum-tenancy" className="w-full px-4 py-3 border border-navy-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
                     <option>6 months</option>
                     <option>12 months</option>
                     <option>24 months</option>
@@ -191,8 +191,8 @@ export default function ListPropertyPage() {
             <div>
               <h3 className="font-bold text-navy-800 text-lg mb-4 border-b border-navy-100 pb-2">Description & Features</h3>
               <div>
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Property Description</label>
-                <textarea rows={6} className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" placeholder="Describe your property in detail. Include key features, nearby amenities, transport links, and anything that makes it stand out." />
+                <label htmlFor="listproperty-property-description" className="block text-sm font-semibold text-navy-700 mb-1">Property Description</label>
+                <textarea id="listproperty-property-description" rows={6} className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" placeholder="Describe your property in detail. Include key features, nearby amenities, transport links, and anything that makes it stand out." />
               </div>
               <div className="mt-4">
                 <label className="block text-sm font-semibold text-navy-700 mb-2">Key Features (select all that apply)</label>
@@ -256,26 +256,26 @@ export default function ListPropertyPage() {
               <p className="text-sm text-navy-500 mb-4">How should interested tenants or buyers contact you? Provide at least one method.</p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Your Name *</label>
-                  <input type="text" name="landlord_name" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-your-name" className="block text-sm font-semibold text-navy-700 mb-1">Your Name *</label>
+                  <input id="listproperty-your-name" type="text" name="landlord_name" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Email Address *</label>
-                  <input type="email" name="landlord_email" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-email-address" className="block text-sm font-semibold text-navy-700 mb-1">Email Address *</label>
+                  <input id="listproperty-email-address" type="email" name="landlord_email" required className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Phone Number</label>
-                  <input type="tel" name="landlord_phone" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-phone-number" className="block text-sm font-semibold text-navy-700 mb-1">Phone Number</label>
+                  <input id="listproperty-phone-number" type="tel" name="landlord_phone" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">WhatsApp Number</label>
-                  <input type="tel" name="landlord_whatsapp" placeholder="e.g. 07700 900123" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+                  <label htmlFor="listproperty-whatsapp-number" className="block text-sm font-semibold text-navy-700 mb-1">WhatsApp Number</label>
+                  <input id="listproperty-whatsapp-number" type="tel" name="landlord_whatsapp" placeholder="e.g. 07700 900123" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
               </div>
               <div className="mt-3">
-                <label className="block text-sm font-semibold text-navy-700 mb-2">How should tenants contact you?</label>
+                <label htmlFor="listproperty-how-should-tenants-contact" className="block text-sm font-semibold text-navy-700 mb-2">How should tenants contact you?</label>
                 <div className="flex flex-wrap gap-3">
-                  <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_email" defaultChecked className="rounded border-navy-300 text-gold-500" /> Email</label>
+                  <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input id="listproperty-how-should-tenants-contact" type="checkbox" name="contact_email" defaultChecked className="rounded border-navy-300 text-gold-500" /> Email</label>
                   <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_whatsapp" className="rounded border-navy-300 text-gold-500" /> WhatsApp</label>
                   <label className="flex items-center gap-2 text-sm text-navy-600 cursor-pointer"><input type="checkbox" name="contact_phone" className="rounded border-navy-300 text-gold-500" /> Phone Call</label>
                 </div>

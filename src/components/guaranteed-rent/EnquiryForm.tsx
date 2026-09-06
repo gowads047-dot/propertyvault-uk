@@ -83,33 +83,33 @@ export function EnquiryForm() {
     <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-navy-100 p-6 md:p-8 shadow-lg space-y-4">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-navy-700 mb-1">Your Name *</label>
-          <input type="text" required value={fields.name} onChange={set("name")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
+          <label htmlFor="guaranteedre-your-name" className="block text-sm font-semibold text-navy-700 mb-1">Your Name *</label>
+          <input id="guaranteedre-your-name" type="text" required value={fields.name} onChange={set("name")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-navy-700 mb-1">Phone Number *</label>
-          <input type="tel" required value={fields.phone} onChange={set("phone")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
+          <label htmlFor="guaranteedre-phone-number" className="block text-sm font-semibold text-navy-700 mb-1">Phone Number *</label>
+          <input id="guaranteedre-phone-number" type="tel" required value={fields.phone} onChange={set("phone")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
         </div>
       </div>
       <div>
-        <label className="block text-sm font-semibold text-navy-700 mb-1">Email Address *</label>
-        <input type="email" required value={fields.email} onChange={set("email")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <label htmlFor="guaranteedre-email-address" className="block text-sm font-semibold text-navy-700 mb-1">Email Address *</label>
+        <input id="guaranteedre-email-address" type="email" required value={fields.email} onChange={set("email")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
       </div>
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold text-navy-700 mb-1">Property Postcode</label>
-          <input type="text" placeholder="e.g. B12 8QX" value={fields.postcode} onChange={set("postcode")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
+          <label htmlFor="guaranteedre-property-postcode" className="block text-sm font-semibold text-navy-700 mb-1">Property Postcode</label>
+          <input id="guaranteedre-property-postcode" type="text" placeholder="e.g. B12 8QX" value={fields.postcode} onChange={set("postcode")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400" />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-navy-700 mb-1">Bedrooms</label>
-          <select value={fields.bedrooms} onChange={set("bedrooms")} className="w-full px-4 py-3 border border-navy-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
+          <label htmlFor="guaranteedre-bedrooms" className="block text-sm font-semibold text-navy-700 mb-1">Bedrooms</label>
+          <select id="guaranteedre-bedrooms" value={fields.bedrooms} onChange={set("bedrooms")} className="w-full px-4 py-3 border border-navy-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-gold-400">
             <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6+</option>
           </select>
         </div>
       </div>
       <div>
-        <label className="block text-sm font-semibold text-navy-700 mb-1">Message (optional)</label>
-        <textarea rows={3} placeholder="Tell us about your property or ask any questions..." value={fields.message} onChange={set("message")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
+        <label htmlFor="guaranteedre-message-optional" className="block text-sm font-semibold text-navy-700 mb-1">Message (optional)</label>
+        <textarea id="guaranteedre-message-optional" rows={3} placeholder="Tell us about your property or ask any questions..." value={fields.message} onChange={set("message")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
       </div>
 
       {status === "error" && (

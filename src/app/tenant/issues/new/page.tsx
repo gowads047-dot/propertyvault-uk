@@ -101,14 +101,14 @@ function NewIssueInner() {
 
           {/* Title */}
           <div>
-            <label style={label}>Issue title</label>
-            <input type="text" value={title} onChange={e => setTitle(e.target.value)} required placeholder="e.g. Boiler not producing hot water" style={input} />
+            <label htmlFor="new-issue-title" style={label}>Issue title</label>
+            <input id="new-issue-title" type="text" value={title} onChange={e => setTitle(e.target.value)} required placeholder="e.g. Boiler not producing hot water" style={input} />
           </div>
 
           {/* Description */}
           <div>
-            <label style={label}>Describe the issue</label>
-            <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="When did it start? How bad is it? What have you tried?" rows={4}
+            <label htmlFor="new-describe-the-issue" style={label}>Describe the issue</label>
+            <textarea id="new-describe-the-issue" value={description} onChange={e => setDescription(e.target.value)} placeholder="When did it start? How bad is it? What have you tried?" rows={4}
               style={{ ...input, resize: "vertical", lineHeight: 1.6 }} />
           </div>
 

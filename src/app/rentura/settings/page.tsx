@@ -182,8 +182,8 @@ export default function RenturaSettings() {
                 ))}
               </div>
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 6 }}>Email address</label>
-                <input
+                <label htmlFor="settings-email-address" style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 6 }}>Email address</label>
+                <input id="settings-email-address"
                   value={user?.email || ""}
                   disabled
                   style={{ width: "100%", background: "rgba(255,255,255,0.02)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "10px 12px", fontSize: 13, color: C.ink3, boxSizing: "border-box", cursor: "not-allowed" }}

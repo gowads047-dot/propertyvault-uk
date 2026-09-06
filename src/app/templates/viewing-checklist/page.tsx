@@ -238,8 +238,8 @@ export default function ViewingChecklistTemplate() {
 
             {/* Notes */}
             <div style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", padding: 20, marginBottom: 20 }}>
-              <label style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>Overall Notes & Observations</label>
-              <textarea value={f.notes} onChange={e => setF(p => ({ ...p, notes: e.target.value }))} placeholder="Any concerns, highlights, or additional observations…" rows={4}
+              <label htmlFor="viewingcheck-overall-notes-observations" style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>Overall Notes & Observations</label>
+              <textarea id="viewingcheck-overall-notes-observations" value={f.notes} onChange={e => setF(p => ({ ...p, notes: e.target.value }))} placeholder="Any concerns, highlights, or additional observations…" rows={4}
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit" }} />
             </div>
 

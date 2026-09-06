@@ -98,12 +98,12 @@ function TenantAuthInner() {
               </p>
               <form onSubmit={handleSetup} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Your email</label>
-                  <input type="email" value={email} readOnly style={{ ...input, opacity: 0.6 }} />
+                  <label htmlFor="tenant-your-email" style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Your email</label>
+                  <input id="tenant-your-email" type="email" value={email} readOnly style={{ ...input, opacity: 0.6 }} />
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Create a password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 6 characters" style={input} />
+                  <label htmlFor="tenant-create-a-password" style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Create a password</label>
+                  <input id="tenant-create-a-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 6 characters" style={input} />
                 </div>
                 {error && <p style={{ fontSize: 13, color: "#b91c1c", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
                 <button type="submit" disabled={submitting} style={btn(submitting)}>{submitting ? "Setting up…" : "Access my portal →"}</button>
@@ -116,12 +116,12 @@ function TenantAuthInner() {
               <p style={{ fontSize: 13, color: S.ink2, marginBottom: 24 }}>Access your issues, messages, and home advice.</p>
               <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Email</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com" style={input} />
+                  <label htmlFor="tenant-email" style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Email</label>
+                  <input id="tenant-email" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com" style={input} />
                 </div>
                 <div>
-                  <label style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password" style={input} />
+                  <label htmlFor="tenant-password" style={{ display: "block", fontSize: 11, fontWeight: 700, color: S.ink2, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.06em" }}>Password</label>
+                  <input id="tenant-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Your password" style={input} />
                 </div>
                 {error && <p style={{ fontSize: 13, color: "#b91c1c", background: "rgba(220,38,38,0.06)", padding: "9px 12px", borderRadius: 8 }}>{error}</p>}
                 <button type="submit" disabled={submitting} style={btn(submitting)}>{submitting ? "Logging in…" : "Log in →"}</button>

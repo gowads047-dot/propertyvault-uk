@@ -97,8 +97,8 @@ export default function SettingsPage() {
           <h2 className="font-bold text-base mb-4" style={{ color: "var(--h-text)" }}>Profile</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>Display name</label>
-              <input
+              <label htmlFor="settings-display-name" className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>Display name</label>
+              <input id="settings-display-name"
                 value={name}
                 onChange={e => setName(e.target.value)}
                 placeholder="Your name or company"
@@ -106,8 +106,8 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>WhatsApp number</label>
-              <input
+              <label htmlFor="settings-whatsapp-number" className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>WhatsApp number</label>
+              <input id="settings-whatsapp-number"
                 value={whatsapp}
                 onChange={e => setWhatsapp(e.target.value)}
                 placeholder="+20 100 000 0000"
@@ -129,8 +129,8 @@ export default function SettingsPage() {
           <h2 className="font-bold text-base mb-1" style={{ color: "var(--h-text)" }}>Email address</h2>
           <p className="text-xs mb-4" style={{ color: "var(--h-subtle)" }}>Current: <strong style={{ color: "var(--h-muted)" }}>{user.email}</strong></p>
           <div>
-            <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>New email address</label>
-            <input
+            <label htmlFor="settings-new-email-address" className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>New email address</label>
+            <input id="settings-new-email-address"
               type="email"
               value={newEmail}
               onChange={e => setNewEmail(e.target.value)}
@@ -151,8 +151,8 @@ export default function SettingsPage() {
           <h2 className="font-bold text-base mb-4" style={{ color: "var(--h-text)" }}>Password</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>New password</label>
-              <input
+              <label htmlFor="settings-new-password" className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>New password</label>
+              <input id="settings-new-password"
                 type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
@@ -161,8 +161,8 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>Confirm new password</label>
-              <input
+              <label htmlFor="settings-confirm-new-password" className="block text-sm font-semibold mb-1" style={{ color: "var(--h-muted)" }}>Confirm new password</label>
+              <input id="settings-confirm-new-password"
                 type="password"
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
