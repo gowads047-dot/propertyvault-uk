@@ -132,7 +132,7 @@ export default function CheckOutReportTemplate() {
               <h2 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 16 }}>Deposit Deduction Schedule</h2>
               {deductions.map((d, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-                  <input value={d.desc} onChange={e => updateDeduction(i, "desc", e.target.value)} placeholder={`Deduction ${i + 1} description`}
+                  <input aria-label={`Deduction ${i + 1} description`} value={d.desc} onChange={e => updateDeduction(i, "desc", e.target.value)} placeholder={`Deduction ${i + 1} description`}
                     style={{ flex: 3, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
