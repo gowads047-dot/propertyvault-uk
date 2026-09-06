@@ -22,7 +22,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
     if (!q) return;
     setLoading(true); setError(""); setData(null);
     try {
-      const res  = await fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(q)}`);
+      const res  = await fetch(`/api/postcode-lookup/?postcode=${encodeURIComponent(q)}`);
       const json = await res.json();
       if (!res.ok) { setError(json.error ?? "Lookup failed"); return; }
       setData(json);

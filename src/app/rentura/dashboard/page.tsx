@@ -423,7 +423,7 @@ export default function RenturaDashboard() {
     setChatLoading(true);
 
     try {
-      const res = await fetch("/api/rentura/chat", {
+      const res = await fetch("/api/rentura/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

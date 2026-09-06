@@ -66,12 +66,45 @@ describe("who the server thinks the caller is", () => {
     expect(offenders, `identity from a query string: ${offenders.join(", ")}`).toEqual([]);
   });
 
-  // The admin list opens the service role key. The check that guards it has to
-  // be the verified one, or the key is guarded by a claim.
-  it("guards the service role key in admin/users with a verified identity", () => {
-    const src = readFileSync(join(API, "admin", "users", "route.ts"), "utf8");
-    expect(src).toContain("getVerifiedUser(");
-    expect(src).toContain("isAdmin(");
-    expect(src.indexOf("getVerifiedUser(")).toBeLessThan(src.indexOf("SUPABASE_SERVICE_ROLE_KEY"));
+  /**
+   * The service role key bypasses row level security entirely, so a route that
+   * opens it has to establish who is asking before it does.
+   *
+   * This named one file — admin/users — which is the failure shape behind most
+   * of the access bugs found in this codebase: a correct rule applied in one
+   * place and not the others. It walks the tree now, so a second admin route
+   * cannot be added without the same gate. That is not hypothetical; adding
+   * admin/enquiries is what exposed it.
+   */
+  const adminRoutes = files.filter(f => f.includes(`${sep}admin${sep}`));
+  const usesServiceRole = (src: string) => src.includes("SUPABASE_SERVICE_ROLE_KEY");
+
+  it("finds the admin routes, so the checks below are not vacuous", () => {
+    expect(adminRoutes.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("guards the service role key in every admin route with a verified identity", () => {
+    for (const file of adminRoutes) {
+      const src = readFileSync(file, "utf8");
+      if (!usesServiceRole(src)) continue;
+      const name = file.slice(file.indexOf("api")).split(sep).join("/");
+
+      expect(src, `${name} opens the service role without getVerifiedUser`).toContain("getVerifiedUser(");
+      expect(src, `${name} opens the service role without isAdmin`).toContain("isAdmin(");
+      expect(
+        src.indexOf("getVerifiedUser("),
+        `${name} reads the service role key before checking who is asking`,
+      ).toBeLessThan(src.indexOf("SUPABASE_SERVICE_ROLE_KEY"));
+    }
+  });
+
+  it("never decides admin from a session read out of the cookie", () => {
+    // getSession returns what the cookie claims, unverified. Gating the
+    // service role on it means gating it on the caller's own assertion.
+    for (const file of adminRoutes) {
+      const src = readFileSync(file, "utf8");
+      const name = file.slice(file.indexOf("api")).split(sep).join("/");
+      expect(/auth\.getSession\(/.test(src), `${name} uses getSession to decide access`).toBe(false);
+    }
   });
 });

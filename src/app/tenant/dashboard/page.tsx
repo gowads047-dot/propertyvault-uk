@@ -43,7 +43,7 @@ function TenantPortalInner() {
   useEffect(() => {
     if (!token) return;
 
-    fetch(`/api/tenant/validate?token=${token}`)
+    fetch(`/api/tenant/validate/?token=${token}`)
       .then(r => r.json())
       .then(async (data) => {
         if (!data.valid) {
@@ -61,7 +61,7 @@ function TenantPortalInner() {
         };
         setInfo(tenantInfo);
 
-        const issuesRes = await fetch(`/api/tenant/issues?token=${token}`);
+        const issuesRes = await fetch(`/api/tenant/issues/?token=${token}`);
         const issuesData = await issuesRes.json();
         const tenantIssues: Issue[] = issuesData.issues || [];
         setIssues(tenantIssues);
@@ -98,7 +98,7 @@ function TenantPortalInner() {
     setChatLoading(true);
 
     try {
-      const res = await fetch("/api/tenant/chat", {
+      const res = await fetch("/api/tenant/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token, history: apiHistory, userInput: userText }),

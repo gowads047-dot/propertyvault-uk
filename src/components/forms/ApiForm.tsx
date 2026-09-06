@@ -52,7 +52,7 @@ export default function ApiForm({
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, source }),

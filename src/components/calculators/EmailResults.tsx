@@ -30,7 +30,7 @@ export function EmailResults({ deal }: Props) {
     setStatus("sending");
 
     try {
-      const res = await fetch("/api/send-deal", {
+      const res = await fetch("/api/send-deal/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, deal }),
