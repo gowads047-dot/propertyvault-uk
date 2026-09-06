@@ -116,14 +116,17 @@ export const SERVICES: Service[] = [
   {
     slug: "professionals",
     name: "Find a Professional",
-    summary: "Brokers, solicitors, surveyors and trades, with what they cover and how to reach them.",
+    summary: "Which regulator covers a broker, a conveyancer, a surveyor or a letting agent, where their public register is, and what to check before you instruct anybody.",
     stage: "complete",
-    readiness: "partner",
+    // Was "partner", which claims we introduce you to somebody vetted. We do
+    // not: there is no panel and no verification standard. The page tells you
+    // how to check a professional yourself, which works today and unaided.
+    readiness: "live",
     // Points at the existing directory rather than a new URL. Rebuilding the
     // network as a vetted panel is later work, and moving the page before that
     // exists would spend its search ranking for nothing.
     href: "/find-agent",
-    cta: "Browse professionals",
+    cta: "How to check a professional",
   },
   {
     slug: "refurb-planning",
