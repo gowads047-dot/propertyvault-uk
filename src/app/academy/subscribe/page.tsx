@@ -133,7 +133,7 @@ export default function AcademySubscribePage() {
 
         {/* Social proof */}
         <div style={{ marginTop: 64, textAlign: "center" }}>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Trusted by UK property investors</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.25)", marginBottom: 20 }}>Cancel from your dashboard at any time</p>
           <div style={{ display: "flex", justifyContent: "center", gap: 40, flexWrap: "wrap" }}>
             {[["100+", "Investors enrolled"], ["12+", "Courses"], ["4.5h+", "Content per course"]].map(([v, l]) => (
               <div key={l} style={{ textAlign: "center" }}>

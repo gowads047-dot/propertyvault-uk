@@ -163,7 +163,7 @@ export default function SheffieldPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Sheffield?",
-              a: "Most Sheffield landlords are up and receiving guaranteed rent within 7–14 days of initial contact. We move quickly through inspection, lease agreement, and setup — there are no unnecessary delays. You agree the start date and payments begin on schedule.",
+              a: "Once you accept our offer, most Sheffield leases are signed within 7–14 days, with the first payment on the lease start date. We move quickly through inspection, lease agreement, and setup — there are no unnecessary delays. You agree the start date and payments begin on schedule.",
             },
             {
               q: "Who handles maintenance and repairs at my Sheffield property?",

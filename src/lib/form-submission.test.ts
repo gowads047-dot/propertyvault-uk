@@ -134,6 +134,32 @@ function stripComments(src: string): string {
     .replace(/(^|[^:])(\/\/[^\n]*)/g, (_m, pre: string, c: string) => pre + blank(c));
 }
 
+/**
+ * A <form> with neither an onSubmit handler nor an action.
+ *
+ * Submitting one reloads the page and discards everything typed into it. The
+ * /trades waiting list was this, and widening the check found three more —
+ * /community, /deal-sourcing and /membership — all collecting an email
+ * address that went nowhere. Four "join the waiting list" forms on a site
+ * whose entire remaining question is how many people want these services.
+ */
+function formsThatGoNowhere(): string[] {
+  const dead: string[] = [];
+  for (const rel of files) {
+    const src = stripComments(readFileSync(join(SRC, rel), "utf8"));
+    for (const m of src.matchAll(/<form\b/g)) {
+      // tagAt, not [^>]*. An inline handler — onSubmit={(e) => ...} — contains
+      // a ">" that truncates a lazy match right before the attribute being
+      // looked for, so a working form reads as a dead one.
+      const tag = tagAt(src, m.index!);
+      if (!tag) continue;
+      if (/onSubmit|action=/.test(tag)) continue;
+      dead.push(`src/${rel}:${src.slice(0, m.index).split("\n").length}`);
+    }
+  }
+  return dead;
+}
+
 describe("a form submits what it collects", () => {
   it("reads the whole tree, so a clean result means something", () => {
     expect(files.length).toBeGreaterThan(150);
@@ -154,6 +180,16 @@ describe("a form submits what it collects", () => {
       "FormData only collects controls with a name, so these are filled in by " +
         "somebody and then thrown away on submit. The field will look correct " +
         `in every other respect.\n\n${detail}`,
+    ).toEqual([]);
+  });
+
+  it("has no form that submits nowhere", () => {
+    const dead = formsThatGoNowhere();
+    expect(
+      dead,
+      "a <form> with no onSubmit and no action reloads the page and throws away " +
+        "everything typed into it. Use ApiForm, or give it a handler:\n\n  " +
+        dead.join("\n  "),
     ).toEqual([]);
   });
 

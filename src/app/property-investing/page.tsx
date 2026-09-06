@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Property Investing UK — Complete Guide for Beginners to Advanced",
@@ -190,7 +191,7 @@ export default function PropertyInvestingPage() {
             ))}
           </div>
           <div className="text-center mt-4">
-            <Link href="/calculators" className="text-sm font-semibold text-gold-600 hover:text-gold-700">View all 15 calculators →</Link>
+            <Link href="/calculators" className="text-sm font-semibold text-gold-600 hover:text-gold-700">View all {siteMetrics.calculators} calculators →</Link>
           </div>
         </div>
       </section>

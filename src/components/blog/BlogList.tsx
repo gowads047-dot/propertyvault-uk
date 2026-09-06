@@ -418,12 +418,12 @@ export function BlogList({ articles }: { articles: Article[] }) {
             Ready to go beyond reading?
           </h3>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginBottom: 24, maxWidth: 480, margin: "0 auto 24px" }}>
-            The Academy gives you the playbooks, scripts, tools and step-by-step training to actually source deals — not just understand them.
+            The Academy is being built: playbooks, scripts, tools and step-by-step training for sourcing deals rather than just reading about them. It is not open yet and there is no price.
           </p>
           <a href="/academy" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 14, textDecoration: "none" }}>
-            Join the Academy — £14.99/month →
+            Join the Academy waiting list →
           </a>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>Educational platform · Not financial advice · Cancel anytime</p>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>Educational platform · Not financial advice · Nothing to buy yet</p>
         </div>
       </div>
     </>

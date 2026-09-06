@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CookiePreferences } from "@/components/legal/CookiePreferences";
 
 export const metadata: Metadata = {
   title: "Cookie Policy — PropertyVault UK",
@@ -61,22 +62,19 @@ export default function CookiesPage() {
               </table>
             </div>
 
-            <h3 className="text-lg font-bold text-navy-800 mt-6 mb-2">Marketing Cookies</h3>
-            <p>These cookies may be set by our advertising partners to build a profile of your interests and show relevant adverts on other sites. We use these cookies only with your consent.</p>
-            <div className="overflow-x-auto mt-3">
-              <table className="w-full text-sm border-collapse">
-                <thead><tr className="bg-navy-50"><th className="text-left p-3 font-semibold">Cookie</th><th className="text-left p-3 font-semibold">Purpose</th><th className="text-left p-3 font-semibold">Duration</th></tr></thead>
-                <tbody>
-                  <tr className="border-b border-navy-100"><td className="p-3">_fbp</td><td className="p-3">Facebook — ad measurement and targeting</td><td className="p-3">3 months</td></tr>
-                  <tr><td className="p-3">_gcl_au</td><td className="p-3">Google Ads — conversion tracking</td><td className="p-3">3 months</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <h3 className="text-lg font-bold text-navy-800 mt-6 mb-2">Advertising Cookies</h3>
+            <p>
+              We do not use any. There is no advertising pixel, no remarketing tag and no ad
+              network on this site, and we do not share your browsing with advertisers. This
+              section previously listed a Facebook pixel and a Google Ads tag that were never
+              installed.
+            </p>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">Managing Your Cookie Preferences</h2>
-            <p>When you first visit our Site, you will see a cookie consent banner allowing you to accept or reject non-essential cookies. You can change your preferences at any time by clicking &ldquo;Cookie Settings&rdquo; in the footer.</p>
+            <p>When you first visit our Site, you will see a cookie consent banner allowing you to accept or reject non-essential cookies. You can change your choice at any time using the controls below.</p>
+            <div className="mt-4"><CookiePreferences /></div>
             <p className="mt-2">You can also control cookies through your browser settings. Most browsers allow you to block or delete cookies. However, blocking essential cookies may affect the functionality of the Site.</p>
             <ul className="list-disc pl-6 space-y-1 mt-2">
               <li><strong>Chrome:</strong> Settings → Privacy and Security → Cookies</li>

@@ -3,6 +3,29 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+/**
+ * The banner used to decide nothing.
+ *
+ * Google Analytics loaded from the root layout on every page for every
+ * visitor, and these two buttons wrote "all" or "essential" into
+ * localStorage and stopped there. Nothing read that value. "Essential Only"
+ * left analytics running exactly as before, and the cookie policy's promise
+ * that analytics cookies are used "only with your consent" was not true of
+ * anybody.
+ *
+ * Consent Mode v2 fixes it at the source: layout.tsx now denies
+ * analytics_storage before gtag loads, so no analytics cookie is written
+ * until somebody says yes. These handlers are what says yes.
+ *
+ * gtag is defined by the consent-default script in the root layout, which
+ * runs beforeInteractive, so it exists by the time anybody can click.
+ */
+function tellGoogle(granted: boolean) {
+  window.gtag?.("consent", "update", {
+    analytics_storage: granted ? "granted" : "denied",
+  });
+}
+
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
 
@@ -14,11 +37,13 @@ export function CookieConsent() {
 
   function accept() {
     localStorage.setItem("cookie_consent", "all");
+    tellGoogle(true);
     setVisible(false);
   }
 
   function reject() {
     localStorage.setItem("cookie_consent", "essential");
+    tellGoogle(false);
     setVisible(false);
   }
 

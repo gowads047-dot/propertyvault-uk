@@ -1,45 +1,53 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
+import { guaranteedRentCities } from "@/lib/site";
 
-// ── Market rate benchmarks by city & bedrooms ────────────────────────────────
-// GR offer = 82–88% of market rate. Ranges shown to visitor.
+// ── Indicative market rents by city & bedrooms ───────────────────────────────
+//
+// Three of the six cities we operate in. There is no data behind the other
+// three, so the widget says so and takes the enquiry rather than interpolating
+// a number for a city nobody has priced — see the note in the city selector.
+//
+// GR offer = 82–88% of market rate. The range is shown to the visitor.
 const MARKET_RATES: Record<string, Record<number, number>> = {
   birmingham:  { 1: 700,  2: 875,  3: 1050, 4: 1300, 5: 1600, 6: 1900 },
   nottingham:  { 1: 700,  2: 800,  3: 950,  4: 1100, 5: 1350, 6: 1600 },
   derby:       { 1: 650,  2: 750,  3: 900,  4: 1050, 5: 1300, 6: 1550 },
 };
 
-// What self-managing costs per year (used in comparison)
-const SELF_MANAGE_DEDUCTIONS = {
-  agentFees:   0.10,  // 10% management
-  voidWeeks:   3,     // average void weeks per year
-  maintenance: 600,   // annual maintenance estimate
-  compliance:  300,   // gas cert, EICR amortised
-};
-
-const fmt = (n: number) =>
-  "£" + Math.round(n).toLocaleString("en-GB");
+const fmt = money;
 
 export function GRQuoteWidget() {
   const [city, setCity] = useState<string>("");
   const [bedrooms, setBedrooms] = useState<number>(0);
   const [shown, setShown] = useState(false);
 
-  const marketRent = city && bedrooms ? (MARKET_RATES[city]?.[bedrooms] ?? 0) : 0;
+  /** Whether we hold indicative rents for the chosen city. */
+  const hasRates = !!city && !!MARKET_RATES[city];
+
+  const marketRent = hasRates && bedrooms ? (MARKET_RATES[city]![bedrooms] ?? 0) : 0;
   const grLow  = Math.round(marketRent * 0.82);
   const grHigh = Math.round(marketRent * 0.88);
 
-  // Self-managing annual net
-  const selfManageGross = marketRent * 12;
-  const agentCut  = selfManageGross * SELF_MANAGE_DEDUCTIONS.agentFees;
-  const voidLoss  = (marketRent / 4) * SELF_MANAGE_DEDUCTIONS.voidWeeks;
-  const selfNet   = selfManageGross - agentCut - voidLoss - SELF_MANAGE_DEDUCTIONS.maintenance - SELF_MANAGE_DEDUCTIONS.compliance;
+  /**
+   * The comparison, from the shared model.
+   *
+   * This used to be computed here with its own constants, and got the void
+   * cost wrong: (monthlyRent / 4) * weeks treats a year as forty-eight weeks,
+   * which overstated a three-week void by 8.3% — £750 where /guaranteed-rent
+   * printed £692 for the same property. Both now read the same module.
+   */
+  const c = compare({ ...DEFAULT_ASSUMPTIONS, monthlyMarketRent: marketRent });
 
-  const grMidAnnual  = ((grLow + grHigh) / 2) * 12;
-  const annualDiff   = grMidAnnual - selfNet;
+  const grMidAnnual = ((grLow + grHigh) / 2) * 12;
+  // Compared against the agent case, because the deductions below include a
+  // management fee. Self-managing avoids that fee, and the note says so.
+  const annualDiff = grMidAnnual - c.lettingAgentNet;
 
-  const canShow = city && bedrooms > 0;
+  const canShow = hasRates && bedrooms > 0;
 
   return (
     <div style={{ background: "white", border: "2px solid #e2e8f0", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 24px rgba(15,27,54,0.06)" }}>
@@ -62,21 +70,30 @@ export function GRQuoteWidget() {
           <div>
             <p style={{ fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 8 }}>City</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-              {[
-                { id: "birmingham", label: "Birmingham" },
-                { id: "nottingham", label: "Nottingham" },
-                { id: "derby",      label: "Derby" },
-              ].map(c => (
-                <button key={c.id} onClick={() => { setCity(c.id); setShown(false); }}
-                  style={{ padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer", textAlign: "left",
-                    background: city === c.id ? "#0f1b36" : "#f8f9fc",
-                    color: city === c.id ? "white" : "#374151",
-                    border: city === c.id ? "none" : "1.5px solid #e2e8f0",
-                    transition: "all 0.15s" }}>
-                  {city === c.id && <span style={{ color: "var(--gold-ink)", marginRight: 6 }}>✓</span>}
-                  {c.label}
-                </button>
-              ))}
+              {/* All six cities we operate in, not just the three we can
+                  price instantly. Listing only three read as though we did
+                  not cover the others, which turned away landlords in half
+                  our own service area. */}
+              {guaranteedRentCities.map(gc => {
+                const priced = !!MARKET_RATES[gc.slug];
+                return (
+                  <button key={gc.slug} onClick={() => { setCity(gc.slug); setShown(false); }}
+                    style={{ padding: "10px 14px", borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: "pointer", textAlign: "left",
+                      display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8,
+                      background: city === gc.slug ? "#0f1b36" : "#f8f9fc",
+                      color: city === gc.slug ? "white" : "#374151",
+                      border: city === gc.slug ? "none" : "1.5px solid #e2e8f0",
+                      transition: "all 0.15s" }}>
+                    <span>
+                      {city === gc.slug && <span style={{ color: "var(--gold-ink)", marginRight: 6 }}>✓</span>}
+                      {gc.name}
+                    </span>
+                    {!priced && (
+                      <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.7 }}>by request</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -96,13 +113,36 @@ export function GRQuoteWidget() {
               ))}
             </div>
             <p style={{ fontSize: 11, color: "#475569", marginTop: 8, lineHeight: 1.4 }}>
-              Based on typical Birmingham, Nottingham & Derby market rents. Your actual offer depends on property condition, location, and a free valuation visit.
+              We hold indicative rents for Birmingham, Nottingham and Derby, so those three give an
+              instant figure. Leicester, Coventry and Sheffield are covered by the service but not
+              yet priced here — rather than guess, we will work yours out and come back to you. Any
+              estimate depends on property condition, location and a valuation visit.
             </p>
           </div>
         </div>
 
+        {/* A city we cover but have not priced. Say so plainly and hand over
+            to the enquiry form, rather than leaving a disabled button that
+            looks like the city is not served. */}
+        {city && !hasRates && (
+          <div role="status" style={{ background: "#f8f9fc", border: "1.5px solid #e2e8f0", borderRadius: 12, padding: "14px 16px" }}>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 4 }}>
+              We cover {guaranteedRentCities.find(g => g.slug === city)?.name}, but not with an
+              instant figure.
+            </p>
+            <p style={{ fontSize: 12, color: "#475569", lineHeight: 1.5, margin: 0 }}>
+              We hold indicative rents for Birmingham, Nottingham and Derby only. Making one up for
+              anywhere else would not help you.{" "}
+              <Link href="#enquiry" style={{ color: "#8a6d1f", fontWeight: 700 }}>
+                Send us the address
+              </Link>{" "}
+              and we will price it properly.
+            </p>
+          </div>
+        )}
+
         {/* CTA to show estimate */}
-        {!shown && (
+        {!shown && !(city && !hasRates) && (
           <button onClick={() => { if (canShow) setShown(true); }}
             style={{ width: "100%", padding: "14px", borderRadius: 12, border: "none", cursor: canShow ? "pointer" : "not-allowed", fontWeight: 800, fontSize: 15,
               background: canShow ? "#c9a84c" : "#e2e8f0",
@@ -152,10 +192,11 @@ export function GRQuoteWidget() {
               <p style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>Annual income comparison</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {[
-                  { label: "Gross market rent", self: fmt(selfManageGross), gr: "—", selfColor: "#374151", grColor: "#475569" },
-                  { label: "Agent fees (10%)", self: `−${fmt(agentCut)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
-                  { label: `Void periods (${SELF_MANAGE_DEDUCTIONS.voidWeeks} wks)`, self: `−${fmt(voidLoss)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
-                  { label: "Maintenance & compliance", self: `−${fmt(SELF_MANAGE_DEDUCTIONS.maintenance + SELF_MANAGE_DEDUCTIONS.compliance)}`, gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: "Gross market rent", self: fmt(c.annualMarketRent), gr: "—", selfColor: "#374151", grColor: "#475569" },
+                  { label: `Agent fees (${Math.round(DEFAULT_ASSUMPTIONS.agentPct * 100)}%)`, self: fmt(-c.agentFees), gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: `Void periods (${DEFAULT_ASSUMPTIONS.voidWeeks} wks)`, self: fmt(-c.voidCost), gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: "Maintenance & compliance", self: fmt(-(c.maintenance + c.compliance)), gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
+                  { label: "Tenant-find (spread)", self: fmt(-c.tenantFindPerYear), gr: "£0", selfColor: "#dc2626", grColor: "#15803d" },
                 ].map(r => (
                   <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                     <span style={{ color: "#475569" }}>{r.label}</span>
@@ -169,27 +210,30 @@ export function GRQuoteWidget() {
                 <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: 8, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>Your annual net income</span>
                   <div style={{ display: "flex", gap: 24 }}>
-                    <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", minWidth: 80, textAlign: "right" }}>{fmt(selfNet)}</span>
+                    <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", minWidth: 80, textAlign: "right" }}>{fmt(c.lettingAgentNet)}</span>
                     <span style={{ fontSize: 13, fontWeight: 800, color: "#15803d", minWidth: 80, textAlign: "right" }}>{fmt(grMidAnnual)}</span>
                   </div>
                 </div>
                 {annualDiff > 0 && (
                   <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8, padding: "8px 12px", marginTop: 4 }}>
                     <p style={{ fontSize: 12, fontWeight: 700, color: "#15803d" }}>
-                      ✓ With guaranteed rent you could earn {fmt(annualDiff)} more per year — with zero effort.
+                      ✓ About {fmt(annualDiff)} a year more than letting through an agent, on the assumptions below.
                     </p>
                   </div>
                 )}
               </div>
               <p style={{ fontSize: 10, color: "#475569", marginTop: 10 }}>
-                Illustrative. Self-managing figures assume 10% agent fees, 3 void weeks, £{SELF_MANAGE_DEDUCTIONS.maintenance + SELF_MANAGE_DEDUCTIONS.compliance} annual maintenance & compliance.
-                Your GR columns show {fmt(grLow)}–{fmt(grHigh)}/mo mid-point annualised.
-              </p>
+                Illustrative, not surveyed averages. The comparison column assumes a letting
+                agent at {Math.round(DEFAULT_ASSUMPTIONS.agentPct * 100)}%, {DEFAULT_ASSUMPTIONS.voidWeeks} void weeks, {fmt(c.maintenance + c.compliance)} a year of maintenance and
+                compliance and a {fmt(DEFAULT_ASSUMPTIONS.tenantFindFee)} tenant-find fee spread over {DEFAULT_ASSUMPTIONS.tenancyYears} years. Managing it
+                yourself saves the agent fee and costs your time — see the full three-way table on
+                this page. Guaranteed rent shown is the {fmt(grLow)}–{fmt(grHigh)}/mo mid-point annualised.
+            </p>
             </div>
 
             {/* Column headers for comparison */}
             <div style={{ display: "flex", justifyContent: "flex-end", gap: 24, marginBottom: 4, paddingRight: 4 }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", minWidth: 80, textAlign: "right" }}>Self-manage</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "#475569", minWidth: 80, textAlign: "right" }}>With an agent</span>
               <span style={{ fontSize: 10, fontWeight: 700, color: "#15803d", minWidth: 80, textAlign: "right" }}>Guaranteed rent</span>
             </div>
 

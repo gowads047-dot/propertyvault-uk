@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import ApiForm from "@/components/forms/ApiForm";
+import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Deal Sourcing Marketplace — Coming Soon | PropertyVault UK",
@@ -63,11 +65,24 @@ export default function DealSourcingPage() {
           <div className="mt-10 bg-white rounded-2xl border-2 border-gold-400/30 p-8 text-center">
             <h3 className="text-xl font-bold text-navy-800 mb-2">Get Early Access</h3>
             <p className="text-sm text-navy-500 mb-4">Be the first to know when the Deal Sourcing Marketplace launches. Join the waiting list.</p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input aria-label="Your email" type="email" placeholder="Your email" required
-                className="flex-1 px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
-              <button type="submit" className="btn-primary whitespace-nowrap">Join Waiting List</button>
-            </form>
+            <ApiForm
+              source="waitlist:deal-sourcing"
+              submitLabel="Join the list"
+              successTitle="Noted, thank you."
+              successBody="We will email you once the deal sourcing marketplace is running, and nothing else."
+              sentEvent={events.waitlistJoined}
+              sentParams={{ service: "deal-sourcing" }}
+              className="space-y-3 text-left"
+            >
+              <div>
+                <label htmlFor="deal-sourcing-name" className="block text-sm font-semibold text-navy-700 mb-1">Your name</label>
+                <input id="deal-sourcing-name" name="name" type="text" required maxLength={100} autoComplete="name" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+              <div>
+                <label htmlFor="deal-sourcing-email" className="block text-sm font-semibold text-navy-700 mb-1">Email</label>
+                <input id="deal-sourcing-email" name="email" type="email" required maxLength={200} autoComplete="email" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+            </ApiForm>
           </div>
 
           <div className="mt-8 text-center">
@@ -89,7 +104,7 @@ export default function DealSourcingPage() {
           <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 100, padding: "5px 14px", fontSize: 12, color: "#d4af37", fontWeight: 700, marginBottom: 20 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
-              NOW OPEN — £14.99/MONTH
+              NOT OPEN YET — JOIN THE LIST
             </div>
             <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", lineHeight: 1.15 }}>
               Want to Become a Deal Sourcer?
@@ -118,7 +133,7 @@ export default function DealSourcingPage() {
 
           <div style={{ textAlign: "center" }}>
             <Link href="/academy" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "15px 40px", borderRadius: 14, textDecoration: "none", marginBottom: 10 }}>
-              Join the Academy — £14.99/month →
+              Join the Academy waiting list →
             </Link>
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>Cancel anytime. Secure checkout via Stripe.</p>
           </div>

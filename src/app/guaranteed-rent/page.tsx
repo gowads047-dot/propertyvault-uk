@@ -4,6 +4,15 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { GRQuoteWidget } from "@/components/guaranteed-rent/GRQuoteWidget";
 import { EnquiryForm } from "@/components/guaranteed-rent/EnquiryForm";
+import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
+
+/**
+ * One set of assumptions, shared with the quote widget. The page and the
+ * widget used to keep separate copies and printed different void costs for
+ * the same property, because one of them divided the monthly rent by four.
+ */
+const A = DEFAULT_ASSUMPTIONS;
+const GR = compare(A);
 
 const serviceSchema = {
   "@context": "https://schema.org",
@@ -26,7 +35,7 @@ const serviceSchema = {
   ],
   offers: {
     "@type": "Offer",
-    description: "Free rent estimate — no obligation. Get a guaranteed rent figure for your property within 24 hours.",
+    description: "Free rent estimate — no obligation. Get a guaranteed rent figure for your property within 48 hours.",
     price: "0",
     priceCurrency: "GBP",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent",
@@ -51,7 +60,7 @@ const breadcrumbSchema = {
 };
 
 const guaranteedRentFaqs = [
-  { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. But when you factor in zero voids, zero agent fees, zero maintenance costs, and zero compliance spend, most landlords actually net more overall than self-managing." },
+  { q: "How much rent will I receive with guaranteed rent?", a: "Typically 80-90% of market rent. You pay no agent fee, carry no void risk and we cover day-to-day repairs and the compliance certificates, so the gap narrows once those are counted. Against a letting agent that usually leaves you ahead; against managing it yourself the two land close together, and what you gain is certainty rather than income. The worked example above shows both, with every assumption listed." },
   { q: "Do I still own my property with guaranteed rent?", a: "Yes — you retain 100% ownership. We lease the property from you under a formal agreement, similar to a commercial tenant. You can sell at any time, subject to the lease terms." },
   { q: "What types of property qualify for guaranteed rent?", a: "Most residential properties qualify — houses, flats, bungalows, and HMOs from 1 bedroom upwards. The property must meet basic habitability and safety standards." },
   { q: "Who are the tenants in a guaranteed rent scheme?", a: "Tenants are sourced, referenced and managed entirely by our team. You have no direct contact with them — we handle referencing, day-to-day management, maintenance and any issues that arise for the length of the lease." },
@@ -59,7 +68,7 @@ const guaranteedRentFaqs = [
   { q: "How long is a guaranteed rent lease?", a: "Typically 3-5 years. Longer leases provide greater income security and may attract a higher guaranteed rent amount." },
   { q: "How quickly can guaranteed rent start?", a: "Once you accept our offer, we can typically complete the lease within 7-14 days. Your first guaranteed rent payment follows shortly after." },
   { q: "What areas do you cover for guaranteed rent?", a: "We currently operate across Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield — and the surrounding areas within approximately 30 minutes of each city centre." },
-  { q: "Is guaranteed rent better than using a letting agent?", a: "For many landlords, yes. When you add up void periods, agent fees (8-12%), maintenance costs, and compliance spend, guaranteed rent at 80-90% of market rate often delivers more net income with zero effort." },
+  { q: "Is guaranteed rent better than using a letting agent?", a: "On the worked example above it is about £1,326 a year better, because you are not paying the 8-12% management fee on top of the voids, maintenance and compliance every landlord carries. Whether that holds for your property depends on your own numbers — a property that never sits empty and rarely needs work narrows the gap considerably." },
   { q: "What happens at the end of a guaranteed rent lease?", a: "Your property is returned in the condition it was at the start of the lease (fair wear and tear excepted). You can then renew the lease with us, let privately, or sell." },
 ];
 
@@ -170,39 +179,91 @@ export default function GuaranteedRentPage() {
         <div className="container-max max-w-3xl">
           <div className="text-center mb-8">
             <p className="text-gold-600 font-bold text-xs uppercase tracking-widest mb-2">The Maths</p>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>You Actually Earn More</h2>
-            <p className="text-navy-500 mt-2">When you add up voids, agent fees, maintenance, and compliance — guaranteed rent usually puts more money in your pocket.</p>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>Worked through, with the assumptions shown</h2>
+            <p className="text-navy-500 mt-2">
+              Three columns, because the answer depends on which one you are comparing against. Every
+              figure below is an assumption you can change, not a market average.
+            </p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
-              <thead><tr className="bg-navy-50"><th className="text-left p-3 font-semibold"></th><th className="text-left p-3 font-semibold">Self-Managing</th><th className="text-left p-3 font-semibold text-gold-700">Guaranteed Rent</th></tr></thead>
+              <caption className="sr-only">
+                Annual income on a £{GR.annualMarketRent.toLocaleString("en-GB")} property: self-managing,
+                using a letting agent, and on guaranteed rent
+              </caption>
+              <thead>
+                <tr className="bg-navy-50">
+                  <th scope="col" className="text-left p-3 font-semibold">Per year</th>
+                  <th scope="col" className="text-left p-3 font-semibold">Self-managing</th>
+                  <th scope="col" className="text-left p-3 font-semibold">Letting agent</th>
+                  <th scope="col" className="text-left p-3 font-semibold text-gold-700">Guaranteed rent</th>
+                </tr>
+              </thead>
               <tbody>
                 {[
-                  ["Market rent (£1,000/month)", "£12,000", "—"],
-                  ["Guaranteed rent (£850/month)", "—", "£10,200"],
-                  ["Void periods (3 weeks)", "-£692", "£0"],
-                  ["Letting agent fees (10%)", "-£1,200", "£0"],
-                  ["Maintenance & repairs", "-£600", "£0"],
-                  ["Compliance costs", "-£300", "£0"],
-                  ["Tenant-find fee", "-£500", "£0"],
-                ].map((row, i) => (
-                  <tr key={i} className="border-b border-navy-100"><td className="p-3 font-medium text-navy-800">{row[0]}</td><td className="p-3 text-navy-600">{row[1]}</td><td className="p-3 text-gold-700 font-semibold">{row[2]}</td></tr>
+                  [`Rent received (${money(A.monthlyMarketRent)}/month market)`, money(GR.annualMarketRent), money(GR.annualMarketRent), money(GR.annualGuaranteedRent)],
+                  [`Voids (${A.voidWeeks} weeks empty)`, money(-GR.voidCost), money(-GR.voidCost), "£0"],
+                  ["Maintenance and repairs", money(-GR.maintenance), money(-GR.maintenance), "£0"],
+                  ["Compliance certificates", money(-GR.compliance), money(-GR.compliance), "£0"],
+                  [`Tenant-find (${money(A.tenantFindFee)} over ${A.tenancyYears} years)`, money(-GR.tenantFindPerYear), money(-GR.tenantFindPerYear), "£0"],
+                  [`Agent management (${Math.round(A.agentPct * 100)}%)`, "£0", money(-GR.agentFees), "£0"],
+                ].map((row) => (
+                  <tr key={row[0]} className="border-b border-navy-100">
+                    <th scope="row" className="p-3 font-medium text-navy-800 text-left">{row[0]}</th>
+                    <td className="p-3 text-navy-600 tabular-nums">{row[1]}</td>
+                    <td className="p-3 text-navy-600 tabular-nums">{row[2]}</td>
+                    <td className="p-3 text-gold-700 font-semibold tabular-nums">{row[3]}</td>
+                  </tr>
                 ))}
-                <tr className="bg-navy-50"><td className="p-3 font-bold text-navy-800">Your actual annual income</td><td className="p-3 font-bold text-navy-800">£8,708</td><td className="p-3 font-bold text-gold-700 text-lg">£10,200</td></tr>
-                <tr className="bg-green-50"><td className="p-3 font-bold text-green-800">You earn MORE with guaranteed rent</td><td className="p-3"></td><td className="p-3 font-bold text-green-700">+£1,492/year</td></tr>
+                <tr className="bg-navy-50">
+                  <th scope="row" className="p-3 font-bold text-navy-800 text-left">Net income</th>
+                  <td className="p-3 font-bold text-navy-800 tabular-nums">{money(GR.selfManagingNet)}</td>
+                  <td className="p-3 font-bold text-navy-800 tabular-nums">{money(GR.lettingAgentNet)}</td>
+                  <td className="p-3 font-bold text-gold-700 text-lg tabular-nums">{money(GR.annualGuaranteedRent)}</td>
+                </tr>
+                <tr>
+                  <th scope="row" className="p-3 font-bold text-navy-800 text-left">Difference vs guaranteed rent</th>
+                  <td className="p-3 font-bold text-navy-700 tabular-nums">{money(GR.vsSelfManaging)}/yr better</td>
+                  <td className="p-3 font-bold text-navy-700 tabular-nums">{money(GR.vsLettingAgent)}/yr better</td>
+                  <td className="p-3" />
+                </tr>
               </tbody>
             </table>
           </div>
+
+          {/* The honest reading of the table above, said before the reader has
+              to work it out. Against an agent the gap is real money; against
+              doing it yourself it is small, and the old version of this page
+              hid that by charging a self-manager an agent's 10% fee. */}
+          <div className="mt-4 rounded-xl border border-navy-200 bg-white p-5">
+            <p className="text-sm text-navy-700 leading-relaxed m-0">
+              <strong>What that actually says.</strong> Against a letting agent, guaranteed rent is
+              roughly {money(GR.vsLettingAgent)} a year better on these assumptions. Against managing
+              it yourself it is about {money(GR.vsSelfManaging)} — close enough that the honest answer
+              is &ldquo;similar money, far less work&rdquo; rather than &ldquo;you earn more&rdquo;.
+              What you are really buying is certainty: the guaranteed column does not move if the
+              property sits empty for three months or the boiler needs replacing.
+            </p>
+          </div>
+
           <div className="mt-4 bg-navy-50 rounded-xl p-4 text-xs text-navy-500 space-y-1">
             <p className="font-semibold text-navy-700 mb-2">Assumptions used in this example</p>
-            <p>• Market rent: £1,000/month (£12,000/year)</p>
-            <p>• Guaranteed rent offered: 85% of market = £850/month (£10,200/year)</p>
-            <p>• Voids: industry average 2.7 weeks/year = £692 lost income</p>
-            <p>• Agent fees: 10% management = £1,200/year</p>
-            <p>• Maintenance & repairs: RICS estimate avg £600/year for a 2-bed</p>
-            <p>• Compliance: gas/EICON/EPC/EICR prorated avg = £300/year</p>
-            <p>• Tenant-find fee: one-time £500 amortised over typical 1.5yr tenancy</p>
-            <p className="pt-1 italic">Your actual figures will vary. Request a personalised estimate for your property.</p>
+            <p>• Market rent: {money(A.monthlyMarketRent)}/month ({money(GR.annualMarketRent)}/year)</p>
+            <p>• Guaranteed rent offered: {Math.round(A.offerPct * 100)}% of market = {money(A.monthlyMarketRent * A.offerPct)}/month ({money(GR.annualGuaranteedRent)}/year)</p>
+            <p>• Voids: {A.voidWeeks} weeks a year = {money(GR.voidCost)} of lost rent</p>
+            <p>• Agent management: {Math.round(A.agentPct * 100)}% of rent = {money(GR.agentFees)}/year</p>
+            <p>• Maintenance and repairs: {money(A.maintenance)}/year</p>
+            <p>• Compliance: gas safety, EICR and EPC spread across their renewal cycles = {money(A.compliance)}/year</p>
+            <p>• Tenant-find: {money(A.tenantFindFee)} once, spread over a {A.tenancyYears}-year tenancy = {money(GR.tenantFindPerYear)}/year</p>
+            <p className="pt-2 italic">
+              These are illustrative assumptions chosen to show the arithmetic, not surveyed averages
+              — your voids, maintenance and compliance costs will differ, and the answer moves with
+              them. Work yours out with the{" "}
+              <Link href="/calculators/void-period" className="text-gold-600 font-semibold not-italic">void period calculator</Link>{" "}
+              and the{" "}
+              <Link href="/calculators/landlord-costs" className="text-gold-600 font-semibold not-italic">landlord costs calculator</Link>,
+              or ask us for an estimate on your property.
+            </p>
           </div>
           <div className="text-center mt-6">
             <Link href="/blog/guaranteed-rent-vs-traditional-letting" className="text-sm font-semibold text-gold-600 hover:text-gold-700 transition-colors">Read the full comparison: Guaranteed Rent vs Traditional Letting →</Link>

@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
 import { nonNegative } from "@/lib/inputs";
+import { DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
 
 export function VoidPeriodCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(900);
@@ -20,9 +21,12 @@ export function VoidPeriodCalculator() {
     const totalVoidCost = lostRent + ongoingCosts;
     const annualVoidCost = totalVoidCost * voidsPerYear;
     const annualRent = monthlyRent * 12;
-    const pctOfAnnualRent = (annualVoidCost / annualRent) * 100;
+    const pctOfAnnualRent = annualRent > 0 ? (annualVoidCost / annualRent) * 100 : 0;
     const effectiveMonthlyIncome = (annualRent - annualVoidCost) / 12;
-    const guaranteedRentComparison = monthlyRent * 0.88; // typical guaranteed rent at 88% of market
+    // The mid-point of the 82-88% offer range, matching /guaranteed-rent.
+    // This used to hard-code 0.88 and call it typical, which is the top of
+    // the range and made the comparison look better than the page it cites.
+    const guaranteedRentComparison = monthlyRent * DEFAULT_ASSUMPTIONS.offerPct;
     const guaranteedRentAnnual = guaranteedRentComparison * 12;
     const savingVsGuaranteed = guaranteedRentAnnual - (annualRent - annualVoidCost);
     return { lostRent, ongoingCosts, totalVoidCost, annualVoidCost, pctOfAnnualRent, effectiveMonthlyIncome, guaranteedRentComparison, guaranteedRentAnnual, savingVsGuaranteed };
@@ -103,7 +107,7 @@ export function VoidPeriodCalculator() {
 
         <div className={`rounded-2xl p-5 border-2 ${results.savingVsGuaranteed > 0 ? "bg-green-50 border-green-300" : "bg-amber-50 border-amber-300"}`}>
           <p className="font-bold text-navy-800 mb-2 text-sm">Guaranteed Rent Comparison</p>
-          <p className="text-xs text-navy-600 mb-3">If guaranteed rent pays you {fmt(results.guaranteedRentComparison)}/month (88% of market rate, zero voids, zero management):</p>
+          <p className="text-xs text-navy-600 mb-3">If guaranteed rent pays you {fmt(results.guaranteedRentComparison)}/month ({Math.round(DEFAULT_ASSUMPTIONS.offerPct * 100)}% of market rate, no voids, no management fee):</p>
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
               <p className="text-xs text-navy-500">Current (after voids)</p>
