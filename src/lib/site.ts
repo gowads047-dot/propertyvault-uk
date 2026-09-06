@@ -93,7 +93,7 @@ export const siteMetrics = {
   /** City guides under src/app/areas, excluding the postcodes hub. */
   areaGuides: 20,
   /** Directories under src/app/blog. */
-  blogPosts: 29,
+  blogPosts: 30,
   /** Cities with a dedicated guaranteed-rent landing page. */
   guaranteedRentCities: guaranteedRentCities.length,
 } as const;

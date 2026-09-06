@@ -19,6 +19,15 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    title: "How to Find a Property Deal Without Paying a Sourcer",
+    excerpt: "Sourcing fees are commonly quoted at £3,000–£5,000 a deal. What that fee buys, which parts of it are free public data you can pull yourself, and the part that is genuinely worth paying for.",
+    href: "/blog/find-a-deal-without-a-sourcer",
+    category: "Investing",
+    readTime: "9 min",
+    date: "6 September 2026",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+  },
+  {
     title: "دليل شراء العقارات في المملكة المتحدة",
     excerpt: "كل ما تحتاج معرفته قبل شراء عقار في بريطانيا — من الرهن العقاري والضرائب إلى المحامي والتفاوض على السعر. دليل شامل للمشترين العرب.",
     href: "/blog/dalil-shira-aqar-uk",
