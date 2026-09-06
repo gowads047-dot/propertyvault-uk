@@ -17,8 +17,20 @@
       "schedule": "0 7 * * 1"
     },
     {
-      "path": "/api/notifications/reel-daily",
+      "path": "/api/social/publish",
       "schedule": "0 18 * * *"
+    },
+    {
+      "path": "/api/social/publish/retry",
+      "schedule": "40 18 * * *"
+    },
+    {
+      "path": "/api/social/refresh-token",
+      "schedule": "0 6 * * 1"
+    },
+    {
+      "path": "/api/social/weekly",
+      "schedule": "0 7 * * 1"
     },
     {
       "path": "/api/vault/purge",
