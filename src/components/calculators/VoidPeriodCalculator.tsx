@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { ShareResults } from "./ShareResults";
 import { nonNegative } from "@/lib/inputs";
+import { DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
 
 export function VoidPeriodCalculator() {
   const [monthlyRent, setMonthlyRent] = useState(900);
@@ -20,9 +21,12 @@ export function VoidPeriodCalculator() {
     const totalVoidCost = lostRent + ongoingCosts;
     const annualVoidCost = totalVoidCost * voidsPerYear;
     const annualRent = monthlyRent * 12;
-    const pctOfAnnualRent = (annualVoidCost / annualRent) * 100;
+    const pctOfAnnualRent = annualRent > 0 ? (annualVoidCost / annualRent) * 100 : 0;
     const effectiveMonthlyIncome = (annualRent - annualVoidCost) / 12;
-    const guaranteedRentComparison = monthlyRent * 0.88; // typical guaranteed rent at 88% of market
+    // The mid-point of the 82-88% offer range, matching /guaranteed-rent.
+    // This used to hard-code 0.88 and call it typical, which is the top of
+    // the range and made the comparison look better than the page it cites.
+    const guaranteedRentComparison = monthlyRent * DEFAULT_ASSUMPTIONS.offerPct;
     const guaranteedRentAnnual = guaranteedRentComparison * 12;
     const savingVsGuaranteed = guaranteedRentAnnual - (annualRent - annualVoidCost);
     return { lostRent, ongoingCosts, totalVoidCost, annualVoidCost, pctOfAnnualRent, effectiveMonthlyIncome, guaranteedRentComparison, guaranteedRentAnnual, savingVsGuaranteed };

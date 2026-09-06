@@ -199,6 +199,30 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
+      {/*
+        Consent Mode v2 defaults, set before gtag loads.
+
+        Analytics used to load unconditionally on every page for every
+        visitor. The cookie banner wrote "all" or "essential" into
+        localStorage and nothing read it, so "Essential Only" left Google
+        Analytics running and /cookies promised analytics cookies were used
+        "only with your consent" — which was true of nobody. Under PECR
+        reg 6 a non-essential cookie needs consent before it is set, not a
+        preference recorded after.
+
+        So everything starts denied. A returning visitor who accepted is
+        re-granted here from their stored choice; a new one is granted only
+        when they press Accept All, via CookieConsent. wait_for_update gives
+        that click a moment to land before gtag gives up on it.
+
+        beforeInteractive so this runs ahead of the gtag script below —
+        ordering is the whole point, and afterInteractive would race it.
+      */}
+      <Script id="consent-default" strategy="beforeInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+try{if(localStorage.getItem('cookie_consent')==='all'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}`}
+      </Script>
       {/* Google Analytics through next/script so Next controls load order */}
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-MG7FKKCKWQ" strategy="afterInteractive" />
       <Script id="ga-init" strategy="afterInteractive">

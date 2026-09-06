@@ -16,7 +16,13 @@ type GtagParams = Record<string, string | number | boolean | undefined>;
 
 declare global {
   interface Window {
-    gtag?: (command: string, eventName: string, params?: GtagParams) => void;
+    /**
+     * Two shapes in use: gtag("event", name, params) from track() below, and
+     * gtag("consent", "default" | "update", state) from the root layout and
+     * the cookie controls. One declaration covering both, because two
+     * `declare global` blocks for the same property do not merge.
+     */
+    gtag?: (command: string, action: string, params?: GtagParams) => void;
   }
 }
 

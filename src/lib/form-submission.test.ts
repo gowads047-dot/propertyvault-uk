@@ -147,8 +147,13 @@ function formsThatGoNowhere(): string[] {
   const dead: string[] = [];
   for (const rel of files) {
     const src = stripComments(readFileSync(join(SRC, rel), "utf8"));
-    for (const m of src.matchAll(/<form\b([^>]*)>/g)) {
-      if (/onSubmit|action=/.test(m[1])) continue;
+    for (const m of src.matchAll(/<form\b/g)) {
+      // tagAt, not [^>]*. An inline handler — onSubmit={(e) => ...} — contains
+      // a ">" that truncates a lazy match right before the attribute being
+      // looked for, so a working form reads as a dead one.
+      const tag = tagAt(src, m.index!);
+      if (!tag) continue;
+      if (/onSubmit|action=/.test(tag)) continue;
       dead.push(`src/${rel}:${src.slice(0, m.index).split("\n").length}`);
     }
   }
