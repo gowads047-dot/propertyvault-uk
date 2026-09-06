@@ -120,6 +120,17 @@ const PATTERNS: { re: RegExp; why: string }[] = [
     ),
     why: "describes people as vetted",
   },
+  {
+    // A mark PropertyVault awards. /list-property offered a "verified badge"
+    // for uploading compliance documents that nothing read and nobody checked,
+    // and the four patterns above all missed it — a badge is not a person and
+    // the sentence never said "we".
+    //
+    // This is the same rule as the others: a mark means somebody applied a
+    // standard, and there is no standard here to apply.
+    re: /\b(?:verified|vetted|approved|trusted|accredited|certified)\s+(?:badge|badges|status|tick|mark|seal|stamp|label)\b/gi,
+    why: "offers a badge with no standard behind it",
+  },
 ];
 
 type Hit = { where: string; why: string; text: string };
@@ -152,12 +163,22 @@ describe("PropertyVault does not claim to have vetted anybody", () => {
   it("still recognises the claim it was written for", () => {
     // The original /find-agent line, verbatim. If a refactor breaks the
     // patterns, this fails rather than the suite going quietly green.
-    const original = "We verify all professional listings with the relevant regulatory body";
-    const matched = PATTERNS.some(p => {
-      p.re.lastIndex = 0;
-      return p.re.test(original);
-    });
-    expect(matched, "the detector no longer catches the claim it exists for").toBe(true);
+    // Each of these was live on the site. If a refactor breaks the patterns,
+    // this fails rather than the suite going quietly green.
+    const removed = [
+      "We verify all professional listings with the relevant regulatory body",
+      "Find vetted plumbers, electricians, builders, and gas engineers",
+      "PropertyVault verified social housing partners (see our directory)",
+      "Upload your compliance documents to display a verified badge",
+      "A vetted community of serious UK property investors",
+    ];
+    for (const claim of removed) {
+      const matched = PATTERNS.some(p => {
+        p.re.lastIndex = 0;
+        return p.re.test(claim);
+      });
+      expect(matched, `the detector no longer catches: ${claim}`).toBe(true);
+    }
   });
 
   it("does not fire on the disclaimers that say we vet nobody", () => {

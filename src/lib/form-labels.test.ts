@@ -58,6 +58,22 @@ type Unnamed = { where: string; tag: string };
  * unnamed, and placeholders that could have supplied a name were invisible.
  * Fixing it revealed 37 more controls that a placeholder could name.
  */
+/**
+ * Comments, blanked out rather than deleted so line numbers survive.
+ *
+ * A page whose header comment explains that its upload boxes contained no
+ * `<input type="file">` had that sentence counted as an unnamed control, and
+ * pushed the total one over the ceiling. Prose about a control is not a
+ * control, and a check that cannot tell the difference punishes the comment
+ * that explains the fix.
+ */
+function stripComments(src: string): string {
+  const blank = (m: string) => m.replace(/[^\n]/g, " ");
+  return src
+    .replace(/\/\*[\s\S]*?\*\//g, blank)
+    .replace(/(^|[^:])(\/\/[^\n]*)/g, (_m, pre: string, c: string) => pre + blank(c));
+}
+
 function tagAt(src: string, start: number): string | null {
   let depth = 0;
   let quote: string | null = null;
@@ -98,7 +114,7 @@ function findUnnamed(): { unnamed: Unnamed[]; explicit: number; wrapped: number 
 
   for (const file of files) {
     const rel = toPosix(file.slice(root.length + 1));
-    const src = readFileSync(file, "utf8");
+    const src = stripComments(readFileSync(file, "utf8"));
 
     for (const m of src.matchAll(/<(input|textarea|select)\b/g)) {
       const at = m.index!;
