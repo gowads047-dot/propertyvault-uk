@@ -182,7 +182,7 @@ function RenturaAuthForm() {
             {(mode === "signin" || mode === "signup" || mode === "update") && (
               <div>
                 <label style={labelStyle}>{mode === "update" ? "New password" : "Password"}</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)}
+                <input aria-label={mode === "update" ? "New password" : "Password"} type="password" value={password} onChange={e => setPassword(e.target.value)}
                   placeholder={mode === "signup" || mode === "update" ? "At least 8 characters" : "••••••••"}
                   autoComplete={mode === "signin" ? "current-password" : "new-password"} required style={inputStyle} />
               </div>

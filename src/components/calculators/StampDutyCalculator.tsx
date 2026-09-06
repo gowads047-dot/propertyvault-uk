@@ -43,6 +43,7 @@ export function StampDutyCalculator() {
             />
           </div>
           <input
+            aria-label="Property price slider"
             type="range" min={50000} max={3000000} step={5000} value={price}
             onChange={e => setPrice(nonNegative(e.target.value))}
             className="w-full mt-3 accent-gold-500"

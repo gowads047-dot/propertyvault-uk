@@ -198,7 +198,7 @@ export default function ViewingChecklistTemplate() {
                 ].map(field => (
                   <div key={field.key}>
                     <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>{field.label}</label>
-                    <input type={field.type} value={f[field.key] as string} onChange={e => setF(p => ({ ...p, [field.key]: e.target.value }))}
+                    <input aria-label={field.label} type={field.type} value={f[field.key] as string} onChange={e => setF(p => ({ ...p, [field.key]: e.target.value }))}
                       placeholder={field.placeholder}
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                   </div>

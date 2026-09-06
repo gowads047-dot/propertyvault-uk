@@ -178,7 +178,7 @@ export default function LandlordComplianceTemplate() {
                 ] as const).map((f, i) => (
                   <div key={i}>
                     <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>{f.label}</label>
-                    <input type={(f as { type?: string }).type ?? "text"} value={f.val} onChange={e => (f.set as (v: string) => void)(e.target.value)} placeholder={f.ph}
+                    <input aria-label={f.label} type={(f as { type?: string }).type ?? "text"} value={f.val} onChange={e => (f.set as (v: string) => void)(e.target.value)} placeholder={f.ph}
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                   </div>
                 ))}
@@ -216,7 +216,7 @@ export default function LandlordComplianceTemplate() {
                       {item.dateField && (
                         <div style={{ padding: "0 20px 14px 54px", display: "flex", alignItems: "center", gap: 10 }}>
                           <label style={{ fontSize: 12, color: "#475569", whiteSpace: "nowrap" }}>{item.dateLabel}:</label>
-                          <input type="date" value={dates[item.dateField as keyof Dates]} onChange={e => setDates(p => ({ ...p, [item.dateField!]: e.target.value }))}
+                          <input aria-label={`${item.title} — ${item.dateLabel}`} type="date" value={dates[item.dateField as keyof Dates]} onChange={e => setDates(p => ({ ...p, [item.dateField!]: e.target.value }))}
                             style={{ padding: "6px 10px", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12, outline: "none" }} />
                         </div>
                       )}

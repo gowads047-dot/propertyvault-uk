@@ -266,7 +266,7 @@ export default function GCCBuyersPage() {
                 <label className="text-sm font-semibold text-white/80">{ar ? "سعر العقار" : "Property Price"}</label>
                 <span className="text-xl font-black text-[var(--h-accent-on-ink)]">{fmt(price)}</span>
               </div>
-              <input type="range" min={50000} max={2000000} step={5000} value={price}
+              <input aria-label={ar ? "سعر العقار" : "Property price slider"} type="range" min={50000} max={2000000} step={5000} value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
                 className="w-full accent-[var(--h-accent-on-ink)]" />
               <div className={`flex justify-between text-xs text-white/55 mt-1 ${ar ? "flex-row-reverse" : ""}`}>
@@ -277,7 +277,7 @@ export default function GCCBuyersPage() {
             {/* Manual input */}
             <div className="mb-6">
               <label className="text-xs text-white/55 block mb-2">{ar ? "أو أدخل السعر يدوياً:" : "Or type a price:"}</label>
-              <input type="number" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
+              <input aria-label={ar ? "أو أدخل السعر يدوياً:" : "Or type a price:"} type="number" value={price} onChange={(e) => setPrice(Math.max(0, Number(e.target.value)))}
                 className="bg-white/5 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm w-full focus:outline-none focus:border-[var(--h-accent-on-ink)]/50"
                 dir="ltr" />
             </div>

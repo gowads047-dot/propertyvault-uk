@@ -82,7 +82,7 @@ export default function OfferWorksheetTemplate() {
                 ].map((f, i) => (
                   <div key={i}>
                     <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>{f.l}</label>
-                    <input value={f.v} onChange={e => (f.s as (v: string) => void)(e.target.value)} placeholder={f.ph}
+                    <input aria-label={f.l} value={f.v} onChange={e => (f.s as (v: string) => void)(e.target.value)} placeholder={f.ph}
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                   </div>
                 ))}
@@ -103,7 +103,7 @@ export default function OfferWorksheetTemplate() {
               <p style={{ fontSize: 12, color: "#475569", marginBottom: 16 }}>Find 2-3 similar properties sold recently nearby. Check Rightmove Sold Prices or the Land Registry.</p>
               {([[comp1Addr, setComp1Addr, comp1Price, setComp1Price],[comp2Addr, setComp2Addr, comp2Price, setComp2Price],[comp3Addr, setComp3Addr, comp3Price, setComp3Price]] as const).map((row, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
-                  <input value={row[0] as string} onChange={e => (row[1] as (v: string) => void)(e.target.value)} placeholder={`Comparable ${i + 1} address`}
+                  <input aria-label="Cost item description" value={row[0] as string} onChange={e => (row[1] as (v: string) => void)(e.target.value)} placeholder={`Comparable ${i + 1} address`}
                     style={{ flex: 2, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
@@ -132,7 +132,7 @@ export default function OfferWorksheetTemplate() {
                 ].map((f, i) => (
                   <div key={i}>
                     <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>{f.l}</label>
-                    <input type="number" value={f.v || ""} onChange={e => (f.s as (v: number) => void)(Number(e.target.value))} placeholder={f.ph}
+                    <input aria-label={f.l} type="number" value={f.v || ""} onChange={e => (f.s as (v: number) => void)(Number(e.target.value))} placeholder={f.ph}
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                   </div>
                 ))}

@@ -1332,7 +1332,7 @@ export default function PropertyPassport() {
             ].map(([label, key, type, placeholder]) => (
               <div key={key}>
                 <label style={labelStyle}>{label}</label>
-                <input type={type} placeholder={placeholder} value={(tenantForm as Record<string, string>)[key]} onChange={e => setTenantForm(f => ({ ...f, [key]: e.target.value }))} style={inputStyle} />
+                <input aria-label={label} type={type} placeholder={placeholder} value={(tenantForm as Record<string, string>)[key]} onChange={e => setTenantForm(f => ({ ...f, [key]: e.target.value }))} style={inputStyle} />
               </div>
             ))}
             <button onClick={addTenant} disabled={saving || !tenantForm.name.trim()} style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 15, padding: "13px 0", borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", marginTop: 8, opacity: saving ? 0.6 : 1 }}>
@@ -1356,7 +1356,7 @@ export default function PropertyPassport() {
             ].map(([label, key, type, placeholder]) => (
               <div key={key}>
                 <label style={labelStyle}>{label}</label>
-                <input type={type} placeholder={placeholder} value={(mortgageForm as Record<string, string>)[key]} onChange={e => setMortgageForm(f => ({ ...f, [key]: e.target.value }))} style={inputStyle} />
+                <input aria-label={label} type={type} placeholder={placeholder} value={(mortgageForm as Record<string, string>)[key]} onChange={e => setMortgageForm(f => ({ ...f, [key]: e.target.value }))} style={inputStyle} />
               </div>
             ))}
             <button onClick={addMortgage} disabled={saving} style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 15, padding: "13px 0", borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", marginTop: 8, opacity: saving ? 0.6 : 1 }}>

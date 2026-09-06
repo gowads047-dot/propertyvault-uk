@@ -88,7 +88,7 @@ export default function CheckOutReportTemplate() {
                 ].map((f, i) => (
                   <div key={i}>
                     <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>{f.l}</label>
-                    <input type={f.t || "text"} value={f.v} onChange={e => (f.s as (v: string) => void)(e.target.value)} placeholder={f.ph}
+                    <input aria-label={f.l} type={f.t || "text"} value={f.v} onChange={e => (f.s as (v: string) => void)(e.target.value)} placeholder={f.ph}
                       style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                   </div>
                 ))}

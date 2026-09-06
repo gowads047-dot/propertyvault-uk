@@ -128,7 +128,7 @@ export default function AcademyCRMPage() {
               {([["Name *", "name"], ["Phone", "phone"], ["Email", "email"], ["Strategy (e.g. BTL, HMO)", "strategy"], ["Budget Range", "budget"], ["Target Areas", "area"]] as [string, keyof typeof BLANK][]).map(([label, key]) => (
                 <div key={key}>
                   <label style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", display: "block", marginBottom: 4 }}>{label}</label>
-                  <input style={inp()} value={form[key] as string} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} />
+                  <input aria-label={label} style={inp()} value={form[key] as string} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))} />
                 </div>
               ))}
               <div>
