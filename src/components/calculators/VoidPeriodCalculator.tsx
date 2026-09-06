@@ -107,7 +107,7 @@ export function VoidPeriodCalculator() {
 
         <div className={`rounded-2xl p-5 border-2 ${results.savingVsGuaranteed > 0 ? "bg-green-50 border-green-300" : "bg-amber-50 border-amber-300"}`}>
           <p className="font-bold text-navy-800 mb-2 text-sm">Guaranteed Rent Comparison</p>
-          <p className="text-xs text-navy-600 mb-3">If guaranteed rent pays you {fmt(results.guaranteedRentComparison)}/month (88% of market rate, zero voids, zero management):</p>
+          <p className="text-xs text-navy-600 mb-3">If guaranteed rent pays you {fmt(results.guaranteedRentComparison)}/month ({Math.round(DEFAULT_ASSUMPTIONS.offerPct * 100)}% of market rate, no voids, no management fee):</p>
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
               <p className="text-xs text-navy-500">Current (after voids)</p>

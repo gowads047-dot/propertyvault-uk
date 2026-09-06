@@ -119,3 +119,60 @@ describe("estimator coverage is a subset of where we operate", () => {
     expect(guaranteedRentCities.length).toBe(6);
   });
 });
+
+describe("nothing keeps its own copy of these numbers", () => {
+  /**
+   * Four surfaces described the same £1,000/month property and three of them
+   * disagreed. /guaranteed-rent said a three-week void cost £692; the quote
+   * widget computed £750 from monthlyRent / 4; /guaranteed-rent/vs-letting-agent
+   * used four weeks and called it £1,000 (four weeks of £12,000 is £923); and
+   * the void calculator called 88% of market "typical" where the others said
+   * 85%. Its bottom line put a landlord £1,374 away from the main page's answer
+   * for an identical property.
+   *
+   * Each was written separately and each was internally consistent, which is
+   * why none of them looked wrong. The only durable fix is that there is one
+   * copy, so this asserts the surfaces read it rather than re-deriving it.
+   */
+  const SURFACES = [
+    "app/guaranteed-rent/page.tsx",
+    "app/guaranteed-rent/vs-letting-agent/page.tsx",
+    "components/guaranteed-rent/GRQuoteWidget.tsx",
+    "components/calculators/VoidPeriodCalculator.tsx",
+  ];
+
+  it("has every guaranteed-rent surface importing the shared model", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    for (const rel of SURFACES) {
+      const src = readFileSync(join(process.cwd(), "src", rel), "utf8");
+      expect(
+        src.includes("guaranteed-rent-model"),
+        `src/${rel} does not read the shared model, so its numbers can drift`,
+      ).toBe(true);
+    }
+  });
+
+  it("keeps the void-week assumption out of those files as a literal", async () => {
+    const { readFileSync } = await import("node:fs");
+    const { join } = await import("node:path");
+    const blank = (m: string) => m.replace(/[^\n]/g, " ");
+    for (const rel of SURFACES) {
+      const src = readFileSync(join(process.cwd(), "src", rel), "utf8")
+        .replace(/\/\*[\s\S]*?\*\//g, blank)
+        .replace(/(^|[^:])(\/\/[^\n]*)/g, (_m, p: string, c: string) => p + blank(c));
+      // A void assumption written into the copy rather than interpolated —
+      // "Void periods (3 weeks)", "void periods average 4 weeks/yr", "2.7
+      // weeks". The model's value reaches the page as {A.voidWeeks}.
+      //
+      // Scoped to void claims specifically. A first pass matched any number
+      // before "weeks" and flagged "most transitions happen within 2–4 weeks
+      // of agreeing terms", which is a timeline and has nothing to do with
+      // this — a check that fires on unrelated prose gets switched off.
+      const literal =
+        src.match(/void[^.\n]{0,40}?\b\d+(?:\.\d+)?\s+weeks?\b/i) ??
+        src.match(/\b\d+(?:\.\d+)?\s+(?:void\s+)?weeks?[^.\n]{0,25}\b(?:void|empty)\b/i);
+      expect(literal?.[0], `src/${rel} hardcodes "${literal?.[0]}"`).toBeUndefined();
+    }
+  });
+});
