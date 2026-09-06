@@ -200,7 +200,7 @@ export default function AcademyAreaResearchPage() {
           <h3 style={{ fontSize: 16, fontWeight: 800, marginBottom: 6 }}>Postcode Deep Dive</h3>
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 16 }}>Enter a specific postcode to see sold prices, rental data, and crime stats.</p>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-            <input
+            <input aria-label="B21 9BB"
               type="text" placeholder="e.g. B21 9BB" value={postcode} onChange={e => setPostcode(e.target.value)}
               onKeyDown={e => e.key === "Enter" && lookup()}
               style={{ flex: 1, minWidth: 160, padding: "10px 14px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box" }}

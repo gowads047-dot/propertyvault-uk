@@ -66,7 +66,7 @@ export default function MembershipPage() {
           <h2 className="text-2xl font-bold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Join the Waiting List</h2>
           <p className="text-sm text-navy-500 mb-6">Be the first to know when membership launches. No spam, just one email when we&apos;re ready.</p>
           <form className="space-y-3">
-            <input type="email" placeholder="Your email address" required
+            <input aria-label="Your email address" type="email" placeholder="Your email address" required
               className="w-full px-4 py-3.5 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 text-center" />
             <button type="submit" className="btn-primary w-full !py-3.5">Join Waiting List</button>
           </form>

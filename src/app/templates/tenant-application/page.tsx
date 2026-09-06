@@ -8,11 +8,14 @@ import Link from "next/link";
 // ── Field helpers ─────────────────────────────────────────────────────────────
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 16 }}>
-      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}>{label}</label>
-      {hint && <p style={{ fontSize: 11, color: "#475569", marginBottom: 5 }}>{hint}</p>}
+    // Wrapping rather than adjacent — see the note in commercial-lease. The
+    // hint moves from <p> to <span> because a paragraph cannot legally sit
+    // inside a label.
+    <label style={{ display: "block", marginBottom: 16 }}>
+      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#374151", marginBottom: 5 }}>{label}</span>
+      {hint && <span style={{ display: "block", fontSize: 11, color: "#475569", marginBottom: 5 }}>{hint}</span>}
       {children}
-    </div>
+    </label>
   );
 }
 function Input({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {

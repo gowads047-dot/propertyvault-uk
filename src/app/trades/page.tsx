@@ -97,7 +97,7 @@ export default function TradesPage() {
             <h3 className="text-xl font-bold text-navy-800 mb-2">Get Notified When We Launch</h3>
             <p className="text-sm text-navy-500 mb-4">Join the waiting list for the PropertyVault Trades Marketplace.</p>
             <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" placeholder="Your email" required
+              <input aria-label="Your email" type="email" placeholder="Your email" required
                 className="flex-1 px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
               <button type="submit" className="btn-primary whitespace-nowrap">Join Waiting List</button>
             </form>

@@ -1008,7 +1008,7 @@ export default function PropertyPassport() {
                       {/* Quoted */}
                       {editingCost?.id === issue.id && editingCost.field === "quoted_cost" ? (
                         <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-                          <input autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                          <input aria-label="0.00" autoFocus type="number" placeholder="0.00" value={editingCost.value}
                             onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
                             onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "quoted_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
                             style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid ${CTA}`, outline: "none", fontFamily: "inherit" }} />
@@ -1032,7 +1032,7 @@ export default function PropertyPassport() {
                       {/* Actual */}
                       {editingCost?.id === issue.id && editingCost.field === "actual_cost" ? (
                         <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-                          <input autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                          <input aria-label="0.00" autoFocus type="number" placeholder="0.00" value={editingCost.value}
                             onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
                             onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "actual_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
                             style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid #15803d`, outline: "none", fontFamily: "inherit" }} />
@@ -1143,9 +1143,9 @@ export default function PropertyPassport() {
 
                 {/* Issue details */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 20 }}>
-                  <input type="text" placeholder="Issue title *" value={maintForm.title} onChange={e => setMaintForm(f => ({ ...f, title: e.target.value }))}
+                  <input aria-label="Issue title *" type="text" placeholder="Issue title *" value={maintForm.title} onChange={e => setMaintForm(f => ({ ...f, title: e.target.value }))}
                     style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                  <textarea placeholder="Describe the issue (optional — detail helps the contractor quote accurately)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
+                  <textarea aria-label="Describe the issue (optional — detail helps the contractor quote accurately)" placeholder="Describe the issue (optional — detail helps the contractor quote accurately)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
                     style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 80, resize: "vertical" as const, lineHeight: 1.6 }} />
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
                     <select value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
@@ -1166,15 +1166,15 @@ export default function PropertyPassport() {
                   <p style={{ fontSize: 11, fontWeight: 800, color: INK2, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 10 }}>👷 Contractor (optional)</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
-                      <input type="text" placeholder="Contractor name" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
+                      <input aria-label="Contractor name" type="text" placeholder="Contractor name" value={maintForm.contractor_name} onChange={e => setMaintForm(f => ({ ...f, contractor_name: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                      <input type="text" placeholder="Company / trade" value={maintForm.contractor_company} onChange={e => setMaintForm(f => ({ ...f, contractor_company: e.target.value }))}
+                      <input aria-label="Company / trade" type="text" placeholder="Company / trade" value={maintForm.contractor_company} onChange={e => setMaintForm(f => ({ ...f, contractor_company: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
-                      <input type="tel" placeholder="📞 Phone" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
+                      <input aria-label="📞 Phone" type="tel" placeholder="📞 Phone" value={maintForm.contractor_phone} onChange={e => setMaintForm(f => ({ ...f, contractor_phone: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
-                      <input type="email" placeholder="✉️ Email" value={maintForm.contractor_email} onChange={e => setMaintForm(f => ({ ...f, contractor_email: e.target.value }))}
+                      <input aria-label="✉️ Email" type="email" placeholder="✉️ Email" value={maintForm.contractor_email} onChange={e => setMaintForm(f => ({ ...f, contractor_email: e.target.value }))}
                         style={{ padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit" }} />
                     </div>
                     <p style={{ fontSize: 11, color: INK2, paddingLeft: 2 }}>Add contact details and we&apos;ll help you send a quote request via WhatsApp or email after saving.</p>
@@ -1187,12 +1187,12 @@ export default function PropertyPassport() {
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
                     <div>
                       <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Your estimate (£)</p>
-                      <input type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
+                      <input aria-label="300" type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
                         style={{ width: "100%", padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", boxSizing: "border-box" as const }} />
                     </div>
                     <div>
                       <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Contractor quote (£)</p>
-                      <input type="number" placeholder="Leave blank until quote received" value={maintForm.quoted_cost} onChange={e => setMaintForm(f => ({ ...f, quoted_cost: e.target.value }))}
+                      <input aria-label="Leave blank until quote received" type="number" placeholder="Leave blank until quote received" value={maintForm.quoted_cost} onChange={e => setMaintForm(f => ({ ...f, quoted_cost: e.target.value }))}
                         style={{ width: "100%", padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", boxSizing: "border-box" as const }} />
                     </div>
                   </div>
