@@ -46,6 +46,20 @@ const EVENT_ICONS: Record<string, string> = {
   arrears: "!", note: "●", property_created: "⌂", new_property: "⌂",
 };
 
+/**
+ * What the vault knew about this property before it was bought.
+ *
+ * Read straight from pv_property rather than through an endpoint: the owner
+ * policy already scopes these tables to auth.uid(), so the same anon-key
+ * client the rest of this page uses can see exactly the rows it should.
+ */
+type Research = {
+  id: string;
+  asking_price: number | null;
+  created_at: string;
+  pv_analysis?: { score: number | null; band: string | null; created_at: string }[] | null;
+};
+
 function Section({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) {
   return (
     <div>
@@ -77,6 +91,7 @@ export default function PassportPage() {
   const [mortgages, setMortgages] = useState<RenturaMortgage[]>([]);
   const [compliance, setCompliance] = useState<RenturaCompliance[]>([]);
   const [events, setEvents] = useState<RenturaEvent[]>([]);
+  const [research, setResearch] = useState<Research | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -88,13 +103,23 @@ export default function PassportPage() {
       supabase.from("rentura_mortgages").select("*").eq("property_id", id).eq("is_current", true).limit(1),
       supabase.from("rentura_compliance").select("*").eq("property_id", id).order("expiry_date", { ascending: true }),
       supabase.from("rentura_events").select("*").eq("property_id", id).order("event_date", { ascending: false }).limit(20),
-    ]).then(([p, t, m, c, e]) => {
+      // The research that led to buying it, if this property came through the
+      // vault. maybeSingle because most properties were added by hand and have
+      // no vault record behind them — that is ordinary, not an error.
+      supabase
+        .from("pv_property")
+        .select("id,asking_price,created_at,pv_analysis(score,band,created_at)")
+        .eq("rentura_property_id", id)
+        .eq("user_id", user.id)
+        .maybeSingle(),
+    ]).then(([p, t, m, c, e, r]) => {
       if (!p.data) { router.push("/rentura/dashboard"); return; }
       setProperty(p.data);
       setTenants(t.data ?? []);
       setMortgages(m.data ?? []);
       setCompliance(c.data ?? []);
       setEvents(e.data ?? []);
+      setResearch((r.data as Research | null) ?? null);
       setLoading(false);
     });
   }, [id, user, authLoading, router]);
@@ -287,6 +312,48 @@ export default function PassportPage() {
                 </div>
               )}
             </Section>
+
+            {/* Only where the property came through the vault. Most were added
+                by hand and have no research behind them, and an empty section
+                headed "Before you bought it" would imply we lost something. */}
+            {research ? (
+              <Section title="Before You Bought It" icon="🔎">
+                <div>
+                  {(() => {
+                    const runs = [...(research.pv_analysis ?? [])]
+                      .sort((a, b) => b.created_at.localeCompare(a.created_at));
+                    const latest = runs[0];
+                    return (
+                      <>
+                        <Row label="First looked at" value={fmtDate(research.created_at)} />
+                        {research.asking_price != null ? (
+                          <Row label="Asking price then" value={fmt(research.asking_price)} mono />
+                        ) : null}
+                        {latest?.score != null ? (
+                          <Row
+                            label="PropertyVault score"
+                            value={`${latest.score}/100${latest.band ? ` · ${latest.band}` : ""}`}
+                            highlight
+                          />
+                        ) : null}
+                        {runs.length > 1 ? (
+                          <Row label="Times analysed" value={String(runs.length)} />
+                        ) : null}
+                      </>
+                    );
+                  })()}
+                  <a
+                    href={`/property/${research.id}/`}
+                    style={{
+                      display: "inline-block", marginTop: 12, fontSize: 12,
+                      fontWeight: 700, color: GOLD, textDecoration: "none",
+                    }}
+                  >
+                    Open the full record &rarr;
+                  </a>
+                </div>
+              </Section>
+            ) : null}
 
             <Section title="Compliance Status" icon="✓">
               <div>
