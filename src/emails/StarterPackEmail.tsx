@@ -13,6 +13,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { siteMetrics } from "@/lib/site";
 
 interface StarterPackEmailProps {
   name: string;
@@ -245,7 +246,7 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
               </Column>
               <Column style={{ paddingLeft: 8 }}>
                 <Section style={{ backgroundColor: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 8, padding: "12px 14px" }}>
-                  <Link href={`${BASE}/templates`} style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View all 19 templates →</Link>
+                  <Link href={`${BASE}/templates`} style={{ color: NAVY, fontFamily: "Arial, sans-serif", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>View all ${siteMetrics.templates} templates →</Link>
                   <Text style={{ color: MUTED, fontSize: 11, margin: "4px 0 0" }}>Deposit receipts, inventories & more</Text>
                 </Section>
               </Column>

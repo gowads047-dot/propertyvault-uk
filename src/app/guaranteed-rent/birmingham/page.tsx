@@ -163,7 +163,7 @@ export default function BirminghamPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Birmingham?",
-              a: "Once we've assessed your property and agreed terms, most Birmingham landlords are up and running within 7–14 days. We handle all the paperwork, inspection, and tenant placement — you simply sign the lease and start receiving rent on your agreed payment date.",
+              a: "Once we've assessed your property and you accept the offer, most Birmingham leases are signed within 7–14 days, with your first payment on the lease start date. We handle all the paperwork, inspection, and tenant placement — you simply sign the lease and start receiving rent on your agreed payment date.",
             },
             {
               q: "Who handles maintenance and repairs at my Birmingham property?",

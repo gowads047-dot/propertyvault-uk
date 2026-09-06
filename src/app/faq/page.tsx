@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FAQSchema } from "@/components/seo/FAQSchema";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQ — Guaranteed Rent, Calculators & Property Questions",
@@ -38,7 +39,7 @@ const sections = [
   {
     heading: "Calculators",
     faqs: [
-      { q: "Are your calculators free to use?", a: "Yes — all 20 calculators on PropertyVault UK are completely free to use with no account required. They are designed for UK property investors, landlords, and buyers." },
+      { q: "Are your calculators free to use?", a: `Yes — all ${siteMetrics.calculators} calculators on PropertyVault UK are completely free to use with no account required. They are designed for UK property investors, landlords, and buyers.` },
       { q: "Are the calculator results accurate?", a: "Our calculators use current UK tax rates, stamp duty bands, and standard mortgage formulas. Results are estimates for planning purposes — always verify with a qualified accountant, solicitor, or mortgage broker before making financial decisions." },
       { q: "Which calculator should I start with?", a: "For investors analysing deals: Deal Analyser. For landlords: Landlord Tax or Void Period Cost. For buyers: Stamp Duty and Mortgage. For tax planning: Section 24 or Personal vs Ltd." },
       { q: "Can I save or share my calculator results?", a: "You can email your results to yourself directly from most calculators using the email capture feature. Shareable links are coming soon." },

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import ApiForm from "@/components/forms/ApiForm";
+import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Deal Sourcing Marketplace — Coming Soon | PropertyVault UK",
@@ -63,11 +65,24 @@ export default function DealSourcingPage() {
           <div className="mt-10 bg-white rounded-2xl border-2 border-gold-400/30 p-8 text-center">
             <h3 className="text-xl font-bold text-navy-800 mb-2">Get Early Access</h3>
             <p className="text-sm text-navy-500 mb-4">Be the first to know when the Deal Sourcing Marketplace launches. Join the waiting list.</p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input aria-label="Your email" type="email" placeholder="Your email" required
-                className="flex-1 px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
-              <button type="submit" className="btn-primary whitespace-nowrap">Join Waiting List</button>
-            </form>
+            <ApiForm
+              source="waitlist:deal-sourcing"
+              submitLabel="Join the list"
+              successTitle="Noted, thank you."
+              successBody="We will email you once the deal sourcing marketplace is running, and nothing else."
+              sentEvent={events.waitlistJoined}
+              sentParams={{ service: "deal-sourcing" }}
+              className="space-y-3 text-left"
+            >
+              <div>
+                <label htmlFor="deal-sourcing-name" className="block text-sm font-semibold text-navy-700 mb-1">Your name</label>
+                <input id="deal-sourcing-name" name="name" type="text" required maxLength={100} autoComplete="name" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+              <div>
+                <label htmlFor="deal-sourcing-email" className="block text-sm font-semibold text-navy-700 mb-1">Email</label>
+                <input id="deal-sourcing-email" name="email" type="email" required maxLength={200} autoComplete="email" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+            </ApiForm>
           </div>
 
           <div className="mt-8 text-center">

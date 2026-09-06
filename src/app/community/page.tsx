@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ApiForm from "@/components/forms/ApiForm";
+import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Property Community — Coming Soon | PropertyVault UK",
@@ -52,11 +54,24 @@ export default function CommunityPage() {
           <div className="bg-white rounded-2xl border-2 border-gold-400/30 p-8 text-center">
             <h3 className="text-xl font-bold text-navy-800 mb-2">Join the Waiting List</h3>
             <p className="text-sm text-navy-500 mb-4">Be the first to access the PropertyVault Community when it launches.</p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input aria-label="Your email" type="email" placeholder="Your email" required
-                className="flex-1 px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
-              <button type="submit" className="btn-primary whitespace-nowrap">Join Waiting List</button>
-            </form>
+            <ApiForm
+              source="waitlist:community"
+              submitLabel="Join the list"
+              successTitle="Noted, thank you."
+              successBody="We will email you once about the community and nothing else."
+              sentEvent={events.waitlistJoined}
+              sentParams={{ service: "community" }}
+              className="space-y-3 text-left"
+            >
+              <div>
+                <label htmlFor="community-name" className="block text-sm font-semibold text-navy-700 mb-1">Your name</label>
+                <input id="community-name" name="name" type="text" required maxLength={100} autoComplete="name" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+              <div>
+                <label htmlFor="community-email" className="block text-sm font-semibold text-navy-700 mb-1">Email</label>
+                <input id="community-email" name="email" type="email" required maxLength={200} autoComplete="email" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+            </ApiForm>
           </div>
         </div>
       </section>
