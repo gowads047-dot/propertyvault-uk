@@ -1148,11 +1148,11 @@ export default function PropertyPassport() {
                   <textarea aria-label="Describe the issue (optional — detail helps the contractor quote accurately)" placeholder="Describe the issue (optional — detail helps the contractor quote accurately)" value={maintForm.description} onChange={e => setMaintForm(f => ({ ...f, description: e.target.value }))}
                     style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", minHeight: 80, resize: "vertical" as const, lineHeight: 1.6 }} />
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
-                    <select value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
+                    <select aria-label="Category" value={maintForm.category} onChange={e => setMaintForm(f => ({ ...f, category: e.target.value as MaintenanceCategory }))}
                       style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, fontFamily: "inherit", color: INK }}>
                       {[["plumbing","🚿 Plumbing"],["electrical","⚡ Electrical"],["structural","🏠 Structural"],["appliance","🔌 Appliance"],["damp","💧 Damp / Mould"],["roofing","🏚 Roofing"],["other","🔧 Other"]].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
                     </select>
-                    <select value={maintForm.urgency} onChange={e => setMaintForm(f => ({ ...f, urgency: e.target.value as MaintenanceUrgency }))}
+                    <select aria-label="Urgency" value={maintForm.urgency} onChange={e => setMaintForm(f => ({ ...f, urgency: e.target.value as MaintenanceUrgency }))}
                       style={{ padding: "11px 14px", fontSize: 14, borderRadius: 9, border: `1px solid ${BORDER}`, fontFamily: "inherit", color: INK }}>
                       <option value="emergency">⚠️ Emergency</option>
                       <option value="urgent">◎ Urgent</option>

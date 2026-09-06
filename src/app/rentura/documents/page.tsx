@@ -123,17 +123,17 @@ export default function RenturaDocuments() {
             <p style={{ fontSize: 13, color: C.ink2 }}>{docs.length} document{docs.length !== 1 ? "s" : ""} stored securely</p>
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <select value={selectedProp} onChange={e => setSelectedProp(e.target.value)} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", fontSize: 12, color: C.ink2, outline: "none" }}>
+            <select aria-label="Filter by property" value={selectedProp} onChange={e => setSelectedProp(e.target.value)} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", fontSize: 12, color: C.ink2, outline: "none" }}>
               <option value="">No property</option>
               {properties.map(p => <option key={p.id} value={p.id}>{p.address.split(",")[0]}</option>)}
             </select>
-            <select value={selectedCat} onChange={e => setSelectedCat(e.target.value)} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", fontSize: 12, color: C.ink2, outline: "none" }}>
+            <select aria-label="Filter by category" value={selectedCat} onChange={e => setSelectedCat(e.target.value)} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", fontSize: 12, color: C.ink2, outline: "none" }}>
               {CATEGORIES.slice(1).map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
             </select>
             <button onClick={() => fileRef.current?.click()} disabled={uploading} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 13, padding: "9px 18px", borderRadius: 8, border: "none", cursor: "pointer" }}>
               {uploading ? "Uploading…" : "+ Upload"}
             </button>
-            <input ref={fileRef} type="file" style={{ display: "none" }} onChange={uploadFile} />
+            <input aria-label="Choose a document to upload" ref={fileRef} type="file" style={{ display: "none" }} onChange={uploadFile} />
           </div>
         </div>
 

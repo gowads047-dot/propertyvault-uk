@@ -21,7 +21,7 @@ export default function AccessibilityPage() {
       <section className="gradient-navy py-12 md:py-16">
         <div className="container-max px-4">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Accessibility Statement</h1>
-          <p className="text-navy-200 text-sm">Last updated: June 2026</p>
+          <p className="text-navy-200 text-sm">Last updated: 6 September 2026</p>
         </div>
       </section>
 
@@ -47,7 +47,7 @@ export default function AccessibilityPage() {
               <li>ARIA labels and roles where native HTML semantics are insufficient</li>
               <li>Responsive design that works across screen sizes and orientations</li>
               <li>Focus indicators visible on all interactive elements</li>
-              <li>Form labels associated with their input fields</li>
+              <li>Form labels associated with their input fields, so a screen reader announces what each one is for — checked across every public form</li>
               <li>Error messages that clearly identify and describe errors</li>
               <li>Content that does not rely solely on colour to convey information</li>
               <li>Text resizable up to 200% without loss of content or functionality</li>
@@ -56,9 +56,19 @@ export default function AccessibilityPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">Known Limitations</h2>
-            <p>While we strive for full accessibility, some areas may have limitations:</p>
+            <p>
+              These are the things we currently know fall short. It is a real list rather than a
+              formality — if you hit something that is not on it, please tell us and it will be.
+            </p>
             <ul className="list-disc pl-6 space-y-1 mt-2">
-              <li>Some interactive calculator charts may have limited screen reader support — text alternatives for results are provided</li>
+              <li>
+                <strong>Some form fields in the landlord dashboard.</strong> A screen reader
+                announces them without saying what they are for. Every form on the public site —
+                the calculators, the document templates, the contact and enquiry forms — was
+                checked and corrected in September 2026, and the signed-in dashboard is being
+                worked through the same way.
+              </li>
+              <li>Some interactive calculator charts have limited screen reader support — the results are also given as text</li>
               <li>Some third-party embedded content may not meet all accessibility standards</li>
               <li>PDF downloads may have limited accessibility — we are working to provide accessible alternatives</li>
             </ul>

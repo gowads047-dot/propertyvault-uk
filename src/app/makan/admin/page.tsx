@@ -146,7 +146,7 @@ export default function MakanAdmin() {
             <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
               <input aria-label="Search title or city" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search title or city…"
                 style={{ flex: 1, minWidth: 200, background: "var(--h-surface)", border: "1px solid var(--h-border)", borderRadius: 8, padding: "8px 12px", fontSize: 13, color: "var(--h-text)", outline: "none" }} />
-              <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
+              <select aria-label="Filter by status" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
                 style={{ background: "var(--h-surface)", border: "1px solid var(--h-border)", borderRadius: 8, padding: "8px 12px", fontSize: 13, color: "var(--h-text)" }}>
                 <option value="all">All statuses</option>
                 <option value="active">Active</option>

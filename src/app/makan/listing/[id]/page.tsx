@@ -749,6 +749,7 @@ export default function ListingPage() {
                       ) : (
                         <form onSubmit={sendEnquiry} className="space-y-2">
                           <textarea
+                            aria-label="Your message"
                             value={message}
                             onChange={e => setMessage(e.target.value)}
                             rows={3}
