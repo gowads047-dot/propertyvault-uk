@@ -106,7 +106,7 @@ export default function Section24Page() {
                   Other Annual Income <span className="font-normal text-navy-400">(salary, pension, other)</span>
                 </label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                <input type="number" min="0" value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <input aria-label="Other annual income in pounds" type="number" min="0" value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full pl-8 pr-4 py-3 border border-navy-200 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 <p className="text-xs text-navy-400 mt-1">Your tax band is computed automatically — <strong className="text-navy-600">{results.taxBand}</strong></p>
               </div>
             </div>
