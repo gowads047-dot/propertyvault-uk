@@ -5,6 +5,7 @@ import Link from "next/link";
 import { DataState } from "@/components/property/DataState";
 import { LifecycleBar } from "@/components/property/LifecycleBar";
 import { StageControl } from "@/components/property/StageControl";
+import { OwnItControl } from "@/components/property/OwnItControl";
 import { specFor, formatValue } from "@/lib/evidence-fields";
 import { NEXT_STEP, lifecycleOf, LIFECYCLE_LABEL, type AnyStage } from "@/lib/lifecycle";
 import { getVaultProperty, type VaultProperty } from "@/lib/vault-client";
@@ -119,6 +120,18 @@ export function PropertyRecord({ id }: { id: string }) {
           stage={stage}
           onChanged={next => setProperty(p => (p ? { ...p, stage: next } : p))}
         />
+
+        {/* Only appears once the property has reached completion. Before that
+            it would be inviting somebody to add a house they do not own to a
+            portfolio of houses they do. */}
+        <div style={{ marginTop: 16 }}>
+          <OwnItControl
+            id={property.id}
+            stage={stage}
+            renturaPropertyId={property.rentura_property_id}
+            onLinked={rid => setProperty(p => (p ? { ...p, rentura_property_id: rid } : p))}
+          />
+        </div>
       </section>
 
       {latest ? (

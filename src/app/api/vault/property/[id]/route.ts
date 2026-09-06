@@ -54,6 +54,7 @@ const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const SELECT =
   "id,address,postcode,property_type,bedrooms,asking_price,stage,source,source_ref," +
+  "rentura_property_id," +
   "created_at,updated_at," +
   "pv_evidence(field,state,value_num,value_text,value_low,value_high,source,source_url,method,checked_at)," +
   "pv_analysis(score,band,components_scored,computed,created_at)";
