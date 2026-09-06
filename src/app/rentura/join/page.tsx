@@ -43,7 +43,7 @@ export default function RenturaJoinPage() {
 
     // If session is available immediately — go straight to Stripe
     if (data.session && data.user) {
-      const res = await fetch("/api/rentura/subscribe", {
+      const res = await fetch("/api/rentura/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), userId: data.user.id }),

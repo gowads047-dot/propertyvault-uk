@@ -19,7 +19,7 @@ export default function RenturaSubscribePage() {
     if (!user) return;
     setLoading(true);
     setError("");
-    const res = await fetch("/api/rentura/subscribe", {
+    const res = await fetch("/api/rentura/subscribe/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: user.email, userId: user.id }),

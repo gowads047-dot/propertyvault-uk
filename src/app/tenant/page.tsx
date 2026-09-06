@@ -21,7 +21,7 @@ function TenantAuthInner() {
 
   useEffect(() => {
     if (!token) return;
-    fetch(`/api/tenant/validate?token=${token}`)
+    fetch(`/api/tenant/validate/?token=${token}`)
       .then(r => r.json())
       .then(d => {
         if (d.valid) {
@@ -47,7 +47,7 @@ function TenantAuthInner() {
       const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
       if (signInErr) { setError("Wrong password. Try logging in instead."); setSubmitting(false); return; }
     } else if (data.user) {
-      await fetch("/api/tenant/validate", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token, authId: data.user.id }) });
+      await fetch("/api/tenant/validate/", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token, authId: data.user.id }) });
     }
     router.push(`/tenant/dashboard?token=${token}`);
   }

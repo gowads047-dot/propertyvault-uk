@@ -59,7 +59,7 @@ function NewIssueInner() {
     if (!title.trim()) { setError("Please give the issue a title."); return; }
     setSubmitting(true);
 
-    const res = await fetch("/api/tenant/issues", {
+    const res = await fetch("/api/tenant/issues/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, title, description, category, priority, attachments }),

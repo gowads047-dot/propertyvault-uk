@@ -21,7 +21,7 @@ export function useIsAdmin(enabled = true): boolean | null {
     if (!enabled) return;
     let cancelled = false;
 
-    authFetch("/api/admin/check")
+    authFetch("/api/admin/check/")
       .then(r => (r.ok ? r.json() : { admin: false }))
       .then(d => {
         if (!cancelled) setAdmin(Boolean(d.admin));

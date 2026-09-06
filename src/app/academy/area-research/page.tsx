@@ -83,7 +83,7 @@ export default function AcademyAreaResearchPage() {
     if (!postcode.trim()) return;
     setLoading(true); setLookupError(""); setLookupData(null);
     try {
-      const res = await fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(postcode.trim())}`);
+      const res = await fetch(`/api/postcode-lookup/?postcode=${encodeURIComponent(postcode.trim())}`);
       const data = await res.json();
       if (data.error) setLookupError(data.error);
       else setLookupData(data);

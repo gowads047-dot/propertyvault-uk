@@ -163,7 +163,7 @@ export default function PropertyPassport() {
       setCompliance(compRes.data ?? []);
       setMaintenance((maintRes.data ?? []) as RenturaMaintenance[]);
       // Load tenant-reported issues
-      authFetch(`/api/tenant/issues?propertyId=${id}`)
+      authFetch(`/api/tenant/issues/?propertyId=${id}`)
         .then(r => r.json())
         .then(d => setTenantIssues(d.issues ?? []));
       setLoading(false);
@@ -195,7 +195,7 @@ export default function PropertyPassport() {
 
       // Send portal invite if email provided
       if (tenantForm.email) {
-        const inviteRes = await fetch("/api/tenant/invite", {
+        const inviteRes = await fetch("/api/tenant/invite/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -282,7 +282,7 @@ export default function PropertyPassport() {
     formData.append("property_id", id as string);
 
     try {
-      const res = await fetch("/api/rentura/extract", { method: "POST", body: formData });
+      const res = await fetch("/api/rentura/extract/", { method: "POST", body: formData });
       const data = await res.json();
       if (!res.ok || data.error) { setUploadError(data.error ?? "Extraction failed"); return; }
       setUploadResult(data);
@@ -460,7 +460,7 @@ export default function PropertyPassport() {
     if (data) {
       const currentTenant = tenants.find(t => t.is_current);
       if (currentTenant?.email) {
-        const notifyRes = await fetch("/api/tenant/notify-issue", {
+        const notifyRes = await fetch("/api/tenant/notify-issue/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

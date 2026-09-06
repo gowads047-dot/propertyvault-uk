@@ -90,7 +90,7 @@ export default function RenturaSettings() {
   async function requestDeleteAccount() {
     if (!user) return;
     setDeleteLoading(true);
-    await fetch("/api/contact", {
+    await fetch("/api/contact/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -115,7 +115,7 @@ export default function RenturaSettings() {
   }
 
   async function openPortal() {
-    const res = await authFetch("/api/stripe/portal", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ platform: "rentura" }) });
+    const res = await authFetch("/api/stripe/portal/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ platform: "rentura" }) });
     const { url, error } = await res.json();
     if (url) window.location.href = url;
     else alert(error || "No billing account found. Subscribe first.");
@@ -123,7 +123,7 @@ export default function RenturaSettings() {
 
   async function openCheckout() {
     if (!user) return;
-    const res = await fetch("/api/rentura/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: user.email, userId: user.id }) });
+    const res = await fetch("/api/rentura/subscribe/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: user.email, userId: user.id }) });
     const { url, error } = await res.json();
     if (url) window.location.href = url;
     else alert(error || "Could not start checkout. Please try again.");

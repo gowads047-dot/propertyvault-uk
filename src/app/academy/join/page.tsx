@@ -51,7 +51,7 @@ export default function AcademyJoinPage() {
     // If session is available immediately (email confirmation is disabled in Supabase),
     // redirect straight to Stripe checkout — payment happens before they can access anything
     if (data.session && data.user) {
-      const checkoutRes = await fetch("/api/stripe/checkout", {
+      const checkoutRes = await fetch("/api/stripe/checkout/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), userId: data.user.id }),

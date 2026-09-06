@@ -266,7 +266,7 @@ export default function DealAnalyserPage() {
     setPostcodeError("");
     setAreaData(null);
     try {
-      const res = await fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(pc)}`);
+      const res = await fetch(`/api/postcode-lookup/?postcode=${encodeURIComponent(pc)}`);
       const json = await res.json();
       if (!res.ok) { setPostcodeError(json.error ?? "Lookup failed"); return; }
       setAreaData(json);
@@ -290,7 +290,7 @@ export default function DealAnalyserPage() {
     setUrlError("");
     setPropertyPreview(null);
     try {
-      const res = await fetch(`/api/property-lookup?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`/api/property-lookup/?url=${encodeURIComponent(url)}`);
       const json: PropertyPreview = await res.json();
       setPropertyPreview(json);
       if (json.success) {
@@ -299,7 +299,7 @@ export default function DealAnalyserPage() {
           setPostcodeInput(json.postcode);
           // Trigger postcode lookup automatically
           const pc = json.postcode.trim().toUpperCase();
-          fetch(`/api/postcode-lookup?postcode=${encodeURIComponent(pc)}`)
+          fetch(`/api/postcode-lookup/?postcode=${encodeURIComponent(pc)}`)
             .then(r => r.json())
             .then(data => {
               if (data && !data.error) {
@@ -325,7 +325,7 @@ export default function DealAnalyserPage() {
     setAiVerdict(null);
     const bm = BENCHMARKS[cityBenchmark];
     try {
-      const res = await fetch("/api/deal-ai-verdict", {
+      const res = await fetch("/api/deal-ai-verdict/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

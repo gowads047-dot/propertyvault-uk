@@ -42,7 +42,7 @@ export function EnquiryForm() {
     // never been activated there. The page promises a reply within 2 hours, so
     // a false success here is the most expensive bug on the site.
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source: "guaranteed-rent", ...fields }),
