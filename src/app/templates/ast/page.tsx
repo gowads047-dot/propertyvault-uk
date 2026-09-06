@@ -883,7 +883,7 @@ export default function ASTPage() {
               ] as [keyof F, string, [string, string][]][]).map(([key, label, opts]) => (
                 <div key={key}>
                   <label className={LABEL}>{label}</label>
-                  <select value={f[key] as string} onChange={e => set(key, e.target.value)} className={SELECT}>
+                  <select aria-label={label} value={f[key] as string} onChange={e => set(key, e.target.value)} className={SELECT}>
                     {opts.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                   </select>
                 </div>

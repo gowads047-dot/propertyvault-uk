@@ -172,7 +172,7 @@ export default function RenturaSettings() {
                 ].map(f => (
                   <div key={f.label}>
                     <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 6 }}>{f.label}</label>
-                    <input
+                    <input aria-label={f.label}
                       value={f.value}
                       onChange={e => f.set(e.target.value)}
                       placeholder={f.placeholder}

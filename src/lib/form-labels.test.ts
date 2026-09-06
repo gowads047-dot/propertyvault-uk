@@ -38,7 +38,7 @@ import { join } from "node:path";
  * element.labels on a rendered page, which is how those three were checked.
  */
 
-const CEILING = 82;
+const CEILING = 63;
 
 const root = process.cwd();
 const toPosix = (p: string) => p.split("\\").join("/");
