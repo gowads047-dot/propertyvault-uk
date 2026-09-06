@@ -234,7 +234,7 @@ export default function RenturaFinancials() {
                   {properties.map(p => <option key={p.id} value={p.id}>{p.address.split(",")[0]}</option>)}
                 </select>
               </FormRow>
-              <FormRow label="Notes"><input value={incForm.notes} onChange={e => setIncForm(f => ({ ...f, notes: e.target.value }))} placeholder="Optional note" style={inputStyle} /></FormRow>
+              <FormRow label="Notes"><input aria-label="Optional note" value={incForm.notes} onChange={e => setIncForm(f => ({ ...f, notes: e.target.value }))} placeholder="Optional note" style={inputStyle} /></FormRow>
               <button onClick={addIncome} disabled={saving || !incForm.amount} style={{ width: "100%", background: C.green, color: "white", fontWeight: 800, fontSize: 13, padding: "10px", borderRadius: 8, border: "none", cursor: "pointer", marginTop: 4, opacity: saving ? 0.6 : 1 }}>
                 + Log income
               </button>
@@ -265,7 +265,7 @@ export default function RenturaFinancials() {
                   {EXP_CATS.map(c => <option key={c} value={c}>{c.replace(/_/g, " ").replace(/\b\w/g, x => x.toUpperCase())}</option>)}
                 </select>
               </FormRow>
-              <FormRow label="Description"><input value={expForm.description} onChange={e => setExpForm(f => ({ ...f, description: e.target.value }))} placeholder="e.g. Boiler repair" style={inputStyle} /></FormRow>
+              <FormRow label="Description"><input aria-label="Boiler repair" value={expForm.description} onChange={e => setExpForm(f => ({ ...f, description: e.target.value }))} placeholder="e.g. Boiler repair" style={inputStyle} /></FormRow>
               <FormRow label="Amount (£)"><input type="number" value={expForm.amount} onChange={e => setExpForm(f => ({ ...f, amount: e.target.value }))} placeholder="450" style={inputStyle} /></FormRow>
               <FormRow label="Date"><input type="date" value={expForm.date} onChange={e => setExpForm(f => ({ ...f, date: e.target.value }))} style={inputStyle} /></FormRow>
               <FormRow label="Property">

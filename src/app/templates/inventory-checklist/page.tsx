@@ -114,7 +114,7 @@ export default function InventoryChecklistTemplate() {
                           </div>
                         </div>
                         {conditions[key] && conditions[key] !== "Excellent" && (
-                          <input value={notes[key] || ""} onChange={e => setNote(key, e.target.value)} placeholder="Add note..."
+                          <input aria-label="Add note" value={notes[key] || ""} onChange={e => setNote(key, e.target.value)} placeholder="Add note..."
                             style={{ marginTop: 6, width: "100%", padding: "7px 10px", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                         )}
                       </div>

@@ -120,7 +120,7 @@ export default function CheckOutReportTemplate() {
                       );
                     })}
                   </div>
-                  <textarea value={notes[room.id] || ""} onChange={e => setNotes(p => ({ ...p, [room.id]: e.target.value }))}
+                  <textarea aria-label="Specific observations for this room" value={notes[room.id] || ""} onChange={e => setNotes(p => ({ ...p, [room.id]: e.target.value }))}
                     placeholder="Specific observations for this room..." rows={2}
                     style={{ width: "100%", padding: "8px 12px", border: "1.5px solid #e2e8f0", borderRadius: 8, fontSize: 12, outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit" }} />
                 </div>
@@ -136,7 +136,7 @@ export default function CheckOutReportTemplate() {
                     style={{ flex: 3, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
-                    <input type="number" value={d.amount || ""} onChange={e => updateDeduction(i, "amount", Number(e.target.value))} placeholder="0.00"
+                    <input aria-label="Deduction amount in pounds" type="number" value={d.amount || ""} onChange={e => updateDeduction(i, "amount", Number(e.target.value))} placeholder="0.00"
                       style={{ flex: 1, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none" }} />
                   </div>
                 </div>

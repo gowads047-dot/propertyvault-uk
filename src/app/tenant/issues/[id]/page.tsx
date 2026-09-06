@@ -181,7 +181,7 @@ function IssueThreadInner() {
         {/* Compose */}
         {issue.status !== "resolved" && (
           <div style={{ background: S.card, border: `1px solid ${S.border}`, borderRadius: 16, padding: "18px 20px", position: "sticky", bottom: 16 }}>
-            <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Add an update or more details…" rows={3}
+            <textarea aria-label="Add an update or more details" value={message} onChange={e => setMessage(e.target.value)} placeholder="Add an update or more details…" rows={3}
               style={{ width: "100%", background: "rgba(26,41,66,0.03)", border: `1px solid ${S.border}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: S.ink, resize: "none", outline: "none", boxSizing: "border-box", fontFamily: "inherit", lineHeight: 1.6 }} />
             {attachments.length > 0 && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8, marginBottom: 8 }}>

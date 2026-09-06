@@ -118,7 +118,7 @@ export default function AcademyPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
+              <input aria-label="Email address" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 focus:bg-white/15 transition-all" />
               <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
                 {busy ? "Joining…" : "Notify Me →"}
@@ -252,7 +252,7 @@ export default function AcademyPage() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
+              <input aria-label="Email address" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 transition-all" />
               <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
             </form>

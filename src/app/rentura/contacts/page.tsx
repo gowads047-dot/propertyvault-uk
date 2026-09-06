@@ -172,7 +172,7 @@ export default function ContactsPage() {
 
         {/* Search + filter */}
         <div style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
-          <input
+          <input aria-label="Search by name, specialty, or number"
             value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search by name, specialty, or number…"
             style={{ flex: 1, minWidth: 200, background: S.card, border: `1px solid ${S.border}`, borderRadius: 9, padding: "9px 14px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }}
@@ -273,7 +273,7 @@ export default function ContactsPage() {
                 <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>
                   WhatsApp number <span style={{ color: S.ink3, fontWeight: 400 }}>(with country code, digits only)</span>
                 </label>
-                <input value={form.whatsapp ?? ""} onChange={e => setForm(f => ({ ...f, whatsapp: e.target.value.replace(/\D/g, "") || null }))}
+                <input aria-label="WhatsApp number" value={form.whatsapp ?? ""} onChange={e => setForm(f => ({ ...f, whatsapp: e.target.value.replace(/\D/g, "") || null }))}
                   placeholder="447700123456"
                   style={{ width: "100%", background: S.card, border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }} />
                 <p style={{ fontSize: 10, color: S.ink3, marginTop: 4 }}>UK: 447… — this is what the AI uses to open WhatsApp</p>

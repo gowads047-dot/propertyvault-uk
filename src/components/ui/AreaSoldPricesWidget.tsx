@@ -47,7 +47,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
       {/* Search */}
       <div style={{ padding: "20px 24px", borderBottom: "1px solid #f1f5f9" }}>
         <div style={{ display: "flex", gap: 10 }}>
-          <input value={input} onChange={e => setInput(e.target.value.toUpperCase())}
+          <input aria-label="B12 8QX or NG7 2PH" value={input} onChange={e => setInput(e.target.value.toUpperCase())}
             onKeyDown={e => e.key === "Enter" && lookup()}
             placeholder="e.g. B12 8QX or NG7 2PH"
             style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 14, outline: "none", fontFamily: "monospace", textTransform: "uppercase" }} />

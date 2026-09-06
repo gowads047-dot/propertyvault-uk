@@ -126,12 +126,15 @@ const BLANK_RTR: Partial<RtRCheck> = {
 // ── Sub-components ─────────────────────────────────────────────────────────────
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
-    <div>
-      <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>
+    // Wraps the control rather than sitting beside it. As siblings with no
+    // htmlFor nothing tied the two together, so every field in this form was
+    // announced with no name.
+    <label style={{ display: "block" }}>
+      <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>
         {label}{required && <span style={{ color: C.red, marginLeft: 2 }}>*</span>}
-      </label>
+      </span>
       {children}
-    </div>
+    </label>
   );
 }
 
@@ -475,16 +478,16 @@ export default function RenturaTenants() {
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16, marginBottom: 16 }}>
                 <Field label="First name" required>
-                  <input value={form.first_name || ""} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))} placeholder="James" style={inp} />
+                  <input aria-label="James" value={form.first_name || ""} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))} placeholder="James" style={inp} />
                 </Field>
                 <Field label="Last name" required>
-                  <input value={form.last_name || ""} onChange={e => setForm(f => ({ ...f, last_name: e.target.value }))} placeholder="Parker" style={inp} />
+                  <input aria-label="Parker" value={form.last_name || ""} onChange={e => setForm(f => ({ ...f, last_name: e.target.value }))} placeholder="Parker" style={inp} />
                 </Field>
                 <Field label="Email">
                   <input type="email" value={form.email || ""} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="james@email.com" style={inp} />
                 </Field>
                 <Field label="Phone">
-                  <input value={form.phone || ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+44 7700 000000" style={inp} />
+                  <input aria-label="+44 7700 000000" value={form.phone || ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+44 7700 000000" style={inp} />
                 </Field>
                 <Field label="Monthly rent (£)">
                   <input type="number" value={form.monthly_rent || ""} onChange={e => setForm(f => ({ ...f, monthly_rent: parseFloat(e.target.value) || undefined }))} placeholder="950" style={inp} />

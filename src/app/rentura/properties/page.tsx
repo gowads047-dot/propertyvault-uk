@@ -108,7 +108,7 @@ export default function RenturaPropertiesPage() {
 
           {/* Search */}
           {properties.length > 0 && (
-            <input
+            <input aria-label="Search by address, city or postcode"
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search by address, city or postcode…"

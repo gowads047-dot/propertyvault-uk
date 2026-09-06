@@ -252,7 +252,7 @@ export function VaultWorkspace() {
           }}
         >
         <Field label="Postcode" hint="Optional — unlocks sold prices">
-          <input
+          <input aria-label="NG7 1AA"
             value={postcode}
             onChange={e => setPostcode(e.target.value)}
             placeholder="NG7 1AA"

@@ -140,7 +140,7 @@ export function SignatureBlock({
         {showWitness && (
           <div>
             <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 4 }}>{witnessLabel} (full name)</p>
-            <input
+            <input aria-label="Witness full name"
               value={witnessName}
               onChange={e => setWitnessName(e.target.value)}
               placeholder="Witness full name"
@@ -205,7 +205,7 @@ export function ShareToolbar({ docTitle, pageUrl, recipientEmail = "", onPrint }
 
       {showEmailInput ? (
         <div className="flex gap-2 items-center">
-          <input
+          <input aria-label="Enter email address"
             type="email"
             value={emailTo}
             onChange={e => setEmailTo(e.target.value)}

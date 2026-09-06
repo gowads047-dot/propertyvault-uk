@@ -658,9 +658,9 @@ export default function ASTPage() {
               {f.agentManaged === "yes" && (
                 <div className="space-y-3 p-4 bg-navy-50 rounded-xl">
                   <p className="text-xs font-semibold text-navy-600 uppercase tracking-wide">Managing Agent Details</p>
-                  <input value={f.agentName} onChange={e => set("agentName", e.target.value)} placeholder="Agent / company name" className={INPUT} />
-                  <input value={f.agentAddress} onChange={e => set("agentAddress", e.target.value)} placeholder="Agent address" className={INPUT} />
-                  <input type="email" value={f.agentEmail} onChange={e => set("agentEmail", e.target.value)} placeholder="Agent email" className={INPUT} />
+                  <input aria-label="Agent / company name" value={f.agentName} onChange={e => set("agentName", e.target.value)} placeholder="Agent / company name" className={INPUT} />
+                  <input aria-label="Agent address" value={f.agentAddress} onChange={e => set("agentAddress", e.target.value)} placeholder="Agent address" className={INPUT} />
+                  <input aria-label="Agent email" type="email" value={f.agentEmail} onChange={e => set("agentEmail", e.target.value)} placeholder="Agent email" className={INPUT} />
                 </div>
               )}
             </div>
@@ -728,20 +728,20 @@ export default function ASTPage() {
               <div className="space-y-3 p-4 bg-navy-50 rounded-xl">
                 <p className="text-xs font-semibold text-navy-600 uppercase">Tenant 1 *</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <input value={f.tenant1Name} onChange={e => set("tenant1Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
-                  <input type="date" value={f.tenant1DOB} onChange={e => set("tenant1DOB", e.target.value)} className={INPUT} />
+                  <input aria-label="Tenant 1 full legal name" value={f.tenant1Name} onChange={e => set("tenant1Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
+                  <input aria-label="Tenant 1 date of birth" type="date" value={f.tenant1DOB} onChange={e => set("tenant1DOB", e.target.value)} className={INPUT} />
                 </div>
               </div>
               <div className="space-y-3 p-4 bg-navy-50 rounded-xl">
                 <p className="text-xs font-semibold text-navy-600 uppercase">Tenant 2 (if applicable)</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <input value={f.tenant2Name} onChange={e => set("tenant2Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
-                  <input type="date" value={f.tenant2DOB} onChange={e => set("tenant2DOB", e.target.value)} className={INPUT} />
+                  <input aria-label="Tenant 2 full legal name" value={f.tenant2Name} onChange={e => set("tenant2Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
+                  <input aria-label="Tenant 2 date of birth" type="date" value={f.tenant2DOB} onChange={e => set("tenant2DOB", e.target.value)} className={INPUT} />
                 </div>
               </div>
               <div className="space-y-3 p-4 bg-navy-50 rounded-xl">
                 <p className="text-xs font-semibold text-navy-600 uppercase">Tenant 3 (if applicable)</p>
-                <input value={f.tenant3Name} onChange={e => set("tenant3Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
+                <input aria-label="Tenant 3 full legal name" value={f.tenant3Name} onChange={e => set("tenant3Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
               </div>
               <div>
                 <label htmlFor="ast-additional-permitted-occupants-non" className={LABEL}>Additional permitted occupants (non-tenants, e.g. children)</label>
@@ -807,10 +807,10 @@ export default function ASTPage() {
               {(f.paymentMethod === "bank-transfer" || f.paymentMethod === "standing-order") && (
                 <div className="space-y-3 p-4 bg-navy-50 rounded-xl">
                   <p className="text-xs font-semibold text-navy-600 uppercase">Bank details for payment</p>
-                  <input value={f.landlordBank} onChange={e => set("landlordBank", e.target.value)} placeholder="Bank name (e.g. Barclays)" className={INPUT} />
+                  <input aria-label="Bank name (e.g. Barclays)" value={f.landlordBank} onChange={e => set("landlordBank", e.target.value)} placeholder="Bank name (e.g. Barclays)" className={INPUT} />
                   <div className="grid grid-cols-2 gap-3">
-                    <input value={f.landlordSortCode} onChange={e => set("landlordSortCode", e.target.value)} placeholder="Sort code (XX-XX-XX)" className={INPUT} />
-                    <input value={f.landlordAccountNo} onChange={e => set("landlordAccountNo", e.target.value)} placeholder="Account number" className={INPUT} />
+                    <input aria-label="Sort code (XX-XX-XX)" value={f.landlordSortCode} onChange={e => set("landlordSortCode", e.target.value)} placeholder="Sort code (XX-XX-XX)" className={INPUT} />
+                    <input aria-label="Account number" value={f.landlordAccountNo} onChange={e => set("landlordAccountNo", e.target.value)} placeholder="Account number" className={INPUT} />
                   </div>
                 </div>
               )}
@@ -912,9 +912,9 @@ export default function ASTPage() {
                   <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-800">
                     A guarantor deed should be executed as a deed (signed, witnessed, and delivered) and ideally reviewed by the guarantor's own solicitor.
                   </div>
-                  <input value={f.guarantorName} onChange={e => set("guarantorName", e.target.value)} placeholder="Guarantor full legal name *" className={INPUT} />
-                  <input value={f.guarantorAddress} onChange={e => set("guarantorAddress", e.target.value)} placeholder="Guarantor address *" className={INPUT} />
-                  <input type="email" value={f.guarantorEmail} onChange={e => set("guarantorEmail", e.target.value)} placeholder="Guarantor email" className={INPUT} />
+                  <input aria-label="Guarantor full legal name *" value={f.guarantorName} onChange={e => set("guarantorName", e.target.value)} placeholder="Guarantor full legal name *" className={INPUT} />
+                  <input aria-label="Guarantor address *" value={f.guarantorAddress} onChange={e => set("guarantorAddress", e.target.value)} placeholder="Guarantor address *" className={INPUT} />
+                  <input aria-label="Guarantor email" type="email" value={f.guarantorEmail} onChange={e => set("guarantorEmail", e.target.value)} placeholder="Guarantor email" className={INPUT} />
                 </div>
               )}
 

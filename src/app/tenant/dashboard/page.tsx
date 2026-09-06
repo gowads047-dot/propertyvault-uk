@@ -299,7 +299,7 @@ function TenantPortalInner() {
 
       {/* INPUT */}
       <div style={{ background: "#111827", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "12px 16px", display: "flex", gap: 10, flexShrink: 0 }}>
-        <input
+        <input aria-label="Type a message"
           ref={inputRef}
           value={input}
           onChange={e => setInput(e.target.value)}

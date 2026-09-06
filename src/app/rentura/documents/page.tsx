@@ -139,7 +139,7 @@ export default function RenturaDocuments() {
 
         {/* Search + filters */}
         <div style={{ display: "flex", gap: 10, marginBottom: 24 }}>
-          <input
+          <input aria-label="Search documents"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search documents…"

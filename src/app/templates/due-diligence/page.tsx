@@ -158,7 +158,7 @@ export default function DueDiligenceTemplate() {
                   <label className="block text-sm font-semibold text-navy-700 mb-1">Purchase Price</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span>
-                    <input type="text" value={purchasePrice} onChange={e => setPurchasePrice(e.target.value)}
+                    <input aria-label="Purchase price in pounds" type="text" value={purchasePrice} onChange={e => setPurchasePrice(e.target.value)}
                       placeholder="500,000"
                       className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                   </div>
@@ -209,7 +209,7 @@ export default function DueDiligenceTemplate() {
                             {showNotes[item.id] ? "▲ Hide notes" : "▼ Add note"}
                           </button>
                           {showNotes[item.id] && (
-                            <textarea value={notes[item.id] || ""} onChange={e => setNotes(p => ({ ...p, [item.id]: e.target.value }))}
+                            <textarea aria-label="Add notes, costs, contacts, or outstanding actions" value={notes[item.id] || ""} onChange={e => setNotes(p => ({ ...p, [item.id]: e.target.value }))}
                               placeholder="Add notes, costs, contacts, or outstanding actions..."
                               className="w-full mt-1 px-3 py-2 border border-navy-200 rounded-lg text-xs text-navy-700 focus:outline-none focus:ring-1 focus:ring-gold-400 resize-none"
                               rows={2} />

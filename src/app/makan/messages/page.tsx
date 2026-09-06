@@ -201,7 +201,7 @@ export default function MessagesPage() {
             </div>
 
             <form onSubmit={sendReply} style={{ padding: "12px 16px", borderTop: "1px solid var(--h-border)", display: "flex", gap: 10 }}>
-              <input value={reply} onChange={e => setReply(e.target.value)} placeholder="Type a message…"
+              <input aria-label="Type a message" value={reply} onChange={e => setReply(e.target.value)} placeholder="Type a message…"
                 style={{ flex: 1, background: "var(--h-surface-2)", border: "1px solid var(--h-border)", borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "var(--h-text)", outline: "none", fontFamily: "inherit" }} />
               <button type="submit" disabled={sending || !reply.trim()} style={{ background: "var(--h-accent)", color: "white", fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 8, border: "none", cursor: "pointer", opacity: sending ? 0.6 : 1 }}>
                 {sending ? "…" : "Send"}
