@@ -83,7 +83,11 @@ export const TOPIC_BACKLOG: TopicIdea[] = [
   {
     title: "How to find a deal without paying a sourcer",
     why: "Deal sourcing is covered from the sourcer's side, not the buyer's.",
-    covers: ["find a deal", "without a sourcer"],
+    // The slug as well as the phrases. publishedText searches the href, and a
+    // slug is the one string that cannot drift from the post it names — the
+    // phrase match would have missed this one, whose title reads "Find a
+    // Property Deal Without Paying a Sourcer".
+    covers: ["find a deal", "without a sourcer", "find-a-deal-without-a-sourcer"],
     priority: 65,
     category: "Investing",
   },
