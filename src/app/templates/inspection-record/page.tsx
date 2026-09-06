@@ -120,7 +120,7 @@ export default function InspectionRecordTemplate() {
                           </div>
                         </div>
                         {ratings[key] && ratings[key] !== "OK" && (
-                          <input value={notes[key] || ""} onChange={e => setNotes(p => ({ ...p, [key]: e.target.value }))} placeholder="Note..."
+                          <input aria-label="Note" value={notes[key] || ""} onChange={e => setNotes(p => ({ ...p, [key]: e.target.value }))} placeholder="Note..."
                             style={{ marginTop: 5, width: "100%", padding: "7px 10px", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                         )}
                       </div>
@@ -132,7 +132,7 @@ export default function InspectionRecordTemplate() {
 
             <div style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", padding: 20, marginBottom: 16 }}>
               <h2 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 12 }}>Actions Required & Follow-Up</h2>
-              <textarea value={actionsRequired} onChange={e => setActionsRequired(e.target.value)} rows={4}
+              <textarea aria-label="List any actions needed by landlord or tenant, with agreed deadlines" value={actionsRequired} onChange={e => setActionsRequired(e.target.value)} rows={4}
                 placeholder="List any actions needed by landlord or tenant, with agreed deadlines..."
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit", marginBottom: 12 }} />
               <div>

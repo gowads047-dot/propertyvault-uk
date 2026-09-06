@@ -161,7 +161,7 @@ export default function HmoManagementLog() {
                           </div>
                           <div className="flex-1">
                             <p className="text-sm text-navy-700">{item.label}</p>
-                            <input value={complianceNotes[item.id] || ""} onChange={e => setComplianceNotes(p => ({ ...p, [item.id]: e.target.value }))}
+                            <input aria-label="Notes (optional)" value={complianceNotes[item.id] || ""} onChange={e => setComplianceNotes(p => ({ ...p, [item.id]: e.target.value }))}
                               placeholder="Notes (optional)" className="mt-1 w-full px-3 py-1.5 border border-navy-100 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-gold-400 text-navy-500" />
                           </div>
                         </div>
@@ -177,7 +177,7 @@ export default function HmoManagementLog() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Maintenance Actions</h2>
-              <textarea value={maintenanceItems} onChange={e => setMaintenanceItems(e.target.value)} rows={5}
+              <textarea aria-label="List any maintenance items raised during this inspection" value={maintenanceItems} onChange={e => setMaintenanceItems(e.target.value)} rows={5}
                 placeholder="List any maintenance items raised during this inspection" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
               <div><label htmlFor="hmomanagemen-overall-notes-next-steps" className="block text-sm font-semibold text-navy-700 mb-1">Overall notes / next steps</label>
                 <textarea id="hmomanagemen-overall-notes-next-steps" value={overallNotes} onChange={e => setOverallNotes(e.target.value)} rows={3} placeholder="Any other observations" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>

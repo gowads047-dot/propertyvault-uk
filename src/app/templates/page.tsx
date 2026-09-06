@@ -271,7 +271,7 @@ export default function TemplatesPage() {
               <svg style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "#475569", pointerEvents: "none" }} width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
               </svg>
-              <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search templates…"
+              <input aria-label="Search templates" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search templates…"
                 style={{ width: "100%", paddingLeft: 40, paddingRight: 16, paddingTop: 10, paddingBottom: 10, border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 14, outline: "none", background: "white", boxSizing: "border-box" }}
               />
             </div>

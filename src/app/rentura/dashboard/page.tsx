@@ -662,7 +662,7 @@ export default function RenturaDashboard() {
                 {greeting}. What should we call you?
               </p>
               <div style={{ display: "flex", gap: 8, alignItems: "center", maxWidth: 360 }}>
-                <input
+                <input aria-label="Your first name"
                   type="text" value={nameInput} onChange={e => setNameInput(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && saveName()}
                   placeholder="Your first name" autoFocus

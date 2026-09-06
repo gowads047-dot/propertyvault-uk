@@ -694,7 +694,7 @@ export default function DealAnalyserPage() {
                 </div>
                 <p className="text-xs text-navy-400 mb-3">Auto-fill price and area data straight from the listing.</p>
                 <div style={{ display: "flex", gap: 8 }}>
-                  <input
+                  <input aria-label="https://www.rightmove.co.uk/properties/"
                     type="url"
                     value={urlInput}
                     onChange={e => setUrlInput(e.target.value)}
@@ -791,7 +791,7 @@ export default function DealAnalyserPage() {
                 <h3 className="font-bold text-navy-800 text-sm mb-1">📍 Property Postcode</h3>
                 <p className="text-xs text-navy-400 mb-3">Get area intelligence — crime data, recent sold prices, and market context.</p>
                 <div style={{ display: "flex", gap: 8 }}>
-                  <input
+                  <input aria-label="NG1 1AA"
                     type="text"
                     value={postcodeInput}
                     onChange={e => setPostcodeInput(e.target.value.toUpperCase())}

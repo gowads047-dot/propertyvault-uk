@@ -107,7 +107,7 @@ export default function OfferWorksheetTemplate() {
                     style={{ flex: 2, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
-                    <input type="number" value={(row[2] as number) || ""} onChange={e => (row[3] as (v: number) => void)(Number(e.target.value))} placeholder="Price"
+                    <input aria-label="Price" type="number" value={(row[2] as number) || ""} onChange={e => (row[3] as (v: number) => void)(Number(e.target.value))} placeholder="Price"
                       style={{ flex: 1, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   </div>
                 </div>

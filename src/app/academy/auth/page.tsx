@@ -83,7 +83,7 @@ export default function AcademyAuthPage() {
               <h1 style={{ fontSize: 20, fontWeight: 800, color: "white", marginBottom: 6, textAlign: "center" }}>Reset password</h1>
               <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", textAlign: "center", marginBottom: 24 }}>Enter your email and we&apos;ll send a reset link.</p>
               <form onSubmit={handleReset} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com"
+                <input aria-label="Email address" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com"
                   style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 12, padding: "12px 16px", color: "white", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                 <button type="submit" disabled={loading}
                   style={{ background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 15, padding: "13px", borderRadius: 12, border: "none", cursor: loading ? "not-allowed" : "pointer", fontFamily: "inherit", opacity: loading ? 0.6 : 1 }}>

@@ -84,7 +84,7 @@ function NewsletterBlock() {
         ) : (
           <>
           <form onSubmit={handleSubmit} style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <input
+            <input aria-label="Email address"
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}

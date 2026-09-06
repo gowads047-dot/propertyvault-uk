@@ -580,11 +580,11 @@ export default function ArrearsPage() {
                 </div>
                 <div>
                   <Lbl>Total amount owed (£)</Lbl>
-                  <input type="number" value={newCase.total_owed} onChange={e => setNewCase(f => ({ ...f, total_owed: e.target.value }))} placeholder="Auto-fills from monthly rent" style={inp} />
+                  <input aria-label="Auto-fills from monthly rent" type="number" value={newCase.total_owed} onChange={e => setNewCase(f => ({ ...f, total_owed: e.target.value }))} placeholder="Auto-fills from monthly rent" style={inp} />
                 </div>
                 <div>
                   <Lbl>Notes (optional)</Lbl>
-                  <textarea value={newCase.notes} onChange={e => setNewCase(f => ({ ...f, notes: e.target.value }))} rows={2} placeholder="e.g. Tenant called to say they lost their job" style={{ ...inp, resize: "vertical" }} />
+                  <textarea aria-label="Tenant called to say they lost their job" value={newCase.notes} onChange={e => setNewCase(f => ({ ...f, notes: e.target.value }))} rows={2} placeholder="e.g. Tenant called to say they lost their job" style={{ ...inp, resize: "vertical" }} />
                 </div>
               </div>
               <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
@@ -704,7 +704,7 @@ export default function ArrearsPage() {
                     </div>
                     <div style={{ marginBottom: 10 }}>
                       <Lbl>Note / details</Lbl>
-                      <textarea value={logForm.note} onChange={e => setLogForm(f => ({ ...f, note: e.target.value }))} rows={2} placeholder="e.g. Called tenant, no answer. Left voicemail." style={{ ...inpSm, resize: "vertical", width: "100%", boxSizing: "border-box" }} />
+                      <textarea aria-label="Called tenant, no answer. Left voicemail" value={logForm.note} onChange={e => setLogForm(f => ({ ...f, note: e.target.value }))} rows={2} placeholder="e.g. Called tenant, no answer. Left voicemail." style={{ ...inpSm, resize: "vertical", width: "100%", boxSizing: "border-box" }} />
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
                       <button onClick={logEvent} disabled={saving} style={{ background: C.blue, color: "white", fontWeight: 700, fontSize: 12, padding: "7px 16px", borderRadius: 7, border: "none", cursor: "pointer" }}>{saving ? "Saving…" : "Log"}</button>
@@ -720,7 +720,7 @@ export default function ArrearsPage() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))", gap: 10, marginBottom: 10 }}>
                       <div>
                         <Lbl>Amount (£) *</Lbl>
-                        <input type="number" value={payForm.amount} onChange={e => setPayForm(f => ({ ...f, amount: e.target.value }))} placeholder="0.00" style={inpSm} />
+                        <input aria-label="Payment amount in pounds" type="number" value={payForm.amount} onChange={e => setPayForm(f => ({ ...f, amount: e.target.value }))} placeholder="0.00" style={inpSm} />
                       </div>
                       <div>
                         <Lbl>Date received</Lbl>
@@ -728,7 +728,7 @@ export default function ArrearsPage() {
                       </div>
                       <div>
                         <Lbl>Note (optional)</Lbl>
-                        <input value={payForm.note} onChange={e => setPayForm(f => ({ ...f, note: e.target.value }))} placeholder="Bank transfer" style={inpSm} />
+                        <input aria-label="Bank transfer" value={payForm.note} onChange={e => setPayForm(f => ({ ...f, note: e.target.value }))} placeholder="Bank transfer" style={inpSm} />
                       </div>
                     </div>
                     <p style={{ fontSize: 11, color: C.ink3, marginBottom: 10 }}>

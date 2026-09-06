@@ -38,7 +38,7 @@ import { join } from "node:path";
  * element.labels on a rendered page, which is how those three were checked.
  */
 
-const CEILING = 141;
+const CEILING = 82;
 
 const root = process.cwd();
 const toPosix = (p: string) => p.split("\\").join("/");
@@ -50,19 +50,46 @@ const files = readdirSync(join(root, "src"), { recursive: true, encoding: "utf8"
 type Unnamed = { where: string; tag: string };
 
 /**
+ * The whole of a JSX tag, from "<input" to the ">" that closes it.
+ *
+ * Not a regex, because `onChange={e => ...}` contains a ">" and any lazy
+ * [^>]* stops dead on the arrow. That truncation hid attributes written after
+ * a handler — including ids — so controls that were properly named counted as
+ * unnamed, and placeholders that could have supplied a name were invisible.
+ * Fixing it revealed 37 more controls that a placeholder could name.
+ */
+function tagAt(src: string, start: number): string | null {
+  let depth = 0;
+  let quote: string | null = null;
+  for (let i = start; i < src.length; i++) {
+    const c = src[i];
+    if (quote) {
+      if (c === quote) quote = null;
+    } else if (c === '"' || c === "'" || c === "`") {
+      quote = c;
+    } else if (c === "{") depth += 1;
+    else if (c === "}") depth -= 1;
+    else if (c === ">" && depth === 0) return src.slice(start, i + 1);
+  }
+  return null;
+}
+
+/**
  * Controls with no accessible name.
  *
- * Two things this has to get right, both learned by getting them wrong.
+ * Three things this has to get right, all learned by getting them wrong.
  *
- * It matches whole tags rather than lines. A JSX control is routinely spread
- * over six lines, and reading only the first meant an id further down looked
- * like no id at all.
+ * It reads whole tags, per tagAt above.
  *
- * And it counts a wrapping <label> as a name, because it is one. An earlier
+ * It counts a wrapping <label> as a name, because it is one. An earlier
  * version looked three lines back for a label and reported all thirty-seven
  * controls in the deal analyser as broken — they sit inside a label spanning
  * five lines, which is valid and needs no id. A check that cries wolf on
  * correct code is one somebody switches off.
+ *
+ * And it cannot see a label supplied by a wrapper component, because the label
+ * lives in the component and the control is written at the call site. Several
+ * of those have been fixed and none of it shows here.
  */
 function findUnnamed(): { unnamed: Unnamed[]; explicit: number; wrapped: number } {
   const unnamed: Unnamed[] = [];
@@ -73,9 +100,10 @@ function findUnnamed(): { unnamed: Unnamed[]; explicit: number; wrapped: number 
     const rel = toPosix(file.slice(root.length + 1));
     const src = readFileSync(file, "utf8");
 
-    for (const m of src.matchAll(/<(input|textarea|select)\b[^>]*>/g)) {
-      const tag = m[0];
+    for (const m of src.matchAll(/<(input|textarea|select)\b/g)) {
       const at = m.index!;
+      const tag = tagAt(src, at);
+      if (!tag) continue;
 
       // Nothing to announce, or announced by its own value.
       if (/type="(hidden|submit|button)"/.test(tag)) continue;

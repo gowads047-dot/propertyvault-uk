@@ -1008,7 +1008,7 @@ export default function PropertyPassport() {
                       {/* Quoted */}
                       {editingCost?.id === issue.id && editingCost.field === "quoted_cost" ? (
                         <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-                          <input aria-label="0.00" autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                          <input aria-label="Quoted cost in pounds" autoFocus type="number" placeholder="0.00" value={editingCost.value}
                             onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
                             onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "quoted_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
                             style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid ${CTA}`, outline: "none", fontFamily: "inherit" }} />
@@ -1032,7 +1032,7 @@ export default function PropertyPassport() {
                       {/* Actual */}
                       {editingCost?.id === issue.id && editingCost.field === "actual_cost" ? (
                         <div style={{ display: "flex", gap: 5, alignItems: "center" }}>
-                          <input aria-label="0.00" autoFocus type="number" placeholder="0.00" value={editingCost.value}
+                          <input aria-label="Actual cost in pounds" autoFocus type="number" placeholder="0.00" value={editingCost.value}
                             onChange={e => setEditingCost(prev => prev ? { ...prev, value: e.target.value } : null)}
                             onKeyDown={e => { if (e.key === "Enter") saveMaintCost(issue.id, "actual_cost", editingCost.value); if (e.key === "Escape") setEditingCost(null); }}
                             style={{ width: 90, padding: "6px 10px", fontSize: 14, borderRadius: 8, border: `2px solid #15803d`, outline: "none", fontFamily: "inherit" }} />
@@ -1187,7 +1187,7 @@ export default function PropertyPassport() {
                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 8 }}>
                     <div>
                       <p style={{ fontSize: 11, color: INK2, marginBottom: 5 }}>Your estimate (£)</p>
-                      <input aria-label="300" type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
+                      <input aria-label="Your estimate in pounds" type="number" placeholder="e.g. 300" value={maintForm.estimated_cost} onChange={e => setMaintForm(f => ({ ...f, estimated_cost: e.target.value }))}
                         style={{ width: "100%", padding: "10px 13px", fontSize: 13, borderRadius: 9, border: `1px solid ${BORDER}`, outline: "none", fontFamily: "inherit", boxSizing: "border-box" as const }} />
                     </div>
                     <div>

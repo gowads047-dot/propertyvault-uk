@@ -43,14 +43,14 @@ export function PostcodeEmailCapture() {
         Enter your email and we&apos;ll send the full postcode list plus our free Property Starter Pack — calculators, guides, and the 2025 compliance checklist.
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
-        <input
+        <input aria-label="First name (optional)"
           type="text"
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="First name (optional)"
           className="px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 sm:w-40"
         />
-        <input
+        <input aria-label="Your email address"
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}

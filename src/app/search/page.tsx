@@ -42,7 +42,7 @@ export default function SearchPage() {
 
             {/* Search */}
             <div className="bg-white rounded-xl p-3 shadow-lg max-w-lg mx-auto">
-              <input
+              <input aria-label="Enter city, town, or postcode"
                 type="text" value={query} onChange={(e) => setQuery(e.target.value)}
                 placeholder="Enter city, town, or postcode..."
                 className="w-full px-4 py-3 border border-navy-200 rounded-lg text-navy-800 focus:outline-none focus:ring-2 focus:ring-gold-400 mb-3"
