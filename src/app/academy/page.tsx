@@ -26,7 +26,7 @@ const FEATURES = [
   { icon: "💬", title: "Weekly Live Deal Reviews", desc: "Every week, bring a real deal you've found and get it reviewed live. Know exactly whether to proceed, negotiate, or walk — before you commit a penny." },
   { icon: "🤖", title: "AI Prompt Toolkit", desc: "50+ tested ChatGPT and Claude prompts for deal analysis, comparable research, market reports, email drafts, and more. AI-powered property investing." },
   { icon: "🏆", title: "7-Day First Deal Challenge", desc: "A structured challenge to find, analyse, and approach your first potential deal within 7 days of joining. Accountability built in." },
-  { icon: "👥", title: "Private Investor Community", desc: "A vetted community of serious UK property investors. Deal sharing, JV opportunities, accountability partners, and direct access to Nass." },
+  { icon: "👥", title: "Private Investor Community", desc: "A private community of serious UK property investors. Deal sharing, JV opportunities, accountability partners, and direct access to Nass." },
 ];
 
 export default function AcademyPage() {

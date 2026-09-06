@@ -270,7 +270,6 @@ export default function RentingStrategiesPage() {
               <li>Search the Regulator of Social Housing&apos;s register for housing associations in your area</li>
               <li>National schemes: Mears Group, Pinnacle Group, Serco, and other registered providers</li>
               <li>Local lettings agents who specialise in social/supported housing</li>
-              <li>PropertyVault verified social housing partners (see our directory)</li>
             </ul>
 
             <h3 className="text-lg font-bold text-navy-800 mt-6">Tax Implications</h3>
