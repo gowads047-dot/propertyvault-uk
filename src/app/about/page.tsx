@@ -167,7 +167,7 @@ export default function AboutPage() {
                 </div>
                 <div>
                   <p className="font-black text-navy-800 text-lg leading-tight">Deal Sourcing Academy</p>
-                  <p className="text-xs text-navy-400">Property education · £14.99/mo</p>
+                  <p className="text-xs text-navy-400">Property education · Not open yet</p>
                 </div>
               </div>
               <p className="text-navy-600 text-sm leading-relaxed mb-5 flex-1">

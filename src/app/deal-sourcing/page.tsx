@@ -104,7 +104,7 @@ export default function DealSourcingPage() {
           <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(212,175,55,0.1)", border: "1px solid rgba(212,175,55,0.3)", borderRadius: 100, padding: "5px 14px", fontSize: 12, color: "#d4af37", fontWeight: 700, marginBottom: 20 }}>
               <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4af37", display: "inline-block" }} />
-              NOW OPEN — £14.99/MONTH
+              NOT OPEN YET — JOIN THE LIST
             </div>
             <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)", lineHeight: 1.15 }}>
               Want to Become a Deal Sourcer?
@@ -133,7 +133,7 @@ export default function DealSourcingPage() {
 
           <div style={{ textAlign: "center" }}>
             <Link href="/academy" style={{ display: "inline-block", background: "linear-gradient(135deg,#d4af37,#f0d060)", color: "#0a0f1e", fontWeight: 800, fontSize: 17, padding: "15px 40px", borderRadius: 14, textDecoration: "none", marginBottom: 10 }}>
-              Join the Academy — £14.99/month →
+              Join the Academy waiting list →
             </Link>
             <p style={{ fontSize: 12, color: "rgba(255,255,255,0.62)" }}>Cancel anytime. Secure checkout via Stripe.</p>
           </div>
