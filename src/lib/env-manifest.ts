@@ -61,7 +61,7 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
 
   CRON_SECRET: {
     required: false,
-    enables: "All six scheduled jobs. Must be at least 16 characters.",
+    enables: "All nine scheduled jobs, and the social status endpoint. Must be at least 16 characters.",
     withoutIt: "Every cron is refused with 401, and the function log says which case it is.",
   },
   ADMIN_EMAIL: {
@@ -93,18 +93,13 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
 
   INSTAGRAM_ACCESS_TOKEN: {
     required: false,
-    enables: "Publishing the daily Reel.",
-    withoutIt: "The evening cron fails loudly. The campaign is date-driven, so the day's video is skipped permanently.",
+    enables: "Bootstrapping Instagram publishing: the first token, before the weekly refresh has stored one in social_settings.",
+    withoutIt: "Until a refreshed token is stored, the evening publish returns 500 and posts nothing. Once one is stored this variable is no longer read for publishing.",
   },
   INSTAGRAM_USER_ID: {
     required: false,
-    enables: "Which Instagram account the Reel is published to.",
-    withoutIt: "Publishing fails, same as above.",
-  },
-  REEL_CAMPAIGN_START: {
-    required: false,
-    enables: "Overriding the campaign's first day.",
-    withoutIt: "The schedule uses its built-in start date. Only needed to shift the run.",
+    enables: "Overriding which Instagram account the Reel is published to.",
+    withoutIt: "Falls back to the PropertyVault account id in lib/reel-calendar.ts, which is correct for production.",
   },
 
   NEXT_PUBLIC_SITE_URL: {
