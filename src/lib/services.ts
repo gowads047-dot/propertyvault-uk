@@ -31,15 +31,19 @@ export type Readiness =
   /** Send a request and a human answers. No automated fulfilment. */
   | "request"
   /** Not operating. Registering interest is all that happens. */
-  | "waitlist"
-  /** PropertyVault introduces you to a third party who delivers it. */
-  | "partner";
+  | "waitlist";
+//
+// There was a fourth state, "partner", meaning "we introduce you to a vetted
+// professional who does the work". Nothing was ever in it after /find-agent
+// stopped claiming to have vetted anybody, and its description was the exact
+// promise that page was removed for making. A readiness nothing carries is a
+// claim waiting for the next service to reach for it, so it is gone. Bring it
+// back the day a verification standard exists and somebody is applying it.
 
 export const READINESS_LABEL: Record<Readiness, string> = {
   live: "Available now",
   request: "By request",
   waitlist: "Coming soon",
-  partner: "Via a professional",
 };
 
 /** What the customer should expect. Shown wherever the label is shown. */
@@ -47,7 +51,6 @@ export const READINESS_MEANING: Record<Readiness, string> = {
   live: "Start straight away — no waiting on us",
   request: "Tell us about the property and we reply with a quote",
   waitlist: "Not running yet. Join the list and we will tell you when it is",
-  partner: "We introduce you to a vetted professional who does the work",
 };
 
 /** The stage of ownership a service belongs to. */

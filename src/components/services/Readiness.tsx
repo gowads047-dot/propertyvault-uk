@@ -14,7 +14,6 @@ import { READINESS_LABEL, READINESS_MEANING } from "@/lib/services";
 const TONE: Record<Readiness, { fg: string; bg: string }> = {
   live:     { fg: "var(--state-verified)",  bg: "color-mix(in srgb, var(--state-verified) 13%, transparent)" },
   request:  { fg: "var(--state-calculated)", bg: "color-mix(in srgb, var(--state-calculated) 13%, transparent)" },
-  partner:  { fg: "var(--state-estimated)",  bg: "color-mix(in srgb, var(--state-estimated) 13%, transparent)" },
   waitlist: { fg: "var(--ink-subtle)",       bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
 };
 

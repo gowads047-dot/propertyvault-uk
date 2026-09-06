@@ -53,7 +53,7 @@ export default function ServicesPage() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", justifyContent: "center" }}>
             {/* Only the states something is actually in. Explaining a label no
                 service carries invites the reader to look for it. */}
-            {(["live", "request", "partner", "waitlist"] as const)
+            {(["live", "request", "waitlist"] as const)
               .filter(r => SERVICES.some(s => s.readiness === r))
               .map(r => (
               <div key={r} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
