@@ -47,11 +47,30 @@ create table if not exists public.pv_property (
   bedrooms      smallint check (bedrooms is null or (bedrooms >= 0 and bedrooms <= 50)),
   asking_price  numeric(12,2) check (asking_price is null or asking_price >= 0),
 
-  -- Where this sits in the buying process. The UI changes by stage.
+  -- Where this sits in its life. The UI changes by stage.
+  --
+  -- Widened by pv-lifecycle.sql, which has been applied — the ownership half
+  -- was added once the product had somewhere to put it. Restated here rather
+  -- than left to the later file, because this is the schema anyone reads first
+  -- and a constraint described in two places must not disagree.
+  --
+  -- The other half of that migration, rentura_property_id, is deliberately NOT
+  -- restated here. It carries a foreign key to rentura_properties, and adding
+  -- it would make this file impossible to apply on its own — which
+  -- pv-schema.test.ts proves it can be, by running it against an empty
+  -- Postgres. That independence is worth more than having the column
+  -- described in two places.
   stage         text not null default 'screening'
-                check (stage in ('screening','analysing','viewing','offer',
-                                 'negotiating','under_offer','due_diligence',
-                                 'purchased','rejected','archived')),
+                check (stage in (
+                  -- Acquisition.
+                  'screening','analysing','viewing','offer',
+                  'negotiating','under_offer','due_diligence','purchased',
+                  -- Ownership.
+                  'refurbishing','rent_ready','let','managed',
+                  'optimising','selling','sold',
+                  -- Left the pipeline.
+                  'rejected','archived')),
+
 
   -- A stable key for "is this the same property", derived in the application
   -- so the rule lives next to its tests rather than in a trigger.
