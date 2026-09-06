@@ -142,7 +142,7 @@ export default function LandlordIssuePage() {
             <textarea aria-label="Reply to tenant" value={message} onChange={e => setMessage(e.target.value)} placeholder="Reply to tenant…" rows={3}
               style={{ width: "100%", background: "rgba(17,17,17,0.02)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "11px 14px", fontSize: 14, color: INK, resize: "none", outline: "none", boxSizing: "border-box", fontFamily: "inherit", lineHeight: 1.6 }} />
             <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
-              <select value={statusChange} onChange={e => setStatusChange(e.target.value)}
+              <select aria-label="Change status" value={statusChange} onChange={e => setStatusChange(e.target.value)}
                 style={{ flex: 1, minWidth: 140, padding: "9px 12px", fontSize: 13, border: `1px solid ${BORDER}`, borderRadius: 9, fontFamily: "inherit", color: INK, background: BG }}>
                 <option value="">No status change</option>
                 <option value="in_progress">Mark: In progress</option>

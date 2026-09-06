@@ -564,7 +564,7 @@ export default function ArrearsPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <div>
                   <Lbl>Tenant *</Lbl>
-                  <select value={newCase.tenant_id} onChange={e => {
+                  <select aria-label="Tenant" value={newCase.tenant_id} onChange={e => {
                     const t = tenantMap[e.target.value];
                     setNewCase(f => ({ ...f, tenant_id: e.target.value, total_owed: String(t?.monthly_rent ?? "") }));
                   }} style={inp}>
@@ -576,7 +576,7 @@ export default function ArrearsPage() {
                 </div>
                 <div>
                   <Lbl>First missed payment date *</Lbl>
-                  <input type="date" value={newCase.first_missed_date} onChange={e => setNewCase(f => ({ ...f, first_missed_date: e.target.value }))} style={inp} />
+                  <input aria-label="First missed payment date" type="date" value={newCase.first_missed_date} onChange={e => setNewCase(f => ({ ...f, first_missed_date: e.target.value }))} style={inp} />
                 </div>
                 <div>
                   <Lbl>Total amount owed (£)</Lbl>
@@ -691,7 +691,7 @@ export default function ArrearsPage() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10, marginBottom: 10 }}>
                       <div>
                         <Lbl>Action type</Lbl>
-                        <select value={logForm.event_type} onChange={e => setLogForm(f => ({ ...f, event_type: e.target.value }))} style={inpSm}>
+                        <select aria-label="Action type" value={logForm.event_type} onChange={e => setLogForm(f => ({ ...f, event_type: e.target.value }))} style={inpSm}>
                           <option value="contact">Phone / email contact</option>
                           <option value="letter_sent">Letter sent</option>
                           <option value="note">Note</option>
@@ -699,7 +699,7 @@ export default function ArrearsPage() {
                       </div>
                       <div>
                         <Lbl>Date</Lbl>
-                        <input type="date" value={logForm.date} onChange={e => setLogForm(f => ({ ...f, date: e.target.value }))} style={inpSm} />
+                        <input aria-label="Action date" type="date" value={logForm.date} onChange={e => setLogForm(f => ({ ...f, date: e.target.value }))} style={inpSm} />
                       </div>
                     </div>
                     <div style={{ marginBottom: 10 }}>
@@ -724,7 +724,7 @@ export default function ArrearsPage() {
                       </div>
                       <div>
                         <Lbl>Date received</Lbl>
-                        <input type="date" value={payForm.date} onChange={e => setPayForm(f => ({ ...f, date: e.target.value }))} style={inpSm} />
+                        <input aria-label="Date payment received" type="date" value={payForm.date} onChange={e => setPayForm(f => ({ ...f, date: e.target.value }))} style={inpSm} />
                       </div>
                       <div>
                         <Lbl>Note (optional)</Lbl>

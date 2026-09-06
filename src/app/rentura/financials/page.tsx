@@ -125,7 +125,7 @@ export default function RenturaFinancials() {
             <h1 style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.02em", marginBottom: 4 }}>Financials</h1>
             <p style={{ fontSize: 13, color: C.ink2 }}>Income, expenses and profitability</p>
           </div>
-          <select value={taxYearStart} onChange={e => setTaxYearStart(parseInt(e.target.value))} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 14px", fontSize: 13, color: C.ink, outline: "none" }}>
+          <select aria-label="Tax year" value={taxYearStart} onChange={e => setTaxYearStart(parseInt(e.target.value))} style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 14px", fontSize: 13, color: C.ink, outline: "none" }}>
             {TAX_YEAR_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
           </select>
         </div>

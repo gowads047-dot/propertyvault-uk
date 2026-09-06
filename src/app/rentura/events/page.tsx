@@ -194,12 +194,12 @@ export default function EventsPage() {
 
           {/* Filters */}
           <div style={{ display: "flex", gap: 10, marginBottom: 28, flexWrap: "wrap" }}>
-            <select value={propertyFilter} onChange={e => setPropertyFilter(e.target.value)}
+            <select aria-label="Filter by property" value={propertyFilter} onChange={e => setPropertyFilter(e.target.value)}
               style={{ ...inputStyle, width: "auto", fontSize: 13, padding: "7px 12px" }}>
               <option value="all">All properties</option>
               {properties.map(p => <option key={p.id} value={p.id}>{p.nickname || p.address.split(",")[0]}</option>)}
             </select>
-            <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
+            <select aria-label="Filter by event type" value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
               style={{ ...inputStyle, width: "auto", fontSize: 13, padding: "7px 12px" }}>
               <option value="all">All types</option>
               {EVENT_TYPES.map(t => <option key={t} value={t}>{EVENT_META[t]?.label || t}</option>)}

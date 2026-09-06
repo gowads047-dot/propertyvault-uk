@@ -138,7 +138,7 @@ function NewIssueInner() {
               <p style={{ fontSize: 14, fontWeight: 600, color: S.ink, marginBottom: 4 }}>{uploading ? "Uploading…" : "Click to attach or drag files here"}</p>
               <p style={{ fontSize: 12, color: S.ink2 }}>Photos, videos, or documents — up to 50MB each</p>
             </div>
-            <input ref={fileRef} type="file" multiple accept="image/*,video/*,.pdf" style={{ display: "none" }} onChange={e => e.target.files && handleFiles(e.target.files)} />
+            <input aria-label="Attach photos, videos or documents" ref={fileRef} type="file" multiple accept="image/*,video/*,.pdf" style={{ display: "none" }} onChange={e => e.target.files && handleFiles(e.target.files)} />
             {attachments.length > 0 && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
                 {attachments.map((a, i) => (

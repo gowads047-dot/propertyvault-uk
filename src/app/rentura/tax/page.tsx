@@ -663,7 +663,7 @@ export default function TaxIntelligence() {
                       <label style={{ fontSize: 13, fontWeight: 700, color: INK }}>Additional repair spend before April 5</label>
                       <span style={{ fontSize: 14, fontWeight: 900, color: INK }}>{fmt(whatIfSpend)}</span>
                     </div>
-                    <input type="range" min={0} max={20000} step={500} value={whatIfSpend} onChange={e => setWhatIfSpend(Number(e.target.value))}
+                    <input aria-label="Additional repair spend" type="range" min={0} max={20000} step={500} value={whatIfSpend} onChange={e => setWhatIfSpend(Number(e.target.value))}
                       style={{ width: "100%", accentColor: CTA }} />
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: INK2, marginTop: 4 }}>
                       <span>£0</span><span>£20,000</span>

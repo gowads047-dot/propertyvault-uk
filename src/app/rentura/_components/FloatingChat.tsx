@@ -605,7 +605,7 @@ export default function FloatingChat() {
           {needsPropSelect && props.length > 1 && (
             <div style={{ marginBottom: 8 }}>
               <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which property?</p>
-              <select value={pendingScan.propId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, propId: e.target.value || null } : s)}
+              <select aria-label="Which property is this for?" value={pendingScan.propId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, propId: e.target.value || null } : s)}
                 style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, padding: "7px 10px", color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "inherit" }}>
                 <option value="">Select property…</option>
                 {props.map(p => <option key={p.id} value={p.id}>{shortAddr(p.address)}</option>)}
@@ -617,7 +617,7 @@ export default function FloatingChat() {
           {needsTenantSelect && tenants.length > 0 && (
             <div style={{ marginBottom: 8 }}>
               <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 5 }}>Which tenant?</p>
-              <select value={pendingScan.tenantId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, tenantId: e.target.value || null } : s)}
+              <select aria-label="Which tenant is this for?" value={pendingScan.tenantId ?? ""} onChange={e => setPendingScan(s => s ? { ...s, tenantId: e.target.value || null } : s)}
                 style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, padding: "7px 10px", color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "inherit" }}>
                 <option value="">Select tenant…</option>
                 {tenants.map(t => <option key={t.id} value={t.id}>{t.first_name} {t.last_name}</option>)}
@@ -685,9 +685,9 @@ export default function FloatingChat() {
       `}</style>
 
       {/* Hidden file inputs — three separate intents */}
-      <input ref={fileInputRef}   type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={makeInputHandler} style={{ display: "none" }} />
-      <input ref={photoInputRef}  type="file" accept="image/*" onChange={makeInputHandler} style={{ display: "none" }} />
-      <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={makeInputHandler} style={{ display: "none" }} />
+      <input aria-label="Choose a document" ref={fileInputRef}   type="file" accept="image/jpeg,image/png,image/webp,application/pdf" onChange={makeInputHandler} style={{ display: "none" }} />
+      <input aria-label="Choose a photo" ref={photoInputRef}  type="file" accept="image/*" onChange={makeInputHandler} style={{ display: "none" }} />
+      <input aria-label="Take a photo" ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={makeInputHandler} style={{ display: "none" }} />
 
       {/* FAB */}
       {!open && (
@@ -976,7 +976,7 @@ export default function FloatingChat() {
               )}
             </div>
 
-            <input ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
+            <input aria-label="Message" ref={inputRef} value={input} onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); if (pendingFile) scanFile(pendingFile); else send(input); } }}
               placeholder={pendingFile ? "Add a note or press Send to scan…" : ready ? "Tell me what happened…" : "Loading portfolio…"}
               disabled={chatLoading || !ready}

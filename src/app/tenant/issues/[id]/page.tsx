@@ -204,7 +204,7 @@ function IssueThreadInner() {
                 {sending ? "Sending…" : "Send →"}
               </button>
             </div>
-            <input ref={fileRef} type="file" multiple accept="image/*,video/*" style={{ display: "none" }} onChange={e => e.target.files && handleFiles(e.target.files)} />
+            <input aria-label="Attach photos or videos" ref={fileRef} type="file" multiple accept="image/*,video/*" style={{ display: "none" }} onChange={e => e.target.files && handleFiles(e.target.files)} />
           </div>
         )}
 

@@ -952,6 +952,7 @@ export default function RenturaDashboard() {
           {/* Input */}
           <div style={{ background: "#111827", padding: "14px 16px", display: "flex", gap: 10 }}>
             <input
+              aria-label="Ask a question"
               ref={inputRef}
               value={input}
               onChange={e => setInput(e.target.value)}
