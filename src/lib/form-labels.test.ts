@@ -7,25 +7,38 @@ import { join } from "node:path";
  *
  * The site publishes an accessibility statement committing to WCAG 2.2 Level
  * AA. A control with no accessible name fails 1.3.1 and 3.3.2, which are Level
- * A — the tier below the one being claimed. There were 389 of them across 78
- * files: the shape almost everywhere was a <label> with no htmlFor sitting
- * next to an input with no id, so the two were never associated and the field
- * was announced as "edit text, blank".
+ * A — the tier below the one being claimed. The shape almost everywhere was a
+ * <label> with no htmlFor sitting next to an input with no id, so the two were
+ * never associated and the field was announced as "edit text, blank".
  *
  * ── Why this is a ceiling rather than a rule ───────────────────────────────
  *
- * 219 were fixed mechanically, because label-then-input is a shape a script
- * can tie together safely. The rest are not: a checkbox inside a map, a search
- * box with a placeholder and no label, a filter with only an icon. Each needs
- * a name written for it, which is a judgement per control and not a codemod.
+ * The label-then-input shape was fixed mechanically, because a script can tie
+ * those two together safely. What remains cannot be: a checkbox inside a map,
+ * a search box with a placeholder and no label, a control whose only visual
+ * label is a <p> above it. Each needs a name written for it, which is a
+ * judgement per control.
  *
  * So this asserts the number does not grow. A new unlabelled control fails the
  * build; fixing a batch means lowering the ceiling in the same commit. The
  * alternative — asserting zero — would have to be skipped today, and a skipped
  * test is one nobody ever comes back to.
+ *
+ * ── What the number does not count ─────────────────────────────────────────
+ *
+ * This reads text, so it sees lexical nesting and not what actually renders.
+ * A helper like FormRow or Field that wraps its children in a <label> names
+ * every control passed to it, and none of that is visible here — the control
+ * is written at the call site and the label lives in the component.
+ *
+ * Three such helpers were fixed and the count did not move at all. So the real
+ * figure is better than this one, and the gap grows every time a wrapper is
+ * corrected. Treat it as a ceiling that only ratchets down, never as a measure
+ * of how accessible the forms are. The ground truth is a browser reporting
+ * element.labels on a rendered page, which is how those three were checked.
  */
 
-const CEILING = 170;
+const CEILING = 141;
 
 const root = process.cwd();
 const toPosix = (p: string) => p.split("\\").join("/");
@@ -39,11 +52,17 @@ type Unnamed = { where: string; tag: string };
 /**
  * Controls with no accessible name.
  *
- * Label depth is tracked across the whole file rather than by looking a couple
- * of lines back. The first version of this used a three-line window and
- * reported all 37 controls in the deal analyser as broken — they are wrapped
- * in a <label> that spans five lines, which is valid and needs no id at all.
- * A check that cries wolf on a correct file is a check somebody switches off.
+ * Two things this has to get right, both learned by getting them wrong.
+ *
+ * It matches whole tags rather than lines. A JSX control is routinely spread
+ * over six lines, and reading only the first meant an id further down looked
+ * like no id at all.
+ *
+ * And it counts a wrapping <label> as a name, because it is one. An earlier
+ * version looked three lines back for a label and reported all thirty-seven
+ * controls in the deal analyser as broken — they sit inside a label spanning
+ * five lines, which is valid and needs no id. A check that cries wolf on
+ * correct code is one somebody switches off.
  */
 function findUnnamed(): { unnamed: Unnamed[]; explicit: number; wrapped: number } {
   const unnamed: Unnamed[] = [];
@@ -52,26 +71,34 @@ function findUnnamed(): { unnamed: Unnamed[]; explicit: number; wrapped: number 
 
   for (const file of files) {
     const rel = toPosix(file.slice(root.length + 1));
-    let depth = 0;
+    const src = readFileSync(file, "utf8");
 
-    readFileSync(file, "utf8").split("\n").forEach((line, i) => {
-      // Tokenised in order, so an open and a close on the same line net out
-      // correctly around any control between them.
-      for (const t of line.matchAll(/<label\b|<\/label>|<(?:input|textarea|select)\b[^>]*/g)) {
-        const tok = t[0];
-        if (tok === "<label") { depth += 1; continue; }
-        if (tok === "</label>") { depth = Math.max(0, depth - 1); continue; }
+    for (const m of src.matchAll(/<(input|textarea|select)\b[^>]*>/g)) {
+      const tag = m[0];
+      const at = m.index!;
 
-        // Nothing to announce, or announced by its own value.
-        if (/type="(hidden|submit|button)"/.test(tok)) continue;
-        if (/aria-hidden="true"/.test(tok)) continue;
+      // Nothing to announce, or announced by its own value.
+      if (/type="(hidden|submit|button)"/.test(tag)) continue;
+      if (/aria-hidden="true"/.test(tag)) continue;
 
-        if (/\b(id=|aria-label=|aria-labelledby=)/.test(tok)) { explicit += 1; continue; }
-        if (depth > 0) { wrapped += 1; continue; }
-
-        unnamed.push({ where: `${rel}:${i + 1}`, tag: tok.slice(0, 70) });
+      if (/\b(id=|aria-label=|aria-labelledby=)/.test(tag)) {
+        explicit += 1;
+        continue;
       }
-    });
+
+      const before = src.slice(0, at);
+      const opens = (before.match(/<label\b/g) ?? []).length;
+      const closes = (before.match(/<\/label>/g) ?? []).length;
+      if (opens > closes) {
+        wrapped += 1;
+        continue;
+      }
+
+      unnamed.push({
+        where: `${rel}:${before.split("\n").length}`,
+        tag: tag.replace(/\s+/g, " ").slice(0, 70),
+      });
+    }
   }
   return { unnamed, explicit, wrapped };
 }
@@ -84,8 +111,7 @@ describe("form controls have a name", () => {
   });
 
   it("counts a wrapped label as a name, because it is one", () => {
-    // The deal analyser wraps every input in a multi-line <label>. If this
-    // regresses, the count jumps by nearly forty and the ceiling looks
+    // If this regresses the count jumps by nearly forty, and the ceiling looks
     // breached by work that never happened.
     expect(wrapped).toBeGreaterThan(30);
   });
@@ -104,8 +130,8 @@ describe("form controls have a name", () => {
 
     expect(
       unnamed.length,
-      `unnamed form controls went up. Give the new ones a label, or lower the ` +
-      `ceiling in the same commit if you fixed some.\n\nworst files:\n${worst}`,
+      "unnamed form controls went up. Give the new ones a label, or lower the " +
+        `ceiling in the same commit if you fixed some.\n\nworst files:\n${worst}`,
     ).toBeLessThanOrEqual(CEILING);
   });
 

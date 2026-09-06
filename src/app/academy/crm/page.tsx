@@ -117,7 +117,7 @@ export default function AcademyCRMPage() {
         </div>
 
         {/* Search */}
-        <input type="text" placeholder="Search by name, area or strategy…" value={search} onChange={e => setSearch(e.target.value)}
+        <input aria-label="Search by name, area or strategy" type="text" placeholder="Search by name, area or strategy…" value={search} onChange={e => setSearch(e.target.value)}
           style={{ ...inp(), marginBottom: 20, maxWidth: 400 }} />
 
         {/* Add / Edit form */}

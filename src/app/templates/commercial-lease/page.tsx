@@ -159,11 +159,15 @@ const SECTION_STEPS = [
 
 function Field({ label, children, hint }: { label: string; children: React.ReactNode; hint?: string }) {
   return (
-    <div>
-      <label style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#0f1b36", marginBottom: 4 }}>{label}</label>
-      {hint && <p style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{hint}</p>}
+    // The label wraps the control rather than sitting beside it. As siblings
+    // with no htmlFor nothing tied them together, so every field this helper
+    // renders was announced with no name. The hint goes inside too: it becomes
+    // part of the accessible name, which is more information rather than less.
+    <label style={{ display: "block" }}>
+      <span style={{ display: "block", fontSize: 13, fontWeight: 600, color: "#0f1b36", marginBottom: 4 }}>{label}</span>
+      {hint && <span style={{ display: "block", fontSize: 11, color: "#475569", marginBottom: 4 }}>{hint}</span>}
       {children}
-    </div>
+    </label>
   );
 }
 

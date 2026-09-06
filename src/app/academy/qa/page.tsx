@@ -82,11 +82,11 @@ export default function AcademyQAPage() {
             </div>
           ) : (
             <form onSubmit={submitQ}>
-              <input
+              <input aria-label="Your first name (optional)"
                 type="text" placeholder="Your first name (optional)" value={name} onChange={e => setName(e.target.value)}
                 style={{ width: "100%", marginBottom: 10, padding: "10px 14px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: 13, boxSizing: "border-box", outline: "none" }}
               />
-              <textarea
+              <textarea aria-label="Type your question here… Be as specific as possible for the best answer"
                 placeholder="Type your question here… Be as specific as possible for the best answer."
                 value={question} onChange={e => setQuestion(e.target.value)} required rows={3}
                 style={{ width: "100%", marginBottom: 12, padding: "10px 14px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: 13, boxSizing: "border-box", outline: "none", resize: "vertical" }}

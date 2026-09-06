@@ -299,11 +299,16 @@ export default function RenturaFinancials() {
 }
 
 function FormRow({ label, children }: { label: string; children: React.ReactNode }) {
+  // The label wraps the control rather than sitting next to it. As siblings
+  // with no htmlFor, nothing associated the two, and every field in this form
+  // was announced with no name at all — eleven of them. Wrapping makes the
+  // association implicit, needs no ids, and costs nothing visually because the
+  // span keeps the block layout the label had.
   return (
-    <div style={{ marginBottom: 12 }}>
-      <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>{label}</label>
+    <label style={{ display: "block", marginBottom: 12 }}>
+      <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.62)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>{label}</span>
       {children}
-    </div>
+    </label>
   );
 }
 

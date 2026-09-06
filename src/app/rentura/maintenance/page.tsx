@@ -456,9 +456,9 @@ export default function MaintenancePage() {
             <div style={{ background: "#fafaf9", borderRadius: 10, padding: "14px 16px" }}>
               <p style={{ ...labelStyle, marginBottom: 12 }}>Contractor</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <input type="text" placeholder="Contractor name" value={form.contractor_name} onChange={e => setF("contractor_name", e.target.value)} style={inputStyle} />
-                <input type="tel" placeholder="Phone number" value={form.contractor_phone} onChange={e => setF("contractor_phone", e.target.value)} style={inputStyle} />
-                <input type="email" placeholder="Email (optional)" value={form.contractor_email} onChange={e => setF("contractor_email", e.target.value)} style={inputStyle} />
+                <input aria-label="Contractor name" type="text" placeholder="Contractor name" value={form.contractor_name} onChange={e => setF("contractor_name", e.target.value)} style={inputStyle} />
+                <input aria-label="Phone number" type="tel" placeholder="Phone number" value={form.contractor_phone} onChange={e => setF("contractor_phone", e.target.value)} style={inputStyle} />
+                <input aria-label="Email (optional)" type="email" placeholder="Email (optional)" value={form.contractor_email} onChange={e => setF("contractor_email", e.target.value)} style={inputStyle} />
               </div>
             </div>
 

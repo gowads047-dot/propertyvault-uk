@@ -118,7 +118,7 @@ export function NewsletterPopup() {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3">
-              <input
+              <input aria-label="Your first name"
                 type="text"
                 placeholder="Your first name"
                 required
@@ -126,7 +126,7 @@ export function NewsletterPopup() {
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 bg-navy-800 border border-navy-600 rounded-xl text-white placeholder-navy-400 focus:outline-none focus:ring-2 focus:ring-gold-400 text-sm"
               />
-              <input
+              <input aria-label="Your email address"
                 type="email"
                 placeholder="Your email address"
                 required

@@ -204,7 +204,7 @@ export default function ScriptsPage() {
         <h1 style={{ fontSize: 36, fontWeight: 800, marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Sales Scripts Library</h1>
         <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: 24 }}>Word-for-word scripts for every conversation. Sellers, agents, investors, objections, closing.</p>
 
-        <input
+        <input aria-label="Search scripts"
           type="text"
           placeholder="Search scripts..."
           value={search}
