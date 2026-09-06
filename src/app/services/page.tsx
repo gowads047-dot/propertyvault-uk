@@ -51,7 +51,11 @@ export default function ServicesPage() {
       <section style={{ background: "var(--page-surface)", borderBottom: "1px solid var(--hairline)" }}>
         <div className="container-max px-4" style={{ padding: "20px 16px" }}>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 28px", justifyContent: "center" }}>
-            {(["live", "request", "partner", "waitlist"] as const).map(r => (
+            {/* Only the states something is actually in. Explaining a label no
+                service carries invites the reader to look for it. */}
+            {(["live", "request", "partner", "waitlist"] as const)
+              .filter(r => SERVICES.some(s => s.readiness === r))
+              .map(r => (
               <div key={r} style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
                 <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)" }}>{READINESS_LABEL[r]}</span>
                 <span style={{ fontSize: 12, color: "var(--ink-muted)" }}>{READINESS_MEANING[r]}</span>
