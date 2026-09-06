@@ -1370,23 +1370,23 @@ export default function PropertyPassport() {
         <Modal title="Add / Update Certificate" onClose={() => setShowAddCert(false)}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div>
-              <label style={labelStyle}>Certificate type</label>
-              <select value={certForm.certificate_type} onChange={e => setCertForm(f => ({ ...f, certificate_type: e.target.value }))}
+              <label htmlFor="id-certificate-type" style={labelStyle}>Certificate type</label>
+              <select id="id-certificate-type" value={certForm.certificate_type} onChange={e => setCertForm(f => ({ ...f, certificate_type: e.target.value }))}
                 style={{ ...inputStyle, cursor: "pointer" }}>
                 {CERT_TYPES.map(t => <option key={t} value={t}>{CERT_LABELS[t]}</option>)}
               </select>
             </div>
             <div>
-              <label style={labelStyle}>Issue date</label>
-              <input type="date" value={certForm.issue_date} onChange={e => setCertForm(f => ({ ...f, issue_date: e.target.value }))} style={inputStyle} />
+              <label htmlFor="id-issue-date" style={labelStyle}>Issue date</label>
+              <input id="id-issue-date" type="date" value={certForm.issue_date} onChange={e => setCertForm(f => ({ ...f, issue_date: e.target.value }))} style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Expiry date</label>
-              <input type="date" value={certForm.expiry_date} onChange={e => setCertForm(f => ({ ...f, expiry_date: e.target.value }))} style={inputStyle} />
+              <label htmlFor="id-expiry-date" style={labelStyle}>Expiry date</label>
+              <input id="id-expiry-date" type="date" value={certForm.expiry_date} onChange={e => setCertForm(f => ({ ...f, expiry_date: e.target.value }))} style={inputStyle} />
             </div>
             <div>
-              <label style={labelStyle}>Notes</label>
-              <input type="text" placeholder="e.g. Engineer: John Smith, cert no. GSC-12345" value={certForm.notes} onChange={e => setCertForm(f => ({ ...f, notes: e.target.value }))} style={inputStyle} />
+              <label htmlFor="id-notes" style={labelStyle}>Notes</label>
+              <input id="id-notes" type="text" placeholder="e.g. Engineer: John Smith, cert no. GSC-12345" value={certForm.notes} onChange={e => setCertForm(f => ({ ...f, notes: e.target.value }))} style={inputStyle} />
             </div>
             <button onClick={addCert} disabled={saving} style={{ background: CTA, color: "white", fontWeight: 800, fontSize: 15, padding: "13px 0", borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", marginTop: 8, opacity: saving ? 0.6 : 1 }}>
               {saving ? "Saving…" : "Save Certificate"}

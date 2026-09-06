@@ -149,8 +149,8 @@ export default function DueDiligenceTemplate() {
               <h2 className="font-bold text-navy-800 text-sm mb-4 uppercase tracking-wide">Deal Details</h2>
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block text-sm font-semibold text-navy-700 mb-1">Property Address</label>
-                  <input type="text" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)}
+                  <label htmlFor="duediligence-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address</label>
+                  <input id="duediligence-property-address" type="text" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)}
                     placeholder="Commercial property address"
                     className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
                 </div>
@@ -165,8 +165,8 @@ export default function DueDiligenceTemplate() {
                 </div>
               </div>
               <div className="mt-4">
-                <label className="block text-sm font-semibold text-navy-700 mb-1">Solicitor / Surveyor</label>
-                <input type="text" value={solicitor} onChange={e => setSolicitor(e.target.value)}
+                <label htmlFor="duediligence-solicitor-surveyor" className="block text-sm font-semibold text-navy-700 mb-1">Solicitor / Surveyor</label>
+                <input id="duediligence-solicitor-surveyor" type="text" value={solicitor} onChange={e => setSolicitor(e.target.value)}
                   placeholder="Firm name"
                   className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" />
               </div>

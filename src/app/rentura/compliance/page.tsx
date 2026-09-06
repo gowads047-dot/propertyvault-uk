@@ -254,16 +254,16 @@ export default function CompliancePage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div>
-                <label style={labelStyle}>Certificate type *</label>
-                <select value={form.certificate_type} onChange={e => setF("certificate_type", e.target.value)} style={inputStyle}>
+                <label htmlFor="compliance-certificate-type" style={labelStyle}>Certificate type *</label>
+                <select id="compliance-certificate-type" value={form.certificate_type} onChange={e => setF("certificate_type", e.target.value)} style={inputStyle}>
                   {CERT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
               </div>
 
               {properties.length > 0 && (
                 <div>
-                  <label style={labelStyle}>Property</label>
-                  <select value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
+                  <label htmlFor="compliance-property" style={labelStyle}>Property</label>
+                  <select id="compliance-property" value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
                     <option value="">Portfolio-wide / unassigned</option>
                     {properties.map(p => <option key={p.id} value={p.id}>{p.nickname || p.address.split(",")[0]}</option>)}
                   </select>
@@ -272,18 +272,18 @@ export default function CompliancePage() {
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
-                  <label style={labelStyle}>Issue date</label>
-                  <input type="date" value={form.issue_date} onChange={e => setF("issue_date", e.target.value)} style={inputStyle} />
+                  <label htmlFor="compliance-issue-date" style={labelStyle}>Issue date</label>
+                  <input id="compliance-issue-date" type="date" value={form.issue_date} onChange={e => setF("issue_date", e.target.value)} style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Expiry date</label>
-                  <input type="date" value={form.expiry_date} onChange={e => setF("expiry_date", e.target.value)} style={inputStyle} />
+                  <label htmlFor="compliance-expiry-date" style={labelStyle}>Expiry date</label>
+                  <input id="compliance-expiry-date" type="date" value={form.expiry_date} onChange={e => setF("expiry_date", e.target.value)} style={inputStyle} />
                 </div>
               </div>
 
               <div>
-                <label style={labelStyle}>Notes</label>
-                <textarea value={form.notes} onChange={e => setF("notes", e.target.value)} rows={2} placeholder="Contractor name, reference number, etc." style={{ ...inputStyle, resize: "vertical" }} />
+                <label htmlFor="compliance-notes" style={labelStyle}>Notes</label>
+                <textarea id="compliance-notes" value={form.notes} onChange={e => setF("notes", e.target.value)} rows={2} placeholder="Contractor name, reference number, etc." style={{ ...inputStyle, resize: "vertical" }} />
               </div>
 
               <button onClick={save} disabled={saving || !form.certificate_type} style={{ background: CTA, color: "#0f1b36", fontWeight: 800, fontSize: 15, padding: "13px 0", borderRadius: 10, border: "none", cursor: "pointer", fontFamily: "inherit", marginTop: 4, opacity: saving ? 0.6 : 1 }}>

@@ -88,9 +88,9 @@ export default function OfferWorksheetTemplate() {
                 ))}
               </div>
               <div style={{ marginTop: 16 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Asking price (£)</label>
+                <label htmlFor="offerworkshe-asking-price" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Asking price (£)</label>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <input type="range" min={50000} max={800000} step={1000} value={asking} onChange={e => setAsking(Number(e.target.value))}
+                  <input id="offerworkshe-asking-price" type="range" min={50000} max={800000} step={1000} value={asking} onChange={e => setAsking(Number(e.target.value))}
                     style={{ flex: 1, accentColor: "#c9a84c", cursor: "pointer" }} />
                   <span style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36", minWidth: 100 }}>{fmt(asking)}</span>
                 </div>
@@ -143,8 +143,8 @@ export default function OfferWorksheetTemplate() {
             <div style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", padding: 24, marginBottom: 16 }}>
               <h2 style={{ fontSize: 15, fontWeight: 700, color: "#0f1b36", marginBottom: 16 }}>Your Offer Strategy</h2>
               <div style={{ marginBottom: 16 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 8 }}>Offer at {offerPct}% of asking price</label>
-                <input type="range" min={75} max={100} step={0.5} value={offerPct} onChange={e => setOfferPct(Number(e.target.value))}
+                <label htmlFor="offerworkshe-offer-at-of-asking" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 8 }}>Offer at {offerPct}% of asking price</label>
+                <input id="offerworkshe-offer-at-of-asking" type="range" min={75} max={100} step={0.5} value={offerPct} onChange={e => setOfferPct(Number(e.target.value))}
                   style={{ width: "100%", accentColor: "#c9a84c", cursor: "pointer" }} />
                 <div style={{ display: "flex", justifyContent: "space-between", marginTop: 6 }}>
                   <span style={{ fontSize: 12, color: "#475569" }}>75% (aggressive)</span>
@@ -154,19 +154,19 @@ export default function OfferWorksheetTemplate() {
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
                 <div>
-                  <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Your name</label>
-                  <input value={buyerName} onChange={e => setBuyerName(e.target.value)} placeholder="Full name"
+                  <label htmlFor="offerworkshe-your-name" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Your name</label>
+                  <input id="offerworkshe-your-name" value={buyerName} onChange={e => setBuyerName(e.target.value)} placeholder="Full name"
                     style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
                 </div>
                 <div>
-                  <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Offer date</label>
-                  <input type="date" value={offerDate} onChange={e => setOfferDate(e.target.value)}
+                  <label htmlFor="offerworkshe-offer-date" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Offer date</label>
+                  <input id="offerworkshe-offer-date" type="date" value={offerDate} onChange={e => setOfferDate(e.target.value)}
                     style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                 </div>
               </div>
               <div style={{ marginTop: 12 }}>
-                <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Offer conditions / notes</label>
-                <textarea value={offerNote} onChange={e => setOfferNote(e.target.value)} rows={3} placeholder="e.g. Subject to survey. Mortgage agreed in principle. Can complete in 8 weeks."
+                <label htmlFor="offerworkshe-offer-conditions-notes" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Offer conditions / notes</label>
+                <textarea id="offerworkshe-offer-conditions-notes" value={offerNote} onChange={e => setOfferNote(e.target.value)} rows={3} placeholder="e.g. Subject to survey. Mortgage agreed in principle. Can complete in 8 weeks."
                   style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit" }} />
               </div>
             </div>

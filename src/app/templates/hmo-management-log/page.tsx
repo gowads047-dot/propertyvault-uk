@@ -93,19 +93,19 @@ export default function HmoManagementLog() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Property & Inspection</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <input value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full HMO address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="hmomanagemen-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <input id="hmomanagemen-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full HMO address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">HMO Licence Number</label>
-                  <input value={licenceNumber} onChange={e => setLicenceNumber(e.target.value)} placeholder="Licence number" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Licence Expiry</label>
-                  <input type="date" value={licenceExpiry} onChange={e => setLicenceExpiry(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="hmomanagemen-hmo-licence-number" className="block text-sm font-semibold text-navy-700 mb-1">HMO Licence Number</label>
+                  <input id="hmomanagemen-hmo-licence-number" value={licenceNumber} onChange={e => setLicenceNumber(e.target.value)} placeholder="Licence number" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="hmomanagemen-licence-expiry" className="block text-sm font-semibold text-navy-700 mb-1">Licence Expiry</label>
+                  <input id="hmomanagemen-licence-expiry" type="date" value={licenceExpiry} onChange={e => setLicenceExpiry(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Inspection Date</label>
-                  <input type="date" value={inspectionDate} onChange={e => setInspectionDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Inspector Name</label>
-                  <input value={inspector} onChange={e => setInspector(e.target.value)} placeholder="Name of person inspecting" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="hmomanagemen-inspection-date" className="block text-sm font-semibold text-navy-700 mb-1">Inspection Date</label>
+                  <input id="hmomanagemen-inspection-date" type="date" value={inspectionDate} onChange={e => setInspectionDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="hmomanagemen-inspector-name" className="block text-sm font-semibold text-navy-700 mb-1">Inspector Name</label>
+                  <input id="hmomanagemen-inspector-name" value={inspector} onChange={e => setInspector(e.target.value)} placeholder="Name of person inspecting" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
             </div>
 
@@ -122,24 +122,24 @@ export default function HmoManagementLog() {
                       {rooms.length > 1 && <button onClick={() => removeRoom(r.id)} className="text-xs text-red-400 hover:text-red-600">Remove</button>}
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      <div className="md:col-span-2"><label className="block text-xs font-semibold text-navy-600 mb-1">Tenant name</label>
-                        <input value={r.occupant} onChange={e => updateRoom(r.id, "occupant", e.target.value)} placeholder="Occupant" className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                      <div><label className="block text-xs font-semibold text-navy-600 mb-1">Weekly rent (£)</label>
+                      <div className="md:col-span-2"><label htmlFor="hmomanagemen-tenant-name" className="block text-xs font-semibold text-navy-600 mb-1">Tenant name</label>
+                        <input id="hmomanagemen-tenant-name" value={r.occupant} onChange={e => updateRoom(r.id, "occupant", e.target.value)} placeholder="Occupant" className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <div><label htmlFor="hmomanagemen-weekly-rent" className="block text-xs font-semibold text-navy-600 mb-1">Weekly rent (£)</label>
                         <div className="relative"><span className="absolute left-2 top-1/2 -translate-y-1/2 text-navy-400 text-xs">£</span>
-                          <input value={r.rent} onChange={e => updateRoom(r.id, "rent", e.target.value)} placeholder="0" className="w-full pl-5 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
-                      <div><label className="block text-xs font-semibold text-navy-600 mb-1">Arrears (£)</label>
+                          <input id="hmomanagemen-weekly-rent" value={r.rent} onChange={e => updateRoom(r.id, "rent", e.target.value)} placeholder="0" className="w-full pl-5 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                      <div><label htmlFor="hmomanagemen-arrears" className="block text-xs font-semibold text-navy-600 mb-1">Arrears (£)</label>
                         <div className="relative"><span className="absolute left-2 top-1/2 -translate-y-1/2 text-navy-400 text-xs">£</span>
-                          <input value={r.arrears} onChange={e => updateRoom(r.id, "arrears", e.target.value)} placeholder="0" className="w-full pl-5 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                          <input id="hmomanagemen-arrears" value={r.arrears} onChange={e => updateRoom(r.id, "arrears", e.target.value)} placeholder="0" className="w-full pl-5 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mt-3">
-                      <div><label className="block text-xs font-semibold text-navy-600 mb-1">Condition</label>
-                        <select value={r.condition} onChange={e => updateRoom(r.id, "condition", e.target.value as "good" | "fair" | "poor")} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400">
+                      <div><label htmlFor="hmomanagemen-condition" className="block text-xs font-semibold text-navy-600 mb-1">Condition</label>
+                        <select id="hmomanagemen-condition" value={r.condition} onChange={e => updateRoom(r.id, "condition", e.target.value as "good" | "fair" | "poor")} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400">
                           <option value="good">Good</option>
                           <option value="fair">Fair</option>
                           <option value="poor">Poor — action needed</option>
                         </select></div>
-                      <div><label className="block text-xs font-semibold text-navy-600 mb-1">Notes</label>
-                        <input value={r.notes} onChange={e => updateRoom(r.id, "notes", e.target.value)} placeholder="Any issues" className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                      <div><label htmlFor="hmomanagemen-notes" className="block text-xs font-semibold text-navy-600 mb-1">Notes</label>
+                        <input id="hmomanagemen-notes" value={r.notes} onChange={e => updateRoom(r.id, "notes", e.target.value)} placeholder="Any issues" className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                     </div>
                   </div>
                 ))}
@@ -179,8 +179,8 @@ export default function HmoManagementLog() {
               <h2 className="font-bold text-navy-800">Maintenance Actions</h2>
               <textarea value={maintenanceItems} onChange={e => setMaintenanceItems(e.target.value)} rows={5}
                 placeholder="List any maintenance items raised during this inspection" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Overall notes / next steps</label>
-                <textarea value={overallNotes} onChange={e => setOverallNotes(e.target.value)} rows={3} placeholder="Any other observations" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="hmomanagemen-overall-notes-next-steps" className="block text-sm font-semibold text-navy-700 mb-1">Overall notes / next steps</label>
+                <textarea id="hmomanagemen-overall-notes-next-steps" value={overallNotes} onChange={e => setOverallNotes(e.target.value)} rows={3} placeholder="Any other observations" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
             </div>
 
             <button onClick={() => setMode("preview")} className="w-full btn-gold">Preview Log →</button>

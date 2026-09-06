@@ -115,21 +115,21 @@ export default function RenturaJoinPage() {
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <div>
-                  <label style={labelStyle}>Full name</label>
-                  <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="e.g. Sarah Thompson" style={inputStyle} />
+                  <label htmlFor="join-full-name" style={labelStyle}>Full name</label>
+                  <input id="join-full-name" type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="e.g. Sarah Thompson" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Email address</label>
-                  <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com" style={inputStyle} />
+                  <label htmlFor="join-email-address" style={labelStyle}>Email address</label>
+                  <input id="join-email-address" type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@email.com" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Phone number</label>
-                  <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="+44 7xxx xxxxxx" style={inputStyle} />
+                  <label htmlFor="join-phone-number" style={labelStyle}>Phone number</label>
+                  <input id="join-phone-number" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="+44 7xxx xxxxxx" style={inputStyle} />
                   <p style={{ fontSize: 11, color: "rgba(15,27,45,0.35)", marginTop: 5 }}>Used for account recovery and important property alerts only.</p>
                 </div>
                 <div>
-                  <label style={labelStyle}>Password</label>
-                  <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 8 characters" style={inputStyle} />
+                  <label htmlFor="join-password" style={labelStyle}>Password</label>
+                  <input id="join-password" type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="At least 8 characters" style={inputStyle} />
                 </div>
 
                 {error && (

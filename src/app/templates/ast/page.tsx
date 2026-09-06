@@ -618,39 +618,39 @@ export default function ASTPage() {
             <div className="space-y-4">
               <h2 className="text-lg font-bold text-navy-800">Landlord Details</h2>
               <div>
-                <label className={LABEL}>Landlord type</label>
-                <select value={f.landlordType} onChange={e => set("landlordType", e.target.value)} className={SELECT}>
+                <label htmlFor="ast-landlord-type" className={LABEL}>Landlord type</label>
+                <select id="ast-landlord-type" value={f.landlordType} onChange={e => set("landlordType", e.target.value)} className={SELECT}>
                   <option value="individual">Individual (private landlord)</option>
                   <option value="company">Company / Ltd</option>
                 </select>
               </div>
               {f.landlordType === "company" && (
                 <div>
-                  <label className={LABEL}>Company name *</label>
-                  <input value={f.landlordCompany} onChange={e => set("landlordCompany", e.target.value)} placeholder="e.g. Smith Properties Ltd" className={INPUT} />
+                  <label htmlFor="ast-company-name" className={LABEL}>Company name *</label>
+                  <input id="ast-company-name" value={f.landlordCompany} onChange={e => set("landlordCompany", e.target.value)} placeholder="e.g. Smith Properties Ltd" className={INPUT} />
                 </div>
               )}
               <div>
-                <label className={LABEL}>Full name (landlord / director) *</label>
-                <input value={f.landlordName} onChange={e => set("landlordName", e.target.value)} placeholder="Full legal name" className={INPUT} />
+                <label htmlFor="ast-full-name-landlord-director" className={LABEL}>Full name (landlord / director) *</label>
+                <input id="ast-full-name-landlord-director" value={f.landlordName} onChange={e => set("landlordName", e.target.value)} placeholder="Full legal name" className={INPUT} />
               </div>
               <div>
-                <label className={LABEL}>Landlord address (for notices) *</label>
-                <input value={f.landlordAddress} onChange={e => set("landlordAddress", e.target.value)} placeholder="Full address including postcode" className={INPUT} />
+                <label htmlFor="ast-landlord-address-for-notices" className={LABEL}>Landlord address (for notices) *</label>
+                <input id="ast-landlord-address-for-notices" value={f.landlordAddress} onChange={e => set("landlordAddress", e.target.value)} placeholder="Full address including postcode" className={INPUT} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Email *</label>
-                  <input type="email" value={f.landlordEmail} onChange={e => set("landlordEmail", e.target.value)} placeholder="landlord@email.com" className={INPUT} />
+                  <label htmlFor="ast-email" className={LABEL}>Email *</label>
+                  <input id="ast-email" type="email" value={f.landlordEmail} onChange={e => set("landlordEmail", e.target.value)} placeholder="landlord@email.com" className={INPUT} />
                 </div>
                 <div>
-                  <label className={LABEL}>Phone</label>
-                  <input value={f.landlordPhone} onChange={e => set("landlordPhone", e.target.value)} placeholder="07700 900000" className={INPUT} />
+                  <label htmlFor="ast-phone" className={LABEL}>Phone</label>
+                  <input id="ast-phone" value={f.landlordPhone} onChange={e => set("landlordPhone", e.target.value)} placeholder="07700 900000" className={INPUT} />
                 </div>
               </div>
               <div>
-                <label className={LABEL}>Is the property managed by an agent?</label>
-                <select value={f.agentManaged} onChange={e => set("agentManaged", e.target.value)} className={SELECT}>
+                <label htmlFor="ast-is-the-property-managed" className={LABEL}>Is the property managed by an agent?</label>
+                <select id="ast-is-the-property-managed" value={f.agentManaged} onChange={e => set("agentManaged", e.target.value)} className={SELECT}>
                   <option value="no">No — landlord manages directly</option>
                   <option value="yes">Yes — managed by a letting agent</option>
                 </select>
@@ -671,13 +671,13 @@ export default function ASTPage() {
             <div className="space-y-4">
               <h2 className="text-lg font-bold text-navy-800">Property Details</h2>
               <div>
-                <label className={LABEL}>Property address *</label>
-                <input value={f.propertyAddress} onChange={e => set("propertyAddress", e.target.value)} placeholder="Full address including postcode" className={INPUT} />
+                <label htmlFor="ast-property-address" className={LABEL}>Property address *</label>
+                <input id="ast-property-address" value={f.propertyAddress} onChange={e => set("propertyAddress", e.target.value)} placeholder="Full address including postcode" className={INPUT} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Property type</label>
-                  <select value={f.propertyType} onChange={e => set("propertyType", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-property-type" className={LABEL}>Property type</label>
+                  <select id="ast-property-type" value={f.propertyType} onChange={e => set("propertyType", e.target.value)} className={SELECT}>
                     <option value="flat">Flat / Apartment</option>
                     <option value="house">House</option>
                     <option value="terraced house">Terraced House</option>
@@ -689,8 +689,8 @@ export default function ASTPage() {
                   </select>
                 </div>
                 <div>
-                  <label className={LABEL}>Furnished status</label>
-                  <select value={f.furnished} onChange={e => set("furnished", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-furnished-status" className={LABEL}>Furnished status</label>
+                  <select id="ast-furnished-status" value={f.furnished} onChange={e => set("furnished", e.target.value)} className={SELECT}>
                     <option value="unfurnished">Unfurnished</option>
                     <option value="part-furnished">Part Furnished</option>
                     <option value="furnished">Fully Furnished</option>
@@ -699,23 +699,23 @@ export default function ASTPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Parking included?</label>
-                  <select value={f.parking} onChange={e => set("parking", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-parking-included" className={LABEL}>Parking included?</label>
+                  <select id="ast-parking-included" value={f.parking} onChange={e => set("parking", e.target.value)} className={SELECT}>
                     <option value="no">No</option>
                     <option value="yes">Yes</option>
                   </select>
                 </div>
                 <div>
-                  <label className={LABEL}>Garden / outdoor space?</label>
-                  <select value={f.garden} onChange={e => set("garden", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-garden-outdoor-space" className={LABEL}>Garden / outdoor space?</label>
+                  <select id="ast-garden-outdoor-space" value={f.garden} onChange={e => set("garden", e.target.value)} className={SELECT}>
                     <option value="no">No</option>
                     <option value="yes">Yes</option>
                   </select>
                 </div>
               </div>
               <div>
-                <label className={LABEL}>Maximum permitted occupants</label>
-                <input type="number" min="1" max="10" value={f.maxOccupants} onChange={e => set("maxOccupants", e.target.value)} className={INPUT} />
+                <label htmlFor="ast-maximum-permitted-occupants" className={LABEL}>Maximum permitted occupants</label>
+                <input id="ast-maximum-permitted-occupants" type="number" min="1" max="10" value={f.maxOccupants} onChange={e => set("maxOccupants", e.target.value)} className={INPUT} />
               </div>
             </div>
           )}
@@ -744,8 +744,8 @@ export default function ASTPage() {
                 <input value={f.tenant3Name} onChange={e => set("tenant3Name", e.target.value)} placeholder="Full legal name" className={INPUT} />
               </div>
               <div>
-                <label className={LABEL}>Additional permitted occupants (non-tenants, e.g. children)</label>
-                <input value={f.additionalOccupants} onChange={e => set("additionalOccupants", e.target.value)} placeholder="e.g. Two children under 18" className={INPUT} />
+                <label htmlFor="ast-additional-permitted-occupants-non" className={LABEL}>Additional permitted occupants (non-tenants, e.g. children)</label>
+                <input id="ast-additional-permitted-occupants-non" value={f.additionalOccupants} onChange={e => set("additionalOccupants", e.target.value)} placeholder="e.g. Two children under 18" className={INPUT} />
               </div>
             </div>
           )}
@@ -756,12 +756,12 @@ export default function ASTPage() {
               <h2 className="text-lg font-bold text-navy-800">Term & Rent</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Tenancy start date *</label>
-                  <input type="date" value={f.startDate} onChange={e => set("startDate", e.target.value)} className={INPUT} />
+                  <label htmlFor="ast-tenancy-start-date" className={LABEL}>Tenancy start date *</label>
+                  <input id="ast-tenancy-start-date" type="date" value={f.startDate} onChange={e => set("startDate", e.target.value)} className={INPUT} />
                 </div>
                 <div>
-                  <label className={LABEL}>Fixed term (months)</label>
-                  <select value={f.fixedMonths} onChange={e => set("fixedMonths", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-fixed-term-months" className={LABEL}>Fixed term (months)</label>
+                  <select id="ast-fixed-term-months" value={f.fixedMonths} onChange={e => set("fixedMonths", e.target.value)} className={SELECT}>
                     {["6","12","18","24","36"].map(m => <option key={m} value={m}>{m} months</option>)}
                   </select>
                 </div>
@@ -773,12 +773,12 @@ export default function ASTPage() {
               )}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Rent amount (£) *</label>
-                  <input type="number" value={f.rentAmount} onChange={e => set("rentAmount", e.target.value)} placeholder="e.g. 900" className={INPUT} />
+                  <label htmlFor="ast-rent-amount" className={LABEL}>Rent amount (£) *</label>
+                  <input id="ast-rent-amount" type="number" value={f.rentAmount} onChange={e => set("rentAmount", e.target.value)} placeholder="e.g. 900" className={INPUT} />
                 </div>
                 <div>
-                  <label className={LABEL}>Rent frequency</label>
-                  <select value={f.rentFrequency} onChange={e => set("rentFrequency", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-rent-frequency" className={LABEL}>Rent frequency</label>
+                  <select id="ast-rent-frequency" value={f.rentFrequency} onChange={e => set("rentFrequency", e.target.value)} className={SELECT}>
                     <option value="monthly">Monthly (PCM)</option>
                     <option value="weekly">Weekly</option>
                   </select>
@@ -795,8 +795,8 @@ export default function ASTPage() {
                   }
                 </div>
                 <div>
-                  <label className={LABEL}>Payment method</label>
-                  <select value={f.paymentMethod} onChange={e => set("paymentMethod", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-payment-method" className={LABEL}>Payment method</label>
+                  <select id="ast-payment-method" value={f.paymentMethod} onChange={e => set("paymentMethod", e.target.value)} className={SELECT}>
                     <option value="bank-transfer">Bank Transfer</option>
                     <option value="standing-order">Standing Order</option>
                     <option value="cheque">Cheque</option>
@@ -826,12 +826,12 @@ export default function ASTPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>Deposit amount (£) *</label>
-                  <input type="number" value={f.depositAmount} onChange={e => set("depositAmount", e.target.value)} placeholder="e.g. 1038" className={INPUT} />
+                  <label htmlFor="ast-deposit-amount" className={LABEL}>Deposit amount (£) *</label>
+                  <input id="ast-deposit-amount" type="number" value={f.depositAmount} onChange={e => set("depositAmount", e.target.value)} placeholder="e.g. 1038" className={INPUT} />
                 </div>
                 <div>
-                  <label className={LABEL}>Deposit protection scheme *</label>
-                  <select value={f.depositScheme} onChange={e => set("depositScheme", e.target.value)} className={SELECT}>
+                  <label htmlFor="ast-deposit-protection-scheme" className={LABEL}>Deposit protection scheme *</label>
+                  <select id="ast-deposit-protection-scheme" value={f.depositScheme} onChange={e => set("depositScheme", e.target.value)} className={SELECT}>
                     <option value="DPS">Deposit Protection Service (DPS)</option>
                     <option value="MyDeposits">MyDeposits</option>
                     <option value="TDS">Tenancy Deposit Scheme (TDS)</option>
@@ -839,8 +839,8 @@ export default function ASTPage() {
                 </div>
               </div>
               <div>
-                <label className={LABEL}>Scheme reference (if known)</label>
-                <input value={f.depositSchemeRef} onChange={e => set("depositSchemeRef", e.target.value)} placeholder="Leave blank to confirm later" className={INPUT} />
+                <label htmlFor="ast-scheme-reference-if-known" className={LABEL}>Scheme reference (if known)</label>
+                <input id="ast-scheme-reference-if-known" value={f.depositSchemeRef} onChange={e => set("depositSchemeRef", e.target.value)} placeholder="Leave blank to confirm later" className={INPUT} />
               </div>
             </div>
           )}
@@ -889,8 +889,8 @@ export default function ASTPage() {
                 </div>
               ))}
               <div>
-                <label className={LABEL}>Additional / special terms</label>
-                <textarea value={f.additionalTerms} onChange={e => set("additionalTerms", e.target.value)}
+                <label htmlFor="ast-additional-special-terms" className={LABEL}>Additional / special terms</label>
+                <textarea id="ast-additional-special-terms" value={f.additionalTerms} onChange={e => set("additionalTerms", e.target.value)}
                   rows={4} placeholder="Any extra clauses or conditions specific to this tenancy..." className={INPUT} />
               </div>
             </div>
@@ -901,8 +901,8 @@ export default function ASTPage() {
             <div className="space-y-4">
               <h2 className="text-lg font-bold text-navy-800">Guarantor</h2>
               <div>
-                <label className={LABEL}>Is a guarantor required?</label>
-                <select value={f.guarantorRequired} onChange={e => set("guarantorRequired", e.target.value)} className={SELECT}>
+                <label htmlFor="ast-is-a-guarantor-required" className={LABEL}>Is a guarantor required?</label>
+                <select id="ast-is-a-guarantor-required" value={f.guarantorRequired} onChange={e => set("guarantorRequired", e.target.value)} className={SELECT}>
                   <option value="no">No guarantor required</option>
                   <option value="yes">Yes — include deed of guarantee</option>
                 </select>

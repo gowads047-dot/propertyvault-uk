@@ -235,8 +235,8 @@ export default function ContactsPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {/* Name */}
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Name *</label>
-                <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                <label htmlFor="contacts-name" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Name *</label>
+                <input id="contacts-name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   placeholder="e.g. Mr Ahmed, City Plumbing Ltd"
                   style={{ width: "100%", background: S.card, border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }} />
               </div>
@@ -244,15 +244,15 @@ export default function ContactsPage() {
               {/* Role + Specialty side by side */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 10 }}>
                 <div>
-                  <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Role</label>
-                  <select value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
+                  <label htmlFor="contacts-role" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Role</label>
+                  <select id="contacts-role" value={form.role} onChange={e => setForm(f => ({ ...f, role: e.target.value }))}
                     style={{ width: "100%", background: "#1e293b", border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }}>
                     {ROLES.map(r => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Specialty</label>
-                  <select value={form.specialty ?? ""} onChange={e => setForm(f => ({ ...f, specialty: e.target.value || null }))}
+                  <label htmlFor="contacts-specialty" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Specialty</label>
+                  <select id="contacts-specialty" value={form.specialty ?? ""} onChange={e => setForm(f => ({ ...f, specialty: e.target.value || null }))}
                     style={{ width: "100%", background: "#1e293b", border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }}>
                     <option value="">— select —</option>
                     {SPECIALTIES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -262,8 +262,8 @@ export default function ContactsPage() {
 
               {/* Phone */}
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Phone</label>
-                <input value={form.phone ?? ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value || null }))}
+                <label htmlFor="contacts-phone" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Phone</label>
+                <input id="contacts-phone" value={form.phone ?? ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value || null }))}
                   placeholder="07xxx xxxxxx"
                   style={{ width: "100%", background: S.card, border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }} />
               </div>
@@ -281,16 +281,16 @@ export default function ContactsPage() {
 
               {/* Email */}
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Email</label>
-                <input value={form.email ?? ""} onChange={e => setForm(f => ({ ...f, email: e.target.value || null }))}
+                <label htmlFor="contacts-email" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Email</label>
+                <input id="contacts-email" value={form.email ?? ""} onChange={e => setForm(f => ({ ...f, email: e.target.value || null }))}
                   placeholder="contractor@example.com"
                   style={{ width: "100%", background: S.card, border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none" }} />
               </div>
 
               {/* Notes */}
               <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Notes</label>
-                <textarea value={form.notes ?? ""} onChange={e => setForm(f => ({ ...f, notes: e.target.value || null }))}
+                <label htmlFor="contacts-notes" style={{ fontSize: 11, fontWeight: 700, color: S.ink2, textTransform: "uppercase", letterSpacing: "0.06em", display: "block", marginBottom: 5 }}>Notes</label>
+                <textarea id="contacts-notes" value={form.notes ?? ""} onChange={e => setForm(f => ({ ...f, notes: e.target.value || null }))}
                   placeholder="e.g. Reliable, usually available weekdays. Gas Safe reg: 123456"
                   rows={2}
                   style={{ width: "100%", background: S.card, border: `1px solid ${S.border}`, borderRadius: 8, padding: "9px 12px", color: S.ink, fontSize: 13, fontFamily: "inherit", outline: "none", resize: "vertical" }} />

@@ -713,20 +713,20 @@ function RtRForm({ form, setForm, onDocTypeChange, onSave, onCancel, saving }: {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 14, marginBottom: 14 }}>
         <div style={{ gridColumn: "1 / -1" }}>
-          <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Document type *</label>
-          <select value={form.document_type || "uk_passport"} onChange={e => onDocTypeChange(e.target.value)} style={inpSm}>
+          <label htmlFor="tenants-document-type" style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Document type *</label>
+          <select id="tenants-document-type" value={form.document_type || "uk_passport"} onChange={e => onDocTypeChange(e.target.value)} style={inpSm}>
             {DOC_TYPES.map(d => <option key={d.value} value={d.value}>{d.label}{d.timeLimited ? " ⏱" : ""}</option>)}
           </select>
         </div>
 
         <div>
-          <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Check date *</label>
-          <input type="date" value={form.check_date || ""} onChange={e => setForm(f => ({ ...f, check_date: e.target.value }))} style={inpSm} />
+          <label htmlFor="tenants-check-date" style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Check date *</label>
+          <input id="tenants-check-date" type="date" value={form.check_date || ""} onChange={e => setForm(f => ({ ...f, check_date: e.target.value }))} style={inpSm} />
         </div>
 
         <div>
-          <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Document ref. (optional)</label>
-          <input value={form.document_ref || ""} onChange={e => setForm(f => ({ ...f, document_ref: e.target.value }))} placeholder="Last 4 digits / BRP ref" style={inpSm} />
+          <label htmlFor="tenants-document-ref-optional" style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Document ref. (optional)</label>
+          <input id="tenants-document-ref-optional" value={form.document_ref || ""} onChange={e => setForm(f => ({ ...f, document_ref: e.target.value }))} placeholder="Last 4 digits / BRP ref" style={inpSm} />
         </div>
 
         {/* Time-limited toggle */}
@@ -737,8 +737,8 @@ function RtRForm({ form, setForm, onDocTypeChange, onSave, onCancel, saving }: {
 
         {form.time_limited && (
           <div style={{ gridColumn: "1 / -1" }}>
-            <label style={{ fontSize: 11, fontWeight: 700, color: C.red, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Permission / visa expiry date *</label>
-            <input type="date" value={form.expiry_date || ""} onChange={e => setForm(f => ({ ...f, expiry_date: e.target.value }))} style={{ ...inpSm, borderColor: "rgba(239,68,68,0.3)" }} />
+            <label htmlFor="tenants-permission-visa-expiry-date" style={{ fontSize: 11, fontWeight: 700, color: C.red, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Permission / visa expiry date *</label>
+            <input id="tenants-permission-visa-expiry-date" type="date" value={form.expiry_date || ""} onChange={e => setForm(f => ({ ...f, expiry_date: e.target.value }))} style={{ ...inpSm, borderColor: "rgba(239,68,68,0.3)" }} />
             <p style={{ fontSize: 11, color: C.ink3, marginTop: 5 }}>
               You must carry out a follow-up check before this date. We will alert you at 90 days and 28 days before expiry.
             </p>
@@ -746,8 +746,8 @@ function RtRForm({ form, setForm, onDocTypeChange, onSave, onCancel, saving }: {
         )}
 
         <div style={{ gridColumn: "1 / -1" }}>
-          <label style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Notes (optional)</label>
-          <textarea value={form.notes || ""} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} placeholder="e.g. Document verified in person, copy filed in docs folder" rows={2} style={{ ...inpSm, resize: "vertical" }} />
+          <label htmlFor="tenants-notes-optional" style={{ fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: 5 }}>Notes (optional)</label>
+          <textarea id="tenants-notes-optional" value={form.notes || ""} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} placeholder="e.g. Document verified in person, copy filed in docs folder" rows={2} style={{ ...inpSm, resize: "vertical" }} />
         </div>
       </div>
 

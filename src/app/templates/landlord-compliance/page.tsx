@@ -228,8 +228,8 @@ export default function LandlordComplianceTemplate() {
 
             {/* Notes */}
             <div style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", padding: 20, marginBottom: 20 }}>
-              <label style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>Notes & Action Points</label>
-              <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any outstanding actions, upcoming renewals, or notes…" rows={4}
+              <label htmlFor="landlordcomp-notes-action-points" style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>Notes & Action Points</label>
+              <textarea id="landlordcomp-notes-action-points" value={notes} onChange={e => setNotes(e.target.value)} placeholder="Any outstanding actions, upcoming renewals, or notes…" rows={4}
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit" }} />
             </div>
 

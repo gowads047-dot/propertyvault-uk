@@ -93,8 +93,8 @@ export default function CheckOutReportTemplate() {
                   </div>
                 ))}
                 <div>
-                  <label style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Deposit held (£)</label>
-                  <input type="number" value={depositHeld || ""} onChange={e => setDepositHeld(Number(e.target.value))} placeholder="e.g. 1200"
+                  <label htmlFor="checkoutrepo-deposit-held" style={{ fontSize: 12, fontWeight: 600, color: "#374151", display: "block", marginBottom: 5 }}>Deposit held (£)</label>
+                  <input id="checkoutrepo-deposit-held" type="number" value={depositHeld || ""} onChange={e => setDepositHeld(Number(e.target.value))} placeholder="e.g. 1200"
                     style={{ width: "100%", padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
                 </div>
               </div>
@@ -164,8 +164,8 @@ export default function CheckOutReportTemplate() {
             </div>
 
             <div style={{ background: "white", borderRadius: 16, border: "1.5px solid #e2e8f0", padding: 20, marginBottom: 20 }}>
-              <label style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>General Notes</label>
-              <textarea value={generalNotes} onChange={e => setGeneralNotes(e.target.value)} rows={3}
+              <label htmlFor="checkoutrepo-general-notes" style={{ fontSize: 14, fontWeight: 700, color: "#0f1b36", display: "block", marginBottom: 10 }}>General Notes</label>
+              <textarea id="checkoutrepo-general-notes" value={generalNotes} onChange={e => setGeneralNotes(e.target.value)} rows={3}
                 placeholder="Any additional notes, agreed actions, evidence references..."
                 style={{ width: "100%", padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit" }} />
             </div>

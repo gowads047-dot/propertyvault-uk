@@ -90,38 +90,38 @@ export default function RepairReport() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Your Details (Tenant)</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Your Full Name *</label>
-                <input value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Your name as on tenancy" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <textarea value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} rows={2} placeholder="The property where you live" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date of Letter</label>
-                <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-your-full-name" className="block text-sm font-semibold text-navy-700 mb-1">Your Full Name *</label>
+                <input id="repairreport-your-full-name" value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Your name as on tenancy" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <textarea id="repairreport-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} rows={2} placeholder="The property where you live" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="repairreport-date-of-letter" className="block text-sm font-semibold text-navy-700 mb-1">Date of Letter</label>
+                <input id="repairreport-date-of-letter" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Landlord / Agent Details</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Landlord or managing agent" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Their Address</label>
-                <textarea value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="repairreport-landlord-agent-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
+                <input id="repairreport-landlord-agent-name" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Landlord or managing agent" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-their-address" className="block text-sm font-semibold text-navy-700 mb-1">Their Address</label>
+                <textarea id="repairreport-their-address" value={landlordAddress} onChange={e => setLandlordAddress(e.target.value)} rows={2} placeholder="Correspondence address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Repair Details</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Issue title *</label>
-                <input value={issueTitle} onChange={e => setIssueTitle(e.target.value)} placeholder="e.g. Boiler not producing hot water" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Location in property</label>
-                <input value={location} onChange={e => setLocation(e.target.value)} placeholder="e.g. Main bathroom, kitchen, loft" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Detailed description *</label>
-                <textarea value={issueDesc} onChange={e => setIssueDesc(e.target.value)} rows={5} placeholder="Describe the issue in detail — what you can see, smell, or hear. Include when it started and how it is affecting you." className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">When did you first notice this?</label>
-                <input type="date" value={firstReported} onChange={e => setFirstReported(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Previous contact with landlord about this issue</label>
-                <textarea value={previousContact} onChange={e => setPreviousContact(e.target.value)} rows={2} placeholder="e.g. Reported verbally on 12 June 2025. No action taken." className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Response/repair deadline requested</label>
-                <input type="date" value={deadline} onChange={e => setDeadline(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">What action you are requesting</label>
-                <textarea value={requestedAction} onChange={e => setRequestedAction(e.target.value)} rows={3} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="repairreport-issue-title" className="block text-sm font-semibold text-navy-700 mb-1">Issue title *</label>
+                <input id="repairreport-issue-title" value={issueTitle} onChange={e => setIssueTitle(e.target.value)} placeholder="e.g. Boiler not producing hot water" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-location-in-property" className="block text-sm font-semibold text-navy-700 mb-1">Location in property</label>
+                <input id="repairreport-location-in-property" value={location} onChange={e => setLocation(e.target.value)} placeholder="e.g. Main bathroom, kitchen, loft" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-detailed-description" className="block text-sm font-semibold text-navy-700 mb-1">Detailed description *</label>
+                <textarea id="repairreport-detailed-description" value={issueDesc} onChange={e => setIssueDesc(e.target.value)} rows={5} placeholder="Describe the issue in detail — what you can see, smell, or hear. Include when it started and how it is affecting you." className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="repairreport-when-did-you-first" className="block text-sm font-semibold text-navy-700 mb-1">When did you first notice this?</label>
+                <input id="repairreport-when-did-you-first" type="date" value={firstReported} onChange={e => setFirstReported(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-previous-contact-with-landlord" className="block text-sm font-semibold text-navy-700 mb-1">Previous contact with landlord about this issue</label>
+                <textarea id="repairreport-previous-contact-with-landlord" value={previousContact} onChange={e => setPreviousContact(e.target.value)} rows={2} placeholder="e.g. Reported verbally on 12 June 2025. No action taken." className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
+              <div><label htmlFor="repairreport-response-repair-deadline-requested" className="block text-sm font-semibold text-navy-700 mb-1">Response/repair deadline requested</label>
+                <input id="repairreport-response-repair-deadline-requested" type="date" value={deadline} onChange={e => setDeadline(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="repairreport-what-action-you-are" className="block text-sm font-semibold text-navy-700 mb-1">What action you are requesting</label>
+                <textarea id="repairreport-what-action-you-are" value={requestedAction} onChange={e => setRequestedAction(e.target.value)} rows={3} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" /></div>
             </div>
 
             <button onClick={() => setMode("preview")} className="w-full btn-gold">Preview Letter →</button>

@@ -86,25 +86,25 @@ export default function PetPermission() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Parties & Property</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Your name or agency" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name *</label>
-                <input value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Tenant's full name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <input value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date</label>
-                <input type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="petpermissio-landlord-agent-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord / Agent Name *</label>
+                <input id="petpermissio-landlord-agent-name" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Your name or agency" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="petpermissio-tenant-name" className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name *</label>
+                <input id="petpermissio-tenant-name" value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Tenant's full name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="petpermissio-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <input id="petpermissio-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="petpermissio-date" className="block text-sm font-semibold text-navy-700 mb-1">Date</label>
+                <input id="petpermissio-date" type="date" value={issueDate} onChange={e => setIssueDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Pet Details</h2>
               <div className="grid grid-cols-3 gap-3">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Pet type *</label>
-                  <input value={petType} onChange={e => setPetType(e.target.value)} placeholder="e.g. Dog" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Breed</label>
-                  <input value={petBreed} onChange={e => setPetBreed(e.target.value)} placeholder="e.g. Labrador" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Name</label>
-                  <input value={petName} onChange={e => setPetName(e.target.value)} placeholder="e.g. Buddy" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="petpermissio-pet-type" className="block text-sm font-semibold text-navy-700 mb-1">Pet type *</label>
+                  <input id="petpermissio-pet-type" value={petType} onChange={e => setPetType(e.target.value)} placeholder="e.g. Dog" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="petpermissio-breed" className="block text-sm font-semibold text-navy-700 mb-1">Breed</label>
+                  <input id="petpermissio-breed" value={petBreed} onChange={e => setPetBreed(e.target.value)} placeholder="e.g. Labrador" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="petpermissio-name" className="block text-sm font-semibold text-navy-700 mb-1">Name</label>
+                  <input id="petpermissio-name" value={petName} onChange={e => setPetName(e.target.value)} placeholder="e.g. Buddy" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
             </div>
 

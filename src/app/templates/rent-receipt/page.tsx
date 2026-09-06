@@ -71,27 +71,27 @@ export default function RentReceipt() {
           <div className="container-max max-w-lg space-y-6">
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Parties & Property</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Landlord Name *</label>
-                <input value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Landlord or agent name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name *</label>
-                <input value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Tenant full name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
-                <input value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-landlord-name" className="block text-sm font-semibold text-navy-700 mb-1">Landlord Name *</label>
+                <input id="rentreceipt-landlord-name" value={landlordName} onChange={e => setLandlordName(e.target.value)} placeholder="Landlord or agent name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-tenant-name" className="block text-sm font-semibold text-navy-700 mb-1">Tenant Name *</label>
+                <input id="rentreceipt-tenant-name" value={tenantName} onChange={e => setTenantName(e.target.value)} placeholder="Tenant full name" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-property-address" className="block text-sm font-semibold text-navy-700 mb-1">Property Address *</label>
+                <input id="rentreceipt-property-address" value={propertyAddress} onChange={e => setPropertyAddress(e.target.value)} placeholder="Full address" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6 space-y-4">
               <h2 className="font-bold text-navy-800">Payment Details</h2>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Amount (£) *</label>
+              <div><label htmlFor="rentreceipt-amount" className="block text-sm font-semibold text-navy-700 mb-1">Amount (£) *</label>
                 <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                  <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                  <input id="rentreceipt-amount" type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Period from *</label>
-                  <input type="date" value={periodFrom} onChange={e => setPeriodFrom(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Period to *</label>
-                  <input type="date" value={periodTo} onChange={e => setPeriodTo(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="rentreceipt-period-from" className="block text-sm font-semibold text-navy-700 mb-1">Period from *</label>
+                  <input id="rentreceipt-period-from" type="date" value={periodFrom} onChange={e => setPeriodFrom(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+                <div><label htmlFor="rentreceipt-period-to" className="block text-sm font-semibold text-navy-700 mb-1">Period to *</label>
+                  <input id="rentreceipt-period-to" type="date" value={periodTo} onChange={e => setPeriodTo(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               </div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Date of Payment *</label>
-                <input type="date" value={paymentDate} onChange={e => setPaymentDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-date-of-payment" className="block text-sm font-semibold text-navy-700 mb-1">Date of Payment *</label>
+                <input id="rentreceipt-date-of-payment" type="date" value={paymentDate} onChange={e => setPaymentDate(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-2">Payment Method</label>
                 <div className="grid grid-cols-2 gap-2">
@@ -103,10 +103,10 @@ export default function RentReceipt() {
                   ))}
                 </div>
               </div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Reference (optional)</label>
-                <input value={reference} onChange={e => setReference(e.target.value)} placeholder="e.g. bank ref, cheque number" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
-              <div><label className="block text-sm font-semibold text-navy-700 mb-1">Receipt Number</label>
-                <input value={receiptNumber} onChange={e => setReceiptNumber(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-reference-optional" className="block text-sm font-semibold text-navy-700 mb-1">Reference (optional)</label>
+                <input id="rentreceipt-reference-optional" value={reference} onChange={e => setReference(e.target.value)} placeholder="e.g. bank ref, cheque number" className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
+              <div><label htmlFor="rentreceipt-receipt-number" className="block text-sm font-semibold text-navy-700 mb-1">Receipt Number</label>
+                <input id="rentreceipt-receipt-number" value={receiptNumber} onChange={e => setReceiptNumber(e.target.value)} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6">
@@ -117,9 +117,9 @@ export default function RentReceipt() {
                 <label className="text-sm font-semibold text-navy-700 cursor-pointer">Include security deposit in this receipt</label>
               </div>
               {includesDeposit && (
-                <div><label className="block text-sm font-semibold text-navy-700 mb-1">Deposit Amount (£)</label>
+                <div><label htmlFor="rentreceipt-deposit-amount" className="block text-sm font-semibold text-navy-700 mb-1">Deposit Amount (£)</label>
                   <div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400">£</span>
-                    <input type="number" value={depositAmount} onChange={e => setDepositAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
+                    <input id="rentreceipt-deposit-amount" type="number" value={depositAmount} onChange={e => setDepositAmount(e.target.value)} placeholder="0.00" className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               )}
             </div>
 

@@ -283,16 +283,16 @@ export default function EventsPage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div>
-                <label style={labelStyle}>Event type *</label>
-                <select value={form.event_type} onChange={e => setF("event_type", e.target.value)} style={inputStyle}>
+                <label htmlFor="events-event-type" style={labelStyle}>Event type *</label>
+                <select id="events-event-type" value={form.event_type} onChange={e => setF("event_type", e.target.value)} style={inputStyle}>
                   {EVENT_TYPES.map(t => <option key={t} value={t}>{EVENT_META[t]?.icon} {EVENT_META[t]?.label || t}</option>)}
                 </select>
               </div>
 
               {properties.length > 0 && (
                 <div>
-                  <label style={labelStyle}>Property</label>
-                  <select value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
+                  <label htmlFor="events-property" style={labelStyle}>Property</label>
+                  <select id="events-property" value={form.property_id} onChange={e => setF("property_id", e.target.value)} style={inputStyle}>
                     <option value="">Portfolio-wide</option>
                     {properties.map(p => <option key={p.id} value={p.id}>{p.nickname || p.address.split(",")[0]}</option>)}
                   </select>
@@ -300,23 +300,23 @@ export default function EventsPage() {
               )}
 
               <div>
-                <label style={labelStyle}>Title *</label>
-                <input value={form.title} onChange={e => setF("title", e.target.value)} placeholder="e.g. Rent received — October" style={inputStyle} />
+                <label htmlFor="events-title" style={labelStyle}>Title *</label>
+                <input id="events-title" value={form.title} onChange={e => setF("title", e.target.value)} placeholder="e.g. Rent received — October" style={inputStyle} />
               </div>
 
               <div>
-                <label style={labelStyle}>Description</label>
-                <textarea value={form.description} onChange={e => setF("description", e.target.value)} rows={2} placeholder="Optional details…" style={{ ...inputStyle, resize: "vertical" }} />
+                <label htmlFor="events-description" style={labelStyle}>Description</label>
+                <textarea id="events-description" value={form.description} onChange={e => setF("description", e.target.value)} rows={2} placeholder="Optional details…" style={{ ...inputStyle, resize: "vertical" }} />
               </div>
 
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 12 }}>
                 <div>
-                  <label style={labelStyle}>Amount (£)</label>
-                  <input type="number" value={form.amount} onChange={e => setF("amount", e.target.value)} placeholder="0.00" style={inputStyle} />
+                  <label htmlFor="events-amount" style={labelStyle}>Amount (£)</label>
+                  <input id="events-amount" type="number" value={form.amount} onChange={e => setF("amount", e.target.value)} placeholder="0.00" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={labelStyle}>Date</label>
-                  <input type="date" value={form.event_date} onChange={e => setF("event_date", e.target.value)} style={inputStyle} />
+                  <label htmlFor="events-date" style={labelStyle}>Date</label>
+                  <input id="events-date" type="date" value={form.event_date} onChange={e => setF("event_date", e.target.value)} style={inputStyle} />
                 </div>
               </div>
 

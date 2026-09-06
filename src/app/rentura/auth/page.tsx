@@ -167,15 +167,15 @@ function RenturaAuthForm() {
 
             {mode === "signup" && (
               <div>
-                <label style={labelStyle}>Your name</label>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nass" autoComplete="name" required style={inputStyle} />
+                <label htmlFor="auth-your-name" style={labelStyle}>Your name</label>
+                <input id="auth-your-name" type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Nass" autoComplete="name" required style={inputStyle} />
               </div>
             )}
 
             {mode !== "update" && (
               <div>
-                <label style={labelStyle}>Email address</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com" autoComplete="email" required style={inputStyle} />
+                <label htmlFor="auth-email-address" style={labelStyle}>Email address</label>
+                <input id="auth-email-address" type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@email.com" autoComplete="email" required style={inputStyle} />
               </div>
             )}
 
@@ -190,8 +190,8 @@ function RenturaAuthForm() {
 
             {mode === "update" && (
               <div>
-                <label style={labelStyle}>Confirm new password</label>
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
+                <label htmlFor="auth-confirm-new-password" style={labelStyle}>Confirm new password</label>
+                <input id="auth-confirm-new-password" type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="Repeat your new password" autoComplete="new-password" required style={inputStyle} />
               </div>
             )}
