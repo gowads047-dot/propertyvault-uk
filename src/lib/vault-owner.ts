@@ -22,9 +22,13 @@ import { getVerifiedUser } from "./server-auth";
  * the account is the stronger claim, and quietly using the token instead would
  * let a stale one outrank a real identity.
  */
+export function userFilter(userId: string): string {
+  return `user_id=eq.${encodeURIComponent(userId)}`;
+}
+
 export async function ownerFilterFor(request: Request): Promise<string | null> {
   const user = await getVerifiedUser(request);
-  if (user) return `user_id=eq.${encodeURIComponent(user.id)}`;
+  if (user) return userFilter(user.id);
 
   const token = request.headers.get("x-vault-token");
   if (!isValidClaimToken(token)) return null;

@@ -159,6 +159,8 @@ export interface SavedProperty {
   postcode: string | null;
   address: string | null;
   asking_price: number | null;
+  /** Set once this became a property you own. */
+  rentura_property_id?: string | null;
   /**
    * Where it is in its life. The endpoint has always returned this; the type
    * did not carry it, so the list could not show it and every property looked
@@ -200,6 +202,8 @@ export interface VaultProperty {
   bedrooms: number | null;
   asking_price: number | null;
   stage: string;
+  /** Set once this became a property you own, and links to the Rentura record. */
+  rentura_property_id: string | null;
   source: string;
   source_ref: string | null;
   created_at: string;
@@ -318,5 +322,42 @@ export async function claimVault(): Promise<{ moved: number } | null> {
   } catch (err) {
     console.error("vault claim failed:", err);
     return null;
+  }
+}
+
+/**
+ * Turn a researched property into one you own.
+ *
+ * Creates the Rentura property from what the vault already knows and links the
+ * two, so the evidence and the workings built up while deciding stay attached
+ * to the thing that was bought.
+ *
+ * Needs an account: the link constraint refuses an anonymous row, because a
+ * claim that two records are the same house may only be made by somebody who
+ * owns both sides of it. The server says so specifically rather than failing
+ * with a constraint violation, and `needsAccount` carries that through.
+ */
+export async function ownProperty(
+  id: string,
+): Promise<
+  | { ok: true; renturaPropertyId: string; created: boolean }
+  | { ok: false; error: string; needsAccount: boolean }
+> {
+  try {
+    const res = await authFetch(`/api/vault/property/${encodeURIComponent(id)}/own/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    const j = await res.json().catch(() => null);
+    if (!res.ok) {
+      return {
+        ok: false,
+        error: j?.error ?? "Could not add that to your portfolio.",
+        needsAccount: j?.reason === "needs-account",
+      };
+    }
+    return { ok: true, renturaPropertyId: j.renturaPropertyId, created: j.created };
+  } catch {
+    return { ok: false, error: "Could not reach the vault.", needsAccount: false };
   }
 }
