@@ -212,14 +212,25 @@ export default function InventoryPage() {
   if (rows.length === 0) {
     return (
       <Shell>
-        {/* An importer, not an illustration. The first thing an operator has is
-            a spreadsheet, and asking them to retype 40 rooms loses them. */}
+        {/* Both buttons here used to point at /makan/app/inventory/import and
+            /inventory/new, and neither route has ever existed — an operator
+            with no rooms yet, which is every new operator, met two 404s.
+
+            Listing is the flow that really creates a building, unit, space and
+            listing, so that is where it points now. The importer was the
+            better idea and asking somebody to retype forty rooms does lose
+            them, but a button promising bulk import that 404s loses them
+            faster. It is described as missing rather than offered. */}
         <Notice title="No rooms yet">
-          <p>Add your first building, or bring a portfolio across from a spreadsheet.</p>
+          <p>List your first building to get started.</p>
           <div className="flex flex-wrap gap-3 mt-5">
-            <Link href="/makan/app/inventory/import" className="h-btn h-btn-primary">Import a spreadsheet</Link>
-            <Link href="/makan/app/inventory/new" className="h-btn h-btn-secondary">Add a building</Link>
+            <Link href="/makan/list" className="h-btn h-btn-primary">List a building</Link>
           </div>
+          <p className="mt-4 text-sm opacity-70">
+            Bringing a portfolio across from a spreadsheet is not built yet. If you have more than
+            a handful of rooms, <Link href="/contact" className="underline">tell us</Link> and we
+            will do the first import by hand.
+          </p>
         </Notice>
       </Shell>
     );
