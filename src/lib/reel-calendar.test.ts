@@ -5,6 +5,7 @@ import {
   CALENDAR, CAMPAIGN_START, INSTAGRAM_USER_ID, buildCalendar, campaignDay,
   reelForDay, fullCaption, durationOf,
 } from "./reel-calendar";
+import { BANNED_CLAIMS } from "./social/claims";
 
 describe("the 30-day calendar", () => {
   it("fills exactly thirty days, numbered one to thirty", () => {
@@ -111,22 +112,12 @@ describe("captions and hashtags", () => {
     }
   });
 
-  // The standing rule, enforced by the test runner rather than by me.
+  // The standing rule, enforced by the test runner rather than by me. The
+  // list itself lives in social/claims.ts, where the publisher's quality
+  // check reads the same one — so this test and the live gate cannot drift.
   it("makes no guarantee, testimonial, market average or prediction", () => {
-    const banned = [
-      // "Guaranteed rent" is the name of a product and may be described.
-      // "Guaranteed" anything else is a promise, and is not allowed.
-      /\bguaranteed\b(?!\s+rent)/i,
-      /\bguarantees\b/i,
-      /\btestimonial/i,
-      /\bclients? (?:have|has)\b/i,
-      /\baverage (?:yield|return|rent|price)\b/i,
-      /\bwill (?:rise|fall|grow|increase|double)\b/i,
-      /\brisk[- ]free\b/i,
-      /\bbest (?:area|investment|deal)\b/i,
-    ];
     for (const r of CALENDAR) {
-      for (const re of banned) {
+      for (const re of BANNED_CLAIMS) {
         expect(re.test(fullCaption(r)), `${r.id} :: ${re}`).toBe(false);
       }
     }

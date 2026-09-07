@@ -15,6 +15,7 @@
 *.ttf   binary
 *.pdf   binary
 *.mp4   binary
+*.mp3   binary
 *.zip   binary
 *.tar   binary
 *.gz    binary

@@ -128,6 +128,11 @@ export const MIGRATIONS: Migration[] = [
     marker: { kind: "column", table: "makan_wanted", column: "let_type" },
   },
   {
+    file: "social-ops.sql",
+    purpose: "The Instagram publishing queue, its event log, operator settings, spend, approved facts and asset licences.",
+    marker: { kind: "table", table: "social_posts" },
+  },
+  {
     file: "makan-media-storage.sql",
     purpose: "The storage bucket and policies for Makan photographs.",
     marker: {

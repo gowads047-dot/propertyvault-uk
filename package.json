@@ -13,7 +13,9 @@
     "reels": "tsx scripts/generate-reels.tsx",
     "check:env": "node scripts/check-env.mjs",
     "check:db": "node scripts/check-db.mjs",
-    "legal:review": "node scripts/legal-review.mjs"
+    "legal:review": "node scripts/legal-review.mjs",
+    "social:seed": "tsx --env-file=.env.local scripts/social-seed.mjs",
+    "social:pause": "tsx --env-file=.env.local scripts/social-pause.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",

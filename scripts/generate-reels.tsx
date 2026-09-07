@@ -11,6 +11,9 @@
  * behind a query string or a redirect.
  *
  * Pass a day number to render just one: npm run reels -- 7
+ *
+ * Every video gets a music bed (lib/reel-audio.ts). The beds are committed
+ * under assets/music and their licences are recorded in social_assets.
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync, writeFileSync, existsSync, statSync } from "node:fs";
@@ -19,6 +22,7 @@ import { ImageResponse } from "next/og";
 import sharp from "sharp";
 import { CALENDAR, durationOf, type ReelSpec } from "../src/lib/reel-calendar";
 import { reelFrame, FPS, WIDTH, HEIGHT } from "../src/lib/reel-frame";
+import { renderArgs, musicBedFor, MUSIC_DIR } from "../src/lib/reel-audio";
 
 const OUT_DIR = join(process.cwd(), "public", "reels");
 const TMP_DIR = join(process.cwd(), ".reel-frames");
@@ -42,19 +46,19 @@ async function renderOne(spec: ReelSpec): Promise<string> {
   }
 
   const out = join(OUT_DIR, fileNameFor(spec));
-  execFileSync("ffmpeg", [
-    "-y", "-loglevel", "error",
-    "-framerate", String(FPS),
-    "-i", join(dir, "f%04d.jpg"),
-    "-c:v", "libx264",
-    "-pix_fmt", "yuv420p",
-    // Flat graphics compress hard; 24 keeps text crisp at a fraction of the size.
-    "-crf", "24",
-    "-preset", "slow",
-    "-movflags", "+faststart",
-    "-r", String(FPS),
+
+  // The music bed. Looped, trimmed to the video, normalised and faded; the
+  // argument list is built in lib/reel-audio.ts so a test can read it.
+  const bed = join(process.cwd(), MUSIC_DIR, musicBedFor(spec.format));
+  if (!existsSync(bed)) throw new Error(`music bed missing: ${bed}`);
+
+  execFileSync("ffmpeg", renderArgs({
+    framesPattern: join(dir, "f%04d.jpg"),
+    bedPath: bed,
     out,
-  ]);
+    fps: FPS,
+    seconds,
+  }));
 
   rmSync(dir, { recursive: true, force: true });
   return out;

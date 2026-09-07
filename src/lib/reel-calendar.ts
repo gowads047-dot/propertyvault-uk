@@ -577,13 +577,16 @@ export function durationOf(spec: ReelSpec): number {
 }
 
 /**
- * Day one of the campaign.
+ * Day one of the original campaign.
  *
  * Kept here rather than in an environment variable because it is a content
  * decision, not a secret — and because a schedule that lives in the repo can
  * be read, reviewed and changed in a commit rather than in a dashboard.
- * REEL_CAMPAIGN_START still overrides it if the schedule needs shifting
- * without a deploy.
+ *
+ * Posting dates now come from the queue (social_posts, seeded by
+ * scripts/social-seed.mjs from whatever start date is given), so this is the
+ * record of when the first run was meant to begin rather than what decides
+ * the evening's post.
  */
 export const CAMPAIGN_START = "2026-08-30";
 
