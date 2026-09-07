@@ -7,7 +7,7 @@ import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, siteMetrics } from "@/lib/site";
 
 /**
  * Fonts are self-hosted through next/font rather than pulled from Google.
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
   description:
-    "The UK's most comprehensive free property platform. 23 free calculators, 19 legal templates, guaranteed rent, and expert guides for UK investors, landlords, and buyers.",
+    `The UK's most comprehensive free property platform. ${siteMetrics.calculators} free calculators, ${siteMetrics.templates} legal templates, guaranteed rent, and expert guides for UK investors, landlords, and buyers.`,
   keywords:
     "property investing UK, buy to let, BRRR calculator, stamp duty calculator, rental yield calculator, property templates, HMO yield, Section 24 calculator, UK mortgages, property law, guaranteed rent Birmingham, Renters Rights Act 2025",
   openGraph: {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
       default: "PropertyVault UK — Free Property Calculators, Templates & Guides",
     },
     description:
-      "23 free calculators, 19 free templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.",
+      `${siteMetrics.calculators} free calculators, ${siteMetrics.templates} free templates, and expert guides for UK property investors, landlords, and buyers. Completely free, no sign-up required.`,
     type: "website",
     locale: "en_GB",
     siteName: "PropertyVault UK",
@@ -71,7 +71,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PropertyVault UK",
-    description: "23 free property calculators, 19 legal templates, and expert UK property guides.",
+    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, and expert UK property guides.`,
     images: ["https://www.propertyvaultuk.co.uk/opengraph-image"],
   },
   robots: { index: true, follow: true },
@@ -158,7 +158,7 @@ const localBusinessJsonLd = {
         itemOffered: {
           "@type": "Service",
           name: "Free Property Calculators",
-          description: "23 free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.",
+          description: `${siteMetrics.calculators} free property calculators including BTL mortgage stress test, rental yield, stamp duty, BRRR, and monthly cash flow.`,
           url: "https://www.propertyvaultuk.co.uk/calculators",
         },
       },
@@ -199,6 +199,30 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
+      {/*
+        Consent Mode v2 defaults, set before gtag loads.
+
+        Analytics used to load unconditionally on every page for every
+        visitor. The cookie banner wrote "all" or "essential" into
+        localStorage and nothing read it, so "Essential Only" left Google
+        Analytics running and /cookies promised analytics cookies were used
+        "only with your consent" — which was true of nobody. Under PECR
+        reg 6 a non-essential cookie needs consent before it is set, not a
+        preference recorded after.
+
+        So everything starts denied. A returning visitor who accepted is
+        re-granted here from their stored choice; a new one is granted only
+        when they press Accept All, via CookieConsent. wait_for_update gives
+        that click a moment to land before gtag gives up on it.
+
+        beforeInteractive so this runs ahead of the gtag script below —
+        ordering is the whole point, and afterInteractive would race it.
+      */}
+      <Script id="consent-default" strategy="beforeInteractive">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+try{if(localStorage.getItem('cookie_consent')==='all'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}`}
+      </Script>
       {/* Google Analytics through next/script so Next controls load order */}
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-MG7FKKCKWQ" strategy="afterInteractive" />
       <Script id="ga-init" strategy="afterInteractive">

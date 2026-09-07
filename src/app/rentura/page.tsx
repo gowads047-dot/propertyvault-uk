@@ -18,14 +18,29 @@ const INCLUDED = [
   "Mobile-friendly dashboard", "CSV exports", "Cancel anytime",
 ];
 
+/**
+ * Rentura against a spreadsheet.
+ *
+ * There used to be a third column, "Other apps", asserting that competitors
+ * offer "Basic" compliance alerts, "Not standard" passports, "Basic CSV"
+ * exports and cost "£20–£80/mo". Nobody has benchmarked any of those products,
+ * so every cell in that column was invented — and unlike the spreadsheet
+ * column, a reader cannot check it against their own experience.
+ *
+ * The spreadsheet comparison stays because it is verifiable: a spreadsheet
+ * genuinely does not send you a renewal reminder.
+ *
+ * The alert window says 45 days because that is what compliance/page.tsx
+ * actually does — amber at 45, red at 14. It claimed 60.
+ */
 const COMPARE = [
-  { feature: "All properties in one view", spreadsheet: "Manual, error-prone", other: "Partial", rentura: "Live portfolio dashboard" },
-  { feature: "Compliance alerts", spreadsheet: "None", other: "Basic", rentura: "60-day advance alerts" },
-  { feature: "Property Passport", spreadsheet: "None", other: "Not standard", rentura: "Digital ID per property" },
-  { feature: "Maintenance tracking", spreadsheet: "None", other: "Varies", rentura: "With photos & costs" },
-  { feature: "Accountant-ready exports", spreadsheet: "Manual formatting", other: "Basic CSV", rentura: "P&L per property" },
-  { feature: "AI property assistant", spreadsheet: "None", other: "Varies by provider", rentura: "Answers any question 24/7" },
-  { feature: "Monthly cost", spreadsheet: "Free (+ your time)", other: "£20–£80/mo", rentura: "£9.99/mo, cancel anytime" },
+  { feature: "All properties in one view", spreadsheet: "Manual, error-prone", rentura: "Live portfolio dashboard" },
+  { feature: "Compliance alerts", spreadsheet: "None", rentura: "Amber at 45 days, red at 14" },
+  { feature: "Property Passport", spreadsheet: "None", rentura: "Digital ID per property" },
+  { feature: "Maintenance tracking", spreadsheet: "None", rentura: "With photos & costs" },
+  { feature: "Accountant-ready exports", spreadsheet: "Manual formatting", rentura: "P&L per property" },
+  { feature: "AI property assistant", spreadsheet: "None", rentura: "Answers questions about your portfolio" },
+  { feature: "Monthly cost", spreadsheet: "Free (+ your time)", rentura: "£9.99/mo, cancel anytime" },
 ];
 
 export default function RenturaPage() {
@@ -66,7 +81,7 @@ export default function RenturaPage() {
             Already a member? Log in
           </Link>
         </div>
-        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 14 }}>Free for 30 days · Then £9.99/mo · Cancel before trial ends and pay nothing</p>
+        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 14 }}>Card required up front · Free for 30 days · Then £9.99/mo · Cancel before day 30 and pay nothing</p>
       </section>
 
       {/* STATS */}
@@ -115,7 +130,6 @@ export default function RenturaPage() {
                 <tr style={{ background: "#0f1b2d" }}>
                   <th style={{ padding: "14px 16px", textAlign: "left", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Feature</th>
                   <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Spreadsheets</th>
-                  <th style={{ padding: "14px 16px", textAlign: "center", color: "rgba(255,255,255,0.6)", fontWeight: 600, fontSize: 12 }}>Other apps</th>
                   <th style={{ padding: "14px 16px", textAlign: "center", color: "var(--gold-ink)", fontWeight: 800, fontSize: 12 }}>Rentura</th>
                 </tr>
               </thead>
@@ -124,13 +138,17 @@ export default function RenturaPage() {
                   <tr key={row.feature} style={{ background: i % 2 === 0 ? "white" : "#f5f3ef", borderBottom: "1px solid rgba(15,27,45,0.05)" }}>
                     <td style={{ padding: "14px 16px", fontWeight: 600, color: "#0f1b2d" }}>{row.feature}</td>
                     <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.66)", fontSize: 13 }}>{row.spreadsheet}</td>
-                    <td style={{ padding: "14px 16px", textAlign: "center", color: "rgba(15,27,45,0.66)", fontSize: 13 }}>{row.other}</td>
                     <td style={{ padding: "14px 16px", textAlign: "center", color: "#0f6e30", fontWeight: 700, fontSize: 13 }}>{row.rentura}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
+          <p style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", textAlign: "center", marginTop: 14, maxWidth: 640, marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
+            Compared against a spreadsheet because that is what most landlords actually use, and
+            because you can check every line of it yourself. We have not benchmarked other landlord
+            software and make no claim about what it does.
+          </p>
           <div style={{ textAlign: "center", marginTop: 36 }}>
             <Link href="/rentura/join" style={{ display: "inline-block", background: "#0f1b2d", color: "white", fontWeight: 800, fontSize: 15, padding: "14px 36px", borderRadius: 12, textDecoration: "none" }}>
               Start free 30-day trial →
@@ -161,12 +179,19 @@ export default function RenturaPage() {
               </div>
             </div>
             <div style={{ background: "#0f1b2d", borderRadius: 20, padding: 28, display: "flex", flexDirection: "column", gap: 14 }}>
+              {/* An illustration, and now labelled as one. It previously
+                  showed a green COMPLIANT badge above "Gas Safety ✓ Valid to
+                  Dec 2025" — a certificate that had expired nine months
+                  earlier, in the shop window of a compliance product.
+
+                  Dates are relative rather than fixed so this cannot go stale
+                  again between deployments, which is how the last one rotted. */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em" }}>Property Passport</span>
-                <span style={{ background: "rgba(34,197,94,0.15)", color: "#15803d", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 6 }}>COMPLIANT</span>
+                <span style={{ background: "rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.7)", fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 6 }}>EXAMPLE</span>
               </div>
               <h3 style={{ color: "white", fontWeight: 800, fontSize: 17 }}>14 Maple Street, Leeds LS1</h3>
-              {[["Type", "HMO — 4 bed"], ["Monthly Rent", "£2,600"], ["EPC Rating", "C — expires Jun 2027"], ["Gas Safety", "✓ Valid to Dec 2025"], ["Tenants", "3 active"], ["Mortgage", "£187,000 @ 4.2% — NatWest"]].map(([k, v]) => (
+              {[["Type", "HMO — 4 bed"], ["Monthly Rent", "£2,600"], ["EPC Rating", "C — valid"], ["Gas Safety", "✓ Valid, renews in 4 months"], ["Tenants", "3 active"], ["Mortgage", "£187,000 @ 4.2%"]].map(([k, v]) => (
                 <div key={k} style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.05)", paddingBottom: 8 }}>
                   <span style={{ fontSize: 12, color: "rgba(255,255,255,0.58)" }}>{k}</span>
                   <span style={{ fontSize: 12, color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>{v}</span>

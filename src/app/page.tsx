@@ -514,8 +514,8 @@ export default function Home() {
                   </svg>
                 ),
                 title: "Stay in control",
-                desc: "No lock-ins. Direct contact with us, not a call centre. Transparent terms from day one.",
-                stat: "No lock-in",
+                desc: "You keep the title. Direct contact with us, not a call centre, and the lease terms are on the table before you commit to anything.",
+                stat: "You still own it",
                 href: "/guaranteed-rent",
                 cta: "How it works",
               },
@@ -606,7 +606,7 @@ export default function Home() {
               },
               {
                 href: "/templates",
-                tag: "19 free templates",
+                tag: "{siteMetrics.templates} free templates",
                 title: "Legal document templates",
                 desc: "Section 8 notices, rent increase letters, tenancy applications, inspection records — print-ready in minutes.",
                 items: ["Section 8 & 13 notices", "Inventory & inspection", "Tenant application form"],
@@ -712,7 +712,7 @@ export default function Home() {
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Link href="/calculators" className="btn-gold">All {siteMetrics.calculators} calculators</Link>
                 <Link href="/templates" style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", padding: "10px 20px", border: "1.5px solid var(--hairline)", borderRadius: 10, background: "var(--page-surface)", textDecoration: "none" }}>
-                  19 free templates
+                  {siteMetrics.templates} free templates
                 </Link>
               </div>
             </div>
@@ -728,14 +728,14 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
             {/* Left: copy */}
             <div>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>Landlord success</p>
+              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>How guaranteed rent works</p>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, color: "var(--ink)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: 20 }}>
-                "Not a single void month in two years"
+                Rent that arrives whether the tenant does or not
               </h2>
               <p style={{ fontSize: 15, color: "var(--ink-muted)", lineHeight: 1.7, marginBottom: 8 }}>
-                Our landlords in Birmingham, Nottingham, and Derby tell us the same thing: guaranteed rent changed how they think about property.
+                We lease the property from you for three to five years and pay a fixed amount every month, occupied or not. The trade is simple: less rent than a good year on the open market, and none of the bad ones.
               </p>
-              <p style={{ fontSize: 14, color: "var(--ink-subtle)", marginBottom: 32 }}>No chasing rent. No tenant calls. No surprise costs.</p>
+              <p style={{ fontSize: 14, color: "var(--ink-subtle)", marginBottom: 32 }}>No chasing rent, no tenant calls, and no letting agent taking a percentage. You stay responsible for the structure, the boiler and buildings insurance.</p>
               <Link href="/guaranteed-rent" className="btn-gold">See if your property qualifies</Link>
             </div>
 
@@ -763,7 +763,7 @@ export default function Home() {
 
               {/* Below-video trust badges */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginTop: 12 }}>
-                {["No fees", "No lock-in", "No agents"].map(b => (
+                {["No fees to you", "No agents", "You still own it"].map(b => (
                   <div key={b} style={{ background: "var(--page-surface)", border: "1.5px solid var(--hairline)", borderRadius: 10, padding: "10px 8px", textAlign: "center" }}>
                     <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)" }}>✓ {b}</p>
                   </div>
@@ -833,7 +833,7 @@ export default function Home() {
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="2" y="6" width="24" height="18" rx="3" fill="#c9a84c"/><path d="M6 20V14" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M11 20V11" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M16 20V8" stroke="white" strokeWidth="3" strokeLinecap="round"/><path d="M21 20V5" stroke="white" strokeWidth="3" strokeLinecap="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>22 Free Calculators</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>{siteMetrics.calculators} Free Calculators</h3>
               <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20 }}>Deal analyser, mortgage, stamp duty, BRRR, rental yield, CGT, Section 24, landlord tax, BTL stress test, and more.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
@@ -841,7 +841,7 @@ export default function Home() {
               <div style={{ width: 52, height: 52, borderRadius: 16, background: "#0f1b36", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                 <svg viewBox="0 0 28 28" fill="none" width="28" height="28"><rect x="4" y="2" width="20" height="24" rx="3" fill="#E8D5B7"/><rect x="8" y="6" width="12" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="10" width="8" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><rect x="8" y="14" width="10" height="2" rx="1" fill="#0f1b36" opacity="0.3"/><path d="M16 18l3 3 5-6" stroke="#c9a84c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </div>
-              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>19 Free Templates</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 8 }}>{siteMetrics.templates} Free Templates</h3>
               <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 20 }}>Buyer, seller, landlord, and commercial templates. Fillable forms, compliance trackers, and inventories.</p>
               <span style={{ fontSize: 13, fontWeight: 700, color: "var(--gold-ink)" }}>Explore →</span>
             </Link>
@@ -907,7 +907,7 @@ export default function Home() {
               ]},
               { title: "For Investors", links: [
                 { href: "/property-investing", label: "Investment Guides" },
-                { href: "/calculators", label: "All 22 Calculators" },
+                { href: "/calculators", label: `All ${siteMetrics.calculators} Calculators` },
                 { href: "/glossary", label: "Property Glossary" },
                 { href: "/blog", label: "Blog" },
               ]},

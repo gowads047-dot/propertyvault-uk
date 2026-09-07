@@ -80,11 +80,6 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "Verifying that a webhook really came from Stripe.",
     withoutIt: "Payments complete but no subscription is recorded against the user.",
   },
-  STRIPE_PRICE_ID: {
-    required: false,
-    enables: "The Academy subscription price.",
-    withoutIt: "Academy checkout fails at session creation.",
-  },
   RENTURA_STRIPE_PRICE_ID: {
     required: false,
     enables: "The Rentura subscription price.",

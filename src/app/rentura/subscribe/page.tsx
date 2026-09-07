@@ -68,7 +68,7 @@ export default function RenturaSubscribePage() {
               "AI landlord assistant (text + document scan)",
               "Tax calculator with SA105 HMRC boxes",
               "Arrears pipeline & letter generation",
-              "30-day free trial if you haven't used one",
+              "30-day free trial, then £9.99/month",
             ].map(f => (
               <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 12 }}>
                 <span style={{ color: GOLD, fontWeight: 800, flexShrink: 0, marginTop: 1 }}>✓</span>

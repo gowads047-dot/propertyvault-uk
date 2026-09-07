@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Manchester Buy-to-Let Investment Guide | PropertyVault UK",
@@ -131,7 +132,7 @@ export default function ManchesterPage() {
             <p className="text-xs font-semibold text-gold-400 uppercase tracking-widest mb-2">Free tools</p>
             <h2 className="text-2xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Analyse any Manchester deal for free</h2>
             <p className="text-white/60 text-sm mb-6">Run the numbers on rental yield, BRRR deals, HMO returns, stamp duty and more — all free, no sign-up required.</p>
-            <Link href="/calculators" className="btn-gold">Browse all 23 calculators</Link>
+            <Link href="/calculators" className="btn-gold">Browse all {siteMetrics.calculators} calculators</Link>
           </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
+import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Newcastle Buy-to-Let Investment Guide | PropertyVault UK",
@@ -362,7 +363,7 @@ export default function NewcastlePage() {
               duty and more — all free, no sign-up required.
             </p>
             <Link href="/calculators" className="btn-gold">
-              Browse all 23 calculators
+              Browse all {siteMetrics.calculators} calculators
             </Link>
           </div>
         </div>

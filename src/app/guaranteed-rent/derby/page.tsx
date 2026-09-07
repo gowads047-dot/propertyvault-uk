@@ -159,7 +159,7 @@ export default function DerbyPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Derby?",
-              a: "Once you contact us, most Derby landlords have their lease signed and first rent payment scheduled within 7–14 days. We move quickly — property inspection, paperwork, and onboarding are all handled by our team so you don't face any unnecessary delays.",
+              a: "Once you contact us, most Derby landlords have their lease signed within 7–14 days of accepting the offer, with the first payment on the lease start date. We move quickly — property inspection, paperwork, and onboarding are all handled by our team so you don't face any unnecessary delays.",
             },
             {
               q: "Who handles maintenance and repairs at my Derby property?",

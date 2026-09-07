@@ -3,12 +3,12 @@ import { CalculatorsGrid } from "@/components/calculators/CalculatorsGrid";
 import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "23 Free UK Property Calculators | PropertyVault UK",
-  description: "23 free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.",
+  title: `${siteMetrics.calculators} Free UK Property Calculators | PropertyVault UK`,
+  description: `${siteMetrics.calculators} free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.`,
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/" },
   openGraph: {
-    title: "23 Free UK Property Calculators | PropertyVault UK",
-    description: "23 free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.",
+    title: `${siteMetrics.calculators} Free UK Property Calculators | PropertyVault UK`,
+    description: `${siteMetrics.calculators} free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.`,
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/calculators/",
     siteName: "PropertyVault UK",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "23 Free UK Property Calculators | PropertyVault UK",
-    description: "23 free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.",
+    title: `${siteMetrics.calculators} Free UK Property Calculators | PropertyVault UK`,
+    description: `${siteMetrics.calculators} free UK property calculators — mortgage, SDLT, BRRR, rental yield, CGT, Section 24, HMO, bridging, cash flow, and more. No login required.`,
   },
 };
 

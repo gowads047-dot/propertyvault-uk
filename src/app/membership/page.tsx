@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { siteMetrics } from "@/lib/site";
+import ApiForm from "@/components/forms/ApiForm";
+import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Membership — Coming Soon | PropertyVault UK",
@@ -65,11 +68,24 @@ export default function MembershipPage() {
         <div className="container-max max-w-lg text-center">
           <h2 className="text-2xl font-bold text-navy-800 mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Join the Waiting List</h2>
           <p className="text-sm text-navy-500 mb-6">Be the first to know when membership launches. No spam, just one email when we&apos;re ready.</p>
-          <form className="space-y-3">
-            <input aria-label="Your email address" type="email" placeholder="Your email address" required
-              className="w-full px-4 py-3.5 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 text-center" />
-            <button type="submit" className="btn-primary w-full !py-3.5">Join Waiting List</button>
-          </form>
+          <ApiForm
+              source="waitlist:membership"
+              submitLabel="Join the list"
+              successTitle="Noted, thank you."
+              successBody="We will email you once when membership launches, and nothing else."
+              sentEvent={events.waitlistJoined}
+              sentParams={{ service: "membership" }}
+              className="space-y-3 text-left"
+            >
+              <div>
+                <label htmlFor="membership-name" className="block text-sm font-semibold text-navy-700 mb-1">Your name</label>
+                <input id="membership-name" name="name" type="text" required maxLength={100} autoComplete="name" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+              <div>
+                <label htmlFor="membership-email" className="block text-sm font-semibold text-navy-700 mb-1">Email</label>
+                <input id="membership-email" name="email" type="email" required maxLength={200} autoComplete="email" className="w-full px-4 py-3 border border-navy-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-400" />
+              </div>
+            </ApiForm>
         </div>
       </section>
 
@@ -80,7 +96,7 @@ export default function MembershipPage() {
           <p className="text-sm text-navy-500 mb-6">No membership needed. Use all of these right now, completely free.</p>
           <div className="grid sm:grid-cols-3 gap-3">
             <Link href="/calculators" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">
-              <p className="font-bold text-navy-800 text-sm">15 Calculators</p>
+              <p className="font-bold text-navy-800 text-sm">{siteMetrics.calculators} Calculators</p>
               <p className="text-xs text-navy-500">Mortgage, yield, BRRR, Section 24 & more</p>
             </Link>
             <Link href="/templates" className="block bg-white rounded-xl border border-navy-100 p-4 hover:shadow-md transition-all">

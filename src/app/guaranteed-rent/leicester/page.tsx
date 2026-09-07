@@ -163,7 +163,7 @@ export default function LeicesterPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Leicester?",
-              a: "Most Leicester landlords are up and running within 7–14 days of first contact. We carry out a quick property inspection, draft the lease agreement, and set up your payment schedule — there are no long queues or complex processes to navigate.",
+              a: "Once you accept our offer, most Leicester leases are signed within 7–14 days, with your first payment on the lease start date. We carry out a quick property inspection, draft the lease agreement, and set up your payment schedule — there are no long queues or complex processes to navigate.",
             },
             {
               q: "Who handles maintenance and repairs at my Leicester property?",

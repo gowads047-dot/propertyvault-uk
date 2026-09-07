@@ -163,7 +163,7 @@ export default function CoventryPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Coventry?",
-              a: "Most Coventry landlords are up and running within 7–14 days of first contact. We inspect the property, prepare the lease agreement, and onboard you quickly — so you start earning guaranteed rent with minimal delay.",
+              a: "Once you accept our offer, most Coventry leases are signed within 7–14 days, and your first payment lands on the lease start date. We inspect the property, prepare the lease agreement, and onboard you quickly — so you start earning guaranteed rent with minimal delay.",
             },
             {
               q: "Who handles maintenance and repairs at my Coventry property?",

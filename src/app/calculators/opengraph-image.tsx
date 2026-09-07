@@ -1,7 +1,8 @@
 import { ImageResponse } from "next/og";
+import { siteMetrics } from "@/lib/site";
 
 export const runtime = "edge";
-export const alt = "17 Free Property Calculators — PropertyVault UK";
+export const alt = `${siteMetrics.calculators} Free Property Calculators — PropertyVault UK`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -15,7 +16,7 @@ export default async function Image() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ padding: "8px 20px", borderRadius: "20px", background: "rgba(244,211,94,0.15)", color: "#f4d35e", fontSize: "16px", fontWeight: 700, alignSelf: "flex-start" }}>Free Tools</div>
-          <div style={{ fontSize: "56px", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>17 Free Property Calculators</div>
+          <div style={{ fontSize: "56px", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>${siteMetrics.calculators} Free Property Calculators</div>
           <div style={{ fontSize: "22px", color: "#97a5c5" }}>Deal Analyser · Mortgage · BRRR · Stamp Duty · CGT · Rental Yield · Section 24 & more</div>
         </div>
         <div style={{ display: "flex", gap: "24px" }}>

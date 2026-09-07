@@ -159,7 +159,7 @@ export default function NottinghamPage() {
             },
             {
               q: "How quickly can I start receiving guaranteed rent in Nottingham?",
-              a: "Most Nottingham landlords are up and receiving rent within 7–14 days of initial contact. We complete the property inspection, lease agreement, and onboarding quickly so you can start earning sooner. There are no lengthy delays or complex legal processes to navigate.",
+              a: "Once you accept our offer, most Nottingham leases are signed within 7–14 days, and the first payment follows on the lease start date. We complete the property inspection, lease agreement, and onboarding quickly so you can start earning sooner. There are no lengthy delays or complex legal processes to navigate.",
             },
             {
               q: "Who handles maintenance and repairs at my Nottingham property?",

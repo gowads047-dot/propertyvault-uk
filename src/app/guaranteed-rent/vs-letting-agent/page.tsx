@@ -3,6 +3,21 @@ import { ogImages } from "@/lib/site";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";
+import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
+
+/** Shared with /guaranteed-rent so the two pages cannot disagree again. */
+const A = DEFAULT_ASSUMPTIONS;
+const GR = compare(A);
+
+/**
+ * The total is the sum of the rounded rows, not the rounding of the true sum.
+ * Those differ by £1 here — the rows show £1,200 + £692 + £333 + £600 + £300 =
+ * £3,125 while the exact figure rounds to £3,126 — and a column that does not
+ * add up is exactly the kind of thing this page was rewritten for.
+ */
+const DEDUCTIONS_SHOWN =
+  Math.round(GR.agentFees) + Math.round(GR.voidCost) + Math.round(GR.tenantFindPerYear) +
+  Math.round(GR.maintenance) + Math.round(GR.compliance);
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent vs Letting Agent — Which Pays More?",
@@ -30,7 +45,7 @@ const breadcrumbSchema = {
 const faqs = [
   {
     q: "Is guaranteed rent actually less than letting agent rent?",
-    a: "On paper, yes — guaranteed rent is typically 80–90% of market rent. But once you deduct letting agent fees (8–12%), void periods (average 3–5 weeks per year), maintenance call-outs, and compliance costs, most landlords net more with guaranteed rent. The key word is 'net'.",
+    a: "On paper, yes — guaranteed rent is typically 80–90% of market rent. But once you deduct letting agent fees (8–12%), void periods, maintenance call-outs, and compliance costs, most landlords net more with guaranteed rent. The key word is 'net'.",
   },
   {
     q: "Do letting agents charge fees on top of their management percentage?",
@@ -38,7 +53,7 @@ const faqs = [
   },
   {
     q: "How do void periods affect my letting agent income?",
-    a: "The average UK void period is 3–5 weeks per year. On a £1,000/month property, that's £750–£1,250 in lost gross rent — before agent re-marketing fees. With guaranteed rent, void periods don't exist: you're paid whether the property is occupied or not.",
+    a: "This page assumes three weeks empty a year, which on a £1,000/month property is about £692 of lost rent — before any re-marketing fee. Yours may be nothing or may be months; the void period calculator lets you use your own figure. With guaranteed rent, void periods don't exist: you're paid whether the property is occupied or not.",
   },
   {
     q: "Who handles maintenance with guaranteed rent?",
@@ -56,8 +71,8 @@ const faqs = [
 
 const rows = [
   { label: "Monthly income on £1,000 market rent", gr: "£820–£900", la: "£880–£920 (gross)" },
-  { label: "Void periods", gr: "Paid whether or not it is let", la: "3–5 weeks/year avg (−£750–£1,250)" },
-  { label: "Management fee", gr: "None", la: "8–12% monthly (−£80–£120/mo)" },
+  { label: "Void periods", gr: "Paid whether or not it is let", la: `${A.voidWeeks} weeks assumed (${money(-GR.voidCost)}/yr)` },
+  { label: "Management fee", gr: "None", la: `${Math.round(A.agentPct * 100)}% assumed (${money(-GR.agentFees)}/yr)` },
   { label: "Tenant-find fee", gr: "None", la: "50–100% of one month's rent" },
   { label: "Renewal fees", gr: "None", la: "£100–£200 per renewal" },
   { label: "Inventory / check-in fee", gr: "None", la: "£100–£250" },
@@ -133,12 +148,11 @@ export default function VsLettingAgentPage() {
 
           <div className="space-y-4">
             {[
-              { label: "Management fee (10%)", cost: "−£1,200/yr", detail: "Every month, taken off the top", color: "bg-red-50 border-red-200 text-red-700" },
-              { label: "Void periods (average 4 weeks/yr)", cost: "−£1,000/yr", detail: "No rent while re-letting — and you still have mortgage payments", color: "bg-red-50 border-red-200 text-red-700" },
-              { label: "Tenant-find fee (one month's rent)", cost: "−£1,000", detail: "Charged every time a new tenant moves in", color: "bg-red-50 border-red-200 text-red-700" },
-              { label: "Maintenance & repairs (avg)", cost: "−£600/yr", detail: "Boiler servicing, appliances, wear and tear — all at your cost", color: "bg-red-50 border-red-200 text-red-700" },
-              { label: "Compliance (gas cert, EICR, EPC)", cost: "−£300/yr", detail: "Legally required — your responsibility to arrange and pay", color: "bg-red-50 border-red-200 text-red-700" },
-              { label: "Inventory, check-in, renewal fees", cost: "−£400/yr", detail: "Hidden fees that add up across a portfolio", color: "bg-red-50 border-red-200 text-red-700" },
+              { label: `Management fee (${Math.round(A.agentPct * 100)}%)`, cost: `${money(-GR.agentFees)}/yr`, detail: "Every month, taken off the top", color: "bg-red-50 border-red-200 text-red-700" },
+              { label: `Void periods (${A.voidWeeks} weeks a year)`, cost: `${money(-GR.voidCost)}/yr`, detail: "No rent while re-letting — and you still have mortgage payments", color: "bg-red-50 border-red-200 text-red-700" },
+              { label: `Tenant-find (${money(A.tenantFindFee)}, spread over ${A.tenancyYears} years)`, cost: `${money(-GR.tenantFindPerYear)}/yr`, detail: "Charged again each time a new tenant moves in. Some agents charge a month's rent instead", color: "bg-red-50 border-red-200 text-red-700" },
+              { label: "Maintenance & repairs", cost: `${money(-GR.maintenance)}/yr`, detail: "Boiler servicing, appliances, wear and tear — all at your cost", color: "bg-red-50 border-red-200 text-red-700" },
+              { label: "Compliance (gas cert, EICR, EPC)", cost: `${money(-GR.compliance)}/yr`, detail: "Your responsibility to arrange and pay. What is required depends on where the property is", color: "bg-red-50 border-red-200 text-red-700" },
             ].map((r) => (
               <div key={r.label} className={`flex items-start justify-between gap-4 rounded-xl border p-4 ${r.color}`}>
                 <div>
@@ -153,13 +167,13 @@ export default function VsLettingAgentPage() {
                 <p className="font-bold text-red-800">Total annual deductions</p>
                 <p className="text-xs text-red-700 mt-0.5">Before your mortgage payment</p>
               </div>
-              <span className="font-extrabold text-red-800 text-lg">−£4,500/yr</span>
+              <span className="font-extrabold text-red-800 text-lg">{money(-DEDUCTIONS_SHOWN)}/yr</span>
             </div>
           </div>
 
           <div className="mt-8 rounded-2xl bg-navy-800 text-white p-6">
             <p className="text-gold-400 font-bold text-sm uppercase tracking-wider mb-2">The bottom line</p>
-            <p className="text-xl font-bold mb-1">£12,000 gross rent → ~£7,500 in your pocket</p>
+            <p className="text-xl font-bold mb-1">{money(GR.annualMarketRent)} gross rent → {money(GR.lettingAgentNet)} in your pocket</p>
             <p className="text-navy-200 text-sm">After fees, voids, maintenance and compliance on a £1,000/month property managed through a traditional agent.</p>
           </div>
         </div>

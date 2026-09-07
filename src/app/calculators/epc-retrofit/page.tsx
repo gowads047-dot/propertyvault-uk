@@ -261,7 +261,7 @@ export default function EPCRetrofitPage() {
             <div className="bg-white rounded-xl p-5 border border-navy-100">
               <h3 className="font-bold text-navy-800 mb-1">Local Authority Grants</h3>
               <p className="text-sm text-navy-600">Many local councils offer additional grants and loans for energy efficiency improvements. Check with your local authority for schemes in your area.</p>
-              <a href="https://www.simpleenergyadvice.org.uk/" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-600 font-semibold mt-2 inline-block">Find local schemes →</a>
+              <a href="https://www.gov.uk/improve-energy-efficiency" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-600 font-semibold mt-2 inline-block">Find local schemes →</a>
             </div>
           </div>
         </div>

@@ -98,11 +98,11 @@ export default function AcademyPage() {
           </h1>
 
           <p className="text-white/65 text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
-            12 modules, done-for-you scripts, legal templates, weekly live deal reviews, and a private investor community. The most practical property education in the UK — all for <strong className="text-white">£14.99/month</strong>.
+            Twelve modules, done-for-you scripts, legal templates, weekly live deal reviews and a private investor community. That is the plan. None of it is built yet, there is no launch date and no price — this page exists so you can tell us you want it. Everything below describes what it would include.
           </p>
 
           <div className="flex flex-wrap justify-center gap-8 mb-10">
-            {[["12", "Modules"], ["40+", "Hours of content"], ["£14.99", "Per month"], ["∞", "Cancel anytime"]].map(([v, l]) => (
+            {[["12", "Modules planned"], ["0", "Available today"], ["—", "Price not set"], ["—", "No date yet"]].map(([v, l]) => (
               <div key={l} className="text-center">
                 <p className="text-3xl font-black text-[#c9a84c]">{v}</p>
                 <p className="text-white/50 text-sm">{l}</p>
@@ -126,7 +126,7 @@ export default function AcademyPage() {
             </form>
           )}
           {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
-          <p className="text-white/30 text-xs mt-3">No spam. Waitlist members get early-bird pricing locked in for life.</p>
+          <p className="text-white/30 text-xs mt-3">No spam. One email when there is something real to join.</p>
         </div>
       </section>
 
@@ -139,7 +139,7 @@ export default function AcademyPage() {
             <div className="space-y-4 text-white/70 leading-relaxed text-sm">
               <p>Most property courses are either <strong className="text-white">too expensive</strong> (£3,000–£10,000 weekends), <strong className="text-white">too vague</strong> (motivational content with no action steps), or <strong className="text-white">hopelessly outdated</strong>.</p>
               <p>PropertyVault Academy is built differently. Every module is written around <strong className="text-white">real deals, real numbers, and real UK legislation</strong> as it stands today. Scripts are tested. Templates are live documents we actually use.</p>
-              <p>At £14.99/month, it&apos;s less than a single coffee shop visit per week — and one deal makes it pay for itself for life.</p>
+              <p>We have not set a price. When we do it will be monthly and cancellable, and waiting-list members will hear it first — but quoting a figure before the content exists would be guessing at both.</p>
             </div>
           </div>
           <div className="space-y-3">
@@ -186,8 +186,8 @@ export default function AcademyPage() {
       <section className="bg-[#0f1b36] py-20 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Everything Included</p>
-            <h2 className="text-3xl font-black">What You Get for £14.99/Month</h2>
+            <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">Planned, not built</p>
+            <h2 className="text-3xl font-black">What it would include</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             {FEATURES.map((f) => (
@@ -242,9 +242,8 @@ export default function AcademyPage() {
       {/* BOTTOM CTA */}
       <section className="bg-[#0f1b36] py-20 px-6">
         <div className="max-w-xl mx-auto text-center">
-          <span className="inline-block bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full px-4 py-1.5 text-[#c9a84c] text-sm font-semibold mb-6">Early-bird pricing for waitlist members</span>
           <h2 className="text-3xl font-black mb-3">Be the First to Know When We Launch</h2>
-          <p className="text-white/50 mb-8">Waitlist members get early access and a discounted rate locked in forever.</p>
+          <p className="text-white/50 mb-8">There is no date. Leave your email and we will tell you if and when it opens.</p>
           {submitted ? (
             <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
               <p className="font-bold text-white text-lg">You&apos;re on the list 🎉</p>
