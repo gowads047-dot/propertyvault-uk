@@ -10,18 +10,19 @@ import { alertSenderFromEnv, assetFetcher, graphFetcher } from "@/lib/social/liv
 /**
  * The evening publish.
  *
- * Runs at 18:00 UTC and again at 18:40. The second run exists so a transient
- * failure — Meta slow to process the container, a blip at the CDN — gets one
- * more go the same evening; it finds the day already published and stops
- * when the first run succeeded. Everything that decides what to do is in
- * lib/social/publisher.ts and is tested there; this file is authorisation,
- * configuration and a call.
+ * Scheduled for 18:00 UTC. On the Hobby plan that means some time between
+ * 18:00 and 19:00, and a second invocation is not ruled out, so there is no
+ * separate retry slot: the one run makes its own single retry, after a
+ * wait, when the failure was the passing kind. Everything that decides what
+ * to do is in lib/social/publisher.ts and is tested there; this file is
+ * authorisation, configuration and a call.
  *
  * The replaced route posted nothing for a week because its token was never
  * set and nothing outside Vercel's function log said so. This one returns
- * 500 whenever it could not do its job — no store, no token, a failed
- * publish, a hold, or a hold it could not send an alert about — so the
- * failure is a red cron in the dashboard rather than a quiet evening.
+ * 500 whenever it could not do its job — no store, no token, an empty
+ * queue, a hold, or a hold it could not send an alert about — so the
+ * failure is a red cron in the dashboard rather than a quiet evening. The
+ * no-token case also emails, because email does not need the token.
  */
 export const maxDuration = 300;
 
@@ -52,15 +53,36 @@ export async function publishWith(
     now: Date;
     sendAlert: (to: string) => AlertSender | null;
     sleep?: PublishDeps["sleep"];
+    clock?: PublishDeps["clock"];
   },
 ) {
-  const picked = pickToken(await store.getSetting("ig_access_token"), process.env.INSTAGRAM_ACCESS_TOKEN, adapters.now);
-  if ("error" in picked) {
-    return NextResponse.json({ posted: false, error: `${picked.error} Nothing was posted.` }, { status: 500 });
-  }
-
   const alertTo = await store.getSetting("alert_email");
   const to = typeof alertTo === "string" && alertTo.includes("@") ? alertTo : CONTACT_EMAIL;
+  const envToken = process.env.INSTAGRAM_ACCESS_TOKEN?.trim() || undefined;
+
+  const picked = pickToken(await store.getSetting("ig_access_token"), envToken, adapters.now);
+  if ("error" in picked) {
+    const sender = adapters.sendAlert(to);
+    const alert = sender
+      ? await sender({
+        subject: "Instagram: no access token — nothing can be posted",
+        text: [
+          picked.error,
+          "",
+          "Generate a long-lived token in the Meta dashboard and set INSTAGRAM_ACCESS_TOKEN in Vercel.",
+          "The Monday run will exchange it and store the result.",
+        ].join("\n"),
+      })
+      : { ok: false, error: "RESEND_API_KEY not configured" };
+    await store.logEvent({
+      post_id: null, level: "error", event: alert.ok ? "alert_sent" : "alert_not_sent",
+      detail: { reason: "no token", ...(alert.error ? { error: alert.error } : {}) },
+    });
+    return NextResponse.json(
+      { posted: false, error: `${picked.error} Nothing was posted.`, alert: { needed: true, sent: alert.ok, ...(alert.error ? { error: alert.error } : {}) } },
+      { status: 500 },
+    );
+  }
 
   const summary = await publishQueued({
     db: store,
@@ -68,15 +90,20 @@ export async function publishWith(
     assetFetcher: adapters.assetFetcher,
     now: adapters.now,
     token: picked.token,
+    tokenSource: picked.source,
+    // Only worth carrying when the run starts on the stored token: a 190
+    // from that one falls back to this one for the evening.
+    fallbackToken: picked.source === "settings" ? envToken : undefined,
     igUserId: process.env.INSTAGRAM_USER_ID ?? INSTAGRAM_USER_ID,
     sendAlert: adapters.sendAlert(to),
     sleep: adapters.sleep,
+    clock: adapters.clock,
   });
 
-  // A hold nobody was told about, a failed publish, or a held day are all
-  // things a person has to act on. 500 is how they find out.
+  // Anything a person has to act on is a 500: a hold, an unalerted hold, an
+  // empty day. "failed" is a row that has used every attempt and sits there.
   const unalerted = summary.alert.needed && !summary.alert.sent;
-  const bad = unalerted || summary.outcome === "failed" || summary.outcome === "held";
+  const bad = unalerted || summary.outcome === "failed" || summary.outcome === "held" || summary.outcome === "nothing-queued";
 
   return NextResponse.json(
     {

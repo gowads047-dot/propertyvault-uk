@@ -62,7 +62,7 @@ export function pickToken(stored: unknown, envToken: string | undefined, now = n
 }
 
 /** Accepts the stored object, or a bare string somebody pasted into the row. */
-function readStored(v: unknown): StoredToken | null {
+export function readStored(v: unknown): StoredToken | null {
   if (typeof v === "string") return v.trim() ? { access_token: v.trim(), expires_at: null, refreshed_at: null } : null;
   if (!v || typeof v !== "object") return null;
   const o = v as Partial<StoredToken>;

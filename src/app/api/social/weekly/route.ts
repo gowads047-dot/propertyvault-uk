@@ -3,20 +3,27 @@ import { authorizeCron } from "@/lib/cron-auth";
 import { INSTAGRAM_USER_ID } from "@/lib/reel-calendar";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { storeFromEnv, type SocialStore } from "@/lib/social/db";
+import { refreshToken } from "@/lib/social/refresh";
 import { pickToken } from "@/lib/social/token";
 import { buildWeeklySummary, renderWeeklyEmail } from "@/lib/social/weekly";
 import { graphFetcher, resendSender, type Mail } from "@/lib/social/live";
 import type { Fetcher } from "@/lib/instagram";
 
 /**
- * The Monday summary, emailed.
+ * Monday morning: refresh the token, then send the summary.
  *
- * 07:00 on Mondays: what went out last week, how each post did, how many
- * followers there are now, what is queued for the next fortnight and what is
- * stuck. Built by lib/social/weekly.ts; this route fetches, renders and sends.
+ * One cron, two jobs, in that order. The refresh comes first so the summary
+ * is built with the token that will be used all week, and so a refresh that
+ * fails is in the summary a person reads that morning rather than only in a
+ * dashboard. The two were separate crons; on the Hobby plan each is placed
+ * anywhere in its hour, so "06:00 refresh, 07:00 summary" was not an order
+ * that could be relied on, and folding them is what makes it one.
  *
- * Without RESEND_API_KEY it returns 500 rather than a success that sent
- * nothing — the same rule as every other cron here.
+ * A failed refresh is a 500 with its own alert email, but the summary still
+ * goes out — the queue is worth reporting whatever the token's state. Without
+ * RESEND_API_KEY it returns 500 rather than a success that sent nothing.
+ *
+ * The response never contains a token.
  */
 export const maxDuration = 120;
 
@@ -26,7 +33,7 @@ export async function GET(req: Request) {
   }
   const s = storeFromEnv();
   if ("error" in s) {
-    return NextResponse.json({ sent: false, error: s.error }, { status: 500 });
+    return NextResponse.json({ sent: false, refreshed: false, error: s.error }, { status: 500 });
   }
   const key = process.env.RESEND_API_KEY;
   return weeklyWith(s.store, {
@@ -45,9 +52,35 @@ export async function weeklyWith(
     send: ((to: string) => (mail: Mail) => Promise<{ ok: boolean; error?: string }>) | null;
   },
 ) {
-  const picked = pickToken(await store.getSetting("ig_access_token"), process.env.INSTAGRAM_ACCESS_TOKEN, adapters.now);
+  const envToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+  const alertTo = await store.getSetting("alert_email");
+  const to = typeof alertTo === "string" && alertTo.includes("@") ? alertTo : CONTACT_EMAIL;
+
+  // ── 1. The token ───────────────────────────────────────────────────────
+  const refresh = await refreshToken(store, adapters.fetcher, envToken, adapters.now);
+  let refreshAlert: { ok: boolean; error?: string } | null = null;
+  if (!refresh.ok && adapters.send) {
+    refreshAlert = await adapters.send(to)({
+      subject: "Instagram token refresh failed",
+      text: [
+        "The Monday exchange of the Instagram access token did not succeed.",
+        "",
+        ...refresh.tried.map(t => `  ${t.source}: ${t.error}`),
+        ...(refresh.tried.length ? [] : [`  ${refresh.error}`]),
+        "",
+        "If the token is under 24 hours old this is expected and next Monday will work.",
+        "Otherwise generate a new long-lived token in the Meta dashboard, set INSTAGRAM_ACCESS_TOKEN in Vercel,",
+        "and if the stored token is the broken one, reset it:",
+        "  update social_settings set value = 'null' where key = 'ig_access_token';",
+      ].join("\n"),
+    });
+  }
+
+  // ── 2. The summary ─────────────────────────────────────────────────────
+  // Re-read after the refresh: the stored token may have just changed.
+  const picked = pickToken(await store.getSetting("ig_access_token"), envToken, adapters.now);
   // No token means no insights, not no summary: the queue is still worth
-  // reporting. The summary says the API was unavailable for every figure.
+  // reporting. The summary says the API was not asked.
   const token = "error" in picked ? "" : picked.token;
 
   const summary = await buildWeeklySummary({
@@ -56,17 +89,22 @@ export async function weeklyWith(
     token,
     igUserId: process.env.INSTAGRAM_USER_ID ?? INSTAGRAM_USER_ID,
     now: adapters.now,
+    tokenLine: { refreshed: refresh.ok, source: refresh.source, expiresAt: refresh.expiresAt, error: refresh.error },
   });
   const mail = renderWeeklyEmail(summary);
 
-  const alertTo = await store.getSetting("alert_email");
-  const to = typeof alertTo === "string" && alertTo.includes("@") ? alertTo : CONTACT_EMAIL;
-
   const facts = {
+    refreshed: refresh.ok,
+    ...(refresh.source ? { refreshSource: refresh.source } : {}),
+    ...(refresh.expiresAt ? { expiresAt: refresh.expiresAt } : {}),
+    ...(refresh.expiresInDays !== undefined ? { expiresInDays: refresh.expiresInDays } : {}),
+    ...(refresh.error ? { refreshError: refresh.error } : {}),
+    ...(refreshAlert ? { refreshAlertSent: refreshAlert.ok } : {}),
     published: summary.posts.length,
     followers: summary.followersCount,
     holds: summary.health.holds.length,
     gapsNext14: summary.health.gapsNext14.length,
+    daysCovered: summary.health.daysCovered,
     tokenAvailable: token !== "",
   };
 
@@ -83,5 +121,9 @@ export async function weeklyWith(
     detail: { to, subject: mail.subject, ...(r.error ? { error: r.error } : {}) },
   });
 
-  return NextResponse.json({ sent: r.ok, to, subject: mail.subject, ...facts, ...(r.error ? { error: r.error } : {}) }, { status: r.ok ? 200 : 500 });
+  const ok = r.ok && refresh.ok;
+  return NextResponse.json(
+    { sent: r.ok, to, subject: mail.subject, ...facts, ...(r.error ? { error: r.error } : {}) },
+    { status: ok ? 200 : 500 },
+  );
 }

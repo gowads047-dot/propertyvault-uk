@@ -16,7 +16,7 @@ import { findBannedClaims } from "./claims";
  *     the thirty the calendar test can see.
  *   - Publishing the same video twice is the fastest way to be marked as
  *     reused content. The digest catches it, except for an evergreen clone,
- *     which is a repeat on purpose and says so in source_refs.
+ *     which is a repeat on purpose and says so with is_clone.
  */
 
 /** The subset of a post the checks read. */
@@ -25,6 +25,7 @@ export interface QcInput {
   asset_sha256: string | null;
   caption: string;
   channel: string;
+  is_clone?: boolean;
   source_refs?: Record<string, unknown> | null;
 }
 
@@ -115,9 +116,11 @@ export async function qualityCheck(
     claims.length === 0 ? "no banned claim" : `matches banned claim(s): ${claims.join(" ; ")}`);
 
   // ── Duplicates ─────────────────────────────────────────────────────────
-  const isClone = typeof post.source_refs?.evergreen_of === "string";
+  // A clone keeps its digest — that is how a later duplicate check sees the
+  // pool asset went out — so the flag, not the digest, is what exempts it.
+  const isClone = post.is_clone === true || typeof post.source_refs?.evergreen_of === "string";
   if (isClone) {
-    add("duplicate", true, `evergreen repeat of ${post.source_refs?.evergreen_of}, on purpose`);
+    add("duplicate", true, `evergreen repeat of ${post.source_refs?.evergreen_of ?? "a pool row"}, on purpose`);
   } else if (!post.asset_sha256) {
     add("duplicate", false, "no asset_sha256 recorded — the seed script computes it; a row without one cannot be checked for repeats");
   } else {

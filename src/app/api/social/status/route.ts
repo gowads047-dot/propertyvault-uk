@@ -9,8 +9,12 @@ import { queueHealth } from "@/lib/social/health";
  *   curl -H "Authorization: Bearer $CRON_SECRET" https://www.propertyvaultuk.co.uk/api/social/status
  *
  * Not a cron. Same authorisation because the answer includes internal error
- * messages and post ids, none of which belong on a public URL.
+ * messages and post ids, none of which belong on a public URL. The two
+ * numbers to look at are queuedNext14 and daysCovered: fourteen days of
+ * rows is a fortnight of evenings that will do something on their own.
  */
+export const maxDuration = 30;
+
 export async function GET(req: Request) {
   if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -6,7 +6,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
  * Everything in src/lib/social is written against this interface rather than
  * against Supabase, for the same reason lib/instagram.ts takes a fetcher: the
  * publishing sequence has to be testable without a network, and a fake
- * implementing eight methods is a great deal simpler than a fake of the
+ * implementing ten methods is a great deal simpler than a fake of the
  * Supabase query builder. memory-store.ts is that fake; supabaseStore() below
  * is the real one, and its own test checks the query it builds for each
  * method rather than what the publisher does with the answer.
@@ -26,6 +26,7 @@ export interface SocialPost {
   asset_sha256: string | null;
   caption: string;
   status: PostStatus;
+  /** Container attempts so far, across runs. */
   attempts: number;
   last_error: string | null;
   ig_container_id: string | null;
@@ -34,6 +35,12 @@ export interface SocialPost {
   published_at: string | null;
   evergreen: boolean;
   last_used_at: string | null;
+  /**
+   * A day-of copy of a pool row. Keeps the pool row's digest so the
+   * duplicate check can see it went out; the uniqueness indexes leave clones
+   * alone so that the same pool row can stand in more than once.
+   */
+  is_clone: boolean;
   qc: unknown;
   source_refs: Record<string, unknown> | null;
   created_at: string;
@@ -65,6 +72,8 @@ export interface PostQuery {
   evergreen?: boolean;
   publishedSince?: string;
   orderBy?: "slot_date" | "last_used_at" | "published_at";
+  /** Ascending unless said otherwise. Descending puts nulls last. */
+  direction?: "asc" | "desc";
   limit?: number;
 }
 
@@ -75,11 +84,27 @@ export interface SocialStore {
   findPosts(q: PostQuery): Promise<SocialPost[]>;
   insertPost(row: NewPost): Promise<SocialPost>;
   updatePost(id: string, patch: Partial<Omit<SocialPost, "id">>): Promise<SocialPost>;
+  /**
+   * Take the row for publishing, atomically. One statement: set status to
+   * 'publishing' only if the row is still in one of the expected statuses
+   * with exactly the expected attempt count. The row comes back when this
+   * caller won it; null when another run got there first, or the row changed
+   * underneath. Two runs in the same evening — which the hourly cron jitter
+   * permits — both read the row as queued, and only one of them gets a row
+   * back from this.
+   */
+  claimPost(id: string, expectedStatus: PostStatus[], expectedAttempts: number): Promise<SocialPost | null>;
   logEvent(e: SocialEvent): Promise<void>;
+  /** The most recent event with this name, or null if it has never happened. */
+  lastEvent(event: string): Promise<SocialEvent | null>;
   /** Total social_spend.gbp on or after the given instant. */
   spendSince(iso: string): Promise<number>;
-  /** Whether any published row on the channel carries this digest. */
-  publishedShaExists(channel: string, sha: string): Promise<boolean>;
+  /**
+   * Whether any published row on the channel carries this digest — clones
+   * included, so a pool asset that went out as a stand-in counts as having
+   * gone out. With `since`, only publishes on or after that instant.
+   */
+  publishedShaExists(channel: string, sha: string, since?: string): Promise<boolean>;
 }
 
 const POST_COLUMNS = "*";
@@ -119,9 +144,12 @@ export function supabaseStore(client: SupabaseClient): SocialStore {
       if (q.slotTo) query = query.lte("slot_date", q.slotTo);
       if (q.evergreen !== undefined) query = query.eq("evergreen", q.evergreen);
       if (q.publishedSince) query = query.gte("published_at", q.publishedSince);
-      // Nulls first on last_used_at so a pool row never used is picked before
-      // any that has been. Ascending everywhere else: oldest slot first.
-      if (q.orderBy) query = query.order(q.orderBy, { ascending: true, nullsFirst: true });
+      // Ascending, nulls first, so a pool row never used is picked before any
+      // that has been. Descending flips both: newest first, unknowns last.
+      if (q.orderBy) {
+        const ascending = q.direction !== "desc";
+        query = query.order(q.orderBy, { ascending, nullsFirst: ascending });
+      }
       if (q.limit) query = query.limit(q.limit);
       const { data, error } = await query;
       if (error) fail("find posts", error);
@@ -146,6 +174,22 @@ export function supabaseStore(client: SupabaseClient): SocialStore {
       return data as SocialPost;
     },
 
+    async claimPost(id, expectedStatus, expectedAttempts) {
+      // The WHERE is the lock: Postgres evaluates it against the current
+      // row under the update's own row lock, so of two concurrent claims
+      // exactly one sees the expected status and attempts.
+      const { data, error } = await client
+        .from("social_posts")
+        .update({ status: "publishing", updated_at: new Date().toISOString() })
+        .eq("id", id)
+        .in("status", expectedStatus)
+        .eq("attempts", expectedAttempts)
+        .select(POST_COLUMNS);
+      if (error) fail(`claim post ${id}`, error);
+      const rows = (data ?? []) as SocialPost[];
+      return rows.length ? rows[0] : null;
+    },
+
     async logEvent(e) {
       const { error } = await client.from("social_events").insert({
         post_id: e.post_id, level: e.level, event: e.event, detail: e.detail ?? null,
@@ -155,16 +199,26 @@ export function supabaseStore(client: SupabaseClient): SocialStore {
       if (error) console.error(`social store: could not log ${e.event}: ${error.message}`);
     },
 
+    async lastEvent(event) {
+      const { data, error } = await client
+        .from("social_events").select("*")
+        .eq("event", event).order("ts", { ascending: false }).limit(1).maybeSingle();
+      if (error) fail(`read last ${event}`, error);
+      return (data as SocialEvent | null) ?? null;
+    },
+
     async spendSince(iso) {
       const { data, error } = await client.from("social_spend").select("gbp").gte("ts", iso);
       if (error) fail("read spend", error);
       return ((data ?? []) as { gbp: number | string }[]).reduce((s, r) => s + Number(r.gbp), 0);
     },
 
-    async publishedShaExists(channel, sha) {
-      const { data, error } = await client
+    async publishedShaExists(channel, sha, since) {
+      let query = client
         .from("social_posts").select("id")
-        .eq("channel", channel).eq("asset_sha256", sha).eq("status", "published").limit(1);
+        .eq("channel", channel).eq("asset_sha256", sha).eq("status", "published");
+      if (since) query = query.gte("published_at", since);
+      const { data, error } = await query.limit(1);
       if (error) fail("check digest", error);
       return (data ?? []).length > 0;
     },

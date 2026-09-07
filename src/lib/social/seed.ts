@@ -12,6 +12,11 @@ import { addDays, isYmd } from "./dates";
  * has been published, held or skipped must not touch it — the digest is what
  * makes the seed idempotent, and the script skips anything already present.
  *
+ * The digest is also what goes stale. A re-render changes every file, and a
+ * queued row whose asset_sha256 no longer matches the file on disk fails its
+ * duplicate check for the wrong reason (or passes it for the wrong reason).
+ * digestUpdates finds those rows so the script can bring them up to date.
+ *
  * Pure: the file digests come in as a function so the test can run without
  * the thirty videos.
  */
@@ -20,6 +25,12 @@ export const CALCULATORS = ["tax.ts", "finance.ts", "deal-score.ts"] as const;
 
 export function fileNameFor(spec: ReelSpec): string {
   return `day-${String(spec.day).padStart(2, "0")}-${spec.id}.mp4`;
+}
+
+/** The reel file a queue row points at, or null when the URL is not one of ours. */
+export function fileNameFromUrl(assetUrl: string): string | null {
+  const m = /\/reels\/([a-z0-9-]+\.mp4)$/i.exec(assetUrl);
+  return m ? m[1] : null;
 }
 
 export function calendarRows(opts: {
@@ -69,6 +80,36 @@ export function evergreenRows(opts: {
       source_refs: { calendarId: spec.id, day: spec.day, calculators: [...CALCULATORS] },
     };
   });
+}
+
+export interface DigestUpdate {
+  id: string;
+  file: string;
+  from: string | null;
+  to: string;
+}
+
+/**
+ * Queued rows — dated or pool — whose file on disk no longer has the digest
+ * the row records. Only queued rows: a published row's digest is the record
+ * of what went out, and a held or skipped row is for a person. Rows whose
+ * file is not on disk (sha256Of returns null) are left alone and reported by
+ * the script, not silently blanked.
+ */
+export function digestUpdates(
+  rows: { id: string; asset_url: string; asset_sha256: string | null; status: string }[],
+  sha256Of: (fileName: string) => string | null,
+): DigestUpdate[] {
+  const out: DigestUpdate[] = [];
+  for (const r of rows) {
+    if (r.status !== "queued") continue;
+    const file = fileNameFromUrl(r.asset_url);
+    if (!file) continue;
+    const to = sha256Of(file);
+    if (to === null || to === r.asset_sha256) continue;
+    out.push({ id: r.id, file, from: r.asset_sha256, to });
+  }
+  return out;
 }
 
 /** "3,7,12" → [3, 7, 12]. Refuses anything that is not a whole number. */

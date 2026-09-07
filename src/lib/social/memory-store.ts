@@ -4,9 +4,10 @@ import type { NewPost, PostQuery, SocialEvent, SocialPost, SocialStore } from ".
  * The in-memory store the tests run the publisher against.
  *
  * Not a mock: it implements the same interface with the same semantics —
- * the filters in findPosts, the ordering, the upsert — so a test exercises the
- * publisher's decisions rather than a script of expected calls. It also
- * exposes its state, so a test can read the events the publisher logged.
+ * the filters in findPosts, the ordering, the upsert, the conditional claim —
+ * so a test exercises the publisher's decisions rather than a script of
+ * expected calls. It also exposes its state, so a test can read the events
+ * the publisher logged.
  */
 export interface MemoryStore extends SocialStore {
   posts: SocialPost[];
@@ -48,6 +49,8 @@ export function memoryStore(init: {
       if (q.publishedSince) rows = rows.filter(p => p.published_at !== null && p.published_at >= q.publishedSince!);
       if (q.orderBy) {
         const k = q.orderBy;
+        // Same as Postgres: ascending puts nulls first, descending puts
+        // them last — a full reversal of the ascending order.
         rows = [...rows].sort((a, b) => {
           const x = a[k], y = b[k];
           if (x === y) return 0;
@@ -55,6 +58,7 @@ export function memoryStore(init: {
           if (y === null) return 1;
           return x < y ? -1 : 1;
         });
+        if (q.direction === "desc") rows.reverse();
       }
       if (q.limit) rows = rows.slice(0, q.limit);
       return rows.map(r => ({ ...r }));
@@ -73,16 +77,35 @@ export function memoryStore(init: {
       return { ...p };
     },
 
+    // Test, then set, with no await in between: that is what makes it the
+    // same shape as the single UPDATE ... WHERE the real store issues. Two
+    // publishers interleaving at their awaits cannot both pass the test.
+    async claimPost(id, expectedStatus, expectedAttempts) {
+      const p = posts.find(x => x.id === id);
+      if (!p || !expectedStatus.includes(p.status) || p.attempts !== expectedAttempts) return null;
+      Object.assign(p, { status: "publishing", updated_at: new Date().toISOString() });
+      return { ...p };
+    },
+
     async logEvent(e) {
       events.push({ ...e, id: events.length + 1, ts: new Date().toISOString() });
+    },
+
+    async lastEvent(event) {
+      for (let i = events.length - 1; i >= 0; i--) {
+        if (events[i].event === event) return { ...events[i] };
+      }
+      return null;
     },
 
     async spendSince(iso) {
       return spend.filter(s => s.ts >= iso).reduce((t, s) => t + s.gbp, 0);
     },
 
-    async publishedShaExists(channel, sha) {
-      return posts.some(p => p.channel === channel && p.asset_sha256 === sha && p.status === "published");
+    async publishedShaExists(channel, sha, since) {
+      return posts.some(p =>
+        p.channel === channel && p.asset_sha256 === sha && p.status === "published" &&
+        (!since || (p.published_at !== null && p.published_at >= since)));
     },
   };
 }
@@ -107,6 +130,7 @@ function fill(p: Partial<SocialPost>): SocialPost {
     published_at: p.published_at ?? null,
     evergreen: p.evergreen ?? false,
     last_used_at: p.last_used_at ?? null,
+    is_clone: p.is_clone ?? false,
     qc: p.qc ?? null,
     source_refs: p.source_refs ?? null,
     created_at: p.created_at ?? now,

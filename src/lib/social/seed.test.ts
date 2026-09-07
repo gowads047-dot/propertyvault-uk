@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calendarRows, evergreenRows, parseDays, fileNameFor } from "./seed";
+import { calendarRows, evergreenRows, parseDays, fileNameFor, fileNameFromUrl, digestUpdates } from "./seed";
 import { CALENDAR, fullCaption } from "../reel-calendar";
 
 const sha = (f: string) => `sha-of-${f}`;
@@ -51,6 +51,34 @@ describe("evergreen rows", () => {
 
   it("refuses a day the calendar does not have", () => {
     expect(() => evergreenRows({ days: [31], sha256Of: sha })).toThrow(/1-30/);
+  });
+});
+
+describe("refreshing digests after a re-render", () => {
+  const row = (id: string, file: string, sha: string | null, status = "queued") => ({
+    id, asset_url: `https://www.propertyvaultuk.co.uk/reels/${file}`, asset_sha256: sha, status,
+  });
+  const onDisk: Record<string, string | null> = { "day-01-a.mp4": "new-1", "day-02-b.mp4": "same-2", "day-03-c.mp4": null };
+  const sha = (f: string) => onDisk[f] ?? null;
+
+  it("reads the file name off a queue row's URL", () => {
+    expect(fileNameFromUrl("https://www.propertyvaultuk.co.uk/reels/day-07-autopsy-2.mp4")).toBe("day-07-autopsy-2.mp4");
+    expect(fileNameFromUrl("https://elsewhere.example/video.mp4")).toBeNull();
+  });
+
+  it("lists queued rows whose file now has a different digest, and nothing else", () => {
+    const updates = digestUpdates([
+      row("changed", "day-01-a.mp4", "old-1"),
+      row("unchanged", "day-02-b.mp4", "same-2"),
+      row("missing-on-disk", "day-03-c.mp4", "old-3"),
+      row("published", "day-01-a.mp4", "old-1", "published"),
+      row("held", "day-01-a.mp4", "old-1", "held"),
+      row("no-digest-yet", "day-01-a.mp4", null),
+    ], sha);
+    expect(updates).toEqual([
+      { id: "changed", file: "day-01-a.mp4", from: "old-1", to: "new-1" },
+      { id: "no-digest-yet", file: "day-01-a.mp4", from: null, to: "new-1" },
+    ]);
   });
 });
 

@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { GET, publishWith } from "./route";
-import { GET as RETRY } from "./retry/route";
 import { memoryStore } from "@/lib/social/memory-store";
 import type { Fetcher } from "@/lib/instagram";
 import type { AssetFetcher } from "@/lib/social/qc";
@@ -42,14 +41,14 @@ const today = () => ({
   caption: `Running costs assumed at 28% of rent. ${TAGS}`,
 });
 
+const ok = (b: unknown) => ({ ok: true, status: 200, json: async () => b });
 const graphOk: Fetcher = async (u, init) => {
-  const ok = (b: unknown) => ({ ok: true, status: 200, json: async () => b });
   if (u.includes("/media_publish")) return ok({ id: "m-1" });
   if (init?.method === "POST") return ok({ id: "c-1" });
   if (u.includes("fields=permalink")) return ok({ permalink: "https://www.instagram.com/reel/x/" });
   return ok({ status_code: "FINISHED" });
 };
-const graphFail: Fetcher = async () => ({ ok: false, status: 400, json: async () => ({ error: { message: "nope" } }) });
+const graphFail: Fetcher = async () => ({ ok: false, status: 400, json: async () => ({ error: { message: "nope", code: 352 } }) });
 const assetsOk: AssetFetcher = async () => ({
   status: 200, headers: { get: (k: string) => (k === "content-type" ? "video/mp4" : "400000") },
 });
@@ -68,10 +67,6 @@ describe("authorisation", () => {
   it("refuses the wrong secret", async () => {
     expect((await GET(new Request("https://x", { headers: { authorization: "Bearer nope" } }))).status).toBe(401);
   });
-
-  it("guards the retry slot the same way", async () => {
-    expect((await RETRY(new Request("https://x/api/social/publish/retry"))).status).toBe(401);
-  });
 });
 
 describe("configuration", () => {
@@ -88,22 +83,40 @@ describe("configuration", () => {
     expect(body.error).toContain("Nothing was posted");
   });
 
-  it("fails with 500 when there is no token anywhere", async () => {
-    const res = await publishWith(memoryStore({ posts: [today()] }), adapters());
+  // Email does not need the Instagram token, so the no-token evening is
+  // the one alert that can always be sent.
+  it("fails with 500, and emails, when there is no token anywhere", async () => {
+    const sent: { subject: string; text: string }[] = [];
+    const store = memoryStore({ posts: [today()] });
+    const res = await publishWith(store, adapters({ sendAlert: () => async m => { sent.push(m); return { ok: true }; } }));
     expect(res.status).toBe(500);
     const body = await res.json();
     expect(body.posted).toBe(false);
     expect(body.error).toContain("INSTAGRAM_ACCESS_TOKEN");
     expect(body.error).toContain("Nothing was posted");
+    expect(body.alert).toEqual({ needed: true, sent: true });
+    expect(sent).toHaveLength(1);
+    expect(sent[0].subject).toContain("no access token");
+    expect(sent[0].text).toContain("INSTAGRAM_ACCESS_TOKEN");
+    expect(store.events.map(e => e.event)).toEqual(["alert_sent"]);
+    expect(store.posts[0].status).toBe("queued");
+  });
+
+  it("says so when the no-token alert could not be sent either", async () => {
+    const res = await publishWith(memoryStore({ posts: [today()] }), adapters({ sendAlert: () => null }));
+    expect(res.status).toBe(500);
+    const body = await res.json();
+    expect(body.alert.sent).toBe(false);
+    expect(body.alert.error).toContain("RESEND_API_KEY");
   });
 
   // The account id is content, not a secret; the route runs without it in the environment.
   it("needs no environment variable but the token once the store is there", async () => {
     process.env.INSTAGRAM_ACCESS_TOKEN = "t";
     delete process.env.INSTAGRAM_USER_ID;
-    const res = await publishWith(memoryStore(), adapters());
+    const res = await publishWith(memoryStore({ posts: [today()] }), adapters());
     expect(res.status).toBe(200);
-    expect((await res.json()).outcome).toBe("nothing-queued");
+    expect((await res.json()).outcome).toBe("published");
   });
 
   it("prefers the stored token and says which it used", async () => {
@@ -121,6 +134,31 @@ describe("configuration", () => {
     expect((await res.json()).tokenSource).toBe("settings");
     expect(used).toContain("access_token=stored");
   });
+
+  it("hands the environment token to the publisher as the fallback for a refused stored token", async () => {
+    process.env.INSTAGRAM_ACCESS_TOKEN = "env";
+    const store = memoryStore({
+      posts: [today()],
+      settings: { ig_access_token: { access_token: "stored", expires_at: "2026-11-01T00:00:00Z" } },
+    });
+    const used: string[] = [];
+    const f: Fetcher = async (u, init) => {
+      if (init?.method === "POST" && !u.includes("media_publish")) {
+        used.push(init.body ?? "");
+        if (init.body?.includes("access_token=stored")) {
+          return { ok: false, status: 400, json: async () => ({ error: { message: "Error validating access token", code: 190 } }) };
+        }
+      }
+      return graphOk(u, init);
+    };
+    const res = await publishWith(store, adapters({ fetcher: f }));
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.outcome).toBe("published");
+    expect(body.tokenSource).toBe("settings");
+    expect(used.map(b => /access_token=(\w+)/.exec(b)![1])).toEqual(["stored", "env"]);
+    expect(store.events.map(e => e.event)).toContain("token_fallback_env");
+  });
 });
 
 describe("outcomes", () => {
@@ -135,7 +173,7 @@ describe("outcomes", () => {
     expect(body.permalink).toContain("instagram.com");
   });
 
-  it("returns 200 when the day was already done — the retry slot is a no-op", async () => {
+  it("returns 200 when the day was already done — a second run is a no-op", async () => {
     const store = memoryStore({ posts: [today()] });
     await publishWith(store, adapters());
     const res = await publishWith(store, adapters({ now: new Date("2026-09-07T18:40:00Z") }));
@@ -143,13 +181,23 @@ describe("outcomes", () => {
     expect((await res.json()).outcome).toBe("already-published");
   });
 
-  it("returns 500 when the publish failed, so the cron shows red", async () => {
+  it("returns 500 when the publish failed and the row is held, so the cron shows red", async () => {
     const res = await publishWith(memoryStore({ posts: [today()] }), adapters({ fetcher: graphFail }));
     expect(res.status).toBe(500);
     const body = await res.json();
     expect(body.posted).toBe(false);
-    expect(body.outcome).toBe("failed");
+    expect(body.outcome).toBe("held");
     expect(body.reason).toContain("nope");
+    expect(body.alert).toEqual({ needed: true, sent: true });
+  });
+
+  // An empty day is a person's problem, and a red cron is how they find out.
+  it("returns 500 when nothing is queued for today", async () => {
+    const res = await publishWith(memoryStore(), adapters());
+    expect(res.status).toBe(500);
+    const body = await res.json();
+    expect(body.outcome).toBe("nothing-queued");
+    expect(body.alert).toEqual({ needed: true, sent: true });
   });
 
   it("returns 500 with the reason when a hold needed an alert and RESEND_API_KEY is missing", async () => {

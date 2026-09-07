@@ -79,6 +79,14 @@ describe("finding posts", () => {
     expect(has(calls, "limit", 1)).toBe(true);
   });
 
+  // The newest published row: descending, and a null published_at (which a
+  // published row should never have) goes last rather than first.
+  it("orders descending with nulls last when asked", async () => {
+    const { client, calls } = fakeClient();
+    await supabaseStore(client).findPosts({ channel: "instagram", orderBy: "published_at", direction: "desc", limit: 1 });
+    expect(has(calls, "order", "published_at", { ascending: false, nullsFirst: false })).toBe(true);
+  });
+
   // evergreen: false is a filter. A truthiness check would drop it.
   it("does not confuse evergreen:false with no evergreen filter", async () => {
     const { client, calls } = fakeClient();
@@ -116,12 +124,54 @@ describe("writing posts", () => {
   });
 });
 
+describe("claiming a post", () => {
+  // The whole point: status and attempts are in the WHERE, so the database
+  // decides between two runs, not the two runs' reads.
+  it("moves the row to publishing only if it still has the expected status and attempts", async () => {
+    const { client, calls } = fakeClient({ data: [{ id: "p1", status: "publishing" }], error: null });
+    const r = await supabaseStore(client).claimPost("p1", ["queued", "failed"], 1);
+    expect(r).toEqual({ id: "p1", status: "publishing" });
+    const [, args] = calls.find(([n]) => n === "update")!;
+    expect(args[0]).toEqual({ status: "publishing", updated_at: expect.any(String) });
+    expect(has(calls, "eq", "id", "p1")).toBe(true);
+    expect(has(calls, "in", "status", ["queued", "failed"])).toBe(true);
+    expect(has(calls, "eq", "attempts", 1)).toBe(true);
+    expect(has(calls, "select", "*")).toBe(true);
+    // No .single(): zero rows is an answer, not an error.
+    expect(has(calls, "single")).toBe(false);
+  });
+
+  it("returns null, not an error, when the row was not there to claim", async () => {
+    const { client } = fakeClient({ data: [], error: null });
+    expect(await supabaseStore(client).claimPost("p1", ["queued"], 0)).toBeNull();
+  });
+
+  it("throws on a database error rather than pretending the claim was lost", async () => {
+    const { client } = fakeClient({ data: null, error: { message: "timeout" } });
+    await expect(supabaseStore(client).claimPost("p1", ["queued"], 0)).rejects.toThrow(/claim post p1: timeout/);
+  });
+});
+
 describe("events, spend and digests", () => {
   it("writes an event with a null detail when none is given", async () => {
     const { client, calls } = fakeClient({ error: null });
     await supabaseStore(client).logEvent({ post_id: null, level: "info", event: "x" });
     expect(has(calls, "from", "social_events")).toBe(true);
     expect(has(calls, "insert", { post_id: null, level: "info", event: "x", detail: null })).toBe(true);
+  });
+
+  it("reads the newest event of a name, or null", async () => {
+    const ev = { id: 7, ts: "2026-09-07T18:00:00Z", post_id: null, level: "info", event: "nothing_queued_alerted", detail: { date: "2026-09-07" } };
+    const { client, calls } = fakeClient({ data: ev, error: null });
+    expect(await supabaseStore(client).lastEvent("nothing_queued_alerted")).toEqual(ev);
+    expect(has(calls, "from", "social_events")).toBe(true);
+    expect(has(calls, "eq", "event", "nothing_queued_alerted")).toBe(true);
+    expect(has(calls, "order", "ts", { ascending: false })).toBe(true);
+    expect(has(calls, "limit", 1)).toBe(true);
+    expect(has(calls, "maybeSingle")).toBe(true);
+
+    const none = fakeClient({ data: null, error: null });
+    expect(await supabaseStore(none.client).lastEvent("x")).toBeNull();
   });
 
   it("sums spend since an instant, coping with numeric coming back as a string", async () => {
@@ -135,5 +185,14 @@ describe("events, spend and digests", () => {
     expect(await supabaseStore(client).publishedShaExists("instagram", "abc")).toBe(true);
     expect(has(calls, "eq", "asset_sha256", "abc")).toBe(true);
     expect(has(calls, "eq", "status", "published")).toBe(true);
+    // No is_clone filter: a clone's publish counts.
+    expect(calls.some(([n, a]) => n === "eq" && a[0] === "is_clone")).toBe(false);
+    expect(calls.some(([n, a]) => n === "gte" && a[0] === "published_at")).toBe(false);
+  });
+
+  it("limits the digest check to recent publishes when given a floor", async () => {
+    const { client, calls } = fakeClient({ data: [], error: null });
+    expect(await supabaseStore(client).publishedShaExists("instagram", "abc", "2026-08-24T00:00:00Z")).toBe(false);
+    expect(has(calls, "gte", "published_at", "2026-08-24T00:00:00Z")).toBe(true);
   });
 });

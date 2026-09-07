@@ -8,7 +8,7 @@ import { join } from "node:path";
  *
  * Follows makan-schema.test.ts: boot Postgres in WASM, run the file exactly as
  * the Supabase SQL editor would, and assert on what the constraints actually
- * do. The two unique indexes are the ones worth proving — they are what stops
+ * do. The unique indexes are the ones worth proving — they are what stops
  * the same Reel being queued twice and two Reels being queued for one day,
  * and a partial index that is subtly wrong reports nothing until production.
  */
@@ -57,6 +57,18 @@ describe("running the file", () => {
     expect(facts.rows[0].n).toBe(3);
     const assets = await db.query<{ n: number }>("select count(*)::int as n from social_assets");
     expect(assets.rows[0].n).toBe(2);
+  });
+
+  // The column arrived after the table. A database made from the first
+  // version of the file has to end up with it too.
+  it("adds is_clone to a table that was created without it", async () => {
+    requireSetup();
+    await db.exec("alter table social_posts drop column is_clone");
+    await db.exec(readFileSync(SQL, "utf8"));
+    const r = await db.query<{ column_default: string; is_nullable: string }>(
+      "select column_default, is_nullable from information_schema.columns where table_name = 'social_posts' and column_name = 'is_clone'",
+    );
+    expect(r.rows).toEqual([{ column_default: "false", is_nullable: "NO" }]);
   });
 
   it("seeds the operator state closed: not paused, nothing approved to spend, no token", async () => {
@@ -136,18 +148,28 @@ describe("the queue's constraints", () => {
     ).rejects.toThrow(/social_posts_pool_asset_uniq/);
   });
 
-  // A day-of clone of a pool row has no digest of its own. Two clones on two
-  // days must both be storable, otherwise the fallback works once.
-  it("lets a clone without a digest take a day", async () => {
+  // A day-of clone keeps the pool row's digest — that is how the duplicate
+  // check later sees the asset went out — and there may be several over a
+  // campaign. Neither asset index may count them, or the fallback works once.
+  it("lets clones carry the pool asset's digest, on more than one day", async () => {
     requireSetup();
     await insertPost({
-      asset_url: "https://x/a.mp4", caption: "c", slot_date: "2030-01-03",
-      source_refs: JSON.stringify({ evergreen_of: "pool", asset_sha256: "aaa" }),
+      asset_url: "https://x/a.mp4", caption: "c", slot_date: "2030-01-03", asset_sha256: "aaa", is_clone: true,
+      source_refs: JSON.stringify({ evergreen_of: "pool" }),
     });
     await insertPost({
-      asset_url: "https://x/a.mp4", caption: "c", slot_date: "2030-01-04",
-      source_refs: JSON.stringify({ evergreen_of: "pool", asset_sha256: "aaa" }),
+      asset_url: "https://x/a.mp4", caption: "c", slot_date: "2030-01-04", asset_sha256: "aaa", is_clone: true,
+      source_refs: JSON.stringify({ evergreen_of: "pool" }),
     });
+    const r = await db.query<{ n: number }>("select count(*)::int as n from social_posts where asset_sha256 = 'aaa'");
+    expect(r.rows[0].n).toBe(4);   // calendar, pool, two clones
+  });
+
+  it("defaults is_clone to false, so an ordinary insert is still caught by the asset index", async () => {
+    requireSetup();
+    await expect(
+      insertPost({ asset_url: "https://x/a.mp4", caption: "c", asset_sha256: "aaa", slot_date: "2030-01-05" }),
+    ).rejects.toThrow(/social_posts_calendar_asset_uniq/);
   });
 
   // The evergreen fallback takes the same date as the row it stands in for.

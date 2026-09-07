@@ -136,8 +136,19 @@ describe("duplicates", () => {
     expect(failing(r)).toEqual(["duplicate"]);
   });
 
-  // The fallback is a repeat by design. It has to pass, or there is no fallback.
-  it("passes an evergreen clone without a digest", async () => {
+  // The fallback is a repeat by design. It has to pass, or there is no
+  // fallback — and it keeps its digest, so the flag is what exempts it.
+  it("passes an evergreen clone, digest and all, without asking about duplicates", async () => {
+    const r = await qualityCheck(
+      { ...good, asset_sha256: "a".repeat(64), is_clone: true, source_refs: { evergreen_of: "pool-row-id" } },
+      serving(),
+      { alreadyPublished: async () => { throw new Error("should not be asked"); } },
+    );
+    expect(r.ok).toBe(true);
+    expect(r.checks.find(c => c.name === "duplicate")?.detail).toContain("pool-row-id");
+  });
+
+  it("still recognises a clone by source_refs alone, for rows made before is_clone existed", async () => {
     const r = await qualityCheck(
       { ...good, asset_sha256: null, source_refs: { evergreen_of: "pool-row-id" } },
       serving(),

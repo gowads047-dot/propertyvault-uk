@@ -18,6 +18,7 @@ describe("queue health", () => {
     expect(h.today).toBe("2026-09-07");
     expect(h.queuedNext14.map(q => q.slot_date)).toEqual(["2026-09-07", "2026-09-08"]);
     expect(h.gapsNext14).toHaveLength(11);
+    expect(h.daysCovered).toBe(3);
     expect(h.gapsNext14[0]).toBe("2026-09-09");
     expect(h.gapsNext14).not.toContain("2026-09-10");
     expect(h.gapsNext14).toContain("2026-09-20");

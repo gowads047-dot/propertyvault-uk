@@ -17,6 +17,11 @@
 -- All six are service-role only. Nothing here is readable from the browser:
 -- social_settings holds the Instagram access token, and the rest is
 -- operational detail that has no business on a public site.
+--
+-- Idempotent: every statement is create-if-not-exists, add-column-if-not-
+-- exists, or insert-where-not-exists. The two asset indexes are dropped and
+-- recreated because their predicate changed once (is_clone) and an index
+-- cannot be altered in place; on a table this size that is instant.
 
 -- ── The queue ──────────────────────────────────────────────────────────────
 
@@ -36,9 +41,11 @@ create table if not exists public.social_posts (
   caption        text        not null,
   status         text        not null default 'queued'
                  check (status in ('queued', 'publishing', 'published', 'failed', 'held', 'skipped')),
-  -- Publish attempts so far. Three failures and the row is held for a person.
+  -- Container attempts so far, across runs. At three the row is held.
   attempts       integer     not null default 0,
   last_error     text,
+  -- Written the moment Meta returns it, before polling, so a run that dies
+  -- waiting leaves enough for the next run to ask what became of it.
   ig_container_id text,
   ig_media_id    text,
   permalink      text,
@@ -47,6 +54,10 @@ create table if not exists public.social_posts (
   -- whose own post fails its checks. Least recently used goes first.
   evergreen      boolean     not null default false,
   last_used_at   timestamptz,
+  -- A day-of copy of a pool row. Keeps the pool row's digest, so the
+  -- duplicate check can see the asset went out; exempt from the asset
+  -- uniqueness indexes, so the same pool row can stand in more than once.
+  is_clone       boolean     not null default false,
   -- The last quality-check result, in full, so a hold can be read without
   -- re-running it.
   qc             jsonb,
@@ -57,18 +68,23 @@ create table if not exists public.social_posts (
   updated_at     timestamptz not null default now()
 );
 
+-- For a database created before the column existed.
+alter table public.social_posts add column if not exists is_clone boolean not null default false;
+
 -- One calendar row per asset, and one pool row per asset. Split in two rather
 -- than a single (channel, asset_sha256) index because the pool is, by design,
--- a second copy of something already in the calendar. A day-of clone of a
--- pool row carries no digest of its own (it records the pool row's under
--- source_refs) and so is never caught by either.
-create unique index if not exists social_posts_calendar_asset_uniq
+-- a second copy of something already in the calendar. Clones are outside
+-- both: they carry the pool row's digest so a later duplicate check sees the
+-- repeat, and there may be several of them over a campaign.
+drop index if exists public.social_posts_calendar_asset_uniq;
+create unique index social_posts_calendar_asset_uniq
   on public.social_posts (channel, asset_sha256)
-  where asset_sha256 is not null and not evergreen;
+  where asset_sha256 is not null and not evergreen and not is_clone;
 
-create unique index if not exists social_posts_pool_asset_uniq
+drop index if exists public.social_posts_pool_asset_uniq;
+create unique index social_posts_pool_asset_uniq
   on public.social_posts (channel, asset_sha256)
-  where asset_sha256 is not null and evergreen;
+  where asset_sha256 is not null and evergreen and not is_clone;
 
 -- One live post per day per channel. Two rows on the same date would both
 -- try to publish at 18:00 and one of them would be a second Reel nobody
@@ -102,8 +118,11 @@ create table if not exists public.social_settings (
 --                   spends; this is the ceiling any paid action must check
 --                   against, and 0 until a person raises it.
 --   alert_email     where holds and failures go.
---   ig_access_token null until the weekly refresh writes one. Until then the
---                   INSTAGRAM_ACCESS_TOKEN environment variable is used.
+--   ig_access_token null until the Monday refresh writes one. Until then the
+--                   INSTAGRAM_ACCESS_TOKEN environment variable is used. To
+--                   discard a stored token that has gone bad and start again
+--                   from the environment variable:
+--                     update social_settings set value = 'null' where key = 'ig_access_token';
 insert into public.social_settings (key, value) values
   ('paused',          'false'::jsonb),
   ('monthly_cap_gbp', '0'::jsonb),
@@ -127,6 +146,8 @@ create table if not exists public.social_events (
 
 create index if not exists social_events_ts_idx on public.social_events (ts desc);
 create index if not exists social_events_post_idx on public.social_events (post_id);
+-- The publisher asks "when did this last happen" (nothing_queued_alerted).
+create index if not exists social_events_event_ts_idx on public.social_events (event, ts desc);
 
 -- ── Spend ──────────────────────────────────────────────────────────────────
 

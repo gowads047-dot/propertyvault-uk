@@ -38,6 +38,9 @@ describe("the status endpoint", () => {
     const body = await res.json();
     expect(body.today).toBe("2026-09-07");
     expect(body.queuedNext14).toHaveLength(1);
+    // The held row for today is not cover: nothing goes out on its own.
+    expect(body.daysCovered).toBe(1);
+    expect(body.gapsNext14).toHaveLength(13);
     expect(body.holds).toHaveLength(1);
     expect(body.paused).toBe(false);
     expect(body.tokenStored).toBe(true);

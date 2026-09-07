@@ -72,6 +72,27 @@ describe("building the summary", () => {
     expect(s2.posts[0].insights.views).toBe("unavailable");
   });
 
+  // No token: nothing is asked, rather than asked with an empty token and
+  // refused. The page says why every figure is unavailable.
+  it("does not call the Graph API at all when there is no token", async () => {
+    let calls = 0;
+    const f: Fetcher = async u => { calls += 1; return graph(u); };
+    const s = await buildWeeklySummary({ db: week(), fetcher: f, token: "", igUserId: "1", now: NOW });
+    expect(calls).toBe(0);
+    expect(s.apiAvailable).toBe(false);
+    expect(s.followersCount).toBe("unavailable");
+    expect(s.posts.every(p => p.insights.views === "unavailable")).toBe(true);
+    expect(renderWeeklyEmail(s).text).toContain("the Graph API was not asked");
+  });
+
+  it("labels a clone as an evergreen repeat by its flag as well as by source_refs", async () => {
+    const db = memoryStore({ posts: [
+      { slot_date: "2026-09-08", status: "published", published_at: "2026-09-08T18:00:00Z", ig_media_id: "m-1", is_clone: true },
+    ] });
+    const s = await buildWeeklySummary({ db, fetcher: graph, token: "t", igUserId: "1", now: NOW });
+    expect(s.posts[0].evergreenRepeat).toBe(true);
+  });
+
   it("states that attribution is not measured, in those words", async () => {
     const s = await buildWeeklySummary({ db: week(), fetcher: graph, token: "t", igUserId: "1", now: NOW });
     expect(s.attribution).toContain(ATTRIBUTION_NOT_MEASURED);
@@ -93,6 +114,7 @@ describe("the email", () => {
     expect(text).toContain("(evergreen repeat)");
     expect(text).toContain("Followers now: 412");
     expect(text).toContain("Queued for the next 14 days: 1");
+    expect(text).toContain("Days covered: 1 of 14");
     expect(text).toContain("Days with nothing queued:");
     expect(text).toContain("£0.00 of £0.00 cap (no spend approved)");
     expect(text).toContain(ATTRIBUTION_NOT_MEASURED);

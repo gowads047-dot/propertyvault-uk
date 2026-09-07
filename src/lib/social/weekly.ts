@@ -9,7 +9,8 @@ import { queueHealth, type QueueHealth } from "./health";
  * what is stuck. Every figure in it is either read from the queue or read
  * from the Graph API on the morning it is sent; anything the API declines to
  * give is printed as "unavailable" rather than as zero, because zero is a
- * number and would be believed.
+ * number and would be believed. With no token at all the API is not asked:
+ * every figure is "unavailable" and the page says why.
  *
  * Attribution is stated plainly. The bio link (/ig) tags visits with UTM
  * parameters and sets a cookie, but nothing reads either back into a report
@@ -32,6 +33,14 @@ export interface WeeklyPost {
   insights: Record<Metric, number | "unavailable">;
 }
 
+/** What the Monday route did about the token before building the page. */
+export interface TokenLine {
+  refreshed: boolean;
+  source?: "settings" | "env";
+  expiresAt?: string | null;
+  error?: string;
+}
+
 export interface WeeklySummary {
   since: string;
   until: string;
@@ -39,6 +48,9 @@ export interface WeeklySummary {
   followersCount: number | "unavailable";
   health: QueueHealth;
   attribution: string;
+  /** False when the run had no token and asked the API nothing. */
+  apiAvailable: boolean;
+  token?: TokenLine;
 }
 
 export const ATTRIBUTION_NOT_MEASURED =
@@ -47,14 +59,17 @@ export const ATTRIBUTION_NOT_MEASURED =
 export async function buildWeeklySummary(deps: {
   db: SocialStore;
   fetcher: Fetcher;
+  /** Empty when there is none. The Graph API is then not called at all. */
   token: string;
   igUserId: string;
   now: Date;
   channel?: string;
+  tokenLine?: TokenLine;
 }): Promise<WeeklySummary> {
   const { db, fetcher, token, now } = deps;
   const channel = deps.channel ?? "instagram";
   const since = new Date(now.getTime() - 7 * 86_400_000).toISOString();
+  const apiAvailable = token !== "";
 
   const rows = await db.findPosts({ channel, status: ["published"], publishedSince: since, orderBy: "published_at" });
 
@@ -67,8 +82,8 @@ export async function buildWeeklySummary(deps: {
       permalink: r.permalink,
       ig_media_id: r.ig_media_id,
       published_at: r.published_at,
-      evergreenRepeat: typeof r.source_refs?.evergreen_of === "string",
-      insights: r.ig_media_id ? await insightsFor(r.ig_media_id, token, fetcher) : unavailable(),
+      evergreenRepeat: r.is_clone || typeof r.source_refs?.evergreen_of === "string",
+      insights: apiAvailable && r.ig_media_id ? await insightsFor(r.ig_media_id, token, fetcher) : unavailable(),
     });
   }
 
@@ -76,9 +91,11 @@ export async function buildWeeklySummary(deps: {
     since,
     until: now.toISOString(),
     posts,
-    followersCount: await followers(deps.igUserId, token, fetcher),
+    followersCount: apiAvailable ? await followers(deps.igUserId, token, fetcher) : "unavailable",
     health: await queueHealth({ db, now, channel }),
     attribution: `${ATTRIBUTION_NOT_MEASURED} The bio link /ig tags visits with UTM parameters and a pv_src cookie; no report reads them yet.`,
+    apiAvailable,
+    ...(deps.tokenLine ? { token: deps.tokenLine } : {}),
   };
 }
 
@@ -132,6 +149,16 @@ export function renderWeeklyEmail(s: WeeklySummary): { subject: string; text: st
   const lines: string[] = [];
   lines.push(`Social summary — week to ${s.until.slice(0, 10)}`);
   lines.push("");
+  if (s.token) {
+    lines.push(s.token.refreshed
+      ? `Instagram token: refreshed from ${s.token.source === "env" ? "INSTAGRAM_ACCESS_TOKEN" : "the stored token"}, expires ${s.token.expiresAt?.slice(0, 10) ?? "unknown"}`
+      : `Instagram token: REFRESH FAILED — ${s.token.error ?? "unknown error"}. Generate a new token in the Meta dashboard and set INSTAGRAM_ACCESS_TOKEN.`);
+    lines.push("");
+  }
+  if (!s.apiAvailable) {
+    lines.push("No Instagram token was available this morning: the Graph API was not asked, so every figure below is unavailable.");
+    lines.push("");
+  }
   lines.push(`Published in the last 7 days: ${s.posts.length}`);
   for (const p of s.posts) {
     lines.push(`  ${p.slot_date ?? "—"}  ${p.format ?? ""}${p.evergreenRepeat ? " (evergreen repeat)" : ""}`);
@@ -144,10 +171,11 @@ export function renderWeeklyEmail(s: WeeklySummary): { subject: string; text: st
   lines.push("Queue");
   lines.push(`  Paused: ${h.paused ? "YES" : "no"}`);
   lines.push(`  Queued for the next 14 days: ${h.queuedNext14.length}`);
+  lines.push(`  Days covered: ${h.daysCovered} of 14`);
   lines.push(`  Days with nothing queued: ${h.gapsNext14.length ? h.gapsNext14.join(", ") : "none"}`);
   lines.push(`  Held for a person: ${h.holds.length}`);
   for (const x of h.holds) lines.push(`    ${x.slot_date ?? "pool"}  ${x.last_error ?? ""}`);
-  lines.push(`  Failed, will retry: ${h.fails.length}`);
+  lines.push(`  Failed, awaiting a run: ${h.fails.length}`);
   for (const x of h.fails) lines.push(`    ${x.slot_date ?? "pool"}  attempt ${x.attempts}  ${x.last_error ?? ""}`);
   lines.push(`  Evergreen pool: ${h.evergreenPool}`);
   lines.push(`  Last published: ${h.lastPublished ? `${h.lastPublished.slot_date} ${h.lastPublished.permalink ?? ""}` : "nothing yet"}`);
@@ -157,7 +185,8 @@ export function renderWeeklyEmail(s: WeeklySummary): { subject: string; text: st
   lines.push(s.attribution);
 
   const text = lines.join("\n");
-  const subject = `Social: ${s.posts.length} published, ${h.holds.length} held, ${h.gapsNext14.length} gap${h.gapsNext14.length === 1 ? "" : "s"} in the next 14 days`;
+  const tokenFlag = s.token && !s.token.refreshed ? "TOKEN REFRESH FAILED — " : "";
+  const subject = `Social: ${tokenFlag}${s.posts.length} published, ${h.holds.length} held, ${h.gapsNext14.length} gap${h.gapsNext14.length === 1 ? "" : "s"} in the next 14 days`;
   const html = `<pre style="font-family:ui-monospace,Menlo,monospace;font-size:13px;line-height:1.5;white-space:pre-wrap;color:#0f1b36;">${escapeHtml(text)}</pre>`;
   return { subject, text, html };
 }
