@@ -110,17 +110,17 @@ export default function PetPermission() {
 
             {decision === "approve-conditions" && (
               <div className="bg-white rounded-2xl border border-navy-100 p-6">
-                <h2 className="font-bold text-navy-800 mb-1">Conditions</h2>
+                <h2 id="pet-conditions-label" className="font-bold text-navy-800 mb-1">Conditions</h2>
                 <p className="text-xs text-navy-400 mb-3">Edit the conditions as needed — one per line</p>
-                <textarea value={conditions} onChange={e => setConditions(e.target.value)} rows={7} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
+                <textarea aria-labelledby="pet-conditions-label" value={conditions} onChange={e => setConditions(e.target.value)} rows={7} className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
               </div>
             )}
 
             {decision === "refuse" && (
               <div className="bg-white rounded-2xl border border-navy-100 p-6">
-                <h2 className="font-bold text-navy-800 mb-1">Reason for Refusal *</h2>
+                <h2 id="pet-refusal-label" className="font-bold text-navy-800 mb-1">Reason for Refusal *</h2>
                 <p className="text-xs text-navy-400 mb-3">Under the Renters' Rights Act, refusal must be reasonable and specific</p>
-                <textarea value={refusalReason} onChange={e => setRefusalReason(e.target.value)} rows={4}
+                <textarea aria-labelledby="pet-refusal-label" value={refusalReason} onChange={e => setRefusalReason(e.target.value)} rows={4}
                   placeholder="e.g. The property is located on the third floor of a purpose-built block of flats. The lease for the building prohibits animals, and this restriction is enforceable by the freeholder..."
                   className="w-full px-4 py-2.5 border border-navy-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
               </div>

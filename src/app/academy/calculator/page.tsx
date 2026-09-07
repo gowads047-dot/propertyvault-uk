@@ -36,6 +36,7 @@ function Slider({ label, value, min, max, step = 1000, onChange, prefix = "£", 
         <span style={{ fontSize: 13, fontWeight: 700, color: "#d4af37" }}>{prefix}{value.toLocaleString("en-GB")}{suffix}</span>
       </div>
       <input type="range" min={min} max={max} step={step} value={value}
+        aria-label={label}
         onChange={e => onChange(Number(e.target.value))}
         style={{ width: "100%", accentColor: "#d4af37" }} />
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
