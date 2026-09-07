@@ -37,17 +37,12 @@ export default function CookiesPage() {
             <h2 className="text-xl font-bold text-navy-800 mb-3">Cookies We Use</h2>
 
             <h3 className="text-lg font-bold text-navy-800 mt-4 mb-2">Strictly Necessary Cookies</h3>
-            <p>These cookies are essential for the Site to function and cannot be switched off. They include:</p>
-            <div className="overflow-x-auto mt-3">
-              <table className="w-full text-sm border-collapse">
-                <thead><tr className="bg-navy-50"><th className="text-left p-3 font-semibold">Cookie</th><th className="text-left p-3 font-semibold">Purpose</th><th className="text-left p-3 font-semibold">Duration</th></tr></thead>
-                <tbody>
-                  <tr className="border-b border-navy-100"><td className="p-3">__clerk_session</td><td className="p-3">Authentication session management</td><td className="p-3">Session</td></tr>
-                  <tr className="border-b border-navy-100"><td className="p-3">cookie_consent</td><td className="p-3">Stores your cookie preference</td><td className="p-3">1 year</td></tr>
-                  <tr><td className="p-3">__stripe_mid</td><td className="p-3">Fraud prevention for payments</td><td className="p-3">1 year</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <p>
+              None. The Site sets no cookie of its own that is required to make it work. Two things
+              people look for here are not cookies at all: your cookie choice is kept in your
+              browser&rsquo;s local storage under <code>cookie_consent</code>, and your Rentura or
+              Makan sign-in is held there too. Clearing site data resets both.
+            </p>
 
             <h3 className="text-lg font-bold text-navy-800 mt-6 mb-2">Analytics Cookies</h3>
             <p>These cookies help us understand how visitors interact with the Site. All data is aggregated and anonymised. We use these cookies only with your consent.</p>
@@ -57,7 +52,6 @@ export default function CookiesPage() {
                 <tbody>
                   <tr className="border-b border-navy-100"><td className="p-3">_ga</td><td className="p-3">Google Analytics — distinguishes users</td><td className="p-3">2 years</td></tr>
                   <tr className="border-b border-navy-100"><td className="p-3">_ga_*</td><td className="p-3">Google Analytics — maintains session state</td><td className="p-3">2 years</td></tr>
-                  <tr><td className="p-3">_gid</td><td className="p-3">Google Analytics — distinguishes users</td><td className="p-3">24 hours</td></tr>
                 </tbody>
               </table>
             </div>

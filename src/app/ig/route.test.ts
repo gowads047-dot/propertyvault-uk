@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { GET, LANDING, SOURCE_COOKIE } from "./route";
+import { GET, LANDING } from "./route";
 
 describe("the bio link", () => {
   it("redirects temporarily to the home page with Instagram UTM parameters", () => {
@@ -13,14 +13,17 @@ describe("the bio link", () => {
     expect(res.headers.get("location")).toBe(LANDING);
   });
 
-  it("sets the acquisition cookie for thirty days, site-wide, Secure and Lax", () => {
-    const cookie = GET().headers.get("set-cookie")!;
-    expect(cookie).toContain(`${SOURCE_COOKIE}=instagram`);
-    expect(cookie).toContain("Path=/");
-    expect(cookie).toContain(`Max-Age=${30 * 86_400}`);
-    expect(cookie).toMatch(/SameSite=Lax/i);
-    expect(cookie).toContain("Secure");
-    expect(cookie).toContain("HttpOnly");
+  /**
+   * It used to set pv_src here, unconditionally. Attribution is not strictly
+   * necessary, so PECR reg 6 wants consent first — and this redirect runs
+   * before the visitor has seen the banner. /cookies did not declare it
+   * either. Nothing read it, so it goes until it has both a reader and a
+   * consent path; see the note on the route.
+   */
+  it("sets no cookie, because consent has not been asked for yet", () => {
+    const res = GET();
+    expect(res.headers.get("set-cookie")).toBeNull();
+    expect(res.headers.get("location")).toContain("utm_source=instagram");
   });
 
   // A 308 is cached by the browser; the cookie would then be set exactly once.

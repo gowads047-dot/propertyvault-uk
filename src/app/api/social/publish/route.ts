@@ -56,6 +56,31 @@ export async function publishWith(
     clock?: PublishDeps["clock"];
   },
 ) {
+  // ── Paused, before anything else ─────────────────────────────────────────
+  //
+  // publisher.ts states the contract as rule 1: "Paused means paused. Nothing
+  // is read, nothing is posted." It enforces that inside publishQueued — but
+  // the token check below runs before publishQueued is ever called, so a
+  // paused pipeline still read two settings, emailed the operator and
+  // returned 500.
+  //
+  // That matters most in exactly the state this launched in: no token
+  // configured, so the run stops at the token every night and emails about
+  // it. Pausing is the one lever for that noise, and it did not reach.
+  //
+  // Checked here rather than moved, because publishQueued is called from the
+  // tests and the backfill too and must keep its own guard.
+  if ((await store.getSetting("paused")) === true) {
+    await store.logEvent({
+      post_id: null, level: "info", event: "skipped_paused",
+      detail: { reason: "checked before the token, so a paused run stays silent" },
+    });
+    return NextResponse.json(
+      { posted: false, outcome: "paused", reason: "social_settings.paused is true" },
+      { status: 200 },
+    );
+  }
+
   const alertTo = await store.getSetting("alert_email");
   const to = typeof alertTo === "string" && alertTo.includes("@") ? alertTo : CONTACT_EMAIL;
   const envToken = process.env.INSTAGRAM_ACCESS_TOKEN?.trim() || undefined;
