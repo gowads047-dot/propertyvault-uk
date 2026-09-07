@@ -83,6 +83,33 @@ describe("configuration", () => {
     expect(body.error).toContain("Nothing was posted");
   });
 
+  /**
+   * publisher.ts states rule 1 as "Paused means paused. Nothing is read,
+   * nothing is posted", and enforces it inside publishQueued. The token check
+   * in this route ran before publishQueued was ever called, so a paused
+   * pipeline still read two settings, emailed the operator and returned 500.
+   *
+   * It mattered most in the state this shipped in — no token configured, so
+   * every night stopped at the token and sent the same email. Pausing is the
+   * one lever against that noise and it did not reach the thing making it.
+   */
+  it("stays silent when paused, even with no token to complain about", async () => {
+    const sent: { subject: string; text: string }[] = [];
+    const store = memoryStore({ posts: [today()], settings: { paused: true } });
+
+    const res = await publishWith(store, adapters({
+      sendAlert: () => async m => { sent.push(m); return { ok: true }; },
+    }));
+
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.outcome).toBe("paused");
+    expect(body.posted).toBe(false);
+    expect(sent, "a paused run must not email anybody").toEqual([]);
+    expect(store.events.map(e => e.event)).toEqual(["skipped_paused"]);
+    expect(store.posts[0].status).toBe("queued");
+  });
+
   // Email does not need the Instagram token, so the no-token evening is
   // the one alert that can always be sent.
   it("fails with 500, and emails, when there is no token anywhere", async () => {
