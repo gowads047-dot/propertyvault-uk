@@ -5,7 +5,7 @@ const FEATURES = [
   { icon: "📊", title: "Portfolio Dashboard", desc: "See your full portfolio at a glance. Net rent, mortgage balances, yield, occupancy, and upcoming renewals — live." },
   { icon: "👤", title: "Tenant Management", desc: "Manage check-ins, check-outs, rent collection, references, and communication from one screen." },
   { icon: "🔧", title: "Maintenance Tracker", desc: "Log jobs, assign contractors, track costs, and get reminded before things become emergencies." },
-  { icon: "📋", title: "Compliance Hub", desc: "Gas, electric, EPC, HMO licensing, and right-to-rent — never miss a renewal with automated alerts." },
+  { icon: "📋", title: "Compliance Hub", desc: "Gas, electric, EPC, HMO licensing, and right-to-rent — automated alerts before each renewal is due." },
   { icon: "💰", title: "Financial Centre", desc: "P&L per property, mortgage tracker, tax summaries, and cashflow projections — accountant-ready exports." },
   { icon: "📄", title: "Documents Vault", desc: "Store tenancy agreements, ASTs, inventories, inspection reports, and invoices — all searchable." },
   { icon: "🤖", title: "AI Property Assistant", desc: "Ask anything about your portfolio. Log maintenance, record payments, and get answers — in plain English." },
@@ -277,7 +277,7 @@ export default function RenturaPage() {
             {/* Story text */}
             <div>
               <h2 style={{ fontFamily: "var(--font-family-heading)", fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 900, color: "#0f1b2d", lineHeight: 1.15, marginBottom: 28, letterSpacing: "-0.025em" }}>
-                Most landlords are managing their portfolio across four places at once.
+                A landlord with a few properties is often managing them across four places at once.
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 18, fontSize: 15, color: "rgba(15,27,45,0.65)", lineHeight: 1.8 }}>
                 <p>
@@ -287,7 +287,7 @@ export default function RenturaPage() {
                   A missed EPC renewal. A deposit not protected on time. A tenant move-out with no proper inventory. The cost of small oversights in property management is disproportionately high — both financially and legally.
                 </p>
                 <p>
-                  Rentura was built to be the one place everything lives. Every property gets its own <strong style={{ color: "#0f1b2d" }}>Property Passport</strong> — compliance documents, tenancy history, maintenance records, EPC status, all searchable and shareable. The compliance calendar sends 60-day alerts before anything expires. The AI assistant answers questions about your own portfolio in plain English.
+                  Rentura was built to be the one place everything lives. Every property gets its own <strong style={{ color: "#0f1b2d" }}>Property Passport</strong> — compliance documents, tenancy history, maintenance records, EPC status, all searchable and shareable. The compliance calendar emails you 45, 14 and 3 days before anything expires. The AI assistant answers questions about your own portfolio in plain English.
                 </p>
                 <p>
                   It&apos;s not a spreadsheet replacement. It&apos;s the operating system for landlords who are done running a business on sticky notes.
@@ -298,7 +298,7 @@ export default function RenturaPage() {
             {/* 4 problem/solution cards */}
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                { before: "Compliance renewals missed", after: "60-day alerts before anything expires" },
+                { before: "Compliance renewals missed", after: "Alerts 45, 14 and 3 days before anything expires" },
                 { before: "Documents scattered across folders", after: "One searchable vault per property" },
                 { before: "Portfolio numbers spread across spreadsheets", after: "Live P&L per property, one dashboard" },
                 { before: "Maintenance logged in WhatsApp", after: "Jobs tracked with costs, photos & status" },
@@ -322,7 +322,7 @@ export default function RenturaPage() {
       {/* FOOTER CTA */}
       <section style={{ background: "#0f1b2d", padding: "64px 24px", textAlign: "center" }}>
         <h2 style={{ fontSize: "clamp(24px,4vw,38px)", fontWeight: 900, color: "white", marginBottom: 12, fontFamily: "var(--font-family-heading)" }}>Ready to organise your portfolio?</h2>
-        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.62)", marginBottom: 32 }}>Join UK landlords already using Rentura to manage smarter.</p>
+        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.62)", marginBottom: 32 }}>Every certificate, mortgage and tenancy in one place, with alerts before anything runs out. 30 days free.</p>
         <Link href="/rentura/join" style={{ display: "inline-flex", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "15px 42px", borderRadius: 12, textDecoration: "none" }}>
           Start free 30-day trial →
         </Link>
