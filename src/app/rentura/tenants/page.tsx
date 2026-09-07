@@ -478,16 +478,16 @@ export default function RenturaTenants() {
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))", gap: 16, marginBottom: 16 }}>
                 <Field label="First name" required>
-                  <input aria-label="James" value={form.first_name || ""} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))} placeholder="James" style={inp} />
+                  <input value={form.first_name || ""} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))} placeholder="James" style={inp} />
                 </Field>
                 <Field label="Last name" required>
-                  <input aria-label="Parker" value={form.last_name || ""} onChange={e => setForm(f => ({ ...f, last_name: e.target.value }))} placeholder="Parker" style={inp} />
+                  <input value={form.last_name || ""} onChange={e => setForm(f => ({ ...f, last_name: e.target.value }))} placeholder="Parker" style={inp} />
                 </Field>
                 <Field label="Email">
                   <input type="email" value={form.email || ""} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="james@email.com" style={inp} />
                 </Field>
                 <Field label="Phone">
-                  <input aria-label="+44 7700 000000" value={form.phone || ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+44 7700 000000" style={inp} />
+                  <input value={form.phone || ""} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="+44 7700 000000" style={inp} />
                 </Field>
                 <Field label="Monthly rent (£)">
                   <input type="number" value={form.monthly_rent || ""} onChange={e => setForm(f => ({ ...f, monthly_rent: parseFloat(e.target.value) || undefined }))} placeholder="950" style={inp} />

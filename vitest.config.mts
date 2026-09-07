@@ -37,5 +37,27 @@ export default defineConfig({
      * machine or a cold filesystem while still failing fast on a real hang.
      */
     hookTimeout: 60_000,
+
+    /**
+     * Also measured.
+     *
+     * Five suites walk the whole source tree and read every .tsx file —
+     * api-calls, form-labels, form-submission, internal-links and
+     * vetting-claims. Two of those are recent, and together they pushed the
+     * suite past the default 5,000ms testTimeout: run on their own the three
+     * slowest finish in 3.5s, but with the other suites competing for cores
+     * the worst measured run was 9,408ms, and four unrelated tests failed as
+     * timeouts while passing individually.
+     *
+     * A shared read cache would be the better fix, except vitest isolates
+     * module state per test file by default, so each suite would still read
+     * every file once. Turning isolation off to share one cache trades a real
+     * correctness guarantee for I/O, which is the wrong way round.
+     *
+     * 30s is ~3x the worst measured run, on the same reasoning as the hook
+     * timeout above: room for a slower machine or a cold filesystem, while
+     * still failing fast on a genuine hang.
+     */
+    testTimeout: 30_000,
   },
 });

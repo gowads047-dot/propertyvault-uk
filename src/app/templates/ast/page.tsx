@@ -786,10 +786,10 @@ export default function ASTPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={LABEL}>{f.rentFrequency === "monthly" ? "Rent due day (1–28)" : "Rent due (day of week)"}</label>
+                  <label htmlFor="ast-rent-due-day" className={LABEL}>{f.rentFrequency === "monthly" ? "Rent due day (1–28)" : "Rent due (day of week)"}</label>
                   {f.rentFrequency === "monthly"
-                    ? <input type="number" min="1" max="28" value={f.rentDueDay} onChange={e => set("rentDueDay", e.target.value)} className={INPUT} />
-                    : <select value={f.rentDueDay} onChange={e => set("rentDueDay", e.target.value)} className={SELECT}>
+                    ? <input id="ast-rent-due-day" type="number" min="1" max="28" value={f.rentDueDay} onChange={e => set("rentDueDay", e.target.value)} className={INPUT} />
+                    : <select id="ast-rent-due-day" value={f.rentDueDay} onChange={e => set("rentDueDay", e.target.value)} className={SELECT}>
                         {["Monday","Tuesday","Wednesday","Thursday","Friday"].map(d => <option key={d}>{d}</option>)}
                       </select>
                   }
@@ -861,6 +861,7 @@ export default function ASTPage() {
                 <div key={key} className="flex items-center justify-between py-2 border-b border-navy-100">
                   <span className="text-sm font-medium text-navy-700">{label}</span>
                   <select value={f[key] as string} onChange={e => set(key, e.target.value)}
+                    aria-label={`${label} — who pays`}
                     className="text-xs font-semibold border border-navy-200 rounded-lg px-3 py-1.5 bg-white text-navy-800 focus:outline-none">
                     <option value="tenant">Tenant pays</option>
                     <option value="landlord">Landlord pays</option>

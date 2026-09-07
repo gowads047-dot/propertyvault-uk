@@ -568,6 +568,7 @@ export default function TaxIntelligence() {
                               <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                                 <span style={{ fontSize: 12, color: INK2 }}>{field === "agent_pct" ? "" : "£"}</span>
                                 <input type="number" value={adj[field] || ""} min={0} onChange={e => updateAdj(l.property.id, field, parseFloat(e.target.value) || 0)}
+                                  aria-label={`${label} for ${l.property.address.split(",")[0]}`}
                                   placeholder="0"
                                   style={{ width: 80, border: `1px solid ${BORDER}`, borderRadius: 6, padding: "4px 8px", fontSize: 12, fontFamily: "inherit", background: "white", color: INK, textAlign: "right" }} />
                                 {field === "agent_pct" && <span style={{ fontSize: 11, color: INK2 }}>%</span>}
@@ -794,16 +795,17 @@ export default function TaxIntelligence() {
                 return (
                   <div key={item.key} style={{ borderBottom: `1px solid ${BORDER}`, paddingBottom: 8, marginBottom: 8 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <input type="checkbox" checked={state?.checked ?? false} onChange={() => toggleMissed(item.key)}
+                      <input type="checkbox" id={`missed-${item.key}`} checked={state?.checked ?? false} onChange={() => toggleMissed(item.key)}
                         style={{ width: 15, height: 15, accentColor: CTA, cursor: "pointer", flexShrink: 0 }} />
-                      <label style={{ fontSize: 12, color: state?.checked ? INK : INK2, fontWeight: state?.checked ? 700 : 400, cursor: "pointer", flex: 1 }}
-                        onClick={() => toggleMissed(item.key)}>
+                      <label htmlFor={`missed-${item.key}`}
+                        style={{ fontSize: 12, color: state?.checked ? INK : INK2, fontWeight: state?.checked ? 700 : 400, cursor: "pointer", flex: 1 }}>
                         {item.label}
                       </label>
                       {state?.checked && (
                         <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
                           <span style={{ fontSize: 11, color: INK2 }}>£</span>
                           <input type="number" value={state.amount || ""} min={0} onChange={e => updateMissedAmt(item.key, parseFloat(e.target.value) || 0)}
+                            aria-label={`${item.label} — amount in £`}
                             style={{ width: 70, border: `1px solid ${BORDER}`, borderRadius: 6, padding: "3px 6px", fontSize: 12, fontFamily: "inherit", textAlign: "right" }} />
                         </div>
                       )}

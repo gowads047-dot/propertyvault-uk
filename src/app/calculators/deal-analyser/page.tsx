@@ -1603,7 +1603,7 @@ export default function DealAnalyserPage() {
                     <h4 className="font-bold text-navy-800 text-sm">5-Year Projection</h4>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span className="text-xs text-navy-500">Growth:</span>
-                      <select value={capitalGrowthPct} onChange={e => setCapGrowth(signed(e.target.value))} className="text-xs font-semibold border border-navy-200 rounded-lg px-2 py-1 bg-white focus:outline-none">
+                      <select value={capitalGrowthPct} onChange={e => setCapGrowth(signed(e.target.value))} aria-label="Growth per year" className="text-xs font-semibold border border-navy-200 rounded-lg px-2 py-1 bg-white focus:outline-none">
                         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(v => <option key={v} value={v}>{v}%/yr</option>)}
                       </select>
                     </div>
