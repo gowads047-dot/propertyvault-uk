@@ -102,6 +102,15 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "Pointing redirects and email links at a specific deployment.",
     withoutIt: "Falls back to the canonical site URL, which is correct for production.",
   },
+  NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: {
+    required: false,
+    enables:
+      "Proving ownership of the site to Google Search Console, which is the only " +
+      "source of impressions, average position and the queries the site surfaces for.",
+    withoutIt:
+      "No Search Console property, so no query data at all — and it does not " +
+      "backfill, so the history starts whenever it is set rather than now.",
+  },
 };
 
 /** Names the application cannot start usefully without. */
