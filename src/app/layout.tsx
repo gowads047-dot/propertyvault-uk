@@ -75,6 +75,27 @@ export const metadata: Metadata = {
     images: ["https://www.propertyvaultuk.co.uk/opengraph-image"],
   },
   robots: { index: true, follow: true },
+
+  /**
+   * Search Console ownership.
+   *
+   * The site had no verification of any kind — no meta tag, no HTML file, and
+   * only an SPF record in DNS. So either Search Console was never connected or
+   * its verification has lapsed, and either way there is no impressions,
+   * position or query data being collected. That data does not backfill: it
+   * starts the day ownership is proven, so every day without it is a day of
+   * query history that cannot be recovered.
+   *
+   * Driven by an environment variable rather than committed, because the code
+   * belongs to one Search Console property rather than to this codebase — a
+   * preview deployment or a fork should not claim ownership of the live site.
+   * Undefined omits the tag entirely; Next renders nothing for it.
+   *
+   * DNS TXT verification at the registrar is stronger, because it covers every
+   * subdomain and both protocols at once and cannot be lost in a redeploy.
+   * This is the two-minute version.
+   */
+  verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
 };
 
 const jsonLd = {
