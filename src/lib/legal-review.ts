@@ -59,6 +59,9 @@ export const TERMS = [
   { id: "ast", pattern: /\bassured shorthold tenanc\w*/gi, why: "Assured shorthold tenancies cannot be granted for new lets." },
   { id: "fixed-term", pattern: /\bfixed[- ]term tenanc\w*/gi, why: "New tenancies are periodic; a fixed term cannot be imposed." },
   { id: "no-fault", pattern: /\bno[- ]fault eviction\w*/gi, why: "The route this describes no longer exists." },
+  // Dates, a fee and two penalty tiers, all drawn from trade-body guidance
+  // rather than the regulations, and all liable to change before December.
+  { id: "prs-database", pattern: /\b(?:PRS|landlord|private rented sector) database\b/gi, why: "Registration dates, the £65 fee and the £7,000 / £40,000 penalty tiers are from NRLA guidance, not primary legislation, and the scheme is not yet open." },
 ] as const;
 
 export type TermId = (typeof TERMS)[number]["id"];
