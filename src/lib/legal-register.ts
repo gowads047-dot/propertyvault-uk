@@ -85,4 +85,6 @@ export const REGISTER: RegisterEntry[] = [
   { file: "src/app/templates/renters-rights-notice/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/templates/renters-rights-notice/page.tsx", term: "no-fault", count: 1, status: "not-reviewed" },
   { file: "src/app/templates/section-8-notice/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
+  { file: "src/app/blog/prs-ombudsman-landlord-registration/page.tsx", term: "prs-database", count: 5, status: "not-reviewed" },
+  { file: "src/app/landlords/prs-database/page.tsx", term: "prs-database", count: 12, status: "not-reviewed" },
 ];

@@ -178,6 +178,20 @@ export const SERVICES: Service[] = [
     cta: "Start free for 30 days",
   },
   {
+    slug: "prs-readiness",
+    name: "PRS Database Readiness",
+    summary: "England's landlord database opens 15 December 2026, West Midlands first. A person looks at what you hold and tells you what is missing before your region is called.",
+    stage: "manage",
+    // Proposed as a priced "PRS-Ready Pack" at £12 a property and Rentura at
+    // £39 a month. Neither figure exists in Stripe — Rentura is £9.99 — and
+    // this catalogue refuses a price on anything not buyable today. A person
+    // answers each request and names a price, if there is one, before doing
+    // any work. Promote to "live" with a real price when there is one.
+    readiness: "request",
+    href: "/landlords/prs-database",
+    cta: "Ask what you are missing",
+  },
+  {
     slug: "compliance-care",
     name: "Compliance Care",
     summary: "We track the certificates and dates for you and book the renewals before they lapse.",
