@@ -160,6 +160,17 @@ export async function publishQueued(deps: PublishDeps): Promise<PublishSummary> 
 
   const done = todays.find(p => p.status === "published");
   if (done) {
+    // Logged, where it used to return silently. Four Reels went out over
+    // four nights, every one published by a process outside this codebase
+    // that wrote its own event rows — and nothing in social_events could say
+    // whether this cron had fired at all, because finding the day already
+    // done left no trace. A run that did nothing is still a run, and "did
+    // the cron fire tonight" is the first question this table exists to
+    // answer.
+    await db.logEvent({
+      post_id: done.id, level: "info", event: "already_published",
+      detail: { date: today, published_at: done.published_at, note: "found done on arrival; nothing to do" },
+    });
     return finish({
       outcome: "already-published", postId: done.id,
       mediaId: done.ig_media_id ?? undefined, permalink: done.permalink, attempts: done.attempts,
