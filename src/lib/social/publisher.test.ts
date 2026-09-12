@@ -145,6 +145,15 @@ describe("the ordinary evening", () => {
     expect(again.mediaId).toBe("m-1");
     expect(f.calls.length).toBe(before);
     expect(posts(d)).toHaveLength(1);
+
+    // A no-op is still a run, and it leaves a row saying so. Without this,
+    // four nights of publishing by a process outside this codebase left no
+    // way to tell whether the cron had fired at all.
+    expect(events(d).filter(e => e === "already_published")).toHaveLength(1);
+    const store = d.db as ReturnType<typeof memoryStore>;
+    const row = store.events.find(e => e.event === "already_published")!;
+    expect(row.post_id).toBe(posts(d)[0].id);
+    expect(row.detail).toMatchObject({ date: TODAY });
   });
 
   it("uses the London date, so a summer evening run finds the right row", async () => {
