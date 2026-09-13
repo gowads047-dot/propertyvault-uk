@@ -14,6 +14,7 @@
     "check:env": "node scripts/check-env.mjs",
     "check:db": "node scripts/check-db.mjs",
     "legal:review": "node scripts/legal-review.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "social:seed": "tsx --env-file=.env.local scripts/social-seed.mjs",
     "social:pause": "tsx --env-file=.env.local scripts/social-pause.mjs"
   },

@@ -41,6 +41,7 @@ const sections = [
     { href: "/property-finance", label: "Property Finance" },
     { href: "/market-insights", label: "Market Insights" },
     { href: "/case-studies", label: "Case Studies" },
+    { href: "/property-news", label: "What Changed" },
     { href: "/makan", label: "Makan" },
   ]},
   // FAQ, References, Complaints and Accessibility were reachable only by
