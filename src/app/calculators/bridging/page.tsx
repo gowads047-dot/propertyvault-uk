@@ -69,7 +69,7 @@ export default function BridgingPage() {
                   <button onClick={() => setInterestType("serviced")} className={`py-2 rounded-lg text-sm font-medium ${interestType === "serviced" ? "bg-navy-600 text-white" : "bg-navy-50 text-navy-600"}`}>Serviced (monthly)</button>
                 </div>
               </div>
-              <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Fees</h3>
+              <h2 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Fees</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Arrangement Fee (%)</label><input aria-label="Arrangement Fee" type="number" min="0" step={0.5} value={arrangementFee} onChange={e => setArrangementFee(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Exit Fee (%)</label><input aria-label="Exit Fee" type="number" min="0" step={0.5} value={exitFee} onChange={e => setExitFee(nonNegative(e.target.value))} className="w-full px-3 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
@@ -90,7 +90,7 @@ export default function BridgingPage() {
                 </div>
               </div>
               <div className="bg-white rounded-xl border border-navy-100 p-5">
-                <h4 className="font-bold text-navy-800 mb-3">Cost Breakdown</h4>
+                <h3 className="font-bold text-navy-800 mb-3">Cost Breakdown</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span>Loan amount</span><span>{fmt(loanAmount)}</span></div>
                   <div className="flex justify-between"><span>Interest ({termMonths} months × {monthlyRate}%)</span><span>{fmt(results.totalInterest)}</span></div>

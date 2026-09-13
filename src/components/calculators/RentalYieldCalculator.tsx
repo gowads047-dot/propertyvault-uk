@@ -110,7 +110,7 @@ export function RentalYieldCalculator() {
         </div>
 
         <div className="bg-white rounded-xl border border-navy-100 p-6">
-          <h4 className="font-bold text-navy-800 mb-4">Income &amp; Expense Breakdown</h4>
+          <h2 className="font-bold text-navy-800 mb-4">Income &amp; Expense Breakdown</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between py-1"><span className="text-navy-600">Annual Rent (gross)</span><span className="font-semibold text-navy-800">{fmt(results.annualRent)}</span></div>
             <div className="flex justify-between py-1"><span className="text-navy-600">Adjusted for Voids</span><span className="font-semibold text-navy-800">{fmt(results.adjustedRent)}</span></div>

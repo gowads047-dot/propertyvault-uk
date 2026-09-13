@@ -96,7 +96,7 @@ export function StampDutyCalculator() {
         {/* Visual band bar */}
         {results.totalTax > 0 && (
           <div className="bg-white rounded-xl border border-navy-100 p-6 mb-4">
-            <h4 className="font-bold text-navy-800 mb-3 text-sm">Tax by band</h4>
+            <h2 className="font-bold text-navy-800 mb-3 text-sm">Tax by band</h2>
             <div className="space-y-2">
               {results.bands.filter(b => b.tax > 0).map((band, i) => {
                 const colors = ["#0f1b36", "#c9a84c", "#6b7280", "#3b82f6", "#ef4444"];
@@ -118,7 +118,7 @@ export function StampDutyCalculator() {
         )}
 
         <div className="bg-white rounded-xl border border-navy-100 p-6">
-          <h4 className="font-bold text-navy-800 mb-4">Tax Band Breakdown</h4>
+          <h2 className="font-bold text-navy-800 mb-4">Tax Band Breakdown</h2>
           <div className="space-y-3">
             {results.bands.map((band, i) => (
               <div key={i} className="flex justify-between items-center text-sm py-2 border-b border-navy-50 last:border-0">

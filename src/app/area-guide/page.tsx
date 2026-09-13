@@ -51,7 +51,7 @@ export default function AreaGuidePage() {
               <a key={t.name} href={t.url} target="_blank" rel="noopener noreferrer"
                 className="flex items-start gap-4 p-5 bg-white rounded-xl border border-navy-100 hover:shadow-lg hover:border-gold-400/30 transition-all">
                 <div className="flex-1">
-                  <h3 className="font-bold text-navy-800 mb-1">{t.name}</h3>
+                  <h2 className="font-bold text-navy-800 mb-1">{t.name}</h2>
                   <p className="text-sm text-navy-500 mb-2">{t.desc}</p>
                   <p className="text-xs text-navy-400">Source: {t.source}</p>
                 </div>

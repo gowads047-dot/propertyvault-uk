@@ -106,7 +106,7 @@ export default function AffordabilityPage() {
                 </div>
               </div>
               <div className="bg-white rounded-xl border border-navy-100 p-6">
-                <h4 className="font-bold text-navy-800 mb-3">Monthly Budget Check</h4>
+                <h2 className="font-bold text-navy-800 mb-3">Monthly Budget Check</h2>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-navy-600">Gross monthly income</span><span className="font-semibold">{fmt(results.monthlyIncome)}</span></div>
                   <div className="flex justify-between text-red-600"><span>Mortgage payment</span><span>-{fmt(results.monthlyPayment)}</span></div>

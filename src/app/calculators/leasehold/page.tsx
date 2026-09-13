@@ -203,14 +203,17 @@ export default function LeaseholdCalculatorPage() {
 
       <section style={{ background: "#f8f9fc", paddingBottom: 64 }}>
         <div className="container-max px-4" style={{ paddingTop: 24 }}>
+          {/* min-w-0 on the columns: grid items default to min-width:auto, so the
+              scrollable tab row inside set a floor on the whole track and the
+              page scrolled sideways on a phone instead of the row. */}
           <div className="grid lg:grid-cols-5 gap-6">
 
             {/* ── INPUTS ─────────────────────────────────────── */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-2 space-y-4 min-w-0">
 
               {/* Property */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">🏠 Property Details</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">🏠 Property Details</h2>
                 <div className="space-y-3">
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Property Value (current, with lease)</span>
@@ -229,7 +232,7 @@ export default function LeaseholdCalculatorPage() {
 
               {/* Ground Rent */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">💰 Ground Rent</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">💰 Ground Rent</h2>
                 <div className="space-y-3">
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Annual ground rent</span>
@@ -253,7 +256,7 @@ export default function LeaseholdCalculatorPage() {
 
               {/* Service Charge & Settings */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">⚙️ Costs & Settings</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">⚙️ Costs & Settings</h2>
                 <div className="space-y-3">
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Service charge £/month</span>
@@ -270,7 +273,7 @@ export default function LeaseholdCalculatorPage() {
 
               {/* Mortgage eligibility quick check */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-3">🏦 Mortgage Eligibility</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-3">🏦 Mortgage Eligibility</h2>
                 <div className="space-y-2">
                   {[
                     { label: "Most high-street lenders (85+ yrs)",   pass: calc.majorLenders },
@@ -290,7 +293,7 @@ export default function LeaseholdCalculatorPage() {
             </div>
 
             {/* ── RESULTS ────────────────────────────────────── */}
-            <div className="lg:col-span-3 space-y-4">
+            <div className="lg:col-span-3 space-y-4 min-w-0">
 
               {/* 4 key metrics */}
               <div className="grid grid-cols-2 gap-3">
@@ -329,7 +332,7 @@ export default function LeaseholdCalculatorPage() {
 
                   {/* Value comparison */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-4">📊 Value Analysis</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-4">📊 Value Analysis</h3>
                     <div className="space-y-3">
                       {[
                         { label: "Current value (with lease)", value: calc.valueWithLease, bar: 100, color: "#0f1b36" },
@@ -358,7 +361,7 @@ export default function LeaseholdCalculatorPage() {
 
                   {/* Annual cost summary */}
                   <div className="bg-navy-800 rounded-2xl p-5 text-white">
-                    <h4 className="font-bold text-sm text-white/50 mb-3">Annual Leasehold Costs</h4>
+                    <h3 className="font-bold text-sm text-white/50 mb-3">Annual Leasehold Costs</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between"><span className="text-white/60">Ground rent</span><span className="font-semibold text-amber-400">{fmt(groundRentAnnual)}/yr</span></div>
                       <div className="flex justify-between"><span className="text-white/60">Service charge</span><span className="font-semibold">{fmt(calc.annualServiceCharge)}/yr</span></div>

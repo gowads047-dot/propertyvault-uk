@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 export const metadata: Metadata = {
-  title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
+  title: "UK Renting Strategies — Social Housing, Guaranteed Rent, DSS",
   description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/renting-strategies/" },
   openGraph: {
-    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
+    title: "UK Renting Strategies — Social Housing, Guaranteed Rent, DSS",
     description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/renting-strategies/",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Renting Strategies UK — Social Housing, Guaranteed Rent, DSS & More",
+    title: "UK Renting Strategies — Social Housing, Guaranteed Rent, DSS",
     description: "Complete guide to every UK renting strategy. Social housing leasing, guaranteed rent, DSS/housing benefit tenants, council leasing, rent-to-rent, corporate lets, and more.",
   },
 };
@@ -207,7 +207,7 @@ export default function RentingStrategiesPage() {
                 <p className="text-sm text-navy-600 leading-relaxed mb-5">{s.desc}</p>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div className="bg-green-50 rounded-lg p-4">
-                    <h4 className="font-bold text-green-800 text-sm mb-2">Advantages</h4>
+                    <h3 className="font-bold text-green-800 text-sm mb-2">Advantages</h3>
                     <ul className="space-y-1">
                       {s.pros.map((p) => (
                         <li key={p} className="flex items-start gap-2 text-xs text-green-700">
@@ -218,7 +218,7 @@ export default function RentingStrategiesPage() {
                     </ul>
                   </div>
                   <div className="bg-red-50 rounded-lg p-4">
-                    <h4 className="font-bold text-red-800 text-sm mb-2">Considerations</h4>
+                    <h3 className="font-bold text-red-800 text-sm mb-2">Considerations</h3>
                     <ul className="space-y-1">
                       {s.cons.map((c) => (
                         <li key={c} className="flex items-start gap-2 text-xs text-red-700">

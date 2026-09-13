@@ -52,7 +52,7 @@ export function CashFlowCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Income</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Income</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Gross Monthly Rent</label>
           <input aria-label="Gross Monthly Rent" type="range" min={400} max={5000} step={25} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -64,7 +64,7 @@ export function CashFlowCalculator() {
           <p className="text-center font-bold text-navy-800">{voidWeeksPerYear} week{voidWeeksPerYear !== 1 ? "s" : ""}</p>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Monthly Costs</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Monthly Costs</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Mortgage / Finance Payment</label>
           <input aria-label="Mortgage / Finance Payment" type="range" min={0} max={3000} step={25} value={mortgagePayment} onChange={e => setMortgagePayment(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -103,7 +103,7 @@ export function CashFlowCalculator() {
           </div>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Investment Details</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Investment Details</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Purchase Price</label>
           <input aria-label="Purchase Price" type="range" min={50000} max={1000000} step={5000} value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full accent-gold-500" />

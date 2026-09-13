@@ -39,7 +39,7 @@ export function LandlordTaxCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Annual Rental Income</label>
           <input aria-label="Annual Rental Income" type="range" min={3000} max={60000} step={500} value={rentalIncome} onChange={e => setRentalIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -55,7 +55,7 @@ export function LandlordTaxCalculator() {
           <input aria-label="Annual Mortgage Interest" type="range" min={0} max={30000} step={250} value={mortgageInterest} onChange={e => setMortgageInterest(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(mortgageInterest)}</p>
         </div>
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Your Other Income</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Your Other Income</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Employment / Self-Employment Income</label>
           <input aria-label="Employment / Self-Employment Income" type="range" min={0} max={150000} step={1000} value={otherIncome} onChange={e => setOtherIncome(nonNegative(e.target.value))} className="w-full accent-gold-500" />

@@ -38,7 +38,7 @@ export function BtlMortgageCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Property & Rental Income</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Property & Rental Income</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Property Value</label>
           <input aria-label="Property Value" type="range" min={50000} max={1000000} step={5000} value={propertyValue} onChange={e => setPropertyValue(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -54,7 +54,7 @@ export function BtlMortgageCalculator() {
           <input aria-label="Monthly Rental Income" type="range" min={400} max={5000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month · {fmt(results.annualRent)}/year</p>
         </div>
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Lender Stress Test Criteria</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Lender Stress Test Criteria</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Actual Mortgage Rate</label>
           <input aria-label="Actual Mortgage Rate" type="range" min={2} max={9} step={0.25} value={actualRate} onChange={e => setActualRate(nonNegative(e.target.value))} className="w-full accent-gold-500" />

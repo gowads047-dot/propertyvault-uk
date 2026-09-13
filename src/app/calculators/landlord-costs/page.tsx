@@ -94,7 +94,7 @@ export default function LandlordCostsPage() {
                   </select>
                 </div>
               </div>
-              <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Monthly Costs (adjust to your figures)</h3>
+              <h2 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Monthly Costs (adjust to your figures)</h2>
               <div className="space-y-2">
                 {costs.map((c) => (
                   <div key={c.label} className="flex items-center justify-between">
@@ -118,7 +118,7 @@ export default function LandlordCostsPage() {
                 </div>
               </div>
               <div className="bg-white rounded-xl border border-navy-100 p-5">
-                <h4 className="font-bold text-navy-800 mb-3">Profit &amp; Loss Summary</h4>
+                <h3 className="font-bold text-navy-800 mb-3">Profit &amp; Loss Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-navy-600">Annual rent (gross)</span><span className="font-semibold">{fmt(results.annualRent)}</span></div>
                   <div className="flex justify-between"><span className="text-navy-600">Less void adjustment</span><span className="font-semibold text-red-600">-{fmt(results.annualRent - results.effectiveRent)}</span></div>

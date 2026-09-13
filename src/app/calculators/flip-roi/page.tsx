@@ -60,14 +60,14 @@ export default function FlipROIPage() {
         <div className="container-max">
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-4">
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Purchase</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Purchase</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Purchase Price</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Purchase Price" type="number" min="0" value={purchasePrice} onChange={e => setPurchasePrice(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Stamp Duty</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Stamp Duty" type="number" min="0" value={stampDuty} onChange={e => setStampDuty(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Legal Fees (purchase)</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Legal Fees (purchase)" type="number" min="0" value={legalFees} onChange={e => setLegalFees(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               </div>
 
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Refurbishment</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Refurbishment</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Refurb Cost</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Refurb Cost" type="number" min="0" value={refurbCost} onChange={e => setRefurbCost(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Finance Costs</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Finance Costs" type="number" min="0" value={financeCost} onChange={e => setFinanceCost(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
@@ -75,7 +75,7 @@ export default function FlipROIPage() {
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Monthly Holding Costs</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Monthly Holding Costs" type="number" min="0" value={holdingCosts} onChange={e => setHoldingCosts(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
               </div>
 
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Sale</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Sale</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Expected Sale Price</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Expected Sale Price" type="number" min="0" value={salePrice} onChange={e => setSalePrice(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Agent Fee (%)</label><input aria-label="Agent Fee" type="number" min="0" step={0.1} value={agentFee} onChange={e => setAgentFee(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div>
@@ -95,7 +95,7 @@ export default function FlipROIPage() {
               </div>
 
               <div className="bg-white rounded-xl border border-navy-100 p-5">
-                <h4 className="font-bold text-navy-800 mb-3">Deal Summary</h4>
+                <h3 className="font-bold text-navy-800 mb-3">Deal Summary</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span>Purchase + costs</span><span>{fmt(results.totalBuyCost)}</span></div>
                   <div className="flex justify-between"><span>Refurb</span><span>{fmt(refurbCost)}</span></div>

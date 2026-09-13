@@ -54,7 +54,7 @@ export function BRRRCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2">BUY</h3>
+        <h2 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2">BUY</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-navy-600 mb-1">Purchase Price</label>
@@ -74,7 +74,7 @@ export function BRRRCalculator() {
           </div>
         </div>
 
-        <h3 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">REFURBISH</h3>
+        <h2 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">REFURBISH</h2>
         <div>
           <label className="block text-xs font-semibold text-navy-600 mb-1">Refurbishment Cost</label>
           <div className="relative">
@@ -92,7 +92,7 @@ export function BRRRCalculator() {
           </div>
         </div>
 
-        <h3 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">RENT</h3>
+        <h2 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">RENT</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-navy-600 mb-1">Monthly Rent</label>
@@ -112,7 +112,7 @@ export function BRRRCalculator() {
           </div>
         </div>
 
-        <h3 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">REFINANCE</h3>
+        <h2 className="font-bold text-navy-800 text-lg border-b border-navy-100 pb-2 pt-2">REFINANCE</h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-navy-600 mb-1">LTV ({refinanceLTV}%)</label>
@@ -163,7 +163,7 @@ export function BRRRCalculator() {
 
         {/* Deal Summary */}
         <div className="bg-white rounded-xl border border-navy-100 p-6">
-          <h4 className="font-bold text-navy-800 mb-4">Deal Summary</h4>
+          <h3 className="font-bold text-navy-800 mb-4">Deal Summary</h3>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between py-1"><span className="text-navy-600">Purchase Price</span><span className="font-semibold">{fmt(purchasePrice)}</span></div>
             <div className="flex justify-between py-1"><span className="text-navy-600">+ Refurbishment</span><span className="font-semibold">{fmt(refurbCost)}</span></div>

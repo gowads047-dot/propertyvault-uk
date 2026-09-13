@@ -43,9 +43,7 @@ export default function HowItWorksPage() {
       {/* For Tenants */}
       <section className="py-16" style={{ background: "var(--h-bg)" }}>
         <div className="h-container max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-sm font-semibold" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>
-            For tenants &amp; buyers
-          </div>
+          <h2 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-sm font-semibold" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>For tenants &amp; buyers</h2>
           <div className="space-y-8">
             {[
               {
@@ -94,9 +92,7 @@ export default function HowItWorksPage() {
       {/* For Landlords */}
       <section className="py-16" style={{ background: "var(--h-surface)", borderTop: "1px solid var(--h-border)" }}>
         <div className="h-container max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-sm font-semibold" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>
-            For landlords &amp; sellers
-          </div>
+          <h2 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-sm font-semibold" style={{ background: "var(--h-green-light)", color: "var(--h-green)" }}>For landlords &amp; sellers</h2>
           <div className="space-y-8">
             {[
               {

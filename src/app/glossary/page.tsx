@@ -121,7 +121,7 @@ export default function GlossaryPage() {
             {activeLetters.map(letter => (
               <div key={letter} id={`letter-${letter}`} className="scroll-mt-20">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-navy-800 text-white flex items-center justify-center font-extrabold text-lg">{letter}</div>
+                  <h2 className="w-10 h-10 rounded-xl bg-navy-800 text-white flex items-center justify-center font-extrabold text-lg" style={{ fontFamily: "var(--font-family-body)", lineHeight: 1 }}>{letter}</h2>
                   <div className="flex-1 h-px bg-navy-200" />
                 </div>
                 <div className="space-y-3">
