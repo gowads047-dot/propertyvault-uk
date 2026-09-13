@@ -1,12 +1,10 @@
 import Link from "next/link";
+import { countries } from "@/lib/makan-config";
 
-const countryLinks = [
-  { code: "gb", flag: "🇬🇧", name: "UK" },
-  { code: "ma", flag: "🇲🇦", name: "Morocco" },
-  { code: "eg", flag: "🇪🇬", name: "Egypt" },
-  { code: "ae", flag: "🇦🇪", name: "UAE" },
-  { code: "sa", flag: "🇸🇦", name: "Saudi" },
-];
+// Derived from the same list the country pages generate from. A hand-written
+// copy here kept UAE and Saudi after they were commented out of the config,
+// so every Makan page footer linked to two 404s.
+const countryLinks = countries.map(c => ({ code: c.code, flag: c.flag, name: c.name }));
 
 export function MakanFooter() {
   return (
@@ -37,6 +35,7 @@ export function MakanFooter() {
               <Link href="/makan/list" className="block text-sm" style={{ color: "var(--h-muted)" }}>List for free</Link>
               <Link href="/makan/wanted" className="block text-sm" style={{ color: "var(--h-muted)" }}>Property wanted</Link>
               <Link href="/makan/how-it-works" className="block text-sm" style={{ color: "var(--h-muted)" }}>How it works</Link>
+              <Link href="/makan/company-lets" className="block text-sm" style={{ color: "var(--h-muted)" }}>Company lets</Link>
               <Link href="/makan/about" className="block text-sm" style={{ color: "var(--h-muted)" }}>About Makan</Link>
               <Link href="/makan/compliance" className="block text-sm font-semibold" style={{ color: "var(--h-accent)" }}>Legal &amp; Compliance</Link>
               <Link href="/guaranteed-rent" className="block text-sm" style={{ color: "var(--h-muted)" }}>Guaranteed rent</Link>

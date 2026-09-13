@@ -298,7 +298,7 @@ export default function Home() {
         <div className="container-max px-4">
           <FadeIn>
             <p style={{ fontSize: 12, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center", marginBottom: 8 }}>Most-used tools</p>
-            <p style={{ fontSize: 22, fontWeight: 800, color: "var(--ink)", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</p>
+            <h2 style={{ fontSize: 22, fontWeight: 800, color: "var(--ink)", textAlign: "center", marginBottom: 32, fontFamily: "var(--font-family-heading)" }}>Run the numbers in 60 seconds</h2>
           </FadeIn>
           <FadeIn>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
@@ -502,7 +502,7 @@ export default function Home() {
                 title: "Stay protected",
                 desc: "Day-to-day management included — legal compliance, property inspections and maintenance coordination.",
                 stat: "Day-to-day handled",
-                href: "/landlord-hub",
+                href: "/landlords",
                 cta: "Compliance guide",
               },
               {
@@ -901,7 +901,7 @@ export default function Home() {
             {[
               { title: "For Landlords", links: [
                 { href: "/guaranteed-rent", label: "Guaranteed Rent" },
-                { href: "/landlord-hub", label: "Compliance Guide" },
+                { href: "/landlords", label: "Compliance Guide" },
                 { href: "/renting-strategies", label: "Renting Strategies" },
                 { href: "/templates", label: "Templates" },
               ]},
