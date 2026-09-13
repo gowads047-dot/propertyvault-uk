@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "UK Property News — Latest Market Updates | PropertyVault",
-  description: "Latest UK property news. Market updates, policy changes, interest rate decisions, and developments affecting property investors and homeowners.",
+  description: "The rule changes affecting UK landlords and buyers — Renters' Rights Act, landlord database, EPC C, CGT and stamp duty — dated, with the page that explains each.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-news/" },
   openGraph: {
     title: "UK Property News — Latest Market Updates | PropertyVault",
-    description: "Latest UK property news. Market updates, policy changes, interest rate decisions, and developments affecting property investors and homeowners.",
+    description: "The rule changes affecting UK landlords and buyers — Renters' Rights Act, landlord database, EPC C, CGT and stamp duty — dated, with the page that explains each.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/property-news/",
     siteName: "PropertyVault UK",
@@ -15,43 +16,108 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "UK Property News — Latest Market Updates | PropertyVault",
-    description: "Latest UK property news. Market updates, policy changes, interest rate decisions, and developments affecting property investors and homeowners.",
+    description: "The rule changes affecting UK landlords and buyers — Renters' Rights Act, landlord database, EPC C, CGT and stamp duty — dated, with the page that explains each.",
   },
 };
+
+/**
+ * Eight items, every one restating what the page it links to already says.
+ *
+ * The previous version was written as news copy: a base rate "as of
+ * mid-2026", house-price growth "ONS data shows", markets "pricing in" cuts
+ * — none of it sourced, and one item flatly wrong: it said PRS Ombudsman
+ * membership was already mandatory with a £5,000 fine, while the site's own
+ * Ombudsman post says the scheme has no administrator and 2028 is a planning
+ * assumption. It also had the Renters' Rights Act in force from June 2025;
+ * the Act page says Royal Assent 27 October 2025 and the tenancy reforms
+ * from 1 May 2026.
+ *
+ * So this page now carries no claim that is not on a page it links to, and
+ * nothing that would need a market source to stand up. When one of those
+ * pages changes, this one is wrong until it is changed to match — which is
+ * the same rule the rest of the site works to.
+ */
+const items = [
+  {
+    date: "1 May 2026",
+    title: "Renters' Rights Act — the tenancy reforms are in force",
+    excerpt: "Royal Assent on 27 October 2025; the main reforms took effect on 1 May 2026. Section 21 no-fault evictions are abolished, existing fixed terms became periodic, and possession runs through Section 8 grounds.",
+    href: "/renters-rights-act",
+    cta: "What it means for landlords",
+  },
+  {
+    date: "15 December 2026",
+    title: "The landlord database opens for registration",
+    excerpt: "England's private rented sector database opens on 15 December 2026, West Midlands first, with a registration deadline of 14 March 2027. What it asks for, what it costs, and the penalties.",
+    href: "/landlords/prs-database",
+    cta: "What to have ready",
+  },
+  {
+    date: "Expected 2028",
+    title: "PRS Ombudsman — not yet open, not yet mandatory",
+    excerpt: "Mandatory Ombudsman membership is currently expected in 2028. As of mid-2026 no scheme administrator has been appointed, so treat 2028 as a planning assumption rather than a fixed date.",
+    href: "/blog/prs-ombudsman-landlord-registration",
+    cta: "Timeline and how to prepare",
+  },
+  {
+    date: "By 2030",
+    title: "EPC C becomes the minimum for rented homes",
+    excerpt: "Privately rented properties in England must reach EPC band C by 2030. The deadline is fixed and there are no extensions, so the cheapest time to plan the work is now.",
+    href: "/blog/epc-c-deadline-landlords",
+    cta: "What landlords must do",
+  },
+  {
+    date: "30 October 2024",
+    title: "Capital gains tax on residential property: 18% and 24%",
+    excerpt: "From 30 October 2024, residential property CGT is 18% for basic-rate taxpayers and 24% for higher and additional rate — down from 28% at the top.",
+    href: "/calculators/capital-gains-tax",
+    cta: "Work out your bill",
+  },
+  {
+    date: "1 April 2025",
+    title: "First-time buyer stamp duty relief: nil rate to £300,000",
+    excerpt: "The temporary £425,000 threshold ended on 31 March 2025. First-time buyers now pay nothing on the first £300,000 and 5% up to £500,000; above that the relief does not apply.",
+    href: "/calculators/stamp-duty",
+    cta: "Check your stamp duty",
+  },
+  {
+    date: "31 October 2024",
+    title: "Additional-property surcharge is 5%",
+    excerpt: "The stamp duty surcharge on second homes and buy-to-let purchases rose from 3% to 5% on 31 October 2024, charged on the whole price on top of the standard bands.",
+    href: "/calculators/stamp-duty",
+    cta: "See it on a real purchase",
+  },
+];
 
 export default function PropertyNewsPage() {
   return (
     <>
       <section className="gradient-navy py-16 md:py-20">
         <div className="container-max px-4">
-          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Latest News</p>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">What changed</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">UK Property News</h1>
-          <p className="text-navy-200">Stay informed with the latest developments affecting UK property investors, landlords, and homebuyers.</p>
+          <p className="text-navy-200">The rule changes that affect landlords and buyers, dated, each with the page that explains it in full.</p>
         </div>
       </section>
       <section className="section-padding bg-white">
         <div className="container-max max-w-4xl">
           <div className="space-y-6">
-            {[
-              { title: "Bank of England Base Rate: Where Are We in 2026?", date: "July 2026", excerpt: "After a series of cautious cuts from the 2024 peak, the base rate sits at 4.00% as of mid-2026. Markets are pricing in one or two further cuts before year-end, providing some relief on tracker and variable mortgages." },
-              { title: "Renters' Rights Act 2025 — Now in Force", date: "June 2025", excerpt: "The Renters' Rights Act received Royal Assent in March 2025 and came fully into force in June 2025. Section 21 no-fault evictions are abolished. All tenancies are now periodic. Landlords must use Section 8 grounds to recover possession." },
-              { title: "EPC C Deadline 2030 — What Landlords Must Do Now", date: "2026", excerpt: "Rental properties must achieve an EPC C rating by 2030 or risk not being legally lettable. The government confirmed no extensions. Average upgrade cost: £6,500–£15,000 depending on current rating." },
-              { title: "UK House Prices: Annual Growth of 3.4% in Mid-2026", date: "July 2026", excerpt: "ONS data shows continued modest growth driven by easing mortgage rates, persistent supply shortage, and strong rental demand in the Midlands. Birmingham and Nottingham outperforming national averages." },
-              { title: "CGT on Residential Property: New Rates Since October 2024", date: "October 2024", excerpt: "Capital gains tax rates on residential property changed in the October 2024 Budget. The higher rate fell from 28% to 24%; the basic rate stays at 18%. The change applies to disposals from 30 October 2024." },
-              { title: "First-Time Buyer SDLT Relief: £300,000 Threshold from April 2025", date: "April 2025", excerpt: "The temporary SDLT nil-rate threshold of £425,000 for first-time buyers ended on 31 March 2025. From 1 April 2025, the threshold reverted to £300,000 (with a cap of £500,000 for the relief to apply at all). First-time buyers should check their stamp duty using the calculator." },
-              { title: "Stamp Duty Surcharge at 5% — One Year On", date: "October 2025", excerpt: "The additional property surcharge rose from 3% to 5% in October 2024 for second homes and buy-to-let purchases. Deal volumes dropped sharply in Q4 2024 but have since stabilised as investors adjust underwriting models." },
-              { title: "PRS Ombudsman Registration Now Mandatory", date: "2025", excerpt: "All private landlords in England are required to join the new Private Rented Sector (PRS) Ombudsman under the Renters' Rights Act 2025. Failure to register is a criminal offence and can result in a fine of up to £5,000." },
-            ].map((n) => (
-              <article key={n.title} className="bg-white rounded-xl border border-navy-100 p-6 hover:shadow-md transition-all cursor-pointer">
-                {n.date && <p className="text-xs font-semibold text-gold-600 uppercase tracking-wide mb-1">{n.date}</p>}
-                <h2 className="text-lg font-bold text-navy-800 mb-2 mt-1">{n.title}</h2>
-                <p className="text-sm text-navy-500">{n.excerpt}</p>
+            {items.map((n) => (
+              <article key={n.title} className="bg-white rounded-xl border border-navy-100 p-6 hover:shadow-md transition-all">
+                <p className="text-xs font-semibold text-gold-600 uppercase tracking-wide mb-1">{n.date}</p>
+                <h2 className="text-lg font-bold text-navy-800 mb-2 mt-1">
+                  <Link href={n.href} className="hover:text-gold-600 transition-colors">{n.title}</Link>
+                </h2>
+                <p className="text-sm text-navy-500 mb-3">{n.excerpt}</p>
+                <Link href={n.href} className="text-sm font-semibold" style={{ color: "var(--gold-ink)" }}>{n.cta} &rarr;</Link>
               </article>
             ))}
           </div>
+          <p className="text-xs text-navy-400 mt-8">
+            Dates and figures are those stated on the linked pages. This page carries no market commentary: rates, prices and forecasts change faster than a page like this is updated, and a stale number presented as news is worse than none.
+          </p>
         </div>
       </section>
     </>
   );
 }
-
