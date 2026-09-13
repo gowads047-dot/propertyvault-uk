@@ -47,13 +47,26 @@ emails to `info@` (a blog prompt, and a token alert until a token exists).
 
 ## Two things outside this codebase
 
-**The external publisher.** Something outside this repository — it writes
-`via: "scheduled-task"` into `social_events` — has been publishing the
-nightly Reel at about 18:03–18:08 UTC, bypassing the site's QC. Now the
-site's own cron reaches its handler, the two can meet: if the cron fires
-before the external task and a token is configured, the site publishes
-first and the task finds it done. Decide which one is the publisher, and
-retire the other.
+**The external publisher.** The `via: "scheduled-task"` rows in
+`social_events` come from a Claude scheduled task on the owner's machine,
+`propertyvault-instagram-daily-reel` (`~/.claude/scheduled-tasks/…`), which
+fires at about 18:00–18:01 UTC and publishes through a Composio Instagram
+connection, writing to Supabase directly. It has its own quality gate —
+asset probe, caption rules, duplicate check — but not the site's claims
+filter, and it never sets `qc`. Its prompt records that the owner chose it
+as the publisher and ruled out code edits from it.
+
+Now the site's cron reaches its handler, both run in the same hour. Both
+claim the row atomically, so a double post is unlikely — but with no
+Instagram token in the environment the site will email an alert every
+night. Two ways to make that stop, and it is the owner's call:
+
+- keep the task as publisher and remove `/api/social/publish/` from
+  `vercel.json` (the code stays; the alert stops); or
+- set `INSTAGRAM_ACCESS_TOKEN` on Vercel and disable the task, so the
+  site publishes with its full QC, including the claims filter.
+
+Not `social_settings.paused`: the task honours it too, and would stop.
 
 **Instagram token.** `social_settings.ig_access_token` is null and there is
 no `INSTAGRAM_ACCESS_TOKEN` in the environment as far as the app's behaviour
