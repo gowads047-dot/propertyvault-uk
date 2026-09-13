@@ -1,19 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { SITE_URL } from "@/lib/site";
 
 export function ShareButtons({ title, url }: { title: string; url?: string }) {
   const [copied, setCopied] = useState(false);
-  // Read after mount, not during render. Rendered on the server this was ""
-  // and on the client it was the page URL, so every share href differed
-  // between the two and React logged a hydration mismatch on every blog
-  // article. The first client render now matches the server exactly, and
-  // the real URL arrives a frame later — before anyone can click.
-  const [pageUrl, setPageUrl] = useState("");
-  useEffect(() => {
-    if (!url) setPageUrl(window.location.href);
-  }, [url]);
-  const shareUrl = url || pageUrl;
+  // The page URL comes from the router, not from window.location. The
+  // pathname is known on the server and identical on the client, so the
+  // share hrefs render the same in both — the previous version read
+  // window.location during render (a hydration mismatch on every article)
+  // and then in an effect (a setState-in-effect lint error that failed CI).
+  // Built on the canonical origin, so a share from a preview deployment
+  // still points at the live site.
+  const pathname = usePathname();
+  const shareUrl = url || `${SITE_URL}${pathname}`;
   const text = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(shareUrl);
 
