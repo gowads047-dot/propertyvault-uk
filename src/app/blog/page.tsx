@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BlogList } from "@/components/blog/BlogList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { PreferredSourceBadge } from "@/components/seo/PreferredSourceBadge";
 import { blogPosts } from "@/lib/blog-posts";
 
 export const metadata: Metadata = {
@@ -51,6 +52,9 @@ export default function BlogPage() {
               <p style={{ fontSize: 15, color: "rgba(255,255,255,0.62)", maxWidth: 440, lineHeight: 1.7 }}>
                 Expert guides on UK property investing, tax, landlord law, and deal sourcing. Every article links to our free tools and calculators.
               </p>
+              <div style={{ marginTop: 20 }}>
+                <PreferredSourceBadge />
+              </div>
             </div>
             {/* Stats strip */}
             <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>

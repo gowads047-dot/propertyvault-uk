@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ShareButtons } from "@/components/makan/ShareButtons";
+import { PreferredSourceBadge } from "@/components/seo/PreferredSourceBadge";
 
 interface Props {
   title: string;
@@ -95,6 +96,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
           <span style={{ fontSize: 12, color: "rgba(255,255,255,0.62)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em" }}>Share</span>
           <ShareButtons title={title} />
+          <PreferredSourceBadge />
         </div>
       </div>
     </section>

@@ -19,6 +19,19 @@ export const SITE_URL = "https://www.propertyvaultuk.co.uk";
 /** Bare host, for display in copy and legal pages. */
 export const SITE_HOST = "www.propertyvaultuk.co.uk";
 
+/**
+ * Google's "add as preferred source" link for this site.
+ *
+ * Preferred Sources lets a signed-in reader pin a publisher so it is
+ * favoured in Top Stories and in AI Mode / AI Overviews. Google keys the
+ * preference on the domain, not the canonical `www` host, and only accepts
+ * domains or subdomains — never paths — so this is the bare apex, not
+ * SITE_URL. Format per
+ * https://developers.google.com/search/docs/appearance/preferred-sources
+ */
+export const PREFERRED_SOURCE_URL =
+  "https://www.google.com/preferences/source?q=propertyvaultuk.co.uk";
+
 /** Absolute URL for a path. Accepts "/foo" or "foo". */
 export function canonical(path = "/"): string {
   const p = path.startsWith("/") ? path : `/${path}`;
