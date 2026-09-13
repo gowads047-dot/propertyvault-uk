@@ -340,7 +340,7 @@ export default function GuaranteedRentPage() {
         <div className="container-max max-w-3xl">
           <FAQSchema faqs={guaranteedRentFaqs} />
 
-          {/* The two questions that stop a lease, answered on their own pages.
+          {/* The questions that stop a lease, answered on their own pages.
               /mortgage-lender was linked from nowhere but its sibling — a
               page written to be found needs the hub pointing at it. */}
           <div className="mt-10 pt-8 border-t border-navy-100">
@@ -349,6 +349,10 @@ export default function GuaranteedRentPage() {
               <li>
                 <Link href="/guaranteed-rent/mortgage-lender" className="text-gold-600 font-semibold">Will my mortgage lender allow guaranteed rent?</Link>
                 <span className="text-navy-500 text-sm"> — what consent to let means, and what to ask for in writing.</span>
+              </li>
+              <li>
+                <Link href="/guaranteed-rent/insurance" className="text-gold-600 font-semibold">Will my insurer allow guaranteed rent?</Link>
+                <span className="text-navy-500 text-sm"> — why a company let needs telling, and what to say.</span>
               </li>
               <li>
                 <Link href="/guaranteed-rent/vs-letting-agent" className="text-gold-600 font-semibold">Guaranteed rent vs a letting agent — which pays more?</Link>

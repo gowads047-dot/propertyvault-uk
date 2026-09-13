@@ -285,10 +285,10 @@ export default function MortgageLenderPage() {
               Get a rent estimate
             </Link>
             <Link
-              href="/guaranteed-rent/vs-letting-agent"
+              href="/guaranteed-rent/insurance"
               className="text-sm font-semibold text-navy-700 self-center px-4"
             >
-              How it compares to a letting agent →
+              Then the insurer question →
             </Link>
           </div>
         </div>
