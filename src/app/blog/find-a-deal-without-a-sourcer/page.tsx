@@ -7,9 +7,7 @@ import { HelpCTA } from "@/components/blog/HelpCTA";
 
 const TITLE = "How to Find a Property Deal Without Paying a Sourcer";
 const DESCRIPTION =
-  "Sourcing fees are commonly quoted at £3,000–£5,000 a deal. Here is what that fee buys, " +
-  "which parts of it you can do yourself with free public data, and the part that is genuinely " +
-  "worth paying for.";
+  "Sourcing fees are commonly quoted at £3,000–£5,000 a deal. What that fee buys, which parts you can do yourself with public data, and the part worth paying for.";
 
 export const metadata: Metadata = {
   title: TITLE,

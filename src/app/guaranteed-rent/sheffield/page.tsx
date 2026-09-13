@@ -4,7 +4,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Sheffield — Landlords Get Paid Every Month",
-  description: "Guaranteed rent for landlords in Sheffield. We lease your property for 3-5 years with guaranteed monthly income. No voids, no management, no fees. All Sheffield postcodes covered.",
+  description: "Guaranteed rent for landlords in Sheffield. We lease your property for 3-5 years and pay a fixed monthly rent. No voids, no management, no fees. S postcodes.",
   keywords: "guaranteed rent Sheffield, guaranteed rent scheme Sheffield, landlord guaranteed rent S postcode, lease my property Sheffield",
   openGraph: {
     title: "Guaranteed Rent Sheffield | PropertyVault UK",

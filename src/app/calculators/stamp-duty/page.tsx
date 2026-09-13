@@ -19,11 +19,11 @@ const stampDutyFaqs = [
 
 export const metadata: Metadata = {
   title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
-  description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
+  description: "Stamp duty land tax (SDLT) instantly: standard purchases, the 5% additional-property surcharge, the 2% non-resident surcharge, and first-time buyer relief.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/" },
   openGraph: {
     title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
-    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
+    description: "Stamp duty land tax (SDLT) instantly: standard purchases, the 5% additional-property surcharge, the 2% non-resident surcharge, and first-time buyer relief.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/stamp-duty/",
     siteName: "PropertyVault UK",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Stamp Duty Calculator UK — Buy-to-Let & Non-Resident SDLT",
-    description: "Calculate your stamp duty land tax (SDLT) instantly. Covers standard purchases, additional properties (+5%), the 2% non-resident surcharge for overseas buyers, and first-time buyer relief.",
+    description: "Stamp duty land tax (SDLT) instantly: standard purchases, the 5% additional-property surcharge, the 2% non-resident surcharge, and first-time buyer relief.",
   },
 };
 

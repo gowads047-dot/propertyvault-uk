@@ -6,9 +6,7 @@ import { canonical, ogImages } from "@/lib/site";
 
 const TITLE = "Vault a Property — Score, Evidence and Maximum Offer";
 const DESCRIPTION =
-  "Paste a postcode, price and rent. PropertyVault checks HM Land Registry sold prices, " +
-  "runs the numbers, scores the deal and tells you the most you should offer — showing " +
-  "where every figure came from.";
+  "Paste a postcode, price and rent. PropertyVault checks Land Registry sold prices, runs the numbers, scores the deal and says the most to offer, sources shown.";
 
 export const metadata: Metadata = {
   title: TITLE,

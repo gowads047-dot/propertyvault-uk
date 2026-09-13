@@ -8,12 +8,12 @@ import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
   title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
-  description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
+  description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. It is not open yet — the timeline and how to prepare.",
   keywords: "PRS ombudsman registration landlord, private rented sector ombudsman UK, landlord ombudsman registration 2025, Renters Rights Act ombudsman, landlord registration England 2026",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/" },
   openGraph: {
     title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
-    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
+    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. It is not open yet — the timeline and how to prepare.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/prs-ombudsman-landlord-registration/",
     siteName: "PropertyVault UK",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
-    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare.",
+    description: "All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. It is not open yet — the timeline and how to prepare.",
   },
 };
 
@@ -54,7 +54,7 @@ export default function PRSOmbudsmanGuideArticle() {
       />
       <BlogArticleHero
         title="PRS Ombudsman Registration — What Every Landlord Must Do Now"
-        excerpt="All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. Registration is not open yet — here is the timeline and how to prepare."
+        excerpt="All private landlords in England will have to join the PRS Ombudsman under the Renters' Rights Act 2025. It is not open yet — the timeline and how to prepare."
         category="Landlords"
         date="July 2026"
         readTime="7 min"
