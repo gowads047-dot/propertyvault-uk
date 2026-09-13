@@ -467,7 +467,7 @@ export default function RentToRentPage() {
               { doc: "Gas Safety Certificate (CP12)", who: "You arrange — annual", critical: false },
               { doc: "Electrical Installation Condition Report (EICR)", who: "You arrange — every 5 years", critical: false },
               { doc: "EPC (minimum E — EPC C required by 2030)", who: "Existing or you arrange", critical: false },
-              { doc: "PRS Ombudsman registration", who: "You register — mandatory under RRA 2025", critical: true },
+              { doc: "PRS Database registration (opens 15 December 2026)", who: "You register — the Ombudsman is not open yet", critical: true },
               { doc: "Periodic tenancy agreement for each subtenant", who: "You issue as landlord (no fixed terms)", critical: false },
               { doc: "Deposit protection for each subtenant", who: "You register within 30 days", critical: false },
               { doc: "Right to Rent checks for each subtenant", who: "You carry out before move-in", critical: false },

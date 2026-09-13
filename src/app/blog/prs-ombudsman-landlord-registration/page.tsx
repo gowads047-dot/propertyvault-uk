@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-  { q: "Do all landlords have to register with the PRS Ombudsman?", a: "Yes. Under the Renters' Rights Act 2025, all private landlords letting residential property in England are legally required to register with the new Private Rented Sector (PRS) Ombudsman. This is mandatory — there is no opt-out. Self-managing landlords must register directly. Landlords using a letting agent are covered by the agent's membership, but the landlord themselves must also be registered." },
+  { q: "Do all landlords have to register with the PRS Ombudsman?", a: "They will. The Renters' Rights Act 2025 makes membership mandatory for every private landlord letting residential property in England, self-managing or not — an agent's redress-scheme membership will not cover the landlord. But the scheme is not open: no administrator has been appointed and there is nothing to join today. Mandatory membership is currently expected in 2028; treat that as a planning assumption." },
   { q: "What happens if I don't register with the PRS Ombudsman?", a: "Nothing yet — the scheme is not live and there is no register to join. Once membership becomes mandatory (currently expected in 2028), failing to join will be an offence under the Renters' Rights Act 2025, with a fine of up to £5,000 per property. Landlords will need to be on the PRS Database first, which opens for registration on 15 December 2026, West Midlands first." },
   { q: "How much does PRS Ombudsman registration cost?", a: "The PRS Ombudsman is expected to charge a membership fee to landlords, similar to the existing property agent redress schemes. The government has indicated the fee will be set at a level proportionate to portfolio size — likely a small annual fee per property. Specific fee schedules will be published by the PRS Ombudsman body once fully operational." },
   { q: "What does the PRS Ombudsman actually do?", a: "The PRS Ombudsman resolves disputes between private landlords and tenants without the need for court proceedings. Tenants can bring complaints about maintenance failures, deposit disputes, communication failures, and other breaches of their tenancy agreement. The Ombudsman's decisions are binding on landlords — they can require compensation payments, repairs, or apologies." },
@@ -35,19 +35,19 @@ const faqs = [
 ];
 
 const steps = [
-  { n: "1", title: "Check your registration status", body: "If you currently use a letting agent, confirm whether your agent has registered you or whether you need to register independently. Most self-managing landlords will need to register directly." },
-  { n: "2", title: "Register at the PRS Ombudsman portal", body: "Go to the official PRS Ombudsman website (prs.co.uk or the government-designated portal) and complete the registration form. You will need: your name and contact details, the address(es) of each rental property, and proof of identity." },
-  { n: "3", title: "Pay the annual membership fee", body: "Pay the registration fee for your portfolio. Keep your payment confirmation — this is your proof of compliance and may be requested by local housing authorities or tenants." },
-  { n: "4", title: "Display your membership number", body: "You must provide your PRS Ombudsman membership number in any tenancy agreement, advertisement, and correspondence with tenants. This is a legal requirement under the Renters' Rights Act 2025." },
-  { n: "5", title: "Renew annually", body: "PRS Ombudsman membership must be renewed each year. Lapsed membership is treated as non-registration for the purposes of enforcement. Set a calendar reminder at least 30 days before your renewal date." },
+  { n: "1", title: "Know which register is which", body: "Two things are coming. The PRS Database is a register of landlords and properties, opening 15 December 2026, West Midlands first. The PRS Ombudsman is a complaints scheme, not yet open, currently expected in 2028. The steps below are for the database — there is nothing to do for the Ombudsman today." },
+  { n: "2", title: "Gather the dates the database asks for", body: "The published field list asks for the date of the gas safety record, the electrical report (EICR) and the EPC, and the HMO licensing status, for each property. If you cannot put your hand on one of them now, that is the thing to fix before December." },
+  { n: "3", title: "Budget the fee", body: "£65 per property, renewed every year, per the NRLA's summary. Not a large sum; a surprise if you have forty properties and did not know." },
+  { n: "4", title: "Watch for your region", body: "The West Midlands is called forward first, with a deadline of 14 March 2027. Other regions follow through 2027. Register when yours opens, not before — there is no early registration." },
+  { n: "5", title: "Ignore anyone selling Ombudsman registration", body: "Until the scheme is live, there is no portal, no fee and no number. An email or a website offering to register you with the PRS Ombudsman today is either mistaken or a scam." },
 ];
 
 export default function PRSOmbudsmanGuideArticle() {
   return (
     <>
       <ArticleSchema
-        headline="PRS Ombudsman Registration — What Every Landlord Must Do Now"
-        description="All private landlords in England must register with the PRS Ombudsman under the Renters' Rights Act 2025. Failure is a criminal offence with fines up to £5,000 per property."
+        headline="PRS Ombudsman & Landlord Database — Timeline and How to Prepare"
+        description="The Ombudsman is not open yet and cannot be joined; the landlord database opens 15 December 2026. What each one is, when it applies, and what to have ready."
         slug="prs-ombudsman-landlord-registration"
         datePublished="2026-08-01"
         section="Landlords"
@@ -81,12 +81,12 @@ export default function PRSOmbudsmanGuideArticle() {
           </ul>
           <p>Landlords renting through a social housing provider or who have only commercial tenants are exempt. Holiday lets and short-term accommodation (Airbnb-style) are a grey area — take legal advice if your situation is unclear.</p>
 
-          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Penalties for Non-Registration</h2>
+          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Penalties — for the database, once you are called forward</h2>
           <div className="not-prose grid sm:grid-cols-3 gap-3">
             {[
-              { label: "Fine per property", value: "Up to £5,000" },
-              { label: "Rent repayment order", value: "Up to 12 months" },
-              { label: "Offence type", value: "Criminal" },
+              { label: "Letting or marketing unregistered", value: "Up to £7,000" },
+              { label: "False information or continuing breach", value: "Up to £40,000" },
+              { label: "Also possible", value: "Rent repayment order" },
             ].map(s => (
               <div key={s.label} className="bg-red-50 border border-red-100 rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-red-700 mb-1">{s.value}</p>
@@ -94,9 +94,9 @@ export default function PRSOmbudsmanGuideArticle() {
               </div>
             ))}
           </div>
-          <p>Local housing authorities have new enforcement powers under the Act. They can proactively check registration status and issue compliance notices without waiting for a tenant complaint. If a landlord fails to comply with a notice, further fines and rent repayment orders follow.</p>
+          <p>Those are the database&apos;s civil penalties as summarised by the NRLA, and they bite only once your region has been called forward and its deadline has passed. The Ombudsman&apos;s penalties for non-membership have not been set, because the scheme has not been set up; any figure you see quoted for it today is a guess. <Link href="/landlords/prs-database" className="text-gold-600 font-semibold">The database page has the field list, the fee and the dates.</Link></p>
 
-          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>How to Register — Step by Step</h2>
+          <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>How to Prepare — Step by Step</h2>
           <div className="not-prose space-y-3">
             {steps.map(s => (
               <div key={s.n} className="flex gap-4 bg-white border border-navy-100 rounded-xl p-4">
