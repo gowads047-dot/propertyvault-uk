@@ -28,7 +28,7 @@ const articleSchema = {
 export const metadata: Metadata = {
   title: "How to Start Investing in UK Property in 2026: A Beginner's Guide",
   description:
-    "What property investing actually looks like, how much money you need, which strategy fits your situation, and how to run the numbers before you spend anything. A honest guide for beginners.",
+    "What property investing actually looks like, how much money you need, which strategy fits you, and how to run the numbers before you spend anything.",
   keywords:
     "how to start investing in property uk, investing in property for beginners uk, uk property investing, how to invest money in property, invest in rental property uk, property investment strategies uk 2026",
   openGraph: {

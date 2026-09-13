@@ -39,8 +39,7 @@ const FIELD =
 
 const TITLE = "Find a Tradesperson — And Check Them Yourself";
 const DESCRIPTION =
-  "How to find and check a plumber, electrician, builder or gas engineer for a rental property: " +
-  "the official registers, what to ask for in writing, and where landlords look today.";
+  "How to find and check a plumber, electrician, builder or gas engineer for a rental: the official registers, what to ask for in writing, where landlords look.";
 
 export const metadata: Metadata = {
   title: TITLE,

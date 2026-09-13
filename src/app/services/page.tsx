@@ -8,9 +8,7 @@ import { canonical, SITE_URL } from "@/lib/site";
 
 const TITLE = "Property Services — What PropertyVault Can Do For You";
 const DESCRIPTION =
-  "Every PropertyVault service, in the order you meet it: finding a property, buying it, " +
-  "getting it let, and managing it. Each one says plainly whether it is running today or " +
-  "still being built.";
+  "Every PropertyVault service in the order you meet it — finding, buying, letting, managing — and, for each, whether it is running today or still being built.";
 
 export const metadata: Metadata = {
   title: TITLE,

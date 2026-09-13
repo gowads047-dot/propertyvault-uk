@@ -56,9 +56,7 @@ const FIELD =
 
 const TITLE = "List Your Property — Where UK Landlords Advertise";
 const DESCRIPTION =
-  "Where to advertise a rental property in the UK, what each portal actually is, and what it " +
-  "costs. PropertyVault does not run a listings portal yet — this is the honest map of the ones " +
-  "that do.";
+  "Where to advertise a rental property in the UK, what each portal actually is and what it costs. We do not run a portal yet; this is the map of the ones that do.";
 
 export const metadata: Metadata = {
   title: TITLE,

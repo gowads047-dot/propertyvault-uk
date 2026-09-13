@@ -30,9 +30,7 @@ const FIELD =
 
 const TITLE = "VaultCheck Pro — A Written Report Before You Offer";
 const DESCRIPTION =
-  "Sixteen questions a buyer needs answered before offering on a UK property, and who can " +
-  "answer each one. Eight come from the free Vault. Six need a person. Two need a professional, " +
-  "and we say so.";
+  "Sixteen questions to answer before offering on a UK property, and who answers each: eight from the free Vault, six need a person, two need a professional.";
 
 export const metadata: Metadata = {
   title: TITLE,

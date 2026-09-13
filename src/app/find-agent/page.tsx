@@ -34,9 +34,7 @@ const FIELD =
 
 const TITLE = "Find a Property Professional — And Check Them Yourself";
 const DESCRIPTION =
-  "Which regulator covers a mortgage broker, a conveyancer, a surveyor, a letting agent or a " +
-  "property accountant — where their public register is, and what to check before you instruct " +
-  "anybody.";
+  "Which regulator covers a mortgage broker, conveyancer, surveyor, letting agent or property accountant, where their register is, and what to check first.";
 
 export const metadata: Metadata = {
   title: TITLE,

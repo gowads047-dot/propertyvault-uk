@@ -75,7 +75,7 @@ const guaranteedRentFaqs = [
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent for Landlords | PropertyVault UK",
-  description: "Guaranteed rent for landlords across the Midlands. No voids, no management, guaranteed income for 3-5 years. Covering Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
+  description: "Guaranteed rent for Midlands landlords: a fixed income for 3-5 years, no voids, no management. Birmingham, Nottingham, Derby, Leicester, Coventry, Sheffield.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/" },
   openGraph: {
     title: "Guaranteed Rent for Landlords | PropertyVault UK",

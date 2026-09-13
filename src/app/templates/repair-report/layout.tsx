@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Free Property Repair Report Template UK — Maintenance Form",
-  description: "Download a free property repair and maintenance request template. Log repair requests, contractor visits, costs, and completion dates. Essential for landlords and property managers.",
+  description: "A free property repair and maintenance request template: log repair requests, contractor visits, costs and completion dates. Fill it in on screen and print it.",
   keywords: "property repair report template UK, maintenance request form landlord, repair log template, property maintenance record UK",
   openGraph: {
     title: "Free Property Repair Report Template UK | PropertyVault",

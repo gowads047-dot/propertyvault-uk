@@ -5,12 +5,12 @@ import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Property Investing UK — Complete Guide for Beginners to Advanced",
-  description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
+  description: "UK property investing explained: buy-to-let, BRRR, HMOs, serviced accommodation, development and 14 renting strategies, with free guides and calculators.",
   keywords: "property investing UK, buy to let guide, BRRR strategy UK, HMO investing, property investment for beginners, how to invest in property UK, rental yield, property portfolio",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/property-investing/" },
   openGraph: {
     title: "Property Investing UK — Complete Guide for Beginners to Advanced",
-    description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
+    description: "UK property investing explained: buy-to-let, BRRR, HMOs, serviced accommodation, development and 14 renting strategies, with free guides and calculators.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/property-investing/",
     siteName: "PropertyVault UK",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Property Investing UK — Complete Guide for Beginners to Advanced",
-    description: "Learn everything about UK property investing. Buy-to-let, BRRR, HMOs, serviced accommodation, property development, and 14 renting strategies. Free guides, calculators, and templates.",
+    description: "UK property investing explained: buy-to-let, BRRR, HMOs, serviced accommodation, development and 14 renting strategies, with free guides and calculators.",
   },
 };
 

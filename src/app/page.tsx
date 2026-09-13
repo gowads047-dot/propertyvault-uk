@@ -12,8 +12,7 @@ import { siteMetrics } from "@/lib/site";
 const TITLE = "PropertyVault UK — Check, Buy, Let and Manage UK Property";
 const DESCRIPTION =
   `Check a UK property against sold prices before you offer, run the numbers with ` +
-  `${siteMetrics.calculators} free calculators, and stay on top of landlord compliance. ` +
-  `Every figure shows where it came from.`;
+  `${siteMetrics.calculators} free calculators, and stay on top of landlord compliance. Sources shown.`;
 
 export const metadata: Metadata = {
   title: TITLE,

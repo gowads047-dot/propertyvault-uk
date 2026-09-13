@@ -7,13 +7,13 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 export const metadata: Metadata = {
   title: "Renters' Rights Act 2025 — Complete Landlord & Tenant Guide",
   description:
-    "Everything landlords and tenants need to know about the Renters' Rights Act 2025. Section 21 abolition, fixed-term tenancies, rent increases, pets, PRS Ombudsman, and what to do now.",
+    "The Renters' Rights Act 2025 for landlords and tenants: Section 21 abolition, fixed-term tenancies, rent increases, pets, the PRS Ombudsman, and what to do now.",
   keywords:
     "Renters Rights Act 2025, Section 21 abolished, fixed term tenancy abolished, rent increase rules 2025, PRS Ombudsman registration, landlord Renters Rights Act checklist, periodic tenancy UK",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/renters-rights-act/" },
   openGraph: {
     title: "Renters' Rights Act 2025 — Complete Landlord & Tenant Guide",
-    description: "Everything landlords and tenants need to know about the Renters' Rights Act 2025. Section 21 abolition, fixed-term tenancies, rent increases, pets, PRS Ombudsman, and what to do now.",
+    description: "The Renters' Rights Act 2025 for landlords and tenants: Section 21 abolition, fixed-term tenancies, rent increases, pets, the PRS Ombudsman, and what to do now.",
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/renters-rights-act/",
     siteName: "PropertyVault UK",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Renters' Rights Act 2025 — Complete Landlord & Tenant Guide",
-    description: "Everything landlords and tenants need to know about the Renters' Rights Act 2025. Section 21 abolition, fixed-term tenancies, rent increases, pets, PRS Ombudsman, and what to do now.",
+    description: "The Renters' Rights Act 2025 for landlords and tenants: Section 21 abolition, fixed-term tenancies, rent increases, pets, the PRS Ombudsman, and what to do now.",
   },
 };
 
