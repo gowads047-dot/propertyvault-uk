@@ -49,7 +49,7 @@ const faqs = [
   },
   {
     q: "What is the PRS Ombudsman and do I need to register?",
-    a: "The Private Rented Sector (PRS) Ombudsman is a new statutory ombudsman scheme that all private landlords in England must join. It provides a free, impartial dispute resolution service for tenants. Failure to register is a criminal offence with fines up to £5,000 per property. Registration is done through the government's official landlord registration portal.",
+    a: "The Act creates a Private Rented Sector (PRS) Ombudsman that all private landlords in England will have to join, offering tenants a free, impartial route for complaints. It is not live yet: no scheme administrator has been appointed and there is nothing to register for today. Mandatory membership is currently expected in 2028 — treat that as a planning assumption, not a date. The thing with a date is the PRS Database, which opens for registration on 15 December 2026.",
   },
   {
     q: "What is the new Decent Homes Standard for rentals?",
@@ -133,17 +133,18 @@ Landlords may require the tenant to obtain pet damage insurance as a condition o
   {
     id: "ombudsman",
     icon: "🏛️",
-    title: "PRS Ombudsman — mandatory registration",
-    subtitle: "Criminal offence not to register — fines up to £5,000",
-    content: `All private landlords in England must register with the new Private Rented Sector (PRS) Ombudsman. This is not optional — failure to register is a criminal offence with fines of up to £5,000 per property.
+    title: "PRS Ombudsman — coming, not yet open",
+    subtitle: "Membership will be mandatory; the scheme is not live and cannot be joined today",
+    content: `The Act creates a Private Rented Sector (PRS) Ombudsman that every private landlord in England will have to join. It will give tenants a free, impartial route for complaints about property condition, conduct and the handling of a tenancy, with decisions that bind the landlord.
 
-The Ombudsman provides a free dispute resolution service for tenants. Tenants can bring complaints about property condition, deposit disputes, service charges, and landlord conduct. The Ombudsman's decisions are binding on landlords.
+It is not live. No scheme administrator has been appointed, there is no register to join, and nothing is owed. Mandatory membership is currently expected in 2028; until a date is published, treat that as a planning assumption.
+
+**What has a date:** the PRS Database — a separate register of landlords and properties — opens for registration on 15 December 2026, West Midlands first. That is the one to prepare for now.
 
 **Action required:**
-- Register with the PRS Ombudsman through the official government registration portal
-- Provide tenants with the Ombudsman's details and complaint procedure at the start of any tenancy
-- Ensure your letting agent is also registered if they manage properties on your behalf
-- Keep your registration up to date — registration covers a specific property, not just the landlord`,
+- Nothing for the Ombudsman today. Do not pay anyone offering to "register" you.
+- Get the PRS Database registration ready for 15 December 2026
+- When the Ombudsman opens, give tenants its details at the start of any tenancy`,
   },
   {
     id: "decent-homes",
@@ -186,7 +187,7 @@ export default function RentersRightsActPage() {
               Renters&apos; Rights Act 2025
             </h1>
             <p className="text-xl text-navy-600 max-w-2xl leading-relaxed mb-8">
-              The most significant change to landlord-tenant law in a generation. Section 21 is abolished, fixed-term tenancies are gone, and PRS Ombudsman registration is now mandatory.
+              The most significant change to landlord-tenant law in a generation. Section 21 is abolished, fixed-term tenancies are gone, and a mandatory PRS Ombudsman is coming — not yet open.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link href="#section-21" className="text-sm font-semibold text-navy-800 bg-navy-50 border border-navy-200 px-4 py-2 rounded-xl hover:border-navy-400 transition-colors">
@@ -311,7 +312,7 @@ export default function RentersRightsActPage() {
           </p>
           <div className="space-y-3">
             {[
-              { priority: "Urgent", item: "Register with the PRS Ombudsman — criminal offence if not done" },
+              { priority: "High", item: "Prepare for the PRS Database, which opens 15 December 2026 — the Ombudsman is not open yet" },
               { priority: "Urgent", item: "Remove all Section 21 notices from AST templates immediately" },
               { priority: "Urgent", item: "Ensure all tenancies are converted to periodic — no new fixed-terms" },
               { priority: "High", item: "Update Section 8 notice templates with all new mandatory grounds" },

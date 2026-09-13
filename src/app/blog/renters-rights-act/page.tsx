@@ -210,8 +210,8 @@ export default function RentersRightsActArticle() {
 
           {/* Ombudsman */}
           <h2 id="ombudsman" className="text-xl font-bold text-navy-800 mt-10" style={{ fontFamily: "var(--font-family-heading)" }}>8. PRS Ombudsman and Landlord Register</h2>
-          <p><strong>Private Rented Sector Ombudsman:</strong> Membership is now <strong>mandatory</strong> for all private landlords in England. The Ombudsman handles tenant complaints about repairs, rent increases, deposit disputes, and conduct. Non-members face financial penalties. Registration is free for individual landlords.</p>
-          <p><strong>Landlord and Agent Register:</strong> A new national register of private landlords and letting agents is being established. Landlords must register (and re-register periodically). Local councils will have access to enforce compliance. Unregistered landlords cannot legally let their properties.</p>
+          <p><strong>Private Rented Sector Ombudsman:</strong> Membership <strong>will be</strong> mandatory for all private landlords in England, and the Ombudsman will handle tenant complaints about repairs, conduct and the handling of a tenancy. It is not live: no administrator has been appointed and there is nothing to join today. Mandatory membership is currently expected in 2028 — a planning assumption, not a date.</p>
+          <p><strong>PRS Database:</strong> The register of landlords and properties is the part with a date. It opens for registration on 15 December 2026, West Midlands first, with other regions called forward through 2027. Once you are called forward, letting without registering will carry penalties. <Link href="/landlords/prs-database" className="text-gold-600 font-semibold">What it asks for and what it costs.</Link></p>
 
           {/* Deposits */}
           <h2 id="deposits" className="text-xl font-bold text-navy-800 mt-10" style={{ fontFamily: "var(--font-family-heading)" }}>9. Advance Rent and Deposit Rules</h2>
@@ -227,8 +227,8 @@ export default function RentersRightsActArticle() {
           <h2 id="action" className="text-xl font-bold text-navy-800 mt-10" style={{ fontFamily: "var(--font-family-heading)" }}>10. What You Must Do Now</h2>
           <div className="not-prose space-y-3">
             {[
-              { n: "01", title: "Register with the PRS Ombudsman", desc: "Mandatory. Free for individual landlords. Check gov.uk for the registration portal." },
-              { n: "02", title: "Register on the Landlord Register", desc: "When the portal opens, you must register all properties. Failure to register means you cannot legally let the property." },
+              { n: "01", title: "Prepare for the PRS Database", desc: "Opens 15 December 2026, West Midlands first. Have the property and certificate details ready before you are called forward." },
+              { n: "02", title: "Ombudsman — nothing to do yet", desc: "Not live, no register to join, currently expected in 2028. When it opens, give tenants its details at the start of any tenancy." },
               { n: "03", title: "Remove Section 21 notices from your process", desc: "Do not serve any Section 21 notice — they are void. Update your eviction process to Section 8 only." },
               { n: "04", title: "Update your tenancy agreements", desc: "Remove any fixed-term provisions, renewal clauses, pet restriction clauses, and rent review provisions. Use a solicitor-drafted periodic tenancy agreement." },
               { n: "05", title: "Update your rent increase process", desc: "Switch entirely to Section 13 notices. Keep records of every notice served and the date it took effect." },
