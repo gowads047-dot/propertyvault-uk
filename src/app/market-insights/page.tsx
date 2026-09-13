@@ -21,7 +21,7 @@ import { fetchBankRate, fetchUkhpi, monthLabel } from "@/lib/market-data";
  * workings, are on the top-20 page linked below.
  */
 
-const TITLE = "UK House Prices by Region and the Bank Rate — Live | PropertyVault";
+const TITLE = "UK House Prices by Region and Bank Rate — Live | PropertyVault";
 const DESCRIPTION =
   "Average house price and annual change for every UK region from the Land Registry index, and the current Bank Rate from the Bank of England. Dated, sourced, refreshed daily.";
 
