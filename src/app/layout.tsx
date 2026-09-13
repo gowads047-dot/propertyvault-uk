@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "PropertyVault UK — Free Property Calculators, Templates & Guides",
   description:
-    `The UK's most comprehensive free property platform. ${siteMetrics.calculators} free calculators, ${siteMetrics.templates} legal templates, guaranteed rent, and expert guides for UK investors, landlords, and buyers.`,
+    `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} landlord templates and plain-English guides, plus guaranteed rent for landlords in the Midlands. No sign-up for any of it.`,
   keywords:
     "property investing UK, buy to let, BRRR calculator, stamp duty calculator, rental yield calculator, property templates, HMO yield, Section 24 calculator, UK mortgages, property law, guaranteed rent Birmingham, Renters Rights Act 2025",
   openGraph: {
@@ -103,7 +103,7 @@ const jsonLd = {
   "@type": "WebSite",
   name: "PropertyVault UK",
   url: "https://www.propertyvaultuk.co.uk",
-  description: "The UK's most comprehensive free property investment platform. Calculators, templates, guides, and tools for investors, landlords, and buyers.",
+  description: "Free property calculators, templates, guides and tools for UK investors, landlords and buyers, and guaranteed rent for landlords in the Midlands.",
   potentialAction: {
     "@type": "SearchAction",
     target: "https://www.propertyvaultuk.co.uk/search/?q={search_term_string}",
@@ -129,9 +129,9 @@ const orgJsonLd = {
 
 const localBusinessJsonLd = {
   "@context": "https://schema.org",
-  "@type": ["RealEstateAgent", "LocalBusiness"],
+  "@type": "LocalBusiness",
   name: "PropertyVault UK",
-  description: "Guaranteed rent scheme for landlords across the Midlands. We pay a fixed monthly income for 3–5 years — no voids, no management, no arrears. Serving Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
+  description: "Guaranteed rent for landlords in the Midlands: a fixed monthly rent for 3–5 years, paid whether or not the property is occupied, with the letting and day-to-day management handled. Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
   url: "https://www.propertyvaultuk.co.uk",
   logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
   image: "https://www.propertyvaultuk.co.uk/opengraph-image",
@@ -145,9 +145,9 @@ const localBusinessJsonLd = {
   areaServed: [
     { "@type": "City", "name": "Birmingham", "sameAs": "https://www.wikidata.org/wiki/Q2256" },
     { "@type": "City", "name": "Nottingham", "sameAs": "https://www.wikidata.org/wiki/Q41262" },
-    { "@type": "City", "name": "Derby", "sameAs": "https://www.wikidata.org/wiki/Q43296" },
-    { "@type": "City", "name": "Leicester", "sameAs": "https://www.wikidata.org/wiki/Q44306" },
-    { "@type": "City", "name": "Coventry", "sameAs": "https://www.wikidata.org/wiki/Q43684" },
+    { "@type": "City", "name": "Derby", "sameAs": "https://www.wikidata.org/wiki/Q43475" },
+    { "@type": "City", "name": "Leicester", "sameAs": "https://www.wikidata.org/wiki/Q83065" },
+    { "@type": "City", "name": "Coventry", "sameAs": "https://www.wikidata.org/wiki/Q6225" },
     { "@type": "City", "name": "Sheffield", "sameAs": "https://www.wikidata.org/wiki/Q42448" },
   ],
   knowsAbout: [
@@ -188,7 +188,7 @@ const localBusinessJsonLd = {
         itemOffered: {
           "@type": "Service",
           name: "Free Legal Templates",
-          description: "19 free landlord legal document templates including AST, Section 8, Section 13 and more — compliant with 2026 legislation.",
+          description: `${siteMetrics.templates} free landlord document templates — tenancy applications, notices, inventories and checklists — filled in on screen and printed.`,
           url: "https://www.propertyvaultuk.co.uk/templates",
         },
       },
