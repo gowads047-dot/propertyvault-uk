@@ -67,6 +67,7 @@ export const REGISTER: RegisterEntry[] = [
   { file: "src/app/property-law/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/property-news/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/property-news/page.tsx", term: "no-fault", count: 1, status: "not-reviewed" },
+  { file: "src/app/property-news/page.tsx", term: "prs-database", count: 5, status: "not-reviewed" },
   { file: "src/app/renters-rights-act/page.tsx", term: "section-21", count: 14, status: "not-reviewed" },
   { file: "src/app/renters-rights-act/page.tsx", term: "fixed-term", count: 11, status: "not-reviewed" },
   { file: "src/app/renters-rights-act/page.tsx", term: "no-fault", count: 2, status: "not-reviewed" },
