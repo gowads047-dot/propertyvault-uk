@@ -57,6 +57,21 @@ TXT record Google gives you at the registrar. Both property types can coexist.
 4. Also register at https://www.bing.com/webmasters — it can import the
    Search Console property in one click and feeds DuckDuckGo and Copilot.
 
+## Bing and DuckDuckGo without waiting: IndexNow
+
+Bing, DuckDuckGo, Yandex and others accept a push notification of changed
+URLs (Google does not). The site carries an IndexNow key file under
+`public/`, and
+
+```bash
+npm run seo:indexnow
+```
+
+submits every sitemap URL in one request; pass paths to submit only those.
+Run it after a deploy that changed pages — not on a timer, and not for
+unchanged URLs. HTTP 200 or 202 means accepted. Bing Webmaster Tools shows
+the submissions under *IndexNow* once the site is registered there.
+
 ## Why the site is "not showing" in Google
 
 Nothing technical blocks it: robots.txt allows crawling, the sitemap is
