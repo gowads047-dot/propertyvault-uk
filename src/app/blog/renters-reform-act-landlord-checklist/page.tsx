@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "What happens if I haven't registered with a Property Redress Scheme?",
-    a: "Private landlords managing their own properties are now required to join the new Private Rented Sector Ombudsman (which replaces the existing redress schemes). Operating without registration can result in civil penalties of up to £7,000 for a first offence and up to £40,000 for repeat offences. Registration is mandatory, not optional.",
+    a: "Not yet. The Act creates a Private Rented Sector Ombudsman that self-managing landlords will have to join, but the scheme is not live — no administrator has been appointed and there is nothing to register for today. Mandatory membership is currently expected in 2028. The register with a date is the PRS Database, which opens 15 December 2026; once you are called forward, letting without registering carries penalties.",
   },
   {
     q: "Can I get tenants out quickly if I want to sell my property?",
@@ -72,10 +72,10 @@ const CHECKLIST = [
   },
   {
     n: "04",
-    title: "Register with the PRS Ombudsman",
-    urgent: true,
-    detail: "All private landlords — including self-managing landlords who do not use an agent — must now join the new Private Rented Sector Ombudsman. This replaces the previous redress scheme requirements. Fines for non-compliance start at £7,000 and rise to £40,000 for repeated breaches. Registration is free for small landlords.",
-    action: "Visit the official PRS Ombudsman website to register.",
+    title: "Get ready for the PRS Database — the Ombudsman is not open yet",
+    urgent: false,
+    detail: "The Act creates a Private Rented Sector Ombudsman that every private landlord will have to join, but it is not live: no administrator has been appointed, there is nothing to register for, and mandatory membership is currently expected in 2028. The PRS Database is the one with a date — registration opens 15 December 2026, West Midlands first.",
+    action: "Have the property and certificate details ready for the database; ignore anyone offering to register you with the Ombudsman today.",
   },
   {
     n: "05",
