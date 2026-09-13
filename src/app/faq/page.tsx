@@ -28,7 +28,7 @@ const sections = [
     heading: "Guaranteed Rent",
     faqs: [
       { q: "What is guaranteed rent?", a: "Guaranteed rent is a property management model where a company leases your property from you on a 3–5 year agreement and pays you a fixed monthly amount — regardless of whether the property is occupied. You receive your rent even during voids, without agent fees, maintenance headaches, or compliance stress." },
-      { q: "How much below market rate will I receive?", a: "Typically 80–95% of the open market rental value, depending on the property's location, condition, and how we intend to use it. When you factor in no agent fees (8–15%), no voids (average £1,000–£2,000/year), and no maintenance costs, most landlords net more under guaranteed rent than traditional letting." },
+      { q: "How much below market rate will I receive?", a: "Typically 80–90% of the open market rent, depending on the property's location, condition, and how we intend to use it. The number to compare is the net: a letting agent's fee, the weeks a property stands empty between tenants, routine repairs and compliance all come off market rent before it reaches you, and none of them come off a guaranteed rent. We have worked through one property both ways with every assumption shown — so you can put your own figures in rather than take ours.", href: "/guaranteed-rent/vs-letting-agent", hrefLabel: "One property, both ways, assumptions shown" },
       { q: "What areas do you cover?", a: "We currently cover Birmingham, Nottingham, Derby, Leicester, Coventry, and Sheffield. If you have a property outside these areas, contact us — we are expanding and may be able to help." },
       { q: "How long is the lease?", a: "Standard leases are 3–5 years. Shorter or longer terms can sometimes be accommodated — contact us to discuss your situation." },
       { q: "How quickly can you take on my property?", a: "We can typically complete an assessment and make a formal offer within 48 hours of viewing. Onboarding (lease signing and handover) usually takes 1–2 weeks." },
@@ -96,7 +96,15 @@ export default function FaqPage() {
                         <svg className="w-3 h-3 group-open:rotate-180 transition-transform" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
                       </span>
                     </summary>
-                    <div className="px-5 pb-5 text-sm text-navy-600 leading-relaxed border-t border-navy-50 pt-3">{faq.a}</div>
+                    <div className="px-5 pb-5 text-sm text-navy-600 leading-relaxed border-t border-navy-50 pt-3">
+                      {faq.a}
+                      {faq.href && (
+                        <>
+                          {" "}
+                          <Link href={faq.href} className="text-gold-600 font-semibold">{faq.hrefLabel ?? "Read more"} &rarr;</Link>
+                        </>
+                      )}
+                    </div>
                   </details>
                 ))}
               </div>
