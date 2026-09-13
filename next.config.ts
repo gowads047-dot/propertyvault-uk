@@ -30,6 +30,34 @@ const nextConfig: NextConfig = {
    *
    * redirects.test.ts asserts the rule, so a future entry cannot reintroduce it.
    */
+  /**
+   * Response headers a scanner expects and a browser acts on.
+   *
+   * Production sent HSTS and nothing else. These are the uncontroversial
+   * set: no MIME sniffing, a referrer policy that keeps the path off
+   * third-party requests, no camera/microphone/geolocation (nothing on the
+   * site asks for them), and frame-ancestors so the site cannot be framed
+   * by another origin — except /embed/, whose whole purpose is to be
+   * iframed on other people's sites, so it gets no framing restriction.
+   *
+   * No script-src policy. GTM, inline JSON-LD and consent script would each
+   * need an exemption, and a wrong CSP breaks the site silently for the
+   * people it is meant to protect. That is a separate, careful change.
+   */
+  async headers() {
+    const common = [
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+    ];
+    return [
+      { source: "/embed/:path*", headers: common },
+      {
+        source: "/((?!embed/).*)",
+        headers: [...common, { key: "Content-Security-Policy", value: "frame-ancestors 'self'" }],
+      },
+    ];
+  },
   async redirects() {
     return [
       // Coming-soon lockdown — Academy only. Makan sub-routes stay reachable.
