@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { parseUkhpi, parseBankRate, monthsAgo, monthLabel, bankRateUrl, UKHPI_REGIONS } from "./market-data";
+import { parseUkhpi, parseBankRate, monthsAgo, monthLabel, bankRateUrl, UKHPI_REGIONS, AREA_UKHPI } from "./market-data";
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 
 // Trimmed from the live response for east-midlands/2026-06 on 13 Sep 2026.
 const ukhpiJune = {
@@ -86,5 +88,17 @@ describe("regions", () => {
     const slugs = UKHPI_REGIONS.map((r) => r.slug);
     expect(new Set(slugs).size).toBe(12);
     for (const s of slugs) expect(s).toMatch(/^[a-z-]+$/);
+  });
+});
+
+describe("AREA_UKHPI", () => {
+  it("covers every city guide under /areas, and nothing else", () => {
+    // A new city page without a slug here would silently show no price;
+    // a stale entry would fetch for a page that does not exist.
+    const dirs = readdirSync(join(process.cwd(), "src", "app", "areas"), { withFileTypes: true })
+      .filter((e) => e.isDirectory() && e.name !== "postcodes")
+      .map((e) => e.name)
+      .sort();
+    expect(Object.keys(AREA_UKHPI).sort()).toEqual(dirs);
   });
 });

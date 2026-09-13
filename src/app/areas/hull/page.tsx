@@ -6,6 +6,7 @@ import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 import { siteMetrics } from "@/lib/site";
+import { LiveAveragePrice } from "@/components/areas/LiveAveragePrice";
 
 export const metadata: Metadata = {
   title: "Hull Buy-to-Let Investment Guide | PropertyVault UK",
@@ -68,7 +69,7 @@ export default function HullPage() {
         <div className="container-max px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { n: "£155k", l: "Average house price" },
+              { n: <LiveAveragePrice area="hull" />, l: "Average house price" },
               { n: "7-9%", l: "Typical gross yield" },
               { n: "260,000", l: "Population" },
               { n: "1", l: "University" },

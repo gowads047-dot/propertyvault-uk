@@ -6,6 +6,7 @@ import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 import { siteMetrics } from "@/lib/site";
+import { LiveAveragePrice } from "@/components/areas/LiveAveragePrice";
 
 export const metadata: Metadata = {
   title: "Bristol Buy-to-Let Investment Guide | PropertyVault UK",
@@ -184,7 +185,7 @@ export default function BristolPage() {
         <div className="container-max px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-center">
             <div>
-              <p className="text-2xl font-extrabold text-navy-900">£390k</p>
+              <p className="text-2xl font-extrabold text-navy-900"><LiveAveragePrice area="bristol" /></p>
               <p className="text-sm text-navy-500 mt-1">Average price</p>
             </div>
             <div>

@@ -6,6 +6,7 @@ import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
 import { siteMetrics } from "@/lib/site";
+import { LiveAveragePrice } from "@/components/areas/LiveAveragePrice";
 
 export const metadata: Metadata = {
   title: "Newcastle Buy-to-Let Investment Guide | PropertyVault UK",
@@ -179,7 +180,7 @@ export default function NewcastlePage() {
                 className="text-3xl font-extrabold text-navy-900"
                 style={{ fontFamily: "var(--font-family-heading)" }}
               >
-                £185k
+                <LiveAveragePrice area="newcastle" />
               </p>
               <p className="text-sm text-navy-500 mt-1">Average price</p>
             </div>
