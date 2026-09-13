@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
+import { LiveAveragePrice } from "@/components/areas/LiveAveragePrice";
 
 export const metadata: Metadata = {
   title: "Property Investing in Derby — Buy-to-Let, Yields & Area Guide",
@@ -68,7 +69,7 @@ export default function DerbyPage() {
         <div className="container-max px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { n: "£200k", l: "Average house price" },
+              { n: <LiveAveragePrice area="derby" />, l: "Average house price" },
               { n: "5-8%", l: "Typical gross yield" },
               { n: "260k+", l: "Population" },
               { n: "1", l: "University" },

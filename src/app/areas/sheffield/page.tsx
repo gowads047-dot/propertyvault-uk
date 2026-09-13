@@ -5,6 +5,7 @@ import { FAQSchema } from "@/components/seo/FAQSchema";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
+import { LiveAveragePrice } from "@/components/areas/LiveAveragePrice";
 
 export const metadata: Metadata = {
   title: "Sheffield Buy-to-Let Guide 2026 — Yields, Areas & Prices",
@@ -66,7 +67,7 @@ export default function SheffieldPage() {
         <div className="container-max px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
-              { n: "£170k", l: "Average house price" },
+              { n: <LiveAveragePrice area="sheffield" />, l: "Average house price" },
               { n: "7–10%", l: "Typical gross yield" },
               { n: "580k+", l: "Population" },
               { n: "2", l: "Major universities" },

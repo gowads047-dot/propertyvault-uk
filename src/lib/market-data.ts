@@ -128,6 +128,52 @@ export function monthLabel(month: string): string {
   return new Date(Date.UTC(y, m - 1, 1)).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
 }
 
+/**
+ * UKHPI slugs for the twenty city guides under /areas. Not always the city
+ * name: the index is published by local authority, so Bristol is "City of
+ * Bristol" and Hull is "City of Kingston upon Hull". Every one was checked
+ * against the endpoint for June 2026.
+ */
+export const AREA_UKHPI: Record<string, { slug: string; label: string }> = {
+  birmingham: { slug: "birmingham", label: "Birmingham" },
+  bradford: { slug: "bradford", label: "Bradford" },
+  bristol: { slug: "city-of-bristol", label: "City of Bristol" },
+  cardiff: { slug: "cardiff", label: "Cardiff" },
+  coventry: { slug: "coventry", label: "Coventry" },
+  derby: { slug: "city-of-derby", label: "City of Derby" },
+  edinburgh: { slug: "city-of-edinburgh", label: "City of Edinburgh" },
+  glasgow: { slug: "city-of-glasgow", label: "City of Glasgow" },
+  hull: { slug: "city-of-kingston-upon-hull", label: "City of Kingston upon Hull" },
+  leeds: { slug: "leeds", label: "Leeds" },
+  leicester: { slug: "leicester", label: "Leicester" },
+  liverpool: { slug: "liverpool", label: "Liverpool" },
+  manchester: { slug: "manchester", label: "Manchester" },
+  newcastle: { slug: "newcastle-upon-tyne", label: "Newcastle upon Tyne" },
+  nottingham: { slug: "city-of-nottingham", label: "City of Nottingham" },
+  portsmouth: { slug: "portsmouth", label: "Portsmouth" },
+  sheffield: { slug: "sheffield", label: "Sheffield" },
+  southampton: { slug: "southampton", label: "Southampton" },
+  "stoke-on-trent": { slug: "stoke-on-trent", label: "Stoke-on-Trent" },
+  wolverhampton: { slug: "wolverhampton", label: "Wolverhampton" },
+};
+
+export type AreaPrice = RegionPrice & { month: string };
+
+/**
+ * The latest published month for one local authority. Same walk-back as
+ * fetchUkhpi; separate because a city page needs one figure, not thirteen.
+ */
+export async function fetchAreaPrice(area: string, now = new Date()): Promise<AreaPrice | null> {
+  const la = AREA_UKHPI[area];
+  if (!la) return null;
+  for (let back = 0; back <= 6; back++) {
+    const month = monthsAgo(back, now);
+    const r = await fetchRegion(la.slug, la.label, month);
+    if (r) return { ...r, month };
+  }
+  return null;
+}
+
 async function fetchRegion(slug: string, name: string, month: string): Promise<RegionPrice | null> {
   // Two attempts. Thirteen requests in parallel to one host, and one of
   // them failed once in testing; without a retry that region would be
