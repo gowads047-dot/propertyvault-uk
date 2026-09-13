@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Rent-to-Rent UK — How It Works, Step by Step",
   description:
-    "A practical rent-to-rent guide for the UK: choosing between HMO and serviced accommodation, setting up the business, finding and pitching landlords, contracts, compliance and the numbers to run before you commit.",
+    "A practical rent-to-rent guide for the UK: HMO or serviced accommodation, set-up, finding and pitching landlords, contracts, compliance and the numbers to run.",
   keywords:
     "rent to rent UK, R2R property, rent to rent HMO, rent to serviced accommodation, rent to rent contracts, rent to rent guide",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/rent-to-rent/" },

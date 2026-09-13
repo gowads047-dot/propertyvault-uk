@@ -6,9 +6,7 @@ import { canonical, ogImages } from "@/lib/site";
 
 const TITLE = "Ask PropertyVault — A Property Agent That Shows Its Working";
 const DESCRIPTION =
-  "Ask about a UK property in plain English. PropertyVault looks up sold prices and planning " +
-  "constraints, runs the numbers through its own calculators, and shows where every figure came " +
-  "from — including the checks it could not run.";
+  "Ask about a UK property in plain English. PropertyVault looks up sold prices and planning constraints, runs the numbers, and shows where every figure came from.";
 
 export const metadata: Metadata = {
   title: TITLE,

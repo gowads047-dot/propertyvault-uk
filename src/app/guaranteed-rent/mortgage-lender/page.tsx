@@ -42,9 +42,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 
 const TITLE = "Will My Mortgage Lender Allow Guaranteed Rent? | PropertyVault UK";
 const DESCRIPTION =
-  "Some buy-to-let lenders permit guaranteed rent and company lets; others do not. What lenders " +
-  "actually object to, the questions to put to yours in writing, and why we tell you to ask before " +
-  "you sign anything with us.";
+  "Some buy-to-let lenders permit guaranteed rent and company lets; others do not. What lenders object to, what to ask yours in writing, and why to ask first.";
 
 export const metadata: Metadata = {
   title: TITLE,

@@ -25,9 +25,7 @@ import { canonical, SITE_URL, siteMetrics } from "@/lib/site";
 
 const TITLE = "For Landlords — Compliance, Tenancies and Getting Paid";
 const DESCRIPTION =
-  "What UK landlords have to do, what is optional, and where PropertyVault can take the work " +
-  "off you. Compliance checklist for England, the possession position after the Renters' Rights " +
-  "Act, and the landlord dashboard.";
+  "What UK landlords must do, what is optional, and where PropertyVault takes the work off you: compliance checklist and possession after the Renters' Rights Act.";
 
 export const metadata: Metadata = {
   title: TITLE,

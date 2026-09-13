@@ -104,11 +104,11 @@ export default function OfferWorksheetTemplate() {
               {([[comp1Addr, setComp1Addr, comp1Price, setComp1Price],[comp2Addr, setComp2Addr, comp2Price, setComp2Price],[comp3Addr, setComp3Addr, comp3Price, setComp3Price]] as const).map((row, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
                   <input aria-label="Cost item description" value={row[0] as string} onChange={e => (row[1] as (v: string) => void)(e.target.value)} placeholder={`Comparable ${i + 1} address`}
-                    style={{ flex: 2, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
-                  <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
+                    style={{ flex: 2, minWidth: 0, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1, minWidth: 0 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
                     <input aria-label="Price" type="number" value={(row[2] as number) || ""} onChange={e => (row[3] as (v: number) => void)(Number(e.target.value))} placeholder="Price"
-                      style={{ flex: 1, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
+                      style={{ flex: 1, minWidth: 0, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
                   </div>
                 </div>
               ))}

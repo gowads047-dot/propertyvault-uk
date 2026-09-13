@@ -5,11 +5,11 @@ import { siteMetrics } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
   description:
-    "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+    "Free property calculators, templates and guides, plus guaranteed rent for landlords. Built because good property information was locked behind paid courses.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/about/" },
   openGraph: {
     title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
-    description: "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+    description: "Free property calculators, templates and guides, plus guaranteed rent for landlords. Built because good property information was locked behind paid courses.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/about/",
     siteName: "PropertyVault UK",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "About PropertyVault UK — Our Story, Mission & Ecosystem",
-    description: "PropertyVault UK was built because good property information was locked behind expensive courses and biased advice. Free tools, guaranteed rent, deal sourcing education, and property management — all in one ecosystem.",
+    description: "Free property calculators, templates and guides, plus guaranteed rent for landlords. Built because good property information was locked behind paid courses.",
   },
 };
 
