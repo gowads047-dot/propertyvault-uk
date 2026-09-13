@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { blogPosts, slugOf, relatedPosts } from "./blog-posts";
+import { blogPosts, slugOf, relatedPosts, postDateISO } from "./blog-posts";
 import { siteMetrics } from "./site";
 
 const blogDir = join(process.cwd(), "src", "app", "blog");
@@ -84,6 +84,21 @@ describe("relatedPosts language separation", () => {
   it("still fills all three slots within each language", () => {
     for (const post of blogPosts) {
       expect(relatedPosts(slugOf(post), 3)).toHaveLength(3);
+    }
+  });
+});
+
+describe("postDateISO", () => {
+  it("handles both date styles the index uses", () => {
+    expect(postDateISO("6 September 2026")).toBe("2026-09-06");
+    expect(postDateISO("25 June 2026")).toBe("2026-06-25");
+    // Month-only dates become the first, so they sort and feed correctly.
+    expect(postDateISO("June 2026")).toBe("2026-06-01");
+  });
+
+  it("parses every post's date, so the feed and schema never carry a raw string", () => {
+    for (const p of blogPosts) {
+      expect(postDateISO(p.date), `${p.href} date "${p.date}"`).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
   });
 });

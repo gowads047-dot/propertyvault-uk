@@ -7,7 +7,10 @@ import { blogPosts } from "@/lib/blog-posts";
 export const metadata: Metadata = {
   title: "Property Investment Blog | PropertyVault UK",
   description: "Expert property investment articles. BRRR strategy, guaranteed rent, Section 24, HMO investing, stamp duty, leasehold, rent-to-rent, deal sourcing, and more.",
-  alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/" },
+  alternates: {
+    canonical: "https://www.propertyvaultuk.co.uk/blog/",
+    types: { "application/rss+xml": "https://www.propertyvaultuk.co.uk/feed.xml" },
+  },
   openGraph: {
     title: "Property Investment Blog | PropertyVault UK",
     description: "Expert property investment articles. BRRR strategy, guaranteed rent, Section 24, HMO investing, stamp duty, leasehold, rent-to-rent, deal sourcing, and more.",

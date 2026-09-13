@@ -294,6 +294,24 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
+const MONTHS: Record<string, string> = {
+  January: "01", February: "02", March: "03", April: "04", May: "05", June: "06",
+  July: "07", August: "08", September: "09", October: "10", November: "11", December: "12",
+};
+
+/**
+ * A post's date as YYYY-MM-DD. Dates are written as "6 September 2026" or,
+ * for the older posts, "June 2026", which becomes the first of the month.
+ * Used by the Article schema and the RSS feed, so that the two agree.
+ */
+export function postDateISO(d: string): string {
+  const full = d.match(/^(\d{1,2})\s+(\w+)\s+(\d{4})$/);
+  if (full) return `${full[3]}-${MONTHS[full[2]] ?? "01"}-${full[1].padStart(2, "0")}`;
+  const my = d.match(/^(\w+)\s+(\d{4})$/);
+  if (my) return `${my[2]}-${MONTHS[my[1]] ?? "01"}-01`;
+  return d;
+}
+
 /** Slug for a post href, e.g. "/blog/foo" -> "foo". */
 export function slugOf(post: BlogPost): string {
   return post.href.replace(/^\/blog\//, "").replace(/\/$/, "");
