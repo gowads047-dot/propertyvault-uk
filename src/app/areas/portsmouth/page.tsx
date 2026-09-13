@@ -462,7 +462,7 @@ export default function PortsmouthPage() {
         </div>
       </section>
 
-      <FAQSchema faqs={cityFaqs} />
+      <FAQSchema faqs={cityFaqs} visible={false} />
     </>
   );
 }

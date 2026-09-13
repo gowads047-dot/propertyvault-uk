@@ -422,7 +422,7 @@ export default function BristolPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} />
+          <FAQSchema faqs={cityFaqs} visible={false} />
           <div className="mt-12">
             <DataProvenance area="Bristol" />
             <Disclaimer />

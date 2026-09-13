@@ -60,7 +60,7 @@ const yieldColor = (y: string) => {
 export default function Top20BTLPostcodesPage() {
   return (
     <>
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} visible={false} />
 
       {/* Hero */}
       <section className="gradient-navy py-16 md:py-24">

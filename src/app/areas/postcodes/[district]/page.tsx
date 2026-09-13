@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     alternates: { canonical: `https://www.propertyvaultuk.co.uk/areas/postcodes/${district.toLowerCase()}/` },
     title: `${d.code} Postcode — Sold Prices & Buy-to-Let Guide`,
-    description: `${d.code} sold prices, rental yields, and buy-to-let investment guide for ${d.city}. ${d.desc} Average price ${d.avgPrice}, typical yield ${d.yield}.`,
+    description: `${d.label}: sold prices, typical yield ${d.yield}, average price ${d.avgPrice}, and what to check before buying to let in ${d.code}.`,
     keywords: `${d.code} sold prices, ${d.code} buy to let, ${d.code} property investment, ${d.city} ${d.code} yields, ${d.code} rental yield`,
   };
 }
@@ -259,7 +259,7 @@ export default async function PostcodePage({ params }: Props) {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={faqs} />
+          <FAQSchema faqs={faqs} visible={false} />
 
           {/* Browse more postcodes */}
           <div className="mt-10 pt-8 border-t border-navy-100">
