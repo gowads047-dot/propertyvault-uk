@@ -143,10 +143,10 @@ const PROPERTY_CHECKS: Check[] = [
 const PORTFOLIO_CHECKS: Check[] = [
   {
     key: "ombudsman",
-    label: "Joined the PRS Ombudsman scheme",
-    detail: "All private landlords in England must join the mandatory PRS Ombudsman scheme — now in force. Failure to join is a criminal offence (fine up to £5,000 per property).",
-    action: "Register at the government's landlord registration portal. Do not delay — enforcement is active.",
-    severity: "high",
+    label: "Ready for the PRS Database (opens 15 December 2026)",
+    detail: "The Ombudsman every landlord will have to join is not open yet — no administrator has been appointed and there is nothing to join today; mandatory membership is currently expected in 2028. The PRS Database is the register with a date: it opens 15 December 2026, West Midlands first.",
+    action: "Have the property and certificate details ready for the database. Ignore anyone offering to register you with the Ombudsman today.",
+    severity: "medium",
   },
   {
     key: "property_portal",
@@ -612,7 +612,7 @@ export default function RRBPage() {
                 { label: "Commencement", date: "June 2025", note: "All provisions now in force", color: RED },
                 { label: "Section 21 abolished", date: "June 2025", note: "No more no-fault evictions — in force now", color: RED },
                 { label: "All tenancies periodic", date: "June 2025", note: "Fixed terms expired into periodic", color: AMBER },
-                { label: "PRS Ombudsman", date: "In force", note: "Mandatory now — fine up to £5,000/property", color: AMBER },
+                { label: "PRS Database", date: "15 Dec 2026", note: "Registration opens, West Midlands first; the Ombudsman is expected in 2028", color: AMBER },
                 { label: "Property Portal", date: "Rolling rollout", note: "Registration required when your area goes live", color: AMBER },
                 { label: "Decent Homes Standard", date: "In force", note: "PRS properties must meet DHS", color: BLUE },
               ].map(d => (

@@ -248,8 +248,8 @@ export default function RentersRightsNotice() {
                 <Right n="9" title="Advance Rent — Maximum One Month"
                   body="Your landlord was not permitted to require more than one month's rent in advance before this tenancy began. If you were asked to pay more than one month's advance rent, you may have grounds to recover the overpayment." />
 
-                <Right n="10" title="Right to Complain to the PRS Ombudsman"
-                  body="Your landlord is required by law to be a member of the Private Rented Sector Ombudsman. If you have a complaint about your landlord that cannot be resolved directly, you have the right to refer it to the Ombudsman free of charge. The Ombudsman can require your landlord to take action and may award you compensation." />
+                <Right n="10" title="Right to Complain to the PRS Ombudsman (when it opens)"
+                  body="The Renters' Rights Act creates a Private Rented Sector Ombudsman that every private landlord will have to join. It is not open yet. Once it is, a complaint about your landlord that cannot be resolved directly can be referred to it free of charge, and it will be able to require your landlord to take action and award compensation. Until then, complaints go to your local council's private sector housing team." />
               </DocSection>
 
               {/* How to raise issues */}

@@ -83,7 +83,7 @@ export default function HMOHubPage() {
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>All new tenancies are periodic</strong> — fixed-term ASTs can no longer be issued for HMO rooms. Tenants can give 2 months' notice to leave at any point, including mid-academic-year for student HMOs.</li>
                 <li><strong>Section 21 abolished</strong> — you can no longer serve a no-fault notice on an HMO tenant. Possession requires a specific Section 8 ground (e.g. rent arrears, antisocial behaviour, or selling the property).</li>
-                <li><strong>PRS Ombudsman registration is mandatory</strong> — HMO landlords must register individually with the PRS Ombudsman. Failure is a criminal offence carrying a fine of up to £5,000 per property.</li>
+                <li><strong>PRS Ombudsman — coming, not yet open</strong> — every private landlord will have to join, but the scheme is not live and cannot be joined today; mandatory membership is currently expected in 2028. The PRS Database, which does have a date, opens for registration on 15 December 2026.</li>
                 <li><strong>Pet requests</strong> — tenants in HMO rooms have the right to request a pet. You must respond within 28 days and cannot unreasonably refuse.</li>
                 <li><strong>Rent increases</strong> — you can only increase room rents once per year via the Section 13 statutory process, with at least 2 months' written notice.</li>
               </ul>

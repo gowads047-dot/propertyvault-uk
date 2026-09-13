@@ -65,8 +65,8 @@ export const blogPosts: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
   },
   {
-    title: "PRS Ombudsman Registration — What Every Landlord Must Do Now",
-    excerpt: "All private landlords in England must register with the PRS Ombudsman under the Renters' Rights Act 2025. Failure is a criminal offence with fines up to £5,000 per property.",
+    title: "PRS Ombudsman & Landlord Database — Timeline and How to Prepare",
+    excerpt: "The Ombudsman is not open yet and cannot be joined; the landlord database opens 15 December 2026. What each one is, when it applies, and what to have ready.",
     href: "/blog/prs-ombudsman-landlord-registration",
     category: "Landlords",
     readTime: "7 min",
