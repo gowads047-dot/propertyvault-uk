@@ -681,15 +681,18 @@ export default function DealAnalyserPage() {
 
       <section style={{ background: "#f8f9fc", paddingBottom: 64 }}>
         <div className="container-max px-4" style={{ paddingTop: 24 }}>
+          {/* min-w-0 on the columns: grid items default to min-width:auto, so the
+              scrollable tab row inside set a floor on the whole track and the
+              page scrolled sideways on a phone instead of the row. */}
           <div className="grid lg:grid-cols-5 gap-6">
 
             {/* ── INPUTS ─────────────────────────────────────── */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="lg:col-span-2 space-y-4 min-w-0">
 
               {/* ── URL Paste ── */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5" style={{ borderColor: "#c9a84c33" }}>
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold text-navy-800 text-sm">🔗 Paste a Rightmove or Zoopla URL</h3>
+                  <h2 className="font-bold text-navy-800 text-sm">🔗 Paste a Rightmove or Zoopla URL</h2>
                   <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
                 </div>
                 <p className="text-xs text-navy-400 mb-3">Auto-fill price and area data straight from the listing.</p>
@@ -773,8 +776,8 @@ export default function DealAnalyserPage() {
 
               {/* Strategy Selector */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-3">🎯 Investment Strategy</h3>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 6 }}>
+                <h2 className="font-bold text-navy-800 text-sm mb-3">🎯 Investment Strategy</h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 6 }}>
                   {(Object.entries(STRATEGY_META) as [Strategy, typeof STRATEGY_META[Strategy]][]).map(([key, meta]) => (
                     <button key={key} onClick={() => handleStrategyChange(key)}
                       style={{ padding: "8px 4px", borderRadius: 10, border: strategy === key ? "2px solid #c9a84c" : "1.5px solid #e2e8f0", background: strategy === key ? "#fefce8" : "white", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
@@ -788,7 +791,7 @@ export default function DealAnalyserPage() {
 
               {/* Postcode lookup */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-1">📍 Property Postcode</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-1">📍 Property Postcode</h2>
                 <p className="text-xs text-navy-400 mb-3">Get area intelligence — crime data, recent sold prices, and market context.</p>
                 <div style={{ display: "flex", gap: 8 }}>
                   <input aria-label="NG1 1AA"
@@ -891,7 +894,7 @@ export default function DealAnalyserPage() {
                               measurement. What replaces them is what is true. */}
                           <span style={{ fontSize: 10, fontWeight: 600, color: "#475569" }}>Regional average</span>
                         </div>
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 4, marginBottom: 8 }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 4, marginBottom: 8 }}>
                           {[
                             { label: "Studio", val: areaData.rental.studio },
                             { label: "1 Bed", val: areaData.rental.oneBed },
@@ -927,7 +930,7 @@ export default function DealAnalyserPage() {
 
               {/* Property */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">🏠 Property</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">🏠 Property</h2>
                 <div className="space-y-3">
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Purchase Price</span>
@@ -976,7 +979,7 @@ export default function DealAnalyserPage() {
               {/* Auto SDLT */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                  <h3 className="font-bold text-navy-800 text-sm">🏛️ Stamp Duty (Auto)</h3>
+                  <h2 className="font-bold text-navy-800 text-sm">🏛️ Stamp Duty (Auto)</h2>
                   <span className="text-xs font-bold text-gold-600">{fmt(sdlt)}</span>
                 </div>
                 <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
@@ -989,7 +992,7 @@ export default function DealAnalyserPage() {
 
               {/* Mortgage */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">🏦 Mortgage</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">🏦 Mortgage</h2>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-2">
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Deposit %</span><input type="number" min="0" value={depositPct} onChange={e => setDepositPct(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
@@ -1009,7 +1012,7 @@ export default function DealAnalyserPage() {
 
               {/* Running Costs */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">⚙️ Running Costs</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">⚙️ Running Costs</h2>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-2">
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Management %</span><input type="number" min="0" value={managementPct} onChange={e => setManagementPct(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
@@ -1025,7 +1028,7 @@ export default function DealAnalyserPage() {
               {/* HMO Inputs */}
               {strategy === "hmo" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                  <h3 className="font-bold text-navy-800 text-sm mb-4">🏘️ HMO Details</h3>
+                  <h2 className="font-bold text-navy-800 text-sm mb-4">🏘️ HMO Details</h2>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Rooms</span><input type="number" min="0" value={hmoRooms} onChange={e => setHmoRooms(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
@@ -1044,7 +1047,7 @@ export default function DealAnalyserPage() {
               {/* R2R Inputs */}
               {strategy === "r2r" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                  <h3 className="font-bold text-navy-800 text-sm mb-4">🔄 Rent-to-Rent Details</h3>
+                  <h2 className="font-bold text-navy-800 text-sm mb-4">🔄 Rent-to-Rent Details</h2>
                   <div className="space-y-3">
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Lease Cost £/mo (you pay landlord)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={r2rLeaseCost} onChange={e => setR2rLeaseCost(+e.target.value)} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
                     <div className="grid grid-cols-2 gap-2">
@@ -1063,7 +1066,7 @@ export default function DealAnalyserPage() {
               {/* Flip Inputs */}
               {strategy === "flip" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                  <h3 className="font-bold text-navy-800 text-sm mb-4">🔨 Flip Details</h3>
+                  <h2 className="font-bold text-navy-800 text-sm mb-4">🔨 Flip Details</h2>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Hold Period (months)</span><input type="number" min="0" value={flipHoldingMonths} onChange={e => setFlipHoldingMonths(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
@@ -1081,7 +1084,7 @@ export default function DealAnalyserPage() {
               {/* SA Inputs */}
               {strategy === "sa" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                  <h3 className="font-bold text-navy-800 text-sm mb-4">🏨 Serviced Accommodation Details</h3>
+                  <h2 className="font-bold text-navy-800 text-sm mb-4">🏨 Serviced Accommodation Details</h2>
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-2">
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Nightly Rate £</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={saNightlyRate} onChange={e => setSaNightlyRate(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
@@ -1100,7 +1103,7 @@ export default function DealAnalyserPage() {
 
               {/* Smart settings */}
               <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                <h3 className="font-bold text-navy-800 text-sm mb-4">🧠 Smart Settings</h3>
+                <h2 className="font-bold text-navy-800 text-sm mb-4">🧠 Smart Settings</h2>
                 <div className="space-y-3">
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Benchmark city</span>
@@ -1125,7 +1128,7 @@ export default function DealAnalyserPage() {
             </div>
 
             {/* ── RESULTS ────────────────────────────────────── */}
-            <div className="lg:col-span-3 space-y-4">
+            <div className="lg:col-span-3 space-y-4 min-w-0">
 
               {/* 4 key metrics */}
               <div className="grid grid-cols-2 gap-3">
@@ -1180,7 +1183,7 @@ export default function DealAnalyserPage() {
                   {/* R2R Summary */}
                   {strategy === "r2r" && (
                     <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
-                      <h4 className="font-bold text-navy-800 text-sm">🔄 Rent-to-Rent P&L</h4>
+                      <h3 className="font-bold text-navy-800 text-sm">🔄 Rent-to-Rent P&L</h3>
                       {[
                         ["Sublet Income", fmt(r2rCalc.grossIncome), "green"],
                         ["Lease Cost", `-${fmt(r2rLeaseCost * 12)}`, "red"],
@@ -1203,7 +1206,7 @@ export default function DealAnalyserPage() {
                   {/* Flip Summary */}
                   {strategy === "flip" && (
                     <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
-                      <h4 className="font-bold text-navy-800 text-sm">🔨 Flip P&L</h4>
+                      <h3 className="font-bold text-navy-800 text-sm">🔨 Flip P&L</h3>
                       {[
                         ["Sale Price (ARV)", fmt(afterRefurbValue), "green"],
                         ["Purchase Price", `-${fmt(purchasePrice)}`, "red"],
@@ -1229,7 +1232,7 @@ export default function DealAnalyserPage() {
                   {/* HMO Summary */}
                   {strategy === "hmo" && (
                     <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
-                      <h4 className="font-bold text-navy-800 text-sm">🏘️ HMO P&L</h4>
+                      <h3 className="font-bold text-navy-800 text-sm">🏘️ HMO P&L</h3>
                       {[
                         ["Gross HMO Income", fmt(hmoCalc.grossIncome), "green"],
                         ["Mortgage", `-${fmt(hmoCalc.annualMtg)}`, "red"],
@@ -1253,7 +1256,7 @@ export default function DealAnalyserPage() {
                   {/* SA Summary */}
                   {strategy === "sa" && (
                     <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-3">
-                      <h4 className="font-bold text-navy-800 text-sm">🏨 SA Revenue Breakdown</h4>
+                      <h3 className="font-bold text-navy-800 text-sm">🏨 SA Revenue Breakdown</h3>
                       {[
                         ["Gross Revenue", fmt(saCalc.grossRevenue), "green"],
                         ["Platform Fees", `-${fmt(saCalc.platformFees)}`, "red"],
@@ -1277,7 +1280,7 @@ export default function DealAnalyserPage() {
                   {/* Guaranteed Rent Comparison */}
                   {strategy === "btl" && guaranteedRent && (
                     <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                      <h4 className="font-bold text-navy-800 text-sm mb-3">🛡️ Guaranteed Rent vs Self-Managed</h4>
+                      <h3 className="font-bold text-navy-800 text-sm mb-3">🛡️ Guaranteed Rent vs Self-Managed</h3>
                       <div className="grid grid-cols-2 gap-3">
                         <div style={{ padding: "14px", borderRadius: 12, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
                           <p style={{ fontSize: 11, color: "#475569", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
@@ -1313,9 +1316,9 @@ export default function DealAnalyserPage() {
 
                   {/* Smart Insights */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-3 flex items-center gap-2">
+                    <h3 className="font-bold text-navy-800 text-sm mb-3 flex items-center gap-2">
                       <span>🧠</span> Smart Insights
-                    </h4>
+                    </h3>
                     <div className="space-y-2">
                       {insights.map((ins, i) => (
                         <div key={i} style={{ display: "flex", gap: 10, padding: "10px 12px", borderRadius: 10, background: ins.type === "success" ? "#f0fdf4" : ins.type === "warn" ? "#fffbeb" : ins.type === "error" ? "#fef2f2" : "#eff6ff", border: `1px solid ${ins.type === "success" ? "#bbf7d0" : ins.type === "warn" ? "#fde68a" : ins.type === "error" ? "#fecaca" : "#bfdbfe"}` }}>
@@ -1329,9 +1332,9 @@ export default function DealAnalyserPage() {
                   {/* AI Deal Verdict */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5" style={{ borderColor: "#c9a84c33" }}>
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="font-bold text-navy-800 text-sm flex items-center gap-2">
+                      <h3 className="font-bold text-navy-800 text-sm flex items-center gap-2">
                         <span>🤖</span> AI Deal Verdict
-                      </h4>
+                      </h3>
                       <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
                     </div>
                     <p className="text-xs text-navy-400 mb-4">Claude analyses your deal metrics and gives a buy / negotiate / pass verdict with red flags and negotiation tips.</p>
@@ -1426,7 +1429,7 @@ export default function DealAnalyserPage() {
 
                   {/* City Benchmark */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-3">📍 vs our {BENCHMARKS[cityBenchmark].name} reference</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-3">📍 vs our {BENCHMARKS[cityBenchmark].name} reference</h3>
                     <div className="grid grid-cols-2 gap-3">
                       {[
                         { label: "Your Gross Yield", yours: calc.grossYield, avg: BENCHMARKS[cityBenchmark].gross },
@@ -1456,7 +1459,7 @@ export default function DealAnalyserPage() {
 
                   {/* Expense Breakdown */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-4">Annual Expenses</h4>
+                    <h2 className="font-bold text-navy-800 text-sm mb-4">Annual Expenses</h2>
                     <div className="h-5 rounded-full overflow-hidden flex mb-4">
                       {expenseItems.map(item => (
                         <div key={item.label} style={{ width: `${expTotal > 0 ? (item.value / expTotal * 100) : 0}%`, backgroundColor: item.color }} className="h-full transition-all" title={`${item.label}: ${fmt(item.value)}`} />
@@ -1478,7 +1481,7 @@ export default function DealAnalyserPage() {
 
                   {/* P&L */}
                   <div className="bg-navy-800 rounded-2xl p-5 text-white">
-                    <h4 className="font-bold text-sm text-white/50 mb-3">Profit & Loss</h4>
+                    <h2 className="font-bold text-sm text-white/50 mb-3">Profit & Loss</h2>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between"><span className="text-white/60">Annual rental income</span><span className="font-semibold text-green-400">{fmt(calc.annualRent)}</span></div>
                       <div className="flex justify-between"><span className="text-white/60">Total expenses</span><span className="font-semibold text-red-400">-{fmt(calc.totalExpenses)}</span></div>
@@ -1491,7 +1494,7 @@ export default function DealAnalyserPage() {
 
                   {/* Investment Summary */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-3">Investment Summary</h4>
+                    <h2 className="font-bold text-navy-800 text-sm mb-3">Investment Summary</h2>
                     <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-sm mb-3">
                       {[
                         ["Deposit", fmt(calc.depositAmount)],
@@ -1530,7 +1533,7 @@ export default function DealAnalyserPage() {
               {/* ── STRESS TEST TAB ───────────────────────────── */}
               {activeSection === "stress" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5 space-y-4">
-                  <h4 className="font-bold text-navy-800 text-sm">Stress Test — Monthly Cash Flow</h4>
+                  <h3 className="font-bold text-navy-800 text-sm">Stress Test — Monthly Cash Flow</h3>
                   <p className="text-xs text-navy-400">How does your cash flow hold up when things go wrong?</p>
                   <div className="space-y-3">
                     {[
@@ -1564,7 +1567,7 @@ export default function DealAnalyserPage() {
 
                   {/* ICR Lender Stress Test */}
                   <div style={{ padding: "16px", borderRadius: 14, border: "1.5px solid #e2e8f0", background: "white" }}>
-                    <h4 className="font-bold text-navy-800 text-sm mb-1">🏦 Lender ICR Stress Test</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-1">🏦 Lender ICR Stress Test</h3>
                     <p className="text-xs text-navy-400 mb-3">Interest Coverage Ratio — lenders require rent to cover mortgage by 125% (basic rate) or 145% (higher rate / company).</p>
                     <div className="grid grid-cols-3 gap-3 mb-3">
                       <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: "#f8f9fc" }}>
@@ -1600,7 +1603,7 @@ export default function DealAnalyserPage() {
               {activeSection === "projection" && (
                 <div className="bg-white rounded-2xl border border-navy-100 p-5">
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                    <h4 className="font-bold text-navy-800 text-sm">5-Year Projection</h4>
+                    <h3 className="font-bold text-navy-800 text-sm">5-Year Projection</h3>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span className="text-xs text-navy-500">Growth:</span>
                       <select value={capitalGrowthPct} onChange={e => setCapGrowth(signed(e.target.value))} aria-label="Growth per year" className="text-xs font-semibold border border-navy-200 rounded-lg px-2 py-1 bg-white focus:outline-none">
@@ -1639,7 +1642,7 @@ export default function DealAnalyserPage() {
               {activeSection === "tax" && (
                 <div className="space-y-4">
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-4">Section 24 Tax Impact</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-4">Section 24 Tax Impact</h3>
                     <div className="grid grid-cols-3 gap-3">
                       {[
                         { label: "Basic rate (20%)", net: taxAnalysis.basicNet, tax: taxAnalysis.basicTax, note: "Full mortgage interest deductible via 20% credit" },
@@ -1664,7 +1667,7 @@ export default function DealAnalyserPage() {
                     )}
                   </div>
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-3">After-tax monthly income</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-3">After-tax monthly income</h3>
                     <div className="grid grid-cols-3 gap-3 text-center">
                       {[
                         { label: "Basic rate", value: taxAnalysis.basicNet / 12 },
@@ -1688,7 +1691,7 @@ export default function DealAnalyserPage() {
                   {/* Bridging Loan Toggle */}
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-                      <h4 className="font-bold text-navy-800 text-sm">🌉 Bridging Finance</h4>
+                      <h3 className="font-bold text-navy-800 text-sm">🌉 Bridging Finance</h3>
                       <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
                         <input type="checkbox" checked={usesBridging} onChange={e => setUsesBridging(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#c9a84c" }} />
                         <span className="text-sm font-semibold text-navy-700">Use bridging loan</span>
@@ -1728,7 +1731,7 @@ export default function DealAnalyserPage() {
                   </div>
 
                   <div className="bg-white rounded-2xl border border-navy-100 p-5">
-                    <h4 className="font-bold text-navy-800 text-sm mb-1">BRRR Refinance Analysis</h4>
+                    <h3 className="font-bold text-navy-800 text-sm mb-1">BRRR Refinance Analysis</h3>
                     <p className="text-xs text-navy-400 mb-4">Refinance at 75% LTV on after-refurb value</p>
                     {afterRefurbValue <= purchasePrice + refurbCost ? (
                       <div style={{ padding: "16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca", textAlign: "center" }}>
@@ -1814,11 +1817,11 @@ export default function DealAnalyserPage() {
           <h2 className="text-xl font-bold text-navy-800">How to Analyse a Property Deal Properly</h2>
           <p>Most amateur investors make a decision based on asking price alone. Professional investors build a full deal model — purchase costs, refurb, finance, running costs, rental income, void assumptions, and exit strategy — before they even view the property. This calculator helps you build that model.</p>
           <p>The key metrics to focus on: <strong>net yield</strong> (annual profit ÷ total invested), <strong>monthly cash flow</strong> (rent minus all costs including mortgage), and <strong>ROI</strong> which factors in capital appreciation alongside income.</p>
-          <h3 className="font-bold text-navy-800">What Is a Good Deal?</h3>
+          <h2 className="font-bold text-navy-800">What Is a Good Deal?</h2>
           <p>For a standard buy-to-let, most experienced investors require a minimum 6% net yield and positive monthly cash flow after all costs. Below this, the risk-adjusted return rarely justifies tying up capital. In the Midlands and North, deals with 8-12% net yield and £200-500/month positive cash flow exist — these are the benchmarks worth targeting.</p>
-          <h3 className="font-bold text-navy-800">Don't Forget Acquisition Costs</h3>
+          <h2 className="font-bold text-navy-800">Don't Forget Acquisition Costs</h2>
           <p>Total investment includes: deposit, stamp duty (5% surcharge on additional properties), legal fees (£1,000-£2,500), survey (£300-£700), mortgage arrangement fee, refurbishment, and initial furnishing. Missing any of these inflates your apparent ROI — this calculator captures all of them.</p>
-          <h3 className="font-bold text-navy-800">Model Void Periods Realistically</h3>
+          <h2 className="font-bold text-navy-800">Model Void Periods Realistically</h2>
           <p>Assuming 100% occupancy is the most common mistake in property analysis. A 5% void allowance (about 2.5 weeks/year) is conservative and realistic for well-located properties. HMOs and short-lets can have higher voids. Baking in realistic voids shows what the deal actually returns in the real world.</p>
           <div className="pt-4 border-t border-navy-200">
             <p className="font-bold text-navy-800 mb-3 text-sm">Related Tools & Guides</p>

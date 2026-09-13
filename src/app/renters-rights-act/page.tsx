@@ -391,7 +391,7 @@ export default function RentersRightsActPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={faqs} />
+          <FAQSchema faqs={faqs} visible={false} />
           <div className="mt-12">
             <Disclaimer />
           </div>

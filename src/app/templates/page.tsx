@@ -288,7 +288,10 @@ export default function TemplatesPage() {
           {/* Results count */}
           <p style={{ fontSize: 13, color: "#475569", marginBottom: 20 }}>{filtered.length} template{filtered.length !== 1 ? "s" : ""}</p>
 
-          {/* Template grid */}
+          {/* Template grid. The heading is visually hidden: the hero and the
+              results count already say what this is, but without an <h2> the
+              nineteen card titles hung straight off the <h1>. */}
+          <h2 className="sr-only">All templates</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 20 }}>
             {filtered.map(t => {
               const cat = CAT_COLORS[t.category];

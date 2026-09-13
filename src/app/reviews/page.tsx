@@ -6,12 +6,12 @@ const DESC =
   "Ask to speak to a current PropertyVault UK landlord before you sign. We will put you in touch directly so you can hear about the service first-hand.";
 
 export const metadata: Metadata = {
-  title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+  title: "References — Speak to a PropertyVault Landlord",
   description: DESC,
   keywords: "PropertyVault UK references, guaranteed rent landlord reference, speak to a landlord",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/reviews/" },
   openGraph: {
-    title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+    title: "References — Speak to a PropertyVault Landlord",
     description: DESC,
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/reviews/",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "References — Speak to a PropertyVault UK Landlord | Guaranteed Rent",
+    title: "References — Speak to a PropertyVault Landlord",
     description: DESC,
   },
 };

@@ -448,7 +448,7 @@ export default function StokeonTrentPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} />
+          <FAQSchema faqs={cityFaqs} visible={false} />
           <div className="mt-12">
             <DataProvenance area="Stoke-on-Trent" />
             <Disclaimer />

@@ -514,7 +514,7 @@ export default function DalilShiraAqarUK() {
         <HelpCTA dir="rtl" />
       </article>
 
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} visible={false} />
       <Disclaimer />
       <RelatedArticles
         slug="dalil-shira-aqar-uk"

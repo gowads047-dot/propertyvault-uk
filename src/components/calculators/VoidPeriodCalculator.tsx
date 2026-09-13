@@ -37,14 +37,14 @@ export function VoidPeriodCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Your Property Income</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Monthly Rent</label>
           <input aria-label="Monthly Rent" type="range" min={400} max={3000} step={50} value={monthlyRent} onChange={e => setMonthlyRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(monthlyRent)}/month</p>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Monthly Costs (still paid during void)</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Monthly Costs (still paid during void)</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Mortgage / Finance Payment</label>
           <input aria-label="Mortgage / Finance Payment" type="range" min={0} max={2500} step={25} value={monthlyMortgage} onChange={e => setMonthlyMortgage(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -66,7 +66,7 @@ export function VoidPeriodCalculator() {
           <p className="text-center font-bold text-navy-800">{fmt(utilities)}/month</p>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Void Pattern</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Void Pattern</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Duration per Void Period</label>
           <input aria-label="Duration per Void Period" type="range" min={1} max={26} step={1} value={voidWeeks} onChange={e => setVoidWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />

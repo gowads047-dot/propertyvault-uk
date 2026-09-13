@@ -19,6 +19,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "Makan — PropertyVault UK",
+    // Explicit, because this openGraph block replaces the root layout's and
+    // the sibling opengraph-image.tsx was not being picked up: /makan and
+    // /makan/gcc shipped with no og:image at all.
+    images: [{ url: "https://www.propertyvaultuk.co.uk/makan/opengraph-image", width: 1200, height: 630, alt: "Makan — Find Your Place. Free property listings worldwide." }],
   },
 };
 

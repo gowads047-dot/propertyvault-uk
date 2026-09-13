@@ -8,7 +8,7 @@ import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { HelpCTA } from "@/components/blog/HelpCTA";
 
 export const metadata: Metadata = {
-  title: "Renters' Rights Act Landlord Checklist 2025 — 12 Things You Must Do Now",
+  title: "Renters' Rights Act Landlord Checklist — 12 Things to Do Now",
   description: "The Renters' Rights Act 2025 is live. Here is the practical landlord checklist: what to update, what to stop doing, what to prepare — before enforcement catches you out.",
   keywords: "renters reform act landlord checklist, renters rights act 2025 landlords, landlord compliance checklist 2025, section 21 abolished what to do, periodic tenancy landlord checklist",
   openGraph: {

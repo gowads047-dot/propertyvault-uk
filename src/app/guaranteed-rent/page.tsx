@@ -339,6 +339,27 @@ export default function GuaranteedRentPage() {
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
           <FAQSchema faqs={guaranteedRentFaqs} />
+
+          {/* The two questions that stop a lease, answered on their own pages.
+              /mortgage-lender was linked from nowhere but its sibling — a
+              page written to be found needs the hub pointing at it. */}
+          <div className="mt-10 pt-8 border-t border-navy-100">
+            <h2 className="text-xl font-extrabold text-navy-800 mb-4" style={{ fontFamily: "var(--font-family-heading)" }}>Before you sign</h2>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/guaranteed-rent/mortgage-lender" className="text-gold-600 font-semibold">Will my mortgage lender allow guaranteed rent?</Link>
+                <span className="text-navy-500 text-sm"> — what consent to let means, and what to ask for in writing.</span>
+              </li>
+              <li>
+                <Link href="/guaranteed-rent/vs-letting-agent" className="text-gold-600 font-semibold">Guaranteed rent vs a letting agent — which pays more?</Link>
+                <span className="text-navy-500 text-sm"> — the same property, both ways, with the assumptions shown.</span>
+              </li>
+              <li>
+                <Link href="/blog/is-guaranteed-rent-a-scam" className="text-gold-600 font-semibold">Is guaranteed rent a scam?</Link>
+                <span className="text-navy-500 text-sm"> — the questions to ask any company, including us.</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
 

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk",
+  title: "Free Property Checkers — EPC, Council Tax, Flood Risk",
   description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/tools/" },
   openGraph: {
-    title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk",
+    title: "Free Property Checkers — EPC, Council Tax, Flood Risk",
     description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/tools/",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Property Tools & Checkers — EPC, Council Tax, Broadband, Flood Risk",
+    title: "Free Property Checkers — EPC, Council Tax, Flood Risk",
     description: "Free UK property tools and checkers. Look up EPC ratings, council tax bands, broadband speeds, flood risk, school ratings, crime stats, and more.",
   },
 };
@@ -31,7 +31,7 @@ const tools: ToolCategory[] = [
     { name: "EPC Lookup", desc: "Check the energy performance rating of any property in England and Wales", url: "https://www.gov.uk/find-energy-certificate", source: "GOV.UK" },
     { name: "Council Tax Band Checker", desc: "Find the council tax band and estimated annual charge for any address", url: "https://www.gov.uk/council-tax-bands", source: "Valuation Office Agency" },
     { name: "Land Registry Title Search", desc: "Find who owns a property, view title plans, and download official copies (£3 each)", url: "https://search-property-information.service.gov.uk/", source: "HM Land Registry" },
-    { name: "Planning Applications Search", desc: "Search planning applications submitted to any local authority in England", url: "https://www.planningportal.co.uk/planning/planning-applications/find-out-more/search-applications", source: "Planning Portal" },
+    { name: "Planning Applications Search", desc: "Search planning applications submitted to any local authority in England", url: "https://www.gov.uk/search-register-planning-decisions", source: "GOV.UK" },
     { name: "Sold House Prices", desc: "Look up what any property in England and Wales sold for — free official data", url: "https://landregistry.data.gov.uk/app/ppd", source: "HM Land Registry" },
   ]},
   { category: "Location & Safety", items: [

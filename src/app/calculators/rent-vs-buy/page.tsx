@@ -76,7 +76,7 @@ export default function RentVsBuyPage() {
         <div className="container-max">
           <div className="grid lg:grid-cols-2 gap-8">
             <div className="space-y-5">
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Buying Scenario</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Buying Scenario</h2>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Property Price</label>
                 <input aria-label="Property Price" type="range" min={100000} max={1000000} step={5000} value={propertyPrice} onChange={e => setPropertyPrice(nonNegative(e.target.value))} className="w-full accent-gold-500" />
@@ -89,7 +89,7 @@ export default function RentVsBuyPage() {
               <div><label className="block text-xs font-semibold text-navy-700 mb-1">Mortgage Term ({term} years)</label><input aria-label="Mortgage Term ( years)" type="range" min={5} max={40} step={1} value={term} onChange={e => setTerm(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
               <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Property Growth ({annualGrowth}%)</label><input aria-label="Annual Property Growth" type="range" min={0} max={8} step={0.5} value={annualGrowth} onChange={e => setAnnualGrowth(signed(e.target.value))} className="w-full accent-gold-500" /></div>
 
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Renting Scenario</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Renting Scenario</h2>
               <div>
                 <label className="block text-sm font-semibold text-navy-700 mb-1">Current Monthly Rent</label>
                 <div className="relative"><span className="absolute left-4 top-1/2 -translate-y-1/2 text-navy-400">£</span>
@@ -97,7 +97,7 @@ export default function RentVsBuyPage() {
               </div>
               <div><label className="block text-xs font-semibold text-navy-700 mb-1">Annual Rent Increase ({annualRentIncrease}%)</label><input aria-label="Annual Rent Increase" type="range" min={0} max={10} step={0.5} value={annualRentIncrease} onChange={e => setAnnualRentIncrease(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
 
-              <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Comparison Period</h3>
+              <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-3">Comparison Period</h2>
               <div><label className="block text-sm font-semibold text-navy-700 mb-1">Compare over {years} years</label><input aria-label="Compare over years" type="range" min={1} max={30} step={1} value={years} onChange={e => setYears(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
             </div>
 
@@ -110,7 +110,7 @@ export default function RentVsBuyPage() {
 
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="bg-white rounded-xl border border-navy-100 p-5">
-                  <h4 className="font-bold text-navy-800 text-sm mb-3">Buying</h4>
+                  <h3 className="font-bold text-navy-800 text-sm mb-3">Buying</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-navy-600">Monthly mortgage</span><span className="font-semibold">{fmt(results.monthlyMortgage)}</span></div>
                     <div className="flex justify-between"><span className="text-navy-600">+ running costs</span><span className="font-semibold">~£150</span></div>
@@ -120,7 +120,7 @@ export default function RentVsBuyPage() {
                   </div>
                 </div>
                 <div className="bg-white rounded-xl border border-navy-100 p-5">
-                  <h4 className="font-bold text-navy-800 text-sm mb-3">Renting</h4>
+                  <h3 className="font-bold text-navy-800 text-sm mb-3">Renting</h3>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between"><span className="text-navy-600">Current rent</span><span className="font-semibold">{fmt(results.monthlyRent)}/mo</span></div>
                     <div className="flex justify-between"><span className="text-navy-600">Rent in year {years}</span><span className="font-semibold">{fmt(results.finalMonthlyRent)}/mo</span></div>

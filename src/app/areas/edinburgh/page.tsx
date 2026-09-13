@@ -459,7 +459,7 @@ export default function EdinburghPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} />
+          <FAQSchema faqs={cityFaqs} visible={false} />
           <div className="mt-12">
             <DataProvenance area="Edinburgh" />
             <Disclaimer />

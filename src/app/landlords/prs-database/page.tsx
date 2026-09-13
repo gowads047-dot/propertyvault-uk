@@ -47,11 +47,9 @@ import { findService } from "@/lib/services";
  * nothing about them.
  */
 
-const TITLE = "The Landlord Database Opens 15 December — What You Need Ready | PropertyVault UK";
+const TITLE = "Landlord Database Opens 15 December — What to Have Ready";
 const DESCRIPTION =
-  "England's landlord database opens for registration on 15 December 2026, West Midlands " +
-  "first, with a deadline of 14 March 2027. What it asks for, what it costs, what the " +
-  "penalties are, and how to have the dates ready before you are called forward.";
+  "England's landlord database opens 15 December 2026, West Midlands first; deadline 14 March 2027. What it asks for, what it costs, the penalties, how to prepare.";
 
 export const metadata: Metadata = {
   title: TITLE,

@@ -25,7 +25,7 @@ const tools = [
   { name: "School Performance", desc: "Search schools by location. View Ofsted ratings, exam results, and pupil numbers.", url: "https://www.find-school-performance-data.service.gov.uk/", source: "DfE / Ofsted" },
   { name: "Council Tax Bands", desc: "Check the council tax band for any property in England and Wales.", url: "https://www.gov.uk/council-tax-bands", source: "Valuation Office Agency" },
   { name: "Broadband Coverage", desc: "Check superfast, ultrafast, and full fibre broadband availability at any address.", url: "https://labs.thinkbroadband.com/local/", source: "Ofcom / ThinkBroadband" },
-  { name: "Planning Applications", desc: "Search planning applications submitted to your local council.", url: "https://www.planningportal.co.uk/planning/planning-applications/find-out-more/search-applications", source: "Planning Portal" },
+  { name: "Planning Applications", desc: "Search planning applications submitted to your local council.", url: "https://www.gov.uk/search-register-planning-decisions", source: "GOV.UK" },
   { name: "Energy Performance (EPC)", desc: "Look up the EPC rating and report for any property in England and Wales.", url: "https://www.gov.uk/find-energy-certificate", source: "MHCLG" },
   { name: "Land Registry Title Search", desc: "Find out who owns a property and see the title plan. Costs £3 per title.", url: "https://search-property-information.service.gov.uk/", source: "HM Land Registry" },
   { name: "Deprivation Index", desc: "Check how deprived an area is across income, employment, education, health, and crime.", url: "https://dclgapps.communities.gov.uk/imd/iod_index.html", source: "MHCLG" },
@@ -51,7 +51,7 @@ export default function AreaGuidePage() {
               <a key={t.name} href={t.url} target="_blank" rel="noopener noreferrer"
                 className="flex items-start gap-4 p-5 bg-white rounded-xl border border-navy-100 hover:shadow-lg hover:border-gold-400/30 transition-all">
                 <div className="flex-1">
-                  <h3 className="font-bold text-navy-800 mb-1">{t.name}</h3>
+                  <h2 className="font-bold text-navy-800 mb-1">{t.name}</h2>
                   <p className="text-sm text-navy-500 mb-2">{t.desc}</p>
                   <p className="text-xs text-navy-400">Source: {t.source}</p>
                 </div>

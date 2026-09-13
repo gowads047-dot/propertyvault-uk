@@ -31,14 +31,14 @@ export function RentIncreaseCalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <div className="space-y-5">
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Current Tenancy</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2">Current Tenancy</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Current Monthly Rent</label>
           <input aria-label="Current Monthly Rent" type="range" min={400} max={3000} step={25} value={currentRent} onChange={e => setCurrentRent(nonNegative(e.target.value))} className="w-full accent-gold-500" />
           <p className="text-center font-bold text-navy-800">{fmt(currentRent)}/month</p>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Proposed Increase</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Proposed Increase</h2>
         <div className="flex gap-2">
           <button onClick={() => setIncreaseType("percent")} className={`flex-1 py-2 rounded-xl text-sm font-semibold border transition-all ${increaseType === "percent" ? "bg-navy-800 text-white border-navy-800" : "bg-white text-navy-600 border-navy-200"}`}>By Percentage</button>
           <button onClick={() => setIncreaseType("fixed")} className={`flex-1 py-2 rounded-xl text-sm font-semibold border transition-all ${increaseType === "fixed" ? "bg-navy-800 text-white border-navy-800" : "bg-white text-navy-600 border-navy-200"}`}>Fixed Amount</button>
@@ -63,7 +63,7 @@ export function RentIncreaseCalculator() {
           <p className="text-center font-bold text-navy-800">{monthsUntilIncrease === 0 ? "Immediate" : `${monthsUntilIncrease} month${monthsUntilIncrease !== 1 ? "s" : ""}`}</p>
         </div>
 
-        <h3 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Section 13 Notice</h3>
+        <h2 className="font-bold text-navy-800 border-b border-navy-100 pb-2 pt-2">Section 13 Notice</h2>
         <div>
           <label className="block text-sm font-semibold text-navy-700 mb-1">Notice period you plan to give</label>
           <input aria-label="Notice period you plan to give" type="range" min={1} max={8} step={1} value={noticeWeeks} onChange={e => setNoticeWeeks(nonNegative(e.target.value))} className="w-full accent-gold-500" />

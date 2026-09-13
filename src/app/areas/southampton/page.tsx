@@ -445,7 +445,7 @@ export default function SouthamptonPage() {
         </div>
       </section>
 
-      <FAQSchema faqs={cityFaqs} />
+      <FAQSchema faqs={cityFaqs} visible={false} />
     </>
   );
 }

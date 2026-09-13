@@ -37,11 +37,22 @@ const sections = [
     { href: "/mortgages", label: "Mortgages" },
     { href: "/property-tax", label: "Tax" },
     { href: "/glossary", label: "Glossary" },
+    { href: "/property-law", label: "Property Law" },
+    { href: "/property-finance", label: "Property Finance" },
+    { href: "/market-insights", label: "Market Insights" },
+    { href: "/case-studies", label: "Case Studies" },
     { href: "/makan", label: "Makan" },
   ]},
+  // FAQ, References, Complaints and Accessibility were reachable only by
+  // typing the URL — in the sitemap, but linked from nowhere. A crawler
+  // treats an unlinked page as unimportant, and a reader cannot find it.
   { title: "Company", links: [
     { href: "/about", label: "About Us" },
     { href: "/contact", label: "Contact" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/reviews", label: "References" },
+    { href: "/complaints", label: "Complaints" },
+    { href: "/accessibility", label: "Accessibility" },
     { href: "/privacy", label: "Privacy" },
     { href: "/terms", label: "Terms" },
     { href: "/disclaimer", label: "Disclaimer" },
@@ -62,9 +73,13 @@ export function Footer() {
             </div>
             <p className="text-xs text-navy-400 leading-relaxed">One place for everything property — check it, buy it, let it, manage it.</p>
           </div>
+          {/* Column labels are <p>, not <h4>. As headings they sat under
+              whatever the page's last <h2> was and skipped a level on every
+              page — and on pages with no <h2> at all, straight from the <h1>.
+              A nav label is not a section of the document. */}
           {sections.map((s) => (
             <div key={s.title}>
-              <h4 className="font-semibold text-navy-800 text-xs uppercase tracking-wider mb-3">{s.title}</h4>
+              <p className="font-semibold text-navy-800 text-xs uppercase tracking-wider mb-3">{s.title}</p>
               <ul className="space-y-2">
                 {s.links.map((link) => (
                   <li key={link.href}><Link href={link.href} className="text-sm text-navy-400 hover:text-navy-800 transition-colors">{link.label}</Link></li>
@@ -76,9 +91,9 @@ export function Footer() {
       </div>
       <div className="border-t border-navy-100/50">
         <div className="container-max px-4 py-6">
-          <h4 className="font-semibold text-navy-800 text-xs uppercase tracking-wider mb-3">
+          <p className="font-semibold text-navy-800 text-xs uppercase tracking-wider mb-3">
             Area guides
-          </h4>
+          </p>
           <ul className="flex flex-wrap gap-x-4 gap-y-2 list-none p-0 m-0">
             {AREA_CITIES.map(city => (
               <li key={city}>

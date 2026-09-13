@@ -450,7 +450,7 @@ export default function WolverhamptonPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} />
+          <FAQSchema faqs={cityFaqs} visible={false} />
           <div className="mt-10">
             <DataProvenance area="Wolverhampton" />
             <Disclaimer />

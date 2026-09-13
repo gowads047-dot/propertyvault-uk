@@ -5,6 +5,11 @@ import ApiForm from "@/components/forms/ApiForm";
 import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
+  // A "coming soon" page has nothing for a search result to be about.
+  // Indexed, it is thin content counted against the rest of the site;
+  // follow stays on so the links out of it still carry. Drop this, and the
+  // COMING_SOON entry in src/lib/routes.ts, when the page is real.
+  robots: { index: false, follow: true },
   title: "Membership — Coming Soon | PropertyVault UK",
   description: "PropertyVault membership is coming soon. Join the waiting list to be the first to access exclusive courses, tools, and community features.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/membership/" },

@@ -369,7 +369,7 @@ export default function HquqAlmustajirUK() {
         <HelpCTA dir="rtl" />
       </article>
 
-      <FAQSchema faqs={faqs} />
+      <FAQSchema faqs={faqs} visible={false} />
       <Disclaimer />
       <RelatedArticles
         slug="hquq-almustajir-uk"

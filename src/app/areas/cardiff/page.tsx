@@ -459,7 +459,7 @@ export default function CardiffPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} />
+          <FAQSchema faqs={cityFaqs} visible={false} />
           <div className="mt-10">
             <DataProvenance area="Cardiff" />
             <Disclaimer />

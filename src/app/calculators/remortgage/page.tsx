@@ -80,7 +80,7 @@ export default function RemortgagePage() {
               </div>
               <div><label className="block text-sm font-semibold text-navy-700 mb-1">Remaining Term ({remainingTerm} years)</label><input aria-label="Remaining Term ( years)" type="range" min={5} max={35} step={1} value={remainingTerm} onChange={e => setRemainingTerm(nonNegative(e.target.value))} className="w-full accent-gold-500" /></div>
 
-              <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Switching Costs</h3>
+              <h2 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Switching Costs</h2>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Arrangement Fee</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Arrangement Fee" type="number" min="0" value={arrangementFee} onChange={e => setArrangementFee(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
                 <div><label className="block text-xs font-semibold text-navy-700 mb-1">Valuation Fee</label><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input aria-label="Valuation Fee" type="number" min="0" value={valuationFee} onChange={e => setValuationFee(nonNegative(e.target.value))} className="w-full pl-7 pr-2 py-2 border border-navy-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></div>
@@ -112,7 +112,7 @@ export default function RemortgagePage() {
                 </div>
               </div>
               <div className="bg-white rounded-xl border border-navy-100 p-5">
-                <h4 className="font-bold text-navy-800 mb-3">Full Comparison</h4>
+                <h3 className="font-bold text-navy-800 mb-3">Full Comparison</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-navy-600">Total cost staying (current rate)</span><span className="font-semibold">{fmt(results.currentTotalCost)}</span></div>
                   <div className="flex justify-between"><span className="text-navy-600">Total cost switching (new rate + fees)</span><span className="font-semibold">{fmt(results.newTotalCost)}</span></div>

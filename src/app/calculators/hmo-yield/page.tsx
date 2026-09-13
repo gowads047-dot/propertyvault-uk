@@ -84,7 +84,7 @@ export default function HMOYieldPage() {
               </div>
 
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-navy-800">Rooms ({rooms.length})</h3>
+                <h2 className="font-bold text-navy-800">Rooms ({rooms.length})</h2>
                 <div className="flex gap-2">
                   <button onClick={removeRoom} className="px-3 py-1 bg-navy-100 text-navy-600 rounded text-sm hover:bg-navy-200">−</button>
                   <button onClick={addRoom} className="px-3 py-1 bg-navy-600 text-white rounded text-sm hover:bg-navy-700">+ Add Room</button>
@@ -105,7 +105,7 @@ export default function HMOYieldPage() {
                 ))}
               </div>
 
-              <h3 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Monthly Costs</h3>
+              <h2 className="font-bold text-navy-800 text-sm border-b border-navy-100 pb-2">Monthly Costs</h2>
               <div className="grid grid-cols-2 gap-3">
                 {[
                   { label: "Bills (gas/elec/water/wifi)", value: billsPerMonth, set: setBillsPerMonth },
@@ -137,7 +137,7 @@ export default function HMOYieldPage() {
               </div>
 
               <div className="bg-white rounded-xl border border-navy-100 p-5">
-                <h4 className="font-bold text-navy-800 mb-3">Annual P&amp;L</h4>
+                <h3 className="font-bold text-navy-800 mb-3">Annual P&amp;L</h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span>Gross annual rent</span><span className="font-semibold">{fmt(results.annualRent)}</span></div>
                   <div className="flex justify-between text-red-600"><span>Annual expenses</span><span>-{fmt(results.annualExpenses)}</span></div>

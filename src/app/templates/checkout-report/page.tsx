@@ -133,11 +133,11 @@ export default function CheckOutReportTemplate() {
               {deductions.map((d, i) => (
                 <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
                   <input aria-label={`Deduction ${i + 1} description`} value={d.desc} onChange={e => updateDeduction(i, "desc", e.target.value)} placeholder={`Deduction ${i + 1} description`}
-                    style={{ flex: 3, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
-                  <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
+                    style={{ flex: 3, minWidth: 0, padding: "9px 12px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none", fontFamily: "inherit" }} />
+                  <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1, minWidth: 0 }}>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#374151" }}>£</span>
                     <input aria-label="Deduction amount in pounds" type="number" value={d.amount || ""} onChange={e => updateDeduction(i, "amount", Number(e.target.value))} placeholder="0.00"
-                      style={{ flex: 1, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none" }} />
+                      style={{ flex: 1, minWidth: 0, padding: "9px 10px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 13, outline: "none" }} />
                   </div>
                 </div>
               ))}

@@ -73,8 +73,16 @@ export const CRAWL_ALLOWED_EXCEPTIONS = ["/rentura", "/academy"] as const;
  */
 const REDIRECTED = ["/landlord-hub", "/manage"];
 
+/**
+ * Placeholder pages: a heading, "What's coming", and a waiting-list form.
+ * Each carries robots noindex in its own metadata; this keeps the sitemap
+ * from contradicting that. Remove an entry here and the noindex together
+ * when the page has something on it.
+ */
+const COMING_SOON = ["/community", "/membership", "/deal-sourcing"];
+
 /** Routes that render but should never be advertised to a crawler. */
-const NEVER_INDEX = ["/embed", "/hub", "/_not-found", "/_global-error", ...REDIRECTED];
+const NEVER_INDEX = ["/embed", "/hub", "/_not-found", "/_global-error", ...REDIRECTED, ...COMING_SOON];
 
 const APP_DIR = join(process.cwd(), "src", "app");
 

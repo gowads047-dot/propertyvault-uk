@@ -125,7 +125,7 @@ export default function Section24Page() {
               </div>
 
               <div className="bg-white rounded-xl border border-navy-100 p-6">
-                <h4 className="font-bold text-navy-800 mb-3">Before vs After Section 24</h4>
+                <h2 className="font-bold text-navy-800 mb-3">Before vs After Section 24</h2>
                 <div className="space-y-2 text-sm">
                   <p className="font-semibold text-navy-600 text-xs uppercase">Old Rules (pre-2020)</p>
                   <div className="flex justify-between"><span className="text-navy-600">Rental income</span><span>{fmt(rentalIncome)}</span></div>
