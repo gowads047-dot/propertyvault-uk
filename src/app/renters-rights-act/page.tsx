@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "When did the Renters' Rights Act come into force?",
-    a: "The Renters' Rights Act received Royal Assent and came into force in 2025. Key provisions — including the abolition of Section 21, the end of fixed-term tenancies for new lets, and the introduction of the PRS Ombudsman registration requirement — took effect from the commencement date. All existing periodic tenancies were converted to the new regime on the transition date.",
+    a: "Royal Assent was 27 October 2025. A first wave of measures commenced on 27 December 2025, and the main tenancy reforms — the abolition of Section 21, the end of fixed-term tenancies for new lets, and the conversion of existing tenancies to periodic — took effect on 1 May 2026. The PRS Ombudsman is not part of that: the scheme is not open yet, with mandatory membership currently expected in 2028.",
   },
   {
     q: "What has replaced Section 21 evictions?",
