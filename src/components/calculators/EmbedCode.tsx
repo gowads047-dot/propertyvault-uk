@@ -9,7 +9,13 @@ interface EmbedCodeProps {
 export function EmbedCode({ slug, title }: EmbedCodeProps) {
   const [copied, setCopied] = useState(false);
   const url = `https://www.propertyvaultuk.co.uk/embed/${slug}/`;
-  const code = `<iframe src="${url}" width="100%" height="620" frameborder="0" style="border-radius:12px;border:1px solid #e8eaf0;" title="${title} — PropertyVault UK" loading="lazy"></iframe>\n<p style="font-size:11px;color:#888;margin-top:6px;">Powered by <a href="https://www.propertyvaultuk.co.uk/calculators/" target="_blank" rel="noopener">PropertyVault UK</a></p>`;
+  // The attribution is the point, for us: an iframe's contents are a
+  // separate document, so the only link the host page actually gives this
+  // site is the one in the <p> below it. It goes to the calculator's own
+  // page with the calculator's name as the anchor — one link to the page
+  // that does the thing, rather than every embed pointing at the index.
+  const pageUrl = `https://www.propertyvaultuk.co.uk/calculators/${slug}/`;
+  const code = `<iframe src="${url}" width="100%" height="620" frameborder="0" style="border-radius:12px;border:1px solid #e8eaf0;" title="${title} — PropertyVault UK" loading="lazy"></iframe>\n<p style="font-size:11px;color:#888;margin-top:6px;"><a href="${pageUrl}" target="_blank" rel="noopener">${title}</a> by <a href="https://www.propertyvaultuk.co.uk/" target="_blank" rel="noopener">PropertyVault UK</a></p>`;
 
   function copy() {
     navigator.clipboard.writeText(code).then(() => {
@@ -30,7 +36,7 @@ export function EmbedCode({ slug, title }: EmbedCodeProps) {
         </button>
       </div>
       <pre className="bg-white border border-navy-100 rounded-lg p-3 text-xs text-navy-600 overflow-x-auto whitespace-pre-wrap leading-relaxed">{code}</pre>
-      <p className="text-xs text-navy-400 mt-2">Works on WordPress, Webflow, Squarespace, Wix, or any HTML page. The &ldquo;Powered by PropertyVault UK&rdquo; attribution is required.</p>
+      <p className="text-xs text-navy-400 mt-2">Works on WordPress, Webflow, Squarespace, Wix, or any HTML page. The attribution line under the calculator is required — leave it in.</p>
     </div>
   );
 }
