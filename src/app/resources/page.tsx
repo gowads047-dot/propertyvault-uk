@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Free Property Resources — Templates, Checklists & Toolkits",
-  description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
+  title: "Free Property Resources — Calculators, Checklists & Guides",
+  description: "Free property investment resources you can use now: BRRR and cash flow calculators, due diligence and compliance checklists, and the first-time buyer guide.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/resources/" },
   openGraph: {
-    title: "Free Property Resources — Templates, Checklists & Toolkits",
-    description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
+    title: "Free Property Resources — Calculators, Checklists & Guides",
+    description: "Free property investment resources you can use now: BRRR and cash flow calculators, due diligence and compliance checklists, and the first-time buyer guide.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/resources/",
     siteName: "PropertyVault UK",
@@ -15,22 +15,27 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Property Resources — Templates, Checklists & Toolkits",
-    description: "Free downloadable property investment resources. BRRR checklists, deal analysers, development appraisal templates, landlord compliance checklists, and more.",
+    title: "Free Property Resources — Calculators, Checklists & Guides",
+    description: "Free property investment resources you can use now: BRRR and cash flow calculators, due diligence and compliance checklists, and the first-time buyer guide.",
   },
 };
 
+/**
+ * Every entry is a page on this site. The previous list promised ten
+ * downloads — spreadsheets and PDFs — behind a "Download Free" button with
+ * no handler and an email gate with no form. None of the files existed.
+ * Seven of the ten have a working equivalent here; those link to it. The
+ * other three (development appraisal, mortgage comparison tracker,
+ * portfolio tracker) do not, and are not listed until they do.
+ */
 const resources = [
-  { title: "BRRR Deal Analyser Spreadsheet", desc: "Complete Excel spreadsheet to model any BRRR deal. Purchase, refurb, rent, refinance — with built-in ROI and cash flow calculations.", category: "Spreadsheet", format: "XLSX" },
-  { title: "Property Due Diligence Checklist", desc: "40-point checklist covering legal, structural, financial, and compliance checks before purchasing any investment property.", category: "Checklist", format: "PDF" },
-  { title: "Landlord Compliance Checklist", desc: "Every legal requirement for UK landlords in one document. Gas safety, electrical, EPC, deposit protection, and more.", category: "Checklist", format: "PDF" },
-  { title: "Development Appraisal Template", desc: "Professional development appraisal spreadsheet with GDV, build costs, finance costs, professional fees, and profit analysis.", category: "Spreadsheet", format: "XLSX" },
-  { title: "Mortgage Comparison Tracker", desc: "Compare mortgage products side by side. Rates, fees, total cost over term, and true cost analysis.", category: "Spreadsheet", format: "XLSX" },
-  { title: "Rental Property Cash Flow Template", desc: "Monthly and annual cash flow tracker for single-let and multi-let properties. Income, expenses, and net profit analysis.", category: "Spreadsheet", format: "XLSX" },
-  { title: "HMO Setup Checklist", desc: "Everything you need to set up an HMO — licensing, fire safety, room standards, furnishing, and compliance requirements.", category: "Checklist", format: "PDF" },
-  { title: "Property Viewing Checklist", desc: "Structured checklist for property viewings. Assess structural condition, location factors, potential issues, and investment potential.", category: "Checklist", format: "PDF" },
-  { title: "Portfolio Tracker Spreadsheet", desc: "Track your entire property portfolio — values, equity, mortgage balances, rental income, yields, and net worth over time.", category: "Spreadsheet", format: "XLSX" },
-  { title: "First-Time Buyer Step-by-Step Guide", desc: "Complete PDF guide walking first-time buyers through the entire process from saving a deposit to getting keys.", category: "Guide", format: "PDF" },
+  { title: "BRRR Deal Analyser", desc: "Model any BRRR deal — purchase, refurb, rent, refinance — with ROI and the cash left in.", category: "Calculator", href: "/calculators/brrr" },
+  { title: "Property Due Diligence Checklist", desc: "Legal, structural, financial and compliance checks before you buy. Tick it off on screen or print it.", category: "Checklist", href: "/templates/due-diligence" },
+  { title: "Landlord Compliance Checklist", desc: "Every legal requirement for an English landlord in one place — gas, electrical, EPC, deposit, and the rest.", category: "Checklist", href: "/templates/landlord-compliance" },
+  { title: "Rental Property Cash Flow", desc: "Monthly and annual cash flow for a single let: income, costs, mortgage, and what is left.", category: "Calculator", href: "/calculators/monthly-cashflow" },
+  { title: "HMO Management Log", desc: "The running record an HMO licence expects you to keep — inspections, certificates, tenants and incidents.", category: "Template", href: "/templates/hmo-management-log" },
+  { title: "Property Viewing Checklist", desc: "What to check at a viewing: condition, location, and the problems that cost money later.", category: "Checklist", href: "/templates/viewing-checklist" },
+  { title: "First-Time Buyer Guide", desc: "The whole process, from saving a deposit to getting the keys, in order.", category: "Guide", href: "/first-time-buyer" },
 ];
 
 export default function ResourcesPage() {
@@ -38,9 +43,9 @@ export default function ResourcesPage() {
     <>
       <section className="gradient-navy py-16 md:py-20">
         <div className="container-max px-4">
-          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Free Downloads</p>
+          <p className="text-gold-400 font-semibold text-sm uppercase tracking-wider mb-3">Free tools</p>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Property Resource Library</h1>
-          <p className="text-navy-200">Free templates, checklists, spreadsheets, and guides to support your property investment journey.</p>
+          <p className="text-navy-200">Calculators, checklists, templates and guides — all on this site, all free, none behind a form.</p>
         </div>
       </section>
 
@@ -59,16 +64,16 @@ export default function ResourcesPage() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="px-2 py-0.5 bg-navy-50 text-navy-600 text-xs font-semibold rounded">{r.category}</span>
-                    <span className="px-2 py-0.5 bg-gold-50 text-gold-700 text-xs font-semibold rounded">{r.format}</span>
+                    <span className="px-2 py-0.5 bg-gold-50 text-gold-700 text-xs font-semibold rounded">Free · no sign-up</span>
                   </div>
                   <h2 className="font-bold text-navy-800 mb-1">{r.title}</h2>
                   <p className="text-sm text-navy-500">{r.desc}</p>
                 </div>
-                <button className="btn-primary !py-2 !px-5 text-sm flex-shrink-0">Download Free</button>
+                <Link href={r.href} className="btn-primary !py-2 !px-5 text-sm flex-shrink-0">Open</Link>
               </div>
             ))}
           </div>
-          <p className="text-xs text-navy-400 mt-6 text-center">Enter your email to receive download links. We will also add you to our weekly newsletter (unsubscribe anytime).</p>
+          <p className="text-xs text-navy-400 mt-6 text-center">Nothing here needs an email address. The checklists and templates print cleanly if you want a paper copy.</p>
         </div>
       </section>
     </>
