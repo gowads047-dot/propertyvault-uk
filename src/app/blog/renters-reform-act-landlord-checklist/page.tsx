@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "Is Section 21 definitely abolished — can I still use it?",
-    a: "No. Section 21 no-fault evictions were abolished when the Renters' Rights Act came into force in 2025. Any Section 21 notice served after the commencement date is invalid. You must now use Section 8 and cite a specific legal ground. Serving an invalid Section 21 can result in a £7,000 fine or more.",
+    a: "No. Section 21 no-fault evictions were abolished when the main tenancy reforms of the Renters' Rights Act took effect on 1 May 2026. A Section 21 notice served after that date is invalid; possession runs through Section 8 on a specific legal ground. Serving an invalid notice can attract a civil penalty — take advice before serving anything.",
   },
   {
     q: "Do I need new tenancy agreements after the Renters' Rights Act?",

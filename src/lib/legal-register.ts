@@ -41,7 +41,7 @@ export const REGISTER: RegisterEntry[] = [
   { file: "src/app/blog/hquq-almustajir-uk/page.tsx", term: "section-21", count: 9, status: "not-reviewed" },
   { file: "src/app/blog/istihtmar-aqari-uk-min-kharij/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/blog/rent-to-rent-explained/page.tsx", term: "ast", count: 1, status: "not-reviewed" },
-  { file: "src/app/blog/renters-reform-act-landlord-checklist/page.tsx", term: "section-21", count: 15, status: "not-reviewed" },
+  { file: "src/app/blog/renters-reform-act-landlord-checklist/page.tsx", term: "section-21", count: 14, status: "not-reviewed" },
   { file: "src/app/blog/renters-reform-act-landlord-checklist/page.tsx", term: "ast", count: 1, status: "not-reviewed" },
   { file: "src/app/blog/renters-reform-act-landlord-checklist/page.tsx", term: "fixed-term", count: 1, status: "not-reviewed" },
   { file: "src/app/blog/renters-reform-act-landlord-checklist/page.tsx", term: "no-fault", count: 2, status: "not-reviewed" },
