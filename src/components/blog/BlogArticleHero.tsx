@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShareButtons } from "@/components/makan/ShareButtons";
 import { PreferredSourceBadge } from "@/components/seo/PreferredSourceBadge";
+import { postDateISO } from "@/lib/blog-posts";
 
 interface Props {
   title: string;
@@ -10,19 +11,6 @@ interface Props {
   date: string;
   readTime: string;
   image: string;
-}
-
-const MONTHS: Record<string, string> = {
-  January: "01", February: "02", March: "03", April: "04", May: "05", June: "06",
-  July: "07", August: "08", September: "09", October: "10", November: "11", December: "12",
-};
-
-function toISODate(d: string): string {
-  const full = d.match(/^(\d{1,2})\s+(\w+)\s+(\d{4})$/);
-  if (full) return `${full[3]}-${MONTHS[full[2]] ?? "01"}-${full[1].padStart(2, "0")}`;
-  const my = d.match(/^(\w+)\s+(\d{4})$/);
-  if (my) return `${my[2]}-${MONTHS[my[1]] ?? "01"}-01`;
-  return d;
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -49,8 +37,8 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
       name: "PropertyVault UK",
       logo: { "@type": "ImageObject", url: "https://www.propertyvaultuk.co.uk/favicon.ico" },
     },
-    datePublished: toISODate(date),
-    dateModified: toISODate(date),
+    datePublished: postDateISO(date),
+    dateModified: postDateISO(date),
     inLanguage: "en-GB",
     articleSection: category,
     mainEntityOfPage: { "@type": "WebPage", "@id": "https://www.propertyvaultuk.co.uk/blog" },
