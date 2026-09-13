@@ -5,6 +5,11 @@ import ApiForm from "@/components/forms/ApiForm";
 import { events } from "@/lib/analytics";
 
 export const metadata: Metadata = {
+  // A "coming soon" page has nothing for a search result to be about.
+  // Indexed, it is thin content counted against the rest of the site;
+  // follow stays on so the links out of it still carry. Drop this, and the
+  // COMING_SOON entry in src/lib/routes.ts, when the page is real.
+  robots: { index: false, follow: true },
   title: "Deal Sourcing Marketplace — Coming Soon | PropertyVault UK",
   description: "The UK's property deal sourcing marketplace. Find below market value deals from verified sourcers, or list your sourced deals to reach investors. Coming soon.",
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/deal-sourcing/" },
