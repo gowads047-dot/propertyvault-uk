@@ -219,6 +219,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
+        <script
+          id="consent-default"
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}" +
+              "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});" +
+              "try{if(localStorage.getItem('cookie_consent')==='all'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}",
+          }}
+        />
       </head>
       {/*
         Consent Mode v2 defaults, set before gtag loads.
@@ -236,14 +245,12 @@ export default function RootLayout({
         when they press Accept All, via CookieConsent. wait_for_update gives
         that click a moment to land before gtag gives up on it.
 
-        beforeInteractive so this runs ahead of the gtag script below —
-        ordering is the whole point, and afterInteractive would race it.
+        A plain inline <script> in <head>, not next/script with
+        beforeInteractive. Head scripts run before anything in the body, and
+        gtag.js below is afterInteractive, so the ordering holds. The
+        next/script version was hoisted by Next as a <script> directly under
+        <html>, which React reported as a hydration error on every page.
       */}
-      <Script id="consent-default" strategy="beforeInteractive">
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
-try{if(localStorage.getItem('cookie_consent')==='all'){gtag('consent','update',{analytics_storage:'granted'});}}catch(e){}`}
-      </Script>
       {/* Google Analytics through next/script so Next controls load order */}
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-MG7FKKCKWQ" strategy="afterInteractive" />
       <Script id="ga-init" strategy="afterInteractive">

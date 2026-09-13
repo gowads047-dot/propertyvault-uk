@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ShareButtons({ title, url }: { title: string; url?: string }) {
   const [copied, setCopied] = useState(false);
-  const shareUrl = url || (typeof window !== "undefined" ? window.location.href : "");
+  // Read after mount, not during render. Rendered on the server this was ""
+  // and on the client it was the page URL, so every share href differed
+  // between the two and React logged a hydration mismatch on every blog
+  // article. The first client render now matches the server exactly, and
+  // the real URL arrives a frame later — before anyone can click.
+  const [pageUrl, setPageUrl] = useState("");
+  useEffect(() => {
+    if (!url) setPageUrl(window.location.href);
+  }, [url]);
+  const shareUrl = url || pageUrl;
   const text = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(shareUrl);
 
