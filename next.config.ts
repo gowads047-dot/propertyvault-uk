@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
+  // The trailing-slash redirect is applied by src/proxy.ts, not here, so
+  // that /api/ paths are rewritten rather than redirected. A 308 on an API
+  // path is what stopped every cron on the site from reaching its handler.
+  // Pages still redirect exactly as before. Rule: src/lib/trailing-slash.ts.
+  skipTrailingSlashRedirect: true,
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
