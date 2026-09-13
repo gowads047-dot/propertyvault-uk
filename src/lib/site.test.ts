@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
-import { SITE_URL, SITE_HOST, canonical, siteMetrics, guaranteedRentCities } from "./site";
+import { SITE_URL, SITE_HOST, PREFERRED_SOURCE_URL, canonical, siteMetrics, guaranteedRentCities } from "./site";
 
 const appDir = join(process.cwd(), "src", "app");
 
@@ -12,6 +12,17 @@ function countRoutes(section: string, exclude: string[] = []): number {
     .filter(e => !exclude.includes(e.name))
     .length;
 }
+
+describe("preferred source link", () => {
+  it("points Google at the bare apex domain, not the www host or a path", () => {
+    // Google only accepts a domain or subdomain here; www.example.com/blog
+    // would be silently ignored. Keep it the apex so it matches however
+    // Google keys the source.
+    const u = new URL(PREFERRED_SOURCE_URL);
+    expect(u.origin + u.pathname).toBe("https://www.google.com/preferences/source");
+    expect(u.searchParams.get("q")).toBe("propertyvaultuk.co.uk");
+  });
+});
 
 describe("site URL", () => {
   it("uses the www host that actually serves a 200", () => {
