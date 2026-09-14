@@ -70,7 +70,7 @@ export default function PropertyTaxPage() {
           <div>
             <h2 className="text-2xl font-bold text-navy-800 mb-4">Capital Gains Tax (CGT)</h2>
             <div className="space-y-3 text-navy-600 leading-relaxed">
-              <p>When you sell a property that is not your main home, you pay CGT on the profit. From 30 October 2024, residential property CGT rates are 18% (basic rate taxpayers) and 24% (higher/additional rate taxpayers). The annual CGT exempt amount is £3,000 for the 2024-25 and 2025-26 tax years (reduced from £6,000 in 2023-24 and £12,300 in 2022-23).</p>
+              <p>When you sell a property that is not your main home, you pay CGT on the profit. From 30 October 2024, residential property CGT rates are 18% (basic rate taxpayers) and 24% (higher/additional rate taxpayers). The annual CGT exempt amount is £3,000 — the current figure on GOV.UK, unchanged since 2024-25 (it was £6,000 in 2023-24 and £12,300 in 2022-23).</p>
               <p><strong>Calculating CGT:</strong> Sale price minus purchase price, minus allowable costs (stamp duty, legal fees, improvement costs), minus your annual allowance. The remaining gain is added to your income to determine which rate applies.</p>
               <p><strong>Reporting:</strong> CGT on UK residential property must be reported and paid within 60 days of completion using the HMRC real-time CGT service.</p>
             </div>
