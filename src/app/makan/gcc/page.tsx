@@ -464,6 +464,7 @@ export default function GCCBuyersPage() {
           <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap justify-center gap-6 text-sm text-white/55">
             <Link href="/makan" className="hover:text-white/75 transition-colors">← Makan</Link>
             <Link href="/calculators/stamp-duty" className="hover:text-white/75 transition-colors">{ar ? "حاسبة الدمغة الكاملة" : "Full Stamp Duty Calculator"}</Link>
+            <Link href="/landlords/non-resident-landlord-scheme" className="hover:text-white/75 transition-colors">{ar ? "ضريبة الإيجار للمالك المقيم بالخارج" : "Tax on rent while living abroad"}</Link>
             <Link href="/contact" className="hover:text-white/75 transition-colors">{ar ? "تواصل معنا" : "Contact"}</Link>
           </div>
         </div>
