@@ -81,7 +81,7 @@ export default function PropertyTaxPage() {
             <h2 className="text-2xl font-bold text-navy-800 mb-4">Corporation Tax (SPV)</h2>
             <div className="space-y-3 text-navy-600 leading-relaxed">
               <p>Properties held in a limited company pay corporation tax (25% for profits over £250,000, 19% for profits under £50,000, marginal relief between) on rental profits after all allowable deductions including full mortgage interest.</p>
-              <p>Profits can be retained in the company and reinvested without personal tax. When extracted as dividends, additional tax applies at 8.75% (basic), 33.75% (higher), or 39.35% (additional rate).</p>
+              <p>Profits can be retained in the company and reinvested without personal tax. When extracted as dividends, additional tax applies at 10.75% (basic), 35.75% (higher), or 39.35% (additional rate) for 2026/27.</p>
             </div>
           </div>
 
