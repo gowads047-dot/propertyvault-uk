@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     q: "Can landlords be exempt from the EPC C requirement?",
-    a: "Exemptions apply where improvements would exceed the cost cap (expected around £15,000 — confirm on GOV.UK), where the property is listed and works would alter its character, where third-party consent such as a freeholder has been refused, or where all recommended measures have been made but the property still cannot reach band C. Exemptions must be registered on the PRS Exemptions Register and do not transfer to a new owner on sale.",
+    a: "Exemptions apply where improvements would exceed the cost cap (£10,000 per property, set in the government's January 2026 response), where the property is listed and works would alter its character, where third-party consent such as a freeholder has been refused, or where all recommended measures have been made but the property still cannot reach band C. Exemptions must be registered on the PRS Exemptions Register and do not transfer to a new owner on sale.",
   },
 ];
 
@@ -60,11 +60,11 @@ export default function EPCArticle() {
         image="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=1400&q=80"
       />
       <article className="section-padding bg-white"><div className="container-max max-w-3xl prose-sm text-navy-600 leading-relaxed space-y-6">
-        <p className="text-lg">The UK Government has confirmed that all privately rented properties in England and Wales must achieve an Energy Performance Certificate (EPC) rating of at least band C by 2030. The deadline is fixed — landlords should be planning and commissioning improvements now.</p>
+        <p className="text-lg">The UK Government has confirmed that all privately rented properties in England and Wales must achieve an Energy Performance Certificate (EPC) rating of at least band C by 1 October 2030 — its <a href="https://www.gov.uk/government/consultations/improving-the-energy-performance-of-privately-rented-homes-2025-update/outcome/improving-the-energy-performance-of-privately-rented-homes-government-response-html" target="_blank" rel="noopener noreferrer">response to the consultation</a>, published 21 January 2026, set one compliance date for every tenancy, a cost cap of £10,000 per property, and a maximum fine of £30,000 per property per breach. The deadline is fixed — landlords should be planning and commissioning improvements now.</p>
 
         <div className="bg-red-50 border border-red-200 rounded-xl p-5 not-prose">
           <p className="text-sm text-red-800"><strong>Current requirement:</strong> All rental properties must have a minimum EPC rating of E. This has been in force since April 2020. Fines of up to £5,000 per property apply for non-compliance.</p>
-          <p className="text-sm text-red-800 mt-2"><strong>Confirmed requirement:</strong> EPC band C by 2030 for all private rental properties. Non-compliance fines could be up to £30,000 per property. The 2030 deadline is confirmed — check GOV.UK for exemption guidance.</p>
+          <p className="text-sm text-red-800 mt-2"><strong>Confirmed requirement:</strong> EPC band C for all private rental properties by 1 October 2030 — one date for every tenancy, set in the government's response of 21 January 2026. Non-compliance fines could be up to £30,000 per property. The 2030 deadline is confirmed — check GOV.UK for exemption guidance.</p>
         </div>
 
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>What Is an EPC?</h2>
@@ -98,7 +98,7 @@ export default function EPCArticle() {
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Exemptions — When EPC C May Not Apply</h2>
         <p>Not every property will be required to reach EPC C. Exemptions apply where:</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li>The cost of improvements exceeds the spend cap (expected around £15,000 per property — confirm on GOV.UK)</li>
+          <li>The cost of improvements exceeds the cost cap of £10,000 per property — the figure the government settled on in its January 2026 response, down from the £15,000 it had consulted on</li>
           <li>The property is a listed building where works would alter its character</li>
           <li>All recommended improvements have been made but the property still cannot reach C</li>
           <li>Third-party consent (e.g., freeholder for a leasehold flat) has been refused</li>
