@@ -106,7 +106,7 @@ export default function PersonalVsLtdArticle() {
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Extracting Profits from a Limited Company</h2>
         <p>Once profits are in the company, getting them out triggers additional tax. Two options:</p>
         <ul className="list-disc pl-6 space-y-1">
-          <li><strong>Dividends:</strong> Tax-free allowance of £500 (2025/26). Basic rate dividend tax: 8.75%. Higher rate: 33.75%.</li>
+          <li><strong>Dividends:</strong> Tax-free allowance of £500. Dividend tax for 2026/27: 10.75% at the basic rate, 35.75% at the higher rate, 39.35% additional — the first two rose two points in April 2026.</li>
           <li><strong>Salary:</strong> Subject to income tax and National Insurance above £12,570.</li>
         </ul>
         <p>Many portfolio landlords leave profits in the company and reinvest into new properties — deferring personal tax until they extract. If your goal is portfolio growth rather than income, a limited company is structurally more efficient. If you need income now, run the net-of-dividend-tax numbers first.</p>

@@ -87,22 +87,22 @@ describe("calcDividendTax", () => {
   it("no tax within allowance", () => expect(calcDividendTax(500, 30_000)).toBe(0));
   it("basic rate on dividends in basic band", () => {
     // otherIncome=30k → taxable other = 17,430 → 20,270 basic band remaining
-    // dividends=5,000 → all in basic → (5000-500)×8.75%
-    expect(calcDividendTax(5_000, 30_000)).toBe(Math.round(4_500 * 0.0875));
+    // dividends=5,000 → all in basic → (5000-500)×10.75% (2026/27 ordinary rate)
+    expect(calcDividendTax(5_000, 30_000)).toBe(Math.round(4_500 * 0.1075));
   });
   it("higher rate when other income fills basic band", () => {
     // otherIncome=50,000 → taxable=37,430 → 270 basic remaining
     // dividends=10,000: 270 in basic (all covered by allowance), 9,730 in higher (500-270=230 allowance left)
     const tax = calcDividendTax(10_000, 50_000);
     const taxableHigher = 9_730 - 230;
-    expect(tax).toBe(Math.round(taxableHigher * 0.3375));
+    expect(tax).toBe(Math.round(taxableHigher * 0.3575));
   });
   it("returns 0 for zero dividends", () => expect(calcDividendTax(0, 40_000)).toBe(0));
   // Regression: additional-rate dividends start above £125,140 of taxable income,
   // not £112,570 — the higher band is 87,440 wide, not 74,870.
   it("additional rate starts above £125,140 taxable", () => {
-    const basic = (37_700 - 500) * 0.0875;
-    const higher = (125_140 - 37_700) * 0.3375;
+    const basic = (37_700 - 500) * 0.1075;
+    const higher = (125_140 - 37_700) * 0.3575;
     const additional = (130_000 - 125_140) * 0.3935;
     expect(calcDividendTax(130_000, 0)).toBe(Math.round(basic + higher + additional));
   });

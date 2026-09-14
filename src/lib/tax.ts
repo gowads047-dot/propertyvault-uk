@@ -169,10 +169,15 @@ export function calcCorpTax(profit: number, associatedCompanies = 0): number {
   return Math.round(tax);
 }
 
-// ─── Dividend Tax (2024/25) ──────────────────────────────────────────────────
+// ─── Dividend Tax (2026/27) ──────────────────────────────────────────────────
+// The ordinary and upper rates rose two points from 6 April 2026; the
+// additional rate did not move. Per GOV.UK "Tax on dividends", current year.
+// These were left at the 2024/25 figures for the first five months of the
+// tax year, so the calculator understated dividend tax by 2% in the basic
+// and higher bands.
 const DIV_ALLOWANCE = 500;
-const DIV_BASIC_RATE = 0.0875;
-const DIV_HIGHER_RATE = 0.3375;
+const DIV_BASIC_RATE = 0.1075;
+const DIV_HIGHER_RATE = 0.3575;
 const DIV_ADDITIONAL_RATE = 0.3935;
 
 /**
