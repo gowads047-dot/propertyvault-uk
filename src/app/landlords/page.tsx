@@ -264,6 +264,8 @@ export default function LandlordsPage() {
                 { href: "/calculators/rental-yield", label: "Rental yield", desc: "Gross and net, on your numbers" },
                 { href: "/hmo-hub", label: "HMO hub", desc: "Licensing, standards and the numbers" },
                 { href: "/list-property", label: "List a property", desc: "Put it in front of tenants" },
+                { href: "/landlords/prs-database", label: "The landlord database", desc: "Opens 15 December 2026 — what to have ready" },
+                { href: "/landlords/non-resident-landlord-scheme", label: "Living abroad?", desc: "HMRC's scheme, and the form to file first" },
               ].map(l => (
                 <Link
                   key={l.href}

@@ -359,6 +359,10 @@ export default function GuaranteedRentPage() {
                 <span className="text-navy-500 text-sm"> — the same property, both ways, with the assumptions shown.</span>
               </li>
               <li>
+                <Link href="/landlords/non-resident-landlord-scheme" className="text-gold-600 font-semibold">Living abroad? Apply to HMRC before you sign.</Link>
+                <span className="text-navy-500 text-sm"> — under the Non-resident Landlord Scheme a company leasing your property has to deduct tax unless you are approved to be paid gross.</span>
+              </li>
+              <li>
                 <Link href="/blog/is-guaranteed-rent-a-scam" className="text-gold-600 font-semibold">Is guaranteed rent a scam?</Link>
                 <span className="text-navy-500 text-sm"> — the questions to ask any company, including us.</span>
               </li>

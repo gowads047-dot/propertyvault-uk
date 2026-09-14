@@ -64,6 +64,7 @@ export const REGISTER: RegisterEntry[] = [
   { file: "src/app/hmo-hub/page.tsx", term: "prs-database", count: 1, status: "not-reviewed" },
   { file: "src/app/landlords/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/landlords/page.tsx", term: "ast", count: 2, status: "not-reviewed" },
+  { file: "src/app/landlords/page.tsx", term: "prs-database", count: 1, status: "not-reviewed" },
   { file: "src/app/makan/company-lets/page.tsx", term: "ast", count: 2, status: "not-reviewed" },
   { file: "src/app/makan/compliance/page.tsx", term: "section-21", count: 1, status: "not-reviewed" },
   { file: "src/app/makan/compliance/page.tsx", term: "no-fault", count: 1, status: "not-reviewed" },
