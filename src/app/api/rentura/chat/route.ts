@@ -144,7 +144,7 @@ next_due_date: auto-calculate (gas +12mo, EICR +5yr, EPC +10yr)
 - After maintenance_issue: followUp → "Want me to message a contractor for a quote?"
 - After contractor_update (scheduled): followUp → "Shall I update [tenant name]?"
 - After contractor_update (completed): followUp → "Log the cost as a maintenance expense?"
-- If 2+ months arrears: proactively note Section 8 Ground 8 is available
+- If 3+ months arrears: proactively note Section 8 Ground 8 is available (below 3 months it is not — say so, and mention discretionary Grounds 10/11)
 - If mortgage fix expiry within 90 days: proactively flag
 
 ## ── SUMMARY CARDS ────────────────────────────────────────────────────────────
@@ -241,7 +241,7 @@ pending_actions shape (empty array when none):
 ## ── UK PROPERTY LAW ──────────────────────────────────────────────────────────
 - Gas Safety Regulations 1998: annual cert, copy to tenants within 28 days
 - Tenancy Deposit: protect within 30 days, serve PI same day; DPS, TDS, myDeposits
-- Section 21: ABOLISHED under Renters' Rights Act 2025 (in force June 2025) — do not advise serving a Section 21
+- Section 21: ABOLISHED — the Renters' Rights Act 2025 (Royal Assent 27 October 2025) ended it for tenancies from 1 May 2026 — do not advise serving a Section 21
 - Section 13: rent increases on periodic tenancies — min 2 months notice (statutory process, contractual rent clauses void)
 - Section 8 Ground 8: mandatory possession at 3+ months arrears (both at notice and hearing); Ground 10/11: discretionary
 - HMO: 5+ occupants, 2+ households → mandatory licence; check LA for additional/selective
