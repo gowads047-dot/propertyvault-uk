@@ -122,7 +122,7 @@ export default function PropertyInvestingPage() {
           <div className="text-center mb-8">
             <p className="text-gold-600 font-bold text-xs uppercase tracking-widest mb-2">Recommended Learning</p>
             <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>Learn From Samuel Leeds</h2>
-            <p className="text-navy-500 mt-2 max-w-xl mx-auto">We highly recommend Samuel Leeds — the UK&apos;s #1 property trainer. His free content is the best starting point for anyone serious about property.</p>
+            <p className="text-navy-500 mt-2 max-w-xl mx-auto">Samuel Leeds publishes free videos on the strategies covered on this site. They are one way in; his paid courses are not something this site has assessed or recommends.</p>
           </div>
 
           {/* Featured CTA */}
@@ -170,7 +170,7 @@ export default function PropertyInvestingPage() {
               </a>
             ))}
           </div>
-          <p className="text-xs text-navy-400 text-center">PropertyVault is not affiliated with Samuel Leeds. We recommend his content because we believe it provides genuine value. Links open on YouTube.</p>
+          <p className="text-xs text-navy-400 text-center">PropertyVault is not affiliated with Samuel Leeds and receives nothing from these links. Watch the free videos; do not pay for a course on the strength of a video. Links open on YouTube.</p>
         </div>
       </section>
 
