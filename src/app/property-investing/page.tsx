@@ -116,64 +116,6 @@ export default function PropertyInvestingPage() {
         </div>
       </section>
 
-      {/* Samuel Leeds Section — Stands Out */}
-      <section className="section-padding bg-white" id="learn-from-samuel">
-        <div className="container-max max-w-4xl">
-          <div className="text-center mb-8">
-            <p className="text-gold-600 font-bold text-xs uppercase tracking-widest mb-2">Recommended Learning</p>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-navy-800" style={{ fontFamily: "var(--font-family-heading)" }}>Learn From Samuel Leeds</h2>
-            <p className="text-navy-500 mt-2 max-w-xl mx-auto">Samuel Leeds publishes free videos on the strategies covered on this site. They are one way in; his paid courses are not something this site has assessed or recommends.</p>
-          </div>
-
-          {/* Featured CTA */}
-          <div className="bg-gradient-to-br from-navy-800 to-navy-900 rounded-2xl p-6 md:p-8 text-white mb-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[200px] h-[200px] bg-gold-400/5 rounded-full blur-[60px]" />
-            <div className="relative z-10">
-              <span className="inline-block px-3 py-1 bg-gold-400/20 text-gold-400 text-xs font-bold rounded-full mb-4">FREE CRASH COURSE</span>
-              <h3 className="text-xl md:text-2xl font-extrabold text-white mb-3" style={{ fontFamily: "var(--font-family-heading)" }}>Property Investors Crash Course</h3>
-              <p className="text-navy-200 mb-4 max-w-xl">Learn how to buy investment properties, understand deal sourcing, BRRR, rent-to-rent, and start building your portfolio. Thousands of UK investors started here.</p>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://www.samuelleeds.com/" target="_blank" rel="noopener noreferrer" className="btn-primary !py-3 !px-6">
-                  Sign Up Free →
-                </a>
-                <a href="https://www.youtube.com/@SamuelLeeds" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                  YouTube Channel
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Video Links */}
-          <h3 className="font-bold text-navy-800 text-lg mb-4">Recommended Videos by Samuel Leeds</h3>
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            {[
-              { title: "BRRR Strategy Explained", desc: "How to buy, refurbish, rent, and refinance to recycle your capital and scale a property portfolio.", url: "https://www.youtube.com/results?search_query=samuel+leeds+BRRR+strategy", icon: "🔄", tag: "BRRR" },
-              { title: "HMO Investing Guide", desc: "How Houses in Multiple Occupation work, licensing requirements, and how to maximise room-by-room income.", url: "https://www.youtube.com/results?search_query=samuel+leeds+HMO+investing", icon: "🏢", tag: "HMO" },
-              { title: "Rent-to-Rent Explained", desc: "How to control properties without buying them. Lease from a landlord, sublet at a higher rent, keep the margin.", url: "https://www.youtube.com/results?search_query=samuel+leeds+rent+to+rent", icon: "🔑", tag: "R2R" },
-              { title: "How to Start with No Money", desc: "Strategies for getting into property investing with little or no capital. Creative finance and deal sourcing.", url: "https://www.youtube.com/results?search_query=samuel+leeds+no+money+property", icon: "💰", tag: "Beginners" },
-              { title: "Deal Sourcing Masterclass", desc: "How to find below market value properties. Auctions, direct-to-vendor, agents, and sourcing services.", url: "https://www.youtube.com/results?search_query=samuel+leeds+deal+sourcing", icon: "🔍", tag: "Sourcing" },
-              { title: "Property Portfolio Building", desc: "How to go from one property to a full portfolio. Scaling strategies, finance, and portfolio management.", url: "https://www.youtube.com/results?search_query=samuel+leeds+property+portfolio", icon: "📈", tag: "Scaling" },
-            ].map((v) => (
-              <a key={v.title} href={v.url} target="_blank" rel="noopener noreferrer"
-                className="flex items-start gap-4 p-4 bg-white rounded-xl border border-navy-100/80 hover:shadow-lg hover:border-gold-400/30 transition-all group">
-                <div className="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="px-2 py-0.5 bg-navy-50 text-navy-600 text-xs font-bold rounded">{v.tag}</span>
-                  </div>
-                  <h4 className="font-bold text-navy-800 text-sm group-hover:text-gold-600 transition-colors">{v.title}</h4>
-                  <p className="text-xs text-navy-500 mt-0.5">{v.desc}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-          <p className="text-xs text-navy-400 text-center">PropertyVault is not affiliated with Samuel Leeds and receives nothing from these links. Watch the free videos; do not pay for a course on the strength of a video. Links open on YouTube.</p>
-        </div>
-      </section>
-
       {/* Your Tools */}
       <section className="section-padding bg-navy-50/40">
         <div className="container-max max-w-4xl">
@@ -204,7 +146,7 @@ export default function PropertyInvestingPage() {
           </div>
           <div className="space-y-5">
             {[
-              { step: "1", title: "Educate Yourself", desc: "Learn the fundamentals. Read our guides, watch Samuel Leeds' free content, and understand different strategies before committing capital." },
+              { step: "1", title: "Educate Yourself", desc: "Learn the fundamentals. Read our guides, run the numbers in the calculators, and understand the different strategies before committing capital." },
               { step: "2", title: "Set Your Goals", desc: "Define what you want — monthly cash flow targets, portfolio size, timeline, and whether you want hands-on or passive income." },
               { step: "3", title: "Build Your Team", desc: "Connect with a mortgage broker, solicitor, accountant, and letting agent. Use our Find a Professional directory." },
               { step: "4", title: "Secure Finance", desc: "Get a mortgage agreement in principle. Use our Affordability Calculator to understand your borrowing capacity." },
