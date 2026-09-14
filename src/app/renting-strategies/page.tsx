@@ -241,7 +241,7 @@ export default function RentingStrategiesPage() {
         <div className="container-max max-w-4xl">
           <h2 className="text-2xl font-bold text-navy-800 mb-6">Social Housing Leasing — In Depth</h2>
           <div className="space-y-4 text-sm text-navy-600 leading-relaxed">
-            <p>Social housing leasing has become one of the fastest-growing strategies for UK landlords seeking guaranteed, hands-off income. With over 100,000 households in temporary accommodation and 1.2 million on council waiting lists, demand from local authorities is enormous.</p>
+            <p>Social housing leasing is a strategy for landlords who want a fixed, hands-off income from a public-sector tenant. The demand is real and published: <a href="https://www.gov.uk/government/statistics/statutory-homelessness-in-england-january-to-march-2026/statutory-homelessness-in-england-january-to-march-2026" target="_blank" rel="noopener noreferrer" className="text-gold-600 font-semibold">135,580 households were in temporary accommodation in England on 31 March 2026</a>, up 3.6% on a year earlier, and about 1.3 million households were on council housing registers at 31 March 2025, per <a href="https://www.gov.uk/government/statistical-data-sets/local-authority-housing-statistics-data-returns-for-2024-to-2025" target="_blank" rel="noopener noreferrer" className="text-gold-600 font-semibold">MHCLG&apos;s local authority housing statistics</a>.</p>
 
             <h3 className="text-lg font-bold text-navy-800 mt-6">How Social Housing Leasing Works</h3>
             <ol className="list-decimal pl-6 space-y-2">
