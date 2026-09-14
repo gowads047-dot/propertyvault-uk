@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { staticRoutes, isIndexable, rankOf } from "@/lib/routes";
-import { blogPosts, slugOf } from "@/lib/blog-posts";
+import { blogPosts, slugOf, postDateISO } from "@/lib/blog-posts";
 import { countries } from "@/lib/makan-config";
 import { DISTRICTS } from "@/app/areas/postcodes/[district]/page";
 
@@ -17,8 +17,6 @@ import { DISTRICTS } from "@/app/areas/postcodes/[district]/page";
  * actually emits.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const routes = new Set(staticRoutes().filter(isIndexable));
 
   // Dynamic segments, from the same sources their pages generate from.
@@ -26,13 +24,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const c of countries) routes.add(`/makan/country/${c.code}`);
   for (const d of DISTRICTS) routes.add(`/areas/postcodes/${d.code.toLowerCase()}`);
 
+  // lastModified only where it is true. Every URL used to carry the build
+  // time, so all 210 "changed" on every deploy — Google's guidance is that
+  // a lastmod that is not accurate is ignored, and once it has been seen to
+  // be inaccurate the field is discounted for the whole sitemap. Blog posts
+  // have a real date; the rest carry none, which is honest and costs
+  // nothing.
+  const lastModified = new Map(blogPosts.map(p => [`/blog/${slugOf(p)}`, new Date(`${postDateISO(p.date)}T00:00:00Z`)]));
+
   return [...routes]
     .sort()
     .map(route => {
       const { priority, changeFrequency } = rankOf(route);
+      const modified = lastModified.get(route);
       return {
         url: `${SITE_URL}${route === "/" ? "/" : route + "/"}`,
-        lastModified: now,
+        ...(modified ? { lastModified: modified } : {}),
         changeFrequency,
         priority,
       };

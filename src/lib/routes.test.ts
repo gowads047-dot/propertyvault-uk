@@ -232,3 +232,16 @@ describe("the sitemap never advertises a redirect", () => {
     }
   });
 });
+
+describe("sitemap lastModified", () => {
+  it("is present only on blog posts, and is the post's own date", () => {
+    // Every URL used to carry the build time. A lastmod that is not true is
+    // worse than none: Google discounts the field for the whole sitemap.
+    const withDate = entries.filter(e => e.lastModified);
+    expect(withDate.length).toBeGreaterThan(0);
+    for (const e of withDate) expect(e.url).toMatch(/\/blog\/[^/]+\/$/);
+    const s24 = entries.find(e => e.url.endsWith("/blog/section-24-explained/"));
+    expect(s24?.lastModified).toBeInstanceOf(Date);
+    expect(entries.find(e => e.url.endsWith("/calculators/"))?.lastModified).toBeUndefined();
+  });
+});
