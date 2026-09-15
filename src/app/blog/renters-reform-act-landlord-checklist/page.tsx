@@ -179,7 +179,7 @@ export default function RentersReformChecklistPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <h2 className="font-extrabold text-navy-800 text-base" style={{ fontFamily: "var(--font-family-heading)", margin: 0 }}>{item.title}</h2>
-                      {item.urgent && <span className="text-xs font-bold px-2 py-0.5 bg-red-600 text-white rounded-full">URGENT</span>}
+                      {item.urgent && <span className="text-xs font-bold px-2 py-0.5 bg-red-700 text-white rounded-full">URGENT</span>}
                     </div>
                     <p className="text-navy-600 text-sm leading-relaxed mb-3">{item.detail}</p>
                     <div className="bg-white border border-navy-100 rounded-xl px-4 py-3 mb-3">

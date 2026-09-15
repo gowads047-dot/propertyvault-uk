@@ -87,7 +87,7 @@ export default function AcademyPage() {
           <div className="flex items-center justify-center gap-3 mb-8">
             <div className="w-16 h-16 rounded-2xl bg-[#c9a84c]/20 border border-[#c9a84c]/40 flex items-center justify-center text-3xl">🎓</div>
             <div className="text-left">
-              <p className="text-white/40 text-xs uppercase tracking-widest">PropertyVault</p>
+              <p className="text-white/60 text-xs uppercase tracking-widest">PropertyVault</p>
               <p className="text-3xl font-black text-white">Academy</p>
             </div>
           </div>

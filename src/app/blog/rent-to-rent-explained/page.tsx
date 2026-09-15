@@ -156,7 +156,7 @@ export default function RentToRentBlog() {
                 You lease a house, furnish each bedroom individually, and let to separate working professionals on individual ASTs. Each room generates its own income stream. A 5-bed house let as an HMO typically generates 40–60% more revenue than if let as a single household.
               </p>
               <div className="bg-[#0a1628] rounded-xl p-4 text-sm">
-                <p className="text-white/40 mb-2 uppercase text-xs tracking-wider">Example numbers</p>
+                <p className="text-white/60 mb-2 uppercase text-xs tracking-wider">Example numbers</p>
                 <div className="grid grid-cols-2 gap-1 text-white/70">
                   <span>You pay landlord</span><span className="text-white">£900/month</span>
                   <span>5 rooms × £550/room</span><span className="text-green-400">+£2,750/month</span>
@@ -180,7 +180,7 @@ export default function RentToRentBlog() {
                 You lease a property, furnish it to a high standard, and list it on Airbnb, Booking.com, and direct booking platforms. You charge per night rather than per month. In the right location — city centres, tourist towns, near hospitals or business parks — the revenue far exceeds a standard monthly rent.
               </p>
               <div className="bg-[#0a1628] rounded-xl p-4 text-sm">
-                <p className="text-white/40 mb-2 uppercase text-xs tracking-wider">Example numbers (city centre flat)</p>
+                <p className="text-white/60 mb-2 uppercase text-xs tracking-wider">Example numbers (city centre flat)</p>
                 <div className="grid grid-cols-2 gap-1 text-white/70">
                   <span>You pay landlord</span><span className="text-white">£1,100/month</span>
                   <span>£95/night × 70% occupancy</span><span className="text-green-400">+£1,995/month</span>
@@ -204,7 +204,7 @@ export default function RentToRentBlog() {
                 You lease a property and sublet it to a single household — a family, a couple, or a young professional. The margin is slim (£150–£300/month typically), but this is the simplest model with the least compliance burden. It&apos;s the best starting point for absolute beginners who want to learn the model before scaling into HMO.
               </p>
               <div className="bg-[#0a1628] rounded-xl p-4 text-sm">
-                <p className="text-white/40 mb-2 uppercase text-xs tracking-wider">Example numbers (corporate let)</p>
+                <p className="text-white/60 mb-2 uppercase text-xs tracking-wider">Example numbers (corporate let)</p>
                 <div className="grid grid-cols-2 gap-1 text-white/70">
                   <span>You pay landlord</span><span className="text-white">£950/month</span>
                   <span>Corporate tenant pays</span><span className="text-green-400">+£1,200/month</span>
@@ -254,7 +254,7 @@ export default function RentToRentBlog() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/10 text-white/40 text-xs uppercase tracking-wider">
+                <tr className="border-b border-white/10 text-white/60 text-xs uppercase tracking-wider">
                   <th className="text-left py-2 pr-4">Model</th>
                   <th className="text-left py-2 pr-4">Startup cost</th>
                   <th className="text-left py-2 pr-4">Monthly profit</th>
@@ -387,7 +387,7 @@ export default function RentToRentBlog() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead>
-                <tr className="border-b border-white/10 text-white/40 text-xs uppercase tracking-wider">
+                <tr className="border-b border-white/10 text-white/60 text-xs uppercase tracking-wider">
                   <th className="text-left py-2 pr-4">Item</th>
                   <th className="text-left py-2">Typical cost</th>
                 </tr>
