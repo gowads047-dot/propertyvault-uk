@@ -21,7 +21,7 @@ export default function PetPermission() {
 
   const decisionConfig = {
     approve: { label: "✅ Approve", color: "#15803d", bg: "#f0fdf4", border: "#86efac", text: "Permission granted" },
-    "approve-conditions": { label: "⚠️ Approve with conditions", color: "#d97706", bg: "#fffbeb", border: "#fcd34d", text: "Permission granted with conditions" },
+    "approve-conditions": { label: "⚠️ Approve with conditions", color: "#b45309", bg: "#fffbeb", border: "#fcd34d", text: "Permission granted with conditions" },
     refuse: { label: "❌ Refuse", color: "#b91c1c", bg: "#fef2f2", border: "#fca5a5", text: "Permission refused" },
   };
 
@@ -70,14 +70,15 @@ export default function PetPermission() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6">
               <h2 className="font-bold text-navy-800 mb-3">Decision</h2>
-              <div className="space-y-2">
+              <div className="space-y-2" role="radiogroup" aria-label="Decision">
                 {(["approve", "approve-conditions", "refuse"] as const).map(d => {
                   const cfg = decisionConfig[d];
                   return (
-                    <div key={d} onClick={() => setDecision(d)}
+                    <div key={d} onClick={() => setDecision(d)} role="radio" aria-checked={decision === d} tabIndex={0}
+                      onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setDecision(d); } }}
                       style={{ borderColor: decision === d ? cfg.color : undefined, backgroundColor: decision === d ? cfg.bg : undefined }}
-                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all ${decision !== d ? "border-navy-100 hover:border-navy-300" : ""}`}>
-                      <p style={{ color: decision === d ? cfg.color : "#0f1b36" }} className="font-bold text-sm">{cfg.label}</p>
+                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 ${decision !== d ? "border-navy-100 hover:border-navy-300" : ""}`}>
+                      <p style={{ color: decision === d ? cfg.color : undefined }} className={`font-bold text-sm ${decision === d ? "" : "text-navy-800"}`}>{cfg.label}</p>
                     </div>
                   );
                 })}

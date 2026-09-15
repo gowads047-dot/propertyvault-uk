@@ -257,10 +257,23 @@ html.dark .card-hover:hover {
 html.dark input[type="text"], html.dark input[type="email"],
 html.dark input[type="number"], html.dark input[type="tel"],
 html.dark input[type="date"], html.dark input[type="search"],
+html.dark input[type="url"], html.dark input:not([type]),
 html.dark select, html.dark textarea {
   background-color: #1e293b;
   color: #f1f5f9;
   border-color: #334155;
+}
+/* A field that sets a literal white ground inline keeps it in dark mode —
+   inline wins — so its ink has to stay dark too, or the rule above paints
+   #f1f5f9 on white (1.09:1 across the tenant application form). Inline
+   styles never set the colour on these, so the stylesheet can. */
+html.dark input[style*="background: white"], html.dark input[style*="background:white"],
+html.dark input[style*="background: #fff"], html.dark input[style*="background:#fff"],
+html.dark select[style*="background: white"], html.dark select[style*="background:white"],
+html.dark textarea[style*="background: white"], html.dark textarea[style*="background:white"] {
+  background-color: #ffffff;
+  color: #0f1b36;
+  border-color: #e2e8f0;
 }
 
 html.dark input::placeholder, html.dark textarea::placeholder {
@@ -305,6 +318,7 @@ html.dark .bg-red-100 { background-color: #3b0a0a !important; }
 html.dark .text-red-800 { color: #fca5a5 !important; }
 html.dark .text-red-700 { color: #f87171 !important; }
 html.dark .bg-red-50 { background-color: #2a0a0a !important; }
+html.dark .bg-red-50\/40 { background-color: rgb(42 10 10 / 0.6) !important; }
 html.dark .bg-amber-100 { background-color: #2a1800 !important; }
 html.dark .text-amber-800 { color: #fcd34d !important; }
 html.dark .text-amber-700 { color: #fbbf24 !important; }
