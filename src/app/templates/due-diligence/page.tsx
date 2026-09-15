@@ -191,7 +191,7 @@ export default function DueDiligenceTemplate() {
                   <div className="space-y-3">
                     {section.items.map(item => (
                       <div key={item.id} className={`rounded-xl border transition-colors ${checked[item.id] ? "bg-green-50 border-green-200" : item.critical ? "bg-red-50/40 border-red-200" : "bg-navy-50 border-transparent hover:border-navy-200"}`}>
-                        <div className="flex gap-3 p-3 cursor-pointer" onClick={() => toggle(item.id)}>
+                        <div className="flex gap-3 p-3 cursor-pointer rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500" onClick={() => toggle(item.id)} role="checkbox" aria-checked={!!checked[item.id]} tabIndex={0} onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggle(item.id); } }}>
                           <div className={`w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 flex items-center justify-center transition-all ${checked[item.id] ? "bg-green-500 border-green-500" : item.critical ? "border-red-400" : "border-navy-300"}`}>
                             {checked[item.id] && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                           </div>

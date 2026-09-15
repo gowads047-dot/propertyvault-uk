@@ -110,11 +110,12 @@ export default function RentReceipt() {
             </div>
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6">
-              <div className="flex items-center gap-3 mb-3" onClick={() => setIncludesDeposit(!includesDeposit)}>
-                <div className={`w-5 h-5 rounded border-2 flex-shrink-0 cursor-pointer flex items-center justify-center ${includesDeposit ? "bg-gold-400 border-gold-400" : "border-navy-300"}`}>
+              <div className="flex items-center gap-3 mb-3">
+                <div onClick={() => setIncludesDeposit(!includesDeposit)} role="checkbox" aria-checked={includesDeposit} aria-labelledby="rentreceipt-includes-deposit" tabIndex={0} onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setIncludesDeposit(!includesDeposit); } }}
+                  className={`w-5 h-5 rounded border-2 flex-shrink-0 cursor-pointer flex items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 ${includesDeposit ? "bg-gold-400 border-gold-400" : "border-navy-300"}`}>
                   {includesDeposit && <svg className="w-3 h-3 text-navy-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                 </div>
-                <label className="text-sm font-semibold text-navy-700 cursor-pointer">Include security deposit in this receipt</label>
+                <span id="rentreceipt-includes-deposit" className="text-sm font-semibold text-navy-700 cursor-pointer" onClick={() => setIncludesDeposit(!includesDeposit)}>Include security deposit in this receipt</span>
               </div>
               {includesDeposit && (
                 <div><label htmlFor="rentreceipt-deposit-amount" className="block text-sm font-semibold text-navy-700 mb-1">Deposit Amount (£)</label>
