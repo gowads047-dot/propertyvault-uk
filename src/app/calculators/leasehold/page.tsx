@@ -92,7 +92,7 @@ type Tab = "overview" | "extension" | "groundrent" | "verdict";
 const RISK_THRESHOLDS = [
   { min: 90, label: "Safe", color: "#15803d", bg: "#f0fdf4", border: "#bbf7d0", desc: "Excellent — lease is long enough to mortgage and sell without issue." },
   { min: 80, label: "Good", color: "#15803d", bg: "#f0fdf4", border: "#bbf7d0", desc: "Good lease length. Extend soon to stay above 80 years and avoid marriage value." },
-  { min: 70, label: "Caution", color: "#d97706", bg: "#fffbeb", border: "#fde68a", desc: "Some lenders will refuse. Plan your extension now — every year below 80 adds cost." },
+  { min: 70, label: "Caution", color: "#b45309", bg: "#fffbeb", border: "#fde68a", desc: "Some lenders will refuse. Plan your extension now — every year below 80 adds cost." },
   { min: 60, label: "Risk", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa", desc: "High risk. Many lenders won't touch this. Extension required before selling." },
   { min: 0,  label: "Danger", color: "#b91c1c", bg: "#fef2f2", border: "#fecaca", desc: "Unmortgageable for most buyers. Extension is critical — value is severely impaired." },
 ];
@@ -201,7 +201,7 @@ export default function LeaseholdCalculatorPage() {
         </div>
       </section>
 
-      <section style={{ background: "#f8f9fc", paddingBottom: 64 }}>
+      <section style={{ background: "var(--card-surface)", paddingBottom: 64 }}>
         <div className="container-max px-4" style={{ paddingTop: 24 }}>
           {/* min-w-0 on the columns: grid items default to min-width:auto, so the
               scrollable tab row inside set a floor on the whole track and the
@@ -283,7 +283,7 @@ export default function LeaseholdCalculatorPage() {
                   ].map(r => (
                     <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 10px", borderRadius: 8, background: r.invert ? (r.pass ? "#f0fdf4" : "#fef2f2") : (r.pass ? "#f0fdf4" : "#fef2f2") }}>
                       <span style={{ fontSize: 12, color: "#374151" }}>{r.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: r.pass ? "#15803d" : "#dc2626" }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: r.pass ? "#15803d" : "#b91c1c" }}>
                         {r.invert ? (r.pass ? "✓ Safe" : "✗ Risk") : (r.pass ? "✓ Yes" : "✗ No")}
                       </span>
                     </div>
@@ -353,10 +353,10 @@ export default function LeaseholdCalculatorPage() {
                   </div>
 
                   {/* Annual depreciation warning */}
-                  <div style={{ padding: "14px 16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca" }}>
+                  <div className="bg-red-50 border border-red-200" style={{ padding: "14px 16px", borderRadius: 12 }}>
                     <p className="text-sm font-bold text-red-700 mb-1">⏱️ Annual lease depreciation</p>
-                    <p className="text-2xl font-extrabold text-red-600">{fmt(calc.annualDepreciation)}<span className="text-sm font-normal text-red-400">/year</span></p>
-                    <p className="text-xs text-red-500 mt-1">This is roughly how much value the lease loses each year as it runs down — assuming no extension.</p>
+                    <p className="text-2xl font-extrabold text-red-600">{fmt(calc.annualDepreciation)}<span className="text-sm font-normal text-red-700">/year</span></p>
+                    <p className="text-xs text-red-700 mt-1">This is roughly how much value the lease loses each year as it runs down — assuming no extension.</p>
                   </div>
 
                   {/* Annual cost summary */}
@@ -470,7 +470,7 @@ export default function LeaseholdCalculatorPage() {
                                 <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", fontWeight: 700, color: moriskRisk ? "#dc2626" : "#0f1b36" }}>{fmt(row.rent)}</td>
                                 <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#475569" }}>{fmt(row.rent / 12)}</td>
                                 <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right" }}>
-                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: moriskRisk ? "#fef2f2" : "#f0fdf4", color: moriskRisk ? "#dc2626" : "#15803d" }}>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: moriskRisk ? "#fef2f2" : "#f0fdf4", color: moriskRisk ? "#b91c1c" : "#15803d" }}>
                                     {moriskRisk ? "⚠️ High" : "✓ OK"}
                                   </span>
                                 </td>
@@ -480,7 +480,7 @@ export default function LeaseholdCalculatorPage() {
                         </tbody>
                       </table>
                     </div>
-                    <div style={{ marginTop: 16, padding: "12px 14px", borderRadius: 12, background: "#f8f9fc", border: "1px solid #e2e8f0" }}>
+                    <div style={{ marginTop: 16, padding: "12px 14px", borderRadius: 12, background: "var(--card-surface)", border: "1px solid var(--hairline)" }}>
                       <p className="text-xs font-bold text-navy-800 mb-1">Total ground rent over remaining {yearsLeft} years</p>
                       <p className="text-2xl font-extrabold text-red-600">{fmt(calc.totalGR)}</p>
                       <p className="text-xs text-navy-400">Undiscounted total. This comes out of your pocket over the life of the lease.</p>
@@ -499,7 +499,7 @@ export default function LeaseholdCalculatorPage() {
                       ].map(r => (
                         <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: r.good ? "#f0fdf4" : "#fef2f2" }}>
                           <span style={{ fontSize: 12, color: "#374151", flex: 1 }}>{r.label}</span>
-                          <span style={{ fontSize: 11, color: r.good ? "#15803d" : "#dc2626", fontWeight: 600, marginLeft: 12, flexShrink: 0 }}>{r.val}</span>
+                          <span style={{ fontSize: 11, color: r.good ? "#15803d" : "#b91c1c", fontWeight: 600, marginLeft: 12, flexShrink: 0 }}>{r.val}</span>
                         </div>
                       ))}
                     </div>

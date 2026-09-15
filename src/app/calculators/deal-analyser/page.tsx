@@ -679,7 +679,7 @@ export default function DealAnalyserPage() {
         </div>
       </section>
 
-      <section style={{ background: "#f8f9fc", paddingBottom: 64 }}>
+      <section style={{ background: "var(--card-surface)", paddingBottom: 64 }}>
         <div className="container-max px-4" style={{ paddingTop: 24 }}>
           {/* min-w-0 on the columns: grid items default to min-width:auto, so the
               scrollable tab row inside set a floor on the whole track and the
@@ -703,7 +703,7 @@ export default function DealAnalyserPage() {
                     onChange={e => setUrlInput(e.target.value)}
                     onKeyDown={e => e.key === "Enter" && lookupPropertyUrl()}
                     placeholder="https://www.rightmove.co.uk/properties/…"
-                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 13, outline: "none", minWidth: 0 }}
+                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid var(--hairline)", borderRadius: 12, fontSize: 13, outline: "none", minWidth: 0, background: "var(--page-surface)", color: "var(--ink)" }}
                   />
                   <button
                     onClick={lookupPropertyUrl}
@@ -1559,7 +1559,7 @@ export default function DealAnalyserPage() {
                       );
                     })}
                   </div>
-                  <div style={{ padding: "12px 14px", borderRadius: 12, background: "#f8f9fc", border: "1px solid #e2e8f0" }}>
+                  <div style={{ padding: "12px 14px", borderRadius: 12, background: "var(--card-surface)", border: "1px solid var(--hairline)" }}>
                     <p className="text-xs font-bold text-navy-800 mb-1">Break-even rent</p>
                     <p className="text-2xl font-extrabold text-navy-800">{fmt((calc.totalExpenses / 12) + 1)}<span className="text-sm font-normal text-navy-400">/mo</span></p>
                     <p className="text-xs text-navy-400">Minimum rent to avoid negative cash flow</p>

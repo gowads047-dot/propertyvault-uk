@@ -198,7 +198,7 @@ export function MortgageCalculator() {
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-navy-100">
-                <th className="text-left pb-2 text-navy-400 font-semibold"></th>
+                <th scope="col" className="text-left pb-2 text-navy-400 font-semibold">Figure</th>
                 <th className="text-right pb-2 text-navy-600 font-semibold">Repayment</th>
                 <th className="text-right pb-2 text-gold-600 font-semibold">Interest Only</th>
               </tr>
@@ -210,7 +210,7 @@ export function MortgageCalculator() {
                 { l: "Balance at end",  rep: "£0",    io: fmt(loan) },
               ].map(r => (
                 <tr key={r.l} className="border-b border-navy-50">
-                  <td className="py-2 text-navy-600 font-medium">{r.l}</td>
+                  <th scope="row" className="py-2 text-navy-600 font-medium text-left">{r.l}</th>
                   <td className="py-2 text-right font-bold text-navy-800">{r.rep}</td>
                   <td className="py-2 text-right font-bold text-gold-600">{r.io}</td>
                 </tr>
