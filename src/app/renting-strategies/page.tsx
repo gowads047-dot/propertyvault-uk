@@ -207,7 +207,7 @@ export default function RentingStrategiesPage() {
                 <p className="text-sm text-navy-600 leading-relaxed mb-5">{s.desc}</p>
                 <div className="grid md:grid-cols-2 gap-4 mb-4">
                   <div className="bg-green-50 rounded-lg p-4">
-                    <h3 className="font-bold text-green-800 text-sm mb-2">Advantages</h3>
+                    <h3 className="font-bold text-green-800 text-sm mb-2">Advantages<span className="sr-only"> of {s.title}</span></h3>
                     <ul className="space-y-1">
                       {s.pros.map((p) => (
                         <li key={p} className="flex items-start gap-2 text-xs text-green-700">
@@ -218,7 +218,7 @@ export default function RentingStrategiesPage() {
                     </ul>
                   </div>
                   <div className="bg-red-50 rounded-lg p-4">
-                    <h3 className="font-bold text-red-800 text-sm mb-2">Considerations</h3>
+                    <h3 className="font-bold text-red-800 text-sm mb-2">Considerations<span className="sr-only"> for {s.title}</span></h3>
                     <ul className="space-y-1">
                       {s.cons.map((c) => (
                         <li key={c} className="flex items-start gap-2 text-xs text-red-700">
