@@ -24,7 +24,7 @@ export default function RepairReport() {
 
   const urgencyConfig = {
     emergency: { label: "🚨 Emergency (24 hrs)", color: "#b91c1c", bg: "#fef2f2", desc: "No hot water, no heating in winter, flooding, gas leak, structural danger, sewage — landlord must act within 24 hours" },
-    urgent: { label: "⚠️ Urgent (2–7 days)", color: "#d97706", bg: "#fffbeb", desc: "Broken boiler, serious leak, mould affecting health, broken locks — 2–7 days is typically expected" },
+    urgent: { label: "⚠️ Urgent (2–7 days)", color: "#b45309", bg: "#fffbeb", desc: "Broken boiler, serious leak, mould affecting health, broken locks — 2–7 days is typically expected" },
     routine: { label: "ℹ️ Routine (28 days)", color: "#2563eb", bg: "#eff6ff", desc: "Dripping tap, broken window handle, minor damp — landlord has around 28 days to respond" },
   };
 
@@ -73,15 +73,16 @@ export default function RepairReport() {
 
             <div className="bg-white rounded-2xl border border-navy-100 p-6">
               <h2 className="font-bold text-navy-800 mb-3">Urgency Level</h2>
-              <div className="space-y-2">
+              <div className="space-y-2" role="radiogroup" aria-label="Urgency level">
                 {(["emergency", "urgent", "routine"] as const).map(u => {
                   const cfg = urgencyConfig[u];
                   return (
-                    <div key={u} onClick={() => setUrgency(u)}
+                    <div key={u} onClick={() => setUrgency(u)} role="radio" aria-checked={urgency === u} tabIndex={0}
+                      onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setUrgency(u); } }}
                       style={{ borderColor: urgency === u ? cfg.color : undefined, backgroundColor: urgency === u ? cfg.bg : undefined }}
-                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all ${urgency !== u ? "border-navy-100 hover:border-navy-300" : ""}`}>
-                      <p style={{ color: urgency === u ? cfg.color : "#0f1b36" }} className="font-bold text-sm mb-1">{cfg.label}</p>
-                      <p className={`text-xs ${urgency === u ? "" : "text-navy-400"}`} style={{ color: urgency === u ? cfg.color : undefined, opacity: urgency === u ? 0.75 : 1 }}>{cfg.desc}</p>
+                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 ${urgency !== u ? "border-navy-100 hover:border-navy-300" : ""}`}>
+                      <p style={{ color: urgency === u ? cfg.color : undefined }} className={`font-bold text-sm mb-1 ${urgency === u ? "" : "text-navy-800"}`}>{cfg.label}</p>
+                      <p className={`text-xs ${urgency === u ? "" : "text-navy-400"}`} style={{ color: urgency === u ? cfg.color : undefined }}>{cfg.desc}</p>
                     </div>
                   );
                 })}
