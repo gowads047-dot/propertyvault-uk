@@ -193,9 +193,11 @@ const countries = [
 ];
 
 const riskColor = (risk: string) => {
-  if (risk === "high") return { bg: "#fef2f2", border: "#fecaca", text: "#991b1b", badge: "#dc2626" };
-  if (risk === "medium") return { bg: "#fffbeb", border: "#fde68a", text: "#92400e", badge: "#d97706" };
-  return { bg: "#f0fdf4", border: "#bbf7d0", text: "#14532d", badge: "#16a34a" };
+  // The badge colour is 12px bold text on the tint, so it needs 4.5:1: the
+  // -600 shades were 4.41, 3.07 and 3.14; the -700s are 5.9, 4.8 and 4.8.
+  if (risk === "high") return { bg: "#fef2f2", border: "#fecaca", text: "#991b1b", badge: "#b91c1c" };
+  if (risk === "medium") return { bg: "#fffbeb", border: "#fde68a", text: "#92400e", badge: "#b45309" };
+  return { bg: "#f0fdf4", border: "#bbf7d0", text: "#14532d", badge: "#15803d" };
 };
 
 export default function CompliancePage() {
