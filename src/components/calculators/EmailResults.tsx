@@ -54,7 +54,7 @@ export function EmailResults({ deal }: Props) {
   return (
     <div className="bg-navy-50 rounded-2xl border border-navy-100 p-5">
       <p className="font-semibold text-navy-800 text-sm mb-1">Save this analysis</p>
-      <p className="text-xs text-navy-400 mb-3">
+      <p className="text-xs text-navy-500 mb-3">
         Get a full copy of this deal emailed to you — score, all 4 metrics, and a summary table.
       </p>
       <form onSubmit={handleSubmit} className="flex gap-2">

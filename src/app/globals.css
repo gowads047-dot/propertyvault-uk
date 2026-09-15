@@ -215,6 +215,18 @@ html.dark [style*="25D366"], html.dark [style*="25d366"] { color: #0b2e18; }
   --ok-flat: #15803d;
   --gold-pill-ink: #7a5f1c;
   --danger: #b91c1c;          /* 6.99 on white */
+
+  /* Tinted panels the calculators build inline (result rows, warnings,
+     tips). Each tint pairs with an ink checked against it in both themes;
+     the inks on the light tints are the Tailwind -700/-800 shades. */
+  --tint-green: #f0fdf4;
+  --tint-red: #fef2f2;
+  --tint-amber: #fffbeb;
+  --tint-amber-ink: #92400e;  /* 6.84 on the amber tint */
+  --tint-blue: #eff6ff;
+  --tint-blue-ink: #1d4ed8;   /* 6.0 on the blue tint */
+  --tint-orange: #fff7ed;
+  --tint-orange-ink: #c2410c; /* 4.88 on the orange tint */
 }
 html.dark {
   --state-verified: #4fc08a;
@@ -236,6 +248,14 @@ html.dark {
   --ok-flat: #4ade80;
   --gold-pill-ink: #e8c877;
   --danger: #f87171;          /* 6.17 on #0f1b36 */
+  --tint-green: #0a1e12;
+  --tint-red: #2a0a0a;
+  --tint-amber: #1c1400;
+  --tint-amber-ink: #fcd34d;
+  --tint-blue: #0a1a2e;
+  --tint-blue-ink: #93c5fd;
+  --tint-orange: #2a1200;
+  --tint-orange-ink: #fdba74;
 }
 
 /* The Makan promo card keeps its own palette in both themes: it is a Clay

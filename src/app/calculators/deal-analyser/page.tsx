@@ -629,7 +629,7 @@ export default function DealAnalyserPage() {
   const shareParams = { pp: purchasePrice, rc: refurbCost, arv: afterRefurbValue, mr: monthlyRent, dp: depositPct, rate: mortgageRate, term: mortgageTerm, mt: mortgageType, mgmt: managementPct, maint: maintenancePct, ins: insuranceMonthly, vw: voidWeeks };
 
   const expenseItems = [
-    { label: "Mortgage",    value: calc.annualMortgage, color: "#0f1b36" },
+    { label: "Mortgage",    value: calc.annualMortgage, color: "var(--ink)" },
     { label: "Management",  value: calc.management,     color: "var(--gold-ink)" },
     { label: "Maintenance", value: calc.maintenance,    color: "#6b7280" },
     { label: "Insurance",   value: calc.insurance,      color: "#3b82f6" },
@@ -656,7 +656,7 @@ export default function DealAnalyserPage() {
   return (
     <>
       {/* Header */}
-      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "56px 0 48px" }}>
+      <section data-surface="dark" style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "56px 0 48px" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
           <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Deal Analyser" }]} />
@@ -679,7 +679,7 @@ export default function DealAnalyserPage() {
         </div>
       </section>
 
-      <section style={{ background: "#f8f9fc", paddingBottom: 64 }}>
+      <section style={{ background: "var(--card-surface)", paddingBottom: 64 }}>
         <div className="container-max px-4" style={{ paddingTop: 24 }}>
           {/* min-w-0 on the columns: grid items default to min-width:auto, so the
               scrollable tab row inside set a floor on the whole track and the
@@ -693,7 +693,7 @@ export default function DealAnalyserPage() {
               <div className="bg-white rounded-2xl border border-navy-100 p-5" style={{ borderColor: "#c9a84c33" }}>
                 <div className="flex items-center gap-2 mb-1">
                   <h2 className="font-bold text-navy-800 text-sm">🔗 Paste a Rightmove or Zoopla URL</h2>
-                  <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: "var(--tint-amber-ink)", background: "var(--tint-amber)", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
                 </div>
                 <p className="text-xs text-navy-400 mb-3">Auto-fill price and area data straight from the listing.</p>
                 <div style={{ display: "flex", gap: 8 }}>
@@ -703,19 +703,19 @@ export default function DealAnalyserPage() {
                     onChange={e => setUrlInput(e.target.value)}
                     onKeyDown={e => e.key === "Enter" && lookupPropertyUrl()}
                     placeholder="https://www.rightmove.co.uk/properties/…"
-                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 13, outline: "none", minWidth: 0 }}
+                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid var(--hairline)", borderRadius: 12, fontSize: 13, outline: "none", minWidth: 0, background: "var(--page-surface)", color: "var(--ink)" }}
                   />
                   <button
                     onClick={lookupPropertyUrl}
                     disabled={urlLoading || !urlInput.trim()}
-                    style={{ padding: "10px 16px", background: urlLoading || !urlInput.trim() ? "#475569" : "#c9a84c", color: "white", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: urlLoading || !urlInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
+                    style={{ padding: "10px 16px", background: urlLoading || !urlInput.trim() ? "#475569" : "#c9a84c", color: urlLoading || !urlInput.trim() ? "white" : "#0f1b36", border: "none", borderRadius: 12, fontSize: 13, fontWeight: 700, cursor: urlLoading || !urlInput.trim() ? "not-allowed" : "pointer", whiteSpace: "nowrap", transition: "background 0.15s" }}
                   >
                     {urlLoading ? "Fetching…" : "Fetch"}
                   </button>
                 </div>
 
                 {urlError && (
-                  <p style={{ fontSize: 12, color: "#92400e", background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 8, padding: "8px 12px", marginTop: 10, fontWeight: 500 }}>
+                  <p style={{ fontSize: 12, color: "var(--tint-amber-ink)", background: "var(--tint-amber)", border: "1px solid #fde68a", borderRadius: 8, padding: "8px 12px", marginTop: 10, fontWeight: 500 }}>
                     ⚠️ {urlError}
                     {propertyPreview?.listingUrl && (
                       <a href={propertyPreview.listingUrl} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: 4, color: "var(--gold-ink)", fontWeight: 600, textDecoration: "none" }}>
@@ -726,7 +726,7 @@ export default function DealAnalyserPage() {
                 )}
 
                 {propertyPreview?.success && (
-                  <div style={{ marginTop: 14, borderTop: "1px solid #e2e8f0", paddingTop: 12 }}>
+                  <div style={{ marginTop: 14, borderTop: "1px solid var(--hairline)", paddingTop: 12 }}>
                     <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                       {propertyPreview.imageUrl && (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -734,23 +734,23 @@ export default function DealAnalyserPage() {
                       )}
                       <div style={{ flex: 1, minWidth: 0 }}>
                         {propertyPreview.address && (
-                          <p style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36", marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)", marginBottom: 2, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {propertyPreview.address}
                           </p>
                         )}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 4 }}>
                           {propertyPreview.price && (
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#15803d", background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "2px 8px", borderRadius: 6 }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ok-flat)", background: "var(--tint-green)", border: "1px solid #bbf7d0", padding: "2px 8px", borderRadius: 6 }}>
                               £{propertyPreview.price.toLocaleString()}
                             </span>
                           )}
                           {propertyPreview.bedrooms && (
-                            <span style={{ fontSize: 12, fontWeight: 600, color: "#374151", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 8px", borderRadius: 6 }}>
+                            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-muted)", background: "var(--card-surface)", border: "1px solid var(--hairline)", padding: "2px 8px", borderRadius: 6 }}>
                               {propertyPreview.bedrooms} bed
                             </span>
                           )}
                           {propertyPreview.propertyType && (
-                            <span style={{ fontSize: 12, fontWeight: 600, color: "#374151", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 8px", borderRadius: 6, textTransform: "capitalize" }}>
+                            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-muted)", background: "var(--card-surface)", border: "1px solid var(--hairline)", padding: "2px 8px", borderRadius: 6, textTransform: "capitalize" }}>
                               {propertyPreview.propertyType}
                             </span>
                           )}
@@ -763,11 +763,11 @@ export default function DealAnalyserPage() {
                     {propertyPreview.keyFeatures && propertyPreview.keyFeatures.length > 0 && (
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 10 }}>
                         {propertyPreview.keyFeatures.map((f, i) => (
-                          <span key={i} style={{ fontSize: 10, color: "#475569", background: "#f8f9fc", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>{f}</span>
+                          <span key={i} style={{ fontSize: 10, color: "var(--ink-muted)", background: "var(--card-surface)", border: "1px solid var(--hairline)", padding: "2px 7px", borderRadius: 6 }}>{f}</span>
                         ))}
                       </div>
                     )}
-                    <p style={{ fontSize: 11, color: "#15803d", fontWeight: 600, marginTop: 8 }}>
+                    <p style={{ fontSize: 11, color: "var(--ok-flat)", fontWeight: 600, marginTop: 8 }}>
                       ✓ Price auto-filled · postcode area data loaded
                     </p>
                   </div>
@@ -780,13 +780,13 @@ export default function DealAnalyserPage() {
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 6 }}>
                   {(Object.entries(STRATEGY_META) as [Strategy, typeof STRATEGY_META[Strategy]][]).map(([key, meta]) => (
                     <button key={key} onClick={() => handleStrategyChange(key)}
-                      style={{ padding: "8px 4px", borderRadius: 10, border: strategy === key ? "2px solid #c9a84c" : "1.5px solid #e2e8f0", background: strategy === key ? "#fefce8" : "white", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
+                      style={{ padding: "8px 4px", borderRadius: 10, border: strategy === key ? "2px solid #c9a84c" : "1.5px solid var(--hairline)", background: strategy === key ? "var(--tint-amber)" : "var(--page-surface)", cursor: "pointer", textAlign: "center", transition: "all 0.15s" }}>
                       <div style={{ fontSize: 18 }}>{meta.icon}</div>
-                      <div style={{ fontSize: 10, fontWeight: 700, color: strategy === key ? "#92400e" : "#475569", marginTop: 3, lineHeight: 1.2 }}>{meta.label}</div>
+                      <div style={{ fontSize: 10, fontWeight: 700, color: strategy === key ? "var(--tint-amber-ink)" : "var(--ink-muted)", marginTop: 3, lineHeight: 1.2 }}>{meta.label}</div>
                     </button>
                   ))}
                 </div>
-                <p style={{ fontSize: 11, color: "#475569", marginTop: 8 }}>{STRATEGY_META[strategy].desc}</p>
+                <p style={{ fontSize: 11, color: "var(--ink-muted)", marginTop: 8 }}>{STRATEGY_META[strategy].desc}</p>
               </div>
 
               {/* Postcode lookup */}
@@ -801,7 +801,7 @@ export default function DealAnalyserPage() {
                     onKeyDown={e => e.key === "Enter" && lookupPostcode()}
                     placeholder="e.g. NG1 1AA"
                     maxLength={8}
-                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 14, fontWeight: 600, outline: "none", textTransform: "uppercase", letterSpacing: "0.04em" }}
+                    style={{ flex: 1, padding: "10px 14px", border: "1.5px solid var(--hairline)", borderRadius: 12, fontSize: 14, fontWeight: 600, outline: "none", textTransform: "uppercase", letterSpacing: "0.04em" }}
                   />
                   <button
                     onClick={lookupPostcode}
@@ -812,18 +812,18 @@ export default function DealAnalyserPage() {
                   </button>
                 </div>
                 {postcodeError && (
-                  <p style={{ fontSize: 12, color: "#b91c1c", marginTop: 8, fontWeight: 500 }}>⚠️ {postcodeError}</p>
+                  <p style={{ fontSize: 12, color: "var(--danger)", marginTop: 8, fontWeight: 500 }}>⚠️ {postcodeError}</p>
                 )}
 
                 {/* Area Intelligence results */}
                 {areaData && (
-                  <div style={{ marginTop: 16, borderTop: "1px solid #e2e8f0", paddingTop: 14 }}>
+                  <div style={{ marginTop: 16, borderTop: "1px solid var(--hairline)", paddingTop: 14 }}>
                     {/* Area header */}
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                       <div>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: "#0f1b36" }}>{areaData.postcode}</p>
-                        <p style={{ fontSize: 12, color: "#475569" }}>{[areaData.district, areaData.county, areaData.region].filter(Boolean).join(" · ")}</p>
-                        <p style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>{areaData.ward} ward · {areaData.constituency}</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: "var(--ink)" }}>{areaData.postcode}</p>
+                        <p style={{ fontSize: 12, color: "var(--ink-muted)" }}>{[areaData.district, areaData.county, areaData.region].filter(Boolean).join(" · ")}</p>
+                        <p style={{ fontSize: 11, color: "var(--ink-muted)", marginTop: 2 }}>{areaData.ward} ward · {areaData.constituency}</p>
                       </div>
                       <a
                         href={`https://www.google.com/maps?q=${areaData.lat},${areaData.lng}`}
@@ -837,62 +837,62 @@ export default function DealAnalyserPage() {
                     </div>
 
                     {/* Crime */}
-                    <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0", marginBottom: 10 }}>
+                    <div style={{ padding: "10px 12px", borderRadius: 10, background: "var(--card-surface)", border: "1.5px solid var(--hairline)", marginBottom: 10 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                        <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🚨 Crime ({areaData.crime.month})</span>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-muted)" }}>🚨 Crime ({areaData.crime.month})</span>
                         <span style={{ fontSize: 13, fontWeight: 800, color: areaData.crime.color }}>{areaData.crime.level} — {areaData.crime.total} incidents</span>
                       </div>
                       {areaData.crime.topCategories.length > 0 && (
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 8px" }}>
                           {areaData.crime.topCategories.map(c => (
-                            <span key={c.label} style={{ fontSize: 10, color: "#475569", background: "white", border: "1px solid #e2e8f0", padding: "2px 7px", borderRadius: 6 }}>
+                            <span key={c.label} style={{ fontSize: 10, color: "var(--ink-muted)", background: "var(--page-surface)", border: "1px solid var(--hairline)", padding: "2px 7px", borderRadius: 6 }}>
                               {c.label} ({c.count})
                             </span>
                           ))}
                         </div>
                       )}
-                      <p style={{ fontSize: 10, color: "#475569", marginTop: 4 }}>Source: data.police.uk — crimes within ~1 mile</p>
+                      <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 4 }}>Source: data.police.uk — crimes within ~1 mile</p>
                     </div>
 
                     {/* Recent sold prices */}
                     {areaData.sales.recent.length > 0 ? (
-                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "var(--card-surface)", border: "1.5px solid var(--hairline)" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏠 Recent Sold Prices</span>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-muted)" }}>🏠 Recent Sold Prices</span>
                           {areaData.sales.avgPrice > 0 && (
-                            <span style={{ fontSize: 12, fontWeight: 700, color: "#0f1b36" }}>Avg: <strong style={{ color: "var(--gold-ink)" }}>£{areaData.sales.avgPrice.toLocaleString()}</strong></span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink)" }}>Avg: <strong style={{ color: "var(--gold-ink)" }}>£{areaData.sales.avgPrice.toLocaleString()}</strong></span>
                           )}
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                           {areaData.sales.recent.slice(0, 5).map((s, i) => (
-                            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: i < 4 ? "1px solid #e2e8f0" : "none" }}>
+                            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: i < 4 ? "1px solid var(--hairline)" : "none" }}>
                               <div>
-                                <p style={{ fontSize: 11, fontWeight: 600, color: "#374151" }}>{s.address || s.type}</p>
-                                <p style={{ fontSize: 10, color: "#475569" }}>{s.type} · {s.tenure} {s.newBuild ? "· New Build" : ""} · {s.date.slice(0, 7)}</p>
+                                <p style={{ fontSize: 11, fontWeight: 600, color: "var(--ink-muted)" }}>{s.address || s.type}</p>
+                                <p style={{ fontSize: 10, color: "var(--ink-muted)" }}>{s.type} · {s.tenure} {s.newBuild ? "· New Build" : ""} · {s.date.slice(0, 7)}</p>
                               </div>
-                              <span style={{ fontSize: 13, fontWeight: 800, color: "#0f1b36", flexShrink: 0, marginLeft: 8 }}>
+                              <span style={{ fontSize: 13, fontWeight: 800, color: "var(--ink)", flexShrink: 0, marginLeft: 8 }}>
                                 £{s.price.toLocaleString()}
                               </span>
                             </div>
                           ))}
                         </div>
-                        <p style={{ fontSize: 10, color: "#475569", marginTop: 6 }}>Source: HM Land Registry Price Paid Data</p>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 6 }}>Source: HM Land Registry Price Paid Data</p>
                       </div>
                     ) : (
-                      <p style={{ fontSize: 12, color: "#475569", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
+                      <p style={{ fontSize: 12, color: "var(--ink-muted)", textAlign: "center", padding: "8px 0" }}>No recent sold prices found for this postcode — try a nearby postcode.</p>
                     )}
 
                     {/* Rental Market */}
                     {areaData.rental && (
-                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#f8f9fc", border: "1.5px solid #e2e8f0", marginTop: 10 }}>
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "var(--card-surface)", border: "1.5px solid var(--hairline)", marginTop: 10 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "#374151" }}>🏘️ Rental Market ({areaData.region})</span>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-muted)" }}>🏘️ Rental Market ({areaData.region})</span>
                           {/* A demand rating and a "+4.8% YoY" trend used to sit
                               here. Both were hardcoded regional constants with no
                               source, shown in traffic-light colours next to a
                               specific postcode — a guess wearing the clothes of a
                               measurement. What replaces them is what is true. */}
-                          <span style={{ fontSize: 10, fontWeight: 600, color: "#475569" }}>Regional average</span>
+                          <span style={{ fontSize: 10, fontWeight: 600, color: "var(--ink-muted)" }}>Regional average</span>
                         </div>
                         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 4, marginBottom: 8 }}>
                           {[
@@ -902,25 +902,25 @@ export default function DealAnalyserPage() {
                             { label: "3 Bed", val: areaData.rental.threeBed },
                             { label: "4 Bed+", val: areaData.rental.fourBed },
                           ].map(r => (
-                            <div key={r.label} style={{ background: "white", border: "1px solid #e2e8f0", borderRadius: 7, padding: "5px 4px", textAlign: "center" }}>
-                              <div style={{ fontSize: 9, color: "#475569", fontWeight: 600 }}>{r.label}</div>
-                              <div style={{ fontSize: 11, fontWeight: 800, color: "#0f1b36" }}>£{r.val.toLocaleString()}</div>
-                              <div style={{ fontSize: 9, color: "#475569" }}>/mo</div>
+                            <div key={r.label} style={{ background: "var(--page-surface)", border: "1px solid var(--hairline)", borderRadius: 7, padding: "5px 4px", textAlign: "center" }}>
+                              <div style={{ fontSize: 9, color: "var(--ink-muted)", fontWeight: 600 }}>{r.label}</div>
+                              <div style={{ fontSize: 11, fontWeight: 800, color: "var(--ink)" }}>£{r.val.toLocaleString()}</div>
+                              <div style={{ fontSize: 9, color: "var(--ink-muted)" }}>/mo</div>
                             </div>
                           ))}
                         </div>
                         {areaData.rental.yieldRangeLow && areaData.rental.yieldRangeHigh && (
-                          <p style={{ fontSize: 10, color: "#475569" }}>
+                          <p style={{ fontSize: 10, color: "var(--ink-muted)" }}>
                             Estimated gross yield: <strong style={{ color: "var(--gold-ink)" }}>{areaData.rental.yieldRangeLow}–{areaData.rental.yieldRangeHigh}%</strong> — regional rent against this postcode&apos;s sold prices, so treat it as a guide
                           </p>
                         )}
-                        <p style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>{areaData.rental.basis}</p>
-                        <p style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 3 }}>{areaData.rental.basis}</p>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 3 }}>Source: ONS Private Rental Market Statistics 2024 — regional medians</p>
                       </div>
                     )}
 
                     {areaData.suggestedCity && (
-                      <p style={{ fontSize: 11, color: "#475569", marginTop: 8 }}>
+                      <p style={{ fontSize: 11, color: "var(--ink-muted)", marginTop: 8 }}>
                         📊 Benchmark auto-set to <strong>{BENCHMARKS[areaData.suggestedCity]?.name}</strong> based on region.
                       </p>
                     )}
@@ -958,7 +958,7 @@ export default function DealAnalyserPage() {
                   )}
                 </div>
                 {strategy === "btl" && (
-                  <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #e2e8f0" }}>
+                  <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid var(--hairline)" }}>
                     <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
                       <input type="checkbox" checked={guaranteedRent} onChange={e => setGuaranteedRent(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#c9a84c" }} />
                       <span className="text-sm font-semibold text-navy-700">Guaranteed Rent (via PropertyVault)</span>
@@ -969,7 +969,7 @@ export default function DealAnalyserPage() {
                           <span className="block text-xs text-navy-500 mb-1">Guaranteed % of market rent: {guaranteedRentPct}%</span>
                           <input type="range" min={80} max={95} step={1} value={guaranteedRentPct} onChange={e => setGuaranteedRentPct(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
                         </label>
-                        <p style={{ fontSize: 11, color: "#475569", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
+                        <p style={{ fontSize: 11, color: "var(--ink-muted)", marginTop: 4 }}>Guaranteed: <strong style={{ color: "var(--gold-ink)" }}>{fmt(monthlyRent * guaranteedRentPct / 100)}/mo</strong> — no voids, no management fees</p>
                       </div>
                     )}
                   </div>
@@ -1039,7 +1039,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Utilities £/mo</span><input type="number" min="0" value={hmoUtilities} onChange={e => setHmoUtilities(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Licence £/yr</span><input type="number" min="0" value={hmoLicenceCost} onChange={e => setHmoLicenceCost(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
-                    <p style={{ fontSize: 11, color: "#475569" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
+                    <p style={{ fontSize: 11, color: "var(--ink-muted)" }}>Gross income: <strong style={{ color: "var(--gold-ink)" }}>{fmt(hmoRooms * hmoRentPerRoom)}/mo</strong></p>
                   </div>
                 </div>
               )}
@@ -1096,7 +1096,7 @@ export default function DealAnalyserPage() {
                       <label className="block"><span className="block text-xs text-navy-500 mb-1">Avg Stay (nights)</span><input type="number" min="0" value={saAvgStayNights} onChange={e => setSaAvgStayNights(nonNegative(e.target.value))} className="w-full px-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></label>
                     </div>
                     <label className="block"><span className="block text-xs text-navy-500 mb-1">Running Costs £/mo (linen, toiletries, etc.)</span><div className="relative"><span className="absolute left-3 top-1/2 -translate-y-1/2 text-navy-400 text-sm">£</span><input type="number" min="0" value={saRunningCosts} onChange={e => setSaRunningCosts(nonNegative(e.target.value))} className="w-full pl-7 pr-3 py-2.5 border border-navy-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold-400" /></div></label>
-                    <p style={{ fontSize: 11, color: "#475569" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
+                    <p style={{ fontSize: 11, color: "var(--ink-muted)" }}>Projected revenue: <strong style={{ color: "var(--gold-ink)" }}>{fmt(saCalc.grossRevenue)}/yr</strong> ({saCalc.occupiedNights} nights)</p>
                   </div>
                 </div>
               )}
@@ -1170,7 +1170,7 @@ export default function DealAnalyserPage() {
               <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
                 {availableTabs.map(tab => (
                   <button key={tab.id} onClick={() => setActiveSection(tab.id)}
-                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeSection === tab.id ? "none" : "1.5px solid #e2e8f0", background: activeSection === tab.id ? "#0f1b36" : "white", color: activeSection === tab.id ? "white" : "#475569", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
+                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeSection === tab.id ? "none" : "1.5px solid var(--hairline)", background: activeSection === tab.id ? "#0f1b36" : "var(--page-surface)", color: activeSection === tab.id ? "white" : "var(--ink-muted)", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
                     {tab.label}
                   </button>
                 ))}
@@ -1282,27 +1282,27 @@ export default function DealAnalyserPage() {
                     <div className="bg-white rounded-2xl border border-navy-100 p-5">
                       <h3 className="font-bold text-navy-800 text-sm mb-3">🛡️ Guaranteed Rent vs Self-Managed</h3>
                       <div className="grid grid-cols-2 gap-3">
-                        <div style={{ padding: "14px", borderRadius: 12, background: "#f8f9fc", border: "1.5px solid #e2e8f0" }}>
-                          <p style={{ fontSize: 11, color: "#475569", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
-                          <p style={{ fontSize: 20, fontWeight: 800, color: calc.monthlyCF >= 0 ? "#0f1b36" : "#dc2626" }}>{fmt(calc.monthlyCF)}/mo</p>
-                          <div style={{ marginTop: 8, fontSize: 11, color: "#475569" }}>
+                        <div style={{ padding: "14px", borderRadius: 12, background: "var(--card-surface)", border: "1.5px solid var(--hairline)" }}>
+                          <p style={{ fontSize: 11, color: "var(--ink-muted)", marginBottom: 6, fontWeight: 600 }}>SELF-MANAGED</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: calc.monthlyCF >= 0 ? "var(--ink)" : "var(--danger)" }}>{fmt(calc.monthlyCF)}/mo</p>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "var(--ink-muted)" }}>
                             <div>Rent: {fmt(monthlyRent)}/mo</div>
                             <div>Voids: ~{voidWeeks} wks/yr</div>
                             <div>Mgmt: {managementPct}%</div>
                           </div>
                         </div>
-                        <div style={{ padding: "14px", borderRadius: 12, background: "#f0fdf4", border: "1.5px solid #bbf7d0" }}>
-                          <p style={{ fontSize: 11, color: "#15803d", marginBottom: 6, fontWeight: 700 }}>GUARANTEED RENT</p>
-                          <p style={{ fontSize: 20, fontWeight: 800, color: grCalc.grMonthlyCF >= 0 ? "#15803d" : "#dc2626" }}>{fmt(grCalc.grMonthlyCF)}/mo</p>
-                          <div style={{ marginTop: 8, fontSize: 11, color: "#475569" }}>
+                        <div style={{ padding: "14px", borderRadius: 12, background: "var(--tint-green)", border: "1.5px solid #bbf7d0" }}>
+                          <p style={{ fontSize: 11, color: "var(--ok-flat)", marginBottom: 6, fontWeight: 700 }}>GUARANTEED RENT</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: grCalc.grMonthlyCF >= 0 ? "var(--ok-flat)" : "var(--danger)" }}>{fmt(grCalc.grMonthlyCF)}/mo</p>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "var(--ink-muted)" }}>
                             <div>Rent: {fmt(grCalc.grMonthly)}/mo ({guaranteedRentPct}%)</div>
-                            <div>Voids: <strong style={{ color: "#15803d" }}>0 weeks</strong></div>
-                            <div>Mgmt: <strong style={{ color: "#15803d" }}>0%</strong></div>
+                            <div>Voids: <strong style={{ color: "var(--ok-flat)" }}>0 weeks</strong></div>
+                            <div>Mgmt: <strong style={{ color: "var(--ok-flat)" }}>0%</strong></div>
                           </div>
                         </div>
                       </div>
-                      <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: grCalc.saving >= 0 ? "#eff6ff" : "#fffbeb", border: `1px solid ${grCalc.saving >= 0 ? "#bfdbfe" : "#fde68a"}` }}>
-                        <p style={{ fontSize: 13, fontWeight: 600, color: grCalc.saving >= 0 ? "#1d4ed8" : "#92400e" }}>
+                      <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: 10, background: grCalc.saving >= 0 ? "var(--tint-blue)" : "var(--tint-amber)", border: `1px solid ${grCalc.saving >= 0 ? "#bfdbfe" : "#fde68a"}` }}>
+                        <p style={{ fontSize: 13, fontWeight: 600, color: grCalc.saving >= 0 ? "var(--tint-blue-ink)" : "var(--tint-amber-ink)" }}>
                           {grCalc.saving >= 0
                             ? `💡 Guaranteed rent gives you ${fmt(grCalc.saving)}/mo more certainty — no void risk, no agent hassle.`
                             : `⚠️ Self-managing earns ${fmt(-grCalc.saving)}/mo more if fully let. Guaranteed rent trades income for peace of mind.`}
@@ -1321,9 +1321,9 @@ export default function DealAnalyserPage() {
                     </h3>
                     <div className="space-y-2">
                       {insights.map((ins, i) => (
-                        <div key={i} style={{ display: "flex", gap: 10, padding: "10px 12px", borderRadius: 10, background: ins.type === "success" ? "#f0fdf4" : ins.type === "warn" ? "#fffbeb" : ins.type === "error" ? "#fef2f2" : "#eff6ff", border: `1px solid ${ins.type === "success" ? "#bbf7d0" : ins.type === "warn" ? "#fde68a" : ins.type === "error" ? "#fecaca" : "#bfdbfe"}` }}>
+                        <div key={i} style={{ display: "flex", gap: 10, padding: "10px 12px", borderRadius: 10, background: ins.type === "success" ? "var(--tint-green)" : ins.type === "warn" ? "var(--tint-amber)" : ins.type === "error" ? "var(--tint-red)" : "var(--tint-blue)", border: `1px solid ${ins.type === "success" ? "#bbf7d0" : ins.type === "warn" ? "#fde68a" : ins.type === "error" ? "#fecaca" : "#bfdbfe"}` }}>
                           <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{ins.type === "success" ? "✅" : ins.type === "warn" ? "⚠️" : ins.type === "error" ? "❌" : "💡"}</span>
-                          <p style={{ fontSize: 13, lineHeight: 1.5, color: "#374151" }}>{ins.text}</p>
+                          <p style={{ fontSize: 13, lineHeight: 1.5, color: "var(--ink-muted)" }}>{ins.text}</p>
                         </div>
                       ))}
                     </div>
@@ -1335,7 +1335,7 @@ export default function DealAnalyserPage() {
                       <h3 className="font-bold text-navy-800 text-sm flex items-center gap-2">
                         <span>🤖</span> AI Deal Verdict
                       </h3>
-                      <span style={{ fontSize: 10, fontWeight: 700, color: "#92400e", background: "#fef3c7", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, color: "var(--tint-amber-ink)", background: "var(--tint-amber)", border: "1px solid #fde68a", padding: "1px 7px", borderRadius: 20 }}>NEW</span>
                     </div>
                     <p className="text-xs text-navy-400 mb-4">Claude analyses your deal metrics and gives a buy / negotiate / pass verdict with red flags and negotiation tips.</p>
 
@@ -1355,36 +1355,36 @@ export default function DealAnalyserPage() {
                     )}
 
                     {aiVerdictError && (
-                      <p style={{ fontSize: 12, color: "#b91c1c", background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>⚠️ {aiVerdictError}</p>
+                      <p style={{ fontSize: 12, color: "var(--danger)", background: "var(--tint-red)", border: "1px solid #fecaca", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>⚠️ {aiVerdictError}</p>
                     )}
 
                     {aiVerdict && (
                       <div>
                         {/* Verdict badge */}
-                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: aiVerdict.verdict === "Buy" ? "#f0fdf4" : aiVerdict.verdict === "Negotiate" ? "#fffbeb" : "#fef2f2", border: `2px solid ${aiVerdict.verdict === "Buy" ? "#86efac" : aiVerdict.verdict === "Negotiate" ? "#fde68a" : "#fecaca"}` }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14, padding: "12px 16px", borderRadius: 12, background: aiVerdict.verdict === "Buy" ? "var(--tint-green)" : aiVerdict.verdict === "Negotiate" ? "var(--tint-amber)" : "var(--tint-red)", border: `2px solid ${aiVerdict.verdict === "Buy" ? "#86efac" : aiVerdict.verdict === "Negotiate" ? "#fde68a" : "#fecaca"}` }}>
                           <span style={{ fontSize: 28 }}>{aiVerdict.verdict === "Buy" ? "✅" : aiVerdict.verdict === "Negotiate" ? "🤝" : "❌"}</span>
                           <div>
-                            <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "#15803d" : aiVerdict.verdict === "Negotiate" ? "#92400e" : "#dc2626", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
-                            <p style={{ fontSize: 11, color: "#475569", fontWeight: 600 }}>AI-assisted analysis · not financial advice</p>
+                            <p style={{ fontSize: 20, fontWeight: 900, color: aiVerdict.verdict === "Buy" ? "var(--ok-flat)" : aiVerdict.verdict === "Negotiate" ? "var(--tint-amber-ink)" : "var(--danger)", lineHeight: 1.1 }}>{aiVerdict.verdict}</p>
+                            <p style={{ fontSize: 11, color: "var(--ink-muted)", fontWeight: 600 }}>AI-assisted analysis · not financial advice</p>
                           </div>
                         </div>
 
-                        <p style={{ fontSize: 11, lineHeight: 1.5, color: "#475569", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 11px", marginBottom: 14 }}>
+                        <p style={{ fontSize: 11, lineHeight: 1.5, color: "var(--ink-muted)", background: "var(--card-surface)", border: "1px solid var(--hairline)", borderRadius: 8, padding: "8px 11px", marginBottom: 14 }}>
                           This is an automated reading of the figures you entered, not a personal recommendation.
                           PropertyVault UK is not authorised or regulated by the FCA. Check the numbers yourself and
                           speak to a qualified professional before committing to a purchase.
                         </p>
 
                         {/* Summary */}
-                        <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.6, marginBottom: 14, fontStyle: "italic" }}>&ldquo;{aiVerdict.summary}&rdquo;</p>
+                        <p style={{ fontSize: 13, color: "var(--ink-muted)", lineHeight: 1.6, marginBottom: 14, fontStyle: "italic" }}>&ldquo;{aiVerdict.summary}&rdquo;</p>
 
                         {/* Green flags */}
                         {aiVerdict.greenFlags?.length > 0 && (
                           <div style={{ marginBottom: 12 }}>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#15803d", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>✅ Green flags</p>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "var(--ok-flat)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>✅ Green flags</p>
                             <div className="space-y-1.5">
                               {aiVerdict.greenFlags.map((f, i) => (
-                                <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#f0fdf4", borderRadius: 8, border: "1px solid #bbf7d0" }}>{f}</div>
+                                <div key={i} style={{ fontSize: 13, color: "var(--ink-muted)", padding: "7px 10px", background: "var(--tint-green)", borderRadius: 8, border: "1px solid #bbf7d0" }}>{f}</div>
                               ))}
                             </div>
                           </div>
@@ -1393,10 +1393,10 @@ export default function DealAnalyserPage() {
                         {/* Red flags */}
                         {aiVerdict.redFlags?.length > 0 && (
                           <div style={{ marginBottom: 12 }}>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#b91c1c", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>⚠️ Red flags</p>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "var(--danger)", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>⚠️ Red flags</p>
                             <div className="space-y-1.5">
                               {aiVerdict.redFlags.map((f, i) => (
-                                <div key={i} style={{ fontSize: 13, color: "#374151", padding: "7px 10px", background: "#fef2f2", borderRadius: 8, border: "1px solid #fecaca" }}>{f}</div>
+                                <div key={i} style={{ fontSize: 13, color: "var(--ink-muted)", padding: "7px 10px", background: "var(--tint-red)", borderRadius: 8, border: "1px solid #fecaca" }}>{f}</div>
                               ))}
                             </div>
                           </div>
@@ -1404,22 +1404,22 @@ export default function DealAnalyserPage() {
 
                         {/* Negotiation tip */}
                         {aiVerdict.negotiationTip && (
-                          <div style={{ marginBottom: 12, padding: "10px 12px", background: "#eff6ff", borderRadius: 10, border: "1px solid #bfdbfe" }}>
-                            <p style={{ fontSize: 11, fontWeight: 700, color: "#1d4ed8", marginBottom: 4 }}>💡 NEGOTIATION TIP</p>
-                            <p style={{ fontSize: 13, color: "#374151" }}>{aiVerdict.negotiationTip}</p>
+                          <div style={{ marginBottom: 12, padding: "10px 12px", background: "var(--tint-blue)", borderRadius: 10, border: "1px solid #bfdbfe" }}>
+                            <p style={{ fontSize: 11, fontWeight: 700, color: "var(--tint-blue-ink)", marginBottom: 4 }}>💡 NEGOTIATION TIP</p>
+                            <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{aiVerdict.negotiationTip}</p>
                           </div>
                         )}
 
                         {/* Key insight */}
                         {aiVerdict.keyInsight && (
-                          <div style={{ padding: "10px 12px", background: "#f8f9fc", borderRadius: 10, border: "1px solid #e2e8f0" }}>
-                            <p style={{ fontSize: 13, color: "#0f1b36", fontWeight: 600, lineHeight: 1.5 }}>🔑 {aiVerdict.keyInsight}</p>
+                          <div style={{ padding: "10px 12px", background: "var(--card-surface)", borderRadius: 10, border: "1px solid var(--hairline)" }}>
+                            <p style={{ fontSize: 13, color: "var(--ink)", fontWeight: 600, lineHeight: 1.5 }}>🔑 {aiVerdict.keyInsight}</p>
                           </div>
                         )}
 
                         <button
                           onClick={() => { setAiVerdict(null); setAiVerdictError(""); }}
-                          style={{ marginTop: 12, fontSize: 12, color: "#475569", background: "none", border: "none", cursor: "pointer", padding: 0 }}
+                          style={{ marginTop: 12, fontSize: 12, color: "var(--ink-muted)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
                         >
                           Re-analyse →
                         </button>
@@ -1435,22 +1435,22 @@ export default function DealAnalyserPage() {
                         { label: "Your Gross Yield", yours: calc.grossYield, avg: BENCHMARKS[cityBenchmark].gross },
                         { label: "Your Net Yield",   yours: calc.netYield,   avg: BENCHMARKS[cityBenchmark].net },
                       ].map(b => (
-                        <div key={b.label} style={{ padding: "12px 14px", borderRadius: 12, background: "#f8f9fc", border: "1px solid #e2e8f0" }}>
-                          <p style={{ fontSize: 11, color: "#475569", marginBottom: 6 }}>{b.label}</p>
+                        <div key={b.label} style={{ padding: "12px 14px", borderRadius: 12, background: "var(--card-surface)", border: "1px solid var(--hairline)" }}>
+                          <p style={{ fontSize: 11, color: "var(--ink-muted)", marginBottom: 6 }}>{b.label}</p>
                           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 8 }}>
-                            <span style={{ fontSize: 20, fontWeight: 800, color: b.yours >= b.avg ? "#15803d" : "#dc2626" }}>{b.yours.toFixed(1)}%</span>
-                            <span style={{ fontSize: 12, color: "#475569" }}>vs {b.avg}% reference</span>
+                            <span style={{ fontSize: 20, fontWeight: 800, color: b.yours >= b.avg ? "var(--ok-flat)" : "var(--danger)" }}>{b.yours.toFixed(1)}%</span>
+                            <span style={{ fontSize: 12, color: "var(--ink-muted)" }}>vs {b.avg}% reference</span>
                           </div>
-                          <div style={{ height: 6, borderRadius: 4, background: "#e2e8f0", overflow: "hidden" }}>
-                            <div style={{ height: "100%", width: `${Math.min(100, (b.yours / (b.avg * 2)) * 100)}%`, background: b.yours >= b.avg ? "#15803d" : "#f59e0b", borderRadius: 4, transition: "width 0.4s" }} />
+                          <div style={{ height: 6, borderRadius: 4, background: "var(--hairline)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${Math.min(100, (b.yours / (b.avg * 2)) * 100)}%`, background: b.yours >= b.avg ? "#16a34a" : "#f59e0b", borderRadius: 4, transition: "width 0.4s" }} />
                           </div>
-                          <p style={{ fontSize: 10, color: b.yours >= b.avg ? "#15803d" : "#dc2626", marginTop: 4, fontWeight: 600 }}>
+                          <p style={{ fontSize: 10, color: b.yours >= b.avg ? "var(--ok-flat)" : "var(--danger)", marginTop: 4, fontWeight: 600 }}>
                             {b.yours >= b.avg ? `▲ ${(b.yours - b.avg).toFixed(1)}% above` : `▼ ${(b.avg - b.yours).toFixed(1)}% below`} this reference
                           </p>
                         </div>
                       ))}
                     </div>
-                    <p style={{ fontSize: 10, color: "#475569", marginTop: 8 }}>
+                    <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 8 }}>
                       Reference yields are our own figures for a typical deal in each city. They are not
                       a measured market average — for sold evidence on a specific postcode, use the area
                       lookup above.
@@ -1546,53 +1546,53 @@ export default function DealAnalyserPage() {
                     ].map(s => {
                       const pct = stressCalc.baseline !== 0 ? ((s.value - stressCalc.baseline) / Math.abs(stressCalc.baseline)) * 100 : 0;
                       return (
-                        <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 12, background: s.value < 0 ? "#fef2f2" : s.value < 100 ? "#fffbeb" : "#f0fdf4", border: `1px solid ${s.value < 0 ? "#fecaca" : s.value < 100 ? "#fde68a" : "#bbf7d0"}` }}>
+                        <div key={s.label} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 12, background: s.value < 0 ? "var(--tint-red)" : s.value < 100 ? "var(--tint-amber)" : "var(--tint-green)", border: `1px solid ${s.value < 0 ? "#fecaca" : s.value < 100 ? "#fde68a" : "#bbf7d0"}` }}>
                           <span style={{ fontSize: 18, flexShrink: 0 }}>{s.icon}</span>
                           <div style={{ flex: 1 }}>
-                            <p style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>{s.label}</p>
-                            {s.label !== "Current (baseline)" && <p style={{ fontSize: 11, color: "#475569" }}>{pct >= 0 ? `+${pct.toFixed(0)}%` : `${pct.toFixed(0)}%`} vs baseline</p>}
+                            <p style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-muted)" }}>{s.label}</p>
+                            {s.label !== "Current (baseline)" && <p style={{ fontSize: 11, color: "var(--ink-muted)" }}>{pct >= 0 ? `+${pct.toFixed(0)}%` : `${pct.toFixed(0)}%`} vs baseline</p>}
                           </div>
-                          <span style={{ fontSize: 16, fontWeight: 800, color: s.value >= 200 ? "#15803d" : s.value >= 0 ? "#d97706" : "#dc2626", fontFamily: "monospace" }}>
+                          <span style={{ fontSize: 16, fontWeight: 800, color: s.value >= 200 ? "var(--ok-flat)" : s.value >= 0 ? "var(--tint-amber-ink)" : "var(--danger)", fontFamily: "monospace" }}>
                             {fmt(s.value)}/mo
                           </span>
                         </div>
                       );
                     })}
                   </div>
-                  <div style={{ padding: "12px 14px", borderRadius: 12, background: "#f8f9fc", border: "1px solid #e2e8f0" }}>
+                  <div style={{ padding: "12px 14px", borderRadius: 12, background: "var(--card-surface)", border: "1px solid var(--hairline)" }}>
                     <p className="text-xs font-bold text-navy-800 mb-1">Break-even rent</p>
                     <p className="text-2xl font-extrabold text-navy-800">{fmt((calc.totalExpenses / 12) + 1)}<span className="text-sm font-normal text-navy-400">/mo</span></p>
                     <p className="text-xs text-navy-400">Minimum rent to avoid negative cash flow</p>
                   </div>
 
                   {/* ICR Lender Stress Test */}
-                  <div style={{ padding: "16px", borderRadius: 14, border: "1.5px solid #e2e8f0", background: "white" }}>
+                  <div style={{ padding: "16px", borderRadius: 14, border: "1.5px solid var(--hairline)", background: "var(--page-surface)" }}>
                     <h3 className="font-bold text-navy-800 text-sm mb-1">🏦 Lender ICR Stress Test</h3>
                     <p className="text-xs text-navy-400 mb-3">Interest Coverage Ratio — lenders require rent to cover mortgage by 125% (basic rate) or 145% (higher rate / company).</p>
                     <div className="grid grid-cols-3 gap-3 mb-3">
-                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: "#f8f9fc" }}>
-                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Your ICR</p>
-                        <p style={{ fontSize: 22, fontWeight: 800, color: icrCalc.passes125 ? "#15803d" : "#dc2626" }}>{icrCalc.icr === Infinity ? "∞" : icrCalc.icr.toFixed(2)}x</p>
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: "var(--card-surface)" }}>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginBottom: 4 }}>Your ICR</p>
+                        <p style={{ fontSize: 22, fontWeight: 800, color: icrCalc.passes125 ? "var(--ok-flat)" : "var(--danger)" }}>{icrCalc.icr === Infinity ? "∞" : icrCalc.icr.toFixed(2)}x</p>
                       </div>
-                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes125 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes125 ? "#bbf7d0" : "#fecaca"}` }}>
-                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Basic Rate 1.25x</p>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes125 ? "#15803d" : "#dc2626" }}>{icrCalc.passes125 ? "✓ PASS" : "✗ FAIL"}</p>
-                        <p style={{ fontSize: 10, color: "#475569" }}>Need {fmt(icrCalc.required125)}/mo</p>
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes125 ? "var(--tint-green)" : "var(--tint-red)", border: `1.5px solid ${icrCalc.passes125 ? "#bbf7d0" : "#fecaca"}` }}>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginBottom: 4 }}>Basic Rate 1.25x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes125 ? "var(--ok-flat)" : "var(--danger)" }}>{icrCalc.passes125 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)" }}>Need {fmt(icrCalc.required125)}/mo</p>
                       </div>
-                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes145 ? "#f0fdf4" : "#fef2f2", border: `1.5px solid ${icrCalc.passes145 ? "#bbf7d0" : "#fecaca"}` }}>
-                        <p style={{ fontSize: 10, color: "#475569", marginBottom: 4 }}>Higher Rate 1.45x</p>
-                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes145 ? "#15803d" : "#dc2626" }}>{icrCalc.passes145 ? "✓ PASS" : "✗ FAIL"}</p>
-                        <p style={{ fontSize: 10, color: "#475569" }}>Need {fmt(icrCalc.required145)}/mo</p>
+                      <div style={{ textAlign: "center", padding: "12px", borderRadius: 10, background: icrCalc.passes145 ? "var(--tint-green)" : "var(--tint-red)", border: `1.5px solid ${icrCalc.passes145 ? "#bbf7d0" : "#fecaca"}` }}>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)", marginBottom: 4 }}>Higher Rate 1.45x</p>
+                        <p style={{ fontSize: 16, fontWeight: 800, color: icrCalc.passes145 ? "var(--ok-flat)" : "var(--danger)" }}>{icrCalc.passes145 ? "✓ PASS" : "✗ FAIL"}</p>
+                        <p style={{ fontSize: 10, color: "var(--ink-muted)" }}>Need {fmt(icrCalc.required145)}/mo</p>
                       </div>
                     </div>
                     {!icrCalc.passes125 && (
-                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#fef2f2", border: "1px solid #fecaca" }}>
-                        <p style={{ fontSize: 12, color: "#b91c1c", fontWeight: 600 }}>⚠️ This deal fails lender ICR checks at current rent. You need {fmt(icrCalc.required125 - icrCalc.effectiveRent)}/mo more rent, or a lower mortgage.</p>
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "var(--tint-red)", border: "1px solid #fecaca" }}>
+                        <p style={{ fontSize: 12, color: "var(--danger)", fontWeight: 600 }}>⚠️ This deal fails lender ICR checks at current rent. You need {fmt(icrCalc.required125 - icrCalc.effectiveRent)}/mo more rent, or a lower mortgage.</p>
                       </div>
                     )}
                     {icrCalc.passes125 && !icrCalc.passes145 && (
-                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "#fffbeb", border: "1px solid #fde68a" }}>
-                        <p style={{ fontSize: 12, color: "#92400e", fontWeight: 600 }}>⚠️ Passes basic rate but fails higher rate / company ICR. Increase rent by {fmt(icrCalc.required145 - icrCalc.effectiveRent)}/mo to pass 1.45x.</p>
+                      <div style={{ padding: "10px 12px", borderRadius: 10, background: "var(--tint-amber)", border: "1px solid #fde68a" }}>
+                        <p style={{ fontSize: 12, color: "var(--tint-amber-ink)", fontWeight: 600 }}>⚠️ Passes basic rate but fails higher rate / company ICR. Increase rent by {fmt(icrCalc.required145 - icrCalc.effectiveRent)}/mo to pass 1.45x.</p>
                       </div>
                     )}
                   </div>
@@ -1616,19 +1616,19 @@ export default function DealAnalyserPage() {
                       <thead>
                         <tr>
                           {["Year", "Property Value", "Net Income", "Cumul. Income", "Equity", "Total Gain"].map(h => (
-                            <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid #e2e8f0", color: "#475569", fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>{h}</th>
+                            <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid var(--hairline)", color: "var(--ink-muted)", fontSize: 11, fontWeight: 600, whiteSpace: "nowrap" }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {projection.map((row, i) => (
-                          <tr key={row.yr} style={{ background: i % 2 === 0 ? "#f8f9fc" : "white" }}>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", fontWeight: 700, color: "#0f1b36", textAlign: "right" }}>Yr {row.yr}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.capitalValue)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: calc.netIncome >= 0 ? "#15803d" : "#dc2626" }}>{fmt(calc.netIncome)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.cumulativeIncome)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#374151" }}>{fmt(row.equity)}</td>
-                            <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", fontWeight: 700, color: row.totalWealth >= 0 ? "#15803d" : "#dc2626" }}>{fmt(row.totalWealth)}</td>
+                          <tr key={row.yr} style={{ background: i % 2 === 0 ? "var(--card-surface)" : "var(--page-surface)" }}>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", fontWeight: 700, color: "var(--ink)", textAlign: "right" }}>Yr {row.yr}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", color: "var(--ink-muted)" }}>{fmt(row.capitalValue)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", color: calc.netIncome >= 0 ? "var(--ok-flat)" : "var(--danger)" }}>{fmt(calc.netIncome)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", color: "var(--ink-muted)" }}>{fmt(row.cumulativeIncome)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", color: "var(--ink-muted)" }}>{fmt(row.equity)}</td>
+                            <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", fontWeight: 700, color: row.totalWealth >= 0 ? "var(--ok-flat)" : "var(--danger)" }}>{fmt(row.totalWealth)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -1649,18 +1649,18 @@ export default function DealAnalyserPage() {
                         { label: "Higher rate (40%)", net: taxAnalysis.higherNet, tax: taxAnalysis.higherTax, note: "S24 restricts interest relief — only 20% credit" },
                         { label: "Ltd company (CT)", net: taxAnalysis.companyNet, tax: taxAnalysis.companyTax, note: "Full mortgage interest deductible. CT 19%–25% via marginal relief" },
                       ].map((t, i) => (
-                        <div key={t.label} style={{ padding: "14px 12px", borderRadius: 14, border: "1.5px solid", borderColor: i === 2 ? "#bbf7d0" : i === 1 ? "#fde68a" : "#e2e8f0", background: i === 2 ? "#f0fdf4" : "#f8f9fc", textAlign: "center" }}>
-                          <p style={{ fontSize: 11, fontWeight: 600, color: "#475569", marginBottom: 8 }}>{t.label}</p>
-                          <p style={{ fontSize: 20, fontWeight: 800, color: t.net > 0 ? "#0f1b36" : "#dc2626" }}>{fmt(t.net)}</p>
-                          <p style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>net/yr after tax</p>
-                          <p style={{ fontSize: 12, fontWeight: 600, color: "#b91c1c", marginTop: 6 }}>Tax: {fmt(t.tax)}</p>
-                          <p style={{ fontSize: 10, color: "#475569", marginTop: 6, lineHeight: 1.4 }}>{t.note}</p>
+                        <div key={t.label} style={{ padding: "14px 12px", borderRadius: 14, border: "1.5px solid", borderColor: i === 2 ? "#bbf7d0" : i === 1 ? "#fde68a" : "var(--hairline)", background: i === 2 ? "var(--tint-green)" : "var(--card-surface)", textAlign: "center" }}>
+                          <p style={{ fontSize: 11, fontWeight: 600, color: "var(--ink-muted)", marginBottom: 8 }}>{t.label}</p>
+                          <p style={{ fontSize: 20, fontWeight: 800, color: t.net > 0 ? "var(--ink)" : "var(--danger)" }}>{fmt(t.net)}</p>
+                          <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 2 }}>net/yr after tax</p>
+                          <p style={{ fontSize: 12, fontWeight: 600, color: "var(--danger)", marginTop: 6 }}>Tax: {fmt(t.tax)}</p>
+                          <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 6, lineHeight: 1.4 }}>{t.note}</p>
                         </div>
                       ))}
                     </div>
                     {taxAnalysis.higherNet < taxAnalysis.companyNet && (
-                      <div style={{ marginTop: 16, padding: "12px 14px", borderRadius: 12, background: "#eff6ff", border: "1px solid #bfdbfe" }}>
-                        <p style={{ fontSize: 13, color: "#1d4ed8", fontWeight: 600 }}>
+                      <div style={{ marginTop: 16, padding: "12px 14px", borderRadius: 12, background: "var(--tint-blue)", border: "1px solid #bfdbfe" }}>
+                        <p style={{ fontSize: 13, color: "var(--tint-blue-ink)", fontWeight: 600 }}>
                           💡 As a higher-rate taxpayer, a limited company structure could save you <strong>{fmt(taxAnalysis.companyNet - taxAnalysis.higherNet)}</strong>/year in tax on this property.
                         </p>
                       </div>
@@ -1674,7 +1674,7 @@ export default function DealAnalyserPage() {
                         { label: "Higher rate", value: taxAnalysis.higherNet / 12 },
                         { label: "Ltd company", value: taxAnalysis.companyNet / 12 },
                       ].map(t => (
-                        <div key={t.label} style={{ padding: "12px", borderRadius: 12, background: "#f8f9fc" }}>
+                        <div key={t.label} style={{ padding: "12px", borderRadius: 12, background: "var(--card-surface)" }}>
                           <p className="text-xs text-navy-400 mb-1">{t.label}</p>
                           <p className={`text-xl font-extrabold ${t.value >= 0 ? "text-navy-800" : "text-red-600"}`}>{fmt(t.value)}/mo</p>
                         </div>
@@ -1713,16 +1713,16 @@ export default function DealAnalyserPage() {
                             { label: "Exit Loan (75% ARV)", value: fmt(bridgingCalc.exitLoan), note: "Refinance amount" },
                             { label: "Cash Released", value: fmt(Math.max(0, bridgingCalc.cashReleased)), note: "Net capital returned", highlight: bridgingCalc.cashReleased > 0 },
                           ].map(s => (
-                            <div key={s.label} style={{ padding: "12px", borderRadius: 10, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
-                              <p style={{ fontSize: 10, color: "#475569", marginBottom: 3 }}>{s.label}</p>
-                              <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "#15803d" : "#0f1b36" }}>{s.value}</p>
-                              <p style={{ fontSize: 10, color: "#475569" }}>{s.note}</p>
+                            <div key={s.label} style={{ padding: "12px", borderRadius: 10, background: s.highlight ? "var(--tint-green)" : "var(--card-surface)", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "var(--hairline)"}` }}>
+                              <p style={{ fontSize: 10, color: "var(--ink-muted)", marginBottom: 3 }}>{s.label}</p>
+                              <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "var(--ok-flat)" : "var(--ink)" }}>{s.value}</p>
+                              <p style={{ fontSize: 10, color: "var(--ink-muted)" }}>{s.note}</p>
                             </div>
                           ))}
                         </div>
                         {bridgingCalc.netCashLeft < 0 && (
-                          <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
-                            <p style={{ fontSize: 13, color: "#15803d", fontWeight: 600 }}>✅ Full BRRR recycle! Cash released ({fmt(bridgingCalc.cashReleased)}) exceeds cash invested ({fmt(bridgingCalc.cashRequired)}) — <strong>infinite ROI</strong> on this deal.</p>
+                          <div style={{ marginTop: 12, padding: "10px 12px", borderRadius: 10, background: "var(--tint-green)", border: "1px solid #bbf7d0" }}>
+                            <p style={{ fontSize: 13, color: "var(--ok-flat)", fontWeight: 600 }}>✅ Full BRRR recycle! Cash released ({fmt(bridgingCalc.cashReleased)}) exceeds cash invested ({fmt(bridgingCalc.cashRequired)}) — <strong>infinite ROI</strong> on this deal.</p>
                           </div>
                         )}
                       </>
@@ -1734,8 +1734,8 @@ export default function DealAnalyserPage() {
                     <h3 className="font-bold text-navy-800 text-sm mb-1">BRRR Refinance Analysis</h3>
                     <p className="text-xs text-navy-400 mb-4">Refinance at 75% LTV on after-refurb value</p>
                     {afterRefurbValue <= purchasePrice + refurbCost ? (
-                      <div style={{ padding: "16px", borderRadius: 12, background: "#fef2f2", border: "1px solid #fecaca", textAlign: "center" }}>
-                        <p style={{ fontSize: 14, color: "#b91c1c", fontWeight: 600 }}>⚠️ No equity gain — ARV must exceed (purchase price + refurb cost) to benefit from BRRR refinance.</p>
+                      <div style={{ padding: "16px", borderRadius: 12, background: "var(--tint-red)", border: "1px solid #fecaca", textAlign: "center" }}>
+                        <p style={{ fontSize: 14, color: "var(--danger)", fontWeight: 600 }}>⚠️ No equity gain — ARV must exceed (purchase price + refurb cost) to benefit from BRRR refinance.</p>
                       </div>
                     ) : (
                       <>
@@ -1748,10 +1748,10 @@ export default function DealAnalyserPage() {
                             { label: "New monthly mtg",    value: fmt2(brrrCalc.newMtg), note: "After refinance" },
                             { label: "New cash flow",      value: `${fmt(brrrCalc.newNetIncome)}/mo`, note: "After new mortgage", highlight: brrrCalc.newNetIncome > 0 },
                           ].map(s => (
-                            <div key={s.label} style={{ padding: "14px 12px", borderRadius: 12, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
-                              <p style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{s.label}</p>
-                              <p style={{ fontSize: 18, fontWeight: 800, color: s.highlight ? "#15803d" : "#0f1b36" }}>{s.value}</p>
-                              <p style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>{s.note}</p>
+                            <div key={s.label} style={{ padding: "14px 12px", borderRadius: 12, background: s.highlight ? "var(--tint-green)" : "var(--card-surface)", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "var(--hairline)"}` }}>
+                              <p style={{ fontSize: 11, color: "var(--ink-muted)", marginBottom: 4 }}>{s.label}</p>
+                              <p style={{ fontSize: 18, fontWeight: 800, color: s.highlight ? "var(--ok-flat)" : "var(--ink)" }}>{s.value}</p>
+                              <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 2 }}>{s.note}</p>
                             </div>
                           ))}
                         </div>
@@ -1770,8 +1770,8 @@ export default function DealAnalyserPage() {
                           </div>
                         </div>
                         {brrrCalc.moneyOut > 0 && (
-                          <div style={{ padding: "12px 14px", borderRadius: 12, background: "#eff6ff", border: "1px solid #bfdbfe" }}>
-                            <p style={{ fontSize: 13, color: "#1d4ed8" }}>💡 BRRR releases <strong>{fmt(brrrCalc.moneyOut)}</strong> of your capital — enough to fund {Math.floor(brrrCalc.moneyOut / calc.totalCashIn * 10) / 10} more deals of the same size.</p>
+                          <div style={{ padding: "12px 14px", borderRadius: 12, background: "var(--tint-blue)", border: "1px solid #bfdbfe" }}>
+                            <p style={{ fontSize: 13, color: "var(--tint-blue-ink)" }}>💡 BRRR releases <strong>{fmt(brrrCalc.moneyOut)}</strong> of your capital — enough to fund {Math.floor(brrrCalc.moneyOut / calc.totalCashIn * 10) / 10} more deals of the same size.</p>
                           </div>
                         )}
                       </>
