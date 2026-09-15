@@ -238,6 +238,9 @@ html.dark [style*="c9a84c"], html.dark [style*="C9A84C"] { color: #0f1b36; }
 html.dark .bg-gold-50 { background-color: #1e1a0e; }
 html.dark .bg-green-50 { background-color: #0a1e12; }
 html.dark .bg-blue-50 { background-color: #0a1224; }
+/* The deep gold used as body ink inside a bg-gold-50 callout (the "best
+   areas" posts) had no dark mapping: #604c16 on the dark gold tint, 2.1:1. */
+html.dark .text-gold-900 { color: #e8c877; }
 
 html.dark p, html.dark span, html.dark li, html.dark td,
 html.dark th, html.dark label, html.dark a {
@@ -298,14 +301,14 @@ html.dark #print-doc .bg-amber-50 { background-color: #fffbeb !important; }
 html.dark #print-doc .text-amber-700 { color: #b45309 !important; }
 
 /* ── Colour badges: readable in dark mode site-wide ── */
-html.dark .bg-green-100 { background-color: #052e16 !important; }
+html.dark .bg-green-100, html.dark .bg-green-200 { background-color: #052e16 !important; }
 html.dark .text-green-800 { color: #86efac !important; }
 html.dark .text-green-700 { color: #4ade80 !important; }
-html.dark .bg-red-100 { background-color: #3b0a0a !important; }
+html.dark .bg-red-100, html.dark .bg-red-200 { background-color: #3b0a0a !important; }
 html.dark .text-red-800 { color: #fca5a5 !important; }
 html.dark .text-red-700 { color: #f87171 !important; }
 html.dark .bg-red-50 { background-color: #2a0a0a !important; }
-html.dark .bg-amber-100 { background-color: #2a1800 !important; }
+html.dark .bg-amber-100, html.dark .bg-amber-200 { background-color: #2a1800 !important; }
 html.dark .text-amber-800 { color: #fcd34d !important; }
 html.dark .text-amber-700 { color: #fbbf24 !important; }
 html.dark .bg-amber-50 { background-color: #1c1400 !important; }

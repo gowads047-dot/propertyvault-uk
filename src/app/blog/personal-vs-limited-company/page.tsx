@@ -91,14 +91,14 @@ export default function PersonalVsLtdArticle() {
         <h2 className="text-xl font-bold text-navy-800 mt-8" style={{ fontFamily: "var(--font-family-heading)" }}>Real Numbers — Higher Rate Taxpayer Example</h2>
         <div className="not-prose bg-navy-50 rounded-xl p-5 text-sm">
           <p className="font-bold text-navy-800 mb-3">£18,000 annual rent · £8,000 mortgage interest · £1,500 expenses · 40% taxpayer</p>
-          <table className="w-full"><thead><tr className="border-b border-navy-200"><th className="text-left py-2"></th><th className="text-right py-2">Personal</th><th className="text-right py-2">Ltd Company</th></tr></thead><tbody>
-            <tr className="border-b border-navy-100"><td className="py-1.5">Rental income</td><td className="py-1.5 text-right">£18,000</td><td className="py-1.5 text-right">£18,000</td></tr>
-            <tr className="border-b border-navy-100"><td className="py-1.5">Deductible expenses</td><td className="py-1.5 text-right">−£1,500</td><td className="py-1.5 text-right">−£1,500</td></tr>
-            <tr className="border-b border-navy-100"><td className="py-1.5">Mortgage interest</td><td className="py-1.5 text-right">Not deductible</td><td className="py-1.5 text-right">−£8,000</td></tr>
-            <tr className="border-b border-navy-100"><td className="py-1.5 font-semibold">Taxable profit</td><td className="py-1.5 text-right font-semibold">£16,500</td><td className="py-1.5 text-right font-semibold">£8,500</td></tr>
-            <tr className="border-b border-navy-100"><td className="py-1.5">Tax before relief</td><td className="py-1.5 text-right">£6,600 (40%)</td><td className="py-1.5 text-right">£1,615 (19%)</td></tr>
-            <tr className="border-b border-navy-100"><td className="py-1.5">20% mortgage interest credit</td><td className="py-1.5 text-right">−£1,600</td><td className="py-1.5 text-right">N/A</td></tr>
-            <tr className="font-bold"><td className="py-1.5">Tax payable</td><td className="py-1.5 text-right text-red-700">£5,000</td><td className="py-1.5 text-right text-green-700">£1,615</td></tr>
+          <table className="w-full"><thead><tr className="border-b border-navy-200"><th scope="col" className="text-left py-2">Line</th><th className="text-right py-2">Personal</th><th className="text-right py-2">Ltd Company</th></tr></thead><tbody>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 text-left font-normal">Rental income</th><td className="py-1.5 text-right">£18,000</td><td className="py-1.5 text-right">£18,000</td></tr>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 text-left font-normal">Deductible expenses</th><td className="py-1.5 text-right">−£1,500</td><td className="py-1.5 text-right">−£1,500</td></tr>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 text-left font-normal">Mortgage interest</th><td className="py-1.5 text-right">Not deductible</td><td className="py-1.5 text-right">−£8,000</td></tr>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 font-semibold text-left">Taxable profit</th><td className="py-1.5 text-right font-semibold">£16,500</td><td className="py-1.5 text-right font-semibold">£8,500</td></tr>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 text-left font-normal">Tax before relief</th><td className="py-1.5 text-right">£6,600 (40%)</td><td className="py-1.5 text-right">£1,615 (19%)</td></tr>
+            <tr className="border-b border-navy-100"><th scope="row" className="py-1.5 text-left font-normal">20% mortgage interest credit</th><td className="py-1.5 text-right">−£1,600</td><td className="py-1.5 text-right">N/A</td></tr>
+            <tr className="font-bold"><th scope="row" className="py-1.5 text-left">Tax payable</th><td className="py-1.5 text-right text-red-700">£5,000</td><td className="py-1.5 text-right text-green-700">£1,615</td></tr>
           </tbody></table>
           <p className="text-xs text-navy-500 mt-2">Ltd saving before accountant costs: ~£3,385/year per property at this level.</p>
         </div>
