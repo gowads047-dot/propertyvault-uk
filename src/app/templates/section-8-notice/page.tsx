@@ -118,7 +118,7 @@ export default function Section8Notice() {
                 {GROUNDS.map(g => (
                   <div key={g.id} onClick={() => toggleGround(g.id)}
                     className={`border rounded-xl p-4 cursor-pointer transition-all ${selectedGrounds.includes(g.id) ? "bg-navy-800 border-navy-800" : "border-navy-100 hover:border-navy-300 bg-navy-50"}`}>
-                    <div className="flex items-start gap-3">
+                    <div className={`flex items-start gap-3 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500`} role="checkbox" aria-checked={selectedGrounds.includes(g.id)} tabIndex={0} onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggleGround(g.id); } }}>
                       <div className={`w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 flex items-center justify-center ${selectedGrounds.includes(g.id) ? "bg-gold-400 border-gold-400" : "border-navy-300"}`}>
                         {selectedGrounds.includes(g.id) && <svg className="w-3 h-3 text-navy-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                       </div>
@@ -133,8 +133,8 @@ export default function Section8Notice() {
                     </div>
                     {selectedGrounds.includes(g.id) && (
                       <div className="mt-3 ml-8" onClick={e => e.stopPropagation()}>
-                        <label htmlFor="section8noti-particulars-for-this-ground" className="block text-xs text-navy-200 mb-1">Particulars for this ground (required — describe the specific facts):</label>
-                        <textarea id="section8noti-particulars-for-this-ground" value={groundDetails[g.id] || ""} onChange={e => setGroundDetails(p => ({ ...p, [g.id]: e.target.value }))}
+                        <label htmlFor={`section8noti-particulars-${g.id}`} className="block text-xs text-navy-200 mb-1">Particulars for this ground (required — describe the specific facts):</label>
+                        <textarea id={`section8noti-particulars-${g.id}`} value={groundDetails[g.id] || ""} onChange={e => setGroundDetails(p => ({ ...p, [g.id]: e.target.value }))}
                           placeholder={g.id === "g8" || g.id === "g10" || g.id === "g11" ? `e.g. As at ${fmt(issueDate)}, the tenant owes £${arrearAmount || "___"} in rent arrears representing ${arrearWeeks || "___"} weeks/months of unpaid rent...` : "Describe the specific facts that support this ground..."}
                           rows={3} className="w-full px-3 py-2 border border-white/20 rounded-lg text-xs text-white bg-white/10 placeholder-navy-300 focus:outline-none focus:ring-1 focus:ring-gold-400 resize-none" />
                       </div>

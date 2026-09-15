@@ -60,10 +60,10 @@ export default function ReferenceRequest() {
           <div className="container-max max-w-2xl space-y-6">
             <div className="bg-white rounded-2xl border border-navy-100 p-6">
               <h2 className="font-bold text-navy-800 mb-3">Reference Type</h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Reference type">
                 {([["employer", "👔 Employer Reference", "Confirm employment, income, and job stability"], ["landlord", "🏠 Previous Landlord Reference", "Confirm rental history, conduct, and arrears"]] as const).map(([val, label, desc]) => (
-                  <div key={val} onClick={() => setType(val)}
-                    className={`border rounded-xl p-4 cursor-pointer transition-all ${type === val ? "bg-navy-800 border-navy-800" : "border-navy-100 hover:border-navy-300"}`}>
+                  <div key={val} onClick={() => setType(val)} role="radio" aria-checked={type === val} tabIndex={0} onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); setType(val); } }}
+                    className={`border rounded-xl p-4 cursor-pointer transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 ${type === val ? "bg-navy-800 border-navy-800" : "border-navy-100 hover:border-navy-300"}`}>
                     <p className={`font-bold text-sm ${type === val ? "text-white" : "text-navy-800"}`}>{label}</p>
                     <p className={`text-xs mt-1 ${type === val ? "text-navy-200" : "text-navy-400"}`}>{desc}</p>
                   </div>

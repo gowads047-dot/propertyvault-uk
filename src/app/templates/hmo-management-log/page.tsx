@@ -155,8 +155,8 @@ export default function HmoManagementLog() {
                     <div className="space-y-2">
                       {COMPLIANCE_ITEMS.filter(i => i.category === cat).map(item => (
                         <div key={item.id} className="flex items-start gap-3">
-                          <div onClick={() => toggleCompliance(item.id)}
-                            className={`w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer flex items-center justify-center transition-all ${compliance[item.id] ? "bg-green-500 border-green-500" : "border-navy-300"}`}>
+                          <div onClick={() => toggleCompliance(item.id)} role="checkbox" aria-checked={!!compliance[item.id]} aria-label={item.label} tabIndex={0} onKeyDown={e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); toggleCompliance(item.id); } }}
+                            className={`w-5 h-5 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer flex items-center justify-center transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-500 ${compliance[item.id] ? "bg-green-500 border-green-500" : "border-navy-300"}`}>
                             {compliance[item.id] && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>}
                           </div>
                           <div className="flex-1">
