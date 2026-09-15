@@ -625,7 +625,10 @@ input::placeholder, textarea::placeholder {
   --h-on-ink: #F5F0E8;
   --h-on-ink-muted: #C6C9BF;
   --h-accent-on-ink: #E88B62;
-  --h-green: #16a34a;
+  /* green-700, not -600: the token is used as text on --h-green-light and on
+     white ("Free forever", "What we are"), where #16a34a was 3.14 and 3.3:1.
+     As a ground under white it also improves, 3.3 to 5.0. */
+  --h-green: #15803d;
   --h-green-light: #f0fdf4;
   font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
   background: var(--h-bg);

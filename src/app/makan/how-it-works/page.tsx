@@ -174,7 +174,7 @@ export default function HowItWorksPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr>
-                  <th className="text-left py-3 px-4 font-semibold" style={{ color: "var(--h-muted)" }}></th>
+                  <th scope="col" className="text-left py-3 px-4 font-semibold" style={{ color: "var(--h-muted)" }}>Feature</th>
                   <th className="py-3 px-4 font-bold text-center rounded-t-xl" style={{ background: "var(--h-accent-light)", color: "var(--h-accent)" }}>Makan</th>
                   <th className="py-3 px-4 font-semibold text-center" style={{ color: "var(--h-muted)" }}>Bayut / Dubizzle</th>
                   <th className="py-3 px-4 font-semibold text-center" style={{ color: "var(--h-muted)" }}>Rightmove</th>
@@ -193,7 +193,7 @@ export default function HowItWorksPage() {
                   { label: "Agent commission", m: "£0 / 0%", b: "2–5%", r: "1–3% + VAT" },
                 ].map(row => (
                   <tr key={row.label} style={{ borderBottom: "1px solid var(--h-border)" }}>
-                    <td className="py-3 px-4 font-medium" style={{ color: "var(--h-text)" }}>{row.label}</td>
+                    <th scope="row" className="py-3 px-4 font-medium text-left" style={{ color: "var(--h-text)" }}>{row.label}</th>
                     <td className="py-3 px-4 text-center font-semibold" style={{ color: "var(--h-accent)" }}>{row.m}</td>
                     <td className="py-3 px-4 text-center" style={{ color: "var(--h-muted)" }}>{row.b}</td>
                     <td className="py-3 px-4 text-center" style={{ color: "var(--h-muted)" }}>{row.r}</td>
@@ -216,8 +216,8 @@ export default function HowItWorksPage() {
             <Link href="/makan" className="h-btn h-btn-primary text-center">Browse listings</Link>
             <Link href="/makan/list" className="h-btn text-center" style={{ background: "rgba(255,255,255,0.1)", color: "white", border: "1px solid rgba(255,255,255,0.2)" }}>List for free</Link>
           </div>
-          <p className="text-xs mt-6" style={{ color: "rgba(255,255,255,0.3)" }}>
-            Questions about legal compliance? <Link href="/makan/compliance" className="underline" style={{ color: "rgba(255,255,255,0.5)" }}>Read our country guide →</Link>
+          <p className="text-xs mt-6" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Questions about legal compliance? <Link href="/makan/compliance" className="underline" style={{ color: "rgba(255,255,255,0.8)" }}>Read our country guide →</Link>
           </p>
         </div>
       </section>

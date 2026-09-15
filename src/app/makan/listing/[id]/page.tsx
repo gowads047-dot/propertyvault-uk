@@ -320,7 +320,7 @@ export default function ListingPage() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
               Back to listings
             </Link>
-            <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <span className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }}>
               👁 {views} people viewed this week
             </span>
           </div>
@@ -345,7 +345,7 @@ export default function ListingPage() {
                 </div>
                 <div className="text-center">
                   <p className="text-sm font-semibold mb-1" style={{ color: "rgba(255,255,255,0.7)" }}>Photos coming soon</p>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>Contact the agent for a viewing</p>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }}>Contact the agent for a viewing</p>
                 </div>
               </div>
             )}
@@ -481,7 +481,7 @@ export default function ListingPage() {
               <div className="px-5 py-4 flex items-center justify-between gap-4" style={{ background: "var(--h-slate)" }}>
                 <div>
                   <p style={{ fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 900, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{priceStr}</p>
-                  <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
                     {forSale ? "asking price" : "per calendar month"}
                     {pricePerSqm ? ` · ${formatPrice(pricePerSqm, listing.country || "gb")}/m²` : ""}
                   </p>
@@ -709,7 +709,7 @@ export default function ListingPage() {
               {/* Price header */}
               <div className="px-6 py-5" style={{ background: "var(--h-slate)" }}>
                 <p style={{ fontSize: "clamp(22px, 3vw, 30px)", fontWeight: 900, letterSpacing: "-0.03em", color: "white", lineHeight: 1 }}>{priceStr}</p>
-                <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-xs mt-1 font-medium" style={{ color: "rgba(255,255,255,0.6)" }}>
                   {forSale ? "Asking price" : "Per calendar month"}
                 </p>
                 <div className="mt-3">

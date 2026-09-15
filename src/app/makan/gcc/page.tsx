@@ -344,7 +344,7 @@ export default function GCCBuyersPage() {
           <div className="space-y-5">
             {(ar ? STEPS_AR : STEPS_EN).map((s) => (
               <div key={s.n} className={`flex gap-6 bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-[var(--h-accent-on-ink)]/20 transition-colors ${ar ? "flex-row-reverse" : ""}`} dir={ar ? "rtl" : "ltr"}>
-                <div className="text-3xl font-black text-[var(--h-accent-on-ink)]/60 shrink-0 w-12 text-center">{s.n}</div>
+                <div className="text-3xl font-black text-[var(--h-accent-on-ink)] shrink-0 w-12 text-center">{s.n}</div>
                 <div>
                   <h3 className="font-bold text-white mb-2">{s.title}</h3>
                   <p className="text-white/55 text-sm leading-relaxed">{s.body}</p>
