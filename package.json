@@ -17,6 +17,7 @@
     "seo:audit": "node scripts/seo-audit.mjs",
     "seo:indexnow": "node scripts/indexnow.mjs",
     "vitals": "node scripts/vitals.mjs",
+    "a11y": "node scripts/a11y.mjs",
     "social:seed": "tsx --env-file=.env.local scripts/social-seed.mjs",
     "social:pause": "tsx --env-file=.env.local scripts/social-pause.mjs"
   },
