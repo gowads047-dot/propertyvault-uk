@@ -104,6 +104,12 @@ html.dark .bg-white\/80 { background-color: rgb(17 24 39 / 0.80); }
 html.dark .bg-white\/70 { background-color: rgb(17 24 39 / 0.70); }
 html.dark .bg-white\/50 { background-color: rgb(17 24 39 / 0.50); }
 html.dark .bg-navy-50 { background-color: #0a1224; }
+/* The opacity variants and navy-100 were never mapped, so in dark mode a
+   section with bg-navy-50/50 stayed a pale wash over the dark page — a mid
+   grey — while every text override on it went light: 2.6:1 on the stamp
+   duty calculator's explanatory copy and its rate table. */
+html.dark .bg-navy-50\/50, html.dark .bg-navy-50\/40, html.dark .bg-navy-50\/30 { background-color: rgb(10 18 36 / 0.6); }
+html.dark .bg-navy-100 { background-color: #1e293b; }
 html.dark .bg-navy-800 { background-color: #1e293b; }
 html.dark .border-navy-100 { border-color: #1e293b; }
 html.dark .text-navy-800 { color: #f1f5f9; }
@@ -142,6 +148,20 @@ html.dark .text-navy-400 { color: #94a3b8; }
    #e4e8f0 on #f4d35e at 1.19:1 across every gold call to action on the site. */
 html.dark .btn-gold,
 html.dark .btn-gold-shimmer { color: #0f1b36; }
+
+/* The same bug, for buttons built from utilities rather than .btn-gold:
+   `bg-gold-400 text-navy-900` is right in light mode, and in dark mode the
+   `html.dark a { color: inherit }` reset below beats the layered text utility
+   and the label inherits the page's light ink onto a gold ground — 1.19:1 on
+   the guaranteed-rent page's "Book a call". Gold stays gold in dark mode, so
+   anything on a gold ground keeps dark ink. Descendants inherit it, which is
+   what an icon drawn in currentColor needs. */
+html.dark .bg-gold-300, html.dark .bg-gold-400,
+html.dark .bg-gold-500, html.dark .bg-gold-600 { color: #0f1b36; }
+/* Green grounds — WhatsApp buttons and the like — the same way. Their light
+   ink is #0b2e18 in every mode now, and the dark-mode reset must not undo it. */
+html.dark .bg-green-400, html.dark .bg-green-500,
+html.dark [style*="25D366"], html.dark [style*="25d366"] { color: #0b2e18; }
 
 /* Card surfaces that follow the theme.
    The homepage set these to the literal #f8f9fc, so in dark mode the card
@@ -236,7 +256,12 @@ html.dark {
    either — this was #e4e8f0 on #c9a84c at 1.86:1 in dark mode. */
 html.dark [style*="c9a84c"], html.dark [style*="C9A84C"] { color: #0f1b36; }
 html.dark .bg-gold-50 { background-color: #1e1a0e; }
+/* The opacity variants are separate classes: unmapped, bg-gold-50/40 was a
+   pale wash over the dark table row — a mid grey, #707379 — under text that
+   had gone bright green, 2.7:1 on the comparison page's "included" column. */
+html.dark .bg-gold-50\/40, html.dark .bg-gold-50\/30 { background-color: rgb(30 26 14 / 0.6); }
 html.dark .bg-green-50 { background-color: #0a1e12; }
+html.dark .bg-green-50\/30 { background-color: rgb(10 30 18 / 0.6); }
 html.dark .bg-blue-50 { background-color: #0a1224; }
 
 html.dark p, html.dark span, html.dark li, html.dark td,
@@ -1098,6 +1123,20 @@ html.dark {
      are pinned individually instead. */
   --gold-ink: var(--gold-ink-dark);
   --ok: #4ade80;
+}
+
+/* Cards built with a literal white inline background stay white in dark mode
+   — the html.dark overrides only reach classes — so gold ink inside them has
+   to stay the light-surface shade. The template cards' "Interactive" tag was
+   #f4d35e on #ffffff at 1.46:1. Pinned on the element, this beats the
+   inherited html.dark flip above whatever the specificity. */
+[style*="background: white"],
+[style*="background:white"],
+[style*="background: #ffffff"],
+[style*="background:#ffffff"],
+[style*="background: #fff;"],
+[style*="background:#fff;"] {
+  --gold-ink: #7d631d;
 }
 
 /* ── Gold text utilities ───────────────────────────────────────────────────

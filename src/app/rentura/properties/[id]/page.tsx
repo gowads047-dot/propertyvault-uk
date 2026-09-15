@@ -980,7 +980,7 @@ export default function PropertyPassport() {
                           <div style={{ display: "flex", gap: 6 }}>
                             {waUrl && (
                               <a href={waUrl} target="_blank" rel="noopener noreferrer"
-                                style={{ display: "flex", alignItems: "center", gap: 5, background: "#25D366", color: "white", fontWeight: 700, fontSize: 11, padding: "6px 11px", borderRadius: 7, textDecoration: "none" }}>
+                                style={{ display: "flex", alignItems: "center", gap: 5, background: "#25D366", color: "#0b2e18", fontWeight: 700, fontSize: 11, padding: "6px 11px", borderRadius: 7, textDecoration: "none" }}>
                                 📱 WhatsApp
                               </a>
                             )}
@@ -1410,7 +1410,7 @@ export default function PropertyPassport() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <a href={lastContractorNotify.whatsappUrl} target="_blank" rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "#0b2e18", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
                 📱 Send via WhatsApp
               </a>
               {lastContractorNotify.contractorEmail && (
@@ -1445,7 +1445,7 @@ export default function PropertyPassport() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <a href={lastMaintNotify.whatsappUrl} target="_blank" rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "#0b2e18", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
                 <span>📱</span> Also send via WhatsApp
               </a>
               <button onClick={() => setLastMaintNotify(null)}
@@ -1468,7 +1468,7 @@ export default function PropertyPassport() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <a href={lastInvite.whatsappUrl} target="_blank" rel="noopener noreferrer"
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "white", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "#0b2e18", fontWeight: 800, fontSize: 14, padding: "13px", borderRadius: 11, textDecoration: "none" }}>
                 <span>📱</span> Also send via WhatsApp
               </a>
               <button onClick={() => setLastInvite(null)}
