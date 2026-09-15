@@ -69,7 +69,7 @@ export function EnquiryForm() {
           href={buildWhatsAppUrl()}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-3 w-full py-4 bg-green-500 text-white font-bold rounded-xl hover:bg-green-600 transition-all shadow-lg text-lg"
+          className="flex items-center justify-center gap-3 w-full py-4 bg-green-500 text-[#0b2e18] font-bold rounded-xl hover:bg-green-600 transition-all shadow-lg text-lg"
         >
           <WhatsAppIcon />
           Continue on WhatsApp →
@@ -127,7 +127,7 @@ export function EnquiryForm() {
           Book a Call
         </a>
         <a href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi, I'm a landlord interested in guaranteed rent. Can you tell me more?")}`} target="_blank" rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 py-4 bg-green-500 text-white font-bold rounded-xl hover:bg-green-600 transition-all text-sm">
+          className="flex items-center justify-center gap-2 py-4 bg-green-500 text-[#0b2e18] font-bold rounded-xl hover:bg-green-600 transition-all text-sm">
           <WhatsAppIcon />
           WhatsApp
         </a>

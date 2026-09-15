@@ -272,7 +272,7 @@ export default function TemplatesPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
               </svg>
               <input aria-label="Search templates" type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search templates…"
-                style={{ width: "100%", paddingLeft: 40, paddingRight: 16, paddingTop: 10, paddingBottom: 10, border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 14, outline: "none", background: "white", boxSizing: "border-box" }}
+                style={{ width: "100%", paddingLeft: 40, paddingRight: 16, paddingTop: 10, paddingBottom: 10, border: "1.5px solid #e2e8f0", borderRadius: 12, fontSize: 14, outline: "none", background: "var(--page-surface)", boxSizing: "border-box" }}
               />
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>

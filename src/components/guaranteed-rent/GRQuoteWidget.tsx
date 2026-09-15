@@ -88,8 +88,12 @@ export function GRQuoteWidget() {
                       {city === gc.slug && <span style={{ color: "var(--gold-ink)", marginRight: 6 }}>✓</span>}
                       {gc.name}
                     </span>
+                    {/* Inherits the button's ink so it reads on both the
+                        selected navy and the unselected pale ground. 0.7
+                        opacity put it at 4.22:1 on the pale ground — bold 10px
+                        is still normal text to WCAG, which wants 4.5. */}
                     {!priced && (
-                      <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.7 }}>by request</span>
+                      <span style={{ fontSize: 10, fontWeight: 700, opacity: 0.85 }}>by request</span>
                     )}
                   </button>
                 );

@@ -75,7 +75,7 @@ export default function AcademyMediaPage() {
           <p style={{ fontSize: 16, fontWeight: 800, marginBottom: 6 }}>Want to be first to know when video drops?</p>
           <p style={{ fontSize: 13, color: "rgba(255,255,255,0.58)", marginBottom: 16 }}>Drop Nass a message and we&apos;ll notify you as soon as the first episode is live.</p>
           <a href="https://wa.me/447415721628?text=Hi%20Nass%2C%20I%27m%20an%20Academy%20member%20and%20I%27d%20like%20to%20be%20notified%20when%20the%20video%20content%20goes%20live!" target="_blank" rel="noopener noreferrer"
-            style={{ display: "inline-block", background: "#25D366", color: "white", fontWeight: 700, fontSize: 13, padding: "10px 24px", borderRadius: 12, textDecoration: "none" }}>
+            style={{ display: "inline-block", background: "#25D366", color: "#0b2e18", fontWeight: 700, fontSize: 13, padding: "10px 24px", borderRadius: 12, textDecoration: "none" }}>
             WhatsApp Nass →
           </a>
         </div>
