@@ -45,7 +45,7 @@ const COMPARE = [
 
 export default function RenturaPage() {
   return (
-    <div style={{ background: "#f5f3ef", minHeight: "100vh", fontFamily: "var(--font-family-body)", color: "#0f1b2d" }}>
+    <div data-surface="light" style={{ background: "#f5f3ef", minHeight: "100vh", fontFamily: "var(--font-family-body)", color: "#0f1b2d" }}>
 
       {/* NAV */}
       <nav style={{ background: "rgba(245,243,239,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(15,27,45,0.08)", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64, position: "sticky", top: 0, zIndex: 50 }}>
@@ -70,7 +70,7 @@ export default function RenturaPage() {
         <h1 style={{ fontSize: "clamp(34px,6vw,62px)", fontWeight: 900, lineHeight: 1.07, letterSpacing: "-0.03em", fontFamily: "var(--font-family-heading)", marginBottom: 20, color: "#0f1b2d" }}>
           The operating system<br />for UK landlords.
         </h1>
-        <p style={{ fontSize: "clamp(15px,2vw,18px)", color: "rgba(15,27,45,0.55)", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7 }}>
+        <p style={{ fontSize: "clamp(15px,2vw,18px)", color: "rgba(15,27,45,0.66)", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7 }}>
           Rentura replaces your spreadsheets, folders, and sticky notes with one smart platform. Manage your full portfolio — properties, tenants, compliance, finances, and documents — from a single dashboard.
         </p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
@@ -81,7 +81,7 @@ export default function RenturaPage() {
             Already a member? Log in
           </Link>
         </div>
-        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 14 }}>Card required up front · Free for 30 days · Then £9.99/mo · Cancel before day 30 and pay nothing</p>
+        <p style={{ fontSize: 12, color: "rgba(15,27,45,0.66)", marginTop: 14 }}>Card required up front · Free for 30 days · Then £9.99/mo · Cancel before day 30 and pay nothing</p>
       </section>
 
       {/* STATS */}
@@ -144,7 +144,7 @@ export default function RenturaPage() {
               </tbody>
             </table>
           </div>
-          <p style={{ fontSize: 12, color: "rgba(15,27,45,0.5)", textAlign: "center", marginTop: 14, maxWidth: 640, marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
+          <p style={{ fontSize: 12, color: "rgba(15,27,45,0.66)", textAlign: "center", marginTop: 14, maxWidth: 640, marginLeft: "auto", marginRight: "auto", lineHeight: 1.6 }}>
             Compared against a spreadsheet because that is what most landlords actually use, and
             because you can check every line of it yourself. We have not benchmarked other landlord
             software and make no claim about what it does.
@@ -166,7 +166,7 @@ export default function RenturaPage() {
               <h2 style={{ fontSize: "clamp(26px,4vw,40px)", fontWeight: 900, letterSpacing: "-0.02em", fontFamily: "var(--font-family-heading)", lineHeight: 1.15, marginBottom: 16 }}>
                 The Property Passport
               </h2>
-              <p style={{ fontSize: 15, color: "rgba(15,27,45,0.55)", lineHeight: 1.75, marginBottom: 24 }}>
+              <p style={{ fontSize: 15, color: "rgba(15,27,45,0.66)", lineHeight: 1.75, marginBottom: 24 }}>
                 Every property in your portfolio gets its own digital ID card. EPC rating, compliance certificates, tenancy history, maintenance log, mortgage details, and key documents — all in one place, permanently.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -247,7 +247,7 @@ export default function RenturaPage() {
             <Link href="/rentura/join" style={{ display: "block", background: "linear-gradient(135deg,#c9a84c,#e8c96d)", color: "#0f1b2d", fontWeight: 900, fontSize: 16, padding: "16px 0", borderRadius: 12, textDecoration: "none", textAlign: "center" }}>
               Start free 30-day trial →
             </Link>
-            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 14 }}>Already a member? <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", textDecoration: "none" }}>Log in here →</Link></p>
+            <p style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", marginTop: 14 }}>Already a member? <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", textDecoration: "underline", textUnderlineOffset: 3 }}>Log in here →</Link></p>
           </div>
         </div>
       </section>
@@ -256,7 +256,7 @@ export default function RenturaPage() {
       <section style={{ background: "#f5f3ef", padding: "56px 24px" }}>
         <div style={{ maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
           <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 10, color: "#0f1b2d" }}>Cancel anytime. Your data stays safe.</h3>
-          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.55)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto" }}>
+          <p style={{ fontSize: 14, color: "rgba(15,27,45,0.66)", lineHeight: 1.8, maxWidth: 520, margin: "0 auto" }}>
             If you cancel, you keep full access until the end of your billing period — plus <strong>30 days free</strong> after that. We&apos;ll email you weekly during that window to remind you to download your data or resubscribe. After 30 days, your account is closed.
           </p>
         </div>

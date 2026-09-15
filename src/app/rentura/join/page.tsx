@@ -67,7 +67,7 @@ export default function RenturaJoinPage() {
   };
 
   return (
-    <div style={{ background: "#f5f3ef", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "var(--font-family-body)" }}>
+    <div data-surface="light" style={{ background: "#f5f3ef", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "var(--font-family-body)" }}>
       <div style={{ width: "100%", maxWidth: 460 }}>
 
         {/* Logo */}
@@ -78,7 +78,7 @@ export default function RenturaJoinPage() {
             </div>
             <span style={{ fontWeight: 900, fontSize: 18, color: "#0f1b2d", letterSpacing: "-0.02em" }}>Rentura</span>
           </Link>
-          <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", marginTop: 6 }}>Property Passport Platform</p>
+          <p style={{ fontSize: 12, color: "rgba(15,27,45,0.66)", marginTop: 6 }}>Property Passport Platform</p>
         </div>
 
         <div style={{ background: "white", borderRadius: 20, padding: "36px 32px", boxShadow: "0 2px 24px rgba(15,27,45,0.06)", border: "1px solid rgba(15,27,45,0.07)" }}>
@@ -111,7 +111,7 @@ export default function RenturaJoinPage() {
             <>
               <h1 style={{ fontSize: 22, fontWeight: 800, color: "#0f1b2d", marginBottom: 4, textAlign: "center" }}>Start your free 30-day trial</h1>
               <p style={{ fontSize: 13, color: "rgba(15,27,45,0.66)", textAlign: "center", marginBottom: 4 }}>Free for 30 days · Then £9.99/month · Cancel anytime</p>
-              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.35)", textAlign: "center", marginBottom: 28 }}>We&apos;ll collect your card details now — no charge for 30 days</p>
+              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.66)", textAlign: "center", marginBottom: 28 }}>We&apos;ll collect your card details now — no charge for 30 days</p>
 
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <div>
@@ -125,7 +125,7 @@ export default function RenturaJoinPage() {
                 <div>
                   <label htmlFor="join-phone-number" style={labelStyle}>Phone number</label>
                   <input id="join-phone-number" type="tel" value={phone} onChange={e => setPhone(e.target.value)} required placeholder="+44 7xxx xxxxxx" style={inputStyle} />
-                  <p style={{ fontSize: 11, color: "rgba(15,27,45,0.35)", marginTop: 5 }}>Used for account recovery and important property alerts only.</p>
+                  <p style={{ fontSize: 11, color: "rgba(15,27,45,0.66)", marginTop: 5 }}>Used for account recovery and important property alerts only.</p>
                 </div>
                 <div>
                   <label htmlFor="join-password" style={labelStyle}>Password</label>
@@ -143,7 +143,7 @@ export default function RenturaJoinPage() {
                 </button>
               </form>
 
-              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.3)", textAlign: "center", marginTop: 20, lineHeight: 1.7 }}>
+              <p style={{ fontSize: 12, color: "rgba(15,27,45,0.66)", textAlign: "center", marginTop: 20, lineHeight: 1.7 }}>
                 By signing up you agree to our{" "}
                 <Link href="/terms" style={{ color: "rgba(15,27,45,0.66)", textDecoration: "underline" }}>Terms</Link>{" "}and{" "}
                 <Link href="/privacy" style={{ color: "rgba(15,27,45,0.66)", textDecoration: "underline" }}>Privacy Policy</Link>.
@@ -153,9 +153,9 @@ export default function RenturaJoinPage() {
           )}
         </div>
 
-        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(15,27,45,0.4)" }}>
+        <p style={{ textAlign: "center", marginTop: 20, fontSize: 13, color: "rgba(15,27,45,0.66)" }}>
           Already have an account?{" "}
-          <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", fontWeight: 700, textDecoration: "none" }}>Log in →</Link>
+          <Link href="/rentura/auth" style={{ color: "var(--gold-ink)", fontWeight: 700, textDecoration: "underline", textUnderlineOffset: 3 }}>Log in →</Link>
         </p>
       </div>
     </div>

@@ -43,7 +43,7 @@ export default function RenturaSubscribePage() {
   if (authLoading) return null;
 
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex" }}>
+    <div data-surface="light" style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex" }}>
       <style>{`body > header, body > footer { display: none !important; }`}</style>
       <RenturaSidebar />
 

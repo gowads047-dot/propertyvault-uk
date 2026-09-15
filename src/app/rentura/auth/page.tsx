@@ -100,7 +100,7 @@ function RenturaAuthForm() {
     display: "block",
     fontSize: 11,
     fontWeight: 700 as const,
-    color: "rgba(17,17,17,0.42)",
+    color: "rgba(17,17,17,0.66)",
     textTransform: "uppercase" as const,
     letterSpacing: "0.08em",
     marginBottom: 7,
@@ -122,7 +122,7 @@ function RenturaAuthForm() {
   };
 
   return (
-    <div style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div data-surface="light" style={{ fontFamily: "var(--font-family-body)", background: BG, color: INK, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
 
       {/* Nav */}
       <nav style={{ padding: "18px 32px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
