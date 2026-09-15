@@ -289,9 +289,9 @@ export default function AreasPage() {
           {/* Legend */}
           <div className="flex flex-wrap gap-4 justify-center mb-8">
             {[
-              { label: "High yield (7%+)", color: "#15803d", bg: "#f0fdf4" },
-              { label: "Solid (5–7%)", color: "var(--gold-ink)", bg: "#faf8f0" },
-              { label: "Capital growth (<5%)", color: "#475569", bg: "#f8fafc" },
+              { label: "High yield (7%+)", color: "var(--ok-flat)" },
+              { label: "Solid (5–7%)", color: "var(--gold-ink)" },
+              { label: "Capital growth (<5%)", color: "var(--ink-muted)" },
             ].map(b => (
               <span key={b.label} className="flex items-center gap-2 text-xs font-semibold" style={{ color: b.color }}>
                 <span style={{ width: 10, height: 10, borderRadius: 2, background: b.color, display: "inline-block" }} />
@@ -325,7 +325,12 @@ export default function AreasPage() {
             ].map((c, i) => {
               // Built in a ternary, which is why the colour sweep could not see it:
               // #c9a84c measured 2.15 on the #faf8f0 badge behind it.
+              // Two inks: the badge pairs a literal colour with its literal pale
+              // ground, so it reads the same in both themes; the yield figure
+              // sits on the section surface, which follows the theme, so it
+              // takes the theme tokens (the literal green was 3.5:1 in dark).
               const color = c.band === "high" ? "#15803d" : c.band === "solid" ? "#7d631d" : "#475569";
+              const ink   = c.band === "high" ? "var(--ok-flat)" : c.band === "solid" ? "var(--gold-ink)" : "var(--ink-muted)";
               const bg    = c.band === "high" ? "#f0fdf4" : c.band === "solid" ? "#faf8f0" : "#f8fafc";
               const barW  = `${Math.round((c.mid / 8.5) * 100)}%`;
               return (
@@ -335,7 +340,7 @@ export default function AreasPage() {
                   <div className="flex-1 h-5 rounded-full overflow-hidden" style={{ background: "#f1f5f9" }}>
                     <div style={{ width: barW, height: "100%", borderRadius: 999, background: color, transition: "width 0.3s ease" }} />
                   </div>
-                  <span className="text-xs font-bold w-12 text-right tabular-nums shrink-0" style={{ color }}>
+                  <span className="text-xs font-bold w-12 text-right tabular-nums shrink-0" style={{ color: ink }}>
                     {c.yield}
                   </span>
                   <span className="text-xs font-semibold px-2 py-0.5 rounded-full shrink-0" style={{ color, background: bg }}>

@@ -203,7 +203,8 @@ function ArticleCard({ post, onCategoryClick }: { post: Article; onCategoryClick
         <div style={{ position: "absolute", top: 12, left: 12 }}>
           <button
             onClick={e => { e.preventDefault(); onCategoryClick(post.category); }}
-            style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: CATEGORY_COLORS[post.category]?.bg ?? "#f1f5f9", color: CATEGORY_COLORS[post.category]?.text ?? "#475569", border: "none", cursor: "pointer" }}
+            style={{ fontSize: 10, fontWeight: 700, padding: "5px 10px", minHeight: 24, borderRadius: 20, background: CATEGORY_COLORS[post.category]?.bg ?? "#f1f5f9", color: CATEGORY_COLORS[post.category]?.text ?? "#475569", border: "none", cursor: "pointer" }}
+            aria-label={`Show ${post.category} articles`}
           >
             {post.category}
           </button>
@@ -241,7 +242,9 @@ function ArticleCard({ post, onCategoryClick }: { post: Article; onCategoryClick
 function ToolsCTABanner() {
   return (
     <div style={{ background: "#f8faff", border: "1.5px solid #e2e8f0", borderRadius: 20, padding: "28px 28px", margin: "16px 0 32px" }}>
-      <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Free tools</p>
+      {/* A literal light card in both themes: the ink stays the light-surface
+          gold rather than the theme-following token (1.4:1 in dark). */}
+      <p style={{ fontSize: 11, fontWeight: 700, color: "#7d631d", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Free tools</p>
       <h3 style={{ fontSize: 17, fontWeight: 800, color: "#0f1b36", marginBottom: 6, lineHeight: 1.3 }}>Put the numbers behind the strategy</h3>
       <p style={{ fontSize: 13, color: "#475569", marginBottom: 18, lineHeight: 1.55 }}>Every article links to a free calculator. Run the numbers on your next deal.</p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
