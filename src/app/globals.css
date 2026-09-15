@@ -112,6 +112,13 @@ html.dark .bg-navy-50\/50, html.dark .bg-navy-50\/40, html.dark .bg-navy-50\/30 
 html.dark .bg-navy-100 { background-color: #1e293b; }
 html.dark .bg-navy-800 { background-color: #1e293b; }
 html.dark .border-navy-100 { border-color: #1e293b; }
+/* -900 was never mapped. On p, span and a the reset further down makes it
+   inherit the page ink anyway, but <strong> is not in that reset, so the
+   bold figures in every city guide's intro stayed #0a1224 on the dark card:
+   1.05:1 on Bradford, Bristol, Cardiff, Edinburgh, Newcastle, Portsmouth,
+   Southampton and Wolverhampton. Same tier as -800. The gold-button rule
+   below this one still wins for `bg-gold-400 text-navy-900`, as it must. */
+html.dark .text-navy-900 { color: #f1f5f9; }
 html.dark .text-navy-800 { color: #f1f5f9; }
 html.dark .text-navy-700 { color: #e2e8f0; }
 html.dark .text-navy-600 { color: #cbd5e1; }
