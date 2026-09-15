@@ -1115,6 +1115,23 @@ html.dark { --nav-ink-active: #e8eefc; }
 }
 
 
+/* A page that is light in both themes — the Rentura landing page sets its
+   surface and ink inline, so nothing here can flip it — opts out of the dark
+   overrides with data-surface="light": headings keep the page's ink instead
+   of the dark-mode near-white (1.03:1 on its cream), and gold ink stays the
+   light-surface shade (the bright gold was 1.32:1). A dark panel nested inside
+   it (the pricing card, inline #0f1b2d) still resolves through the inline-hex
+   rules above, which sit on the panel itself and so win over inheritance. */
+[data-surface="light"] {
+  --gold-ink: #7d631d;
+  color-scheme: light;
+}
+html.dark [data-surface="light"] h1, html.dark [data-surface="light"] h2,
+html.dark [data-surface="light"] h3, html.dark [data-surface="light"] h4,
+html.dark [data-surface="light"] h5, html.dark [data-surface="light"] h6 {
+  color: inherit;
+}
+
 html.dark {
   /* Restored after measuring both ways. Removing this flip fixed 31 elements on
      light cards but broke 49 on genuinely dark sections — net worse, because
