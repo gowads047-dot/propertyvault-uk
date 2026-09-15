@@ -50,9 +50,9 @@ export default function GuaranteedRentComparison() {
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr>
-                  <th className="text-left py-3 px-4 bg-navy-50 rounded-tl-xl font-bold text-navy-800">&nbsp;</th>
-                  <th className="py-3 px-4 bg-gold-50 text-gold-700 font-bold text-center">Guaranteed Rent</th>
-                  <th className="py-3 px-4 bg-navy-50 rounded-tr-xl text-navy-600 font-bold text-center">Traditional Letting</th>
+                  <th scope="col" className="text-left py-3 px-4 bg-navy-50 rounded-tl-xl font-bold text-navy-800">Feature</th>
+                  <th scope="col" className="py-3 px-4 bg-gold-50 text-gold-700 font-bold text-center">Guaranteed Rent</th>
+                  <th scope="col" className="py-3 px-4 bg-navy-50 rounded-tr-xl text-navy-600 font-bold text-center">Traditional Letting</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-navy-100">
@@ -70,7 +70,7 @@ export default function GuaranteedRentComparison() {
                   { label: "Best for", gr: "Hands-off, portfolio, overseas", tl: "Local, single property, experienced" },
                 ].map(row => (
                   <tr key={row.label}>
-                    <td className="py-3 px-4 font-semibold text-navy-800">{row.label}</td>
+                    <th scope="row" className="py-3 px-4 font-semibold text-navy-800 text-left">{row.label}</th>
                     <td className="py-3 px-4 text-center text-navy-600">{row.gr}</td>
                     <td className="py-3 px-4 text-center text-navy-600">{row.tl}</td>
                   </tr>

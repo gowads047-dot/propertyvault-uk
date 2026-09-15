@@ -13,15 +13,18 @@ interface Props {
   image: string;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Market:     "#1d4ed8",
-  Opinion:    "#7c3aed",
-  Investing:  "#0f1b36",
-  Landlords:  "#c9a84c",
-  Tax:        "#dc2626",
-  Finance:    "#059669",
-  Buying:     "#0891b2",
-  Comparison: "#475569",
+// The pill is 11px bold, so its ink needs 4.5:1 on the colour. White on the
+// brand gold is 2.29, so that one takes navy (7.47); the emerald and cyan
+// were 3.77 and 3.68 under white and are the -700 of the same hue (5.5).
+const CATEGORY_COLORS: Record<string, { bg: string; ink: string }> = {
+  Market:     { bg: "#1d4ed8", ink: "white" },
+  Opinion:    { bg: "#7c3aed", ink: "white" },
+  Investing:  { bg: "#0f1b36", ink: "white" },
+  Landlords:  { bg: "#c9a84c", ink: "#0f1b36" },
+  Tax:        { bg: "#dc2626", ink: "white" },
+  Finance:    { bg: "#047857", ink: "white" },
+  Buying:     { bg: "#0e7490", ink: "white" },
+  Comparison: { bg: "#475569", ink: "white" },
 };
 
 export function BlogArticleHero({ title, excerpt, category, date, readTime, image }: Props) {
@@ -69,7 +72,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
         </Link>
 
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: CATEGORY_COLORS[category] ?? "#0f1b36", color: "white" }}>
+          <span style={{ fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20, background: CATEGORY_COLORS[category]?.bg ?? "#0f1b36", color: CATEGORY_COLORS[category]?.ink ?? "white" }}>
             {category}
           </span>
           <span style={{ fontSize: 13, color: "rgba(255,255,255,0.58)" }}>By Nass · {date} · {readTime} read</span>

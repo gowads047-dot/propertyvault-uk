@@ -322,7 +322,7 @@ function RoomsSearch() {
                       and let landlords come to you.</>
                   ) : (
                     <>Makan is just getting started. If you have a room,{" "}
-                      <Link href="/makan/list" style={{ color: "var(--h-accent)" }}>list it free</Link>.</>
+                      <Link href="/makan/list" className="underline" style={{ color: "var(--h-accent)" }}>list it free</Link>.</>
                   )}
                 </Panel>
               ) : (

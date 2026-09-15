@@ -50,7 +50,7 @@ export function AreaSoldPricesWidget({ defaultPostcode = "" }: { defaultPostcode
           <input aria-label="B12 8QX or NG7 2PH" value={input} onChange={e => setInput(e.target.value.toUpperCase())}
             onKeyDown={e => e.key === "Enter" && lookup()}
             placeholder="e.g. B12 8QX or NG7 2PH"
-            style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 14, outline: "none", fontFamily: "monospace", textTransform: "uppercase" }} />
+            style={{ flex: 1, padding: "10px 14px", border: "1.5px solid #e2e8f0", borderRadius: 10, fontSize: 14, outline: "none", fontFamily: "monospace", textTransform: "uppercase", background: "white", color: "#0f1b36" }} />
           <button onClick={() => lookup()} disabled={loading}
             style={{ padding: "10px 20px", background: loading ? "#e2e8f0" : "#0f1b36", color: loading ? "#475569" : "white", border: "none", borderRadius: 10, fontWeight: 700, fontSize: 13, cursor: loading ? "not-allowed" : "pointer", whiteSpace: "nowrap" }}>
             {loading ? "Looking up…" : "Look up"}
