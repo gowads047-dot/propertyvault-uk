@@ -42,8 +42,15 @@ order by ts;
   dashboard: Project → Settings → Cron Jobs shows each job's last run and
   status; Logs shows the request and its status code.
 
-The other six only write email. The Monday morning pair should produce two
-emails to `info@` (a blog prompt, and a token alert until a token exists).
+The other six only write email. Monday morning produces three emails to
+`info@`: the blog brief (07:00 job), and from the weekly job a token alert
+(until a token exists) and the social summary.
+
+**First confirmed runs.** Monday 14 September 2026: blog brief 07:08, weekly
+job 07:21 (`weekly_sent`), compliance and rent reminders at 08:00 and 09:00
+with nothing due. Publish cron 18:02:31 — `alert_sent`, reason "no token",
+the first row the site's publisher ever wrote in the evening window. The
+scheduled task published the day's Reel at 18:27.
 
 ## Two things outside this codebase
 
