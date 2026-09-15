@@ -90,11 +90,11 @@ const pct = (n: number) => `${n.toFixed(1)}%`;
 type Tab = "overview" | "extension" | "groundrent" | "verdict";
 
 const RISK_THRESHOLDS = [
-  { min: 90, label: "Safe", color: "#15803d", bg: "#f0fdf4", border: "#bbf7d0", desc: "Excellent — lease is long enough to mortgage and sell without issue." },
-  { min: 80, label: "Good", color: "#15803d", bg: "#f0fdf4", border: "#bbf7d0", desc: "Good lease length. Extend soon to stay above 80 years and avoid marriage value." },
-  { min: 70, label: "Caution", color: "#b45309", bg: "#fffbeb", border: "#fde68a", desc: "Some lenders will refuse. Plan your extension now — every year below 80 adds cost." },
-  { min: 60, label: "Risk", color: "#ea580c", bg: "#fff7ed", border: "#fed7aa", desc: "High risk. Many lenders won't touch this. Extension required before selling." },
-  { min: 0,  label: "Danger", color: "#b91c1c", bg: "#fef2f2", border: "#fecaca", desc: "Unmortgageable for most buyers. Extension is critical — value is severely impaired." },
+  { min: 90, label: "Safe", color: "var(--ok-flat)", bg: "var(--tint-green)", border: "#bbf7d0", desc: "Excellent — lease is long enough to mortgage and sell without issue." },
+  { min: 80, label: "Good", color: "var(--ok-flat)", bg: "var(--tint-green)", border: "#bbf7d0", desc: "Good lease length. Extend soon to stay above 80 years and avoid marriage value." },
+  { min: 70, label: "Caution", color: "var(--tint-amber-ink)", bg: "var(--tint-amber)", border: "#fde68a", desc: "Some lenders will refuse. Plan your extension now — every year below 80 adds cost." },
+  { min: 60, label: "Risk", color: "var(--tint-orange-ink)", bg: "var(--tint-orange)", border: "#fed7aa", desc: "High risk. Many lenders won't touch this. Extension required before selling." },
+  { min: 0,  label: "Danger", color: "var(--danger)", bg: "var(--tint-red)", border: "#fecaca", desc: "Unmortgageable for most buyers. Extension is critical — value is severely impaired." },
 ];
 
 function getRisk(years: number) {
@@ -175,7 +175,7 @@ export default function LeaseholdCalculatorPage() {
   return (
     <>
       {/* Header */}
-      <section style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "56px 0 48px" }}>
+      <section data-surface="dark" style={{ background: "#0f1b36", position: "relative", overflow: "hidden", padding: "56px 0 48px" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px)", backgroundSize: "60px 60px", pointerEvents: "none" }} />
         <div className="container-max px-4" style={{ position: "relative", zIndex: 1 }}>
           <Breadcrumbs items={[{ label: "Calculators", href: "/calculators" }, { label: "Leasehold Calculator" }]} />
@@ -193,7 +193,7 @@ export default function LeaseholdCalculatorPage() {
             </div>
             {/* Risk badge */}
             <div style={{ padding: "20px 28px", borderRadius: 20, background: risk.bg, border: `2px solid ${risk.border}`, textAlign: "center", minWidth: 160 }}>
-              <p style={{ fontSize: 11, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Lease Risk</p>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-muted)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>Lease Risk</p>
               <p style={{ fontSize: 36, fontWeight: 900, color: risk.color, lineHeight: 1 }}>{yearsLeft}<span style={{ fontSize: 14, fontWeight: 600 }}>yrs</span></p>
               <p style={{ fontSize: 14, fontWeight: 800, color: risk.color, marginTop: 4 }}>{risk.label}</p>
             </div>
@@ -223,7 +223,7 @@ export default function LeaseholdCalculatorPage() {
                   <label className="block">
                     <span className="block text-xs text-navy-500 mb-1">Years remaining on lease: <strong>{yearsLeft} years</strong></span>
                     <input type="range" min={10} max={999} step={1} value={yearsLeft} onChange={e => setYearsLeft(nonNegative(e.target.value))} style={{ width: "100%", accentColor: "#c9a84c" }} />
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#475569", marginTop: 2 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "var(--ink-muted)", marginTop: 2 }}>
                       <span>10 yrs</span><span>80 yrs</span><span>120+ yrs</span><span>999 yrs</span>
                     </div>
                   </label>
@@ -281,9 +281,9 @@ export default function LeaseholdCalculatorPage() {
                     { label: "BTL lenders (usually 70+ yrs)",        pass: calc.mortgageable },
                     { label: "Unmortgageable risk (<60 yrs)",        pass: yearsLeft >= 60, invert: true },
                   ].map(r => (
-                    <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 10px", borderRadius: 8, background: r.invert ? (r.pass ? "#f0fdf4" : "#fef2f2") : (r.pass ? "#f0fdf4" : "#fef2f2") }}>
-                      <span style={{ fontSize: 12, color: "#374151" }}>{r.label}</span>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: r.pass ? "#15803d" : "#b91c1c" }}>
+                    <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 10px", borderRadius: 8, background: r.invert ? (r.pass ? "var(--tint-green)" : "var(--tint-red)") : (r.pass ? "var(--tint-green)" : "var(--tint-red)") }}>
+                      <span style={{ fontSize: 12, color: "var(--ink-muted)" }}>{r.label}</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: r.pass ? "var(--ok-flat)" : "var(--danger)" }}>
                         {r.invert ? (r.pass ? "✓ Safe" : "✗ Risk") : (r.pass ? "✓ Yes" : "✗ No")}
                       </span>
                     </div>
@@ -315,7 +315,7 @@ export default function LeaseholdCalculatorPage() {
               <div style={{ display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 }}>
                 {tabs.map(tab => (
                   <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeTab === tab.id ? "none" : "1.5px solid #e2e8f0", background: activeTab === tab.id ? "#0f1b36" : "white", color: activeTab === tab.id ? "white" : "#475569", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
+                    style={{ padding: "7px 14px", borderRadius: 20, fontSize: 12, fontWeight: 600, cursor: "pointer", border: activeTab === tab.id ? "none" : "1.5px solid var(--hairline)", background: activeTab === tab.id ? "#0f1b36" : "var(--page-surface)", color: activeTab === tab.id ? "white" : "var(--ink-muted)", whiteSpace: "nowrap", transition: "all 0.15s", flexShrink: 0 }}>
                     {tab.label}
                   </button>
                 ))}
@@ -327,7 +327,7 @@ export default function LeaseholdCalculatorPage() {
                   {/* Risk banner */}
                   <div style={{ padding: "16px 20px", borderRadius: 14, background: risk.bg, border: `1.5px solid ${risk.border}` }}>
                     <p style={{ fontSize: 14, fontWeight: 700, color: risk.color, marginBottom: 4 }}>{risk.label} Lease — {yearsLeft} years remaining</p>
-                    <p style={{ fontSize: 13, color: "#374151" }}>{risk.desc}</p>
+                    <p style={{ fontSize: 13, color: "var(--ink-muted)" }}>{risk.desc}</p>
                   </div>
 
                   {/* Value comparison */}
@@ -335,16 +335,16 @@ export default function LeaseholdCalculatorPage() {
                     <h3 className="font-bold text-navy-800 text-sm mb-4">📊 Value Analysis</h3>
                     <div className="space-y-3">
                       {[
-                        { label: "Current value (with lease)", value: calc.valueWithLease, bar: 100, color: "#0f1b36" },
-                        { label: `After extension (+90 yrs = ${Math.min(yearsLeft + 90, 999)} yrs)`, value: calc.valueAfterExt, bar: (calc.valueAfterExt / calc.freeholdValue) * 100, color: "#15803d" },
+                        { label: "Current value (with lease)", value: calc.valueWithLease, bar: 100, color: "var(--ink)" },
+                        { label: `After extension (+90 yrs = ${Math.min(yearsLeft + 90, 999)} yrs)`, value: calc.valueAfterExt, bar: (calc.valueAfterExt / calc.freeholdValue) * 100, color: "var(--ok-flat)" },
                         { label: "Freehold equivalent (999 yrs)", value: calc.freeholdValue, bar: 100, color: "var(--gold-ink)" },
                       ].map(r => (
                         <div key={r.label}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                            <span style={{ fontSize: 12, color: "#475569" }}>{r.label}</span>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: "#0f1b36" }}>{fmt(r.value)}</span>
+                            <span style={{ fontSize: 12, color: "var(--ink-muted)" }}>{r.label}</span>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink)" }}>{fmt(r.value)}</span>
                           </div>
-                          <div style={{ height: 6, borderRadius: 4, background: "#f1f5f9", overflow: "hidden" }}>
+                          <div style={{ height: 6, borderRadius: 4, background: "var(--card-surface)", overflow: "hidden" }}>
                             <div style={{ height: "100%", width: `${r.bar}%`, background: r.color, borderRadius: 4 }} />
                           </div>
                         </div>
@@ -391,10 +391,10 @@ export default function LeaseholdCalculatorPage() {
                         { label: "Marriage Value", value: yearsLeft < 80 ? fmt(Math.max(0, calc.freeholdValue * (calc.relAfterExtension - calc.relativity)) * 0.5) : "£0 (n/a)", note: yearsLeft < 80 ? "50% of value created (statutory)" : "Only applies below 80 years" },
                         { label: "Total Premium", value: fmt(calc.extensionPremium), note: "Estimated cost to extend", highlight: true },
                       ].map(s => (
-                        <div key={s.label} style={{ padding: "14px 12px", borderRadius: 12, background: s.highlight ? "#f0fdf4" : "#f8f9fc", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "#e2e8f0"}` }}>
-                          <p style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{s.label}</p>
-                          <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "#15803d" : "#0f1b36" }}>{s.value}</p>
-                          <p style={{ fontSize: 10, color: "#475569", marginTop: 2 }}>{s.note}</p>
+                        <div key={s.label} style={{ padding: "14px 12px", borderRadius: 12, background: s.highlight ? "var(--tint-green)" : "var(--card-surface)", border: `1.5px solid ${s.highlight ? "#bbf7d0" : "var(--hairline)"}` }}>
+                          <p style={{ fontSize: 11, color: "var(--ink-muted)", marginBottom: 4 }}>{s.label}</p>
+                          <p style={{ fontSize: 17, fontWeight: 800, color: s.highlight ? "var(--ok-flat)" : "var(--ink)" }}>{s.value}</p>
+                          <p style={{ fontSize: 10, color: "var(--ink-muted)", marginTop: 2 }}>{s.note}</p>
                         </div>
                       ))}
                     </div>
@@ -414,8 +414,8 @@ export default function LeaseholdCalculatorPage() {
                     </div>
 
                     {yearsLeft < 80 && (
-                      <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: "#fef2f2", border: "1px solid #fecaca" }}>
-                        <p style={{ fontSize: 13, color: "#b91c1c", fontWeight: 600 }}>⚠️ Marriage Value applies — lease is below 80 years. Extending now adds ~{fmt(calc.extensionPremium * 0.3)} to the premium. Extend immediately before dropping further.</p>
+                      <div style={{ marginTop: 12, padding: "12px 14px", borderRadius: 10, background: "var(--tint-red)", border: "1px solid #fecaca" }}>
+                        <p style={{ fontSize: 13, color: "var(--danger)", fontWeight: 600 }}>⚠️ Marriage Value applies — lease is below 80 years. Extending now adds ~{fmt(calc.extensionPremium * 0.3)} to the premium. Extend immediately before dropping further.</p>
                       </div>
                     )}
                   </div>
@@ -457,7 +457,7 @@ export default function LeaseholdCalculatorPage() {
                         <thead>
                           <tr>
                             {["Year", "Annual Ground Rent", "Monthly Cost", "Mortgage Risk"].map(h => (
-                              <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid #e2e8f0", color: "#475569", fontSize: 11, fontWeight: 600 }}>{h}</th>
+                              <th key={h} style={{ textAlign: "right", padding: "6px 8px", borderBottom: "2px solid var(--hairline)", color: "var(--ink-muted)", fontSize: 11, fontWeight: 600 }}>{h}</th>
                             ))}
                           </tr>
                         </thead>
@@ -465,12 +465,12 @@ export default function LeaseholdCalculatorPage() {
                           {calc.grProjection.map((row, i) => {
                             const moriskRisk = row.rent > 1000;
                             return (
-                              <tr key={row.yr} style={{ background: i % 2 === 0 ? "#f8f9fc" : "white" }}>
-                                <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", fontWeight: 700, color: "#0f1b36", textAlign: "right" }}>Yr {row.yr}</td>
-                                <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", fontWeight: 700, color: moriskRisk ? "#dc2626" : "#0f1b36" }}>{fmt(row.rent)}</td>
-                                <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right", color: "#475569" }}>{fmt(row.rent / 12)}</td>
-                                <td style={{ padding: "8px", borderBottom: "1px solid #e2e8f0", textAlign: "right" }}>
-                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: moriskRisk ? "#fef2f2" : "#f0fdf4", color: moriskRisk ? "#b91c1c" : "#15803d" }}>
+                              <tr key={row.yr} style={{ background: i % 2 === 0 ? "var(--card-surface)" : "var(--page-surface)" }}>
+                                <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", fontWeight: 700, color: "var(--ink)", textAlign: "right" }}>Yr {row.yr}</td>
+                                <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", fontWeight: 700, color: moriskRisk ? "var(--danger)" : "var(--ink)" }}>{fmt(row.rent)}</td>
+                                <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right", color: "var(--ink-muted)" }}>{fmt(row.rent / 12)}</td>
+                                <td style={{ padding: "8px", borderBottom: "1px solid var(--hairline)", textAlign: "right" }}>
+                                  <span style={{ fontSize: 11, fontWeight: 700, padding: "2px 8px", borderRadius: 20, background: moriskRisk ? "var(--tint-red)" : "var(--tint-green)", color: moriskRisk ? "var(--danger)" : "var(--ok-flat)" }}>
                                     {moriskRisk ? "⚠️ High" : "✓ OK"}
                                   </span>
                                 </td>
@@ -497,9 +497,9 @@ export default function LeaseholdCalculatorPage() {
                         { label: "Doubling ground rent clauses", val: "Listed on RICS warning register", good: false },
                         { label: "Ground rent > £250 (or £1k London)", val: "Can trigger assured tenancy — eviction risk", good: false },
                       ].map(r => (
-                        <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: r.good ? "#f0fdf4" : "#fef2f2" }}>
-                          <span style={{ fontSize: 12, color: "#374151", flex: 1 }}>{r.label}</span>
-                          <span style={{ fontSize: 11, color: r.good ? "#15803d" : "#b91c1c", fontWeight: 600, marginLeft: 12, flexShrink: 0 }}>{r.val}</span>
+                        <div key={r.label} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "8px 10px", borderRadius: 8, background: r.good ? "var(--tint-green)" : "var(--tint-red)" }}>
+                          <span style={{ fontSize: 12, color: "var(--ink-muted)", flex: 1 }}>{r.label}</span>
+                          <span style={{ fontSize: 11, color: r.good ? "var(--ok-flat)" : "var(--danger)", fontWeight: 600, marginLeft: 12, flexShrink: 0 }}>{r.val}</span>
                         </div>
                       ))}
                     </div>
@@ -516,7 +516,7 @@ export default function LeaseholdCalculatorPage() {
                     <p style={{ fontSize: 20, fontWeight: 800, color: risk.color, marginBottom: 12 }}>
                       {yearsLeft >= 90 ? "✅ Buy with confidence" : yearsLeft >= 80 ? "✅ Fine — extend soon" : yearsLeft >= 70 ? "⚠️ Proceed with caution" : yearsLeft >= 60 ? "❌ High risk — negotiate hard" : "❌ Avoid or heavily discount"}
                     </p>
-                    <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.6 }}>{risk.desc}</p>
+                    <p style={{ fontSize: 14, color: "var(--ink-muted)", lineHeight: 1.6 }}>{risk.desc}</p>
                   </div>
 
                   {/* Checklist */}
@@ -534,9 +534,9 @@ export default function LeaseholdCalculatorPage() {
                         { label: "Confirm right to extend lease (2 years ownership required)", done: false },
                         { label: "Budget for extension premium + legal fees in your offer", done: false },
                       ].map(c => (
-                        <div key={c.label} style={{ display: "flex", gap: 10, padding: "8px 10px", borderRadius: 8, background: c.done ? "#f0fdf4" : "#f8f9fc" }}>
+                        <div key={c.label} style={{ display: "flex", gap: 10, padding: "8px 10px", borderRadius: 8, background: c.done ? "var(--tint-green)" : "var(--card-surface)" }}>
                           <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{c.done ? "✅" : "☐"}</span>
-                          <p style={{ fontSize: 12, color: "#374151" }}>{c.label}</p>
+                          <p style={{ fontSize: 12, color: "var(--ink-muted)" }}>{c.label}</p>
                         </div>
                       ))}
                     </div>
@@ -544,9 +544,9 @@ export default function LeaseholdCalculatorPage() {
 
                   {/* Negotiation tip */}
                   {yearsLeft < 85 && (
-                    <div style={{ padding: "16px", borderRadius: 14, background: "#eff6ff", border: "1px solid #bfdbfe" }}>
-                      <p style={{ fontSize: 13, fontWeight: 700, color: "#1d4ed8", marginBottom: 6 }}>💡 Negotiation Tip</p>
-                      <p style={{ fontSize: 13, color: "#374151", lineHeight: 1.5 }}>
+                    <div style={{ padding: "16px", borderRadius: 14, background: "var(--tint-blue)", border: "1px solid #bfdbfe" }}>
+                      <p style={{ fontSize: 13, fontWeight: 700, color: "var(--tint-blue-ink)", marginBottom: 6 }}>💡 Negotiation Tip</p>
+                      <p style={{ fontSize: 13, color: "var(--ink-muted)", lineHeight: 1.5 }}>
                         With a {yearsLeft}-year lease, negotiate the purchase price down by at least <strong>{fmt(calc.extensionPremium + 5000)}</strong> to cover the full cost of extending (premium + legal fees). Then serve a Section 42 notice within 2 years of completion to lock in today&apos;s valuation.
                       </p>
                     </div>
