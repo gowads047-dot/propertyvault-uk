@@ -1148,6 +1148,10 @@ input::placeholder, textarea::placeholder {
 :root {
   --gold-ink: #7d631d;   /* 5.72 on white  */
   --gold-ink-dark: #f4d35e; /* 11.3 on navy */
+  /* One step further in the same direction, for hover: darker on light
+     grounds (8.4 on white), brighter on dark ones. */
+  --gold-ink-hover: #604c16;
+  --gold-ink-hover-dark: #f9e493;
 }
 
 /* The active nav item sits on rgba(201,168,76,0.09) — a wash thin enough that
@@ -1181,6 +1185,7 @@ html.dark { --nav-ink-active: #e8eefc; }
 [style*="deg, #1a1a1a"],
 [data-surface="dark"] {
   --gold-ink: var(--gold-ink-dark);
+  --gold-ink-hover: var(--gold-ink-hover-dark);
   --ok: #4ade80;
   --danger-soft: #ffa2a2;
 }
@@ -1242,6 +1247,7 @@ html.dark { --nav-ink-active: #e8eefc; }
 .bg-\[\#0a1628\],
 .bg-\[\#0f1b2d\] {
   --gold-ink: var(--gold-ink-dark);
+  --gold-ink-hover: var(--gold-ink-hover-dark);
   --ok: #4ade80;
   --danger-soft: #ffa2a2;
 }
@@ -1277,6 +1283,7 @@ html.dark {
      sections whose backgrounds are now tokens. The remaining light-card cases
      are pinned individually instead. */
   --gold-ink: var(--gold-ink-dark);
+  --gold-ink-hover: var(--gold-ink-hover-dark);
   --ok: #4ade80;
   --danger-soft: #ffa2a2;
 }
@@ -1317,6 +1324,13 @@ html.dark {
 .text-gold-700 {
   color: var(--gold-ink);
 }
+/* The hover variants are separate utilities and were still the raw scale:
+   hover:text-gold-600 (109 links, most of them navy text on white) turned
+   the link #b8922f on hover, 2.9:1 — contrast has to hold in every state
+   the text is shown in. Hover goes to the ink, or one step past it when
+   the resting colour is already the ink, so the change stays visible. */
+.hover\:text-gold-600:hover { color: var(--gold-ink); }
+.hover\:text-gold-700:hover { color: var(--gold-ink-hover); }
 
 /* Tailwind v4 lightened its palette: green-600 is #00a63e, 3.2:1 on white,
    and amber-600 is #e17100, also 3.2. The site uses text-green-600 for its
