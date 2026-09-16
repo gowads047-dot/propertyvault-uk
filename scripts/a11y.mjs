@@ -14,9 +14,12 @@
  *
  * What it catches is what axe catches on the page as loaded: contrast,
  * unnamed buttons, tables without headers, duplicate ids. It does not click
- * tabs or open panels, so the calculators' result tabs and the templates'
- * option cards need the DOM scan in the browser (see the September 2026
- * accessibility PRs, #139–#148, for the method) when they change.
+ * tabs or open panels, and it samples elements rather than reading every
+ * text node. For the full scan — every text node, every sitemap page, in
+ * whichever colour scheme the browser is in — paste
+ * scripts/contrast-scan.browser.js into the DevTools console and run
+ * `await pvScanAll()`. That is what found the light-mode failures this
+ * script, run on a dark machine, could not (#151).
  *
  * Nothing is installed into the project: `npx lighthouse@12` fetches it
  * into npm's cache the first time. Exit status is 1 if any page scored
