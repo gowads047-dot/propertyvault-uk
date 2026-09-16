@@ -55,7 +55,7 @@ export function EnquiryForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-white rounded-2xl border border-green-200 p-8 shadow-lg text-center space-y-6">
+      <div role="status" className="bg-white rounded-2xl border border-green-200 p-8 shadow-lg text-center space-y-6">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
           <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -113,7 +113,7 @@ export function EnquiryForm() {
       </div>
 
       {status === "error" && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">Something went wrong — please try WhatsApp instead.</p>
+        <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">Something went wrong — please try WhatsApp instead.</p>
       )}
 
       <button type="submit" disabled={status === "submitting"} className="btn-primary w-full text-lg !py-4 !rounded-xl disabled:opacity-60">

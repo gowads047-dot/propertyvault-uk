@@ -44,7 +44,7 @@ export function EmailResults({ deal }: Props) {
 
   if (status === "sent") {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-5 text-center">
+      <div role="status" className="bg-green-50 border border-green-200 rounded-2xl p-5 text-center">
         <p className="text-green-700 font-semibold text-sm">Analysis sent! Check your inbox.</p>
         <p className="text-green-600 text-xs mt-1">Didn&apos;t receive it? Check spam or try again.</p>
       </div>
@@ -80,7 +80,7 @@ export function EmailResults({ deal }: Props) {
         </button>
       </form>
       {status === "error" && (
-        <p className="text-red-500 text-xs mt-2">Something went wrong — please try again.</p>
+        <p role="alert" className="text-red-700 text-xs mt-2">Something went wrong — please try again.</p>
       )}
     </div>
   );

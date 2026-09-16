@@ -85,7 +85,7 @@ export function NewsletterPopup() {
         )}
 
         {status === "success" ? (
-          <div className="text-center py-4">
+          <div role="status" className="text-center py-4">
             <span className="text-4xl block mb-4">🎉</span>
             <h3 className="text-xl font-extrabold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
               You&apos;re in!
@@ -155,7 +155,7 @@ export function NewsletterPopup() {
               </div>
 
               {errorMsg && (
-                <p className="text-xs text-red-400 font-medium">{errorMsg}</p>
+                <p role="alert" className="text-xs text-red-400 font-medium">{errorMsg}</p>
               )}
 
               <button
