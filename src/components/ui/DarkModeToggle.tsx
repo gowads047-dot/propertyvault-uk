@@ -5,12 +5,12 @@ import { useState, useEffect } from "react";
 export function DarkModeToggle() {
   const [dark, setDark] = useState(false);
 
+  // The class itself is set before first paint by the inline script in the
+  // root layout; this only brings the button's state in line with it.
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored === "dark" || (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage and matchMedia, neither of which exists on the server
+    if (document.documentElement.classList.contains("dark")) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- reads the DOM, which does not exist on the server
       setDark(true);
-      document.documentElement.classList.add("dark");
     }
   }, []);
 

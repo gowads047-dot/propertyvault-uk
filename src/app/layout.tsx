@@ -205,8 +205,25 @@ export default function RootLayout({
     <html
       lang="en-GB"
       className={`${inter.variable} ${playfair.variable} ${jakarta.variable} ${notoArabic.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
+        {/*
+          Theme before first paint. The dark class used to be added from a
+          useEffect in the header's toggle — after hydration — so every
+          dark-mode visitor saw the light page flash to dark on every load,
+          with the colour transitions animating the switch. This runs before
+          anything is painted. Same rule as the toggle: a stored choice wins,
+          otherwise the system preference. suppressHydrationWarning on <html>
+          because the class the client adds here is not in the server HTML.
+        */}
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
