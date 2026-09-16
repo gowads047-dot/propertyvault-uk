@@ -77,6 +77,13 @@ for (const page of pages) {
     continue;
   }
   const j = JSON.parse(readFileSync(out, "utf8"));
+  // A run that did not complete (page load timed out, Chrome died) still
+  // writes a report, with a score of 0 that is not the page's score.
+  if (j.runtimeError) {
+    console.log(page.padEnd(56), "ERR ", j.runtimeError.code, "—", (j.runtimeError.message || "").slice(0, 80));
+    failed++;
+    continue;
+  }
   const score = Math.round(j.categories.accessibility.score * 100);
   console.log(page.padEnd(56), String(score).padStart(3));
   if (score < 100) failed++;
