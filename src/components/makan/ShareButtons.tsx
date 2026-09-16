@@ -65,7 +65,7 @@ export function ShareButtons({ title, url }: { title: string; url?: string }) {
       </a>
       <button onClick={copyLink}
         className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-        style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
+        style={{ background: "var(--h-warm, var(--card-surface))", color: "var(--h-muted, var(--ink-muted))" }}>
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
         {copied ? "Copied!" : "Copy link"}
       </button>

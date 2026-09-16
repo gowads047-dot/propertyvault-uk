@@ -221,10 +221,10 @@ export default function EPCRetrofitPage() {
                       { band: "D", color: "bg-yellow-400", range: "55-68" },
                       { band: "E", color: "bg-orange-400", range: "39-54" },
                       { band: "F", color: "bg-orange-500", range: "21-38" },
-                      { band: "G", color: "bg-red-500", range: "1-20" },
+                      { band: "G", color: "bg-red-700", range: "1-20" },
                     ].map((b) => (
                       <div key={b.band} className={`flex items-center gap-2 px-2 py-1 rounded ${currentEPC === b.band ? "ring-2 ring-navy-600 bg-navy-50" : ""}`}>
-                        <div className={`w-8 h-6 ${b.color} rounded text-white text-xs font-bold flex items-center justify-center`}>{b.band}</div>
+                        <div className={`w-8 h-6 ${b.color} rounded ${b.band === "G" ? "text-white" : "text-[#0f1b36]"} text-xs font-bold flex items-center justify-center`}>{b.band}</div>
                         <span className="text-xs text-navy-600">{b.range} points</span>
                         {currentEPC === b.band && <span className="text-xs font-bold text-navy-800 ml-auto">Current</span>}
                         {b.band === "C" && <span className="text-xs text-red-600 font-medium ml-auto">Target</span>}

@@ -71,7 +71,7 @@ export default function VaultCheckProPage() {
               pretend otherwise.
             </p>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "7px 14px" }}>
-              <ReadinessChip readiness={service.readiness} />
+              <ReadinessChip readiness={service.readiness} onDark />
               <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
                 {READINESS_MEANING[service.readiness]}
               </span>

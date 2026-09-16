@@ -113,13 +113,13 @@ export default function CGTCalculatorPage() {
             {/* Results */}
             <div>
               <div className="bg-navy-800 rounded-2xl p-8 text-white mb-5">
-                <p className="text-white/50 text-sm mb-1">Capital Gains Tax</p>
+                <p className="text-white/60 text-sm mb-1">Capital Gains Tax</p>
                 <p className="text-4xl font-extrabold text-gold-400 mb-5">{fmt(results.tax)}</p>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/50 text-xs">Total Gain</p><p className="font-bold text-lg">{fmt(results.totalGain)}</p></div>
-                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/50 text-xs">Taxable Gain</p><p className="font-bold text-lg">{fmt(results.taxableGain)}</p></div>
-                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/50 text-xs">Effective Rate</p><p className="font-bold text-lg">{results.effectiveRate.toFixed(1)}%</p></div>
-                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/50 text-xs">Net Profit After Tax</p><p className="font-bold text-lg text-green-400">{fmt(results.netProfit)}</p></div>
+                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/60 text-xs">Total Gain</p><p className="font-bold text-lg">{fmt(results.totalGain)}</p></div>
+                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/60 text-xs">Taxable Gain</p><p className="font-bold text-lg">{fmt(results.taxableGain)}</p></div>
+                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/60 text-xs">Effective Rate</p><p className="font-bold text-lg">{results.effectiveRate.toFixed(1)}%</p></div>
+                  <div className="bg-white/10 rounded-xl p-4"><p className="text-white/60 text-xs">Net Profit After Tax</p><p className="font-bold text-lg text-green-400">{fmt(results.netProfit)}</p></div>
                 </div>
               </div>
 

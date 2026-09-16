@@ -121,7 +121,7 @@ function NewsletterBlock() {
           {error && <p style={{ fontSize: 12, color: "#fca5a5", marginTop: 8 }}>{error}</p>}
           </>
         )}
-        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>
+        <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 12 }}>
           For landlords, investors and deal sourcers. Unsubscribe any time.
         </p>
       </div>
@@ -426,7 +426,7 @@ export function BlogList({ articles }: { articles: Article[] }) {
           <a href="/academy" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 14, textDecoration: "none" }}>
             Join the Academy waiting list →
           </a>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginTop: 12 }}>Educational platform · Not financial advice · Nothing to buy yet</p>
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 12 }}>Educational platform · Not financial advice · Nothing to buy yet</p>
         </div>
       </div>
     </>

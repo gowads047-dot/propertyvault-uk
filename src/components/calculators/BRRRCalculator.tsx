@@ -127,12 +127,12 @@ export function BRRRCalculator() {
 
       <div>
         {/* Hero Result */}
-        <div className={`rounded-2xl p-8 text-white mb-6 ${results.allMoneyOut ? "bg-gradient-to-br from-green-700 to-green-900" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
+        <div className={`rounded-2xl p-8 text-white mb-6 ${results.allMoneyOut ? "bg-gradient-to-br from-green-800 to-green-950" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
           {results.allMoneyOut ? (
             <>
-              <p className="text-green-200 text-sm mb-1">All Money Out + Surplus</p>
+              <p className="text-green-100 text-sm mb-1">All Money Out + Surplus</p>
               <p className="text-4xl font-bold text-white mb-1">{fmt(results.surplus)}</p>
-              <p className="text-green-200 text-sm">You recycle 100% of your capital and get {fmt(results.surplus)} back!</p>
+              <p className="text-green-100 text-sm">You recycle 100% of your capital and get {fmt(results.surplus)} back!</p>
             </>
           ) : (
             <>

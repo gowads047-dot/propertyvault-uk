@@ -84,7 +84,7 @@ export default function FlipROIPage() {
             </div>
 
             <div>
-              <div className={`rounded-2xl p-8 text-white mb-6 ${results.grossProfit >= 0 ? "bg-gradient-to-br from-green-700 to-green-900" : "bg-gradient-to-br from-red-700 to-red-900"}`}>
+              <div className={`rounded-2xl p-8 text-white mb-6 ${results.grossProfit >= 0 ? "bg-gradient-to-br from-green-800 to-green-950" : "bg-gradient-to-br from-red-700 to-red-900"}`}>
                 <p className="text-sm opacity-80 mb-1">Projected Profit</p>
                 <p className="text-4xl font-bold mb-4">{fmt(results.grossProfit)}</p>
                 <div className="grid grid-cols-3 gap-3">

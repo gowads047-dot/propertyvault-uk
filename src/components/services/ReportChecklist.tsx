@@ -17,7 +17,7 @@ import {
 const TONE: Record<Answerer, { fg: string; bg: string }> = {
   evidence:     { fg: "var(--state-verified)",  bg: "color-mix(in srgb, var(--state-verified) 13%, transparent)" },
   analyst:      { fg: "var(--gold-ink)",        bg: "color-mix(in srgb, var(--gold-ink) 14%, transparent)" },
-  professional: { fg: "var(--ink-subtle)",      bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
+  professional: { fg: "var(--ink-muted)",      bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
 };
 
 function Chip({ answerer }: { answerer: Answerer }) {

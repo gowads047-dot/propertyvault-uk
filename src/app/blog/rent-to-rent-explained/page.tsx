@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RentToRentBlog() {
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main data-surface="dark" className="min-h-screen bg-[#0a1628] text-white">
 
       {/* Hero */}
       <section className="relative py-20 px-6 overflow-hidden">
@@ -77,7 +77,7 @@ export default function RentToRentBlog() {
             You never buy the property. You never need a mortgage. Your capital goes towards setup costs — furnishing, deposits, insurance — rather than a 25% deposit on a £250,000 flat.
           </p>
           <div className="bg-[#0f1b36] rounded-2xl p-6 border border-white/10">
-            <p className="text-white/50 text-xs uppercase tracking-wider mb-4">The Basic Model</p>
+            <p className="text-white/60 text-xs uppercase tracking-wider mb-4">The Basic Model</p>
             <div className="space-y-3 text-sm">
               {[
                 { step: "1", label: "You find a motivated landlord", detail: "Someone struggling with voids, maintenance, or management headaches" },
@@ -164,7 +164,7 @@ export default function RentToRentBlog() {
                   <span className="font-bold text-white">Monthly profit</span><span className="font-bold text-[#c9a84c]">~£1,400/month</span>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-3">Requires HMO licence for 3+ unrelated tenants. Check your council&apos;s specific rules.</p>
+              <p className="text-white/60 text-xs mt-3">Requires HMO licence for 3+ unrelated tenants. Check your council&apos;s specific rules.</p>
             </div>
 
             {/* SA */}
@@ -188,7 +188,7 @@ export default function RentToRentBlog() {
                   <span className="font-bold text-white">Monthly profit</span><span className="font-bold text-[#c9a84c]">~£495/month</span>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-3">Some councils have introduced Article 4 directions restricting short-term letting. Check before committing.</p>
+              <p className="text-white/60 text-xs mt-3">Some councils have introduced Article 4 directions restricting short-term letting. Check before committing.</p>
             </div>
 
             {/* Single Let */}

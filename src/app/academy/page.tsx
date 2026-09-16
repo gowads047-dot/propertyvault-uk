@@ -71,7 +71,7 @@ export default function AcademyPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main data-surface="dark" className="min-h-screen bg-[#0a1628] text-white">
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center px-6 py-24 overflow-hidden">
@@ -105,7 +105,7 @@ export default function AcademyPage() {
             {[["12", "Modules planned"], ["0", "Available today"], ["—", "Price not set"], ["—", "No date yet"]].map(([v, l]) => (
               <div key={l} className="text-center">
                 <p className="text-3xl font-black text-[#c9a84c]">{v}</p>
-                <p className="text-white/50 text-sm">{l}</p>
+                <p className="text-white/60 text-sm">{l}</p>
               </div>
             ))}
           </div>
@@ -126,7 +126,7 @@ export default function AcademyPage() {
             </form>
           )}
           {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
-          <p className="text-white/30 text-xs mt-3">No spam. One email when there is something real to join.</p>
+          <p className="text-white/60 text-xs mt-3">No spam. One email when there is something real to join.</p>
         </div>
       </section>
 
@@ -166,7 +166,7 @@ export default function AcademyPage() {
           <div className="text-center mb-12">
             <p className="text-[#c9a84c] text-xs font-bold uppercase tracking-widest mb-3">The Curriculum</p>
             <h2 className="text-3xl font-black">12 Modules. Zero Fluff.</h2>
-            <p className="text-white/50 mt-2">A complete journey from understanding the UK market to building and scaling your portfolio.</p>
+            <p className="text-white/60 mt-2">A complete journey from understanding the UK market to building and scaling your portfolio.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {MODULES.map((m) => (
@@ -175,7 +175,7 @@ export default function AcademyPage() {
                   <span className="text-[#c9a84c] font-black text-xs font-mono bg-[#c9a84c]/10 px-2 py-0.5 rounded">{m.n}</span>
                   <h3 className="font-bold text-white text-sm">{m.title}</h3>
                 </div>
-                <p className="text-white/50 text-xs leading-relaxed">{m.desc}</p>
+                <p className="text-white/60 text-xs leading-relaxed">{m.desc}</p>
               </div>
             ))}
           </div>
@@ -243,11 +243,11 @@ export default function AcademyPage() {
       <section className="bg-[#0f1b36] py-20 px-6">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-3xl font-black mb-3">Be the First to Know When We Launch</h2>
-          <p className="text-white/50 mb-8">There is no date. Leave your email and we will tell you if and when it opens.</p>
+          <p className="text-white/60 mb-8">There is no date. Leave your email and we will tell you if and when it opens.</p>
           {submitted ? (
             <div className="bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-2xl px-8 py-6">
               <p className="font-bold text-white text-lg">You&apos;re on the list 🎉</p>
-              <p className="text-white/50 text-sm mt-1">We&apos;ll be in touch very soon.</p>
+              <p className="text-white/60 text-sm mt-1">We&apos;ll be in touch very soon.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">

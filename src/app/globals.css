@@ -15,7 +15,7 @@
      muted body colour, so captions, footer links and bylines on every page
      were failing. Same hue, 9% darker: 4.75 on white, 4.54 on the tinted
      card surfaces. Dark mode overrides it separately below. */
-  --color-navy-400: #6172a0;
+  --color-navy-400: #556795;  /* was #6172a0: 4.25 on navy-50, 4.45 on cream */
   --color-navy-500: #4a5f96;
   --color-navy-600: #1a2e5a;
   --color-navy-700: #152548;
@@ -130,10 +130,12 @@ html.dark .text-navy-400 { color: #94a3b8; }
 .gradient-navy .text-navy-400,
 .hero-section .text-navy-400,
 [data-surface="dark"] .text-navy-400,
+[class*="from-navy-8"] .text-navy-400,
 .section-dark-rich .text-navy-500,
 .gradient-navy .text-navy-500,
 .hero-section .text-navy-500,
-[data-surface="dark"] .text-navy-500 { color: #9aa6b8; }
+[data-surface="dark"] .text-navy-500,
+[class*="from-navy-8"] .text-navy-500 { color: #9aa6b8; }
 
 /* Darker still, and worse: text-navy-600/700/800 on one of these heroes
    measured 1.29:1 on /calculators/leasehold/ — an invisible heading, not a
@@ -142,12 +144,26 @@ html.dark .text-navy-400 { color: #94a3b8; }
 .gradient-navy .text-navy-600,
 .hero-section .text-navy-600,
 [data-surface="dark"] .text-navy-600,
+[class*="from-navy-8"] .text-navy-600,
+[class*="from-navy-8"] .text-navy-700,
+[class*="from-navy-8"] .text-navy-800,
 .section-dark-rich .text-navy-700,
 .gradient-navy .text-navy-700,
 .hero-section .text-navy-700,
 .section-dark-rich .text-navy-800,
 .gradient-navy .text-navy-800,
 .hero-section .text-navy-800 { color: #e4e8f0; }
+
+/* A white card inside one of those dark sections is light again — the
+   search page's active "For Sale" tab is bg-white text-navy-800 inside
+   .gradient-navy, and the hero override above turned its label near-white on
+   white (1.23:1). Light mode only; dark mode remaps both the card and the
+   tiers itself. */
+html:not(.dark) .bg-white .text-navy-800, html:not(.dark) .bg-white.text-navy-800 { color: #0f1b36; }
+html:not(.dark) .bg-white .text-navy-700, html:not(.dark) .bg-white.text-navy-700 { color: #152548; }
+html:not(.dark) .bg-white .text-navy-600, html:not(.dark) .bg-white.text-navy-600 { color: #1a2e5a; }
+html:not(.dark) .bg-white .text-navy-500, html:not(.dark) .bg-white.text-navy-500 { color: #4a5f96; }
+html:not(.dark) .bg-white .text-navy-400, html:not(.dark) .bg-white.text-navy-400 { color: #556795; }
 
 /* A gold button stays gold in dark mode, so its label has to stay dark. The
    .btn-gold utility does set color: #0f1b36, but it lives in @layer utilities
@@ -208,13 +224,17 @@ html.dark [style*="25D366"], html.dark [style*="25d366"] { color: #0b2e18; }
   --ink-muted: #475569;   /* 7.58 on white, 5.10 on the #cbd5e1 chips */
   --ink-subtle: #616f82;  /* 5.12 on white           */
   --hairline: #e8eaf0;
-  --ok: #15803d;              /* 5.02 on white */
+  --ok: #0f6e43;              /* 6.1 on white, 5.3 on navy-50 (was #15803d: 4.49 on navy-50) */
   /* Follows the THEME only, never the surface. --ok flips on dark-surface
      containers too, which is right for a tick on a dark card and wrong for a
      label on an ordinary page background. */
-  --ok-flat: #15803d;
+  --ok-flat: #0f6e43;
   --gold-pill-ink: #7a5f1c;
   --danger: #b91c1c;          /* 6.99 on white */
+  /* text-red-400 routes through this: red-400 is #ff6467, 3.0 on white and
+     4.4 on the navy-800 cards it usually sits on; the dark-surface rules and
+     dark mode swap in red-300. */
+  --danger-soft: #b91c1c;
 
   /* Tinted panels the calculators build inline (result rows, warnings,
      tips). Each tint pairs with an ink checked against it in both themes;
@@ -248,6 +268,7 @@ html.dark {
   --ok-flat: #4ade80;
   --gold-pill-ink: #e8c877;
   --danger: #f87171;          /* 6.17 on #0f1b36 */
+  --danger-soft: #ffa2a2;
   --tint-green: #0a1e12;
   --tint-red: #2a0a0a;
   --tint-amber: #1c1400;
@@ -374,7 +395,6 @@ html.dark #print-doc .text-amber-700 { color: #b45309 !important; }
 /* ── Colour badges: readable in dark mode site-wide ── */
 html.dark .bg-green-100 { background-color: #052e16 !important; }
 html.dark .text-green-800 { color: #86efac !important; }
-html.dark .text-green-700 { color: #4ade80 !important; }
 html.dark .bg-red-100 { background-color: #3b0a0a !important; }
 html.dark .text-red-800 { color: #fca5a5 !important; }
 html.dark .text-red-700 { color: #f87171 !important; }
@@ -401,10 +421,7 @@ html.dark .bg-purple-50 { background-color: #1a0a2e !important; }
 html.dark .text-purple-700 { color: #d8b4fe !important; }
 html.dark .bg-orange-50 { background-color: #2a1200 !important; }
 html.dark .text-orange-700 { color: #fdba74 !important; }
-html.dark .text-red-600 { color: #f87171 !important; }
-html.dark .text-green-600 { color: #4ade80 !important; }
 html.dark .text-blue-600 { color: #60a5fa !important; }
-html.dark .text-amber-600 { color: #fbbf24 !important; }
 html.dark .text-amber-900 { color: #fde68a !important; }
 html.dark .bg-slate-50 { background-color: #111827 !important; }
 html.dark .bg-gold-100 { background-color: #1e1a0e !important; }
@@ -512,6 +529,25 @@ body {
     font-weight: 700;
     color: #0f1b36;
     line-height: 1.15;
+  }
+  /* A page that is dark in both themes (data-surface="dark" on its <main>)
+     inherits its headings from the page ink instead: /rent-to-rent/ and the
+     two dark blog posts had every unstyled heading navy on navy in light
+     mode, 1.06:1. Same layer, so text-white and the like still win. */
+  [data-surface="dark"] :is(h1, h2, h3),
+  .bg-navy-800 :is(h1, h2, h3),
+  .bg-navy-900 :is(h1, h2, h3),
+  [class*="from-navy-8"] :is(h1, h2, h3) {
+    color: inherit;
+  }
+  /* …but a light card inside one of those is light again — and a navy
+     call-out inside a bg-white article (every blog post's "Test your deal"
+     card) is dark again. Nearest wrapper wins, by specificity. */
+  .bg-white :is(h1, h2, h3) {
+    color: #0f1b36;
+  }
+  .bg-white :is(.bg-navy-800, .bg-navy-900, [data-surface="dark"]) :is(h1, h2, h3) {
+    color: inherit;
   }
 }
 
@@ -1120,11 +1156,23 @@ html.dark { --nav-ink-active: #e8eefc; }
 .bg-navy-800,
 .bg-navy-900,
 [class*="gradient-navy"],
+[class*="bg-navy-6"],
+[class*="bg-navy-7"],
 [class*="bg-navy-8"],
 [class*="bg-navy-9"],
+[class*="from-navy-8"],
+[class*="from-navy-9"],
+.from-\[\#0f1b36\],
+[style*="deg, #0f1b36"],
+[style*="deg,#0f1b36"],
+[style*="deg, #050912"],
+[style*="deg, #0a0f1e"],
+[style*="deg, #1a2845"],
+[style*="deg, #1a1a1a"],
 [data-surface="dark"] {
   --gold-ink: var(--gold-ink-dark);
   --ok: #4ade80;
+  --danger-soft: #ffa2a2;
 }
 
 /* Dark surfaces set with an inline hex rather than a class — Rentura and the
@@ -1179,9 +1227,13 @@ html.dark { --nav-ink-active: #e8eefc; }
 [style*="background:#0a1628"],
 [style*="background-color:#0a1628"],
 [style*="background: #0a1628"],
-[style*="background-color: #0a1628"] {
+[style*="background-color: #0a1628"],
+.bg-\[\#0f1b36\],
+.bg-\[\#0a1628\],
+.bg-\[\#0f1b2d\] {
   --gold-ink: var(--gold-ink-dark);
   --ok: #4ade80;
+  --danger-soft: #ffa2a2;
 }
 
 [style*="#c9a84c"],
@@ -1216,6 +1268,7 @@ html.dark {
      are pinned individually instead. */
   --gold-ink: var(--gold-ink-dark);
   --ok: #4ade80;
+  --danger-soft: #ffa2a2;
 }
 
 /* Cards built with a literal white inline background stay white in dark mode
@@ -1254,6 +1307,21 @@ html.dark {
 .text-gold-700 {
   color: var(--gold-ink);
 }
+
+/* Tailwind v4 lightened its palette: green-600 is #00a63e, 3.2:1 on white,
+   and amber-600 is #e17100, also 3.2. The site uses text-green-600 for its
+   positive figures (52 places) and text-amber-600 for its cautions. Routed
+   through the theme tokens: --ok follows the surface — the dark green on
+   light grounds, the bright one inside dark sections and in dark mode —
+   and the amber ink is the one the calculators' tinted panels use. This
+   supersedes the html.dark-only overrides those two classes had. */
+.text-green-500,
+.text-green-600,
+.text-green-700 { color: var(--ok); }
+.text-red-400 { color: var(--danger-soft); }
+/* red-600 is #e7000b in v4: 4.27 on navy-50 under the deduction figures. */
+.text-red-600 { color: var(--danger); }
+.text-amber-600 { color: var(--tint-amber-ink); }
 
 
 /* A featured card that spans two columns — until there are not two columns.
