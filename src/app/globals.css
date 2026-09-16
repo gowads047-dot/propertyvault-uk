@@ -649,18 +649,36 @@ input::placeholder, textarea::placeholder {
   }
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50%       { background-position: 100% 50%; }
+/* The slow drift of the navy gradient used to be a background-position
+   animation on a 300%-sized gradient. background-position is not a
+   compositor property: every frame of the 14-second loop repainted the
+   whole hero on the main thread, on 93 pages, for as long as the page was
+   open. The same drift is now a transform on an oversized pseudo-element,
+   which the compositor moves without repainting anything. */
+@keyframes gradient-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%       { transform: translate3d(-33.3%, -3%, 0); }
 }
 
 @utility gradient-navy {
   /* Same reasoning as .section-dark-rich: a colour underneath, so any later
      rule that sets only background-image cannot leave light text on cream. */
   background-color: #0b1226;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.gradient-navy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 300%;
+  height: 106%;
   background-image: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
-  background-size: 300% 300%;
-  animation: gradient-shift 14s ease infinite;
+  animation: gradient-drift 14s ease infinite;
+  will-change: transform;
+  z-index: -1;
+  pointer-events: none;
 }
 
 @utility text-gradient-gold {
