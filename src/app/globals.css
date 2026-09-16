@@ -181,6 +181,10 @@ html.dark .btn-gold-shimmer { color: #0f1b36; }
    what an icon drawn in currentColor needs. */
 html.dark .bg-gold-300, html.dark .bg-gold-400,
 html.dark .bg-gold-500, html.dark .bg-gold-600 { color: #0f1b36; }
+/* …and a navy text utility on an element inside the gold ground keeps its
+   navy too, or the dark-mode tier mapping lightens it: the BRRR academy's
+   letter tiles were #f1f5f9 on gold, 1.34:1. */
+html.dark :is(.bg-gold-300, .bg-gold-400, .bg-gold-500, .bg-gold-600) :is(.text-navy-700, .text-navy-800, .text-navy-900) { color: #0f1b36; }
 /* Green grounds — WhatsApp buttons and the like — the same way. Their light
    ink is #0b2e18 in every mode now, and the dark-mode reset must not undo it. */
 html.dark .bg-green-400, html.dark .bg-green-500,

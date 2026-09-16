@@ -187,11 +187,11 @@ export default function BiggestLieArticle() {
 
             <div className="border-t border-navy-200 my-10" />
 
-            <div className="not-prose my-8 rounded-2xl overflow-hidden border border-gold-200" style={{ background: "linear-gradient(135deg, #faf8f0 0%, #fef9ec 100%)" }}>
+            <div className="not-prose my-8 rounded-2xl overflow-hidden border border-gold-200" style={{ background: "var(--card-surface)" }}>
               <div style={{ padding: "24px 28px" }}>
                 <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold-ink)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Free tool</p>
-                <p style={{ fontSize: 18, fontWeight: 800, color: "#0f1b36", marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Does your deal still stack up at today&apos;s rates?</p>
-                <p style={{ fontSize: 14, color: "#475569", marginBottom: 16, lineHeight: 1.6 }}>Run 8 metrics — gross yield, net yield, cash flow, stress test +2% — plus an AI buy/pass verdict. Free, no sign-up.</p>
+                <p style={{ fontSize: 18, fontWeight: 800, color: "var(--ink)", marginBottom: 6, fontFamily: "var(--font-family-heading)" }}>Does your deal still stack up at today&apos;s rates?</p>
+                <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 16, lineHeight: 1.6 }}>Run 8 metrics — gross yield, net yield, cash flow, stress test +2% — plus an AI buy/pass verdict. Free, no sign-up.</p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                   <Link href="/calculators/deal-analyser" className="btn-primary text-sm !py-2.5 !px-5">Deal Analyser →</Link>
                   <Link href="/calculators/rent-vs-buy" className="btn-outline text-sm !py-2.5 !px-5">Rent vs Buy →</Link>
