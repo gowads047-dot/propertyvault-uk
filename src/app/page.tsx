@@ -42,14 +42,25 @@ export default function Home() {
           from { opacity: 0; transform: translateY(10px); }
           to   { opacity: 1; transform: translateY(0); }
         }
-        @keyframes hero-bg {
-          0%, 100% { background-position: 0% 60%; }
-          50%       { background-position: 100% 40%; }
-        }
+        /* The drift is a compositor transform on a pseudo-element, not a
+           background-position animation — see .gradient-navy in globals. */
         .hero-section {
-          background: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
-          background-size: 300% 300%;
-          animation: hero-bg 14s ease infinite;
+          background-color: #0b1226;
+          position: relative;
+          isolation: isolate;
+          overflow: hidden;
+        }
+        .hero-section::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          width: 300%;
+          height: 106%;
+          background-image: linear-gradient(160deg, #050912 0%, #0f1b36 35%, #1a2e5a 65%, #0d1830 100%);
+          animation: gradient-drift 14s ease infinite;
+          will-change: transform;
+          z-index: -1;
+          pointer-events: none;
         }
         .stat-num { animation: countUp 0.6s ease both; }
         .stat-num:nth-child(2) { animation-delay: 0.1s; }
@@ -191,7 +202,7 @@ export default function Home() {
           </div>
 
           {/* Bottom stats bar — glassmorphic */}
-          <div className="stats-grid-4" style={{ marginTop: 64, background: "rgba(255,255,255,0.05)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0" }}>
+          <div className="stats-grid-4" style={{ marginTop: 64, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, padding: "28px 0" }}>
             {[
               { n: String(siteMetrics.calculators), l: "Free calculators" },
               { n: String(siteMetrics.templates), l: "Free templates" },
