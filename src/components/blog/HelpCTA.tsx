@@ -29,7 +29,7 @@ export function HelpCTA({ dir = "ltr" }: { dir?: "ltr" | "rtl" }) {
     >
       <p
         className="text-xs font-bold uppercase tracking-widest mb-2"
-        style={{ color: "var(--gold-ink)" }}
+        style={{ color: "var(--gold-pill-ink)" }}
       >
         {ar ? "هل تحتاج مساعدة؟" : "Working this out for yourself?"}
       </p>

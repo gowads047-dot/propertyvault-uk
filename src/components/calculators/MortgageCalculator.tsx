@@ -81,7 +81,7 @@ export function MortgageCalculator() {
              stressMonthly, minRent, coverage, stressPass, amort, ioMonthly, ioTotalInterest };
   }, [isBTL, repayType, price, rate, termYrs, monthlyRent, loan, mr, n]);
 
-  const ltvColor = results.ltv > 75 ? "#dc2626" : results.ltv > 70 ? "#d97706" : "#15803d";
+  const ltvColor = results.ltv > 75 ? "var(--danger)" : results.ltv > 70 ? "var(--tint-amber-ink)" : "var(--ok)";
 
   return (
     <div className="grid lg:grid-cols-2 gap-8">

@@ -227,7 +227,7 @@ export default function RentToRentPage() {
   const slProfit = sl ? sl.sublet - sl.rent - sl.costs : 0;
 
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main data-surface="dark" className="min-h-screen bg-[#0a1628] text-white">
 
       {/* Hero */}
       <section className="relative py-20 px-6 overflow-hidden">
@@ -254,7 +254,7 @@ export default function RentToRentPage() {
             ].map((s) => (
               <div key={s.label} className="bg-white/5 rounded-xl p-4 text-center">
                 <p className="text-2xl font-black text-[#c9a84c]">{s.stat}</p>
-                <p className="text-white/50 text-xs mt-1">{s.label}</p>
+                <p className="text-white/60 text-xs mt-1">{s.label}</p>
               </div>
             ))}
           </div>
@@ -318,7 +318,7 @@ export default function RentToRentPage() {
               </div>
             </div>
             <div className="bg-[#0f1b36] rounded-2xl p-6 border border-white/10">
-              <p className="text-white/50 text-xs uppercase tracking-wider mb-4">Example Monthly P&amp;L</p>
+              <p className="text-white/60 text-xs uppercase tracking-wider mb-4">Example Monthly P&amp;L</p>
               {hmo && (
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between"><span className="text-white/60">You pay landlord</span><span className="text-red-400">−£{hmo.rent.toLocaleString()}</span></div>
@@ -343,7 +343,7 @@ export default function RentToRentPage() {
                   <div className="border-t border-white/10 pt-2 flex justify-between font-bold text-base"><span>Monthly profit</span><span className="text-[#c9a84c]">£{slProfit.toLocaleString()}</span></div>
                 </div>
               )}
-              <p className="text-white/35 text-xs mt-4">Example figures only. Always model your specific market.</p>
+              <p className="text-white/60 text-xs mt-4">Example figures only. Always model your specific market.</p>
             </div>
           </div>
         </div>
@@ -438,7 +438,7 @@ export default function RentToRentPage() {
             <div className="p-6 space-y-4">
               {script.lines.map((line, i) => (
                 <div key={i} className={`rounded-xl p-4 ${line.speaker === "YOU" ? "bg-[#c9a84c]/10 border border-[#c9a84c]/20 ml-0 mr-8" : line.speaker === "TIP" ? "bg-blue-500/10 border border-blue-500/20" : "bg-white/5 border border-white/10 ml-8 mr-0"}`}>
-                  <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${line.speaker === "YOU" ? "text-[#c9a84c]" : line.speaker === "TIP" ? "text-blue-400" : "text-white/40"}`}>
+                  <p className={`text-xs font-bold uppercase tracking-wider mb-2 ${line.speaker === "YOU" ? "text-[#c9a84c]" : line.speaker === "TIP" ? "text-blue-400" : "text-white/60"}`}>
                     {line.speaker === "TIP" ? "💡 Tip" : line.speaker === "AGENT" || line.speaker === "LANDLORD" ? `[${line.speaker} might say]` : "You say"}
                   </p>
                   <p className="text-white/85 text-sm leading-relaxed whitespace-pre-line">{line.text}</p>
@@ -475,10 +475,10 @@ export default function RentToRentPage() {
               { doc: "Company credibility pack", who: "You prepare for agents/landlords", critical: false },
             ].map((d) => (
               <div key={d.doc} className={`flex gap-3 items-start rounded-xl p-4 border ${d.critical ? "border-[#c9a84c]/30 bg-[#c9a84c]/5" : "border-white/10 bg-white/5"}`}>
-                <span className={`shrink-0 text-sm mt-0.5 ${d.critical ? "text-[#c9a84c]" : "text-white/40"}`}>✓</span>
+                <span className={`shrink-0 text-sm mt-0.5 ${d.critical ? "text-[#c9a84c]" : "text-white/60"}`}>✓</span>
                 <div>
                   <p className="font-semibold text-white text-sm">{d.doc}</p>
-                  <p className="text-white/45 text-xs mt-0.5">{d.who}</p>
+                  <p className="text-white/65 text-xs mt-0.5">{d.who}</p>
                 </div>
                 {d.critical && <span className="ml-auto shrink-0 text-xs text-[#c9a84c] font-bold bg-[#c9a84c]/10 px-2 py-0.5 rounded-full">Required</span>}
               </div>

@@ -75,7 +75,7 @@ export function BtlMortgageCalculator() {
       <div className="space-y-4">
         <div className={`rounded-2xl p-6 border-2 ${results.passes ? "bg-green-50 border-green-400" : "bg-red-50 border-red-400"}`}>
           <div className="flex items-center gap-3 mb-2">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${results.passes ? "bg-green-500" : "bg-red-500"}`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg ${results.passes ? "bg-green-700" : "bg-red-700"}`}>
               {results.passes ? "✓" : "✗"}
             </div>
             <div>

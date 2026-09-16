@@ -117,7 +117,7 @@ export function CashFlowCalculator() {
       </div>
 
       <div className="space-y-4">
-        <div className={`rounded-2xl p-6 text-white ${positive ? "bg-gradient-to-br from-green-600 to-green-800" : "bg-gradient-to-br from-red-700 to-red-900"}`}>
+        <div className={`rounded-2xl p-6 text-white ${positive ? "bg-gradient-to-br from-green-800 to-green-950" : "bg-gradient-to-br from-red-700 to-red-900"}`}>
           <p className="text-sm opacity-80 mb-1">Monthly cash flow</p>
           <p className="text-5xl font-bold">{positive ? "+" : ""}{fmt(results.monthlyCashFlow)}</p>
           <p className="text-sm opacity-70 mt-1">{positive ? "Positive" : "Negative"} — {fmt(Math.abs(results.annualCashFlow))}/year {positive ? "profit" : "shortfall"}</p>

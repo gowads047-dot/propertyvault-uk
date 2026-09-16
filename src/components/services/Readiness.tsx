@@ -14,11 +14,18 @@ import { READINESS_LABEL, READINESS_MEANING } from "@/lib/services";
 const TONE: Record<Readiness, { fg: string; bg: string }> = {
   live:     { fg: "var(--state-verified)",  bg: "color-mix(in srgb, var(--state-verified) 13%, transparent)" },
   request:  { fg: "var(--state-calculated)", bg: "color-mix(in srgb, var(--state-calculated) 13%, transparent)" },
-  waitlist: { fg: "var(--ink-subtle)",       bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
+  waitlist: { fg: "var(--ink-muted)",       bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
+};
+/* On a navy hero the light-surface inks are 1.9–2.7:1; these are the same
+   three states in the tones the dark theme uses for them. */
+const TONE_ON_DARK: Record<Readiness, { fg: string; bg: string }> = {
+  live:     { fg: "#4fc08a", bg: "rgba(79, 192, 138, 0.16)" },
+  request:  { fg: "#7ba5f5", bg: "rgba(123, 165, 245, 0.16)" },
+  waitlist: { fg: "#c6c9bf", bg: "rgba(198, 201, 191, 0.16)" },
 };
 
-export function ReadinessChip({ readiness }: { readiness: Readiness }) {
-  const tone = TONE[readiness];
+export function ReadinessChip({ readiness, onDark = false }: { readiness: Readiness; onDark?: boolean }) {
+  const tone = (onDark ? TONE_ON_DARK : TONE)[readiness];
   return (
     <span
       title={READINESS_MEANING[readiness]}

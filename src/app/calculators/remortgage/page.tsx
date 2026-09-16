@@ -90,12 +90,12 @@ export default function RemortgagePage() {
             </div>
 
             <div>
-              <div className={`rounded-2xl p-8 text-white mb-6 ${results.worthSwitching ? "bg-gradient-to-br from-green-700 to-green-900" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
+              <div className={`rounded-2xl p-8 text-white mb-6 ${results.worthSwitching ? "bg-gradient-to-br from-green-800 to-green-950" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
                 {results.worthSwitching ? (
                   <>
-                    <p className="text-green-200 text-sm mb-1">Switching could save you</p>
+                    <p className="text-green-100 text-sm mb-1">Switching could save you</p>
                     <p className="text-4xl font-bold text-white mb-1">{fmt(results.netSaving)}</p>
-                    <p className="text-green-200 text-sm">over the remaining {remainingTerm} years</p>
+                    <p className="text-green-100 text-sm">over the remaining {remainingTerm} years</p>
                   </>
                 ) : (
                   <>
@@ -107,7 +107,7 @@ export default function RemortgagePage() {
                 <div className="grid grid-cols-2 gap-3 mt-6">
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Current Monthly</p><p className="font-bold text-lg">{fmtExact(results.currentMonthly)}</p></div>
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">New Monthly</p><p className="font-bold text-lg">{fmtExact(results.newMonthly)}</p></div>
-                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Monthly Saving</p><p className="font-bold text-lg text-green-400">{fmtExact(results.monthlySaving)}</p></div>
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Monthly Saving</p><p className="font-bold text-lg text-white">{fmtExact(results.monthlySaving)}</p></div>
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Break-Even</p><p className="font-bold text-lg">{results.breakEvenMonths > 0 ? Math.ceil(results.breakEvenMonths) + " months" : "—"}</p></div>
                 </div>
               </div>

@@ -102,7 +102,7 @@ export default function RentVsBuyPage() {
             </div>
 
             <div>
-              <div className={`rounded-2xl p-8 text-white mb-6 ${results.buyingIsCheaper ? "bg-gradient-to-br from-green-700 to-green-900" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
+              <div className={`rounded-2xl p-8 text-white mb-6 ${results.buyingIsCheaper ? "bg-gradient-to-br from-green-800 to-green-950" : "bg-gradient-to-br from-navy-800 to-navy-900"}`}>
                 <p className="text-sm opacity-80 mb-1">Over {years} years, it is cheaper to</p>
                 <p className="text-4xl font-bold mb-1">{results.buyingIsCheaper ? "BUY" : "RENT"}</p>
                 <p className="text-sm opacity-80">by approximately {fmt(results.savingAmount)}</p>

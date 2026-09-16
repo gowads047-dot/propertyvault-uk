@@ -89,7 +89,7 @@ export function LandlordTaxCalculator() {
             <p className="text-sm opacity-70 mt-1">per year vs the old rules</p>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-green-700 to-green-900 rounded-2xl p-6 text-white">
+          <div className="bg-gradient-to-br from-green-800 to-green-950 rounded-2xl p-6 text-white">
             <p className="text-lg font-bold">Section 24 does not affect you</p>
             <p className="text-sm opacity-70 mt-1">At the basic rate (20%) the credit exactly offsets — no extra tax.</p>
           </div>

@@ -1481,7 +1481,7 @@ export default function DealAnalyserPage() {
 
                   {/* P&L */}
                   <div className="bg-navy-800 rounded-2xl p-5 text-white">
-                    <h2 className="font-bold text-sm text-white/50 mb-3">Profit & Loss</h2>
+                    <h2 className="font-bold text-sm text-white/60 mb-3">Profit & Loss</h2>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between"><span className="text-white/60">Annual rental income</span><span className="font-semibold text-green-400">{fmt(calc.annualRent)}</span></div>
                       <div className="flex justify-between"><span className="text-white/60">Total expenses</span><span className="font-semibold text-red-400">-{fmt(calc.totalExpenses)}</span></div>

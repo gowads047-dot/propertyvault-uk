@@ -361,7 +361,7 @@ export default function LeaseholdCalculatorPage() {
 
                   {/* Annual cost summary */}
                   <div className="bg-navy-800 rounded-2xl p-5 text-white">
-                    <h3 className="font-bold text-sm text-white/50 mb-3">Annual Leasehold Costs</h3>
+                    <h3 className="font-bold text-sm text-white/60 mb-3">Annual Leasehold Costs</h3>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between"><span className="text-white/60">Ground rent</span><span className="font-semibold text-amber-400">{fmt(groundRentAnnual)}/yr</span></div>
                       <div className="flex justify-between"><span className="text-white/60">Service charge</span><span className="font-semibold">{fmt(calc.annualServiceCharge)}/yr</span></div>

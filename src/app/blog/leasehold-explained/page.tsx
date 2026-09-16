@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function LeaseholdExplained() {
   return (
-    <main className="min-h-screen bg-[#0a1628] text-white">
+    <main data-surface="dark" className="min-h-screen bg-[#0a1628] text-white">
       {/* Hero */}
       <section className="relative py-20 px-6 overflow-hidden">
         <div className="absolute inset-0 opacity-10"
@@ -75,7 +75,7 @@ export default function LeaseholdExplained() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/10 text-white/50">
+                <tr className="border-b border-white/10 text-white/60">
                   <th className="py-2 pr-6">Feature</th>
                   <th className="py-2 pr-6">Freehold</th>
                   <th className="py-2">Leasehold</th>
@@ -116,7 +116,7 @@ export default function LeaseholdExplained() {
               <div key={r.years} className="bg-white/5 rounded-xl p-4 text-center">
                 <p className="text-lg font-bold text-white">{r.years}</p>
                 <p className={`text-sm font-semibold ${r.color}`}>{r.risk}</p>
-                <p className="text-white/50 text-xs mt-1">~{r.pct} of value</p>
+                <p className="text-white/60 text-xs mt-1">~{r.pct} of value</p>
               </div>
             ))}
           </div>

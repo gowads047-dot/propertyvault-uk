@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 const OBLIGATION_TONE = {
   legal:       { fg: "var(--state-verified)",  bg: "color-mix(in srgb, var(--state-verified) 13%, transparent)" },
   conditional: { fg: "var(--state-estimated)", bg: "color-mix(in srgb, var(--state-estimated) 13%, transparent)" },
-  recommended: { fg: "var(--ink-subtle)",      bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
+  recommended: { fg: "var(--ink-muted)",       bg: "color-mix(in srgb, var(--ink-subtle) 13%, transparent)" },
 } as const;
 
 const landlordServices = SERVICES.filter(s =>

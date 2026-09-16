@@ -112,14 +112,14 @@ export default function Section24Page() {
             </div>
 
             <div>
-              <div className={`rounded-2xl p-8 text-white mb-6 ${results.extraTax > 0 ? "bg-gradient-to-br from-red-700 to-red-900" : "bg-gradient-to-br from-green-700 to-green-900"}`}>
+              <div className={`rounded-2xl p-8 text-white mb-6 ${results.extraTax > 0 ? "bg-gradient-to-br from-red-700 to-red-900" : "bg-gradient-to-br from-green-800 to-green-950"}`}>
                 <p className="text-sm opacity-80 mb-1">Additional Tax Due to Section 24</p>
                 <p className="text-4xl font-bold mb-1">{results.extraTax > 0 ? "+" : ""}{fmt(results.extraTax)}</p>
                 <p className="text-sm opacity-80">{results.extraTax > 0 ? "per year more than the old rules" : "Section 24 has no additional impact at basic rate"}</p>
                 <div className="grid grid-cols-2 gap-3 mt-6">
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Tax (old rules)</p><p className="font-bold text-lg">{fmt(results.oldTax)}</p></div>
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Tax (current rules)</p><p className="font-bold text-lg">{fmt(results.newTax)}</p></div>
-                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">20% Tax Credit</p><p className="font-bold text-lg text-green-300">-{fmt(results.taxCredit)}</p></div>
+                  <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">20% Tax Credit</p><p className="font-bold text-lg text-green-100">-{fmt(results.taxCredit)}</p></div>
                   <div className="bg-white/10 rounded-lg p-3"><p className="text-xs opacity-70">Effective Tax Rate</p><p className="font-bold text-lg">{results.effectiveRate.toFixed(1)}%</p></div>
                 </div>
               </div>
