@@ -27,7 +27,7 @@ export function PostcodeEmailCapture() {
 
   if (status === "sent") {
     return (
-      <div className="text-center py-4">
+      <div role="status" className="text-center py-4">
         <p className="text-lg font-bold text-navy-800 mb-1">Done! Check your inbox.</p>
         <p className="text-sm text-navy-500">
           We&apos;ve sent the postcode data + our free Property Starter Pack to your email.
@@ -67,7 +67,7 @@ export function PostcodeEmailCapture() {
         </button>
       </form>
       {status === "error" && (
-        <p className="text-red-500 text-xs mt-2">Something went wrong — please try again.</p>
+        <p role="alert" className="text-red-700 text-xs mt-2">Something went wrong — please try again.</p>
       )}
       <p className="text-xs text-navy-400 mt-2">Free. No spam. Unsubscribe any time.</p>
     </div>
