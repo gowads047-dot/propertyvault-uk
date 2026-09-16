@@ -1007,10 +1007,16 @@ input::placeholder, textarea::placeholder {
    the outline.
 
    :focus-visible rather than :focus, so it does not fire on mouse clicks.
-   Declared last so it wins on specificity ties with the utility layer. */
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 3px solid #c9a84c;
-  outline-offset: 2px;
+   Declared last so it wins on specificity ties with the utility layer.
+
+   !important, because 91 fields set `outline: "none"` as an inline style —
+   every input on the template forms and most of the calculators — and an
+   inline declaration beats any stylesheet rule that is not important. Those
+   fields had no focus indicator at all for a keyboard user. Makan's inputs
+   draw their own ring (.h-input:focus) and keep it. */
+:where(a, button, input, select, textarea, summary, [tabindex]):not(.makan *):focus-visible {
+  outline: 3px solid #c9a84c !important;
+  outline-offset: 2px !important;
   border-radius: 3px;
 }
 
@@ -1019,7 +1025,7 @@ input::placeholder, textarea::placeholder {
 .gradient-navy :where(a, button, input, select, textarea, [tabindex]):focus-visible,
 .bg-navy-800 :where(a, button, input, select, textarea, [tabindex]):focus-visible,
 .bg-navy-900 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-  outline-color: #ffffff;
+  outline-color: #ffffff !important;
   box-shadow: 0 0 0 5px rgba(201, 168, 76, 0.45);
 }
 
