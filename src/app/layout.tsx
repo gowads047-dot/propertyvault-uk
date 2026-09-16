@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans, Noto_Sans_Arabic } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import { SiteHeader, SiteFooter } from "@/components/layout/SiteChrome";
 import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsLoader } from "@/components/layout/AnalyticsLoader";
 import { SITE_URL, siteMetrics } from "@/lib/site";
 
 /**
@@ -264,15 +264,17 @@ export default function RootLayout({
 
         A plain inline <script> in <head>, not next/script with
         beforeInteractive. Head scripts run before anything in the body, and
-        gtag.js below is afterInteractive, so the ordering holds. The
-        next/script version was hoisted by Next as a <script> directly under
-        <html>, which React reported as a hydration error on every page.
+        gtag.js is only ever appended later by loadGtag, so the ordering
+        holds. The next/script version was hoisted by Next as a <script>
+        directly under <html>, which React reported as a hydration error on
+        every page.
       */}
-      {/* Google Analytics through next/script so Next controls load order */}
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-MG7FKKCKWQ" strategy="afterInteractive" />
-      <Script id="ga-init" strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-MG7FKKCKWQ');`}
-      </Script>
+      {/*
+        gtag.js itself is not here any more. It loads only once there is
+        analytics consent — at start-up for a returning visitor who accepted
+        (AnalyticsLoader, below), or when a new visitor presses Accept
+        (CookieConsent) — see loadGtag in lib/analytics.ts for why.
+      */}
       <body className="min-h-full flex flex-col">
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <SiteHeader />
@@ -282,6 +284,7 @@ export default function RootLayout({
         <WhatsAppButton />
         <NewsletterPopup />
         <Analytics />
+        <AnalyticsLoader />
       </body>
     </html>
   );

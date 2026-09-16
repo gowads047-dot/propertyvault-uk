@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { loadGtag } from "@/lib/analytics";
 
 /**
  * Change your mind about analytics cookies.
@@ -42,6 +43,7 @@ export function CookiePreferences() {
     window.gtag?.("consent", "update", {
       analytics_storage: next === "all" ? "granted" : "denied",
     });
+    if (next === "all") loadGtag();
     setChoice(next);
     setSaved(true);
   }
