@@ -11,9 +11,13 @@ about five minutes.
 
 ## Status — 17 September 2026
 
-Property `https://www.propertyvaultuk.co.uk/` (URL prefix) was added and
-verified by the **HTML file** method: `public/google19819c16e72c76b6.html`
-is served at the site root and must stay there. The Google Analytics route
+Property `https://www.propertyvaultuk.co.uk/` (URL prefix) was added on the
+account and the **HTML file** method is in place: `public/google19819c16e72c76b6.html`
+is served at the site root (200) and must stay there. The last step is the
+**Verify** button in that property's *Verify ownership* dialog (Search
+Console → the welcome page → "Already started? Finish verification" →
+pick the www property → HTML file → Verify). The browser session that
+was driving this dropped before that click; nothing else is needed. The Google Analytics route
 was tried first and Google refused it — Next renders the gtag script after
 `</head>`, and that method requires it inside `<head>`. The file is bound
 to this domain (Google fetches it from `www.propertyvaultuk.co.uk`), so a
