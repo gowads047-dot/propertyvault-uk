@@ -141,6 +141,14 @@ export const MIGRATIONS: Migration[] = [
     },
   },
   {
+    file: "trigger-functions.sql",
+    purpose: "Trigger functions withdrawn from the RPC surface and given a fixed search_path.",
+    marker: {
+      kind: "unverifiable",
+      because: "revokes a grant and sets a function option, neither of which PostgREST exposes",
+    },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
