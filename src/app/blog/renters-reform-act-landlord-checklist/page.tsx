@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Renters' Rights Act Landlord Checklist 2025" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/opengraph-image/", width: 1200, height: 630, alt: "Renters' Rights Act Landlord Checklist 2025" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/renters-reform-act-landlord-checklist/" },
 };

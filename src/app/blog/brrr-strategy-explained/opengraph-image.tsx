@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "What Is the BRRR Strategy? — PropertyVault UK";
+const card = blogCard("brrr-strategy-explained");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("What Is the BRRR Strategy?", "Investing", "June 2026");
+export default function Image() {
+  return card.render();
 }

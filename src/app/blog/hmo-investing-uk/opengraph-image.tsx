@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "HMO Investing UK — Still Profitable? — PropertyVault UK";
+const card = blogCard("hmo-investing-uk");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("HMO Investing UK — Still Profitable?", "Investing", "June 2026");
+export default function Image() {
+  return card.render();
 }

@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "Section 24 — How It Affects Your Tax — PropertyVault UK";
+const card = blogCard("section-24-explained");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("Section 24 — How It Affects Your Tax", "Tax", "June 2026");
+export default function Image() {
+  return card.render();
 }

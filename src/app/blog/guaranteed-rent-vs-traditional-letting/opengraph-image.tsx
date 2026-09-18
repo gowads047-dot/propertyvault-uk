@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "Guaranteed Rent vs Traditional Letting — PropertyVault UK";
+const card = blogCard("guaranteed-rent-vs-traditional-letting");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("Guaranteed Rent vs Traditional Letting", "Comparison", "June 2026");
+export default function Image() {
+  return card.render();
 }

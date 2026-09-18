@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "EPC C Deadline — What Landlords Need — PropertyVault UK";
+const card = blogCard("epc-c-deadline-landlords");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("EPC C Deadline — What Landlords Need", "Landlords", "June 2026");
+export default function Image() {
+  return card.render();
 }

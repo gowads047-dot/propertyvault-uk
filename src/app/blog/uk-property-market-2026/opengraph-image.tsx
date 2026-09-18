@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "UK Property Market 2026 — PropertyVault UK";
+const card = blogCard("uk-property-market-2026");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("UK Property Market 2026", "Market", "June 2026");
+export default function Image() {
+  return card.render();
 }
