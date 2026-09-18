@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { track, events } from "@/lib/analytics";
 
 export function NewsletterPopup() {
@@ -61,15 +61,69 @@ export function NewsletterPopup() {
     }
   }
 
+  /**
+   * A modal that behaves like one for keyboard and screen-reader users.
+   *
+   * It opens a minute into reading, by itself. Until now it did so with
+   * no role, no announcement, focus left wherever it was on the page
+   * behind, Tab walking through content the overlay had covered, and no
+   * way to close it but finding the × with a pointer. Now: role dialog
+   * and aria-modal, labelled by its heading; focus moves into it on open
+   * and goes back where it was on close; Tab cycles within it; Escape
+   * dismisses. Not a general dialog primitive — the site has one modal.
+   */
+  const panelRef = useRef<HTMLDivElement>(null);
+  const restoreFocusTo = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!visible) return;
+    restoreFocusTo.current = document.activeElement as HTMLElement | null;
+    const panel = panelRef.current;
+    // The first field, not the × that precedes it in the DOM.
+    const first = panel?.querySelector<HTMLElement>("input, select, textarea") ?? panel?.querySelector<HTMLElement>("button");
+    (first ?? panel)?.focus();
+    return () => {
+      restoreFocusTo.current?.focus?.();
+    };
+  }, [visible]);
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.key === "Escape" && status !== "success") {
+      e.preventDefault();
+      dismiss();
+      return;
+    }
+    if (e.key !== "Tab" || !panelRef.current) return;
+    const focusable = [...panelRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )];
+    if (focusable.length === 0) return;
+    const firstEl = focusable[0];
+    const lastEl = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === firstEl) {
+      e.preventDefault();
+      lastEl.focus();
+    } else if (!e.shiftKey && document.activeElement === lastEl) {
+      e.preventDefault();
+      firstEl.focus();
+    }
+  }
+
   if (!visible) return null;
 
   return (
     <div
       className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4"
       onClick={status !== "success" ? dismiss : undefined}
+      onKeyDown={onKeyDown}
     >
       <div
-        className="bg-navy-900 rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl relative"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="newsletter-popup-title"
+        tabIndex={-1}
+        className="bg-navy-900 rounded-2xl p-6 md:p-8 max-w-md w-full shadow-2xl relative focus:outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         {status !== "success" && (
@@ -87,7 +141,7 @@ export function NewsletterPopup() {
         {status === "success" ? (
           <div role="status" className="text-center py-4">
             <span className="text-4xl block mb-4">🎉</span>
-            <h3 className="text-xl font-extrabold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
+            <h3 id="newsletter-popup-title" className="text-xl font-extrabold text-white mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>
               You&apos;re in!
             </h3>
             {/* Only promise an inbox delivery when one actually happened. The
@@ -109,7 +163,7 @@ export function NewsletterPopup() {
           <>
             <div className="text-center mb-5">
               <span className="text-3xl block mb-3">📬</span>
-              <h3 className="text-xl font-extrabold text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
+              <h3 id="newsletter-popup-title" className="text-xl font-extrabold text-white" style={{ fontFamily: "var(--font-family-heading)" }}>
                 Free Property Starter Pack
               </h3>
               <p className="text-sm text-navy-300 mt-2">
