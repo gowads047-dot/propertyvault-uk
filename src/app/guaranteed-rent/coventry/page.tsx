@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/coventry/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Coventry — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/coventry/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Coventry — PropertyVault UK" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/coventry/" },
 };

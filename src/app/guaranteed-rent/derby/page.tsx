@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/derby/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Derby — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/derby/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Derby — PropertyVault UK" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/derby/" },
 };

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Guaranteed Rent vs Letting Agent — Which Pays More?",
     description: "A full cost breakdown: agent fees, void periods, maintenance and compliance vs guaranteed rent. See which puts more money in your pocket.",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/vs-letting-agent",
-    images: ogImages("Guaranteed rent versus a letting agent — the full cost breakdown"),
+    images: ogImages("Guaranteed rent versus a letting agent — the full cost breakdown", "/guaranteed-rent/opengraph-image/"),
   },
 };
 

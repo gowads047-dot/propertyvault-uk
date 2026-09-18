@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/mortgage-lender/",
     siteName: "PropertyVault UK",
-    images: ogImages("Will my mortgage lender allow guaranteed rent?"),
+    images: ogImages("Will my mortgage lender allow guaranteed rent?", "/guaranteed-rent/opengraph-image/"),
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };
