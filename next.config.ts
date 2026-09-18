@@ -85,6 +85,12 @@ const nextConfig: NextConfig = {
       { source: "/hetta", destination: "/makan/", permanent: true },
       { source: "/hetta/:path+", destination: "/makan/:path+/", permanent: true },
 
+      // /rentura/timeline was renamed to /rentura/events in June and left
+      // behind as a page whose only content was redirect("/rentura/events")
+      // — a 307 to the bare path, then the 308 to the slash: two hops and a
+      // render to reach one page. Nothing links to it any more.
+      { source: "/rentura/timeline", destination: "/rentura/events/", permanent: true },
+
       // Country pages parked in makan-config.ts ("not active in this
       // phase"). Google crawled them while they were live and now gets a
       // 404 for each. Temporary, not permanent: they are expected back, and
