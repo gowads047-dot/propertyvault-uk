@@ -1,4 +1,5 @@
 import { SITE_URL, canonical } from "@/lib/site";
+import { blogPosts, slugOf, ogImagePath } from "@/lib/blog-posts";
 
 /**
  * schema.org Article markup for a blog post.
@@ -34,6 +35,7 @@ export function ArticleSchema({
   /** Set to "ar" for the Arabic-language posts. */
   inLanguage?: string;
 }) {
+  const post = blogPosts.find(p => slugOf(p) === slug);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -49,7 +51,7 @@ export function ArticleSchema({
       name: "PropertyVault UK",
       url: SITE_URL,
     },
-    image: canonical("/opengraph-image/"),
+    image: canonical(post ? ogImagePath(post) : "/opengraph-image/"),
     articleSection: section,
     inLanguage,
     ...(keywords?.length ? { keywords } : {}),

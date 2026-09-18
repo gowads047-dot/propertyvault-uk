@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: URL,
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Finding a UK property deal without a sourcer" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/find-a-deal-without-a-sourcer/opengraph-image/", width: 1200, height: 630, alt: "Finding a UK property deal without a sourcer" }],
     authors: ["Nass"],
     publishedTime: "2026-09-06T00:00:00.000Z",
   },
@@ -31,7 +31,7 @@ const jsonLd = {
   dateModified: "2026-09-06",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
-  image: "https://www.propertyvaultuk.co.uk/opengraph-image/",
+  image: "https://www.propertyvaultuk.co.uk/blog/find-a-deal-without-a-sourcer/opengraph-image/",
   articleSection: "Investing",
   keywords: ["find a deal without a sourcer", "property sourcing fees UK", "BMV property UK", "deal sourcing UK"],
 };

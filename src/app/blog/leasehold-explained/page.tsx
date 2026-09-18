@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Leasehold flat building exterior in the UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/opengraph-image/", width: 1200, height: 630, alt: "Leasehold flat building exterior in the UK" }],
   },
   twitter: {
     card: "summary_large_image",
