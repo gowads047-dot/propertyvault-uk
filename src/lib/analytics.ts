@@ -17,12 +17,58 @@ type GtagParams = Record<string, string | number | boolean | undefined>;
 declare global {
   interface Window {
     /**
-     * Two shapes in use: gtag("event", name, params) from track() below, and
+     * Three shapes in use: gtag("event", name, params) from track() below,
      * gtag("consent", "default" | "update", state) from the root layout and
-     * the cookie controls. One declaration covering both, because two
+     * the cookie controls, and gtag("js", Date) / gtag("config", id) from
+     * loadGtag. One declaration covering both, because two
      * `declare global` blocks for the same property do not merge.
      */
-    gtag?: (command: string, action: string, params?: GtagParams) => void;
+    gtag?: (command: string, action: string | Date, params?: GtagParams) => void;
+    dataLayer?: unknown[];
+    __gtagLoaded?: boolean;
+  }
+}
+
+const GA_ID = "G-MG7FKKCKWQ";
+
+/**
+ * Load gtag.js — once, and only once somebody has said yes to analytics.
+ *
+ * It used to load on every page for every visitor, with Consent Mode
+ * holding analytics_storage at "denied" until the banner was accepted. That
+ * kept the cookie off, but the 191 KB script still downloaded, parsed and
+ * ran (about a quarter of a second of main-thread time on a desktop, four
+ * times that on a throttled phone) for the majority of visits where nobody
+ * ever accepts — on a page whose largest paint was already waiting on the
+ * main thread. Now nothing from Google is fetched until there is consent:
+ * a returning visitor who accepted gets it at start-up (AnalyticsLoader),
+ * a new one at the moment they press Accept. The consent-mode default and
+ * the update for stored consent still run first, from the root layout, so
+ * gtag sees the right state the instant it arrives.
+ *
+ * What this gives up: Google's "advanced" consent mode, where the tag runs
+ * before consent and sends cookieless pings it later models traffic from.
+ * With no advertising and a handful of accepted sessions a day, there was
+ * nothing to model.
+ */
+export function loadGtag(): void {
+  if (typeof window === "undefined" || window.__gtagLoaded) return;
+  window.__gtagLoaded = true;
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag?.("js", new Date());
+  window.gtag?.("config", GA_ID);
+}
+
+/** Loads gtag.js at start-up for a visitor whose stored choice is "all". */
+export function loadGtagIfConsented(): void {
+  try {
+    if (localStorage.getItem("cookie_consent") === "all") loadGtag();
+  } catch {
+    // No storage: no stored consent, so nothing to load.
   }
 }
 

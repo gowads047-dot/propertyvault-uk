@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { loadGtag } from "@/lib/analytics";
 
 /**
  * The banner used to decide nothing.
@@ -38,6 +39,7 @@ export function CookieConsent() {
   function accept() {
     localStorage.setItem("cookie_consent", "all");
     tellGoogle(true);
+    loadGtag();
     setVisible(false);
   }
 
