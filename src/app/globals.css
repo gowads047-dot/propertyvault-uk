@@ -1087,6 +1087,13 @@ input::placeholder, textarea::placeholder {
   box-shadow: 0 0 0 5px rgba(201, 168, 76, 0.45);
 }
 
+/* Cookie banner — in the server HTML for everyone, hidden before first paint
+   for a visitor whose choice is already stored (consent-init in layout.tsx
+   adds the class; CookieConsent then unmounts it after hydration). */
+html.consented .cookie-banner {
+  display: none;
+}
+
 /* Skip link — visually hidden until focused, then pinned to the top-left.
    WCAG 2.4.1: without it a keyboard user tabs through the whole header,
    including four navigation groups, on every single page. */
