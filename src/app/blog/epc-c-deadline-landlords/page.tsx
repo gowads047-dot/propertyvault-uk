@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "EPC rating chart for UK rental properties" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/epc-c-deadline-landlords/opengraph-image/", width: 1200, height: 630, alt: "EPC rating chart for UK rental properties" }],
   },
   twitter: {
     card: "summary_large_image",

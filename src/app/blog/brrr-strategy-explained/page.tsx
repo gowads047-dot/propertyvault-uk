@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property refurbishment for BRRR strategy UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/opengraph-image/", width: 1200, height: 630, alt: "Property refurbishment for BRRR strategy UK" }],
   },
   twitter: {
     card: "summary_large_image",

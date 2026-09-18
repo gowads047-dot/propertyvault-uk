@@ -55,7 +55,7 @@ describe("what a shared link looks like", () => {
 describe("the share card itself", () => {
   it("points at the site's own generated image, at the size the platforms want", () => {
     const [img] = ogImages("something");
-    expect(img.url).toBe("https://www.propertyvaultuk.co.uk/opengraph-image");
+    expect(img.url).toBe("https://www.propertyvaultuk.co.uk/opengraph-image/");
     expect(img.width).toBe(1200);
     expect(img.height).toBe(630);
   });

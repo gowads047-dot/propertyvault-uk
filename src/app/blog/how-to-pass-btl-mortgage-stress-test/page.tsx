@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BTL Mortgage Stress Test Guide" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "BTL Mortgage Stress Test Guide" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/blog/how-to-pass-btl-mortgage-stress-test/" },
 };

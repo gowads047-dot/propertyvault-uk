@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/list-property/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Where UK landlords advertise a rental property" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Where UK landlords advertise a rental property" }],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
 };

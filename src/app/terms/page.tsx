@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/terms/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Terms of Use — PropertyVault UK", description: "PropertyVault UK terms of use. Rules governing your use of our website, content, calculators, community features, and membership services." },
 };

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Complete UK stamp duty guide. Current SDLT rates, first-time buyer relief, additional property surcharge, and how to calculate your stamp duty bill.",
     url: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Stamp Duty UK Guide — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/opengraph-image/", width: 1200, height: 630, alt: "Stamp Duty UK Guide — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -24,7 +24,7 @@ const jsonLd = {
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
-  image: "https://www.propertyvaultuk.co.uk/opengraph-image",
+  image: "https://www.propertyvaultuk.co.uk/blog/stamp-duty-guide/opengraph-image/",
   articleSection: "Tax",
   keywords: ["stamp duty UK", "SDLT rates", "first time buyer stamp duty", "additional property surcharge"],
 };

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/templates/sale-prep-checklist/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Property Sale Prep Checklist — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Free Property Sale Prep Checklist — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Property Sale Preparation Checklist UK | PropertyVault", description: "Free checklist — get your property market ready with nothing missed." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/sale-prep-checklist/" },

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/templates/renters-rights-notice/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Renters Rights Act Notice — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Free Renters Rights Act Notice — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Renters Rights Act Notice Template 2025 | PropertyVault", description: "Free landlord notice template for the Renters Rights Act 2025." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/renters-rights-notice/" },

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 mortgage interest restriction impact on landlord tax bills" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/section-24-explained/opengraph-image/", width: 1200, height: 630, alt: "Section 24 mortgage interest restriction impact on landlord tax bills" }],
   },
   twitter: {
     card: "summary_large_image",

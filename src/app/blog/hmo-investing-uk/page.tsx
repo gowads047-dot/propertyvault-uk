@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "HMO house in multiple occupation exterior UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/hmo-investing-uk/opengraph-image/", width: 1200, height: 630, alt: "HMO house in multiple occupation exterior UK" }],
   },
   twitter: {
     card: "summary_large_image",

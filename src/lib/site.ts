@@ -63,7 +63,7 @@ export function canonical(path = "/"): string {
  * comparison page somebody would actually forward to a landlord.
  */
 export function ogImages(alt: string): { url: string; width: number; height: number; alt: string }[] {
-  return [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt }];
+  return [{ url: `${SITE_URL}/opengraph-image/`, width: 1200, height: 630, alt }];
 }
 
 export function siteOrigin(): string {

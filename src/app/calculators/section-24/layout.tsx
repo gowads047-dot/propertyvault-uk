@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/calculators/section-24/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Section 24 Tax Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Section 24 Tax Calculator — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Section 24 Tax Calculator UK 2026 | PropertyVault", description: "Free tool — see exactly how much more tax Section 24 costs you." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/section-24/" },

@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed Rent for Landlords" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent for Landlords" }],
   },
   twitter: {
     card: "summary_large_image",

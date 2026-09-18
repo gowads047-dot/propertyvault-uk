@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Tax comparison personal vs limited company property ownership" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/personal-vs-limited-company/opengraph-image/", width: 1200, height: 630, alt: "Tax comparison personal vs limited company property ownership" }],
   },
   twitter: {
     card: "summary_large_image",

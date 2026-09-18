@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK property market skyline and investment outlook 2026" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/uk-property-market-2026/opengraph-image/", width: 1200, height: 630, alt: "UK property market skyline and investment outlook 2026" }],
   },
   twitter: {
     card: "summary_large_image",
