@@ -9,25 +9,31 @@ query data — and that data does not backfill.
 This is the one item on the SEO list that needs your Google account. It takes
 about five minutes.
 
-## Status — 17 September 2026
+## Status — 18 September 2026: verified
 
-Property `https://www.propertyvaultuk.co.uk/` (URL prefix) was added on the
-account and the **HTML file** method is in place: `public/google19819c16e72c76b6.html`
-is served at the site root (200) and must stay there. The last step is the
-**Verify** button in that property's *Verify ownership* dialog (Search
-Console → the welcome page → "Already started? Finish verification" →
-pick the www property → HTML file → Verify). The browser session that
-was driving this dropped before that click; nothing else is needed. The Google Analytics route
-was tried first and Google refused it — Next renders the gtag script after
-`</head>`, and that method requires it inside `<head>`. The file is bound
-to this domain (Google fetches it from `www.propertyvaultuk.co.uk`), so a
-fork or preview deployment cannot use it to claim the live site, which is
-why it is committed rather than kept in an environment variable.
+Property `https://www.propertyvaultuk.co.uk/` (URL prefix) is **verified** —
+"Ownership auto verified, method: HTML file" — via
+`public/google19819c16e72c76b6.html`, which is served at the site root and
+must stay there. The Google Analytics route was tried first and Google
+refused it: Next renders the gtag script after `</head>`, and that method
+needs it inside `<head>`. The file is bound to this domain (Google fetches
+it from `www.propertyvaultuk.co.uk`), so a fork or preview deployment cannot
+use it to claim the live site, which is why it is committed rather than
+kept in an environment variable.
+
+The sitemap was already on the property (submitted 22 Aug 2026, last read
+16 Sept, status Success, 211 pages discovered), so that step was done.
 
 Two older unverified properties exist on the same account from earlier
 attempts (`propertyvaultuk.co.uk` domain property and
 `https://propertyvaultuk.co.uk/`); they are harmless and can be removed in
 Settings, or the domain one verified by DNS TXT later for the wider view.
+
+Note for anyone driving Search Console through a browser automation: its
+pages freeze the Claude in Chrome renderer for 30–60 s after most clicks;
+text extraction and element refs work, screenshots inside dialogs usually
+do not, and the "Add a website → same URL" path re-runs verification
+without a click on Verify.
 
 ## Fastest route: Google Analytics (did not work here — see status)
 
