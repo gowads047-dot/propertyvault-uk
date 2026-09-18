@@ -34,3 +34,31 @@ export function trailingSlashAction(pathname: string): TrailingSlashAction {
   if (pathname.startsWith("/api/")) return "rewrite";
   return "redirect";
 }
+
+/**
+ * The href next/link used to emit on its own.
+ *
+ * With trailingSlash on, next/link adds the slash to every internal href it
+ * renders — until skipTrailingSlashRedirect is set, which also switches that
+ * off (Next reads the one flag as "trailing slashes are handled manually").
+ * So from the day the proxy took over (#122), every <Link href="/blog"> on
+ * the site rendered as /blog, and every crawl of an internal link became a
+ * 308 to /blog/ — 53 of them in Search Console's "page with redirect" list
+ * within the week. components/ui/Link.tsx applies this to put the slash
+ * back at the source.
+ *
+ * Same rule as Next's: only a root-relative path is touched; query and hash
+ * are kept; the root, anything already slashed, files and Next internals
+ * are left alone.
+ */
+export function withTrailingSlash(href: string): string {
+  if (!href.startsWith("/") || href.startsWith("//")) return href;
+  const hashAt = href.indexOf("#");
+  const hash = hashAt >= 0 ? href.slice(hashAt) : "";
+  const beforeHash = hashAt >= 0 ? href.slice(0, hashAt) : href;
+  const queryAt = beforeHash.indexOf("?");
+  const query = queryAt >= 0 ? beforeHash.slice(queryAt) : "";
+  const pathname = queryAt >= 0 ? beforeHash.slice(0, queryAt) : beforeHash;
+  if (trailingSlashAction(pathname) === "pass") return href;
+  return `${pathname}/${query}${hash}`;
+}

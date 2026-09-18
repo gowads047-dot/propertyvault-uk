@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const FEATURES = [
   { icon: "🏠", title: "Property Passport", desc: "Every property gets its own digital passport — EPC, compliance, documents, tenancy history, and maintenance all in one place." },

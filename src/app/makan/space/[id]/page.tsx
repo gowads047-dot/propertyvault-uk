@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { supabase } from "@/lib/supabase";
 import { freshnessLabel, isMissingTable, STATUS_LABEL, type SpaceStatus } from "@/lib/makan-inventory";
 import { publicLocation } from "@/lib/makan-search";

@@ -1,5 +1,5 @@
 import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";

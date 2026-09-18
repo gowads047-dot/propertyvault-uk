@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { ogImages } from "@/lib/site";
 import type { Metadata } from "next";
 import { FAQSchema } from "@/components/seo/FAQSchema";

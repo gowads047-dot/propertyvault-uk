@@ -29,7 +29,26 @@ const eslintConfig = defineConfig([
         "error",
         { forbid: [">", "}"] },
       ],
+      // next/link stopped adding trailing slashes the day
+      // skipTrailingSlashRedirect went on, so every internal link became a
+      // 308. components/ui/Link puts the slash back; nothing else imports
+      // the original.
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "next/link",
+              message: "Import Link from \"@/components/ui/Link\" — it adds the trailing slash next/link no longer does.",
+            },
+          ],
+        },
+      ],
     },
+  },
+  {
+    files: ["src/components/ui/Link.tsx"],
+    rules: { "no-restricted-imports": "off" },
   },
 ]);
 

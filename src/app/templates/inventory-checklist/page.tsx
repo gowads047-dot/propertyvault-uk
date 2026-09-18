@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { SignatureBlock } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const ROOMS = [
   { id: "entrance", name: "Entrance / Hallway", items: ["Front door — condition, locks, letter box", "Flooring — type and condition", "Walls and ceiling — marks, damage, paint", "Lighting — working", "Smoke alarm present and tested"] },

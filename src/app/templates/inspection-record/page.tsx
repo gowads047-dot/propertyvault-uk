@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { SignatureBlock } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const AREAS = [
   { id: "exterior",  name: "Exterior & Entry",   checks: ["Front door security", "Windows (external) — condition", "Gutters/drainage visible issues", "Garden/communal areas"] },

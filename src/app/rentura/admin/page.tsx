@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "@/components/ui/Link";
 import { authFetch } from "@/lib/auth-fetch";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
@@ -78,7 +79,7 @@ export default function RenturaAdmin() {
           <span style={{ fontSize: 12, color: C.ink3, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", borderRadius: 20, padding: "2px 10px" }}>Admin</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <a href="/rentura/dashboard" style={{ fontSize: 12, color: C.ink2, textDecoration: "none" }}>← Dashboard</a>
+          <Link href="/rentura/dashboard" style={{ fontSize: 12, color: C.ink2, textDecoration: "none" }}>← Dashboard</Link>
           <span style={{ fontSize: 12, color: C.ink3 }}>{user.email}</span>
         </div>
       </header>

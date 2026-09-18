@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";

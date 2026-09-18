@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { countries } from "@/lib/makan-config";
 
 // Derived from the same list the country pages generate from. A hand-written

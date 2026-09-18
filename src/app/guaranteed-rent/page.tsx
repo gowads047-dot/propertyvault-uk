@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
@@ -313,11 +313,11 @@ export default function GuaranteedRentPage() {
               { city: "Coventry", areas: "Foleshill, Stoke, Hillfields, Radford, Tile Hill, Wood End, Binley, Earlsdon, and all CV postcodes", href: "/guaranteed-rent/coventry" },
               { city: "Sheffield", areas: "Burngreave, Firth Park, Hillsborough, Walkley, Crookes, Heeley, Meersbrook, and all S postcodes", href: "/guaranteed-rent/sheffield" },
             ].map((c) => (
-              <a key={c.city} href={c.href} className="glass rounded-2xl p-6 text-left hover:bg-white/10 transition-all block">
+              <Link key={c.city} href={c.href} className="glass rounded-2xl p-6 text-left hover:bg-white/10 transition-all block">
                 <h3 className="font-extrabold text-gold-400 text-xl mb-2" style={{ fontFamily: "var(--font-family-heading)" }}>{c.city}</h3>
                 <p className="text-sm text-navy-200 mb-2">{c.areas}</p>
                 <span className="text-xs font-semibold text-gold-400">View {c.city} details →</span>
-              </a>
+              </Link>
             ))}
           </div>
           {/* Expansion waitlist */}

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { SignatureBlock } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const fmt = (n: number) => "£" + Math.round(n).toLocaleString("en-GB");
 

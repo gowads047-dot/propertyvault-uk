@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { authFetch } from "@/lib/auth-fetch";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const QUICK_STEPS = [
   { n: 1, label: "Watch Orientation", href: "/academy/courses#orientation", done: false },

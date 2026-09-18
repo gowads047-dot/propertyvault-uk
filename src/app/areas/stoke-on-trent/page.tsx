@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";

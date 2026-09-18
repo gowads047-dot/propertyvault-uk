@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { authFetch } from "@/lib/auth-fetch";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";

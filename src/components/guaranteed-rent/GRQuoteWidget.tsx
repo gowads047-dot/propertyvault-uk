@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
 import { guaranteedRentCities } from "@/lib/site";
 

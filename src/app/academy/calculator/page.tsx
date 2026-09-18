@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 function fmt(n: number) {
   return "£" + Math.round(n).toLocaleString("en-GB");

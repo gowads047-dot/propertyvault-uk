@@ -2,7 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { supabase } from "@/lib/supabase";
 
 function TenantAuthInner() {

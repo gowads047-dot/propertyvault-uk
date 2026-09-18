@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 interface GuaranteedRentCTAProps {
   context?: "yield" | "cashflow" | "mortgage" | "brrr" | "deal" | "general";
