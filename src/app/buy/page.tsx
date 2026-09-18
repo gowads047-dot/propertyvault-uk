@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: TITLE,
     description: DESCRIPTION,
     url: canonical("/buy/"),
-    images: [{ url: `${SITE_URL}/opengraph-image`, width: 1200, height: 630, alt: "Buying a property with PropertyVault" }],
+    images: [{ url: `${SITE_URL}/opengraph-image/`, width: 1200, height: 630, alt: "Buying a property with PropertyVault" }],
   },
 };
 

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Nottingham — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed Rent Nottingham — PropertyVault UK" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/guaranteed-rent/nottingham/" },
 };

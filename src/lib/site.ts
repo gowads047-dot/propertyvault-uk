@@ -62,8 +62,8 @@ export function canonical(path = "/"): string {
  * Four pages were doing that, including /ask, /vault, and the guaranteed-rent
  * comparison page somebody would actually forward to a landlord.
  */
-export function ogImages(alt: string): { url: string; width: number; height: number; alt: string }[] {
-  return [{ url: `${SITE_URL}/opengraph-image/`, width: 1200, height: 630, alt }];
+export function ogImages(alt: string, path = "/opengraph-image/"): { url: string; width: number; height: number; alt: string }[] {
+  return [{ url: `${SITE_URL}${path}`, width: 1200, height: 630, alt }];
 }
 
 export function siteOrigin(): string {

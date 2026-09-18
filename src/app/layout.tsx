@@ -68,11 +68,14 @@ export const metadata: Metadata = {
     url: "https://www.propertyvaultuk.co.uk",
     images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "PropertyVault UK — Free Property Tools, Calculators & Guides" }],
   },
+  // Only the card type. Next fills a page's twitter title, description and
+  // image from its openGraph block when they are not set — but a value set
+  // here is inherited by every page that does not declare `twitter`, and
+  // wins. With an image here, thirty pages that advertise their own card
+  // in og:image (the guaranteed-rent cities, Makan, more) were showing the
+  // site logo on X.
   twitter: {
     card: "summary_large_image",
-    title: "PropertyVault UK",
-    description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, and expert UK property guides.`,
-    images: ["https://www.propertyvaultuk.co.uk/opengraph-image/"],
   },
   robots: { index: true, follow: true },
 
