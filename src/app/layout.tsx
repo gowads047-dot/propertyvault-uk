@@ -224,6 +224,21 @@ export default function RootLayout({
               "try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}",
           }}
         />
+        {/*
+          Same idea for the cookie banner. It is in the server HTML now (it
+          was mounted from a useEffect, so on a throttled phone it appeared
+          seconds after the page and Lighthouse took its paragraph as the
+          largest paint). A visitor who has already answered must not see it
+          flash in, so their stored choice hides it here, before paint —
+          globals.css: html.consented .cookie-banner.
+        */}
+        <script
+          id="consent-init"
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('cookie_consent')){document.documentElement.classList.add('consented')}}catch(e){}",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

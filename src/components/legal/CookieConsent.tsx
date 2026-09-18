@@ -26,13 +26,23 @@ function tellGoogle(granted: boolean) {
   });
 }
 
+/**
+ * Rendered on the server, shown by default. It used to start hidden and
+ * mount from the effect below, which on a throttled phone put it on screen
+ * seconds after the rest of the page — and, being the largest text block to
+ * appear, it became the homepage's largest contentful paint. Now it is in
+ * the HTML from the first byte. For a visitor who has already answered, the
+ * consent-init script in the root layout adds html.consented before first
+ * paint and globals.css hides .cookie-banner under it, so nothing flashes;
+ * the effect then takes it out of the tree as well.
+ */
 export function CookieConsent() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie_consent");
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reads localStorage, which is unavailable during render; reading it in an initialiser causes a hydration mismatch
-    if (!consent) setVisible(true);
+    if (consent) setVisible(false);
   }, []);
 
   function accept() {
@@ -50,7 +60,7 @@ export function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-navy-900 text-white border-t border-navy-700 shadow-2xl">
+    <div className="cookie-banner fixed bottom-0 left-0 right-0 z-[100] bg-navy-900 text-white border-t border-navy-700 shadow-2xl">
       <div className="container-max px-4 py-4 md:py-5">
         <div className="flex flex-col md:flex-row md:items-center gap-4">
           <div className="flex-1">
