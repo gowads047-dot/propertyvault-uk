@@ -77,6 +77,20 @@ const nextConfig: NextConfig = {
       // would take a working account page away from every logged-in user.
       { source: "/landlord-hub", destination: "/landlords/", permanent: true },
       { source: "/manage", destination: "/landlords/", permanent: true },
+
+      // Makan was called Hetta until 22 June 2026 (4ab22c5 renamed the
+      // directory and every link, and added no redirect). Search Console
+      // still lists /hetta/rooms as a 404 it keeps returning to. Same
+      // sub-paths on both sides, so every old URL lands on its new self.
+      { source: "/hetta", destination: "/makan/", permanent: true },
+      { source: "/hetta/:path+", destination: "/makan/:path+/", permanent: true },
+
+      // Country pages parked in makan-config.ts ("not active in this
+      // phase"). Google crawled them while they were live and now gets a
+      // 404 for each. Temporary, not permanent: they are expected back, and
+      // a 307 tells Google to keep checking rather than forget the URL.
+      // makan-config.test.ts keeps this list and the config in step.
+      { source: "/makan/country/:code(ae|sa|kw|bh|qa|om|jo)", destination: "/makan/", permanent: false },
     ];
   },
 };
