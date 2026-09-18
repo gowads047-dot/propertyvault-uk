@@ -23,6 +23,17 @@ kept in an environment variable.
 
 The sitemap was already on the property (submitted 22 Aug 2026, last read
 16 Sept, status Success, 211 pages discovered), so that step was done.
+Indexing was requested the same day for `/`, `/guaranteed-rent/`,
+`/calculators/`, `/landlords/prs-database/` and `/blog/` — each shows
+"Indexing requested". IndexNow was pushed for all 211 URLs (HTTP 200).
+The overview already carries history from the earlier unverified period:
+40 clicks over August–September, 212 pages indexed and 102 not indexed,
+24 valid Breadcrumbs items.
+
+Still to do, and it needs a sign-in: Bing Webmaster Tools
+(https://www.bing.com/webmasters — "Get started", sign in with the Google
+account, then *Import from Google Search Console*). Until that is done,
+IndexNow submissions are accepted but there is no Bing dashboard to read.
 
 Two older unverified properties exist on the same account from earlier
 attempts (`propertyvaultuk.co.uk` domain property and
