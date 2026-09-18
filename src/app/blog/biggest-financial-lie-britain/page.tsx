@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "UK housing market price charts and data" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/biggest-financial-lie-britain/opengraph-image/", width: 1200, height: 630, alt: "UK housing market price charts and data" }],
   },
   twitter: {
     card: "summary_large_image",

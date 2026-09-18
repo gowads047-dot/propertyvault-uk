@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/templates/ast/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free AST Template — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Free AST Template — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free AST Template UK 2026 | PropertyVault", description: "Free AST template for England — updated for 2026 legislation." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/ast/" },

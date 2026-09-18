@@ -16,11 +16,11 @@ export default async function Image() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div style={{ padding: "8px 20px", borderRadius: "20px", background: "rgba(244,211,94,0.15)", color: "#f4d35e", fontSize: "16px", fontWeight: 700, alignSelf: "flex-start" }}>Free Tools</div>
-          <div style={{ fontSize: "56px", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>${siteMetrics.calculators} Free Property Calculators</div>
+          <div style={{ display: "flex", fontSize: "56px", fontWeight: 800, color: "#ffffff", lineHeight: 1.1 }}>{siteMetrics.calculators} Free Property Calculators</div>
           <div style={{ fontSize: "22px", color: "#97a5c5" }}>Deal Analyser · Mortgage · BRRR · Stamp Duty · CGT · Rental Yield · Section 24 & more</div>
         </div>
         <div style={{ display: "flex", gap: "24px" }}>
-          {[{ n: "17", l: "Calculators" }, { n: "100%", l: "Free" }, { n: "Zero", l: "Sign-up" }].map(s => (
+          {[{ n: String(siteMetrics.calculators), l: "Calculators" }, { n: "100%", l: "Free" }, { n: "Zero", l: "Sign-up" }].map(s => (
             <div key={s.l} style={{ display: "flex", flexDirection: "column", padding: "12px 24px", borderRadius: "12px", background: "rgba(255,255,255,0.08)" }}>
               <span style={{ fontSize: "28px", fontWeight: 800, color: "#f4d35e" }}>{s.n}</span>
               <span style={{ fontSize: "14px", color: "#97a5c5" }}>{s.l}</span>

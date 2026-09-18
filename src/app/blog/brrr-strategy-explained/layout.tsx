@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "The BRRR strategy explained for UK property investors. Buy, Refurbish, Rent, Refinance — learn how it works, the risks, and how to model your first deal.",
     url: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BRRR Strategy Explained — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/opengraph-image/", width: 1200, height: 630, alt: "BRRR Strategy Explained — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2025-09-01T00:00:00.000Z",
   },
@@ -24,7 +24,7 @@ const jsonLd = {
   dateModified: "2025-09-01",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
-  image: "https://www.propertyvaultuk.co.uk/opengraph-image",
+  image: "https://www.propertyvaultuk.co.uk/blog/brrr-strategy-explained/opengraph-image/",
   articleSection: "Strategy",
   keywords: ["BRRR strategy UK", "buy refurbish rent refinance", "BRRR property investing"],
 };

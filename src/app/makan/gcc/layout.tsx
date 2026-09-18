@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     siteName: "Makan — PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/makan/opengraph-image", width: 1200, height: 630, alt: "Makan — Find Your Place. Free property listings worldwide." }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/makan/opengraph-image/", width: 1200, height: 630, alt: "Makan — Find Your Place. Free property listings worldwide." }],
   },
 };
 

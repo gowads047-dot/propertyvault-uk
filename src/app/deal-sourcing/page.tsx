@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/deal-sourcing/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Deal Sourcing UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Property Deal Sourcing UK" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/best-areas-invest-birmingham-2026/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Best Areas to Invest in Birmingham 2026" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Best Areas to Invest in Birmingham 2026" }],
   },
 };
 

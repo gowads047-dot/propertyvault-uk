@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-vs-traditional-letting/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Guaranteed rent vs traditional letting comparison for UK landlords" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-vs-traditional-letting/opengraph-image/", width: 1200, height: 630, alt: "Guaranteed rent vs traditional letting comparison for UK landlords" }],
   },
   twitter: {
     card: "summary_large_image",

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/calculators/deal-analyser/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Property Deal Analyser — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Property Deal Analyser — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Property Deal Analyser UK | PropertyVault", description: "Free tool — analyse any property investment deal in under 5 minutes." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/deal-analyser/" },

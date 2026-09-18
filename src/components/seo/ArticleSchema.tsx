@@ -49,7 +49,7 @@ export function ArticleSchema({
       name: "PropertyVault UK",
       url: SITE_URL,
     },
-    image: canonical("/opengraph-image"),
+    image: canonical("/opengraph-image/"),
     articleSection: section,
     inLanguage,
     ...(keywords?.length ? { keywords } : {}),

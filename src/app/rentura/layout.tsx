@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     locale: "en_GB",
     siteName: "PropertyVault UK",
     url: "https://www.propertyvaultuk.co.uk/rentura/",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rentura — The Conversational Property OS for UK Landlords" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Rentura — The Conversational Property OS for UK Landlords" }],
   },
   twitter: {
     card: "summary_large_image",

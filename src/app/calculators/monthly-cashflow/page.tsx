@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/calculators/monthly-cashflow/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "BTL Monthly Cash Flow Calculator" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "BTL Monthly Cash Flow Calculator" }],
   },
   twitter: {
     card: "summary_large_image",

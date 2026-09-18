@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/templates/tenant-application/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Free Tenant Application Form — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Free Tenant Application Form — PropertyVault UK" }],
   },
   twitter: { card: "summary_large_image", title: "Free Tenant Application Form UK | PropertyVault", description: "Free landlord tenant application template — screen tenants before letting." },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/templates/tenant-application/" },

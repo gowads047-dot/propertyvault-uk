@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Landlord signing guaranteed rent agreement with property company" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/guaranteed-rent-explained/opengraph-image/", width: 1200, height: 630, alt: "Landlord signing guaranteed rent agreement with property company" }],
   },
   twitter: {
     card: "summary_large_image",

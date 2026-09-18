@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/about/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "About PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "About PropertyVault UK" }],
   },
   twitter: {
     card: "summary_large_image",

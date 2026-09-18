@@ -66,13 +66,13 @@ export const metadata: Metadata = {
     locale: "en_GB",
     siteName: "PropertyVault UK",
     url: "https://www.propertyvaultuk.co.uk",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "PropertyVault UK — Free Property Tools, Calculators & Guides" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "PropertyVault UK — Free Property Tools, Calculators & Guides" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "PropertyVault UK",
     description: `${siteMetrics.calculators} free property calculators, ${siteMetrics.templates} legal templates, and expert UK property guides.`,
-    images: ["https://www.propertyvaultuk.co.uk/opengraph-image"],
+    images: ["https://www.propertyvaultuk.co.uk/opengraph-image/"],
   },
   robots: { index: true, follow: true },
 
@@ -134,7 +134,7 @@ const localBusinessJsonLd = {
   description: "Guaranteed rent for landlords in the Midlands: a fixed monthly rent for 3–5 years, paid whether or not the property is occupied, with the letting and day-to-day management handled. Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
   url: "https://www.propertyvaultuk.co.uk",
   logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
-  image: "https://www.propertyvaultuk.co.uk/opengraph-image",
+  image: "https://www.propertyvaultuk.co.uk/opengraph-image/",
   email: "info@propertyvaultuk.co.uk",
   priceRange: "££",
   address: {

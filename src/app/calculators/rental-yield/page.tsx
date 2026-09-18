@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     description: "Calculate gross and net rental yield on any UK property — factor in voids, management, and all costs.",
     type: "website",
     url: "https://www.propertyvaultuk.co.uk/calculators/rental-yield/",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image", width: 1200, height: 630, alt: "Rental Yield Calculator — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Rental Yield Calculator — PropertyVault UK" }],
   },
   alternates: { canonical: "https://www.propertyvaultuk.co.uk/calculators/rental-yield/" },
 };
