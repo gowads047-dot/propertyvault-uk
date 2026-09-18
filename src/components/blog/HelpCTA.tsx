@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { WHATSAPP_HELP_URL, CALENDLY_URL } from "@/lib/contact";
 
 /**

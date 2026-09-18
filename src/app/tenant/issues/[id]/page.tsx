@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { supabase } from "@/lib/supabase";
 
 const S = { bg: "#f8f7f5", card: "white", ink: "#1a2942", ink2: "rgba(26,41,66,0.55)", border: "rgba(26,41,66,0.1)", accent: "#1a2942" };

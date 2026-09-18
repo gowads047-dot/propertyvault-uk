@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SignatureBlock } from "@/components/SignatureBlock";
 import { PrintHeader, PrintFooter } from "@/components/PrintDoc";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 // ── Field helpers ─────────────────────────────────────────────────────────────
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {

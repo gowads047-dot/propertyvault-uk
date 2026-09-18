@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { trailingSlashAction } from "./trailing-slash";
+import { trailingSlashAction, withTrailingSlash } from "./trailing-slash";
 
 describe("trailingSlashAction", () => {
   it("leaves canonical page URLs and the root alone", () => {
@@ -39,5 +39,31 @@ describe("next.config.ts", () => {
     const cfg = readFileSync(join(process.cwd(), "next.config.ts"), "utf8");
     expect(cfg).toMatch(/trailingSlash:\s*true/);
     expect(cfg).toMatch(/skipTrailingSlashRedirect:\s*true/);
+  });
+});
+
+describe("withTrailingSlash", () => {
+  it("adds the slash to a bare page path, keeping query and hash", () => {
+    expect(withTrailingSlash("/blog")).toBe("/blog/");
+    expect(withTrailingSlash("/guaranteed-rent/birmingham")).toBe("/guaranteed-rent/birmingham/");
+    expect(withTrailingSlash("/makan?type=flat")).toBe("/makan/?type=flat");
+    expect(withTrailingSlash("/landlords#faq")).toBe("/landlords/#faq");
+    expect(withTrailingSlash("/makan?type=flat#top")).toBe("/makan/?type=flat#top");
+  });
+
+  it("leaves what is already right, and what is not a page, alone", () => {
+    expect(withTrailingSlash("/")).toBe("/");
+    expect(withTrailingSlash("/blog/")).toBe("/blog/");
+    expect(withTrailingSlash("/blog/?page=2")).toBe("/blog/?page=2");
+    expect(withTrailingSlash("/sitemap.xml")).toBe("/sitemap.xml");
+    expect(withTrailingSlash("/deal-report.pdf")).toBe("/deal-report.pdf");
+    expect(withTrailingSlash("https://example.com/x")).toBe("https://example.com/x");
+    expect(withTrailingSlash("mailto:info@propertyvaultuk.co.uk")).toBe("mailto:info@propertyvaultuk.co.uk");
+    expect(withTrailingSlash("#top")).toBe("#top");
+    expect(withTrailingSlash("//cdn.example.com/x")).toBe("//cdn.example.com/x");
+  });
+
+  it("gives API paths the slash too, matching how the crons call them", () => {
+    expect(withTrailingSlash("/api/contact")).toBe("/api/contact/");
   });
 });

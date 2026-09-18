@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import ApiForm from "@/components/forms/ApiForm";
 import { events } from "@/lib/analytics";

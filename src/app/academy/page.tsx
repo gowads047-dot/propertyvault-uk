@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const MODULES = [
   { n: "01", title: "Property Foundations", desc: "How the UK market works, title types, key metrics every investor must know, and the mindset behind successful portfolios." },

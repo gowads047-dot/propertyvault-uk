@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { ShareResults } from "./ShareResults";
 import { calcSDLT } from "@/lib/tax";
 import { monthlyRepayment, monthlyInterestOnly, pctOf } from "@/lib/finance";

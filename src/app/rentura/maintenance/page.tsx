@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";

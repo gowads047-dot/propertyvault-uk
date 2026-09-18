@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { PrintButton } from "@/components/calculators/PrintButton";
 import { ShareResults } from "@/components/calculators/ShareResults";
@@ -556,7 +556,7 @@ export default function LeaseholdCalculatorPage() {
                   <div style={{ padding: "20px", borderRadius: 16, background: "#0f1b36", textAlign: "center" }}>
                     <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 8 }}>Buying a leasehold property?</p>
                     <p style={{ fontSize: 16, fontWeight: 700, color: "white", marginBottom: 12 }}>Talk to a PropertyVault adviser — free, no obligation.</p>
-                    <a href="/contact" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>Get Free Advice →</a>
+                    <Link href="/contact" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 800, fontSize: 14, padding: "12px 28px", borderRadius: 12, textDecoration: "none" }}>Get Free Advice →</Link>
                   </div>
                 </div>
               )}

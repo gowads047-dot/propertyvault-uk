@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import Image from "next/image";
 import { ShareButtons } from "@/components/makan/ShareButtons";
 import { PreferredSourceBadge } from "@/components/seo/PreferredSourceBadge";

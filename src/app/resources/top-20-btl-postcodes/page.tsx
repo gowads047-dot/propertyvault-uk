@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ogImages } from "@/lib/site";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { Disclaimer } from "@/components/legal/Disclaimer";

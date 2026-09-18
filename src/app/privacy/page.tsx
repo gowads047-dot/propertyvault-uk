@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "@/components/ui/Link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — PropertyVault UK",
@@ -118,7 +119,7 @@ export default function PrivacyPage() {
 
           <div>
             <h2 className="text-xl font-bold text-navy-800 mb-3">7. Cookies</h2>
-            <p>We use cookies and similar technologies to improve your experience, analyse usage, and deliver relevant content. See our full Cookie Policy at <a href="/cookies" className="text-gold-600 font-semibold">/cookies</a> for details on what cookies we use, their purposes, and how to manage your preferences.</p>
+            <p>We use cookies and similar technologies to improve your experience, analyse usage, and deliver relevant content. See our full Cookie Policy at <Link href="/cookies" className="text-gold-600 font-semibold">/cookies</Link> for details on what cookies we use, their purposes, and how to manage your preferences.</p>
           </div>
 
           <div>

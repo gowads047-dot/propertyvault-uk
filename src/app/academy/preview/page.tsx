@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const MODULES = [
   { n: "01", title: "Introduction to Deal Sourcing", lessons: ["What is a Deal Sourcer?", "How Sourcing Fees Work", "The Deal Pipeline Overview", "Legal Considerations Intro", "Your 90-Day Action Plan"] },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 const CHALLENGE_DAYS = [
   { day: 1, title: "Understand Deal Sourcing", desc: "The business model, income potential, legal framework, and mindset of a professional deal sourcer.", task: "Write down 3 target areas and why you chose them.", download: "Day 1 Checklist", nass: "Most people skip this day because they think they already know what deal sourcing is. They don't. Do this properly and you'll save yourself months of confusion." },

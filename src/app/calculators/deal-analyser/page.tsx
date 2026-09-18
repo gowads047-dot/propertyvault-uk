@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { FAQSchema } from "@/components/seo/FAQSchema";
 import { EmailResults } from "@/components/calculators/EmailResults";
@@ -1308,9 +1308,9 @@ export default function DealAnalyserPage() {
                             : `⚠️ Self-managing earns ${fmt(-grCalc.saving)}/mo more if fully let. Guaranteed rent trades income for peace of mind.`}
                         </p>
                       </div>
-                      <a href="/guaranteed-rent" style={{ display: "block", marginTop: 12, textAlign: "center", padding: "10px", borderRadius: 10, background: "#0f1b36", color: "var(--gold-ink)", fontWeight: 700, fontSize: 13, textDecoration: "none" }}>
+                      <Link href="/guaranteed-rent" style={{ display: "block", marginTop: 12, textAlign: "center", padding: "10px", borderRadius: 10, background: "#0f1b36", color: "var(--gold-ink)", fontWeight: 700, fontSize: 13, textDecoration: "none" }}>
                         Get a Guaranteed Rent Quote from PropertyVault →
-                      </a>
+                      </Link>
                     </div>
                   )}
 

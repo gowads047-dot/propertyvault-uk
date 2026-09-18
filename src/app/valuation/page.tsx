@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 export const metadata: Metadata = {
   title: "Free Property Valuation UK — Instant Online Estimates",

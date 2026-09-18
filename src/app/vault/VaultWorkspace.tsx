@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { track, events } from "@/lib/analytics";
 import { DataState, EvidenceRow } from "@/components/property/DataState";
 import { PVScore } from "@/components/property/PVScore";

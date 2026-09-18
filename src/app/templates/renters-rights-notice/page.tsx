@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SignatureBlock, ShareToolbar } from "@/components/SignatureBlock";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 // Defined at module scope so React keeps the same component type across renders.
 // Nested inside the page they were re-created on every keystroke, remounting

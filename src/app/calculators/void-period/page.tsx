@@ -5,7 +5,7 @@ import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 export const metadata: Metadata = {
   title: "Void Period Cost Calculator UK — What Empty Weeks Cost",

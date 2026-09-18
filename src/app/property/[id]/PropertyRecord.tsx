@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { DataState } from "@/components/property/DataState";
 import { LifecycleBar } from "@/components/property/LifecycleBar";
 import { StageControl } from "@/components/property/StageControl";

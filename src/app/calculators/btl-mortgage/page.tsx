@@ -6,7 +6,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 
 export const metadata: Metadata = {
   title: "BTL Mortgage Stress Test Calculator UK — ICR Check",

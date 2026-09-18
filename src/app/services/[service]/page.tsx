@@ -1,7 +1,7 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { notFound } from "next/navigation";
 import ApiForm from "@/components/forms/ApiForm";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";

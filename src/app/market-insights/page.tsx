@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { fetchBankRate, fetchUkhpi, monthLabel } from "@/lib/market-data";
 

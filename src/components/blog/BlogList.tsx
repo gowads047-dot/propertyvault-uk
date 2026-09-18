@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
@@ -255,10 +255,10 @@ function ToolsCTABanner() {
           { label: "Section 24", href: "/calculators/section-24" },
           { label: "Stamp Duty", href: "/calculators/stamp-duty" },
         ].map(t => (
-          <a key={t.href} href={t.href} style={{ fontSize: 12, fontWeight: 600, color: "#0f1b36", background: "white", border: "1.5px solid #e2e8f0", borderRadius: 10, padding: "6px 14px", textDecoration: "none", transition: "border-color 0.15s" }}
+          <Link key={t.href} href={t.href} style={{ fontSize: 12, fontWeight: 600, color: "#0f1b36", background: "white", border: "1.5px solid #e2e8f0", borderRadius: 10, padding: "6px 14px", textDecoration: "none", transition: "border-color 0.15s" }}
             className="hover:border-navy-400">
             {t.label} →
-          </a>
+          </Link>
         ))}
       </div>
     </div>
@@ -423,9 +423,9 @@ export function BlogList({ articles }: { articles: Article[] }) {
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", marginBottom: 24, maxWidth: 480, margin: "0 auto 24px" }}>
             The Academy is being built: playbooks, scripts, tools and step-by-step training for sourcing deals rather than just reading about them. It is not open yet and there is no price.
           </p>
-          <a href="/academy" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 14, textDecoration: "none" }}>
+          <Link href="/academy" style={{ display: "inline-block", background: "#c9a84c", color: "#0f1b36", fontWeight: 700, fontSize: 14, padding: "12px 28px", borderRadius: 14, textDecoration: "none" }}>
             Join the Academy waiting list →
-          </a>
+          </Link>
           <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 12 }}>Educational platform · Not financial advice · Nothing to buy yet</p>
         </div>
       </div>

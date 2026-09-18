@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import { AREA_CITIES, areaSlug } from "@/lib/areas";
 
 /**

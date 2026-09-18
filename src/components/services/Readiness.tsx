@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/ui/Link";
 import type { Readiness, Service } from "@/lib/services";
 import { READINESS_LABEL, READINESS_MEANING } from "@/lib/services";
 
