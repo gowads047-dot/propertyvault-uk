@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "Stamp Duty UK — Complete Guide — PropertyVault UK";
+const card = blogCard("stamp-duty-guide");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("Stamp Duty UK — Complete Guide", "Finance", "June 2026");
+export default function Image() {
+  return card.render();
 }

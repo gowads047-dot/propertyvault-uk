@@ -1,10 +1,11 @@
-import { blogOgImage, ogSize } from "@/lib/og-blog";
+import { blogCard, ogSize } from "@/lib/og-blog";
 
 export const runtime = "edge";
-export const alt = "Personal vs Ltd Company for BTL — PropertyVault UK";
+const card = blogCard("personal-vs-limited-company");
+export const alt = card.alt;
 export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  return blogOgImage("Personal vs Ltd Company for BTL", "Tax", "June 2026");
+export default function Image() {
+  return card.render();
 }

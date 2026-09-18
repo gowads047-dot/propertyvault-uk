@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { blogPosts, slugOf } from "./blog-posts";
 
 export const ogSize = { width: 1200, height: 630 };
 
@@ -25,4 +26,20 @@ export function blogOgImage(title: string, category: string, date: string) {
     ),
     { ...ogSize }
   );
+}
+
+/**
+ * The card for one post, from the same list the blog index, the feed and
+ * the sitemap read. Each post's opengraph-image.tsx is the same eight
+ * lines with its slug; the title, category and date are never typed twice.
+ * Throws at build time for a slug that is not in the index, which is the
+ * moment to find out.
+ */
+export function blogCard(slug: string) {
+  const post = blogPosts.find(p => slugOf(p) === slug);
+  if (!post) throw new Error(`No blog post with slug "${slug}" in lib/blog-posts.ts`);
+  return {
+    alt: `${post.title} — PropertyVault UK`,
+    render: () => blogOgImage(post.title, post.category, post.date),
+  };
 }

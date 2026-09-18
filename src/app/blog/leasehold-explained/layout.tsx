@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Everything UK buyers need to know about leasehold: lease lengths, extension costs, ground rent risks, marriage value, and how to avoid the most expensive mistakes.",
     url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/",
     siteName: "PropertyVault UK",
-    images: [{ url: "https://www.propertyvaultuk.co.uk/opengraph-image/", width: 1200, height: 630, alt: "Leasehold Explained — PropertyVault UK" }],
+    images: [{ url: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/opengraph-image/", width: 1200, height: 630, alt: "Leasehold Explained — PropertyVault UK" }],
     authors: ["Nass"],
     publishedTime: "2026-07-05T00:00:00.000Z",
   },
@@ -24,7 +24,7 @@ const jsonLd = {
   dateModified: "2026-07-05",
   author: { "@type": "Person", name: "Nass" },
   publisher: { "@type": "Organization", name: "PropertyVault UK", url: "https://www.propertyvaultuk.co.uk" },
-  image: "https://www.propertyvaultuk.co.uk/opengraph-image/",
+  image: "https://www.propertyvaultuk.co.uk/blog/leasehold-explained/opengraph-image/",
   articleSection: "Buying",
   keywords: ["leasehold", "lease extension", "ground rent", "marriage value", "leasehold reform", "UK property"],
 };

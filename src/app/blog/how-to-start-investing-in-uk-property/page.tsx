@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "PropertyVault UK",
     images: [
       {
-        url: "https://www.propertyvaultuk.co.uk/opengraph-image/",
+        url: "https://www.propertyvaultuk.co.uk/blog/how-to-start-investing-in-uk-property/opengraph-image/",
         width: 1200,
         height: 630,
         alt: "How to Start Investing in UK Property",
