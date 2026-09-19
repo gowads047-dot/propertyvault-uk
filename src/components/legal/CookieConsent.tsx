@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "@/components/ui/Link";
+import { consentSignals } from "@/lib/consent";
 import { loadGtag } from "@/lib/analytics";
 
 /**
@@ -22,9 +23,7 @@ import { loadGtag } from "@/lib/analytics";
  * runs beforeInteractive, so it exists by the time anybody can click.
  */
 function tellGoogle(granted: boolean) {
-  window.gtag?.("consent", "update", {
-    analytics_storage: granted ? "granted" : "denied",
-  });
+  window.gtag?.("consent", "update", consentSignals(granted));
 }
 
 /**

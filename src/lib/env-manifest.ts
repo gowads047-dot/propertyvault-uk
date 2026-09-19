@@ -64,6 +64,26 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "All nine scheduled jobs, and the social status endpoint. Must be at least 16 characters.",
     withoutIt: "Every cron is refused with 401, and the function log says which case it is.",
   },
+  META_PIXEL_ID: {
+    required: false,
+    enables: "Meta Conversions API: a server-side Lead event for each enquiry from a visitor who accepted marketing cookies.",
+    withoutIt: "Nothing is sent to Meta.",
+  },
+  META_CAPI_ACCESS_TOKEN: {
+    required: false,
+    enables: "The token the Conversions API call carries. Set with META_PIXEL_ID or not at all.",
+    withoutIt: "Nothing is sent to Meta.",
+  },
+  NEXT_PUBLIC_GADS_CONVERSION_ID: {
+    required: false,
+    enables: "Google Ads conversion tracking with enhanced conversions, on the same gtag.js. Looks like AW-123456789.",
+    withoutIt: "No Ads conversion is sent; GA4 is unaffected.",
+  },
+  NEXT_PUBLIC_GADS_LEAD_LABEL: {
+    required: false,
+    enables: "The conversion label for a lead, from the Ads conversion action. Set with the id or not at all.",
+    withoutIt: "No Ads conversion is sent.",
+  },
   UNSUBSCRIBE_SECRET: {
     required: false,
     enables: "A key of its own for signing one-click unsubscribe links.",

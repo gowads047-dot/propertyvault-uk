@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { attributionFields } from "@/lib/attribution";
+import { storedConsent } from "@/lib/consent";
+import { conversion } from "@/lib/analytics";
 
 const SUBJECTS = [
   "General Enquiry",
@@ -37,7 +39,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), ...data, source: "contact" }),
+        body: JSON.stringify({ ...attributionFields(), ...data, source: "contact", marketing_consent: storedConsent() }),
       });
       const json = await res.json().catch(() => ({}));
 
@@ -47,6 +49,7 @@ export default function ContactForm() {
         return;
       }
       setStatus("sent");
+      conversion("lead", { email: String(data.email ?? "") });
     } catch {
       setError("We could not reach the server. Please check your connection and try again.");
       setStatus("error");

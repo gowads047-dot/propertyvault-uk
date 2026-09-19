@@ -2,7 +2,8 @@ import { createClient } from "@supabase/supabase-js";
 import { RULES, rateGuard } from "@/lib/rate-limit";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
-import { REPLY_TO } from "@/lib/site";
+import { REPLY_TO, SITE_URL } from "@/lib/site";
+import { sendLeadToMeta } from "@/lib/meta-capi";
 
 /**
  * Contact enquiries.
@@ -26,7 +27,10 @@ const SOURCES = ["contact", "guaranteed-rent", "list-property", "makan-wanted"] 
 type Source = (typeof SOURCES)[number];
 
 /** Fields that are handled explicitly; everything else becomes `details`. */
-const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey"]);
+// marketing_consent is the visitor's cookie choice at the moment they
+// pressed Send, carried so the server can tell Meta only about a visitor
+// who accepted; it is a signal about the request, not a detail of the enquiry.
+const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey", "marketing_consent"]);
 
 const SOURCE_LABEL: Record<Source, string> = {
   "contact": "enquiry",
@@ -162,6 +166,22 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Resend unavailable for contact enquiry:", err);
     // The enquiry is saved. It can be picked up from contact_messages.
+  }
+
+  // 3. Meta Conversions API, when configured and only with consent. Runs
+  // after the save and the email; its failure is logged and costs nothing.
+  if (saved?.id) {
+    await sendLeadToMeta({
+      eventId: saved.id,
+      email,
+      phone: typeof body.phone === "string" ? body.phone : null,
+      consent: typeof body.marketing_consent === "string" ? body.marketing_consent : null,
+      sourceUrl: `${SITE_URL}${typeof body.landing_page === "string" ? body.landing_page : "/"}`,
+      ip: req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? null,
+      userAgent: req.headers.get("user-agent"),
+      fbclid: typeof body.fbclid === "string" ? body.fbclid : null,
+      attributedAt: typeof body.attributed_at === "string" ? body.attributed_at : null,
+    });
   }
 
   return NextResponse.json({ ok: true });
