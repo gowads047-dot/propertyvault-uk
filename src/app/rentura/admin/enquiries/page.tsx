@@ -39,6 +39,9 @@ type Enquiry = {
   message: string | null;
   source: string | null;
   details: Record<string, unknown> | null;
+  /** Set once the notification email was accepted by Resend; false means
+   *  this row is the only copy and nobody was told. */
+  emailed: boolean | null;
   created_at: string;
 };
 
@@ -156,6 +159,17 @@ export default function EnquiriesPage() {
                   </span>
                   {e.subject ? (
                     <span style={{ fontSize: 12, color: INK2 }}>{e.subject}</span>
+                  ) : null}
+                  {e.emailed === false ? (
+                    <span
+                      title="The notification email did not go out. This page is the only place this enquiry exists."
+                      style={{
+                        fontSize: 11, fontWeight: 700, color: "#ffa2a2",
+                        background: "rgba(248,113,113,0.12)", borderRadius: 4, padding: "2px 7px",
+                      }}
+                    >
+                      Not emailed
+                    </span>
                   ) : null}
                 </div>
 
