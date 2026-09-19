@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { track, events } from "@/lib/analytics";
+import { attributionFields } from "@/lib/attribution";
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
@@ -39,7 +40,7 @@ export function NewsletterPopup() {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, user_type: userType || null }),
+        body: JSON.stringify({ ...attributionFields(), name, email, user_type: userType || null }),
       });
       const data = await res.json();
 

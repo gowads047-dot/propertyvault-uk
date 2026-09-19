@@ -14,11 +14,14 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
  * even if email fails". These tests hold the code to that contract.
  */
 
+// The route upserts. The mock keeps the old name so the assertions below
+// read as they did: `insert` is called with the row, and resolves to
+// whatever it is told to.
 const insert = vi.fn();
 const send = vi.fn();
 
 vi.mock("@supabase/supabase-js", () => ({
-  createClient: () => ({ from: () => ({ insert }) }),
+  createClient: () => ({ from: () => ({ upsert: (row: unknown) => insert(row) }) }),
 }));
 
 vi.mock("resend", () => ({
@@ -63,6 +66,8 @@ afterEach(() => {
   vi.unstubAllGlobals();
   delete process.env.RESEND_API_KEY;
   delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+  delete process.env.CRON_SECRET;
+  delete process.env.UNSUBSCRIBE_SECRET;
 });
 
 describe("a missing RESEND_API_KEY must not cost us the subscriber", () => {
@@ -146,13 +151,52 @@ describe("the happy path still works", () => {
     expect(send.mock.calls[0][0]).toMatchObject({ to: "test.person@example.com" });
   });
 
-  it("treats a duplicate email as success, since the pack is still worth sending", async () => {
-    insert.mockResolvedValue({ error: { code: "23505" } });
-
+  it("re-subscribes an address that is already there, clearing any earlier unsubscribe", async () => {
+    // An upsert on email: no duplicate error to handle any more, and the
+    // row comes back on the list — signing up again is renewed consent.
     const res = await post(valid);
 
     expect(res.status).toBe(200);
+    expect(insert.mock.calls[0][0]).toMatchObject({ unsubscribed_at: null });
     expect(send).toHaveBeenCalledTimes(1);
+  });
+
+  it("stores the attribution the form carried", async () => {
+    await post({ ...valid, utm_source: "instagram", utm_campaign: "reel-12", landing_page: "/guaranteed-rent/" });
+
+    expect(insert.mock.calls[0][0]).toMatchObject({
+      attribution: { utm_source: "instagram", utm_campaign: "reel-12", landing_page: "/guaranteed-rent/" },
+    });
+  });
+
+  it("falls back to the columns the table has when the migration has not been run", async () => {
+    insert.mockResolvedValueOnce({ error: { code: "42703", message: "column attribution does not exist" } });
+
+    const res = await post({ ...valid, utm_source: "x" });
+
+    expect(res.status).toBe(200);
+    expect(insert).toHaveBeenCalledTimes(2);
+    expect(insert.mock.calls[1][0]).not.toHaveProperty("attribution");
+    expect(insert.mock.calls[1][0]).not.toHaveProperty("unsubscribed_at");
+  });
+
+  it("puts one-click unsubscribe headers and a footer link on the email", async () => {
+    process.env.CRON_SECRET = "a-secret-long-enough-to-sign-with";
+
+    await post(valid);
+
+    const msg = send.mock.calls[0][0];
+    expect(msg.headers["List-Unsubscribe-Post"]).toBe("List-Unsubscribe=One-Click");
+    expect(msg.headers["List-Unsubscribe"]).toMatch(/^<https:\/\/www\.propertyvaultuk\.co\.uk\/api\/unsubscribe\/\?e=test\.person%40example\.com&t=[A-Za-z0-9_-]+>$/);
+  });
+
+  it("sends no unsubscribe link it cannot sign", async () => {
+    delete process.env.CRON_SECRET;
+    delete process.env.UNSUBSCRIBE_SECRET;
+
+    await post(valid);
+
+    expect(send.mock.calls[0][0].headers).toEqual({});
   });
 
   it("surfaces a genuine database failure", async () => {

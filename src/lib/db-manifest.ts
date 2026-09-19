@@ -157,6 +157,11 @@ export const MIGRATIONS: Migration[] = [
     },
   },
   {
+    file: "subscribers-consent.sql",
+    purpose: "Attribution (utm/click ids) and unsubscribed_at on subscribers; one-click unsubscribe needs the latter.",
+    marker: { kind: "column", table: "subscribers", column: "unsubscribed_at" },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
