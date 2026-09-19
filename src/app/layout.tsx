@@ -22,9 +22,23 @@ import { SITE_URL, siteMetrics } from "@/lib/site";
  * next/font emits the files from our own origin and injects a <link rel=preload>
  * at HTML parse time, so the chain collapses to a single parallel fetch.
  */
+/**
+ * display: optional on the two fonts every page uses.
+ *
+ * With the default (swap) the text paints in the fallback and repaints
+ * when the web font lands — and that repaint is what Lighthouse counts as
+ * the largest contentful paint, a second after first paint on a throttled
+ * phone. With optional, a font that is not in the cache within the first
+ * ~100 ms stays out for that page view: the fallback (metric-matched, so
+ * nothing shifts) is what the visitor reads, and the font is cached for
+ * the next page. On a normal connection the preloaded file arrives in
+ * time and nothing changes. The trade: a first-time visitor on a slow
+ * connection sees system-ui and Georgia instead of Inter and Playfair.
+ */
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "optional",
 });
 
 /** Every heading on the site. Worth preloading. */
@@ -32,6 +46,7 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
   weight: ["600", "700", "800"],
+  display: "optional",
 });
 
 /** Makan only — declared but not preloaded, so the rest of the site pays nothing. */

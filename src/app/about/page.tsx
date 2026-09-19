@@ -192,7 +192,9 @@ export default function AboutPage() {
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: "#0b0f14" }}
                 >
-                  <span className="font-black text-sm" style={{ color: "#AD4429" }}>م</span>
+                  {/* Makan's clay (#AD4429) is 3.3:1 on this tile; the lighter clay reads
+                      at 6.4:1 and is the same hue. Decorative — the name is beside it. */}
+                  <span aria-hidden="true" className="font-black text-sm" style={{ color: "#E0785A" }}>م</span>
                 </div>
                 <div>
                   <p className="font-black text-navy-800 text-lg leading-tight">Makan</p>
