@@ -42,6 +42,16 @@ describe("vercel.json crons", () => {
     expect(missing).toEqual([]);
   });
 
+  it("exports GET from every cron route, because that is the request Vercel sends", () => {
+    // /api/rentura/cancel-reminders/ exported only POST from the day it was
+    // scheduled: 405 every Monday, no reminder ever sent, nothing logged as
+    // failed. A cron is a GET.
+    for (const c of config.crons) {
+      const src = readFileSync(join(process.cwd(), "src", "app", c.path, "route.ts"), "utf8");
+      expect(src, `${c.path} does not export GET`).toMatch(/export\s+(async\s+)?function\s+GET\b|export\s+const\s+GET\b/);
+    }
+  });
+
   it("runs each cron at most once a day, which is all the Hobby plan allows", () => {
     // A more frequent expression fails the deployment outright.
     for (const c of config.crons) {
