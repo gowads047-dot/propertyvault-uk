@@ -1,0 +1,90 @@
+# Nightly database backup.
+#
+# The Supabase project is on the free plan, which keeps no backups: the
+# live database is the only copy of every enquiry, subscriber, Rentura
+# record and Makan listing. This takes a full pg_dump of the public and
+# auth schemas every night, encrypts it with a passphrase, and keeps it
+# as a workflow artifact for 30 days. Restore steps: docs/ops/database-backups.md.
+#
+# Secrets (repository → Settings → Secrets and variables → Actions):
+#   SUPABASE_DB_URL    the *session pooler* connection string, port 5432,
+#                      from the dashboard's Connect panel. The direct host
+#                      is IPv6-only and GitHub's runners have no IPv6.
+#   BACKUP_PASSPHRASE  anything long and private; needed to decrypt.
+#
+# The dump never touches the repository and never appears in the log.
+
+name: Database backup
+
+on:
+  schedule:
+    - cron: "17 2 * * *" # 02:17 UTC, daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: db-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check the secrets are set
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          [ -n "$DB_URL" ] || { echo "::error::SUPABASE_DB_URL is not set — see the comment at the top of this workflow"; exit 1; }
+          [ -n "$PASSPHRASE" ] || { echo "::error::BACKUP_PASSPHRASE is not set"; exit 1; }
+          [ "${#PASSPHRASE}" -ge 16 ] || { echo "::error::BACKUP_PASSPHRASE is shorter than 16 characters"; exit 1; }
+
+      - name: Install the Postgres 17 client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-common >/dev/null
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y >/dev/null
+          sudo apt-get install -y -qq postgresql-client-17 >/dev/null
+          pg_dump --version
+
+      - name: Dump, compress, encrypt
+        env:
+          DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          stamp="$(date -u +%Y-%m-%dT%H%MZ)"
+          out="propertyvault-${stamp}.dump.gz.enc"
+          # Custom format restores selectively with pg_restore; --no-owner
+          # because the owner on a restored database will be whoever runs it.
+          pg_dump "$DB_URL" \
+            --format=custom --no-owner \
+            --schema=public --schema=auth \
+            | gzip -9 \
+            | openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:PASSPHRASE -out "$out"
+          size=$(stat -c %s "$out")
+          [ "$size" -gt 10000 ] || { echo "::error::backup is only ${size} bytes — that is not a database"; exit 1; }
+          echo "Wrote $out ($size bytes)"
+          echo "BACKUP_FILE=$out" >> "$GITHUB_ENV"
+
+      - name: Prove it decrypts and reads as a dump
+        env:
+          PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -pass env:PASSPHRASE -in "$BACKUP_FILE" \
+            | gunzip \
+            | pg_restore --list \
+            | grep -c "TABLE DATA" \
+            | xargs -I{} sh -c '[ {} -gt 10 ] && echo "{} tables with data" || { echo "::error::fewer than 10 tables in the dump"; exit 1; }'
+
+      - name: Keep it for 30 days
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_FILE }}
+          path: ${{ env.BACKUP_FILE }}
+          retention-days: 30
+          if-no-files-found: error
