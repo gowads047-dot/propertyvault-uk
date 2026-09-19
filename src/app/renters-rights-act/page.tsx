@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
@@ -392,7 +392,7 @@ export default function RentersRightsActPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={faqs} visible={false} />
+          <FAQList faqs={faqs} visible={false} />
           <div className="mt-12">
             <Disclaimer />
           </div>

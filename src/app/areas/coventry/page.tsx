@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
@@ -179,7 +179,7 @@ export default function CoventryPage() {
       {/* FAQs */}
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
-          <FAQSchema faqs={cityFaqs} />
+          <FAQList faqs={cityFaqs} />
           <DataProvenance area="Coventry" />
           <Disclaimer type="financial" />
         </div>

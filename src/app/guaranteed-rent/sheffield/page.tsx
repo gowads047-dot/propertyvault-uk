@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Sheffield — Landlords Get Paid Every Month",
@@ -152,7 +152,7 @@ export default function SheffieldPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={[
+          <FAQList faqs={[
             {
               q: "How much guaranteed rent will I receive for my Sheffield property?",
               a: "Our guaranteed rent offer is based on your property's size, type, and location within Sheffield. For a typical 3-bed terraced house in areas like Burngreave or Firth Park we offer around £775 per month — paid every month with no voids and no deductions. Contact us for a free, no-obligation quote.",

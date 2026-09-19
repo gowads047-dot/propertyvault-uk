@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Coventry — Landlords Get Paid Every Month",
@@ -152,7 +152,7 @@ export default function CoventryPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={[
+          <FAQList faqs={[
             {
               q: "How much guaranteed rent will I receive for my Coventry property?",
               a: "Our guaranteed rent offer depends on your property's location, size, and condition in Coventry. For a typical 3-bed terraced house in areas like Foleshill or Hillfields, we offer around £730 per month — paid every month with no voids or agent fees. Contact us for a tailored, no-obligation quote.",

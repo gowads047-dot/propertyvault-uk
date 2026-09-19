@@ -2,7 +2,7 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { HelpCTA } from "@/components/blog/HelpCTA";
@@ -425,7 +425,7 @@ export default function HowToStartInvestingPage() {
       {/* FAQ */}
       <section className="section-padding bg-navy-50">
         <div className="container-max max-w-3xl px-4">
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
         </div>
       </section>
       <RelatedArticles

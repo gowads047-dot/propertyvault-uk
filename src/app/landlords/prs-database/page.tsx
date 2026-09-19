@@ -2,7 +2,7 @@ import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { ogImages } from "@/lib/site";
 import ApiForm from "@/components/forms/ApiForm";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { events } from "@/lib/analytics";
 import { findService } from "@/lib/services";
@@ -289,7 +289,7 @@ export default function PrsDatabasePage() {
           </p>
           <Link href="/rentura" className="btn-gold">See Rentura →</Link>
 
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
         </div>
       </section>
 

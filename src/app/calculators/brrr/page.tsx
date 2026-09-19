@@ -1,7 +1,7 @@
 import { BRRRCalculator } from "@/components/calculators/BRRRCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
@@ -53,7 +53,7 @@ export default function BRRRPage() {
           </div>
           <EmbedCode slug="brrr" title="BRRR Calculator UK" />
           <GuaranteedRentCTA context="brrr" />
-          <FAQSchema faqs={brrrFaqs} />
+          <FAQList faqs={brrrFaqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

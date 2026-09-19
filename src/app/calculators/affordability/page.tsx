@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -122,7 +122,7 @@ export default function AffordabilityPage() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="Mortgage Affordability Calculator" summary={`Affordability: can borrow ${fmt(results.maxBorrowing)}, property up to ${fmt(results.maxProperty)}, ${fmt(results.monthlyPayment)}/mo repayment`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

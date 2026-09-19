@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -161,7 +161,7 @@ export default function PersonalVsLtdPage() {
 
           <div className="mt-6"><EmailResults /></div>
           <ShareResults title="Personal vs Limited Company BTL Calculator" summary={`Personal: ${fmt(results.personalNet)}/yr net vs Ltd: ${fmt(results.ltdNet)}/yr net — ${results.ltdBetter ? `Ltd saves ${fmt(results.saving)}/yr` : `personal saves ${fmt(-results.saving)}/yr`}`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

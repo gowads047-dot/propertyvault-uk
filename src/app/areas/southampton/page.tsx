@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
@@ -422,7 +422,7 @@ export default function SouthamptonPage() {
         </div>
       </section>
 
-      {/* FAQSchema + Disclaimer */}
+      {/* FAQList + Disclaimer */}
       <section className="bg-navy-50 section-padding">
         <div className="container-max px-4 max-w-3xl">
           <h2
@@ -446,7 +446,7 @@ export default function SouthamptonPage() {
         </div>
       </section>
 
-      <FAQSchema faqs={cityFaqs} visible={false} />
+      <FAQList faqs={cityFaqs} visible={false} />
     </>
   );
 }

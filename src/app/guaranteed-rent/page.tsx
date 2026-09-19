@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { GRQuoteWidget } from "@/components/guaranteed-rent/GRQuoteWidget";
 import { EnquiryForm } from "@/components/guaranteed-rent/EnquiryForm";
 import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
@@ -338,7 +338,7 @@ export default function GuaranteedRentPage() {
       {/* FAQs with Schema */}
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={guaranteedRentFaqs} />
+          <FAQList faqs={guaranteedRentFaqs} />
 
           {/* The questions that stop a lease, answered on their own pages.
               /mortgage-lender was linked from nowhere but its sibling — a

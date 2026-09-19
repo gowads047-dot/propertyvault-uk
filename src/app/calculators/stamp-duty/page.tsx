@@ -1,7 +1,7 @@
 import { StampDutyCalculator } from "@/components/calculators/StampDutyCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
@@ -53,7 +53,7 @@ export default function StampDutyPage() {
           <StampDutyCalculator />
           <div className="mt-8"><EmailResults /></div>
           <EmbedCode slug="stamp-duty" title="Stamp Duty Calculator UK 2026" />
-          <FAQSchema faqs={stampDutyFaqs} />
+          <FAQList faqs={stampDutyFaqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

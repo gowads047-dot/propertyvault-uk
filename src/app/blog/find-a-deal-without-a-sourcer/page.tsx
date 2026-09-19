@@ -2,7 +2,7 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { HelpCTA } from "@/components/blog/HelpCTA";
 
 const TITLE = "How to Find a Property Deal Without Paying a Sourcer";
@@ -233,7 +233,7 @@ export default function FindADealArticle() {
             is the one number that decides whether everything else in the pack is worth reading.
           </p>
 
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <HelpCTA />
           <Disclaimer type="financial" />
         </div>

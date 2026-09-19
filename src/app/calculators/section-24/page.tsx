@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -157,7 +157,7 @@ export default function Section24Page() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="Section 24 Tax Calculator" summary={`Section 24: ${fmt(results.extraTax)} extra tax/yr, net income ${fmt(results.netIncomeNew)}/yr (was ${fmt(results.netIncomeOld)}/yr before S24)`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

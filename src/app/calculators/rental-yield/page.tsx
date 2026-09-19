@@ -1,7 +1,7 @@
 import { RentalYieldCalculator } from "@/components/calculators/RentalYieldCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { GuaranteedRentCTA } from "@/components/ui/GuaranteedRentCTA";
@@ -58,7 +58,7 @@ export default function RentalYieldPage() {
           <div className="mt-8"><EmailResults /></div>
           <GuaranteedRentCTA context="yield" />
           <EmbedCode slug="rental-yield" title="Rental Yield Calculator UK" />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { VoidPeriodCalculator } from "@/components/calculators/VoidPeriodCalculator";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -75,7 +75,7 @@ export default function VoidPeriodPage() {
             </div>
           </div>
 
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
       </section>

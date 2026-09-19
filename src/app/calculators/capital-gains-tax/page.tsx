@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { calcCorpTax } from "@/lib/tax";
@@ -158,7 +158,7 @@ export default function CGTCalculatorPage() {
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
           <ShareResults title="Capital Gains Tax Calculator" summary={`CGT: ${fmt(results.tax)} tax on ${fmt(results.totalGain)} total gain (${results.effectiveRate.toFixed(1)}% effective rate) — net profit ${fmt(results.netProfit)}`} />
-          <FAQSchema faqs={cgtFaqs} />
+          <FAQList faqs={cgtFaqs} />
           <Disclaimer type="tax" />
         </div>
       </section>

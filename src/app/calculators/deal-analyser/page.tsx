@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { PrintButton } from "@/components/calculators/PrintButton";
@@ -1807,7 +1807,7 @@ export default function DealAnalyserPage() {
       <section className="bg-navy-50 section-padding">
         <div className="container-max max-w-3xl px-4">
           <GuaranteedRentCTA context="deal" />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
       </section>

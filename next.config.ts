@@ -50,6 +50,13 @@ const nextConfig: NextConfig = {
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
     ];
+    // A preview deployment is the site at a *.vercel.app URL that anyone
+    // with the link can open, and that Google would happily index as a
+    // duplicate. Vercel sets VERCEL_ENV=preview on those builds and only
+    // those; local builds and production never see this header.
+    if (process.env.VERCEL_ENV === "preview") {
+      common.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
+    }
     return [
       { source: "/embed/:path*", headers: common },
       {

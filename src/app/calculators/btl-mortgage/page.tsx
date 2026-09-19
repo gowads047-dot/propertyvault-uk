@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { BtlMortgageCalculator } from "@/components/calculators/BtlMortgageCalculator";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Disclaimer } from "@/components/legal/Disclaimer";
@@ -75,7 +75,7 @@ export default function BtlMortgagePage() {
           </div>
 
           <GuaranteedRentCTA context="mortgage" />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="financial" />
         </div>
       </section>

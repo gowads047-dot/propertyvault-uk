@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -150,7 +150,7 @@ export default function HMOYieldPage() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="HMO Yield Calculator" summary={`HMO: ${results.grossYield.toFixed(1)}% gross / ${results.netYield.toFixed(1)}% net yield, ${fmt(results.monthlyCashFlow)}/mo cash flow (${results.occupiedCount}/${results.totalRooms} rooms)`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

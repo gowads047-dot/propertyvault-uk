@@ -134,7 +134,7 @@ const orgJsonLd = {
   "@type": "Organization",
   name: "PropertyVault UK",
   url: "https://www.propertyvaultuk.co.uk",
-  logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
+  logo: "https://www.propertyvaultuk.co.uk/opengraph-image/",
   contactPoint: {
     "@type": "ContactPoint",
     email: "info@propertyvaultuk.co.uk",
@@ -151,9 +151,11 @@ const localBusinessJsonLd = {
   name: "PropertyVault UK",
   description: "Guaranteed rent for landlords in the Midlands: a fixed monthly rent for 3–5 years, paid whether or not the property is occupied, with the letting and day-to-day management handled. Birmingham, Nottingham, Derby, Leicester, Coventry and Sheffield.",
   url: "https://www.propertyvaultuk.co.uk",
-  logo: "https://www.propertyvaultuk.co.uk/favicon.ico",
+  logo: "https://www.propertyvaultuk.co.uk/opengraph-image/",
   image: "https://www.propertyvaultuk.co.uk/opengraph-image/",
   email: "info@propertyvaultuk.co.uk",
+  // The WhatsApp number every enquiry button on the site already opens.
+  telephone: "+44 7415 721628",
   priceRange: "££",
   address: {
     "@type": "PostalAddress",

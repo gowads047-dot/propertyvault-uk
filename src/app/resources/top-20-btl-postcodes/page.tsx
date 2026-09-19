@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ogImages } from "@/lib/site";
 import Link from "@/components/ui/Link";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { PostcodeEmailCapture } from "@/components/resources/PostcodeEmailCapture";
 
@@ -60,7 +60,7 @@ const yieldColor = (y: string) => {
 export default function Top20BTLPostcodesPage() {
   return (
     <>
-      <FAQSchema faqs={faqs} visible={false} />
+      <FAQList faqs={faqs} visible={false} />
 
       {/* Hero */}
       <section className="gradient-navy py-16 md:py-24">

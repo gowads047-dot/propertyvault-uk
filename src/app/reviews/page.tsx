@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 const DESC =
   "Ask to speak to a current PropertyVault UK landlord before you sign. We will put you in touch directly so you can hear about the service first-hand.";
@@ -120,7 +120,7 @@ export default function ReviewsPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
         </div>
       </section>
     </>

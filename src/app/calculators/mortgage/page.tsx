@@ -1,7 +1,7 @@
 import { MortgageCalculator } from "@/components/calculators/MortgageCalculator";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { EmbedCode } from "@/components/calculators/EmbedCode";
@@ -51,7 +51,7 @@ export default function MortgageCalculatorPage() {
           <MortgageCalculator />
           <div className="mt-8"><EmailResults /></div>
           <EmbedCode slug="mortgage" title="Mortgage Calculator UK" />
-          <FAQSchema faqs={mortgageFaqs} />
+          <FAQList faqs={mortgageFaqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

@@ -2,7 +2,7 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { HelpCTA } from "@/components/blog/HelpCTA";
 
@@ -221,7 +221,7 @@ export default function BtlStressTestPage() {
         <HelpCTA />
       </article>
 
-      <FAQSchema faqs={faqs} />
+      <FAQList faqs={faqs} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
       <RelatedArticles

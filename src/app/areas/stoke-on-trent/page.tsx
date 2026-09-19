@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { DataProvenance } from "@/components/ui/DataProvenance";
@@ -449,7 +449,7 @@ export default function StokeonTrentPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={cityFaqs} visible={false} />
+          <FAQList faqs={cityFaqs} visible={false} />
           <div className="mt-12">
             <DataProvenance area="Stoke-on-Trent" />
             <Disclaimer />
