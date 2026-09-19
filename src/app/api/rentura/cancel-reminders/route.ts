@@ -3,7 +3,22 @@ import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO, siteOrigin } from "@/lib/site";
 
+/**
+ * Vercel runs a cron as a GET. This route only answered POST, so the Monday
+ * job in vercel.json got a 405 every week since it was scheduled and no
+ * cancellation reminder was ever sent by it. GET is the cron's entry point;
+ * POST stays for calling it by hand. crons.test.ts now checks every cron
+ * route exports GET.
+ */
+export async function GET(req: Request) {
+  return run(req);
+}
+
 export async function POST(req: Request) {
+  return run(req);
+}
+
+async function run(req: Request) {
   if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
