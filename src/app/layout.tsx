@@ -8,6 +8,7 @@ import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsLoader } from "@/components/layout/AnalyticsLoader";
 import { AttributionCapture } from "@/components/layout/AttributionCapture";
+import { ErrorBeacon } from "@/components/layout/ErrorBeacon";
 import { SITE_URL, siteMetrics } from "@/lib/site";
 
 /**
@@ -322,6 +323,7 @@ export default function RootLayout({
         <Analytics />
         <AnalyticsLoader />
         <AttributionCapture />
+        <ErrorBeacon />
       </body>
     </html>
   );

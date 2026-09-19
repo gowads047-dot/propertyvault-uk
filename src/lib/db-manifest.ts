@@ -162,6 +162,11 @@ export const MIGRATIONS: Migration[] = [
     marker: { kind: "column", table: "subscribers", column: "unsubscribed_at" },
   },
   {
+    file: "app-errors.sql",
+    purpose: "Where server and browser errors are recorded; /rentura/admin/errors/ reads it.",
+    marker: { kind: "table", table: "app_errors" },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
