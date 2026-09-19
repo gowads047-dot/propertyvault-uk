@@ -7,6 +7,7 @@ import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsLoader } from "@/components/layout/AnalyticsLoader";
+import { AttributionCapture } from "@/components/layout/AttributionCapture";
 import { SITE_URL, siteMetrics } from "@/lib/site";
 
 /**
@@ -320,6 +321,7 @@ export default function RootLayout({
         <NewsletterPopup />
         <Analytics />
         <AnalyticsLoader />
+        <AttributionCapture />
       </body>
     </html>
   );

@@ -144,6 +144,14 @@ export const RULES = {
   emailGlobal: { name: "email-global", limit: 500, windowSeconds: 86_400 },
 
   /**
+   * One-click unsubscribe. The token is the real gate; this bounds how
+   * many forged ones a caller can try, and stops a script unsubscribing
+   * a list of addresses it does hold tokens for all at once.
+   */
+  unsubscribePerCaller: { name: "unsubscribe", limit: 20, windowSeconds: 3600 },
+  unsubscribeGlobal: { name: "unsubscribe-global", limit: 2_000, windowSeconds: 86_400 },
+
+  /**
    * Proxying somebody else's free public service.
    *
    * /api/postcode-lookup fans out to postcodes.io, data.police.uk and HM Land

@@ -18,6 +18,8 @@ import { siteMetrics } from "@/lib/site";
 interface StarterPackEmailProps {
   name: string;
   userType?: string | null;
+  /** The signed one-click unsubscribe link; absent when no secret is configured. */
+  unsubscribeUrl?: string | null;
   /**
    * Shows an apology line above the greeting. Used only by the one-off
    * backfill for people who signed up while the sending domain was
@@ -59,7 +61,7 @@ const CHECKLIST = [
   { n: "7", text: "Create a pet policy — you must respond to pet requests in writing within 28 days." },
 ];
 
-export default function StarterPackEmail({ name, delayed = false }: StarterPackEmailProps) {
+export default function StarterPackEmail({ name, delayed = false, unsubscribeUrl }: StarterPackEmailProps) {
   const firstName = name.split(" ")[0];
 
   return (
@@ -287,6 +289,12 @@ export default function StarterPackEmail({ name, delayed = false }: StarterPackE
               No spam — this is the only email we send unless you enquire about a service.{" "}
               PropertyVault UK · Midlands, England
             </Text>
+            {unsubscribeUrl ? (
+              <Text style={{ color: "#9ca3af", fontSize: 11, margin: "8px 0 0", lineHeight: 1.6 }}>
+                <Link href={unsubscribeUrl} style={{ color: "#9ca3af", textDecoration: "underline" }}>Unsubscribe</Link>
+                {" "}— one click, no sign-in.
+              </Text>
+            ) : null}
           </Section>
 
         </Container>

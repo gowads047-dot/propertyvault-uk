@@ -3,6 +3,7 @@
 import Link from "@/components/ui/Link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { attributionFields } from "@/lib/attribution";
 
 interface Article {
   title: string;
@@ -44,7 +45,7 @@ function NewsletterBlock() {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: email.split("@")[0], email, user_type: "blog" }),
+        body: JSON.stringify({ ...attributionFields(), name: email.split("@")[0], email, user_type: "blog" }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? "Something went wrong."); return; }

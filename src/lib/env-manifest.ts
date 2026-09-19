@@ -64,6 +64,11 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "All nine scheduled jobs, and the social status endpoint. Must be at least 16 characters.",
     withoutIt: "Every cron is refused with 401, and the function log says which case it is.",
   },
+  UNSUBSCRIBE_SECRET: {
+    required: false,
+    enables: "A key of its own for signing one-click unsubscribe links.",
+    withoutIt: "CRON_SECRET signs them instead; with neither, newsletter emails carry no unsubscribe link.",
+  },
   ADMIN_EMAIL: {
     required: false,
     enables: "Naming a different admin than the address the site publishes.",
