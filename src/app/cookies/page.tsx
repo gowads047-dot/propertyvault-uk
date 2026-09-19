@@ -41,7 +41,11 @@ export default function CookiesPage() {
               None. The Site sets no cookie of its own that is required to make it work. Two things
               people look for here are not cookies at all: your cookie choice is kept in your
               browser&rsquo;s local storage under <code>cookie_consent</code>, and your Rentura or
-              Makan sign-in is held there too. Clearing site data resets both.
+              Makan sign-in is held there too. If you arrived from a link that carried campaign
+              tags (<code>utm_</code> parameters or an ad click id), those tags and the page you
+              landed on are kept under <code>pv_attribution</code> for 90 days, and sent to us only
+              if you then submit a form — so we know which link brought you. None of it identifies
+              you. Clearing site data resets all of these.
             </p>
 
             <h3 className="text-lg font-bold text-navy-800 mt-6 mb-2">Analytics Cookies</h3>

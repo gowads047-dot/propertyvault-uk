@@ -5,6 +5,8 @@ import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import StarterPackEmail from "@/emails/StarterPackEmail";
 import { REPLY_TO } from "@/lib/site";
+import { pickAttribution } from "@/lib/attribution";
+import { unsubscribeHeaders, unsubscribeUrl } from "@/lib/unsubscribe";
 
 export async function POST(req: Request) {
   const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
@@ -12,7 +14,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
 
-  const { name, email, user_type } = await req.json();
+  const body = (await req.json()) as Record<string, unknown>;
+  const { name, email, user_type } = body as { name?: string; email?: string; user_type?: string | null };
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
@@ -25,25 +28,35 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
+  // The service key: signing up again must clear unsubscribed_at (it is
+  // renewed consent), and that is an update, which anon's insert-only
+  // policy does not allow. The key is already a condition of getting here
+  // — rateGuard fails closed without it.
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  // 1. Save to Supabase
-  const { error: dbError } = await supabase.from("subscribers").insert({
+  // 1. Save to Supabase. An address that is already there is updated in
+  // place rather than refused: new name, new attribution, and back on the
+  // list if they had left.
+  const row = {
     name: name.trim(),
     email: email.trim().toLowerCase(),
     user_type: user_type ?? null,
     source: "popup",
-  });
-
+  };
+  const extra = { attribution: pickAttribution(body), unsubscribed_at: null };
+  let { error: dbError } = await supabase.from("subscribers").upsert({ ...row, ...extra }, { onConflict: "email" });
+  if (dbError?.code === "42703") {
+    // subscribers-consent.sql has not been run here yet. The sign-up must
+    // not wait on a migration; store what the table can hold.
+    console.error("subscribers is missing the attribution/unsubscribed_at columns — run supabase/subscribers-consent.sql");
+    ({ error: dbError } = await supabase.from("subscribers").upsert(row, { onConflict: "email" }));
+  }
   if (dbError) {
-    // Duplicate email — already subscribed, still send the pack
-    if (dbError.code !== "23505") {
-      console.error("DB error:", dbError);
-      return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
-    }
+    console.error("DB error:", dbError);
+    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 
   // 2. Send starter pack email via Resend.
@@ -61,7 +74,9 @@ export async function POST(req: Request) {
       replyTo: REPLY_TO,
       to: recipient,
       subject: "Your Free Property Starter Pack 🏠",
-      react: StarterPackEmail({ name: name.trim(), userType: user_type ?? null }),
+      // RFC 8058: the Unsubscribe button Gmail and Apple Mail show at the top.
+      headers: unsubscribeHeaders(recipient),
+      react: StarterPackEmail({ name: name.trim(), userType: user_type ?? null, unsubscribeUrl: unsubscribeUrl(recipient) }),
     });
     if (emailError) console.error("Email error:", emailError);
     else emailed = true;

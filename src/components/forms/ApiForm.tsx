@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { track } from "@/lib/analytics";
+import { attributionFields } from "@/lib/attribution";
 
 /**
  * A form that posts itself to /api/contact as JSON.
@@ -55,7 +56,7 @@ export default function ApiForm({
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source }),
+        body: JSON.stringify({ ...attributionFields(), ...data, source }),
       });
       const json = await res.json().catch(() => ({}));
 
@@ -111,6 +112,10 @@ export default function ApiForm({
       <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
         {status === "sending" ? "Sending…" : submitLabel}
       </button>
+      <p className="text-xs text-navy-500 mt-3 leading-relaxed">
+        We use what you send us to reply to this enquiry and for nothing else — see the{" "}
+        <a href="/privacy/" className="underline">privacy policy</a>.
+      </p>
     </form>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { attributionFields } from "@/lib/attribution";
 
 export function PostcodeEmailCapture() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ export function PostcodeEmailCapture() {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, name: name || "Investor", user_type: "landlord" }),
+        body: JSON.stringify({ ...attributionFields(), email, name: name || "Investor", user_type: "landlord" }),
       });
       if (!res.ok) throw new Error("Failed");
       setStatus("sent");

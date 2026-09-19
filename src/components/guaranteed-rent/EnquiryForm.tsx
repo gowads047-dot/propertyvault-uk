@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { attributionFields } from "@/lib/attribution";
 
 const WA_NUMBER = "447415721628";
 
@@ -13,6 +14,10 @@ const WhatsAppIcon = () => (
 export function EnquiryForm() {
   const [fields, setFields] = useState({ name: "", phone: "", email: "", postcode: "", bedrooms: "3", message: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  // When the box was ticked, as the record of consent that goes with the
+  // phone number: a marketing call needs consent under PECR reg 21, and
+  // "they ticked a box" is only a defence if you can say when.
+  const [consentAt, setConsentAt] = useState<string>("");
 
   function set(k: keyof typeof fields) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
@@ -45,7 +50,7 @@ export function EnquiryForm() {
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source: "guaranteed-rent", ...fields }),
+        body: JSON.stringify({ ...attributionFields(), source: "guaranteed-rent", ...fields, consent: consentAt }),
       });
       setStatus(res.ok ? "success" : "error");
     } catch {
@@ -110,6 +115,22 @@ export function EnquiryForm() {
       <div>
         <label htmlFor="guaranteedre-message-optional" className="block text-sm font-semibold text-navy-700 mb-1">Message (optional)</label>
         <textarea id="guaranteedre-message-optional" rows={3} placeholder="Tell us about your property or ask any questions..." value={fields.message} onChange={set("message")} className="w-full px-4 py-3 border border-navy-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-400 resize-none" />
+      </div>
+
+      <div className="flex items-start gap-3">
+        <input
+          id="guaranteedre-consent"
+          type="checkbox"
+          required
+          checked={Boolean(consentAt)}
+          onChange={e => setConsentAt(e.target.checked ? new Date().toISOString() : "")}
+          className="mt-1 h-5 w-5 shrink-0 rounded border-navy-300 accent-[#0f1b36]"
+        />
+        <label htmlFor="guaranteedre-consent" className="text-sm text-navy-600 leading-relaxed">
+          I agree to PropertyVault UK contacting me about this enquiry by phone, WhatsApp or email.
+          We use your details for this only — see the{" "}
+          <a href="/privacy/" className="underline text-navy-800">privacy policy</a>. *
+        </label>
       </div>
 
       {status === "error" && (

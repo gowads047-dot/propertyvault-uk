@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { attributionFields } from "@/lib/attribution";
 
 const SUBJECTS = [
   "General Enquiry",
@@ -36,7 +37,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, source: "contact" }),
+        body: JSON.stringify({ ...attributionFields(), ...data, source: "contact" }),
       });
       const json = await res.json().catch(() => ({}));
 
@@ -127,6 +128,10 @@ export default function ContactForm() {
       <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>
+      <p className="text-xs text-navy-500 mt-3 leading-relaxed">
+        We use what you send us to reply to this message and for nothing else — see the{" "}
+        <a href="/privacy/" className="underline">privacy policy</a>.
+      </p>
     </form>
   );
 }
