@@ -4,6 +4,7 @@ import Link from "@/components/ui/Link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { attributionFields } from "@/lib/attribution";
+import { Turnstile, turnstileToken } from "@/components/forms/Turnstile";
 
 interface Article {
   title: string;
@@ -36,16 +37,17 @@ function NewsletterBlock() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
+    const humanToken = turnstileToken(e.currentTarget);
     setError("");
     try {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), name: email.split("@")[0], email, user_type: "blog" }),
+        body: JSON.stringify({ ...attributionFields(), name: email.split("@")[0], email, user_type: "blog", "cf-turnstile-response": humanToken }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error ?? "Something went wrong."); return; }
@@ -118,6 +120,7 @@ function NewsletterBlock() {
             }}>
               {loading ? "Subscribing…" : "Subscribe →"}
             </button>
+            <Turnstile className="basis-full w-full" />
           </form>
           {error && <p style={{ fontSize: 12, color: "#fca5a5", marginTop: 8 }}>{error}</p>}
           </>

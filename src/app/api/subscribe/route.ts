@@ -7,6 +7,7 @@ import StarterPackEmail from "@/emails/StarterPackEmail";
 import { REPLY_TO } from "@/lib/site";
 import { pickAttribution } from "@/lib/attribution";
 import { unsubscribeHeaders, unsubscribeUrl } from "@/lib/unsubscribe";
+import { verifyTurnstile, callerIp, TURNSTILE_FIELD } from "@/lib/turnstile";
 
 export async function POST(req: Request) {
   const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
@@ -26,6 +27,11 @@ export async function POST(req: Request) {
   const recipient = validRecipient(email);
   if (!recipient) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
+  }
+
+  const human = await verifyTurnstile(body[TURNSTILE_FIELD], callerIp(req));
+  if (!human.ok) {
+    return NextResponse.json({ error: "Please complete the verification and try again." }, { status: 400 });
   }
 
   // The service key: signing up again must clear unsubscribed_at (it is

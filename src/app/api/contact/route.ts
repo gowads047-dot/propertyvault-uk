@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { REPLY_TO, SITE_URL } from "@/lib/site";
 import { sendLeadToMeta } from "@/lib/meta-capi";
+import { verifyTurnstile, callerIp, TURNSTILE_FIELD } from "@/lib/turnstile";
 
 /**
  * Contact enquiries.
@@ -30,7 +31,7 @@ type Source = (typeof SOURCES)[number];
 // marketing_consent is the visitor's cookie choice at the moment they
 // pressed Send, carried so the server can tell Meta only about a visitor
 // who accepted; it is a signal about the request, not a detail of the enquiry.
-const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey", "marketing_consent"]);
+const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey", "marketing_consent", TURNSTILE_FIELD]);
 
 const SOURCE_LABEL: Record<Source, string> = {
   "contact": "enquiry",
@@ -73,6 +74,13 @@ export async function POST(req: Request) {
   const honey = String(body._honey ?? "").trim();
 
   if (honey) return NextResponse.json({ ok: true });
+
+  // Cloudflare Turnstile, when configured. Checked before the fields so a
+  // bot learns nothing from the validation messages.
+  const human = await verifyTurnstile(body[TURNSTILE_FIELD], callerIp(req));
+  if (!human.ok) {
+    return NextResponse.json({ error: "Please complete the verification and try again." }, { status: 400 });
+  }
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 400 });

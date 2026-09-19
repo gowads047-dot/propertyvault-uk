@@ -4,6 +4,7 @@ import { useState } from "react";
 import { attributionFields } from "@/lib/attribution";
 import { storedConsent } from "@/lib/consent";
 import { conversion } from "@/lib/analytics";
+import { Turnstile, turnstileToken } from "@/components/forms/Turnstile";
 
 const WA_NUMBER = "447415721628";
 
@@ -40,9 +41,10 @@ export function EnquiryForm() {
     return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("submitting");
+    const humanToken = turnstileToken(e.currentTarget);
     // This used to post to formsubmit.co and call itself a success regardless
     // of the outcome — the response was never checked, and FormSubmit was
     // silently discarding every enquiry because the destination address had
@@ -52,7 +54,7 @@ export function EnquiryForm() {
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), source: "guaranteed-rent", ...fields, consent: consentAt, marketing_consent: storedConsent() }),
+        body: JSON.stringify({ ...attributionFields(), source: "guaranteed-rent", ...fields, consent: consentAt, marketing_consent: storedConsent(), "cf-turnstile-response": humanToken }),
       });
       setStatus(res.ok ? "success" : "error");
       if (res.ok) conversion("lead", { email: fields.email, phone: fields.phone });
@@ -135,6 +137,8 @@ export function EnquiryForm() {
           <a href="/privacy/" className="underline text-navy-800">privacy policy</a>. *
         </label>
       </div>
+
+      <Turnstile />
 
       {status === "error" && (
         <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">Something went wrong — please try WhatsApp instead.</p>

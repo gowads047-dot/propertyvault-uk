@@ -5,6 +5,7 @@ import { track } from "@/lib/analytics";
 import { attributionFields } from "@/lib/attribution";
 import { storedConsent } from "@/lib/consent";
 import { conversion } from "@/lib/analytics";
+import { Turnstile } from "@/components/forms/Turnstile";
 
 /**
  * A form that posts itself to /api/contact as JSON.
@@ -105,6 +106,8 @@ export default function ApiForm({
       />
 
       {children}
+
+      <Turnstile className="mt-2" />
 
       {status === "error" && (
         <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
