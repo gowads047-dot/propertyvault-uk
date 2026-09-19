@@ -11,18 +11,20 @@ import { REPLY_TO, siteOrigin } from "@/lib/site";
  * route exports GET.
  */
 export async function GET(req: Request) {
-  return run(req);
-}
-
-export async function POST(req: Request) {
-  return run(req);
-}
-
-async function run(req: Request) {
   if (!authorizeCron(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+  return sendReminders();
+}
 
+export async function POST(req: Request) {
+  if (!authorizeCron(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  return sendReminders();
+}
+
+async function sendReminders() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
