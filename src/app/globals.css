@@ -505,8 +505,19 @@ html.dark .makan input::placeholder, html.dark .makan textarea::placeholder {
 
 html {
   scroll-behavior: smooth;
+  /* The header is sticky and 4rem tall (4.5rem from md). Without this, a
+     control brought into view by Tab, or a section by an anchor link,
+     scrolls to the very top and sits under it — WCAG 2.2's 2.4.11, focus
+     not obscured. The extra rem is breathing room. */
+  scroll-padding-top: 5rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 5.5rem;
+  }
 }
 
 body {

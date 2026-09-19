@@ -6,6 +6,7 @@ import { CookieConsent } from "@/components/legal/CookieConsent";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { NewsletterPopup } from "@/components/layout/NewsletterPopup";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AnalyticsLoader } from "@/components/layout/AnalyticsLoader";
 import { AttributionCapture } from "@/components/layout/AttributionCapture";
 import { SITE_URL, siteMetrics } from "@/lib/site";
@@ -320,6 +321,10 @@ export default function RootLayout({
         <WhatsAppButton />
         <NewsletterPopup />
         <Analytics />
+        {/* Field Core Web Vitals — INP above all, which no lab run can give.
+            Same-origin script, reports to vitals.vercel-insights.com (in the
+            CSP), no cookies, no identifiers. */}
+        <SpeedInsights />
         <AnalyticsLoader />
         <AttributionCapture />
       </body>
