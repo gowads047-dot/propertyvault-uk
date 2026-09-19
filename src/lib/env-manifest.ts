@@ -84,6 +84,16 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "The conversion label for a lead, from the Ads conversion action. Set with the id or not at all.",
     withoutIt: "No Ads conversion is sent.",
   },
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: {
+    required: false,
+    enables: "The Cloudflare Turnstile widget on every public form.",
+    withoutIt: "No widget; the honeypot and the rate limiter remain.",
+  },
+  TURNSTILE_SECRET_KEY: {
+    required: false,
+    enables: "Server-side checking of the Turnstile token; a submission without a valid one is refused.",
+    withoutIt: "Tokens are not checked, so set both keys or neither.",
+  },
   UNSUBSCRIBE_SECRET: {
     required: false,
     enables: "A key of its own for signing one-click unsubscribe links.",

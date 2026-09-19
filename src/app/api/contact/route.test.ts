@@ -161,6 +161,37 @@ describe("Meta Conversions API", () => {
   });
 });
 
+describe("Turnstile", () => {
+  it("is not required until a secret is configured", async () => {
+    const res = await post(enquiry);
+    expect(res.status).toBe(200);
+  });
+
+  it("refuses a submission with no token once a secret is set, before anything is stored", async () => {
+    process.env.TURNSTILE_SECRET_KEY = "1x0000000000000000000000000000000AA";
+    const res = await post(enquiry);
+    expect(res.status).toBe(400);
+    await expect(res.json()).resolves.toMatchObject({ error: expect.stringContaining("verification") });
+    expect(insert).not.toHaveBeenCalled();
+    delete process.env.TURNSTILE_SECRET_KEY;
+  });
+
+  it("accepts a submission whose token Cloudflare confirms", async () => {
+    process.env.TURNSTILE_SECRET_KEY = "1x0000000000000000000000000000000AA";
+    // The limiter's PostgREST call and Cloudflare's siteverify share fetch.
+    vi.stubGlobal("fetch", vi.fn(async (url: string) =>
+      String(url).includes("challenges.cloudflare.com")
+        ? new Response(JSON.stringify({ success: true }), { status: 200 })
+        : new Response("1", { status: 200 })));
+    const res = await post({ ...enquiry, "cf-turnstile-response": "tok" });
+    expect(res.status).toBe(200);
+    expect(insert).toHaveBeenCalledTimes(1);
+    // The token is not one of the enquiry's own details.
+    expect(insert.mock.calls[0][0].details ?? {}).not.toHaveProperty("cf-turnstile-response");
+    delete process.env.TURNSTILE_SECRET_KEY;
+  });
+});
+
 describe("validation", () => {
   it("requires a name and an email", async () => {
     expect((await post({ email: "a@b.com", message: "hi" })).status).toBe(400);
