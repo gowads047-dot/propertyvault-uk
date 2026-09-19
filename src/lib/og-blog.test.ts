@@ -4,22 +4,18 @@ import { join } from "node:path";
 import { blogPosts, slugOf, ogImagePath } from "./blog-posts";
 
 /**
- * Every English post has a social card generated from the index, and
- * advertises it; the Arabic posts use the site card. Without this, a new
- * post is shared with the site logo and nobody notices, which is how
- * nineteen of thirty were being shared until 18 Sept 2026.
+ * Every post has a social card generated from the index, and advertises
+ * it. Without this, a new post is shared with the site logo and nobody
+ * notices, which is how nineteen of thirty were being shared until
+ * 18 Sept 2026.
  */
 const BLOG = join(process.cwd(), "src", "app", "blog");
 
 describe("blog social cards", () => {
-  it("has a card file for every English post, driven by its slug, and none for Arabic", () => {
+  it("has a card file for every post, driven by its slug", () => {
     for (const post of blogPosts) {
       const slug = slugOf(post);
       const file = join(BLOG, slug, "opengraph-image.tsx");
-      if (post.category === "Arabic") {
-        expect(existsSync(file), `${slug} is Arabic and should use the site card`).toBe(false);
-        continue;
-      }
       expect(existsSync(file), `${slug} has no opengraph-image.tsx`).toBe(true);
       expect(readFileSync(file, "utf8"), `${slug}'s card must come from blogCard("${slug}")`)
         .toContain(`blogCard("${slug}")`);

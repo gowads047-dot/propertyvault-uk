@@ -149,6 +149,14 @@ export const MIGRATIONS: Migration[] = [
     },
   },
   {
+    file: "rls-initplan.sql",
+    purpose: "RLS policies evaluate auth.uid() once per query; duplicate Rentura policies dropped.",
+    marker: {
+      kind: "unverifiable",
+      because: "rewrites policy expressions, which PostgREST does not expose",
+    },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
