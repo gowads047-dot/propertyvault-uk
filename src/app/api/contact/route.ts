@@ -91,19 +91,29 @@ export async function POST(req: Request) {
   }
 
   // 1. Record the enquiry. This is the part that must not fail.
+  //
+  // The service key, not the anon key: the row's id has to come back so
+  // step 2 can mark it emailed, and anon has an insert policy but no
+  // select, so RETURNING is refused under RLS. The key is already a
+  // condition of getting this far — rateGuard reads its counter with it
+  // and fails closed without it.
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { error: dbError } = await supabase.from("contact_messages").insert({
-    name,
-    email,
-    subject: subject.slice(0, MAX.subject),
-    message,
-    source,
-    details: Object.keys(details).length ? details : null,
-  });
+  const { data: saved, error: dbError } = await supabase
+    .from("contact_messages")
+    .insert({
+      name,
+      email,
+      subject: subject.slice(0, MAX.subject),
+      message,
+      source,
+      details: Object.keys(details).length ? details : null,
+    })
+    .select("id")
+    .single();
 
   if (dbError) {
     console.error("Contact insert failed:", dbError);
@@ -136,7 +146,19 @@ export async function POST(req: Request) {
         "Reply directly to this email to answer the sender.",
       ].join("\n"),
     });
-    if (emailError) console.error("Contact email failed:", emailError);
+    if (emailError) {
+      console.error("Contact email failed:", emailError);
+    } else if (saved?.id) {
+      // The flag the schema built its "still needs emailing on" index for,
+      // and which nothing set until now: every enquiry sat at false
+      // whether the notification went or not, so a failed send was
+      // indistinguishable from a successful one in the data.
+      const { error: flagError } = await supabase
+        .from("contact_messages")
+        .update({ emailed: true })
+        .eq("id", saved.id);
+      if (flagError) console.error("Could not mark enquiry emailed:", flagError);
+    }
   } catch (err) {
     console.error("Resend unavailable for contact enquiry:", err);
     // The enquiry is saved. It can be picked up from contact_messages.
