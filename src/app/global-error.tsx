@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { reportClientError } from "@/lib/error-beacon";
 
 /**
  * The last resort: an error in the root layout itself.
@@ -24,6 +25,7 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     console.error("Unhandled root layout error:", error);
+    reportClientError(error, "global-error");
   }, [error]);
 
   return (

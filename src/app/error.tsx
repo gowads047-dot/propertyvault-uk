@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "@/components/ui/Link";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { reportClientError } from "@/lib/error-beacon";
 
 /**
  * What a visitor sees when a page throws.
@@ -26,6 +27,7 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error("Unhandled page error:", error);
+    reportClientError(error, "error-boundary");
   }, [error]);
 
   return (

@@ -152,6 +152,13 @@ export const RULES = {
   unsubscribeGlobal: { name: "unsubscribe-global", limit: 2_000, windowSeconds: 86_400 },
 
   /**
+   * Browser error reports. A broken page sends a handful; a script that
+   * wants to fill the table sends thousands. Per caller and in total.
+   */
+  errorReportPerCaller: { name: "error-report", limit: 30, windowSeconds: 3600 },
+  errorReportGlobal: { name: "error-report-global", limit: 5_000, windowSeconds: 86_400 },
+
+  /**
    * Proxying somebody else's free public service.
    *
    * /api/postcode-lookup fans out to postcodes.io, data.police.uk and HM Land
