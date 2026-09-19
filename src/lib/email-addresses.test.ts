@@ -40,6 +40,9 @@ const ALLOWED_NON_OURS = new Set([
   "test.person@example.com",
   "Test.Person@Example.com",
   "bot@spam.com",
+  // The underscore case in the unsubscribe route's test and comment.
+  "jane_doe@email.com",
+  "jane.doe@email.com",
   // Demo rows in the Academy CRM and Rentura contacts screens.
   "james@example.com",
   "sarah@example.com",

@@ -2,15 +2,15 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { unsubscribeToken } from "@/lib/unsubscribe";
 
 const update = vi.fn();
-const ilike = vi.fn();
+const eq = vi.fn();
 vi.mock("@supabase/supabase-js", () => ({
-  createClient: () => ({ from: () => ({ update: (patch: unknown) => { update(patch); return { ilike }; } }) }),
+  createClient: () => ({ from: () => ({ update: (patch: unknown) => { update(patch); return { eq }; } }) }),
 }));
 
 beforeEach(() => {
   vi.resetModules();
   update.mockReset();
-  ilike.mockReset().mockResolvedValue({ error: null });
+  eq.mockReset().mockResolvedValue({ error: null });
   process.env.CRON_SECRET = "a-secret-long-enough-to-sign-with";
   process.env.NEXT_PUBLIC_SUPABASE_URL = "https://stub.supabase.co";
   process.env.SUPABASE_SERVICE_ROLE_KEY = "stub-service-key";
@@ -32,7 +32,7 @@ describe("/api/unsubscribe", () => {
     const res = await POST(new Request(url("jane@example.com", unsubscribeToken("jane@example.com")!), { method: "POST" }));
     expect(res.status).toBe(200);
     expect(update.mock.calls[0][0]).toHaveProperty("unsubscribed_at");
-    expect(ilike).toHaveBeenCalledWith("email", "jane@example.com");
+    expect(eq).toHaveBeenCalledWith("email", "jane@example.com");
   });
 
   it("GET with a valid token does the same and shows a page", async () => {
@@ -41,7 +41,7 @@ describe("/api/unsubscribe", () => {
     expect(res.status).toBe(200);
     expect(res.headers.get("content-type")).toContain("text/html");
     expect(await res.text()).toContain("unsubscribed");
-    expect(ilike).toHaveBeenCalledWith("email", "jane@example.com");
+    expect(eq).toHaveBeenCalledWith("email", "jane@example.com");
   });
 
   it("refuses a forged or missing token without touching the database", async () => {
@@ -49,5 +49,11 @@ describe("/api/unsubscribe", () => {
     expect((await POST(new Request(url("jane@example.com", "forged"), { method: "POST" }))).status).toBe(400);
     expect((await GET(new Request("https://www.propertyvaultuk.co.uk/api/unsubscribe/"))).status).toBe(400);
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it("matches the address exactly, so an underscore in it is not a wildcard", async () => {
+    const { POST } = await import("./route");
+    await POST(new Request(url("jane_doe@email.com", unsubscribeToken("jane_doe@email.com")!), { method: "POST" }));
+    expect(eq).toHaveBeenCalledWith("email", "jane_doe@email.com");
   });
 });

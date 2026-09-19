@@ -34,35 +34,64 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please complete the verification and try again." }, { status: 400 });
   }
 
-  // The service key: signing up again must clear unsubscribed_at (it is
-  // renewed consent), and that is an update, which anon's insert-only
-  // policy does not allow. The key is already a condition of getting here
-  // — rateGuard fails closed without it.
+  // The service key: an address that is already there gets an update,
+  // which anon's insert-only policy does not allow. The key is already a
+  // condition of getting here — rateGuard fails closed without it.
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  // 1. Save to Supabase. An address that is already there is updated in
-  // place rather than refused: new name, new attribution, and back on the
-  // list if they had left.
-  const row = {
-    name: name.trim(),
-    email: email.trim().toLowerCase(),
-    user_type: user_type ?? null,
-    source: "popup",
-  };
-  const extra = { attribution: pickAttribution(body), unsubscribed_at: null };
-  let { error: dbError } = await supabase.from("subscribers").upsert({ ...row, ...extra }, { onConflict: "email" });
-  if (dbError?.code === "42703") {
-    // subscribers-consent.sql has not been run here yet. The sign-up must
-    // not wait on a migration; store what the table can hold.
+  // 1. Save to Supabase.
+  //
+  // Read first, then insert or update — not an upsert. Two reasons. The
+  // unique index is on lower(email), an expression, and ON CONFLICT (email)
+  // cannot match it: Postgres answers 42P10 and for ninety minutes every
+  // sign-up on the live site was a 500. And an anonymous form post is not
+  // proof of who is asking: it must not rewrite what an existing subscriber
+  // gave us, and it must not clear an unsubscribe — opting out is a signed
+  // link, opting back in has to be the owner's act too. So an existing row
+  // only gains the latest attribution; an unsubscribed one is left as it is
+  // and is not emailed. The response is the same either way, so nobody
+  // can learn whether an address is on the list.
+  const address = email.trim().toLowerCase();
+  const { data: existing, error: readError } = await supabase
+    .from("subscribers")
+    .select("id, unsubscribed_at")
+    .eq("email", address)
+    .maybeSingle();
+  if (readError && readError.code !== "42703") {
+    console.error("DB error:", readError);
+    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+  }
+  const migrated = readError?.code !== "42703";
+  if (!migrated) {
     console.error("subscribers is missing the attribution/unsubscribed_at columns — run supabase/subscribers-consent.sql");
-    ({ error: dbError } = await supabase.from("subscribers").upsert(row, { onConflict: "email" }));
+  }
+
+  const attribution = pickAttribution(body);
+  let dbError: { code?: string; message: string } | null = null;
+  let unsubscribed = false;
+  if (existing) {
+    unsubscribed = Boolean(existing.unsubscribed_at);
+    if (migrated && attribution) {
+      ({ error: dbError } = await supabase.from("subscribers").update({ attribution }).eq("id", existing.id));
+    }
+  } else {
+    const row: Record<string, unknown> = { name: name.trim(), email: address, user_type: user_type ?? null, source: "popup" };
+    if (migrated) row.attribution = attribution;
+    ({ error: dbError } = await supabase.from("subscribers").insert(row));
+    // Two submissions at once: the second sees the first's row as a duplicate.
+    if (dbError?.code === "23505") dbError = null;
   }
   if (dbError) {
     console.error("DB error:", dbError);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+  }
+  if (unsubscribed) {
+    // Same answer as a fresh sign-up. They asked not to be emailed, and a
+    // form somebody else can fill in does not change that.
+    return NextResponse.json({ ok: true, emailed: true });
   }
 
   // 2. Send starter pack email via Resend.

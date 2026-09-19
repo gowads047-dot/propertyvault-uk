@@ -4,10 +4,10 @@ import { createClient } from "@supabase/supabase-js";
 import { isAdmin } from "@/lib/admin";
 
 
-export async function GET() {
+export async function GET(request: Request) {
   // Verified against the auth server, not read out of the request cookie:
   // this decides whether the service role key gets used.
-  const user = await getVerifiedUser();
+  const user = await getVerifiedUser(request);
   if (!user || !isAdmin(user.email ?? undefined)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
