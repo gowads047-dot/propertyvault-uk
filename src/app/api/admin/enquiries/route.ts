@@ -27,7 +27,7 @@ import { isAdmin } from "@/lib/admin";
 export const dynamic = "force-dynamic";
 
 /** Enough to triage from, and no more. */
-const SELECT = "id,name,email,subject,message,source,details,created_at";
+const SELECT = "id,name,email,subject,message,source,details,emailed,created_at";
 
 export async function GET(request: Request) {
   // Verified against the auth server rather than read from the cookie: this

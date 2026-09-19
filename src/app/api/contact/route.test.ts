@@ -14,10 +14,18 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
  */
 
 const insert = vi.fn();
+const update = vi.fn();
 const send = vi.fn();
 
+// insert(...).select("id").single() resolves to whatever `insert` was given;
+// update(...).eq(...) resolves to whatever `update` was given.
 vi.mock("@supabase/supabase-js", () => ({
-  createClient: () => ({ from: () => ({ insert }) }),
+  createClient: () => ({
+    from: () => ({
+      insert: (row: unknown) => ({ select: () => ({ single: () => insert(row) }) }),
+      update: (patch: unknown) => ({ eq: (col: string, val: unknown) => update(patch, col, val) }),
+    }),
+  }),
 }));
 
 vi.mock("resend", () => ({
@@ -47,7 +55,8 @@ const enquiry = {
 
 beforeEach(() => {
   vi.resetModules();
-  insert.mockReset().mockResolvedValue({ error: null });
+  insert.mockReset().mockResolvedValue({ data: { id: "row-1" }, error: null });
+  update.mockReset().mockResolvedValue({ error: null });
   send.mockReset().mockResolvedValue({ error: null });
   process.env.NEXT_PUBLIC_SUPABASE_URL = "https://stub.supabase.co";
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "stub-anon-key";
@@ -80,22 +89,40 @@ describe("the enquiry is recorded before it is emailed", () => {
     });
   });
 
-  it("still returns ok when RESEND_API_KEY is unset", async () => {
+  it("marks the row emailed once the notification has gone", async () => {
+    await post(enquiry);
+
+    expect(update).toHaveBeenCalledTimes(1);
+    expect(update.mock.calls[0]).toEqual([{ emailed: true }, "id", "row-1"]);
+  });
+
+  it("still returns ok when RESEND_API_KEY is unset, and leaves the row unemailed", async () => {
     delete process.env.RESEND_API_KEY;
 
     const res = await post(enquiry);
 
     expect(res.status).toBe(200);
     expect(insert).toHaveBeenCalledTimes(1);
+    expect(update).not.toHaveBeenCalled();
   });
 
-  it("still returns ok when the send throws", async () => {
+  it("still returns ok when the send throws, and leaves the row unemailed", async () => {
     send.mockRejectedValue(new Error("network down"));
 
     const res = await post(enquiry);
 
     expect(res.status).toBe(200);
     expect(insert).toHaveBeenCalledTimes(1);
+    expect(update).not.toHaveBeenCalled();
+  });
+
+  it("leaves the row unemailed when Resend reports a failure", async () => {
+    send.mockResolvedValue({ error: { message: "domain not verified" } });
+
+    const res = await post(enquiry);
+
+    expect(res.status).toBe(200);
+    expect(update).not.toHaveBeenCalled();
   });
 
   it("reports failure rather than a false success when the database rejects it", async () => {
