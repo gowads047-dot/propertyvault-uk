@@ -40,21 +40,57 @@ const nextConfig: NextConfig = {
    * by another origin — except /embed/, whose whole purpose is to be
    * iframed on other people's sites, so it gets no framing restriction.
    *
-   * No script-src policy. GTM, inline JSON-LD and consent script would each
-   * need an exemption, and a wrong CSP breaks the site silently for the
-   * people it is meant to protect. That is a separate, careful change.
+   * The Content-Security-Policy is the one Next can honour on a static site.
+   * Every page here is prerendered, and a nonce policy needs a fresh nonce
+   * per request — dynamic rendering of all 281 pages, the end of the CDN
+   * cache and of the 150 ms TTFB. So script-src carries 'unsafe-inline'
+   * for Next's own inline payload, and the protection comes from
+   * everything else: scripts only from this origin and the two analytics
+   * hosts; connections only to Supabase, Google Analytics and Vercel's
+   * insights; images and fonts from named hosts; no plugins, no base-tag
+   * hijack, forms only to this origin, and nothing framed but YouTube and
+   * Cloudflare's challenge. A script injected from anywhere else does not
+   * run, and data does not leave for anywhere else. The origin lists are
+   * the inventory of what the pages actually use; lib/csp.test.ts holds
+   * next.config.ts and the code to the same list.
+   *
+   * HSTS: two years, subdomains, preload — the value the HSTS preload list
+   * requires. Vercel sent max-age alone.
    */
   async headers() {
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://challenges.cloudflare.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https://images.unsplash.com https://d8j0ntlcm91z4.cloudfront.net https://ubmxpuukspfponiesasc.supabase.co https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com",
+      "font-src 'self' data:",
+      "connect-src 'self' https://ubmxpuukspfponiesasc.supabase.co wss://ubmxpuukspfponiesasc.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://challenges.cloudflare.com",
+      "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://challenges.cloudflare.com",
+      "media-src 'self' https://ubmxpuukspfponiesasc.supabase.co",
+      "worker-src 'self' blob:",
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "upgrade-insecure-requests",
+    ];
     const common = [
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+      { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
     ];
+    // A preview deployment is the site at a *.vercel.app URL that anyone
+    // with the link can open, and that Google would happily index as a
+    // duplicate. Vercel sets VERCEL_ENV=preview on those builds and only
+    // those; local builds and production never see this header.
+    if (process.env.VERCEL_ENV === "preview") {
+      common.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
+    }
     return [
-      { source: "/embed/:path*", headers: common },
+      { source: "/embed/:path*", headers: [...common, { key: "Content-Security-Policy", value: csp.join("; ") }] },
       {
         source: "/((?!embed/).*)",
-        headers: [...common, { key: "Content-Security-Policy", value: "frame-ancestors 'self'" }],
+        headers: [...common, { key: "Content-Security-Policy", value: [...csp, "frame-ancestors 'self'"].join("; ") }],
       },
     ];
   },
