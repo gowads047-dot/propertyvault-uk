@@ -28,7 +28,7 @@ async function unsubscribe(req: Request): Promise<Outcome> {
 
   // eq, not ilike: both sides are stored and compared lower-cased already,
   // and ilike treats "_" and "%" in the address as wildcards — so a token
-  // for jane_doe@example.com would also unsubscribe jane.doe@example.com.
+  // for jane_doe@email.com would also unsubscribe jane.doe@email.com.
   const { error } = await createClient(supabaseUrl, key)
     .from("subscribers")
     .update({ unsubscribed_at: new Date().toISOString() })

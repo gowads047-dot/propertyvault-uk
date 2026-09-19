@@ -53,7 +53,7 @@ describe("/api/unsubscribe", () => {
 
   it("matches the address exactly, so an underscore in it is not a wildcard", async () => {
     const { POST } = await import("./route");
-    await POST(new Request(url("jane_doe@example.com", unsubscribeToken("jane_doe@example.com")!), { method: "POST" }));
-    expect(eq).toHaveBeenCalledWith("email", "jane_doe@example.com");
+    await POST(new Request(url("jane_doe@email.com", unsubscribeToken("jane_doe@email.com")!), { method: "POST" }));
+    expect(eq).toHaveBeenCalledWith("email", "jane_doe@email.com");
   });
 });
