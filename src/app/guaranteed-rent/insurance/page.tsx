@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { ogImages } from "@/lib/site";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 
 /**
@@ -300,7 +300,7 @@ export default function InsurancePage() {
             </p>
           </div>
 
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
         </div>
       </section>
 

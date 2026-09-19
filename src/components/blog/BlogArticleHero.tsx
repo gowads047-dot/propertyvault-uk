@@ -34,7 +34,7 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
     headline: title,
     description: excerpt,
     image: image,
-    author: { "@type": "Person", name: "Nass", url: "https://www.propertyvaultuk.co.uk/about" },
+    author: { "@type": "Person", name: "Nass", url: "https://www.propertyvaultuk.co.uk/about/" },
     publisher: {
       "@type": "Organization",
       name: "PropertyVault UK",

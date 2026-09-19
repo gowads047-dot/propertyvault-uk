@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -112,7 +112,7 @@ export default function FlipROIPage() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="Flip ROI Calculator" summary={`Flip ROI: ${fmt(results.grossProfit)} profit on ${fmt(results.totalProjectCost)} total cost — ${results.roi.toFixed(1)}% ROI (${results.annualisedROI.toFixed(1)}% annualised)`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

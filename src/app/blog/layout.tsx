@@ -4,7 +4,7 @@ const authorJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Nass",
-  url: "https://www.propertyvaultuk.co.uk/about",
+  url: "https://www.propertyvaultuk.co.uk/about/",
   worksFor: {
     "@type": "Organization",
     name: "PropertyVault UK",

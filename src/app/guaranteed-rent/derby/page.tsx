@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Derby — Landlords Get Paid Every Month",
@@ -148,7 +148,7 @@ export default function DerbyPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={[
+          <FAQList faqs={[
             {
               q: "How much guaranteed rent will I receive for my Derby property?",
               a: "Our offer depends on your property's location, size, and condition within Derby. For a typical 3-bed terraced house in areas like Normanton or Chaddesden, we offer around £710 per month — guaranteed every month with no voids or agent fees. Contact us for a free quote.",

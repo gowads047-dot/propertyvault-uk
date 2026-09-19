@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -280,7 +280,7 @@ export default function EPCRetrofitPage() {
         <div className="container-max max-w-4xl">
           <EmailResults />
           <ShareResults title="EPC Retrofit Cost Calculator" summary={`EPC retrofit: ${results.selectedCount} measure${results.selectedCount !== 1 ? 's' : ''} selected, ${fmt(results.afterGrant)} cost after grant, ${results.paybackYears.toFixed(1)}-year payback`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

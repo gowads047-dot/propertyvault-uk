@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Leicester — Landlords Get Paid Every Month",
@@ -152,7 +152,7 @@ export default function LeicesterPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={[
+          <FAQList faqs={[
             {
               q: "How much guaranteed rent will I receive for my Leicester property?",
               a: "Our offer is based on your property's size, condition, and location in Leicester. For a typical 3-bed terraced house in areas like Belgrave or Highfields we offer around £775 per month — guaranteed every month with no voids and no agent fees deducted. Contact us for a free, no-obligation quote.",

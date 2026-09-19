@@ -6,7 +6,7 @@ import { Disclaimer } from "@/components/legal/Disclaimer";
 import { PrintButton } from "@/components/calculators/PrintButton";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { EmailResults } from "@/components/calculators/EmailResults";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { pvAnnuity, pvLumpSum, discountFactor } from "@/lib/finance";
 import { nonNegative } from "@/lib/inputs";
@@ -586,7 +586,7 @@ export default function LeaseholdCalculatorPage() {
 
       <section className="bg-white section-padding">
         <div className="container-max max-w-3xl px-4">
-          <FAQSchema faqs={leaseholdFaqs} />
+          <FAQList faqs={leaseholdFaqs} />
         </div>
       </section>
 

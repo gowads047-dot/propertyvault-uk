@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -105,7 +105,7 @@ export default function BridgingPage() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="Bridging Loan Calculator" summary={`Bridging loan ${fmt(loanAmount)} for ${termMonths} months at ${monthlyRate}%/mo: total cost ${fmt(results.totalCost)}`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

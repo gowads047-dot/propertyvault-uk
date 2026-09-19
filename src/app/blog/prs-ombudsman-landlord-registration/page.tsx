@@ -1,7 +1,7 @@
 import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { HelpCTA } from "@/components/blog/HelpCTA";
@@ -149,7 +149,7 @@ export default function PRSOmbudsmanGuideArticle() {
             </div>
           </div>
 
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="general" />
         </div>
         <HelpCTA />

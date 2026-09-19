@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 
 export const metadata: Metadata = {
   title: "Guaranteed Rent Nottingham — Landlords Get Paid Every Month",
@@ -148,7 +148,7 @@ export default function NottinghamPage() {
 
       <section className="section-padding bg-white">
         <div className="container-max max-w-3xl">
-          <FAQSchema faqs={[
+          <FAQList faqs={[
             {
               q: "How much guaranteed rent will I receive for my Nottingham property?",
               a: "Our guaranteed rent offer depends on your property's size, type, and location in Nottingham. For a typical 3-bed terraced house in areas like Bulwell or Hyson Green we offer around £755 per month — paid every month with no voids. Contact us for a tailored, no-obligation quote.",

@@ -2,7 +2,7 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { HelpCTA } from "@/components/blog/HelpCTA";
 
@@ -135,7 +135,7 @@ export default function GuaranteedRentComparison() {
           </div>
 
           <div className="mt-10 pt-8 border-t border-navy-200">
-            <FAQSchema faqs={faqs} />
+            <FAQList faqs={faqs} />
             <Disclaimer type="financial" />
           </div>
         </div>

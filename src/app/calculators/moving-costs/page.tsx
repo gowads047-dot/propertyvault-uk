@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -101,7 +101,7 @@ export default function MovingCostsPage() {
 
           <EmailResults />
           <ShareResults title="Moving Costs Calculator" summary={`Moving costs: stamp duty ${fmt(stampDuty)} + fees = ${fmt(totalCosts)} total for ${fmt(propertyPrice)} property`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

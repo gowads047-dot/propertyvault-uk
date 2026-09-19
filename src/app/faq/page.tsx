@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/ui/Link";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { siteMetrics } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -125,7 +125,7 @@ export default function FaqPage() {
             </div>
           </div>
 
-          <FAQSchema faqs={allFaqs} />
+          <FAQList faqs={allFaqs} />
         </div>
       </section>
     </>

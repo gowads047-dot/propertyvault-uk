@@ -1,7 +1,7 @@
 import Link from "@/components/ui/Link";
 import { ogImages } from "@/lib/site";
 import type { Metadata } from "next";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { Disclaimer } from "@/components/legal/Disclaimer";
 import { compare, money, DEFAULT_ASSUMPTIONS } from "@/lib/guaranteed-rent-model";
 
@@ -389,7 +389,7 @@ export default function VsLettingAgentPage() {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
         </div>
       </section>
 

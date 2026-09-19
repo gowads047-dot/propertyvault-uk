@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "@/components/ui/Link";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { EmailResults } from "@/components/calculators/EmailResults";
 import { ShareResults } from "@/components/calculators/ShareResults";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -133,7 +133,7 @@ export default function LandlordCostsPage() {
           </div>
           <div className="mt-8"><EmailResults /></div>
           <ShareResults title="Landlord Costs Calculator" summary={`Landlord costs: ${fmt(results.totalMonthlyExpenses)}/mo expenses, ${fmt(results.monthlyCashFlow)}/mo net cash flow`} />
-          <FAQSchema faqs={faqs} />
+          <FAQList faqs={faqs} />
           <Disclaimer type="calculator" />
         </div>
       </section>

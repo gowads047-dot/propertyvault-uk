@@ -2,7 +2,7 @@ import { BlogArticleHero } from "@/components/blog/BlogArticleHero";
 import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { ArticleSchema } from "@/components/seo/ArticleSchema";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { HelpCTA } from "@/components/blog/HelpCTA";
@@ -369,7 +369,7 @@ export default function HquqAlmustajirUK() {
         <HelpCTA dir="rtl" />
       </article>
 
-      <FAQSchema faqs={faqs} visible={false} />
+      <FAQList faqs={faqs} visible={false} />
       <Disclaimer />
       <RelatedArticles
         slug="hquq-almustajir-uk"

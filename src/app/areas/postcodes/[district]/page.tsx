@@ -2,7 +2,7 @@ import Link from "@/components/ui/Link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Disclaimer } from "@/components/legal/Disclaimer";
-import { FAQSchema } from "@/components/seo/FAQSchema";
+import { FAQList } from "@/components/seo/FAQList";
 import { AreaSoldPricesWidget } from "@/components/ui/AreaSoldPricesWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 
@@ -259,7 +259,7 @@ export default async function PostcodePage({ params }: Props) {
               </div>
             ))}
           </div>
-          <FAQSchema faqs={faqs} visible={false} />
+          <FAQList faqs={faqs} visible={false} />
 
           {/* Browse more postcodes */}
           <div className="mt-10 pt-8 border-t border-navy-100">
