@@ -66,7 +66,11 @@ describe("Content-Security-Policy", () => {
     expect(script).toContain("https://www.googletagmanager.com");
     // Every external script origin the policy allows must be one the code
     // refers to, or a documented placeholder for a service behind a key.
-    const documented = new Set(["https://challenges.cloudflare.com"]);
+    const documented = new Set([
+      "https://challenges.cloudflare.com", // Turnstile, loaded by components/forms/Turnstile.tsx once a key is set
+      "https://www.googleadservices.com", // the Ads conversion tag gtag loads for conversion() in lib/analytics.ts
+      "https://googleads.g.doubleclick.net", // its beacon host
+    ]);
     for (const origin of script.filter(x => x.startsWith("https://"))) {
       expect(sourceFiles.includes(origin) || documented.has(origin), `${origin} allowed but unused`).toBe(true);
     }
@@ -76,6 +80,21 @@ describe("Content-Security-Policy", () => {
     const csp = (await policies())["/((?!embed/).*)"];
     expect(directive(csp, "form-action")).toEqual(["'self'"]);
     expect(directive(csp, "object-src")).toEqual(["'none'"]);
+  });
+});
+
+describe("Google Ads under consent", () => {
+  it("allows the hosts gtag reaches once ad consent is granted", async () => {
+    // Seen on production the day Accept All began granting ad_storage: GA's
+    // audiences pixel at www.google.co.uk was blocked. The conversion tag
+    // (#182) reaches the two ad hosts; the pixel reaches google.com and the
+    // visitor's country TLD, which for this site is .co.uk.
+    const csp = (await policies())["/((?!embed/).*)"];
+    for (const host of ["https://www.googleadservices.com", "https://googleads.g.doubleclick.net", "https://www.google.com", "https://www.google.co.uk"]) {
+      expect(directive(csp, "img-src"), host).toContain(host);
+      expect(directive(csp, "connect-src"), host).toContain(host);
+    }
+    expect(directive(csp, "frame-src")).toContain("https://td.doubleclick.net");
   });
 });
 

@@ -60,12 +60,15 @@ const nextConfig: NextConfig = {
   async headers() {
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://challenges.cloudflare.com",
+      // Google's ad hosts are what gtag loads once ad consent is granted and
+      // an Ads conversion fires (#182): the conversion tag, the doubleclick
+      // beacons, and GA's audiences pixel on google.com / google.co.uk.
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://challenges.cloudflare.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://images.unsplash.com https://d8j0ntlcm91z4.cloudfront.net https://ubmxpuukspfponiesasc.supabase.co https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://d8j0ntlcm91z4.cloudfront.net https://ubmxpuukspfponiesasc.supabase.co https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.uk",
       "font-src 'self' data:",
-      "connect-src 'self' https://ubmxpuukspfponiesasc.supabase.co wss://ubmxpuukspfponiesasc.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://vitals.vercel-insights.com https://challenges.cloudflare.com",
-      "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://challenges.cloudflare.com",
+      "connect-src 'self' https://ubmxpuukspfponiesasc.supabase.co wss://ubmxpuukspfponiesasc.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.uk https://vitals.vercel-insights.com https://challenges.cloudflare.com",
+      "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://td.doubleclick.net https://bid.g.doubleclick.net https://challenges.cloudflare.com",
       "media-src 'self' https://ubmxpuukspfponiesasc.supabase.co",
       "worker-src 'self' blob:",
       "object-src 'none'",
