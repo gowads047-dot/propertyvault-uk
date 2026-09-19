@@ -30,6 +30,9 @@ declare global {
 }
 
 const GA_ID = "G-MG7FKKCKWQ";
+/** Google Ads. Set both, or neither: a conversion needs an account and a label. */
+const ADS_ID = process.env.NEXT_PUBLIC_GADS_CONVERSION_ID;
+const ADS_LEAD_LABEL = process.env.NEXT_PUBLIC_GADS_LEAD_LABEL;
 
 /**
  * Load gtag.js — once, and only once somebody has said yes to analytics.
@@ -61,6 +64,33 @@ export function loadGtag(): void {
   window.dataLayer = window.dataLayer || [];
   window.gtag?.("js", new Date());
   window.gtag?.("config", GA_ID);
+  // The Ads tag rides on the same gtag.js. allow_enhanced_conversions is
+  // what lets the hashed email and phone set in conversion() below be sent.
+  if (ADS_ID) window.gtag?.("config", ADS_ID, { allow_enhanced_conversions: true });
+}
+
+/**
+ * A lead conversion for Google Ads, with enhanced conversions.
+ *
+ * Google matches the click to the enquiry by the email and phone the
+ * visitor typed, hashed by gtag before they leave the browser. It runs only
+ * when gtag is loaded — which since the consent change means only for a
+ * visitor who accepted all cookies — and only when the Ads id and label
+ * are configured. Everything else is a no-op, including the user_data set,
+ * so nothing is ever staged for a tag that is not there.
+ */
+export function conversion(kind: "lead", who: { email?: string; phone?: string }): void {
+  if (typeof window === "undefined" || !window.__gtagLoaded || !ADS_ID || !ADS_LEAD_LABEL) return;
+  try {
+    const email = who.email?.trim().toLowerCase();
+    const phone = who.phone?.replace(/[^\d+]/g, "");
+    if (email || phone) {
+      window.gtag?.("set", "user_data", { ...(email ? { email } : {}), ...(phone ? { phone_number: phone } : {}) });
+    }
+    window.gtag?.("event", "conversion", { send_to: `${ADS_ID}/${ADS_LEAD_LABEL}`, conversion_kind: kind });
+  } catch {
+    // A conversion must never take a form down with it.
+  }
 }
 
 /** Loads gtag.js at start-up for a visitor whose stored choice is "all". */

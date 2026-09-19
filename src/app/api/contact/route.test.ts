@@ -136,6 +136,31 @@ describe("the enquiry is recorded before it is emailed", () => {
   });
 });
 
+describe("Meta Conversions API", () => {
+  it("sends a Lead only for a visitor who accepted marketing cookies, keyed by the row id", async () => {
+    process.env.META_PIXEL_ID = "123";
+    process.env.META_CAPI_ACCESS_TOKEN = "tok";
+    const calls: string[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      calls.push(String(url));
+      return String(url).includes("graph.facebook.com")
+        ? new Response(JSON.stringify({ events_received: 1 }), { status: 200 })
+        : new Response("1", { status: 200 });
+    }));
+
+    await post({ ...enquiry, marketing_consent: "essential" });
+    expect(calls.some(u => u.includes("graph.facebook.com"))).toBe(false);
+
+    await post({ ...enquiry, marketing_consent: "all", fbclid: "IwAR1" });
+    const meta = calls.find(u => u.includes("graph.facebook.com"));
+    expect(meta).toBe("https://graph.facebook.com/v21.0/123/events?access_token=tok");
+    // The consent flag is a request signal, not one of the enquiry's details.
+    expect(insert.mock.calls[1][0].details ?? {}).not.toHaveProperty("marketing_consent");
+    delete process.env.META_PIXEL_ID;
+    delete process.env.META_CAPI_ACCESS_TOKEN;
+  });
+});
+
 describe("validation", () => {
   it("requires a name and an email", async () => {
     expect((await post({ email: "a@b.com", message: "hi" })).status).toBe(400);

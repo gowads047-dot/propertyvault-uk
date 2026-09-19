@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { track } from "@/lib/analytics";
 import { attributionFields } from "@/lib/attribution";
+import { storedConsent } from "@/lib/consent";
+import { conversion } from "@/lib/analytics";
 
 /**
  * A form that posts itself to /api/contact as JSON.
@@ -56,7 +58,7 @@ export default function ApiForm({
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), ...data, source }),
+        body: JSON.stringify({ ...attributionFields(), ...data, source, marketing_consent: storedConsent() }),
       });
       const json = await res.json().catch(() => ({}));
 
@@ -67,6 +69,7 @@ export default function ApiForm({
       }
       setStatus("sent");
       if (sentEvent) track(sentEvent, sentParams);
+      conversion("lead", { email: String(data.email ?? ""), phone: typeof data.phone === "string" ? data.phone : undefined });
     } catch {
       setError("We could not reach the server. Please check your connection and try again.");
       setStatus("error");

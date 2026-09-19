@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { consentSignals } from "@/lib/consent";
 import { loadGtag } from "@/lib/analytics";
 
 /**
@@ -40,9 +41,7 @@ export function CookiePreferences() {
       // If it cannot be stored the consent update below still applies for
       // this page view, and the banner will ask again next time.
     }
-    window.gtag?.("consent", "update", {
-      analytics_storage: next === "all" ? "granted" : "denied",
-    });
+    window.gtag?.("consent", "update", consentSignals(next === "all"));
     if (next === "all") loadGtag();
     setChoice(next);
     setSaved(true);

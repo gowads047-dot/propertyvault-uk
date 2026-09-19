@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { attributionFields } from "@/lib/attribution";
+import { storedConsent } from "@/lib/consent";
+import { conversion } from "@/lib/analytics";
 
 const WA_NUMBER = "447415721628";
 
@@ -50,9 +52,10 @@ export function EnquiryForm() {
       const res = await fetch("/api/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), source: "guaranteed-rent", ...fields, consent: consentAt }),
+        body: JSON.stringify({ ...attributionFields(), source: "guaranteed-rent", ...fields, consent: consentAt, marketing_consent: storedConsent() }),
       });
       setStatus(res.ok ? "success" : "error");
+      if (res.ok) conversion("lead", { email: fields.email, phone: fields.phone });
     } catch {
       setStatus("error");
     }
