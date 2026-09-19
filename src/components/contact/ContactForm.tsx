@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { attributionFields } from "@/lib/attribution";
+import { Turnstile } from "@/components/forms/Turnstile";
 
 const SUBJECTS = [
   "General Enquiry",
@@ -125,6 +126,7 @@ export default function ContactForm() {
         </p>
       )}
 
+      <Turnstile />
       <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
         {status === "sending" ? "Sending…" : "Send Message"}
       </button>

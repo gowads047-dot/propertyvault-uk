@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { track, events } from "@/lib/analytics";
 import { attributionFields } from "@/lib/attribution";
+import { Turnstile, turnstileToken } from "@/components/forms/Turnstile";
 
 export function NewsletterPopup() {
   const [visible, setVisible] = useState(false);
@@ -30,9 +31,10 @@ export function NewsletterPopup() {
     localStorage.setItem("newsletter_dismissed", "true");
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("loading");
+    const humanToken = turnstileToken(e.currentTarget);
     setErrorMsg("");
     track(events.signupSubmitted, { placement: "popup" });
 
@@ -40,7 +42,7 @@ export function NewsletterPopup() {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), name, email, user_type: userType || null }),
+        body: JSON.stringify({ ...attributionFields(), name, email, user_type: userType || null, "cf-turnstile-response": humanToken }),
       });
       const data = await res.json();
 
@@ -213,6 +215,7 @@ export function NewsletterPopup() {
                 <p role="alert" className="text-xs text-red-400 font-medium">{errorMsg}</p>
               )}
 
+              <Turnstile />
               <button
                 type="submit"
                 disabled={status === "loading"}

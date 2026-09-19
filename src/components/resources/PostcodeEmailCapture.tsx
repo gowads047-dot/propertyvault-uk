@@ -2,22 +2,24 @@
 
 import { useState } from "react";
 import { attributionFields } from "@/lib/attribution";
+import { Turnstile, turnstileToken } from "@/components/forms/Turnstile";
 
 export function PostcodeEmailCapture() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email) return;
     setStatus("sending");
+    const humanToken = turnstileToken(e.currentTarget);
 
     try {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...attributionFields(), email, name: name || "Investor", user_type: "landlord" }),
+        body: JSON.stringify({ ...attributionFields(), email, name: name || "Investor", user_type: "landlord", "cf-turnstile-response": humanToken }),
       });
       if (!res.ok) throw new Error("Failed");
       setStatus("sent");
@@ -66,6 +68,7 @@ export function PostcodeEmailCapture() {
         >
           {status === "sending" ? "Sending…" : "Send me the guide"}
         </button>
+        <Turnstile className="basis-full w-full" />
       </form>
       {status === "error" && (
         <p role="alert" className="text-red-700 text-xs mt-2">Something went wrong — please try again.</p>

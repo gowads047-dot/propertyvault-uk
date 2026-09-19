@@ -64,6 +64,16 @@ export const ENV_MANIFEST: Record<string, EnvVar> = {
     enables: "All nine scheduled jobs, and the social status endpoint. Must be at least 16 characters.",
     withoutIt: "Every cron is refused with 401, and the function log says which case it is.",
   },
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY: {
+    required: false,
+    enables: "The Cloudflare Turnstile widget on every public form.",
+    withoutIt: "No widget; the honeypot and the rate limiter remain.",
+  },
+  TURNSTILE_SECRET_KEY: {
+    required: false,
+    enables: "Server-side checking of the Turnstile token; a submission without a valid one is refused.",
+    withoutIt: "Tokens are not checked, so set both keys or neither.",
+  },
   UNSUBSCRIBE_SECRET: {
     required: false,
     enables: "A key of its own for signing one-click unsubscribe links.",

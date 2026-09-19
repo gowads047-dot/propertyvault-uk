@@ -3,6 +3,7 @@ import { RULES, rateGuard } from "@/lib/rate-limit";
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { REPLY_TO } from "@/lib/site";
+import { verifyTurnstile, callerIp, TURNSTILE_FIELD } from "@/lib/turnstile";
 
 /**
  * Contact enquiries.
@@ -26,7 +27,7 @@ const SOURCES = ["contact", "guaranteed-rent", "list-property", "makan-wanted"] 
 type Source = (typeof SOURCES)[number];
 
 /** Fields that are handled explicitly; everything else becomes `details`. */
-const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey"]);
+const KNOWN = new Set(["name", "email", "subject", "message", "source", "_honey", TURNSTILE_FIELD]);
 
 const SOURCE_LABEL: Record<Source, string> = {
   "contact": "enquiry",
@@ -69,6 +70,13 @@ export async function POST(req: Request) {
   const honey = String(body._honey ?? "").trim();
 
   if (honey) return NextResponse.json({ ok: true });
+
+  // Cloudflare Turnstile, when configured. Checked before the fields so a
+  // bot learns nothing from the validation messages.
+  const human = await verifyTurnstile(body[TURNSTILE_FIELD], callerIp(req));
+  if (!human.ok) {
+    return NextResponse.json({ error: "Please complete the verification and try again." }, { status: 400 });
+  }
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
