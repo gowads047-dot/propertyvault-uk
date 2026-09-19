@@ -318,14 +318,13 @@ export function slugOf(post: BlogPost): string {
 }
 
 /**
- * The social card a post advertises. Every English post has its own,
- * generated from this list by the opengraph-image.tsx beside it (one file
- * per post, eight lines, see lib/og-blog.tsx). The Arabic posts use the
- * site card: next/og loads no Arabic font, and a title in tofu is worse
- * than a logo. og-blog.test.ts holds the files to this rule.
+ * The social card a post advertises: its own, generated from this list by
+ * the opengraph-image.tsx beside it (one file per post, eight lines, see
+ * lib/og-blog.tsx — which also carries the Arabic handling).
+ * og-blog.test.ts holds every post to this.
  */
 export function ogImagePath(post: BlogPost): string {
-  return post.category === "Arabic" ? "/opengraph-image/" : `/blog/${slugOf(post)}/opengraph-image/`;
+  return `/blog/${slugOf(post)}/opengraph-image/`;
 }
 
 /** The Arabic posts are categorised "Arabic"; everything else is English. */

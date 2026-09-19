@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: "PropertyVault UK",
     images: [
       {
-        url: "https://www.propertyvaultuk.co.uk/opengraph-image/",
+        url: "https://www.propertyvaultuk.co.uk/blog/istihtmar-aqari-uk-min-kharij/opengraph-image/",
         width: 1200,
         height: 630,
         alt: "الاستثمار العقاري في المملكة المتحدة من خارج بريطانيا",

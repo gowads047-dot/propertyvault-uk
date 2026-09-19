@@ -102,15 +102,32 @@ export default function GlossaryPage() {
       <section className="bg-white sticky top-0 z-10 border-b border-navy-100">
         <div className="container-max px-4 py-3">
           <div className="flex flex-wrap gap-1">
-            {alphabet.map(letter => (
-              <a
-                key={letter}
-                href={activeLetters.includes(letter) ? `#letter-${letter}` : undefined}
-                className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors ${activeLetters.includes(letter) ? "bg-navy-800 text-white hover:bg-gold-500" : "bg-navy-50 text-navy-300 cursor-default"}`}
-              >
-                {letter}
-              </a>
-            ))}
+            {alphabet.map(letter =>
+              activeLetters.includes(letter) ? (
+                <a
+                  key={letter}
+                  href={`#letter-${letter}`}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold transition-colors bg-navy-800 text-white hover:bg-gold-500"
+                >
+                  {letter}
+                </a>
+              ) : (
+                // A letter with no entries is not a link and was never one: an
+                // <a> without href, dimmed to 2.4:1. A span, dimmed the same
+                // way but marked so it is read as a disabled control rather
+                // than low-contrast text, and named so "X, no entries" is
+                // what a screen reader gets instead of a bare letter.
+                <span
+                  key={letter}
+                  role="link"
+                  aria-disabled="true"
+                  aria-label={`${letter}, no entries`}
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold bg-navy-50 text-navy-400 cursor-default"
+                >
+                  {letter}
+                </span>
+              ),
+            )}
           </div>
         </div>
       </section>
