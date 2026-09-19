@@ -20,8 +20,8 @@ import { getVerifiedUser } from "@/lib/server-auth";
  * and /api/admin/users re-checks with the same helper before touching the
  * service role key.
  */
-export async function GET() {
-  const user = await getVerifiedUser();
+export async function GET(request: Request) {
+  const user = await getVerifiedUser(request);
 
   return NextResponse.json(
     { admin: isAdmin(user?.email ?? undefined) },

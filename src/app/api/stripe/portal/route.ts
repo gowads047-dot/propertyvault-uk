@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   // Verified against the auth server. This id selects whose billing
   // portal is opened, so taking it on trust from a cookie would let a
   // caller open somebody else's.
-  const user = await getVerifiedUser();
+  const user = await getVerifiedUser(req);
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

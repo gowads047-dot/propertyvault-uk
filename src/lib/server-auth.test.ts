@@ -53,6 +53,24 @@ describe("who the server thinks the caller is", () => {
   });
 
   /**
+   * The browser signs in with supabase-js, which keeps the session in
+   * localStorage — there is no auth cookie. authFetch sends the access
+   * token as a Bearer header, and getVerifiedUser reads that header only
+   * from the Request it is given. Five routes called it with nothing: the
+   * header was never read, the cookie path found no cookie, and every
+   * admin page and the billing portal answered 401 to everyone, the owner
+   * included. A call without the request is a route nobody can use.
+   */
+  it("hands getVerifiedUser the request, or the bearer token is never read", () => {
+    const offenders = files
+      .map(f => [f, readFileSync(f, "utf8")] as const)
+      .filter(([, src]) => /getVerifiedUser\(\s*\)/.test(src))
+      .map(([f]) => f.slice(f.indexOf("api")).split(sep).join("/"));
+
+    expect(offenders, `getVerifiedUser() without the request: ${offenders.join(", ")}`).toEqual([]);
+  });
+
+  /**
    * An identifier is not a credential. These routes read the caller's own id
    * out of the query string and then queried on it with the service role key,
    * so anyone holding somebody else's user id could ask for their records.

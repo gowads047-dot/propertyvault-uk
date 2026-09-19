@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 const SELECT = "id,ts,side,message,stack,digest,path,method,route_type,user_agent";
 
 export async function GET(request: Request) {
-  const user = await getVerifiedUser();
+  const user = await getVerifiedUser(request);
   if (!user || !isAdmin(user.email ?? undefined)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

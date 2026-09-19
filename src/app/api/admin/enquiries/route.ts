@@ -32,7 +32,7 @@ const SELECT = "id,name,email,subject,message,source,details,emailed,created_at"
 export async function GET(request: Request) {
   // Verified against the auth server rather than read from the cookie: this
   // decides whether the service role key gets used.
-  const user = await getVerifiedUser();
+  const user = await getVerifiedUser(request);
   if (!user || !isAdmin(user.email ?? undefined)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

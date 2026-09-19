@@ -26,10 +26,13 @@ async function unsubscribe(req: Request): Promise<Outcome> {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !key) return { error: "Temporarily unavailable.", status: 503 };
 
+  // eq, not ilike: both sides are stored and compared lower-cased already,
+  // and ilike treats "_" and "%" in the address as wildcards — so a token
+  // for jane_doe@example.com would also unsubscribe jane.doe@example.com.
   const { error } = await createClient(supabaseUrl, key)
     .from("subscribers")
     .update({ unsubscribed_at: new Date().toISOString() })
-    .ilike("email", email);
+    .eq("email", email);
   if (error) {
     console.error("Unsubscribe update failed:", error);
     return { error: "Temporarily unavailable.", status: 503 };

@@ -14,14 +14,21 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
  * even if email fails". These tests hold the code to that contract.
  */
 
-// The route upserts. The mock keeps the old name so the assertions below
-// read as they did: `insert` is called with the row, and resolves to
-// whatever it is told to.
+// The route reads the address first (select → eq → maybeSingle resolves to
+// `existing`), then inserts a new row or updates an existing one.
 const insert = vi.fn();
+const update = vi.fn();
+const existing = vi.fn();
 const send = vi.fn();
 
 vi.mock("@supabase/supabase-js", () => ({
-  createClient: () => ({ from: () => ({ upsert: (row: unknown) => insert(row) }) }),
+  createClient: () => ({
+    from: () => ({
+      select: () => ({ eq: () => ({ maybeSingle: () => existing() }) }),
+      insert: (row: unknown) => insert(row),
+      update: (patch: unknown) => ({ eq: (col: string, val: unknown) => update(patch, col, val) }),
+    }),
+  }),
 }));
 
 vi.mock("resend", () => ({
@@ -50,6 +57,8 @@ const valid = { name: "Test Person", email: "Test.Person@Example.com", user_type
 beforeEach(() => {
   vi.resetModules();
   insert.mockReset().mockResolvedValue({ error: null });
+  update.mockReset().mockResolvedValue({ error: null });
+  existing.mockReset().mockResolvedValue({ data: null, error: null });
   send.mockReset().mockResolvedValue({ error: null });
   process.env.NEXT_PUBLIC_SUPABASE_URL = "https://stub.supabase.co";
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "stub-anon-key";
@@ -151,14 +160,28 @@ describe("the happy path still works", () => {
     expect(send.mock.calls[0][0]).toMatchObject({ to: "test.person@example.com" });
   });
 
-  it("re-subscribes an address that is already there, clearing any earlier unsubscribe", async () => {
-    // An upsert on email: no duplicate error to handle any more, and the
-    // row comes back on the list — signing up again is renewed consent.
+  it("sends the pack again to an address that is already on the list, without rewriting the row", async () => {
+    existing.mockResolvedValue({ data: { id: "row-1", unsubscribed_at: null }, error: null });
+
+    const res = await post({ ...valid, utm_source: "x" });
+
+    expect(res.status).toBe(200);
+    expect(insert).not.toHaveBeenCalled();
+    // Only the attribution moves; name and consent stay as the subscriber left them.
+    expect(update.mock.calls[0][0]).toEqual({ attribution: { utm_source: "x" } });
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not put an unsubscribed address back on the list, or email it, and gives nothing away", async () => {
+    existing.mockResolvedValue({ data: { id: "row-1", unsubscribed_at: "2026-09-01T00:00:00Z" }, error: null });
+
     const res = await post(valid);
 
     expect(res.status).toBe(200);
-    expect(insert.mock.calls[0][0]).toMatchObject({ unsubscribed_at: null });
-    expect(send).toHaveBeenCalledTimes(1);
+    await expect(res.json()).resolves.toEqual({ ok: true, emailed: true });
+    expect(insert).not.toHaveBeenCalled();
+    expect(update).not.toHaveBeenCalled();
+    expect(send).not.toHaveBeenCalled();
   });
 
   it("stores the attribution the form carried", async () => {
@@ -170,14 +193,22 @@ describe("the happy path still works", () => {
   });
 
   it("falls back to the columns the table has when the migration has not been run", async () => {
-    insert.mockResolvedValueOnce({ error: { code: "42703", message: "column attribution does not exist" } });
+    existing.mockResolvedValue({ data: null, error: { code: "42703", message: "column unsubscribed_at does not exist" } });
 
     const res = await post({ ...valid, utm_source: "x" });
 
     expect(res.status).toBe(200);
-    expect(insert).toHaveBeenCalledTimes(2);
-    expect(insert.mock.calls[1][0]).not.toHaveProperty("attribution");
-    expect(insert.mock.calls[1][0]).not.toHaveProperty("unsubscribed_at");
+    expect(insert).toHaveBeenCalledTimes(1);
+    expect(insert.mock.calls[0][0]).not.toHaveProperty("attribution");
+  });
+
+  it("treats a duplicate from a simultaneous submission as success", async () => {
+    insert.mockResolvedValue({ error: { code: "23505", message: "duplicate" } });
+
+    const res = await post(valid);
+
+    expect(res.status).toBe(200);
+    expect(send).toHaveBeenCalledTimes(1);
   });
 
   it("puts one-click unsubscribe headers and a footer link on the email", async () => {
