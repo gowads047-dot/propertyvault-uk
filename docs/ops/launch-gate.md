@@ -8,7 +8,7 @@ The PR numbers say where the code and the verification live.
 
 | # | Item | Status | Evidence / what is left |
 |---|------|--------|-------------------------|
-| 1 | Turn on RLS | Done | All 60 tables in `public` have RLS on (`pg_class.relrowsecurity`). The 11 with no policies are service-role-only by design (`rate_limit`, `social_*`, `tenant_*`, `rentura_right_to_rent`, `app_errors`). |
+| 1 | Turn on RLS | Done | All 60 tables in `public` have RLS on (`pg_class.relrowsecurity`). Of the 11 with no policies, nine are service-role-only by design (`rate_limit`, `social_*`, `tenant_invites`, `tenant_issue_updates`, `app_errors`). Two were not: `rentura_right_to_rent` and `tenant_issues` are read with the user's session and were returning nothing (#189). **Yours:** `supabase/missing-policies.sql`. |
 | 2 | No keys in the front end | Done | Client chunks grep clean for service-role, Resend, Stripe, Meta, Anthropic and cron secrets. The only `NEXT_PUBLIC_*` values are the Supabase URL + anon key (public by design), site URL, admin email, site-verification token. |
 | 3 | Lock admin routes | Done | `/api/admin/*` (check, enquiries, users, errors) each verify a session server-side and require `isAdmin(email)`; the admin pages are client-gated *and* only render data those routes return. `/api/rentura/admin` and Makan admin likewise. |
 | 4 | Rate-limit logins | Done (platform) | Every sign-in is Supabase Auth (`signInWithPassword` / OTP), which rate-limits `/token` per IP and email sends per hour at the project level. The tenant token login is behind `rateGuard`. **Yours:** Supabase → Authentication → Attack protection → enable *leaked password protection*. |
