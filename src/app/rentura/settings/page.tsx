@@ -112,8 +112,8 @@ export default function RenturaSettings() {
 
   async function openCheckout() {
     if (!user) return;
-    const res = await fetch("/api/rentura/subscribe/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email: user.email, userId: user.id }) });
-    const { url, error } = await res.json();
+    const res = await authFetch("/api/rentura/subscribe/", { method: "POST" });
+    const { url, error } = await res.json().catch(() => ({}));
     if (url) window.location.href = url;
     else alert(error || "Could not start checkout. Please try again.");
   }

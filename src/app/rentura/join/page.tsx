@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "@/components/ui/Link";
 import { supabase } from "@/lib/supabase";
+import { authFetch } from "@/lib/auth-fetch";
 
 export default function RenturaJoinPage() {
   const [step, setStep] = useState<"details" | "done">("details");
@@ -45,12 +46,9 @@ export default function RenturaJoinPage() {
 
     // If session is available immediately — go straight to Stripe
     if (data.session && data.user) {
-      const res = await fetch("/api/rentura/subscribe/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), userId: data.user.id }),
-      });
-      const { url } = await res.json();
+      // signUp stored the session, so authFetch can prove who this is.
+      const res = await authFetch("/api/rentura/subscribe/", { method: "POST" });
+      const { url } = await res.json().catch(() => ({}));
       if (url) { window.location.href = url; return; }
     }
 
