@@ -6,23 +6,9 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
 import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
+import { DEFAULT_PREFS, NOTIFICATION_KEYS, type NotifKey, type NotifPrefs } from "@/lib/notification-prefs";
 
 type Tab = "profile" | "notifications" | "billing" | "security";
-
-const NOTIFICATION_KEYS = [
-  { key: "compliance_expiry", title: "Compliance expiry alerts", desc: "Remind me 45, 14 and 3 days before a certificate expires", defaultOn: true },
-  { key: "mortgage_alerts",   title: "Mortgage rate alerts",     desc: "Notify me when a fixed rate is within 90 days of expiry", defaultOn: true },
-  { key: "rent_reminders",    title: "Rent payment reminders",   desc: "Alert me if rent hasn't been logged by the 5th of the month", defaultOn: true },
-  { key: "maintenance",       title: "Maintenance updates",       desc: "Notify me when a maintenance job changes status", defaultOn: false },
-  { key: "weekly_digest",     title: "Portfolio digest",          desc: "Weekly summary of your portfolio performance every Monday", defaultOn: false },
-] as const;
-
-type NotifKey = typeof NOTIFICATION_KEYS[number]["key"];
-type NotifPrefs = Record<NotifKey, boolean>;
-
-const DEFAULT_PREFS: NotifPrefs = Object.fromEntries(
-  NOTIFICATION_KEYS.map(n => [n.key, n.defaultOn])
-) as NotifPrefs;
 
 export default function RenturaSettings() {
   const { user, profile, loading } = useAuth();

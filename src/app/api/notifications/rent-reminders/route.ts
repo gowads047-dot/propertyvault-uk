@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
+import { usersWhoWant } from "@/lib/notification-prefs";
 
 // Daily cron — sends rent due reminders to landlords
 // vercel.json: { "crons": [{ "path": "/api/notifications/rent-reminders", "schedule": "0 9 * * *" }] }
@@ -47,7 +48,11 @@ export async function GET(req: Request) {
   const RESEND_KEY = process.env.RESEND_API_KEY;
   const byUser: Record<string, { email: string; tenants: TenantRow[] }> = {};
 
+  // Only landlords who have the toggle on (Settings → Notifications).
+  const wanted = await usersWhoWant(supabase, due.map(t => t.user_id), "rent_reminders");
+
   for (const tenant of due) {
+    if (!wanted.has(tenant.user_id)) continue;
     if (!byUser[tenant.user_id]) {
       const { data: authUser } = await supabase.auth.admin.getUserById(tenant.user_id);
       const email = authUser?.user?.email;
