@@ -281,7 +281,7 @@ export default function PropertyPassport() {
     formData.append("property_id", id as string);
 
     try {
-      const res = await fetch("/api/rentura/extract/", { method: "POST", body: formData });
+      const res = await authFetch("/api/rentura/extract/", { method: "POST", body: formData });
       const data = await res.json();
       if (!res.ok || data.error) { setUploadError(data.error ?? "Extraction failed"); return; }
       setUploadResult(data);

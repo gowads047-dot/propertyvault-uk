@@ -268,7 +268,7 @@ export default function FloatingChat() {
     setInput("");
 
     try {
-      const res = await fetch("/api/rentura/scan-document/", {
+      const res = await authFetch("/api/rentura/scan-document/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -476,7 +476,7 @@ export default function FloatingChat() {
     setMessages(m => [...m, { role: "user", text: text.trim() }]);
     setInput(""); setChatLoading(true);
     try {
-      const res = await fetch("/api/rentura/chat/", {
+      const res = await authFetch("/api/rentura/chat/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ history: apiHistory, userInput: text.trim(), properties: props, context: ctx }),
