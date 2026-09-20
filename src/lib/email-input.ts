@@ -49,6 +49,22 @@ export function validRecipient(v: unknown): string | null {
  * legitimate reason for one to appear in a property address or a first name,
  * and a newline in a subject is how a header becomes two.
  */
+/**
+ * Caller-supplied text that ends up inside email HTML.
+ *
+ * A tenant's name or an issue title is typed by a person and pasted into
+ * a template; without this, "<a href=…>" in an issue title is a link in an
+ * email sent from our domain to an address the caller chose.
+ */
+export function escapeHtml(v: unknown): string {
+  return String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export function safeHeaderText(v: unknown, maxLength = 80): string {
   if (typeof v !== "string") return "";
   return v

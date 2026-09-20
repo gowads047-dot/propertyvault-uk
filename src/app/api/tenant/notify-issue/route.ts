@@ -1,14 +1,30 @@
 import { NextResponse } from "next/server";
 import { RULES, rateGuard } from "@/lib/rate-limit";
+import { getVerifiedUser } from "@/lib/server-auth";
+import { escapeHtml, safeHeaderText, validRecipient } from "@/lib/email-input";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
 import { REPLY_TO } from "@/lib/site";
 
+/**
+ * A landlord logs a maintenance job and the current tenant is told.
+ *
+ * Like the invite route, this took landlordUserId from the body and
+ * wrote the caller's title and description straight into an email sent
+ * from our domain to an address the caller chose — an open relay with a
+ * branded template. The landlord is now the session, the property must be
+ * theirs, the recipient must be one well-formed address, and the text is
+ * escaped.
+ */
 export async function POST(req: Request) {
   const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
+
+  const landlord = await getVerifiedUser(req);
+  if (!landlord) return NextResponse.json({ error: "Please sign in and try again." }, { status: 401 });
+  const landlordUserId = landlord.id;
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,14 +32,19 @@ export async function POST(req: Request) {
   );
 
   const {
-    tenantEmail, tenantName, tenantPhone,
-    propertyId, propertyAddress, landlordUserId,
+    tenantEmail: rawEmail, tenantName, tenantPhone,
+    propertyId, propertyAddress,
     issueTitle, issueDescription, issueCategory, issuePriority,
   } = await req.json();
+  const tenantEmail = validRecipient(rawEmail);
 
-  if (!tenantEmail || !landlordUserId || !issueTitle) {
+  if (!tenantEmail || typeof propertyId !== "string" || !propertyId || typeof issueTitle !== "string" || !issueTitle.trim()) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
+
+  const { data: property } = await supabase
+    .from("rentura_properties").select("id").eq("id", propertyId).eq("user_id", landlordUserId).maybeSingle();
+  if (!property) return NextResponse.json({ error: "That property is not yours." }, { status: 403 });
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
 
@@ -78,18 +99,18 @@ export async function POST(req: Request) {
         <span style="color:#f4d35e;font-weight:900;font-size:20px;">PropertyVault UK</span>
       </div>
       <div style="background:#f8f7f5;padding:36px 32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;border-top:none;">
-        <h2 style="font-size:20px;font-weight:800;margin:0 0 8px;">Hi ${firstName} — a maintenance issue has been logged for you</h2>
+        <h2 style="font-size:20px;font-weight:800;margin:0 0 8px;">Hi ${escapeHtml(firstName)} — a maintenance issue has been logged for you</h2>
         <p style="font-size:14px;color:rgba(26,41,66,0.6);line-height:1.7;margin:0 0 24px;">
-          Your landlord has logged the following issue at <strong>${shortAddress}</strong> on your behalf and is working on getting it resolved.
+          Your landlord has logged the following issue at <strong>${escapeHtml(shortAddress)}</strong> on your behalf and is working on getting it resolved.
         </p>
 
         <div style="background:white;border:1px solid #e8e4dd;border-radius:12px;padding:20px 24px;margin-bottom:28px;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
-            <p style="font-size:16px;font-weight:800;color:#1a2942;margin:0;">${issueTitle}</p>
+            <p style="font-size:16px;font-weight:800;color:#1a2942;margin:0;">${escapeHtml(issueTitle)}</p>
             <span style="font-size:11px;font-weight:700;color:${priorityColour};background:${priorityColour}14;padding:3px 9px;border-radius:6px;flex-shrink:0;margin-left:12px;">${priorityLabel}</span>
           </div>
-          ${issueDescription ? `<p style="font-size:13px;color:rgba(26,41,66,0.6);line-height:1.65;margin:0 0 10px;">${issueDescription}</p>` : ""}
-          <p style="font-size:12px;color:rgba(26,41,66,0.4);margin:0;">Category: ${issueCategory || "General"} &nbsp;·&nbsp; Status: <strong style="color:#ca8a04;">Open</strong></p>
+          ${issueDescription ? `<p style="font-size:13px;color:rgba(26,41,66,0.6);line-height:1.65;margin:0 0 10px;">${escapeHtml(issueDescription)}</p>` : ""}
+          <p style="font-size:12px;color:rgba(26,41,66,0.4);margin:0;">Category: ${escapeHtml(issueCategory || "General")} &nbsp;·&nbsp; Status: <strong style="color:#ca8a04;">Open</strong></p>
         </div>
 
         <p style="font-size:14px;color:rgba(26,41,66,0.6);line-height:1.7;margin:0 0 20px;">
@@ -113,7 +134,7 @@ export async function POST(req: Request) {
         </div>
 
         <p style="font-size:11px;color:rgba(26,41,66,0.3);margin-top:24px;text-align:center;">
-          ${shortAddress} · PropertyVault UK Tenant Portal<br/>
+          ${escapeHtml(shortAddress)} · PropertyVault UK Tenant Portal<br/>
           If you didn&apos;t expect this email, please ignore it.
         </p>
       </div>
@@ -128,7 +149,7 @@ export async function POST(req: Request) {
         from: "PropertyVault UK <info@propertyvaultuk.co.uk>",
         replyTo: REPLY_TO,
         to: tenantEmail,
-        subject: `🔧 Maintenance update: "${issueTitle}" has been logged — ${shortAddress}`,
+        subject: `🔧 Maintenance update: "${safeHeaderText(issueTitle, 60)}" has been logged — ${safeHeaderText(shortAddress, 80)}`,
         html,
       }),
     });
