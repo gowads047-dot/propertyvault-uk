@@ -88,9 +88,11 @@ describe("Google Ads under consent", () => {
     // Seen on production the day Accept All began granting ad_storage: GA's
     // audiences pixel at www.google.co.uk was blocked. The conversion tag
     // (#182) reaches the two ad hosts; the pixel reaches google.com and the
-    // visitor's country TLD, which for this site is .co.uk.
+    // visitor's country TLD, which for this site is .co.uk. Then, with ad
+    // consent stored, GA's linking beacon to stats.g.doubleclick.net was
+    // blocked on every page load.
     const csp = (await policies())["/((?!embed/).*)"];
-    for (const host of ["https://www.googleadservices.com", "https://googleads.g.doubleclick.net", "https://www.google.com", "https://www.google.co.uk"]) {
+    for (const host of ["https://www.googleadservices.com", "https://googleads.g.doubleclick.net", "https://stats.g.doubleclick.net", "https://www.google.com", "https://www.google.co.uk"]) {
       expect(directive(csp, "img-src"), host).toContain(host);
       expect(directive(csp, "connect-src"), host).toContain(host);
     }
