@@ -32,14 +32,32 @@ async function sendReminders() {
 
   const now = new Date();
 
-  // Find all Rentura members who are cancelled but still in grace period
-  const { data: cancelledMembers } = await supabase
+  // Find all Rentura members who are cancelled but still in grace period.
+  //
+  // No `email` in the select: rentura_subscriptions has no such column, and
+  // asking for one made the whole query fail — quietly, since the error was
+  // never read, so this reported "sent: 0" and did nothing. The address is
+  // on auth.users, which the service role can look up by id.
+  const { data: rows, error } = await supabase
     .from("rentura_subscriptions")
-    .select("user_id, email, name, access_until, cancelled_at")
+    .select("user_id, name, access_until, cancelled_at")
     .eq("status", "cancelled")
     .gt("access_until", now.toISOString());
+  if (error) {
+    console.error("cancel-reminders: could not read subscriptions:", error.message);
+    return NextResponse.json({ error: "Could not read subscriptions." }, { status: 502 });
+  }
+  if (!rows || rows.length === 0) {
+    return NextResponse.json({ sent: 0 });
+  }
 
-  if (!cancelledMembers || cancelledMembers.length === 0) {
+  const cancelledMembers: { user_id: string; name: string | null; access_until: string; cancelled_at: string | null; email: string }[] = [];
+  for (const r of rows) {
+    const { data: u } = await supabase.auth.admin.getUserById(r.user_id);
+    if (u?.user?.email) cancelledMembers.push({ ...r, email: u.user.email });
+    else console.error(`cancel-reminders: no email for user ${r.user_id}`);
+  }
+  if (cancelledMembers.length === 0) {
     return NextResponse.json({ sent: 0 });
   }
 
@@ -61,7 +79,7 @@ async function sendReminders() {
     const emailHtml = `
       <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#0f1b2d;">
         <div style="background:#0f1b2d;padding:24px 32px;border-radius:12px 12px 0 0;">
-          <span style="color:var(--gold-ink);font-weight:900;font-size:20px;">Rentura</span>
+          <span style="color:#f4d35e;font-weight:900;font-size:20px;">Rentura</span>
         </div>
         <div style="background:#f5f3ef;padding:32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;">
           <h2 style="font-size:20px;font-weight:800;margin:0 0 12px;">Hi ${firstName} — your access expires in ${daysLeft} day${daysLeft === 1 ? "" : "s"}</h2>

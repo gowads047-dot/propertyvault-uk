@@ -154,7 +154,7 @@ export default function FloatingChat() {
       supabase.from("rentura_tenants").select("id,first_name,last_name,property_id,monthly_rent,status,phone,tenancy_start,move_in_date").eq("user_id", user.id),
       supabase.from("rentura_mortgages").select("*").eq("user_id", user.id).eq("is_current", true),
       authFetch("/api/rentura/tax-summary/").then(r => r.json()).catch(() => null),
-      supabase.from("tenant_issues").select("id,title,priority,tenant_name,tenant_phone,property_id").eq("landlord_user_id", user.id).neq("status", "resolved").is("landlord_first_response_at", null).limit(8),
+      supabase.from("tenant_issues").select("id,title,priority,tenant_name,property_id").eq("landlord_user_id", user.id).neq("status", "resolved").is("landlord_first_response_at", null).limit(8),
       supabase.from("rentura_contacts").select("id,name,role,specialty,phone,whatsapp").eq("user_id", user.id).order("preferred", { ascending: false }),
     ]);
 
@@ -195,9 +195,9 @@ export default function FloatingChat() {
         const m = mortByProp[p.id];
         return m ? { property: shortAddr(p.address), lender: m.lender, rate: m.interest_rate, monthly: m.monthly_payment, fixedExpiry: m.fixed_term_expiry } : null;
       }).filter(Boolean),
-      unrespondedIssues: (issuesRes.data ?? []).map((i: { title: string; tenant_name: string | null; tenant_phone: string | null; property_id: string; priority: string }) => {
+      unrespondedIssues: (issuesRes.data ?? []).map((i: { title: string; tenant_name: string | null; property_id: string; priority: string }) => {
         const prop = properties.find(p => p.id === i.property_id);
-        return { title: i.title, tenantName: i.tenant_name ?? "Tenant", tenantPhone: i.tenant_phone ?? null, property: prop ? shortAddr(prop.address) : "Property", priority: i.priority };
+        return { title: i.title, tenantName: i.tenant_name ?? "Tenant", tenantPhone: null, property: prop ? shortAddr(prop.address) : "Property", priority: i.priority };
       }),
     });
 
@@ -450,7 +450,7 @@ export default function FloatingChat() {
           const { error: dbErr } = await supabase.from("rentura_documents").insert({
             user_id: user.id,
             property_id: propId ?? null,
-            file_name: pendingScan.file.name,
+            name: pendingScan.file.name,
             file_url: publicUrl,
             category: d.category ?? "other",
           });

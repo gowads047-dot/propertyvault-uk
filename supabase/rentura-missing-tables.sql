@@ -48,7 +48,9 @@ create table if not exists rentura_documents (
   id          uuid primary key default gen_random_uuid(),
   user_id     uuid references auth.users(id) on delete cascade not null,
   property_id uuid references rentura_properties(id) on delete cascade,
-  file_name   text not null,
+  -- `name`, not `file_name`: the live table predates this file and has
+  -- `name`; the code reads and writes `name`.
+  name        text not null,
   file_url    text not null,
   category    text not null default 'other',
   created_at  timestamptz default now()
