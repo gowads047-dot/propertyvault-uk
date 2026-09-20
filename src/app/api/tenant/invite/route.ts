@@ -1,24 +1,44 @@
 import { NextResponse } from "next/server";
-import { safeHeaderText, validRecipient } from "@/lib/email-input";
+import { escapeHtml, safeHeaderText, validRecipient } from "@/lib/email-input";
 import { RULES, rateGuard } from "@/lib/rate-limit";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { createClient } from "@supabase/supabase-js";
 import { randomUUID } from "crypto";
 import { REPLY_TO } from "@/lib/site";
 
+/**
+ * A landlord invites a tenant to the portal.
+ *
+ * This took landlordUserId from the body, unverified, and answered with
+ * the portal URL — which carries the token, and the token is the tenant's
+ * whole credential. Anyone could name an address and a landlord, receive a
+ * live token for that tenant, and (the upsert being on email) re-point an
+ * existing tenant's invite at their own property. The landlord is now the
+ * session, the property must be theirs, and the name goes into the HTML
+ * escaped.
+ */
 export async function POST(req: Request) {
   const limited = await rateGuard(req, RULES.emailPerCaller, RULES.emailGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
 
+  const landlord = await getVerifiedUser(req);
+  if (!landlord) return NextResponse.json({ error: "Please sign in and try again." }, { status: 401 });
+  const landlordUserId = landlord.id;
+
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const { tenantId, tenantEmail, tenantName, tenantPhone, propertyId, propertyAddress, landlordUserId } = await req.json();
+  const { tenantId, tenantEmail, tenantName, tenantPhone, propertyId, propertyAddress } = await req.json();
   const recipient = validRecipient(tenantEmail);
-  if (!recipient || !landlordUserId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+  if (!recipient || typeof propertyId !== "string" || !propertyId) return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+
+  const { data: property } = await supabase
+    .from("rentura_properties").select("id").eq("id", propertyId).eq("user_id", landlordUserId).maybeSingle();
+  if (!property) return NextResponse.json({ error: "That property is not yours." }, { status: 403 });
 
   const token = randomUUID();
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.propertyvaultuk.co.uk";
@@ -34,8 +54,8 @@ export async function POST(req: Request) {
     invite_sent_at: new Date().toISOString(),
   }, { onConflict: "email" });
 
-  const firstName = tenantName?.split(" ")[0] || "there";
-  const shortAddress = propertyAddress?.split(",")[0] || "your property";
+  const firstName = (typeof tenantName === "string" && tenantName.split(" ")[0]) || "there";
+  const shortAddress = (typeof propertyAddress === "string" && propertyAddress.split(",")[0]) || "your property";
 
   const html = `
     <div style="font-family:sans-serif;max-width:560px;margin:0 auto;color:#1a2942;">
@@ -43,9 +63,9 @@ export async function POST(req: Request) {
         <span style="color:#f4d35e;font-weight:900;font-size:20px;">PropertyVault UK</span>
       </div>
       <div style="background:#f8f7f5;padding:36px 32px;border-radius:0 0 12px 12px;border:1px solid #e8e4dd;border-top:none;">
-        <h2 style="font-size:22px;font-weight:800;margin:0 0 12px;">Hi ${firstName} — welcome to your tenant portal 👋</h2>
+        <h2 style="font-size:22px;font-weight:800;margin:0 0 12px;">Hi ${escapeHtml(firstName)} — welcome to your tenant portal 👋</h2>
         <p style="font-size:14px;color:rgba(26,41,66,0.6);line-height:1.75;margin:0 0 20px;">
-          Your landlord has added you to <strong>${shortAddress}</strong> on PropertyVault UK. Your tenant portal gives you a direct line to report maintenance issues, track repairs, and stay connected.
+          Your landlord has added you to <strong>${escapeHtml(shortAddress)}</strong> on PropertyVault UK. Your tenant portal gives you a direct line to report maintenance issues, track repairs, and stay connected.
         </p>
         <div style="background:white;border:1px solid #e8e4dd;border-radius:12px;padding:20px 24px;margin-bottom:28px;">
           <p style="font-size:13px;font-weight:700;color:rgba(26,41,66,0.45);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">What you can do in the portal</p>

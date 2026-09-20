@@ -195,7 +195,7 @@ export default function PropertyPassport() {
 
       // Send portal invite if email provided
       if (tenantForm.email) {
-        const inviteRes = await fetch("/api/tenant/invite/", {
+        const inviteRes = await authFetch("/api/tenant/invite/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -205,7 +205,6 @@ export default function PropertyPassport() {
             tenantPhone: tenantForm.phone || "",
             propertyId: id,
             propertyAddress: property?.address || "",
-            landlordUserId: user.id,
           }),
         });
         const inviteData = await inviteRes.json();
@@ -460,7 +459,7 @@ export default function PropertyPassport() {
     if (data) {
       const currentTenant = tenants.find(t => t.is_current);
       if (currentTenant?.email) {
-        const notifyRes = await fetch("/api/tenant/notify-issue/", {
+        const notifyRes = await authFetch("/api/tenant/notify-issue/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -469,7 +468,6 @@ export default function PropertyPassport() {
             tenantPhone: currentTenant.phone || null,
             propertyId: id,
             propertyAddress: property?.address || null,
-            landlordUserId: user.id,
             issueTitle: (data as { title: string }).title,
             issueDescription: (data as { description?: string }).description || null,
             issueCategory: (data as { category: string }).category,
