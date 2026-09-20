@@ -1,7 +1,18 @@
 import { NextResponse } from "next/server";
 import { RULES, rateGuard } from "@/lib/rate-limit";
-import { validRecipient } from "@/lib/email-input";
+import { escapeHtml } from "@/lib/email-input";
+import { getVerifiedUser } from "@/lib/server-auth";
 import { REPLY_TO } from "@/lib/site";
+
+/**
+ * Welcome and confirmation emails, to the signed-in member only.
+ *
+ * This route sent a branded welcome to any address in the body, with any
+ * `name` pasted into the HTML unescaped, and nothing in the app called it
+ * — an open, unauthenticated sender of our own template to anyone. The
+ * recipient is now the session's address, the name is escaped, and the
+ * Rentura join page calls it once a sign-up has a session.
+ */
 
 const RESEND_KEY = process.env.RESEND_API_KEY;
 
@@ -140,10 +151,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
 
+  const user = await getVerifiedUser(req);
+  if (!user?.email) return NextResponse.json({ error: "Please sign in and try again." }, { status: 401 });
+  const recipient = user.email;
+
   try {
-    const { email, name, type, platform } = await req.json();
-    const recipient = validRecipient(email);
-    if (!recipient || !type) return NextResponse.json({ error: "email and type required" }, { status: 400 });
+    const body = (await req.json().catch(() => ({}))) as { name?: unknown; type?: unknown; platform?: unknown };
+    const type = typeof body.type === "string" ? body.type : "";
+    const platform = body.platform === "rentura" ? "rentura" : "academy";
+    const name = escapeHtml(typeof body.name === "string" ? body.name.trim().slice(0, 60) : "");
+    if (!type) return NextResponse.json({ error: "type required" }, { status: 400 });
 
     if (type === "rentura_welcome") {
       await sendEmail(recipient, "Welcome to Rentura™ — your landlord OS is ready", renturaWelcomeHtml(name || ""));
@@ -151,7 +168,7 @@ export async function POST(req: Request) {
       await sendEmail(recipient, "Welcome to PropertyVault Academy — your courses are ready", academyWelcomeHtml(name || ""));
     } else if (type === "subscription_confirm") {
       const amount = platform === "rentura" ? "£9.99" : "£14.99";
-      await sendEmail(recipient, `Subscription confirmed — ${platform === "rentura" ? "Rentura™" : "PropertyVault Academy"}`, subscriptionConfirmHtml(name || "", platform || "academy", amount));
+      await sendEmail(recipient, `Subscription confirmed — ${platform === "rentura" ? "Rentura™" : "PropertyVault Academy"}`, subscriptionConfirmHtml(name || "", platform, amount));
     } else {
       return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
