@@ -62,12 +62,13 @@ const nextConfig: NextConfig = {
       "default-src 'self'",
       // Google's ad hosts are what gtag loads once ad consent is granted and
       // an Ads conversion fires (#182): the conversion tag, the doubleclick
-      // beacons, and GA's audiences pixel on google.com / google.co.uk.
+      // beacons, GA's audiences pixel on google.com / google.co.uk, and the
+      // GA-to-Ads linking beacon at stats.g.doubleclick.net.
       "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://challenges.cloudflare.com",
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://images.unsplash.com https://d8j0ntlcm91z4.cloudfront.net https://ubmxpuukspfponiesasc.supabase.co https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.uk",
+      "img-src 'self' data: blob: https://images.unsplash.com https://d8j0ntlcm91z4.cloudfront.net https://ubmxpuukspfponiesasc.supabase.co https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.google.com https://www.google.co.uk",
       "font-src 'self' data:",
-      "connect-src 'self' https://ubmxpuukspfponiesasc.supabase.co wss://ubmxpuukspfponiesasc.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://www.google.co.uk https://vitals.vercel-insights.com https://challenges.cloudflare.com",
+      "connect-src 'self' https://ubmxpuukspfponiesasc.supabase.co wss://ubmxpuukspfponiesasc.supabase.co https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://www.google.com https://www.google.co.uk https://vitals.vercel-insights.com https://challenges.cloudflare.com",
       "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://td.doubleclick.net https://bid.g.doubleclick.net https://challenges.cloudflare.com",
       "media-src 'self' https://ubmxpuukspfponiesasc.supabase.co",
       "worker-src 'self' blob:",
