@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO, siteOrigin } from "@/lib/site";
+import { findUserIdByEmail, periodEndIso, periodEndSeconds } from "@/lib/stripe-subscription";
 
 export async function POST(req: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-05-27.dahlia" });
@@ -27,9 +28,7 @@ export async function POST(req: Request) {
   // Subscription created or updated
   if (event.type === "customer.subscription.created" || event.type === "customer.subscription.updated") {
     if (userId) {
-      const periodEnd = sub.current_period_end
-        ? new Date(sub.current_period_end * 1000).toISOString()
-        : null;
+      const periodEnd = periodEndIso(sub);
       const trialEnd = sub.trial_end
         ? new Date(sub.trial_end * 1000).toISOString()
         : null;
@@ -68,7 +67,8 @@ export async function POST(req: Request) {
     if (userId) {
       const nowMs = Date.now();
       const trialEndMs = sub.trial_end ? sub.trial_end * 1000 : 0;
-      const periodEndMs = sub.current_period_end ? sub.current_period_end * 1000 : nowMs;
+      const periodEndSec = periodEndSeconds(sub);
+      const periodEndMs = periodEndSec ? periodEndSec * 1000 : nowMs;
       const cancelledDuringTrial = trialEndMs > nowMs;
 
       const accessUntil = cancelledDuringTrial
@@ -97,17 +97,13 @@ export async function POST(req: Request) {
     if (!cUserId && checkoutSession.subscription) {
       const email = checkoutSession.customer_details?.email || checkoutSession.customer_email;
       if (email) {
-        const { data: authUsers } = await supabase.auth.admin.listUsers();
-        const match = authUsers?.users?.find((u: { email?: string; id: string }) => u.email === email);
-        if (match) cUserId = match.id;
+        cUserId = (await findUserIdByEmail(supabase, email)) ?? undefined;
       }
     }
 
     if (cUserId && checkoutSession.subscription) {
-      const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string) as Stripe.Subscription & { current_period_end?: number };
-      const periodEnd = subscription.current_period_end
-        ? new Date((subscription.current_period_end as number) * 1000).toISOString()
-        : null;
+      const subscription = await stripe.subscriptions.retrieve(checkoutSession.subscription as string);
+      const periodEnd = periodEndIso(subscription);
       const customerEmail = checkoutSession.customer_details?.email || checkoutSession.customer_email || "";
       const trialEndFromSub = (subscription as Stripe.Subscription & { trial_end?: number | null }).trial_end;
       const trialEndIso = trialEndFromSub ? new Date(trialEndFromSub * 1000).toISOString() : null;
