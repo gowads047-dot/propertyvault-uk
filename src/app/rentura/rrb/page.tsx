@@ -301,7 +301,7 @@ export default function RRBPage() {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    if (!user) { router.push("/rentura/auth?next=/rentura/rrb"); return; }
+    if (!user) { router.push("/rentura/auth/?next=/rentura/rrb"); return; }
     async function load() {
       const [pR, tR, cR] = await Promise.all([
         supabase.from("rentura_properties").select("id,address,property_type,bedrooms").eq("user_id", user!.id),

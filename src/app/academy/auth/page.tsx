@@ -39,11 +39,11 @@ export default function AcademyAuthPage() {
 
       if (!isActive && !inGrace) {
         // No active sub and no grace period — send to checkout
-        router.push("/academy/subscribe");
+        router.push("/academy/subscribe/");
         return;
       }
     }
-    router.push("/academy/dashboard");
+    router.push("/academy/dashboard/");
   }
 
   async function handleReset(e: React.FormEvent) {

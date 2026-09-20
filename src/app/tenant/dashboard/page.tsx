@@ -143,7 +143,7 @@ function TenantPortalInner() {
 
   async function handleSignOut() {
     await supabase.auth.signOut();
-    router.push(`/tenant?token=${token}`);
+    router.push(`/tenant/?token=${token}`);
   }
 
   if (loading) {

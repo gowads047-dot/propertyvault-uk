@@ -144,7 +144,7 @@ export default function PropertyPassport() {
   const [certForm, setCertForm] = useState({ certificate_type: "gas_safety", issue_date: "", expiry_date: "", notes: "" });
 
   useEffect(() => {
-    if (!user) { router.push("/rentura/auth?next=/rentura/dashboard"); return; }
+    if (!user) { router.push("/rentura/auth/?next=/rentura/dashboard"); return; }
     async function load() {
       setLoading(true);
       const [propRes, evtRes, tenRes, mortRes, compRes, maintRes] = await Promise.all([
@@ -155,7 +155,7 @@ export default function PropertyPassport() {
         supabase.from("rentura_compliance").select("*").eq("property_id", id).order("expiry_date", { ascending: true }),
         supabase.from("rentura_maintenance").select("*").eq("property_id", id).order("created_at", { ascending: false }),
       ]);
-      if (!propRes.data) { router.push("/rentura/dashboard"); return; }
+      if (!propRes.data) { router.push("/rentura/dashboard/"); return; }
       setProperty(propRes.data);
       setEvents(evtRes.data ?? []);
       setTenants(tenRes.data ?? []);

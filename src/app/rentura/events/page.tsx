@@ -93,7 +93,7 @@ export default function EventsPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/rentura/auth"); return; }
+    if (!user) { router.push("/rentura/auth/"); return; }
     load();
   }, [user, authLoading]); // eslint-disable-line
 

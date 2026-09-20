@@ -53,7 +53,7 @@ export default function RenturaDocuments() {
   const [docsLoading, setDocsLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading && !user) router.push("/rentura/auth");
+    if (!loading && !user) router.push("/rentura/auth/");
   }, [user, loading, router]);
 
   useEffect(() => {

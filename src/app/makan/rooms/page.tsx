@@ -90,7 +90,7 @@ function RoomsSearch() {
   }
 
   const apply = useCallback(
-    (next: Filters) => router.replace(`/makan/rooms${toQueryString(next)}`, { scroll: false }),
+    (next: Filters) => router.replace(`/makan/rooms${toQueryString(next)}/`, { scroll: false }),
     [router]
   );
 

@@ -42,8 +42,8 @@ export default function MakanAdmin() {
   const [stats, setStats] = useState({ total: 0, active: 0, verified: 0, enquiries: 0 });
 
   useEffect(() => {
-    if (!loading && !user) router.push("/makan/auth");
-    if (!loading && user && admin === false) router.push("/makan");
+    if (!loading && !user) router.push("/makan/auth/");
+    if (!loading && user && admin === false) router.push("/makan/");
   }, [user, loading, admin, router]);
 
   useEffect(() => {

@@ -336,7 +336,7 @@ export default function ArrearsPage() {
   const [payForm, setPayForm] = useState({ amount: "", date: today(), note: "" });
 
   useEffect(() => {
-    if (!user) { router.push("/rentura/auth?next=/rentura/arrears"); return; }
+    if (!user) { router.push("/rentura/auth/?next=/rentura/arrears"); return; }
     async function load() {
       const [cR, tR, pR] = await Promise.all([
         supabase.from("rentura_arrears").select("*").eq("user_id", user!.id).order("created_at", { ascending: false }),

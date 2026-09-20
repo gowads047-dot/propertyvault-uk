@@ -117,7 +117,7 @@ export default function InventoryPage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      router.push("/makan/auth");
+      router.push("/makan/auth/");
       return;
     }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch; setState runs after the await, not during render

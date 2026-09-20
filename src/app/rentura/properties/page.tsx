@@ -35,7 +35,7 @@ export default function RenturaPropertiesPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    if (!loading && !user) router.push("/rentura/auth");
+    if (!loading && !user) router.push("/rentura/auth/");
   }, [user, loading, router]);
 
   useEffect(() => {

@@ -170,7 +170,7 @@ export default function RenturaTenants() {
   const [rtrTab, setRtrTab] = useState<"status" | "history">("status");
 
   useEffect(() => {
-    if (!loading && !user) router.push("/rentura/auth");
+    if (!loading && !user) router.push("/rentura/auth/");
   }, [user, loading, router]);
 
   useEffect(() => {

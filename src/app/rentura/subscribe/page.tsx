@@ -13,7 +13,7 @@ export default function RenturaSubscribePage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!authLoading && !user) router.push("/rentura/auth?next=/rentura/subscribe");
+    if (!authLoading && !user) router.push("/rentura/auth/?next=/rentura/subscribe");
   }, [user, authLoading, router]);
 
   async function handleSubscribe() {

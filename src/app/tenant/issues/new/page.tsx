@@ -64,7 +64,7 @@ function NewIssueInner() {
     });
     const { issue, error: apiErr } = await res.json();
     if (apiErr || !issue) { setError(apiErr || "Failed to submit. Please try again."); setSubmitting(false); return; }
-    router.push(`/tenant/issues/${issue.id}?token=${token}&new=1`);
+    router.push(`/tenant/issues/${issue.id}/?token=${token}&new=1`);
   }
 
   return (
