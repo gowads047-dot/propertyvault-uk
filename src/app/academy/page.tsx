@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "@/components/ui/Link";
+import { Turnstile, turnstileToken } from "@/components/forms/Turnstile";
+import { attributionFields } from "@/lib/attribution";
 
 const MODULES = [
   { n: "01", title: "Property Foundations", desc: "How the UK market works, title types, key metrics every investor must know, and the mindset behind successful portfolios." },
@@ -49,13 +51,15 @@ export default function AcademyPage() {
     e.preventDefault();
     if (!email.trim() || busy) return;
 
+    // Read before the await: React reuses the event and the form is gone after it.
+    const humanToken = turnstileToken(e.currentTarget as HTMLFormElement);
     setBusy(true);
     setError("");
     try {
       const res = await fetch("/api/subscribe/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: "Academy Waitlist", email: email.trim(), user_type: "academy_waitlist" }),
+        body: JSON.stringify({ ...attributionFields(), name: "Academy Waitlist", email: email.trim(), user_type: "academy_waitlist", "cf-turnstile-response": humanToken }),
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -117,12 +121,13 @@ export default function AcademyPage() {
               <p className="text-white/60 text-sm mt-1">We&apos;ll email you the moment Academy goes live — plus early-access pricing.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:flex-wrap gap-3 max-w-md mx-auto">
               <input aria-label="Email address" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 focus:bg-white/15 transition-all" />
               <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">
                 {busy ? "Joining…" : "Notify Me →"}
               </button>
+              <Turnstile className="basis-full" />
             </form>
           )}
           {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
@@ -250,10 +255,11 @@ export default function AcademyPage() {
               <p className="text-white/60 text-sm mt-1">We&apos;ll be in touch very soon.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row sm:flex-wrap gap-3 max-w-md mx-auto">
               <input aria-label="Email address" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com"
                 className="flex-1 bg-white/10 border border-white/20 rounded-xl px-5 py-3.5 text-white placeholder-white/40 focus:outline-none focus:border-[#c9a84c]/60 transition-all" />
               <button type="submit" disabled={busy} className="bg-[#c9a84c] hover:bg-[#b8973b] disabled:opacity-60 text-[#0a1628] font-bold px-6 py-3.5 rounded-xl transition-colors whitespace-nowrap">Join Waitlist</button>
+              <Turnstile className="basis-full" />
             </form>
           )}
           {error && <p className="text-red-300 text-sm mt-3" role="alert">{error}</p>}
