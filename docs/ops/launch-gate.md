@@ -8,7 +8,7 @@ The PR numbers say where the code and the verification live.
 
 | # | Item | Status | Evidence / what is left |
 |---|------|--------|-------------------------|
-| 1 | Turn on RLS | Done | All 60 tables in `public` have RLS on (`pg_class.relrowsecurity`). Of the 11 with no policies, nine are service-role-only by design (`rate_limit`, `social_*`, `tenant_invites`, `tenant_issue_updates`, `app_errors`). Two were not: `rentura_right_to_rent` and `tenant_issues` are read with the user's session and were returning nothing (#189). **Yours:** `supabase/missing-policies.sql`. |
+| 1 | Turn on RLS | Done | All 60 tables in `public` have RLS on (`pg_class.relrowsecurity`). Of the 11 with no policies, nine are service-role-only by design (`rate_limit`, `social_*`, `tenant_invites`, `tenant_issue_updates`, `app_errors`). Two were not: `rentura_right_to_rent` and `tenant_issues` are read with the user's session and were returning nothing (#189). And `profiles` had the opposite problem: `using (true)` on a table with every user's phone number (#190). **Yours:** `supabase/missing-policies.sql`, `supabase/profiles-privacy.sql`. |
 | 2 | No keys in the front end | Done | Client chunks grep clean for service-role, Resend, Stripe, Meta, Anthropic and cron secrets. The only `NEXT_PUBLIC_*` values are the Supabase URL + anon key (public by design), site URL, admin email, site-verification token. |
 | 3 | Lock admin routes | Done | `/api/admin/*` (check, enquiries, users, errors) each verify a session server-side and require `isAdmin(email)`; the admin pages are client-gated *and* only render data those routes return. `/api/rentura/admin` and Makan admin likewise. |
 | 4 | Rate-limit logins | Done (platform) | Every sign-in is Supabase Auth (`signInWithPassword` / OTP), which rate-limits `/token` per IP and email sends per hour at the project level. The tenant token login is behind `rateGuard`. **Yours:** Supabase → Authentication → Attack protection → enable *leaked password protection*. |
@@ -44,11 +44,13 @@ The PR numbers say where the code and the verification live.
 Everything code could do is merged and verified on production. `app_errors`
 and the `subscribers` columns have been applied to the database already.
 
-1. Run `supabase/rls-initplan.sql` and `supabase/missing-policies.sql` in the
-   Supabase SQL editor (the connector is not allowed to change policies or
-   add buckets). The second one matters more: until it runs, landlords cannot
-   save a right-to-rent check or see tenant issues, and tenants cannot attach
-   a photo to an issue. `npm run check:db` lists both.
+1. Run `supabase/rls-initplan.sql`, `supabase/missing-policies.sql` and
+   `supabase/profiles-privacy.sql` in the Supabase SQL editor (the connector
+   is not allowed to change policies or add buckets). The last two matter
+   more: until they run, landlords cannot save a right-to-rent check or see
+   tenant issues, tenants cannot attach a photo to an issue, and anyone with
+   the anon key can list every user's phone number. `npm run check:db` lists
+   all three.
 2. Vercel → Settings → Environment Variables (Production): the Turnstile pair,
    the Meta pair, the Google Ads pair. `npm run check:env` explains each.
 3. GitHub → Settings → Secrets: `SUPABASE_DB_URL` (session pooler) and

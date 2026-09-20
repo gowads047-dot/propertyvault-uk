@@ -175,6 +175,14 @@ export const MIGRATIONS: Migration[] = [
     },
   },
   {
+    file: "profiles-privacy.sql",
+    purpose: "profiles select policy: own row, listing owners, enquiry counterparts — not every phone number to anyone with the anon key.",
+    marker: {
+      kind: "unverifiable",
+      because: "replaces a policy, which PostgREST does not expose",
+    },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
