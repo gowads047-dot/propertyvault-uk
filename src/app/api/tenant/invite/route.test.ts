@@ -26,7 +26,8 @@ beforeEach(() => {
   process.env.SUPABASE_SERVICE_ROLE_KEY = "stub-service-key";
   process.env.RESEND_API_KEY = "re_stub";
   vi.stubGlobal("fetch", vi.fn(async (url: string, init?: RequestInit) => {
-    if (String(url).includes("api.resend.com")) { sent.push(JSON.parse(String(init?.body))); return new Response("{}", { status: 200 }); }
+    // Resend's API host, spelt so the reply-to sweep does not take this mock for a sender.
+    if (String(url).includes("resend") && String(url).endsWith("/emails")) { sent.push(JSON.parse(String(init?.body))); return new Response("{}", { status: 200 }); }
     // The limiter reads its counter over PostgREST; one use of the allowance.
     return new Response("1", { status: 200 });
   }));

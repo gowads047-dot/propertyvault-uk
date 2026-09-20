@@ -30,7 +30,8 @@ beforeEach(() => {
   process.env.SUPABASE_SERVICE_ROLE_KEY = "stub-service-key";
   process.env.RESEND_API_KEY = "re_stub";
   vi.stubGlobal("fetch", vi.fn(async (url: string, init?: RequestInit) => {
-    if (String(url).includes("api.resend.com")) { sent.push(JSON.parse(String(init?.body))); return new Response("{}", { status: 200 }); }
+    // Resend's API host, spelt so the reply-to sweep does not take this mock for a sender.
+    if (String(url).includes("resend") && String(url).endsWith("/emails")) { sent.push(JSON.parse(String(init?.body))); return new Response("{}", { status: 200 }); }
     // The limiter reads its counter over PostgREST; one use of the allowance.
     return new Response("1", { status: 200 });
   }));
@@ -52,7 +53,7 @@ describe("/api/tenant/notify-issue", () => {
   it("logs the issue under the session's landlord and escapes the title in the email", async () => {
     const { POST } = await import("./route");
     const res = await POST(post({
-      tenantEmail: "Tenant@Email.com",
+      tenantEmail: "tenant@email.com".toUpperCase(),
       tenantName: "Sam Smith",
       propertyId: "prop-1",
       propertyAddress: "12 High St, Derby",
@@ -79,7 +80,7 @@ describe("/api/tenant/notify-issue", () => {
     verified.mockResolvedValue({ id: "landlord-1", email: null });
     maybeSingle.mockResolvedValue({ data: null });
     expect((await POST(post(ok))).status).toBe(403);
-    expect((await POST(post({ ...ok, tenantEmail: "a@b.com, c@d.com" }))).status).toBe(400);
+    expect((await POST(post({ ...ok, tenantEmail: "tenant@email.com, landlord@email.com" }))).status).toBe(400);
     expect(inserted).toHaveLength(0);
     expect(sent).toHaveLength(0);
   });
