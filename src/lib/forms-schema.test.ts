@@ -93,11 +93,11 @@ describe("subscribe route (service role)", () => {
   it("anon can insert but cannot update, which is why the route holds the service key", async () => {
     requireSetup();
     await as("anon");
-    await db.query("insert into subscribers (name, email) values ('Sam', 'sam@example.com')");
-    const r = await db.query("update subscribers set name = 'Mallory' where email = 'sam@example.com'");
+    await db.query("insert into subscribers (name, email) values ('Sam', 'tenant@email.com')");
+    const r = await db.query("update subscribers set name = 'Mallory' where email = 'tenant@email.com'");
     expect(r.affectedRows ?? 0).toBe(0);
     await as("service_role");
-    const check = await db.query<{ name: string }>("select name from subscribers where email = 'sam@example.com'");
+    const check = await db.query<{ name: string }>("select name from subscribers where email = 'tenant@email.com'");
     expect(check.rows[0].name).toBe("Sam");
   });
 });
@@ -112,7 +112,7 @@ describe("unsubscribe route (service role)", () => {
     const r = await db.query("update subscribers set unsubscribed_at = now() where email = $1", ["jane_doe@email.com"]);
     expect(r.affectedRows).toBe(1);
     const still = await db.query<{ email: string }>(
-      "select email from subscribers where unsubscribed_at is null and email like 'jane%doe@email.com'",
+      "select email from subscribers where unsubscribed_at is null and email in ('jane_doe@email.com', 'jane.doe@email.com')",
     );
     expect(still.rows.map(x => x.email)).toEqual(["jane.doe@email.com"]);
   });
@@ -125,13 +125,13 @@ describe("contact route (service role)", () => {
     // insert … returning needs select under RLS; anon has no select policy.
     await expect(
       db.query(
-        "insert into contact_messages (name, email, message, source, details) values ('P', 'p@example.com', '', 'guaranteed-rent', $1) returning id",
+        "insert into contact_messages (name, email, message, source, details) values ('P', 'landlord@email.com', '', 'guaranteed-rent', $1) returning id",
         [{ phone: "07000000000", consent: "2026-09-19T22:00:00Z" }],
       ),
     ).rejects.toThrow(/row-level security/);
     await as("service_role");
     const ins = await db.query<{ id: string }>(
-      "insert into contact_messages (name, email, message, source, details) values ('P', 'p@example.com', '', 'guaranteed-rent', $1) returning id",
+      "insert into contact_messages (name, email, message, source, details) values ('P', 'landlord@email.com', '', 'guaranteed-rent', $1) returning id",
       [{ phone: "07000000000", consent: "2026-09-19T22:00:00Z", utm_source: "probe" }],
     );
     const id = ins.rows[0].id;
