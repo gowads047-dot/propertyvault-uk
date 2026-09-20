@@ -197,7 +197,7 @@ export default function RenturaDocuments() {
                   {doc.category}
                 </span>
                 <div style={{ display: "flex", gap: 8 }}>
-                  <button type="button" onClick={async () => { setViewError(""); if (!(await openDocument(doc.file_url))) setViewError(`Could not open ${doc.file_name}. Try again in a moment.`); }} style={{ fontSize: 12, color: C.gold, fontWeight: 700, padding: "5px 12px", borderRadius: 7, border: `1px solid rgba(201,168,76,0.3)`, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>
+                  <button type="button" onClick={async () => { setViewError(""); if (!(await openDocument(doc.file_url))) setViewError(`Could not open ${doc.name}. Try again in a moment.`); }} style={{ fontSize: 12, color: C.gold, fontWeight: 700, padding: "5px 12px", borderRadius: 7, border: `1px solid rgba(201,168,76,0.3)`, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>
                     View
                   </button>
                   <button onClick={() => deleteDoc(doc.id, doc.file_url)} style={{ fontSize: 12, color: "#ef4444", background: "transparent", border: `1px solid rgba(239,68,68,0.2)`, borderRadius: 7, padding: "5px 10px", cursor: "pointer" }}>
