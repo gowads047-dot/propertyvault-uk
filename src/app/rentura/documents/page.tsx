@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
+import { BUCKET, docPath, openDocument } from "@/lib/rentura-docs";
 import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 type Doc = {
@@ -44,6 +45,7 @@ export default function RenturaDocuments() {
   const [category, setCategory] = useState<string>("all");
   const [search, setSearch] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [viewError, setViewError] = useState("");
   const [properties, setProperties] = useState<{ id: string; address: string }[]>([]);
   const [selectedProp, setSelectedProp] = useState("");
   const [selectedCat, setSelectedCat] = useState("other");
@@ -79,9 +81,11 @@ export default function RenturaDocuments() {
     if (!file || !user) return;
     setUploading(true);
     const path = `${user.id}/${Date.now()}_${file.name}`;
-    const { error } = await supabase.storage.from("rentura-docs").upload(path, file);
+    const { error } = await supabase.storage.from(BUCKET).upload(path, file);
     if (error) { alert("Upload failed: " + error.message); setUploading(false); return; }
-    const { data: { publicUrl } } = supabase.storage.from("rentura-docs").getPublicUrl(path);
+    // The bucket is private, so this URL does not open on its own; it is the
+    // locator that openDocument() signs when the owner clicks View.
+    const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(path);
     await supabase.from("rentura_documents").insert({
       user_id: user.id,
       property_id: selectedProp || null,
@@ -98,8 +102,8 @@ export default function RenturaDocuments() {
 
   async function deleteDoc(id: string, fileUrl: string) {
     if (!confirm("Delete this document?")) return;
-    const path = fileUrl.split("rentura-docs/")[1];
-    if (path) await supabase.storage.from("rentura-docs").remove([path]);
+    const path = docPath(fileUrl);
+    if (path) await supabase.storage.from(BUCKET).remove([path]);
     await supabase.from("rentura_documents").delete().eq("id", id);
     setDocs(d => d.filter(x => x.id !== id));
   }
@@ -158,6 +162,8 @@ export default function RenturaDocuments() {
           </div>
         </div>
 
+        {viewError && <p role="alert" style={{ fontSize: 13, color: "#f87171", margin: "0 0 12px" }}>{viewError}</p>}
+
         {/* Upload zone (empty state) */}
         {!docsLoading && filtered.length === 0 && (
           <div
@@ -191,9 +197,9 @@ export default function RenturaDocuments() {
                   {doc.category}
                 </span>
                 <div style={{ display: "flex", gap: 8 }}>
-                  <a href={doc.file_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: C.gold, fontWeight: 700, padding: "5px 12px", borderRadius: 7, border: `1px solid rgba(201,168,76,0.3)`, textDecoration: "none" }}>
+                  <button type="button" onClick={async () => { setViewError(""); if (!(await openDocument(doc.file_url))) setViewError(`Could not open ${doc.name}. Try again in a moment.`); }} style={{ fontSize: 12, color: C.gold, fontWeight: 700, padding: "5px 12px", borderRadius: 7, border: `1px solid rgba(201,168,76,0.3)`, background: "transparent", cursor: "pointer", fontFamily: "inherit" }}>
                     View
-                  </a>
+                  </button>
                   <button onClick={() => deleteDoc(doc.id, doc.file_url)} style={{ fontSize: 12, color: "#ef4444", background: "transparent", border: `1px solid rgba(239,68,68,0.2)`, borderRadius: 7, padding: "5px 10px", cursor: "pointer" }}>
                     ✕
                   </button>
