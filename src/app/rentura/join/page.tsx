@@ -31,9 +31,11 @@ export default function RenturaJoinPage() {
 
     // Pre-create subscription row
     if (data.user) {
+      // No email here: the table has no such column (the address lives on
+      // auth.users) and the upsert was failing on it, so no row was ever
+      // pre-created.
       await supabase.from("rentura_subscriptions").upsert({
         user_id: data.user.id,
-        email: email.trim(),
         name: name.trim(),
         phone: phone.trim(),
         status: "pending",

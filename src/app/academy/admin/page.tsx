@@ -19,7 +19,7 @@ type Tab = "overview" | "members" | "courses" | "enrollments";
 // Row shapes for the admin tables. select("*") with no generated Supabase types,
 // so each lists the columns this page actually reads.
 type MemberRow = {
-  id: string; user_id: string; status: string; created_at: string;
+  id: string; user_id: string; status: string; joined_at: string;
   stripe_customer_id: string | null; current_period_end: string | null;
 };
 type CourseRow = {
@@ -51,7 +51,7 @@ export default function AcademyAdmin() {
   useEffect(() => {
     if (!user || !admin) return;
     Promise.all([
-      supabase.from("academy_members").select("*").order("created_at", { ascending: false }),
+      supabase.from("academy_members").select("*").order("joined_at", { ascending: false }),
       supabase.from("academy_courses").select("*").order("sort_order"),
       supabase.from("academy_enrollments").select("*, course:academy_courses(title)").order("enrolled_at", { ascending: false }).limit(100),
     ]).then(([m, c, e]) => {
@@ -140,7 +140,7 @@ export default function AcademyAdmin() {
             <div style={{ padding: "14px 20px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between" }}>
               <p style={{ fontSize: 13, fontWeight: 700 }}>{members.length} members</p>
               <button onClick={() => {
-                const csv = ["user_id,status,stripe_customer_id,created_at", ...members.map(m => `${m.user_id},${m.status},${m.stripe_customer_id || ""},${m.created_at}`)].join("\n");
+                const csv = ["user_id,status,stripe_customer_id,joined_at", ...members.map(m => `${m.user_id},${m.status},${m.stripe_customer_id || ""},${m.joined_at}`)].join("\n");
                 const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = "academy-members.csv"; a.click();
               }} style={{ background: C.gold, color: "#0f1b36", fontWeight: 800, fontSize: 12, padding: "5px 14px", borderRadius: 7, border: "none", cursor: "pointer" }}>Export CSV</button>
             </div>
@@ -159,7 +159,7 @@ export default function AcademyAdmin() {
                     <td style={{ padding: "11px 18px" }}><span style={{ fontSize: 10, fontWeight: 700, color: m.status === "active" ? C.green : C.red, background: m.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", padding: "2px 8px", borderRadius: 10, textTransform: "capitalize" }}>{m.status}</span></td>
                     <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink2, fontFamily: "monospace" }}>{m.stripe_customer_id?.slice(0, 16) || "—"}</td>
                     <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink2 }}>{m.current_period_end ? new Date(m.current_period_end).toLocaleDateString("en-GB") : "—"}</td>
-                    <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink3 }}>{new Date(m.created_at).toLocaleDateString("en-GB")}</td>
+                    <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink3 }}>{new Date(m.joined_at).toLocaleDateString("en-GB")}</td>
                   </tr>
                 ))}
               </tbody>

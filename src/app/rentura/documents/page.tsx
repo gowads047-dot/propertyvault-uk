@@ -8,7 +8,7 @@ import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 type Doc = {
   id: string;
-  file_name: string;
+  name: string;
   category: string;
   file_url: string;
   file_size: number | null;
@@ -85,7 +85,7 @@ export default function RenturaDocuments() {
     await supabase.from("rentura_documents").insert({
       user_id: user.id,
       property_id: selectedProp || null,
-      file_name: file.name,
+      name: file.name,
       category: selectedCat,
       file_url: publicUrl,
       file_size: file.size,
@@ -106,7 +106,7 @@ export default function RenturaDocuments() {
 
   const filtered = docs.filter(d =>
     (category === "all" || d.category === category) &&
-    (search === "" || d.file_name.toLowerCase().includes(search.toLowerCase()))
+    (search === "" || d.name.toLowerCase().includes(search.toLowerCase()))
   );
 
   if (loading) return <div style={{ background: C.bg, minHeight: "100vh" }} />;
@@ -179,9 +179,9 @@ export default function RenturaDocuments() {
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {filtered.map(doc => (
               <div key={doc.id} style={{ display: "flex", alignItems: "center", gap: 16, background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, padding: "14px 18px" }}>
-                <div style={{ fontSize: 24, width: 36, textAlign: "center" }}>{docIcon(doc.file_name)}</div>
+                <div style={{ fontSize: 24, width: 36, textAlign: "center" }}>{docIcon(doc.name)}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doc.file_name}</p>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: C.ink, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doc.name}</p>
                   <p style={{ fontSize: 11, color: C.ink3, marginTop: 2 }}>
                     {new Date(doc.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
                     {doc.file_size ? ` · ${fmtSize(doc.file_size)}` : ""}

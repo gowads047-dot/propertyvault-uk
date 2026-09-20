@@ -30,7 +30,6 @@ interface Listing {
   video_url?: string;
   floor_plan_url?: string;
   highlights?: string[];
-  view_count?: number;
   company_name?: string;
   facebook_url?: string;
   instagram_url?: string;
@@ -190,12 +189,6 @@ function groupFeatures(features: string[]): Record<string, string[]> {
   return grouped;
 }
 
-// Seed a stable pseudo-random view count from listing id
-function viewCount(id: string, base: number = 0): number {
-  const hash = id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  return base + (hash % 47) + 12;
-}
-
 export default function ListingPage() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -215,8 +208,6 @@ export default function ListingPage() {
     const { data } = await supabase.from("listings").select("*").eq("id", id).single();
     if (data) {
       setListing(data);
-      // increment view count
-      supabase.from("listings").update({ view_count: (data.view_count ?? 0) + 1 }).eq("id", data.id);
       const { data: profile } = await supabase.from("profiles").select("name, whatsapp").eq("id", data.user_id).single();
       setOwner(profile);
       if (user) {
@@ -295,7 +286,6 @@ export default function ListingPage() {
   const mapLink = getMapLink(listing.area, listing.city);
   const countryObj = countries.find(x => x.code === listing.country) ?? countries.find(x => x.cities.includes(listing.city));
   const featureGroups = groupFeatures(listing.features ?? []);
-  const views = viewCount(listing.id, listing.view_count ?? 0);
   const pricePerSqm = listing.size_sqm && forSale ? Math.round(listing.price / listing.size_sqm) : null;
 
   // Detect Arabic/RTL content
@@ -320,9 +310,6 @@ export default function ListingPage() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
               Back to listings
             </Link>
-            <span className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }}>
-              👁 {views} people viewed this week
-            </span>
           </div>
 
           {/* Main image */}
@@ -469,9 +456,6 @@ export default function ListingPage() {
               <div className="flex items-center gap-2 mt-3">
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ color: "var(--h-accent)" }}><path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
                 <p className="text-sm font-medium" style={{ color: "var(--h-muted)" }}>{listing.area}, {listing.city}{countryObj ? `, ${countryObj.name}` : ""}</p>
-                <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: "var(--h-warm)", color: "var(--h-muted)" }}>
-                  👁 {views} views
-                </span>
               </div>
             </div>
 

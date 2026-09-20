@@ -20,7 +20,7 @@ function renturaWelcomeHtml(name: string) {
   return `
   <div style="font-family:system-ui,sans-serif;max-width:580px;margin:0 auto;background:#0c0f1a;color:#e5e5e5;border-radius:16px;overflow:hidden;">
     <div style="background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.04));padding:36px 40px;border-bottom:1px solid rgba(255,255,255,0.07);">
-      <p style="font-size:20px;font-weight:800;color:var(--gold-ink);margin:0 0 4px;">Rentura™</p>
+      <p style="font-size:20px;font-weight:800;color:#f4d35e;margin:0 0 4px;">Rentura™</p>
       <p style="font-size:12px;color:rgba(255,255,255,0.58);margin:0;">Property Operating System</p>
     </div>
     <div style="padding:36px 40px;">
@@ -50,7 +50,7 @@ function renturaWelcomeHtml(name: string) {
         Open Rentura →
       </a>
       <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:32px;">
-        Questions? Reply to this email or WhatsApp us: <a href="https://wa.me/447415721628" style="color:var(--gold-ink);">message us on WhatsApp</a>
+        Questions? Reply to this email or WhatsApp us: <a href="https://wa.me/447415721628" style="color:#f4d35e;">message us on WhatsApp</a>
       </p>
     </div>
     <div style="padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);">

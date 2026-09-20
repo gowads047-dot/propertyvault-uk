@@ -3,7 +3,7 @@
 import { useState, useRef, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "@/components/ui/Link";
-import { supabase } from "@/lib/supabase";
+import { uploadTenantAttachment, type Attachment } from "@/lib/tenant-upload";
 
 const CATEGORIES = [
   { value: "plumbing", label: "🚿 Plumbing", desc: "Leaks, drains, toilet, boiler" },
@@ -20,7 +20,6 @@ const S = { bg: "#f8f7f5", card: "white", ink: "#1a2942", ink2: "rgba(26,41,66,0
 const input = { width: "100%", background: "rgba(26,41,66,0.03)", border: `1px solid rgba(26,41,66,0.1)`, borderRadius: 10, padding: "11px 14px", color: "#1a2942", fontSize: 14, outline: "none", boxSizing: "border-box" as const, fontFamily: "inherit" };
 const label = { display: "block" as const, fontSize: 11, fontWeight: 700 as const, color: "rgba(26,41,66,0.5)", marginBottom: 6, textTransform: "uppercase" as const, letterSpacing: "0.07em" };
 
-type Attachment = { url: string; name: string; type: string };
 
 function NewIssueInner() {
   const searchParams = useSearchParams();
@@ -39,14 +38,13 @@ function NewIssueInner() {
 
   async function handleFiles(files: FileList) {
     setUploading(true);
+    setError("");
     const newAttachments: Attachment[] = [];
     for (const file of Array.from(files)) {
-      const ext = file.name.split(".").pop();
-      const path = `tenant-issues/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await supabase.storage.from("tenant-attachments").upload(path, file, { upsert: false });
-      if (!upErr) {
-        const { data } = supabase.storage.from("tenant-attachments").getPublicUrl(path);
-        newAttachments.push({ url: data.publicUrl, name: file.name, type: file.type });
+      try {
+        newAttachments.push(await uploadTenantAttachment(token, file));
+      } catch (e) {
+        setError(e instanceof Error ? e.message : `Could not upload ${file.name}.`);
       }
     }
     setAttachments(prev => [...prev, ...newAttachments]);
