@@ -209,8 +209,8 @@ export default function HubPage() {
             {[
               { label: "Main site", href: "/" },
               { label: "Guaranteed rent", href: "/guaranteed-rent" },
-              { label: "Sourcing", href: "/sourcing" },
-              { label: "Portfolio builder", href: "/portfolio" },
+              { label: "Deal sourcing", href: "/deal-sourcing" },
+              { label: "Vault a property", href: "/vault" },
               { label: "Contact", href: "/contact" },
               { label: "Rentura admin", href: "/rentura/admin" },
               { label: "Academy admin", href: "/academy/admin" },

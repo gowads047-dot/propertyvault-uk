@@ -15,6 +15,11 @@ import { join } from "node:path";
  * Nothing else catches this. The nav has its own check and the services
  * catalogue has one, both written after a link in that specific place broke.
  * This is the version that covers the other two hundred.
+ *
+ * It first read only `href="…"` attributes. The hub's quick links are an
+ * array of `{ label, href: "/sourcing" }` objects, and two of them had
+ * pointed at pages that never existed for as long as the hub had. Object
+ * keys, router.push, redirect and absolute site URLs are read too now.
  */
 
 const root = process.cwd();
@@ -29,10 +34,11 @@ const sourceFiles = readdirSync(join(root, "src"), { recursive: true, encoding: 
 const routes = new Set<string>(["/"]);
 const dynamicParents = new Set<string>();
 for (const p of readdirSync(APP, { recursive: true, encoding: "utf8" })) {
-  if (!p.endsWith("page.tsx")) continue;
+  // A route handler (feed.xml/route.ts) answers a URL as much as a page does.
+  if (!p.endsWith("page.tsx") && !p.endsWith("route.ts")) continue;
   // A route group — (home), (marketing) — adds no path segment.
   const dir = toPosix(p)
-    .replace(/page\.tsx$/, "")
+    .replace(/(page\.tsx|route\.ts)$/, "")
     .replace(/\/$/, "")
     .split("/")
     .filter(seg => !(seg.startsWith("(") && seg.endsWith(")")))
@@ -59,9 +65,15 @@ type Link = { href: string; from: string };
 const links: Link[] = [];
 for (const file of sourceFiles) {
   const from = toPosix(file.slice(root.length + 1));
-  for (const m of readFileSync(file, "utf8").matchAll(/href="(\/[A-Za-z0-9/_#?=&.-]*)"/g)) {
+  const src = readFileSync(file, "utf8");
+  const re = /(?:href=\{?["'`]|href:\s*["'`]|router\.push\(["'`]|redirect\(["'`]|window\.location\.href\s*=\s*["'`]|https:\/\/www\.propertyvaultuk\.co\.uk)(\/[A-Za-z0-9/_#?=&.-]*)/g;
+  for (const m of src.matchAll(re)) {
+    // A prefix that a template fills in (`/makan/listing/${id}`) is not a link.
+    if (src[m.index + m[0].length] === "$") continue;
     const bare = m[1].split("#")[0].split("?")[0];
     if (!bare || bare === "/") continue;
+    // Metadata images are special files, not pages.
+    if (/\/(opengraph-image|twitter-image|icon)\/?$/.test(bare)) continue;
     // API routes have no page and are exercised by their own tests.
     if (bare.startsWith("/api/")) continue;
     links.push({ href: bare.replace(/\/$/, ""), from });
