@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { authorizeCron } from "@/lib/cron-auth";
 import { createClient } from "@supabase/supabase-js";
 import { REPLY_TO } from "@/lib/site";
+import { usersWhoWant } from "@/lib/notification-prefs";
 
 // Called by a cron job or manually — sends compliance expiry alerts via email
 // Set up a Vercel cron in vercel.json: { "crons": [{ "path": "/api/notifications/compliance", "schedule": "0 8 * * *" }] }
@@ -43,11 +44,15 @@ export async function GET(req: Request) {
     }
   }
 
+  // Only to landlords who have the toggle on (Settings → Notifications).
+  const wanted = await usersWhoWant(supabase, alerts.map(a => a.userId), "compliance_expiry");
+
   // Send emails via Resend (or log if not configured)
   const RESEND_KEY = process.env.RESEND_API_KEY;
   let sent = 0;
 
   for (const alert of alerts) {
+    if (!wanted.has(alert.userId)) continue;
     if (RESEND_KEY) {
       await fetch("https://api.resend.com/emails", {
         method: "POST",
