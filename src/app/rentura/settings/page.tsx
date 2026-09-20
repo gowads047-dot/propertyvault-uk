@@ -25,6 +25,7 @@ export default function RenturaSettings() {
   const [notifSaving, setNotifSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteNotice, setDeleteNotice] = useState<{ ok: boolean; text: string } | null>(null);
 
   useEffect(() => {
     if (!loading && !user) router.push("/rentura/auth");
@@ -76,19 +77,21 @@ export default function RenturaSettings() {
   async function requestDeleteAccount() {
     if (!user) return;
     setDeleteLoading(true);
-    await fetch("/api/contact/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: profile?.name || "Rentura user",
-        email: user.email,
-        message: `Account deletion request for user ID: ${user.id}. Please delete all data associated with this account.`,
-        subject: "Account Deletion Request — Rentura",
-      }),
-    }).catch(() => null);
+    setDeleteNotice(null);
+    try {
+      // The session token goes with it: the route records who asked.
+      const res = await authFetch("/api/rentura/delete-account/", { method: "POST" });
+      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (res.ok && json.ok) {
+        setDeleteNotice({ ok: true, text: "Deletion request received. We will delete your account within 30 days and confirm by email." });
+        setDeleteConfirm(false);
+      } else {
+        setDeleteNotice({ ok: false, text: json.error || "Could not send the request. Please email info@propertyvaultuk.co.uk." });
+      }
+    } catch {
+      setDeleteNotice({ ok: false, text: "Could not send the request. Please email info@propertyvaultuk.co.uk." });
+    }
     setDeleteLoading(false);
-    setDeleteConfirm(false);
-    alert("Deletion request sent. We will process it within 30 days and confirm by email.");
   }
 
   async function saveProfile() {
@@ -285,6 +288,9 @@ export default function RenturaSettings() {
               <div style={{ background: "rgba(239,68,68,0.04)", border: "1px solid rgba(239,68,68,0.15)", borderRadius: 12, padding: "20px 24px" }}>
                 <p style={{ fontSize: 13, fontWeight: 700, color: C.red, marginBottom: 4 }}>Delete account</p>
                 <p style={{ fontSize: 12, color: C.ink2, marginBottom: 12 }}>This will permanently delete your account and all your data. This cannot be undone.</p>
+                {deleteNotice && (
+                  <p role="status" style={{ fontSize: 12, fontWeight: 600, color: deleteNotice.ok ? C.green : C.red, marginBottom: 12 }}>{deleteNotice.text}</p>
+                )}
                 {!deleteConfirm ? (
                   <button
                     onClick={() => setDeleteConfirm(true)}
