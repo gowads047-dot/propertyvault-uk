@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { safeNext } from "@/lib/safe-next";
 import Link from "@/components/ui/Link";
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/lib/supabase";
@@ -24,7 +25,7 @@ function RenturaAuthForm() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reads window.location.search, which only exists on the client
-    setNext(params.get("next") ?? "/rentura/dashboard");
+    setNext(safeNext(params.get("next"), "/rentura/dashboard"));
   }, []);
 
   // Detect Supabase password-recovery redirect (arrives with #type=recovery in hash)
