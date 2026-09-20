@@ -1,3 +1,4 @@
+import { SaveErrorToast } from "@/components/layout/SaveErrorToast";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
 
@@ -12,5 +13,10 @@ export const metadata: Metadata = {
 // useAuth() falls back to the default context, whose `loading` is hard-coded true
 // and never changes — every page below would sit on its loading state forever.
 export default function AcademyLayout({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      {children}
+      <SaveErrorToast />
+    </AuthProvider>
+  );
 }
