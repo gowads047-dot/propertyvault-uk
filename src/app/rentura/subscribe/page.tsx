@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { authFetch } from "@/lib/auth-fetch";
 import { RenturaSidebar } from "@/components/rentura/RenturaSidebar";
 
 export default function RenturaSubscribePage() {
@@ -19,12 +20,9 @@ export default function RenturaSubscribePage() {
     if (!user) return;
     setLoading(true);
     setError("");
-    const res = await fetch("/api/rentura/subscribe/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: user.email, userId: user.id }),
-    });
-    const json = await res.json();
+    // The session token says who is subscribing; nothing else is sent.
+    const res = await authFetch("/api/rentura/subscribe/", { method: "POST" });
+    const json = await res.json().catch(() => ({}));
     if (json.url) {
       window.location.href = json.url;
     } else {
