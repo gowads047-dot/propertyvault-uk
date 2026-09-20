@@ -33,3 +33,35 @@ values (
   array['image/jpeg','image/png','image/webp','image/heic','video/mp4','video/quicktime','video/webm','application/pdf']
 )
 on conflict (id) do nothing;
+
+-- makan_org / makan_org_member: no insert policy on either, so a landlord's
+-- first publish on Makan — which creates their organisation and makes them
+-- its owner (ensureOrg in src/app/makan/list/page.tsx) — was refused with
+-- 42501. Only the seeded organisation could ever list. Two insert policies
+-- would not be enough on their own: the page reads the new org's id back,
+-- and makan_org's read policy only shows an org to its members, of which a
+-- brand-new org has none. So the whole step is one function, run as
+-- definer: create the org, make the caller its owner, hand back the id.
+create or replace function public.makan_create_org(org_name text, org_slug text)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare
+  caller uuid := auth.uid();
+  new_org uuid;
+begin
+  if caller is null then
+    raise exception 'Sign in to create an organisation' using errcode = '42501';
+  end if;
+  if exists (select 1 from public.makan_org_member m where m.user_id = caller) then
+    raise exception 'You already belong to an organisation' using errcode = '23505';
+  end if;
+  insert into public.makan_org (name, slug, kind)
+  values (left(org_name, 120), left(org_slug, 120), 'landlord')
+  returning id into new_org;
+  insert into public.makan_org_member (org_id, user_id, role)
+  values (new_org, caller, 'owner');
+  return new_org;
+end;
+$$;
+revoke all on function public.makan_create_org(text, text) from public;
+grant execute on function public.makan_create_org(text, text) to authenticated;

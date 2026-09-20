@@ -168,7 +168,7 @@ export const MIGRATIONS: Migration[] = [
   },
   {
     file: "missing-policies.sql",
-    purpose: "Policies for rentura_right_to_rent and tenant_issues (RLS was on with none), and the tenant-attachments bucket.",
+    purpose: "Policies for rentura_right_to_rent and tenant_issues (RLS was on with none), the tenant-attachments bucket, and makan_create_org() so a new landlord can publish.",
     marker: {
       kind: "unverifiable",
       because: "adds policies and a storage bucket, neither of which PostgREST exposes",

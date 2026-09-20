@@ -48,8 +48,9 @@ and the `subscribers` columns have been applied to the database already.
    `supabase/profiles-privacy.sql` in the Supabase SQL editor (the connector
    is not allowed to change policies or add buckets). The last two matter
    more: until they run, landlords cannot save a right-to-rent check or see
-   tenant issues, tenants cannot attach a photo to an issue, and anyone with
-   the anon key can list every user's phone number. `npm run check:db` lists
+   tenant issues, tenants cannot attach a photo to an issue, no new landlord
+   can publish on Makan, and anyone with the anon key can list every user's
+   phone number. `npm run check:db` lists
    all three.
 2. Vercel → Settings → Environment Variables (Production): the Turnstile pair,
    the Meta pair, the Google Ads pair. `npm run check:env` explains each.

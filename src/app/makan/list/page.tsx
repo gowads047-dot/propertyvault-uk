@@ -104,18 +104,13 @@ export default function ListPage() {
 
     const name = profile?.name?.trim() || "My properties";
     const slug = `${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "landlord"}-${userId.slice(0, 8)}`;
-    const org = await supabase
-      .from("makan_org")
-      .insert({ name, slug, kind: "landlord" })
-      .select("id")
-      .single();
+    // One call, run on the database side: the org, its owner row, and the
+    // id back. Inserting the two rows from here was refused — no insert
+    // policy, and the org's read policy hides an org from everyone until it
+    // has a member, so the id could not be read back either.
+    const org = await supabase.rpc("makan_create_org", { org_name: name, org_slug: slug });
     if (org.error || !org.data) throw org.error ?? new Error("Could not create your account");
-
-    const member = await supabase
-      .from("makan_org_member")
-      .insert({ org_id: org.data.id, user_id: userId, role: "owner" });
-    if (member.error) throw member.error;
-    return org.data.id as string;
+    return org.data as string;
   }
 
   async function publish(e: React.FormEvent) {
