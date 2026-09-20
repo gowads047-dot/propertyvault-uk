@@ -1,96 +1,69 @@
 import { describe, it, expect } from "vitest";
-import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { basename, dirname, join, sep } from "node:path";
 
 /**
- * Every internal link goes somewhere that exists.
+ * Every internal path the code links to is a route that exists.
  *
- * A link into nothing is invisible from the code that writes it: the page
- * compiles, the build passes, and the only symptom is a 404 for whoever
- * clicked. The two this found had been sitting in Makan's inventory empty
- * state — which is the first screen every new operator sees — pointing at
- * /makan/app/inventory/import and /inventory/new, neither of which has ever
- * existed.
- *
- * Nothing else catches this. The nav has its own check and the services
- * catalogue has one, both written after a link in that specific place broke.
- * This is the version that covers the other two hundred.
+ * The signed-in hub had "Sourcing" pointing at /sourcing and "Portfolio
+ * builder" at /portfolio — neither has ever been a page; both were 404s
+ * for as long as the hub existed. The orphan check in the launch gate walks
+ * the sitemap outward and never sees a link *to* a page that is not there.
+ * This one reads the source: every literal path in an href, router.push,
+ * redirect or absolute site URL must match a page, a route handler or a
+ * file in public/.
  */
-
-const root = process.cwd();
-const APP = join(root, "src", "app");
-const toPosix = (p: string) => p.split("\\").join("/");
-
-const sourceFiles = readdirSync(join(root, "src"), { recursive: true, encoding: "utf8" })
-  .filter(p => /\.tsx?$/.test(p) && !p.includes(".test."))
-  .map(p => join(root, "src", p));
-
-/** Routes with a page behind them, and the parents of dynamic segments. */
-const routes = new Set<string>(["/"]);
-const dynamicParents = new Set<string>();
-for (const p of readdirSync(APP, { recursive: true, encoding: "utf8" })) {
-  if (!p.endsWith("page.tsx")) continue;
-  // A route group — (home), (marketing) — adds no path segment.
-  const dir = toPosix(p)
-    .replace(/page\.tsx$/, "")
-    .replace(/\/$/, "")
-    .split("/")
-    .filter(seg => !(seg.startsWith("(") && seg.endsWith(")")))
-    .join("/");
-  const route = dir === "" ? "/" : `/${dir}`;
-  if (route.includes("[")) dynamicParents.add(route.slice(0, route.lastIndexOf("/")));
-  else routes.add(route);
-}
-
-/** A redirect source resolves even with no directory behind it. */
-const redirects = new Set(
-  [...readFileSync(join(root, "next.config.ts"), "utf8").matchAll(/source:\s*"([^"]+)"/g)]
-    .map(m => m[1].replace(/\/$/, "")),
-);
-
-/** Anything served straight out of public/. */
-const publicFiles = new Set(
-  readdirSync(join(root, "public"), { recursive: true, encoding: "utf8" })
-    .map(p => `/${toPosix(p)}`),
-);
-
-type Link = { href: string; from: string };
-
-const links: Link[] = [];
-for (const file of sourceFiles) {
-  const from = toPosix(file.slice(root.length + 1));
-  for (const m of readFileSync(file, "utf8").matchAll(/href="(\/[A-Za-z0-9/_#?=&.-]*)"/g)) {
-    const bare = m[1].split("#")[0].split("?")[0];
-    if (!bare || bare === "/") continue;
-    // API routes have no page and are exercised by their own tests.
-    if (bare.startsWith("/api/")) continue;
-    links.push({ href: bare.replace(/\/$/, ""), from });
+function walk(dir: string, out: string[] = []): string[] {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) walk(p, out);
+    else out.push(p);
   }
+  return out;
 }
 
-function resolves(href: string): boolean {
-  if (routes.has(href) || redirects.has(href) || publicFiles.has(href)) return true;
-  // A concrete child of a dynamic segment: /blog/foo against /blog/[slug].
-  return dynamicParents.has(href.slice(0, href.lastIndexOf("/")));
+const ROOT = process.cwd();
+const rel = (f: string) => f.slice(ROOT.length + 1).split(sep).join("/");
+const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+function routePatterns(): RegExp[] {
+  const out: RegExp[] = [];
+  for (const f of walk(join(ROOT, "src", "app"))) {
+    const b = basename(f);
+    if (b !== "page.tsx" && b !== "route.ts") continue;
+    const segs = rel(dirname(f)).split("/").slice(2).filter((s) => s && !/^\(.*\)$/.test(s));
+    const re = segs
+      .map((s) => (s.startsWith("[...") ? ".+" : s.startsWith("[") ? "[^/]+" : escape(s)))
+      .join("/");
+    out.push(new RegExp(`^/${re}/?$`));
+  }
+  return out;
 }
 
 describe("internal links", () => {
-  it("finds links and routes, so the check below is not vacuous", () => {
-    expect(links.length).toBeGreaterThan(100);
-    expect(routes.size).toBeGreaterThan(150);
-  });
-
-  it("resolves a route group to its parent path", () => {
-    // /makan is served by makan/(home)/page.tsx. Getting this wrong reports
-    // twelve perfectly good links as broken, which is how a useful check gets
-    // switched off.
-    expect(routes.has("/makan")).toBe(true);
-  });
-
-  it("goes somewhere that exists", () => {
-    const broken = [...new Set(
-      links.filter(l => !resolves(l.href)).map(l => `${l.href}  ← ${l.from}`),
-    )].sort();
-    expect(broken, `links to nowhere:\n${broken.join("\n")}`).toEqual([]);
+  it("point at routes that exist", () => {
+    const routes = routePatterns();
+    const pub = new Set(walk(join(ROOT, "public")).map((f) => "/" + rel(f).split("/").slice(1).join("/")));
+    const known = (p: string) => routes.some((r) => r.test(p)) || pub.has(p) || pub.has(p.replace(/\/$/, ""));
+    const re = /(?:href=\{?["'`]|href:\s*["'`]|router\.push\(["'`]|redirect\(["'`]|window\.location\.href\s*=\s*["'`]|https:\/\/www\.propertyvaultuk\.co\.uk)(\/[A-Za-z0-9_\-/.]*)/g;
+    const dead: string[] = [];
+    let checked = 0;
+    for (const f of walk(join(ROOT, "src"))) {
+      if (!/\.tsx?$/.test(f) || f.includes(".test.")) continue;
+      const src = readFileSync(f, "utf8");
+      let m: RegExpExecArray | null;
+      while ((m = re.exec(src))) {
+        const after = src[m.index + m[0].length];
+        // A prefix that a template fills in (`/makan/listing/${id}`) is not a path.
+        if (after === "$") continue;
+        const p = m[1].replace(/[#?].*$/, "");
+        // Metadata images are special files, not pages.
+        if (/\/(opengraph-image|twitter-image|icon)\/?$/.test(p)) continue;
+        checked++;
+        if (!known(p)) dead.push(`${p} in ${rel(f)}:${src.slice(0, m.index).split("\n").length}`);
+      }
+    }
+    expect(dead).toEqual([]);
+    expect(checked).toBeGreaterThan(500);
   });
 });

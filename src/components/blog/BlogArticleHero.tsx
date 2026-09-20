@@ -38,7 +38,9 @@ export function BlogArticleHero({ title, excerpt, category, date, readTime, imag
     publisher: {
       "@type": "Organization",
       name: "PropertyVault UK",
-      logo: { "@type": "ImageObject", url: "https://www.propertyvaultuk.co.uk/favicon.ico" },
+      // The same image the Organization schema in the root layout uses; the
+      // 16px favicon it pointed at is below what Google accepts for a logo.
+      logo: { "@type": "ImageObject", url: "https://www.propertyvaultuk.co.uk/opengraph-image/" },
     },
     datePublished: postDateISO(date),
     dateModified: postDateISO(date),
