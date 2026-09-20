@@ -196,6 +196,10 @@ export const RULES = {
   vaultSaveGlobal: { name: "vault-save-global", limit: 5_000, windowSeconds: 86_400 },
   vaultReadPerCaller: { name: "vault-read", limit: 240, windowSeconds: 3600 },
   vaultReadGlobal: { name: "vault-read-global", limit: 20_000, windowSeconds: 86_400 },
+
+  /** A tenant attaching a photo or PDF to an issue; storage is paid per GB. */
+  uploadPerCaller: { name: "upload", limit: 40, windowSeconds: 3600 },
+  uploadGlobal: { name: "upload-global", limit: 2_000, windowSeconds: 86_400 },
 } as const satisfies Record<string, RateLimitRule>;
 
 /**

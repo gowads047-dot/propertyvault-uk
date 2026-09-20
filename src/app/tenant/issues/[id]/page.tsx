@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
 import Link from "@/components/ui/Link";
-import { supabase } from "@/lib/supabase";
+import { uploadTenantAttachment } from "@/lib/tenant-upload";
 
 const S = { bg: "#f8f7f5", card: "white", ink: "#1a2942", ink2: "rgba(26,41,66,0.55)", border: "rgba(26,41,66,0.1)", accent: "#1a2942" };
 
@@ -29,6 +29,7 @@ function IssueThreadInner() {
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
   const [attachments, setAttachments] = useState<{ url: string; name: string; type: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -45,14 +46,13 @@ function IssueThreadInner() {
 
   async function handleFiles(files: FileList) {
     setUploading(true);
+    setUploadError("");
     const newAttachments: { url: string; name: string; type: string }[] = [];
     for (const file of Array.from(files)) {
-      const ext = file.name.split(".").pop();
-      const path = `tenant-issues/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error } = await supabase.storage.from("tenant-attachments").upload(path, file);
-      if (!error) {
-        const { data } = supabase.storage.from("tenant-attachments").getPublicUrl(path);
-        newAttachments.push({ url: data.publicUrl, name: file.name, type: file.type });
+      try {
+        newAttachments.push(await uploadTenantAttachment(token, file));
+      } catch (e) {
+        setUploadError(e instanceof Error ? e.message : `Could not upload ${file.name}.`);
       }
     }
     setAttachments(prev => [...prev, ...newAttachments]);
@@ -204,6 +204,7 @@ function IssueThreadInner() {
                 {sending ? "Sending…" : "Send →"}
               </button>
             </div>
+            {uploadError && <p role="alert" style={{ fontSize: 13, color: "#b91c1c", marginTop: 8, marginBottom: 0 }}>{uploadError}</p>}
             <input aria-label="Attach photos or videos" ref={fileRef} type="file" multiple accept="image/*,video/*" style={{ display: "none" }} onChange={e => e.target.files && handleFiles(e.target.files)} />
           </div>
         )}

@@ -167,6 +167,14 @@ export const MIGRATIONS: Migration[] = [
     marker: { kind: "table", table: "app_errors" },
   },
   {
+    file: "missing-policies.sql",
+    purpose: "Policies for rentura_right_to_rent and tenant_issues (RLS was on with none), and the tenant-attachments bucket.",
+    marker: {
+      kind: "unverifiable",
+      because: "adds policies and a storage bucket, neither of which PostgREST exposes",
+    },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {

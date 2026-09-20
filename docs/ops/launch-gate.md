@@ -44,8 +44,11 @@ The PR numbers say where the code and the verification live.
 Everything code could do is merged and verified on production. `app_errors`
 and the `subscribers` columns have been applied to the database already.
 
-1. Run `supabase/rls-initplan.sql` in the Supabase SQL editor (the connector
-   is not allowed to change policies). `npm run check:db` lists it.
+1. Run `supabase/rls-initplan.sql` and `supabase/missing-policies.sql` in the
+   Supabase SQL editor (the connector is not allowed to change policies or
+   add buckets). The second one matters more: until it runs, landlords cannot
+   save a right-to-rent check or see tenant issues, and tenants cannot attach
+   a photo to an issue. `npm run check:db` lists both.
 2. Vercel → Settings → Environment Variables (Production): the Turnstile pair,
    the Meta pair, the Google Ads pair. `npm run check:env` explains each.
 3. GitHub → Settings → Secrets: `SUPABASE_DB_URL` (session pooler) and
