@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { useIsAdmin } from "@/lib/useIsAdmin";
 import { supabase } from "@/lib/supabase";
 import { hasRenturaAccess, renturaPathNeedsAccess, type SubscriptionRow } from "@/lib/rentura-access";
 
@@ -15,7 +16,10 @@ import { hasRenturaAccess, renturaPathNeedsAccess, type SubscriptionRow } from "
  * own redirect to sign-in. The answer is remembered for a minute per
  * member so moving between modules does not ask the database each time;
  * a successful checkout lands on the dashboard with ?success=1, which
- * clears it.
+ * clears it. The admin (decided server-side, the address never reaches the
+ * browser) is let through without a subscription: the owner runs the
+ * product and has three properties in it, and the day the paywall went
+ * live there was not a single subscription row in the table.
  */
 const TTL_MS = 60_000;
 let cache: { userId: string; ok: boolean; at: number } | null = null;
@@ -31,6 +35,7 @@ export function RenturaAccessGate({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const gated = renturaPathNeedsAccess(pathname ?? "");
+  const admin = useIsAdmin(gated && !!user);
   const [checked, setChecked] = useState<{ userId: string; ok: boolean } | null>(null);
 
   // true: show the page; false: send to subscribe; null: not known yet.
@@ -40,10 +45,14 @@ export function RenturaAccessGate({ children }: { children: React.ReactNode }) {
       ? null
       : !user
         ? true // the page redirects to sign-in itself
-        : (cachedVerdict(user.id) ?? (checked?.userId === user.id ? checked.ok : null));
+        : admin === true
+          ? true
+          : admin === null
+            ? null // the admin answer decides whether the subscription matters
+            : (cachedVerdict(user.id) ?? (checked?.userId === user.id ? checked.ok : null));
 
   useEffect(() => {
-    if (!gated || loading || !user || verdict !== null) return;
+    if (!gated || loading || !user || admin !== false || verdict !== null) return;
     let cancelled = false;
     // Back from Stripe: the webhook that flips the row from "pending" to
     // "trialing" can land a few seconds after the person does. Ask again,
@@ -70,7 +79,7 @@ export function RenturaAccessGate({ children }: { children: React.ReactNode }) {
       setChecked({ userId: user.id, ok });
     })();
     return () => { cancelled = true; };
-  }, [gated, loading, user, verdict]);
+  }, [gated, loading, user, admin, verdict]);
 
   useEffect(() => {
     if (verdict === false) router.replace("/rentura/subscribe/");
