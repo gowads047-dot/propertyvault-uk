@@ -548,7 +548,8 @@ export default function FloatingChat() {
 
       setMessages(m => [...m, {
         role: "ai",
-        text: result.reply ?? "Something went wrong.",
+        // A refused call (no subscription, rate limit, sign-in lapsed) says why.
+        text: result.reply ?? result.error ?? "Something went wrong.",
         card: result.summary_card ?? null,
         actions: result.actions ?? [],
         awaitingConfirm: result.needsConfirmation === true,
