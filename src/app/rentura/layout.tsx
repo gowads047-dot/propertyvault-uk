@@ -1,3 +1,4 @@
+import { SaveErrorToast } from "@/components/layout/SaveErrorToast";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
 import FloatingChat from "./_components/FloatingChat";
@@ -32,6 +33,7 @@ export default function RenturaLayout({ children }: { children: React.ReactNode 
   return (
     <AuthProvider>
       {children}
+      <SaveErrorToast />
       <FloatingChat />
     </AuthProvider>
   );

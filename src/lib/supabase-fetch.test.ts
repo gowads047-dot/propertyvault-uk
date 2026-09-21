@@ -7,7 +7,8 @@ const BASE = "https://stub.supabase.co";
 
 beforeEach(() => {
   reportClientError.mockReset();
-  vi.stubGlobal("window", {});
+  vi.stubGlobal("window", { dispatchEvent: () => true });
+  vi.stubGlobal("CustomEvent", class { constructor(public type: string, public init?: unknown) {} });
 });
 afterEach(() => vi.unstubAllGlobals());
 
@@ -39,6 +40,23 @@ describe("reportingFetch", () => {
       "POST /rest/v1/rentura_right_to_rent → 403 " + '{"code":"42501","message":"new row violates row-level security policy"}',
       "POST /storage/v1/object/tenant-attachments/x.jpg → 404 " + '{"error":"Bucket not found"}',
     ]);
+  });
+
+  it("announces a refused write on the window with PostgREST's message, and says nothing for a read", async () => {
+    const heard: unknown[] = [];
+    const win = { addEventListener: vi.fn(), dispatchEvent: (e: CustomEvent) => { heard.push(e.detail); return true; } };
+    vi.stubGlobal("window", win);
+    vi.stubGlobal("CustomEvent", class { type: string; detail: unknown; constructor(t: string, o: { detail: unknown }) { this.type = t; this.detail = o.detail; } });
+    respond(403, '{"code":"42501","message":"new row violates row-level security policy for table \\"rentura_right_to_rent\\""}');
+    const { reportingFetch, postgrestMessage } = await import("./supabase-fetch");
+    await reportingFetch(`${BASE}/rest/v1/rentura_right_to_rent?select=*`, { method: "POST" });
+    respond(500, "boom");
+    await reportingFetch(`${BASE}/rest/v1/rentura_right_to_rent?select=*`);
+    expect(heard).toEqual([
+      { method: "POST", path: "/rest/v1/rentura_right_to_rent", status: 403, message: 'new row violates row-level security policy for table "rentura_right_to_rent"' },
+    ]);
+    expect(postgrestMessage("not json", 502)).toBe("HTTP 502");
+    expect(postgrestMessage('{"error":"Bucket not found"}', 404)).toBe("Bucket not found");
   });
 
   it("leaves the body readable for supabase-js", async () => {

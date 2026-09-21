@@ -1,3 +1,4 @@
+import { SaveErrorToast } from "@/components/layout/SaveErrorToast";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
 import { LangProvider } from "@/lib/lang-context";
@@ -64,6 +65,7 @@ export default function MakanLayout({ children }: { children: React.ReactNode })
         <AuthProvider>
           <MakanHeader />
           <div className="flex-1">{children}</div>
+          <SaveErrorToast />
           <MakanFooter />
         </AuthProvider>
       </LangProvider>
