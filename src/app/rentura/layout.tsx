@@ -1,3 +1,4 @@
+import { RenturaAccessGate } from "@/components/rentura/RenturaAccessGate";
 import { SaveErrorToast } from "@/components/layout/SaveErrorToast";
 import type { Metadata } from "next";
 import { AuthProvider } from "@/lib/auth-context";
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 export default function RenturaLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
-      {children}
+      <RenturaAccessGate>{children}</RenturaAccessGate>
       <SaveErrorToast />
       <FloatingChat />
     </AuthProvider>
