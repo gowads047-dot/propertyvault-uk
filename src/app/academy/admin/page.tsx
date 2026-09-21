@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "@/components/ui/Link";
 import { useAuth } from "@/lib/auth-context";
-import { supabase } from "@/lib/supabase";
+import { authFetch } from "@/lib/auth-fetch";
 import { useIsAdmin } from "@/lib/useIsAdmin";
 
 
@@ -19,7 +19,7 @@ type Tab = "overview" | "members" | "courses" | "enrollments";
 // Row shapes for the admin tables. select("*") with no generated Supabase types,
 // so each lists the columns this page actually reads.
 type MemberRow = {
-  id: string; user_id: string; status: string; joined_at: string;
+  user_id: string; status: string; joined_at: string;
   stripe_customer_id: string | null; current_period_end: string | null;
 };
 type CourseRow = {
@@ -42,6 +42,7 @@ export default function AcademyAdmin() {
   const [enrollments, setEnrollments] = useState<EnrollmentRow[]>([]);
   const [stats, setStats] = useState({ members: 0, active: 0, courses: 0, mrr: 0 });
   const [dataLoading, setDataLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!loading && !user) router.push("/academy/join/");
@@ -50,22 +51,35 @@ export default function AcademyAdmin() {
 
   useEffect(() => {
     if (!user || !admin) return;
-    Promise.all([
-      supabase.from("academy_members").select("*").order("joined_at", { ascending: false }),
-      supabase.from("academy_courses").select("*").order("sort_order"),
-      supabase.from("academy_enrollments").select("*, course:academy_courses(title)").order("enrolled_at", { ascending: false }).limit(100),
-    ]).then(([m, c, e]) => {
-      setMembers(m.data || []);
-      setCourses(c.data || []);
-      setEnrollments(e.data || []);
-      const active = ((m.data ?? []) as MemberRow[]).filter(x => x.status === "active");
-      setStats({ members: (m.data || []).length, active: active.length, courses: (c.data || []).length, mrr: active.length * 14.99 });
-      setDataLoading(false);
-    });
+    // Through the admin route: the session's own row-level view of these
+    // tables is one membership, own enrolments and published courses only.
+    authFetch("/api/admin/academy/")
+      .then(async r => {
+        const json = (await r.json().catch(() => ({}))) as { members?: MemberRow[]; courses?: CourseRow[]; enrollments?: EnrollmentRow[]; error?: string };
+        if (!r.ok) throw new Error(json.error ?? "Could not load the Academy data.");
+        const m = json.members ?? [];
+        setMembers(m);
+        setCourses(json.courses ?? []);
+        setEnrollments(json.enrollments ?? []);
+        const active = m.filter(x => x.status === "active");
+        setStats({ members: m.length, active: active.length, courses: (json.courses ?? []).length, mrr: active.length * 14.99 });
+      })
+      .catch((e: unknown) => setError(e instanceof Error ? e.message : "Could not load the Academy data."))
+      .finally(() => setDataLoading(false));
   }, [user, admin]);
 
   async function togglePublish(id: string, current: boolean) {
-    await supabase.from("academy_courses").update({ is_published: !current }).eq("id", id);
+    setError("");
+    const res = await authFetch("/api/admin/academy/", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, is_published: !current }),
+    });
+    if (!res.ok) {
+      const json = (await res.json().catch(() => ({}))) as { error?: string };
+      setError(json.error ?? "Could not change the course's status.");
+      return;
+    }
     setCourses(cs => cs.map(c => c.id === id ? { ...c, is_published: !current } : c));
   }
 
@@ -75,6 +89,7 @@ export default function AcademyAdmin() {
   return (
     <div style={{ background: C.bg, minHeight: "100vh", fontFamily: "var(--font-family-body)", color: C.ink }}>
       <style>{`body > header, body > footer { display: none !important; }`}</style>
+      {error && <p role="alert" style={{ background: "rgba(239,68,68,0.1)", color: C.red, padding: "10px 32px", margin: 0, fontSize: 13 }}>{error}</p>}
 
       <header style={{ background: "rgba(0,0,0,0.4)", borderBottom: `1px solid ${C.border}`, padding: "14px 32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
@@ -116,7 +131,7 @@ export default function AcademyAdmin() {
             <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "20px 24px" }}>
               <p style={{ fontSize: 13, fontWeight: 700, marginBottom: 16 }}>Recent members</p>
               {members.slice(0, 8).map(m => (
-                <div key={m.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
+                <div key={m.user_id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, paddingBottom: 10, borderBottom: `1px solid ${C.border}` }}>
                   <span style={{ fontSize: 12, color: C.ink, fontFamily: "monospace" }}>{m.user_id?.slice(0, 20)}…</span>
                   <span style={{ fontSize: 10, fontWeight: 700, color: m.status === "active" ? C.green : C.red, background: m.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", padding: "2px 8px", borderRadius: 10, textTransform: "capitalize" }}>{m.status}</span>
                 </div>
@@ -154,7 +169,7 @@ export default function AcademyAdmin() {
               </thead>
               <tbody>
                 {members.map(m => (
-                  <tr key={m.id} style={{ borderBottom: `1px solid ${C.border}` }}>
+                  <tr key={m.user_id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink, fontFamily: "monospace" }}>{m.user_id?.slice(0, 20)}…</td>
                     <td style={{ padding: "11px 18px" }}><span style={{ fontSize: 10, fontWeight: 700, color: m.status === "active" ? C.green : C.red, background: m.status === "active" ? "rgba(34,197,94,0.1)" : "rgba(239,68,68,0.1)", padding: "2px 8px", borderRadius: 10, textTransform: "capitalize" }}>{m.status}</span></td>
                     <td style={{ padding: "11px 18px", fontSize: 11, color: C.ink2, fontFamily: "monospace" }}>{m.stripe_customer_id?.slice(0, 16) || "—"}</td>
