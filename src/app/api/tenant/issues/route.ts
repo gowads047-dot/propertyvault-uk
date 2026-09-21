@@ -83,7 +83,7 @@ export async function GET(req: Request) {
     const { data: invite } = await supabase.from("tenant_invites").select("*").eq("token", token).maybeSingle();
     if (!invite) return NextResponse.json({ error: "Invalid token" }, { status: 403 });
     const { data: issues } = await supabase.from("tenant_issues").select("*").eq("property_id", invite.property_id).eq("tenant_email", invite.email).order("created_at", { ascending: false });
-    return NextResponse.json({ issues: issues ?? [], property_id: invite.property_id, property_address: invite.property_address });
+    return NextResponse.json({ issues: issues ?? [], property_id: invite.property_id });
   }
 
   // The landlord path is reached without a tenant token, so the caller

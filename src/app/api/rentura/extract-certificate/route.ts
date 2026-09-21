@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { RULES, rateGuard } from "@/lib/rate-limit";
-import { getVerifiedUser } from "@/lib/server-auth";
+import { requireRenturaMember } from "@/lib/rentura-member";
 import Anthropic from "@anthropic-ai/sdk";
 
 const EXTRACT_SYSTEM = `You are a UK property compliance assistant. The landlord has uploaded a compliance certificate image or PDF. Your job is to read it carefully and extract all key fields.
@@ -54,9 +54,11 @@ export async function POST(req: Request) {
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
   }
-  // A Rentura feature, and every call is a paid model request: members only.
-  if (!(await getVerifiedUser(req))) {
-    return NextResponse.json({ error: "Please sign in and try again." }, { status: 401 });
+  // A Rentura feature, and every call is a paid model request: members
+  // with a live subscription only (the admin always).
+  const member = await requireRenturaMember(req);
+  if (!member.ok) {
+    return NextResponse.json({ error: member.error }, { status: member.status });
   }
 
   try {
