@@ -28,7 +28,6 @@ interface Listing {
   country?: string;
   size_sqm?: number;
   video_url?: string;
-  floor_plan_url?: string;
   highlights?: string[];
   company_name?: string;
   facebook_url?: string;
@@ -201,7 +200,6 @@ export default function ListingPage() {
   const [message, setMessage] = useState("");
   const [enquiryError, setEnquiryError] = useState("");
   const [activeImg, setActiveImg] = useState(0);
-  const [floorPlanOpen, setFloorPlanOpen] = useState(false);
 
 
   const loadListing = useCallback(async () => {
@@ -573,34 +571,6 @@ export default function ListingPage() {
                 <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--h-border)", aspectRatio: "16/9" }}>
                   <video src={listing.video_url} controls className="w-full h-full object-cover" />
                 </div>
-              </div>
-            )}
-
-            {/* Floor plan */}
-            {listing.floor_plan_url && (
-              <div className="mb-8">
-                <h2 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: "var(--h-text)" }}>
-                  📐 Floor plan
-                </h2>
-                <button
-                  onClick={() => setFloorPlanOpen(true)}
-                  className="w-full rounded-2xl overflow-hidden relative group"
-                  style={{ border: "1px solid var(--h-border)", aspectRatio: "4/3" }}
-                >
-                  <Image src={listing.floor_plan_url} alt="Floor plan" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: "rgba(0,0,0,0.3)" }}>
-                    <span className="text-white text-sm font-semibold px-4 py-2 rounded-xl" style={{ background: "rgba(0,0,0,0.6)" }}>View full size</span>
-                  </div>
-                </button>
-              </div>
-            )}
-
-            {/* Floor plan lightbox */}
-            {floorPlanOpen && listing.floor_plan_url && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)" }}
-                onClick={() => setFloorPlanOpen(false)}>
-                {/* eslint-disable-next-line @next/next/no-img-element -- lightbox sizes to the image's own aspect ratio via max-w/max-h; next/image needs fixed dimensions or a sized parent, neither of which fits here */}
-                <img src={listing.floor_plan_url} alt="Floor plan" className="max-w-full max-h-full rounded-2xl" />
               </div>
             )}
 

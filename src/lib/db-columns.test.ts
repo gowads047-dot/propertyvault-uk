@@ -111,9 +111,67 @@ function references(): { unknownTables: Ref[]; unknownColumns: Ref[] } {
   return { unknownTables, unknownColumns };
 }
 
+/**
+ * Row types declared next to a select("*"): every field must be a column.
+ *
+ * select("*") names no columns, so the check above cannot see the type the
+ * page then reads the rows through — and Makan's admin table had a "Views"
+ * column reading `view_count`, a field the type declared and the table has
+ * never had, so it showed 0 for every listing; the Rentura admin's waitlist
+ * table had a "Phone" column reading `phone` off rentura_waitlist, which
+ * stores `portfolio`. A type's fields are matched
+ * to whichever of the file's tables covers most of them; fields that are
+ * embedded-relation aliases (`property:rentura_properties(...)`) or table
+ * names are left alone.
+ */
+function phantomFieldsIn(src: string, rel: string): string[] {
+  const star = new Set([...src.matchAll(/\.from\("([a-z_]+)"\)\.select\("\*/g)].map((m) => m[1]).filter((t) => TABLES.has(t)));
+  if (star.size === 0) return [];
+  // Every table the file touches competes for a type; only a select("*")
+  // table is reported on, since a named select is checked above already.
+  const tables = [...new Set([...src.matchAll(/\.from\("([a-z_]+)"\)/g)].map((m) => m[1]).filter((t) => TABLES.has(t)))];
+  const aliases = new Set<string>();
+  for (const sel of src.matchAll(/\.select\(\s*"([^"]+)"/g)) {
+    for (const a of sel[1].matchAll(/([a-z_]+)\s*:[a-z_]/g)) aliases.add(a[1]);
+  }
+  const out: string[] = [];
+  // A type that is the shape of an API response, not a row, declared in a
+  // file that also reads a table with select("*"). Named here rather than
+  // loosening the match for everyone.
+  const notRows = new Set(["AdminUser"]);
+  // One type at a time: a body may nest one level ({ address: string }) but never another declaration.
+  for (const tm of src.matchAll(/(?:type|interface) (\w+)\s*=?\s*\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}/g)) {
+    // Nested object types are a relation's shape, not columns of this table.
+    const flat = tm[2].replace(/\{[^{}]*\}/g, "{}");
+    const fields = [...flat.matchAll(/(?:^|[{;])\s*([a-z][a-z_0-9]*)\??:/gm)].map((m) => m[1]);
+    if (fields.length < 4 || notRows.has(tm[1])) continue;
+    const best = tables.reduce((a, b) => (fields.filter((f) => TABLES.get(b)!.has(f)).length > fields.filter((f) => TABLES.get(a)!.has(f)).length ? b : a));
+    if (!star.has(best)) continue;
+    const cols = TABLES.get(best)!;
+    if (fields.filter((f) => cols.has(f)).length < fields.length * 0.6) continue;
+    for (const f of fields) {
+      if (cols.has(f) || aliases.has(f) || TABLES.has(f)) continue;
+      out.push(`${rel}: ${tm[1]}.${f} is not a column of ${best}`);
+    }
+  }
+  return out;
+}
+
 describe("database references match the production catalogue", () => {
   const refs = references();
   const show = (r: Ref) => `${r.file}:${r.line} ${r.table}${r.column ? "." + r.column : ""}`;
+
+  it("declares no row-type field that the table it reads with select('*') does not have", () => {
+    const phantoms: string[] = [];
+    for (const file of walk(join(process.cwd(), "src"))) {
+      phantoms.push(...phantomFieldsIn(readFileSync(file, "utf8"), file.slice(process.cwd().length + 1).split(sep).join("/")));
+    }
+    expect(phantoms).toEqual([]);
+    expect(phantomFieldsIn(`
+      type Listing = { id: string; title: string; price: number; city: string; view_count: number | null; owner: { name: string } };
+      const { data } = await supabase.from("listings").select("*, owner:profiles(name)");
+    `, "x.tsx")).toEqual(["x.tsx: Listing.view_count is not a column of listings"]);
+  });
 
   it("names only tables that exist", () => {
     expect(refs.unknownTables.map(show)).toEqual([]);
