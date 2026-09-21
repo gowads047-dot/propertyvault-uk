@@ -61,7 +61,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/makan/auth"); return; }
+    if (!user) { router.push("/makan/auth/"); return; }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- fetchData is an async fetch; its setState calls run after the await, not during render
     fetchData();
   }, [user, authLoading, router, fetchData]);

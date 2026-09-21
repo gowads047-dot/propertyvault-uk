@@ -44,8 +44,8 @@ export default function AcademyAdmin() {
   const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading && !user) router.push("/academy/join");
-    if (!loading && user && admin === false) router.push("/academy/dashboard");
+    if (!loading && !user) router.push("/academy/join/");
+    if (!loading && user && admin === false) router.push("/academy/dashboard/");
   }, [user, loading, admin, router]);
 
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function CoursePage() {
       .select("*")
       .eq("slug", slug)
       .single();
-    if (!c) { router.push("/academy/courses"); return; }
+    if (!c) { router.push("/academy/courses/"); return; }
     setCourse(c);
 
     const { data: mods } = await supabase
@@ -79,7 +79,7 @@ export default function CoursePage() {
   async function enroll() {
     if (!user || !course) return;
     if (!hasSub && !course.is_free) {
-      router.push("/academy/join");
+      router.push("/academy/join/");
       return;
     }
     setEnrolling(true);

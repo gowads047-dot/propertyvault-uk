@@ -96,7 +96,7 @@ export default function PassportPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/rentura/auth"); return; }
+    if (!user) { router.push("/rentura/auth/"); return; }
     Promise.all([
       supabase.from("rentura_properties").select("*").eq("id", id).eq("user_id", user.id).single(),
       supabase.from("rentura_tenants").select("*").eq("property_id", id).order("move_in_date", { ascending: false }),
@@ -113,7 +113,7 @@ export default function PassportPage() {
         .eq("user_id", user.id)
         .maybeSingle(),
     ]).then(([p, t, m, c, e, r]) => {
-      if (!p.data) { router.push("/rentura/dashboard"); return; }
+      if (!p.data) { router.push("/rentura/dashboard/"); return; }
       setProperty(p.data);
       setTenants(t.data ?? []);
       setMortgages(m.data ?? []);

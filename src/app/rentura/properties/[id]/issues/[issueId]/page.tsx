@@ -38,7 +38,7 @@ export default function LandlordIssuePage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/rentura/auth"); return; }
+    if (!user) { router.push("/rentura/auth/"); return; }
     authFetch(`/api/tenant/issues/${issueId}`)
       .then(r => r.json())
       .then(d => { if (d.issue) { setIssue(d.issue); setUpdates(d.updates || []); } setLoading(false); });

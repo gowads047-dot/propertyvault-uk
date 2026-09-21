@@ -83,7 +83,7 @@ export default function EnquiriesPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) { router.push("/makan/auth"); return; }
+    if (!user) { router.push("/makan/auth/"); return; }
     // eslint-disable-next-line react-hooks/set-state-in-effect -- async fetch; setState runs after the await
     fetchInbox();
   }, [user, authLoading, router, fetchInbox]);

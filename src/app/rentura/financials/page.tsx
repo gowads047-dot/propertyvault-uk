@@ -48,7 +48,7 @@ export default function RenturaFinancials() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user) router.push("/rentura/auth");
+    if (!loading && !user) router.push("/rentura/auth/");
   }, [user, loading, router]);
 
   useEffect(() => {

@@ -254,7 +254,7 @@ export default function TaxIntelligence() {
   const now = new Date();
 
   useEffect(() => {
-    if (!user) { router.push("/rentura/auth?next=/rentura/tax"); return; }
+    if (!user) { router.push("/rentura/auth/?next=/rentura/tax"); return; }
     async function load() {
       setLoading(true);
       const [pR, eR, mR, tR, exR, incR] = await Promise.all([

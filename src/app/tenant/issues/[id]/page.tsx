@@ -36,7 +36,7 @@ function IssueThreadInner() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!token) { router.push("/tenant"); return; }
+    if (!token) { router.push("/tenant/"); return; }
     fetch(`/api/tenant/issues/${id}?token=${token}`)
       .then(r => r.json())
       .then(d => { if (d.issue) { setIssue(d.issue); setUpdates(d.updates || []); } setLoading(false); });

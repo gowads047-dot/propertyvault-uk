@@ -49,7 +49,7 @@ function TenantAuthInner() {
     } else if (data.user) {
       await fetch("/api/tenant/validate/", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token, authId: data.user.id }) });
     }
-    router.push(`/tenant/dashboard?token=${token}`);
+    router.push(`/tenant/dashboard/?token=${token}`);
   }
 
   async function handleLogin(e: React.FormEvent) {

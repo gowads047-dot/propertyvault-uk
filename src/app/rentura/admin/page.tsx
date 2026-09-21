@@ -40,8 +40,8 @@ export default function RenturaAdmin() {
   const [dataLoading, setDataLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading && !user) router.push("/rentura/auth");
-    if (!loading && user && admin === false) router.push("/rentura/dashboard");
+    if (!loading && !user) router.push("/rentura/auth/");
+    if (!loading && user && admin === false) router.push("/rentura/dashboard/");
   }, [user, loading, admin, router]);
 
   useEffect(() => {

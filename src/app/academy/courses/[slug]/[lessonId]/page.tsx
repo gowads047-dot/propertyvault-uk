@@ -36,11 +36,11 @@ export default function LessonPage() {
 
   const loadData = useCallback(async () => {
     const { data: c } = await supabase.from("academy_courses").select("id, slug, title, is_free").eq("slug", slug).single();
-    if (!c) { router.push("/academy/courses"); return; }
+    if (!c) { router.push("/academy/courses/"); return; }
     setCourse(c);
 
     const { data: l } = await supabase.from("academy_lessons").select("*").eq("id", lessonId).single();
-    if (!l) { router.push(`/academy/courses/${slug}`); return; }
+    if (!l) { router.push(`/academy/courses/${slug}/`); return; }
     setLesson(l);
 
     const { data: mods } = await supabase
@@ -90,7 +90,7 @@ export default function LessonPage() {
     const idx = allLessons.findIndex(l => l.id === lesson.id);
     if (idx < allLessons.length - 1) {
       const next = allLessons[idx + 1];
-      router.push(`/academy/courses/${slug}/${next.id}`);
+      router.push(`/academy/courses/${slug}/${next.id}/`);
     }
   }
 

@@ -313,7 +313,7 @@ export default function RenturaDashboard() {
 
   // Auth guard
   useEffect(() => {
-    if (!authLoading && !user) router.push("/rentura/auth?next=/rentura/dashboard");
+    if (!authLoading && !user) router.push("/rentura/auth/?next=/rentura/dashboard");
   }, [authLoading, user, router]);
 
   // Fetch name from rentura_subscriptions (not profiles)
@@ -645,7 +645,7 @@ export default function RenturaDashboard() {
             + Add Property
           </Link>
           <span style={{ fontSize: 12, color: INK2 }}>{memberName ?? user.email}</span>
-          <button onClick={async () => { await signOut(); router.push("/rentura"); }}
+          <button onClick={async () => { await signOut(); router.push("/rentura/"); }}
             style={{ fontSize: 12, fontWeight: 600, color: "rgba(17,17,17,0.4)", background: "none", border: "none", cursor: "pointer", padding: "4px 8px", fontFamily: "inherit" }}>
             Sign out
           </button>
