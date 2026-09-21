@@ -150,7 +150,7 @@ export const MIGRATIONS: Migration[] = [
   },
   {
     file: "rls-initplan.sql",
-    purpose: "RLS policies evaluate auth.uid() once per query; duplicate Rentura policies dropped.",
+    purpose: "RLS policies evaluate auth.uid() once per query; duplicate Rentura policies dropped. Applied 21 Sep 2026.",
     marker: {
       kind: "unverifiable",
       because: "rewrites policy expressions, which PostgREST does not expose",
@@ -168,7 +168,7 @@ export const MIGRATIONS: Migration[] = [
   },
   {
     file: "missing-policies.sql",
-    purpose: "Policies for rentura_right_to_rent and tenant_issues (RLS was on with none), the tenant-attachments bucket, and makan_create_org() so a new landlord can publish.",
+    purpose: "Policies for rentura_right_to_rent and tenant_issues (RLS was on with none), the tenant-attachments bucket, and makan_create_org() so a new landlord can publish. Applied 21 Sep 2026.",
     marker: {
       kind: "unverifiable",
       because: "adds policies and a storage bucket, neither of which PostgREST exposes",
@@ -176,7 +176,7 @@ export const MIGRATIONS: Migration[] = [
   },
   {
     file: "profiles-privacy.sql",
-    purpose: "profiles select policy: own row, listing owners, enquiry counterparts — not every phone number to anyone with the anon key.",
+    purpose: "profiles select policy: own row, listing owners, enquiry counterparts — not every phone number to anyone with the anon key. Applied 21 Sep 2026.",
     marker: {
       kind: "unverifiable",
       because: "replaces a policy, which PostgREST does not expose",

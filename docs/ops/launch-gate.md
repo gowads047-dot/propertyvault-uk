@@ -41,21 +41,19 @@ The PR numbers say where the code and the verification live.
 
 ## What is left, all yours
 
-Everything code could do is merged and verified on production. `app_errors`
-and the `subscribers` columns have been applied to the database already.
+Everything code could do is merged and verified on production. The database
+is fully applied as of 21 September 2026: `app_errors`, the `subscribers`
+columns, the FK indexes, and the three policy files (`rls-initplan.sql`,
+`missing-policies.sql`, `profiles-privacy.sql`) all ran through the
+connector once the session was switched out of auto mode — the auto-mode
+classifier, not the connector, was what refused policy DDL.
 
-1. Run `supabase/rls-initplan.sql`, `supabase/missing-policies.sql` and
-   `supabase/profiles-privacy.sql` in the Supabase SQL editor (the connector
-   is not allowed to change policies or add buckets). The last two matter
-   more: until they run, landlords cannot save a right-to-rent check or see
-   tenant issues, tenants cannot attach a photo to an issue, no new landlord
-   can publish on Makan, and anyone with the anon key can list every user's
-   phone number. `npm run check:db` lists
-   all three.
-2. Vercel → Settings → Environment Variables (Production): the Turnstile pair,
+What remains needs a credential or a dashboard sign-in only the owner has:
+
+1. Vercel → Settings → Environment Variables (Production): the Turnstile pair,
    the Meta pair, the Google Ads pair. `npm run check:env` explains each.
-3. GitHub → Settings → Secrets: `SUPABASE_DB_URL` (session pooler) and
+2. GitHub → Settings → Secrets: `SUPABASE_DB_URL` (session pooler) and
    `BACKUP_PASSPHRASE`; then Actions → Database backup → Run workflow, once.
-4. Supabase → Authentication → Attack protection → leaked password protection.
-5. DNS: `_dmarc` TXT → `v=DMARC1; p=quarantine; rua=mailto:info@propertyvaultuk.co.uk`.
-6. Optional: hstspreload.org; Bing Webmaster Tools import.
+3. Supabase → Authentication → Attack protection → leaked password protection.
+4. DNS: `_dmarc` TXT → `v=DMARC1; p=quarantine; rua=mailto:info@propertyvaultuk.co.uk`.
+5. Optional: hstspreload.org; Bing Webmaster Tools import.
