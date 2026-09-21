@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { RULES, rateGuard } from "@/lib/rate-limit";
+import { getVerifiedUser } from "@/lib/server-auth";
 import Anthropic from "@anthropic-ai/sdk";
 
 const EXTRACT_PROMPT = `You are a document data extraction engine for a UK property management platform.
@@ -58,6 +59,10 @@ export async function POST(req: Request) {
   const limited = await rateGuard(req, RULES.visionPerCaller, RULES.visionGlobal);
   if (limited) {
     return NextResponse.json({ error: limited.error }, { status: limited.status });
+  }
+  // A Rentura feature, and every call is a paid model request: members only.
+  if (!(await getVerifiedUser(req))) {
+    return NextResponse.json({ error: "Please sign in and try again." }, { status: 401 });
   }
 
   try {
