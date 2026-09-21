@@ -183,6 +183,14 @@ export const MIGRATIONS: Migration[] = [
     },
   },
   {
+    file: "indexes-fk.sql",
+    purpose: "Covering indexes for the foreign keys the app filters by; the eleven duplicate Rentura indexes dropped. Applied 20 Sep 2026.",
+    marker: {
+      kind: "unverifiable",
+      because: "indexes are not visible through PostgREST",
+    },
+  },
+  {
     file: "makan-seed-org.sql",
     purpose: "Seeds the first Makan organisation.",
     marker: {
