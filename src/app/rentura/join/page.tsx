@@ -46,6 +46,14 @@ export default function RenturaJoinPage() {
 
     // If session is available immediately — go straight to Stripe
     if (data.session && data.user) {
+      // The welcome email, sent to the address on the session. keepalive so
+      // the redirect to Stripe below does not cancel it.
+      void authFetch("/api/notifications/welcome/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "rentura_welcome", name: name.trim() }),
+        keepalive: true,
+      }).catch(() => null);
       // signUp stored the session, so authFetch can prove who this is.
       const res = await authFetch("/api/rentura/subscribe/", { method: "POST" });
       const { url } = await res.json().catch(() => ({}));
