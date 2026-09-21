@@ -14,7 +14,6 @@ type Listing = {
   id: string; title: string; city: string; property_type: string;
   price: number; status: string; created_at: string;
   verified: boolean; listing_type: string; user_id: string;
-  view_count: number | null;
 };
 
 type Enquiry = {
@@ -153,8 +152,8 @@ export default function MakanAdmin() {
                 <option value="inactive">Inactive</option>
               </select>
               <button onClick={() => {
-                const csv = ["id,title,city,type,price,status,verified,views,created"].concat(
-                  listings.map(l => `${l.id},"${l.title}",${l.city},${l.property_type},${l.price},${l.status},${l.verified},${l.view_count || 0},${l.created_at.slice(0,10)}`)
+                const csv = ["id,title,city,type,price,status,verified,created"].concat(
+                  listings.map(l => `${l.id},"${l.title}",${l.city},${l.property_type},${l.price},${l.status},${l.verified},${l.created_at.slice(0,10)}`)
                 ).join("\n");
                 const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = "makan-listings.csv"; a.click();
               }} style={{ background: "var(--h-accent)", color: "white", fontWeight: 700, fontSize: 12, padding: "8px 16px", borderRadius: 8, border: "none", cursor: "pointer" }}>
@@ -166,7 +165,7 @@ export default function MakanAdmin() {
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
                   <tr style={{ borderBottom: "1px solid var(--h-border)" }}>
-                    {["Title","City","Type","Price","Status","Verified","Views","Actions"].map(h => (
+                    {["Title","City","Type","Price","Status","Verified","Actions"].map(h => (
                       <th key={h} style={{ padding: "10px 14px", fontSize: 11, fontWeight: 700, color: "var(--h-muted)", textTransform: "uppercase", letterSpacing: "0.07em", textAlign: "left" }}>{h}</th>
                     ))}
                   </tr>
@@ -190,7 +189,6 @@ export default function MakanAdmin() {
                           {l.verified ? "✓ Verified" : "Unverified"}
                         </button>
                       </td>
-                      <td style={{ padding: "10px 14px", fontSize: 12, color: "var(--h-muted)" }}>{l.view_count || 0}</td>
                       <td style={{ padding: "10px 14px" }}>
                         <button onClick={() => deleteListing(l.id)} style={{ fontSize: 11, color: "#ef4444", background: "rgba(239,68,68,0.08)", border: "none", borderRadius: 7, padding: "4px 10px", cursor: "pointer" }}>Delete</button>
                       </td>

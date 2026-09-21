@@ -25,7 +25,7 @@ type SubRow = {
   stripe_customer_id: string | null; stripe_subscription_id: string | null;
   current_period_end: string | null;
 };
-type WaitlistRow = { id: string; email: string; name: string | null; phone: string | null; created_at: string };
+type WaitlistRow = { id: string; email: string; name: string | null; portfolio: string | null; created_at: string };
 
 export default function RenturaAdmin() {
   const { user, loading } = useAuth();
@@ -220,7 +220,7 @@ export default function RenturaAdmin() {
               <p style={{ fontSize: 13, fontWeight: 700, color: C.ink }}>{waitlist.length} signups</p>
               <button
                 onClick={() => {
-                  const csv = ["email,name,phone,created_at", ...waitlist.map(w => `${w.email},${w.name || ""},${w.phone || ""},${w.created_at}`)].join("\n");
+                  const csv = ["email,name,portfolio,created_at", ...waitlist.map(w => `${w.email},${w.name || ""},${w.portfolio || ""},${w.created_at}`)].join("\n");
                   const blob = new Blob([csv], { type: "text/csv" });
                   const url = URL.createObjectURL(blob);
                   const a = document.createElement("a");
@@ -234,7 +234,7 @@ export default function RenturaAdmin() {
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
               <thead>
                 <tr style={{ borderBottom: `1px solid ${C.border}` }}>
-                  {["Email", "Name", "Phone", "Signed up"].map(h => (
+                  {["Email", "Name", "Portfolio", "Signed up"].map(h => (
                     <th key={h} style={{ padding: "10px 18px", fontSize: 11, fontWeight: 700, color: C.ink3, textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "left" }}>{h}</th>
                   ))}
                 </tr>
@@ -244,7 +244,7 @@ export default function RenturaAdmin() {
                   <tr key={w.id} style={{ borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink }}>{w.email}</td>
                     <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink2 }}>{w.name || "—"}</td>
-                    <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink2 }}>{w.phone || "—"}</td>
+                    <td style={{ padding: "11px 18px", fontSize: 13, color: C.ink2 }}>{w.portfolio || "—"}</td>
                     <td style={{ padding: "11px 18px", fontSize: 12, color: C.ink3 }}>{new Date(w.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</td>
                   </tr>
                 ))}
